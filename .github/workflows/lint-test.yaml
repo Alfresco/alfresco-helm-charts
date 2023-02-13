@@ -1,0 +1,67 @@
+name: Lint and Test Charts
+
+on: pull_request
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    env:
+      INSTALL_NAMESPACE: alfresco
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.8.1
+
+      # Python is required because `ct lint` runs Yamale (https://github.com/23andMe/Yamale) and
+      # yamllint (https://github.com/adrienverge/yamllint) which require Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.7
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@v2.3.1
+        with:
+          version: v3.5.1
+
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        run: |
+          changed=$(ct list-changed --config ct.yaml)
+          if [[ -n "$changed" ]]; then
+            echo "::set-output name=changed::true"
+          fi
+
+      - name: Run chart-testing (lint)
+        run: ct lint --config ct-lint.yaml
+
+      - name: Create kind cluster
+        uses: helm/kind-action@v1.5.0
+        with:
+          node_image: kindest/node:v1.24.0@sha256:0866296e693efe1fed79d5e6c7af8df71fc73ae45e3679af05342239cdc5bc8e
+        if: steps.list-changed.outputs.changed == 'true'
+
+      - name: Login to Quay.io
+        uses: docker/login-action@v2
+        if: steps.list-changed.outputs.changed == 'true'
+        with:
+          registry: quay.io
+          username: ${{ secrets.quay_username }}
+          password: ${{ secrets.quay_password }}
+
+      - name: Prepare namespace for install
+        if: steps.list-changed.outputs.changed == 'true'
+        run: |
+          kubectl create ns "$INSTALL_NAMESPACE"
+          kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson="${HOME}"/.docker/config.json --type=kubernetes.io/dockerconfigjson -n "$INSTALL_NAMESPACE"
+          kubectl create secret generic broker-secret --from-literal=BROKER_URL="failover:(nio://activemq:61616)?timeout=3000" --from-literal=BROKER_USERNAME=admin --from-literal=BROKER_PASSWORD=admin -n "$INSTALL_NAMESPACE"
+
+      - name: Run chart-testing (install)
+        run: |
+          ct install --config ct-install.yaml --namespace "$INSTALL_NAMESPACE"
