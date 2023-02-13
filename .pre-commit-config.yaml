@@ -1,5 +1,4 @@
 repos:
-  # General hooks section
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
     hooks:
@@ -7,7 +6,6 @@ repos:
         args: ["--fix=lf"]
       - id: end-of-file-fixer
         exclude: README.md
-  # Helm hooks section (excluded in pre-commit-compose workflow)
   - repo: https://github.com/norwoodj/helm-docs
     rev: v1.11.0
     hooks:
