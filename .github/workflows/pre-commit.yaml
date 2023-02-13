@@ -1,0 +1,19 @@
+---
+name: Pre-commit
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  pre_commit:
+    name: Run pre-commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.35.0
+      - uses: pre-commit/action@v3.0.0

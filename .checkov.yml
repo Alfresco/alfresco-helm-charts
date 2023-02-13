@@ -1,0 +1,5 @@
+framework:
+  - helm
+directory:
+  - charts
+skip-check: ~

@@ -1,0 +1,20 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+      - id: end-of-file-fixer
+        exclude: README.md
+  - repo: https://github.com/norwoodj/helm-docs
+    rev: v1.11.0
+    hooks:
+      - id: helm-docs
+  - repo: https://github.com/bridgecrewio/checkov.git
+    rev: 2.3.3
+    hooks:
+      - id: checkov
+        files: \.yaml$
+        args:
+        - --quiet
+        - --compact
