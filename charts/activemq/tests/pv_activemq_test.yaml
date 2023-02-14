@@ -5,8 +5,6 @@ templates:
   - pvc-activemq.yaml
 tests:
   - it: should render an ephemeral volume
-    values: &testvalues
-      - ../../../tests/values/test_values.yaml
     set:
       persistence:
         enabled: false
@@ -19,7 +17,6 @@ tests:
             name: data
         template: deployment-activemq.yaml
   - it: should render a deployment with set claim
-    values: *testvalues
     set:
       persistence:
         enabled: true
@@ -31,7 +28,6 @@ tests:
           value: mysfsvolume
         template: deployment-activemq.yaml
   - it: should render a deployment with dynamic claim name
-    values: *testvalues
     set:
       persistence:
         enabled: true
@@ -49,7 +45,6 @@ tests:
           path: spec.storageClassName
         template: pvc-activemq.yaml
   - it: should render a deployment with provided storage class
-    values: *testvalues
     set:
       persistence:
         enabled: true

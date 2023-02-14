@@ -4,8 +4,6 @@ templates:
   - deployment-activemq.yaml
 tests:
   - it: should reference default secret containing broker default credentials
-    values: &testvalues
-      - ../../../tests/values/test_values.yaml
     asserts:
       - equal:
           path: spec.template.spec.containers[0].env[3].name
@@ -13,11 +11,10 @@ tests:
         template: deployment-activemq.yaml
       - equal:
           path: spec.template.spec.containers[0].env[3].valueFrom.secretKeyRef.name
-          value: RELEASE-NAME-alfresco-cs-brokersecret
+          value: RELEASE-NAME-activemq-brokersecret
         template: deployment-activemq.yaml
 
   - it: should reference overridden secret when setting existingSecretName
-    values: *testvalues
     set:
       adminUser.existingSecretName: existing-secret
     asserts:
@@ -27,7 +24,6 @@ tests:
         template: deployment-activemq.yaml
 
   - it: should render cpu and memory limits
-    values: *testvalues
     asserts:
       - equal:
           path: spec.template.spec.containers[0].resources
