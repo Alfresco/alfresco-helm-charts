@@ -1,0 +1,6 @@
+dependencies:
+- name: alfresco-common
+  repository: https://kubernetes-charts.alfresco.com/incubator
+  version: 0.3.0-SNAPSHOT
+digest: sha256:dfa288930849d2d50f7b1a0af66b3bcd2f034cf98069c685ec14df3eb3457b0f
+generated: "2023-01-03T16:14:14.087135+01:00"
