@@ -26,6 +26,12 @@ jobs:
         with:
           python-version: 3.7
 
+      - name: Set up Unit Test plugin for Helm
+        env:
+          HELM_UNITTEST_VERSION: v1.0.16
+        run: |
+          helm plugin install https://github.com/vbehar/helm3-unittest --version $HELM_UNITTEST_VERSION
+
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.3.1
         with:
