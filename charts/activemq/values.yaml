@@ -7,8 +7,12 @@ image:
   tag: 5.17.1-jre11-rockylinux8
   pullPolicy: IfNotPresent
 adminUser:
-  # -- An existing kubernetes secret that contains BROKER_USERNAME and BROKER_PASSWORD keys
+  # -- An existing kubernetes secret that contains BROKER_USERNAME and BROKER_PASSWORD keys to override the default user credentials
   existingSecretName:
+  # -- Username for the default user with administrative privileges
+  user: admin
+  # -- Password for the default user with administrative privileges
+  password: admin
 podSecurityContext:
   runAsUser: 33031
   runAsGroup: 1000

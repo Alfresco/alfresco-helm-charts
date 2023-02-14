@@ -25,7 +25,9 @@ Credentials get injected by the [main chart](../../README.md) and by default are
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| adminUser.existingSecretName | string | `nil` | An existing kubernetes secret that contains BROKER_USERNAME and BROKER_PASSWORD keys |
+| adminUser.existingSecretName | string | `nil` | An existing kubernetes secret that contains BROKER_USERNAME and BROKER_PASSWORD keys to override the default user credentials |
+| adminUser.password | string | `"admin"` | Password for the default user with administrative privileges |
+| adminUser.user | string | `"admin"` | Username for the default user with administrative privileges |
 | enabled | bool | `true` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"alfresco/alfresco-activemq"` |  |
