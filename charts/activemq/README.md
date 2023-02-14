@@ -4,13 +4,6 @@
 
 A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (not meant to be used in production).
 
-Please refer to the [documentation](../../../../docs/helm/README.md) for information on the Helm charts and deployment instructions.
-
-Credentials get injected by the [main chart](../../README.md) and by default are:
-
-* username: admin
-* password: admin
-
 ## Source Code
 
 * <https://github.com/Alfresco/alfresco-helm-charts>
