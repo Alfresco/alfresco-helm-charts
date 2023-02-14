@@ -49,7 +49,7 @@ jobs:
 
       - name: Add dependency chart repos
         run: |
-          helm repo add self https://alfrescolabs.github.io/acs-charts-experimental/
+          helm repo add self https://alfresco.github.io/alfresco-helm-charts/
           helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
 
       - name: Run chart-releaser
