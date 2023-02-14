@@ -1,6 +1,6 @@
 dependencies:
 - name: alfresco-common
-  repository: https://kubernetes-charts.alfresco.com/incubator
-  version: 0.3.0-SNAPSHOT
-digest: sha256:dfa288930849d2d50f7b1a0af66b3bcd2f034cf98069c685ec14df3eb3457b0f
-generated: "2023-01-03T16:14:14.087135+01:00"
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 1.0.0
+digest: sha256:094ae734b29e6e4735e4b6c3ad786305217cb375570a6a8518395c92f61c23bf
+generated: "2023-02-14T14:53:39.031589+01:00"
