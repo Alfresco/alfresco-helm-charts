@@ -13,12 +13,8 @@ spec:
       {{- include "activemq.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      annotations:
-      {{- $credentialsSecretName := default (printf "%s-brokersecret" (include "activemq.fullname" .)) $.Values.adminUser.existingSecretName -}}
-      {{- $credentialsSecretObject := (lookup "v1" "Secret" .Release.Namespace $credentialsSecretName) | default dict }}
-      {{- $credentialsSecretData := (get $credentialsSecretObject "data") | default dict }}
-        checksum/credentials: {{ print $credentialsSecretData.BROKER_USERNAME $credentialsSecretData.BROKER_PASSWORD | sha256sum }}
       {{- with .Values.podAnnotations }}
+      annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -37,6 +33,7 @@ spec:
           value: "{{ .Values.resources.limits.memory | replace "Mi" "" }}"
         - name: ACTIVEMQ_BROKER_NAME
           value: "{{ template "activemq.fullname" . }}"
+        {{- $credentialsSecretName := default (printf "%s-brokersecret" (include "activemq.fullname" .)) $.Values.adminUser.existingSecretName }}
         - name: ACTIVEMQ_ADMIN_LOGIN
           valueFrom:
             secretKeyRef:
