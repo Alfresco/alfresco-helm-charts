@@ -48,14 +48,14 @@ services:
 # -- The ActiveMQ readiness probe is used to check startup only as a failure
 # of the liveness probe later will result in the pod being restarted.
 readinessProbe:
-  initialDelaySeconds: 60
-  periodSeconds: 20
-  timeoutSeconds: 10
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 1
   failureThreshold: 6
 livenessProbe:
-  initialDelaySeconds: 130
-  periodSeconds: 20
-  timeoutSeconds: 10
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 1
   failureThreshold: 1
 persistence:
   enabled: true

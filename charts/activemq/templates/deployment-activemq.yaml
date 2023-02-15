@@ -6,6 +6,8 @@ metadata:
     {{- include "activemq.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       {{- include "activemq.selectorLabels" . | nindent 6 }}
@@ -87,3 +89,4 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      terminationGracePeriodSeconds: 1
