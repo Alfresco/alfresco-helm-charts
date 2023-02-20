@@ -1,11 +1,3 @@
-{{/*
-Create a default fully qualified name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
-{{- define "activemq.fullname" -}}
-{{- printf "%s-activemq" .Release.Name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
 {{- define "activemq.env" -}}
 - name: ACTIVEMQ_URL
   value: $(BROKER_URL)
