@@ -16,6 +16,7 @@ tests:
               sizeLimit: 20Gi
             name: data
         template: deployment-activemq.yaml
+
   - it: should render a deployment with set claim
     set:
       persistence:
@@ -27,6 +28,7 @@ tests:
             spec.template.spec.volumes[0].persistentVolumeClaim.claimName
           value: mysfsvolume
         template: deployment-activemq.yaml
+
   - it: should render a deployment with dynamic claim name
     set:
       persistence:
@@ -44,6 +46,7 @@ tests:
       - isNull:
           path: spec.storageClassName
         template: pvc-activemq.yaml
+
   - it: should render a deployment with provided storage class
     set:
       persistence:

@@ -1,5 +1,5 @@
 ---
-suite: test activemq persistence
+suite: test activemq deployment
 templates:
   - deployment-activemq.yaml
 tests:
