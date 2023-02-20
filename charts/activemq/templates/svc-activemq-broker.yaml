@@ -20,5 +20,4 @@ spec:
     name: amqp
     protocol: TCP
   selector:
-    app: {{ template "activemq.fullname" . }}
-    release: {{ .Release.Name }}
+    {{- include "activemq.selectorLabels" . | nindent 4 }}
