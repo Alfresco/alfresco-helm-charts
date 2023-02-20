@@ -1,0 +1,69 @@
+# Leave this to true to deploy the chart
+enabled: true
+replicaCount: 1
+nodeSelector: {}
+image:
+  repository: alfresco/alfresco-activemq
+  tag: 5.17.1-jre11-rockylinux8
+  pullPolicy: IfNotPresent
+adminUser:
+  # -- An existing kubernetes secret that contains BROKER_USERNAME and BROKER_PASSWORD keys to override the default user credentials
+  existingSecretName:
+  # -- Username for the default user with administrative privileges
+  user: admin
+  # -- Password for the default user with administrative privileges
+  password: admin
+podSecurityContext:
+  runAsUser: 33031
+  runAsGroup: 1000
+  fsGroup: 1000
+resources:
+  requests:
+    cpu: "0.25"
+    memory: "512Mi"
+  limits:
+    cpu: "2"
+    memory: "2048Mi"
+service:
+  name: activemq
+services:
+  broker:
+    ports:
+      internal:
+        stomp: 61613
+        amqp: 5672
+        openwire: 61616
+      external:
+        stomp: 61613
+        amqp: 5672
+        openwire: 61616
+    type: ClusterIP
+  webConsole:
+    ports:
+      internal:
+        webConsole: 8161
+      external:
+        webConsole: 8161
+    type: NodePort
+readinessProbe:
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 6
+livenessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 6
+persistence:
+  enabled: true
+  baseSize: 20Gi
+  storageClass:
+  # -- defines type of access required by the persistent volume
+  # [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
+  accessModes:
+    - ReadWriteOnce
+  existingClaim:
+  data:
+    mountPath: "/opt/activemq/data"
+    subPath: "alfresco-infrastructure/activemq-data"

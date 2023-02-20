@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "activemq.fullname" . }}
+  labels:
+    {{- include "activemq.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "activemq.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "activemq.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- include "component-pod-security-context" .Values | indent 4 }}
+      containers:
+      - name: {{ .Values.service.name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- include "component-security-context" .Values | indent 6 }}
+        env:
+        - name: ACTIVEMQ_CONFIG_MINMEMORY
+          value: "{{ .Values.resources.requests.memory | replace "Mi" "" }}"
+        - name: ACTIVEMQ_CONFIG_MAXMEMORY
+          value: "{{ .Values.resources.limits.memory | replace "Mi" "" }}"
+        - name: ACTIVEMQ_BROKER_NAME
+          value: "{{ template "activemq.fullname" . }}"
+        {{- $credentialsSecretName := default (printf "%s-brokersecret" (include "activemq.fullname" .)) $.Values.adminUser.existingSecretName }}
+        - name: ACTIVEMQ_ADMIN_LOGIN
+          valueFrom:
+            secretKeyRef:
+              name: {{ $credentialsSecretName }}
+              key: BROKER_USERNAME
+        - name: ACTIVEMQ_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ $credentialsSecretName }}
+              key: BROKER_PASSWORD
+        ports:
+        - name: stomp
+          containerPort: {{ .Values.services.broker.ports.internal.stomp | default 61613 }}
+        - name: openwire
+          containerPort: {{ .Values.services.broker.ports.internal.openwire | default 61616 }}
+        - name: amqp
+          containerPort: {{ .Values.services.broker.ports.internal.amqp | default 5672 }}
+        - name: web-console
+          containerPort: {{ .Values.services.webConsole.ports.internal.webConsole | default 8161 }}
+        readinessProbe:
+          tcpSocket:
+            port: {{ .Values.services.broker.ports.internal.openwire | default 61616 }}
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+        livenessProbe:
+          tcpSocket:
+            port: {{ .Values.services.broker.ports.internal.openwire | default 61616 }}
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+        resources: {{- toYaml .Values.resources | nindent 12 }}
+        volumeMounts:
+          - name: data
+            mountPath: {{ .Values.persistence.data.mountPath }}
+            subPath: {{ .Values.persistence.data.subPath }}
+      volumes:
+        {{- include "data_volume" .Values | nindent 8 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      terminationGracePeriodSeconds: 1

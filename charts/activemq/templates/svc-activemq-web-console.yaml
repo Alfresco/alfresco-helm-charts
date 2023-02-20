@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "activemq.fullname" . }}-web-console
+  labels:
+    {{- include "activemq.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.services.webConsole.type }}
+  ports:
+  - port: {{ .Values.services.webConsole.ports.external.webConsole | default 8161 }}
+    targetPort: {{ .Values.services.webConsole.ports.internal.webConsole | default 8161 }}
+    name: web-console
+    protocol: TCP
+  selector:
+    app: {{ template "activemq.fullname" . }}
+    release: {{ .Release.Name }}

@@ -4,8 +4,8 @@ target-branch: main
 chart-dirs:
   - charts
 chart-repos:
-  - self=https://alfrescolabs.github.io/acs-charts-experimental/
+  - self=https://alfresco.github.io/alfresco-helm-charts/
   - bitnami=https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
   - elastic=https://helm.elastic.co
-helm-extra-args: --timeout 600s
+additional-commands: helm unittest --color {{ .Path }}
 validate-maintainers: false
