@@ -12,5 +12,4 @@ spec:
     name: web-console
     protocol: TCP
   selector:
-    app: {{ template "activemq.fullname" . }}
-    release: {{ .Release.Name }}
+    {{- include "activemq.selectorLabels" . | nindent 4 }}

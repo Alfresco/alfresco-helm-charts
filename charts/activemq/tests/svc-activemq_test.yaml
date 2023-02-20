@@ -1,0 +1,20 @@
+---
+suite: test activemq services
+templates:
+  - svc-activemq-broker.yaml
+  - svc-activemq-web-console.yaml
+tests:
+  - it: should use the default service name
+    asserts:
+      - equal:
+          path: spec.selector
+          value:
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/name: activemq
+        template: svc-activemq-broker.yaml
+      - equal:
+          path: spec.selector
+          value:
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/name: activemq
+        template: svc-activemq-web-console.yaml
