@@ -60,6 +60,8 @@ reindexing:
     hostname: postgresql-acs
     database: alfresco
     port: 5432
+    user:
+    password:
     # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys
     existingSecretName:
   resources:
@@ -77,12 +79,17 @@ reindexing:
           memory: "10Mi"
 # -- Overrides .Values.global.elasticsearch
 elasticsearch:
-  host: null
-  port: null
-  protocol: null
-  user: null
-  password: null
-  existingSecretName:
+  # -- Enable embedded elasticsearch - useful when using this chart standalone
+  enabled: false
+  host: elasticsearch-master
+  port: 9200
+  protocol: http
+  image: "docker.elastic.co/elasticsearch/elasticsearch-oss"
+  replicas: 1
+  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+activemq:
+  # -- Enable embedded broker - useful when using this chart standalone
+  enabled: false
 messageBroker:
   # --  Broker URL formatted as per:
   # https://activemq.apache.org/failover-transport-reference
@@ -91,6 +98,7 @@ messageBroker:
   user: null
   # -- Broker password
   password: null
+  existingSecretName:
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
   # -- Shared connections details for Elasticsearch/Opensearch

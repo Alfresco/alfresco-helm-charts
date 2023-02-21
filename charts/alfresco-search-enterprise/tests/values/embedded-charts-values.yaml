@@ -1,0 +1,4 @@
+activemq:
+  enabled: true
+elasticsearch:
+  enabled: true

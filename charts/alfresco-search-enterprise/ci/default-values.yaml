@@ -1,0 +1,31 @@
+reindexing:
+  # requires postgres database at startup
+  enabled: false
+activemq:
+  enabled: true
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
+contentMediaTypeCache:
+  enabled: false
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+  limits:
+    cpu: "1"
+    memory: "1Gi"
+elasticsearch:
+  enabled: true
+  esJavaOpts: "-Xmx512m -Xms512m"
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "1Gi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"

@@ -17,6 +17,8 @@ spec:
   template:
     metadata:
       annotations:
+        checksum/secret-broker: {{ include (print $.Template.BasePath "/secret-messagebroker.yaml") $ | sha256sum }}
+        checksum/secret-database: {{ include (print $.Template.BasePath "/secret-database.yaml") $ | sha256sum }}
         checksum/secret-elasticsearch: {{ include (print $.Template.BasePath "/secret-elasticsearch.yaml") $ | sha256sum }}
       {{- with $.Values.podAnnotations }}
         {{- toYaml $ | nindent 8 }}
@@ -36,7 +38,7 @@ spec:
             - configMapRef:
                 name: {{ template "alfresco-elasticsearch-connector.fullName" $ }}-configmap
             - secretRef:
-                name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" $)) $.Values.messageBroker.existingSecretName }}
+                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-elasticsearch-connector.fullName" $)) $.Values.messageBroker.existingSecretName }}
           env:
             {{- include "spring.activemq.env" . | nindent 12 }}
             {{- include "spring.elasticsearch.env.credentials" $ | nindent 12 }}

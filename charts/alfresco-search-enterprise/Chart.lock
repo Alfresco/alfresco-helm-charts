@@ -1,6 +1,12 @@
 dependencies:
 - name: alfresco-common
-  repository: https://kubernetes-charts.alfresco.com/incubator
-  version: 0.3.0-SNAPSHOT
-digest: sha256:dfa288930849d2d50f7b1a0af66b3bcd2f034cf98069c685ec14df3eb3457b0f
-generated: "2023-01-10T14:31:58.645189+01:00"
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 1.0.0
+- name: activemq
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 3.0.1
+- name: elasticsearch
+  repository: https://helm.elastic.co
+  version: 7.10.1
+digest: sha256:6b63b9d2e141f8331d2f54bd0e7f5cdc71bb4e282fa28af038f0ee818b4242a8
+generated: "2023-02-21T14:08:39.547545+01:00"

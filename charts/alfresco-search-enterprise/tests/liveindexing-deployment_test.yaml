@@ -3,13 +3,16 @@ suite: test liveindexing template rendering
 templates:
   - liveindexing-config.yaml
   - liveindexing-deployment.yaml
+  - secret-elasticsearch.yaml
+  - secret-database.yaml
+  - secret-messagebroker.yaml
 tests:
   - it: |
       Render elasticsearch Liveindexing configmap,
       using global config to ensure it overrides default values.
-    values: &testvalues
-      - ../../../tests/values/test_values.yaml
     set:
+      activemq:
+        enabled: true
       global:
         elasticsearch:
           host: someglobally.used.host
@@ -24,20 +27,13 @@ tests:
 
   - it: |
       Render elasticsearch Liveindexing configmap,
-      using config provided in elasticsearch context to ensure it takes
-      precedence over any global parameter.
-    values:
-      - ../../../tests/values/test_values.yaml
-      - values/external.yaml
-    set:
-      global:
-        elasticsearch:
-          host: someglobally.used.host
-          user: wronguser
+      using embedded elasticsearch chart.
+    values: &testvalues
+      - values/embedded-charts-values.yaml
     asserts:
       - equal:
           path: data.SPRING_ELASTICSEARCH_REST_URIS
-          value: https://some.es.instance.somwhere.on.the.cloud:443
+          value: http://elasticsearch-master:9200
           template: liveindexing-config.yaml
 
   - it: should have env vars for elasticsearch credentials

@@ -1,5 +1,12 @@
 {{- define "spring.elasticsearch.config" -}}
-  SPRING_ELASTICSEARCH_REST_URIS: "{{ .Values.elasticsearch.protocol | default .Values.global.elasticsearch.protocol }}://{{ .Values.elasticsearch.host | default .Values.global.elasticsearch.host }}:{{ .Values.elasticsearch.port | default .Values.global.elasticsearch.port }}"
+{{- if .Values.elasticsearch.enabled }}
+  SPRING_ELASTICSEARCH_REST_URIS: "{{ .Values.elasticsearch.protocol }}://{{ .Values.elasticsearch.host }}:{{ .Values.elasticsearch.port }}"
+{{- else }}
+  {{- if or (not .Values.global.elasticsearch.protocol) (or (not .Values.global.elasticsearch.host) (not .Values.global.elasticsearch.port)) }}
+    {{ fail "Please provide external elasticsearch details under global.elasticsearch or enable the embedded elasticsearch via elasticsearch.enabled" }}
+  {{- end }}
+  SPRING_ELASTICSEARCH_REST_URIS: "{{ .Values.global.elasticsearch.protocol  }}://{{ .Values.global.elasticsearch.host }}:{{ .Values.global.elasticsearch.port }}"
+{{- end -}}
 {{- end -}}
 
 {{- define "spring.elasticsearch.env.credentials" -}}

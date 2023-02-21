@@ -3,10 +3,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "alfresco-elasticsearch-connector.fullName" . }}-reindexing-configmap
   labels:
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: search
+    {{- include "alfresco-elasticsearch-connector.labels" $ | nindent 4 }}
 data:
   ELASTICSEARCH_INDEXNAME: "{{ .Values.indexName }}"
   {{ template "spring.elasticsearch.config" . }}

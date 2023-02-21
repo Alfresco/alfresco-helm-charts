@@ -3,13 +3,10 @@ kind: ConfigMap
 metadata:
   name: {{ template "alfresco-elasticsearch-connector.fullName" . }}-configmap
   labels:
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: search
+    {{- include "alfresco-elasticsearch-connector.labels" $ | nindent 4 }}
 data:
   ELASTICSEARCH_INDEXNAME: "{{ .Values.indexName }}"
-  {{ template "spring.elasticsearch.config" . }}
+  {{- template "spring.elasticsearch.config" . }}
   ALFRESCO_SHAREDFILESTORE_BASEURL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file/
   ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ template "alfresco.shortname" . }}-router/transform/config
   ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_REFRESHTIME: "{{ .Values.contentMediaTypeCache.refreshTime }}"

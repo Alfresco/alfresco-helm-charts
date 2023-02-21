@@ -3,6 +3,8 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ include "alfresco-elasticsearch-connector.fullName" . }}-reindexing
+  labels:
+    {{- include "alfresco-elasticsearch-connector.labels" $ | nindent 4 }}
 spec:
   template:
     metadata:
@@ -26,17 +28,17 @@ spec:
             - configMapRef:
                 name: {{ template "alfresco-elasticsearch-connector.fullName" . }}-reindexing-configmap
             - secretRef:
-                name: {{ default (printf "%s-brokersecret" (include "content-services.shortname" .)) .Values.messageBroker.existingSecretName }}
+                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-elasticsearch-connector.fullName" .)) .Values.messageBroker.existingSecretName }}
           env:
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ default (printf "%s-dbsecret" (include "content-services.shortname" $)) $.Values.reindexing.postgresql.existingSecretName }}
+                  name: {{ default (printf "%s-postgresql-secret" (include "alfresco-elasticsearch-connector.fullName" $)) $.Values.reindexing.postgresql.existingSecretName }}
                   key: DATABASE_PASSWORD
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ default (printf "%s-dbsecret" (include "content-services.shortname" $)) $.Values.reindexing.postgresql.existingSecretName }}
+                  name: {{ default (printf "%s-postgresql-secret" (include "alfresco-elasticsearch-connector.fullName" $)) $.Values.reindexing.postgresql.existingSecretName }}
                   key: DATABASE_USERNAME
             {{- include "spring.activemq.env" . | nindent 12 }}
             {{- include "spring.elasticsearch.env.credentials" $ | nindent 12 }}
