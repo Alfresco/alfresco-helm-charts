@@ -5,7 +5,7 @@ description: |
   A helper subchart to avoid duplication in alfresco charts and set common
   external dependencies
 type: library
-version: 1.0.0
+version: 1.0.1
 dependencies:
   - name: common
     repository: >-
