@@ -2,8 +2,6 @@
 # This supports shell glob matching, relative path matching, and
 # negation (prefixed with !). Only one pattern per line.
 .DS_Store
-# Helm unit tests
-tests
 # Common VCS dirs
 .git/
 .gitignore
@@ -23,3 +21,9 @@ tests
 .idea/
 *.tmproj
 .vscode/
+# Helm unittest
+tests
+# Chart testing values
+ci
+# helm-docs template
+README.md.gotmpl

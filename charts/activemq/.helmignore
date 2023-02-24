@@ -21,3 +21,9 @@
 .idea/
 *.tmproj
 .vscode/
+# Helm unittest
+tests
+# Chart testing values
+ci
+# helm-docs template
+README.md.gotmpl
