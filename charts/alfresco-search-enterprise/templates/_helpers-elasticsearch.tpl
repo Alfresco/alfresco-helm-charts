@@ -6,7 +6,7 @@
 {{- if .Values.elasticsearch.enabled }}
   SPRING_ELASTICSEARCH_REST_URIS: "{{ .Values.elasticsearch.protocol }}://{{ .Values.elasticsearch.clusterName }}-{{ .Values.elasticsearch.nodeGroup }}:{{ .Values.elasticsearch.httpPort }}"
 {{- else }}
-  {{- if or (not .Values.global.searchIndex.host) (not .Values.searchIndex.host) }}
+  {{- if and (not .Values.global.searchIndex.host) (not .Values.searchIndex.host) }}
     {{ fail "Please provide external elasticsearch connection details as values under .global.searchIndex or .searchIndex or enable the embedded elasticsearch via .elasticsearch.enabled" }}
   {{- end }}
   SPRING_ELASTICSEARCH_REST_URIS: "{{ .Values.searchIndex.protocol | default .Values.global.searchIndex.protocol }}://{{ .Values.searchIndex.host | default .Values.global.searchIndex.host }}:{{ .Values.searchIndex.port | default .Values.global.searchIndex.port }}"
