@@ -35,7 +35,7 @@ jobs:
         run: updatecli diff
 
       - name: Run Updatecli in apply mode
-        if: github.event_name == 'push'
+        if: github.event_name == 'workflow_dispatch'
         env:
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
           GIT_AUTHOR_EMAIL: ${{ vars.BOT_GITHUB_EMAIL }}
