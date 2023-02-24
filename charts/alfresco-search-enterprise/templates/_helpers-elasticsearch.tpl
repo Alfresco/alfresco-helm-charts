@@ -13,11 +13,11 @@
 - name: SPRING_ELASTICSEARCH_REST_USERNAME
   valueFrom:
     secretKeyRef:
-      name: {{ default (printf "%s-elasticsearch-secret" (include "alfresco-elasticsearch-connector.fullName" $)) $.Values.global.elasticsearch.existingSecretName }}
+      name: {{ default (printf "%s-elasticsearch-secret" (include "alfresco-search-enterprise.fullName" $)) $.Values.global.elasticsearch.existingSecretName }}
       key: ELASTICSEARCH_USERNAME
 - name: SPRING_ELASTICSEARCH_REST_PASSWORD
   valueFrom:
     secretKeyRef:
-      name: {{ default (printf "%s-elasticsearch-secret" (include "alfresco-elasticsearch-connector.fullName" $)) $.Values.global.elasticsearch.existingSecretName }}
+      name: {{ default (printf "%s-elasticsearch-secret" (include "alfresco-search-enterprise.fullName" $)) $.Values.global.elasticsearch.existingSecretName }}
       key: ELASTICSEARCH_PASSWORD
 {{- end -}}
