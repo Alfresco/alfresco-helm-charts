@@ -38,10 +38,10 @@ spec:
             - configMapRef:
                 name: {{ template "alfresco-search-enterprise.fullName" $ }}-configmap
             - secretRef:
-                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullName" $)) $.Values.messageBroker.existingSecretName }}
+                name: {{ template "alfresco-search-enterprise.existingSecretName" $ }}
           env:
             {{- include "spring.activemq.env" . | nindent 12 }}
-            {{- include "spring.elasticsearch.env.credentials" $ | nindent 12 }}
+            {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
           ports:
             - name: http
               containerPort: 8080

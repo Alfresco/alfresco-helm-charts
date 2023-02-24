@@ -41,7 +41,7 @@ spec:
                   name: {{ default (printf "%s-postgresql-secret" (include "alfresco-search-enterprise.fullName" $)) $.Values.reindexing.postgresql.existingSecretName }}
                   key: DATABASE_USERNAME
             {{- include "spring.activemq.env" . | nindent 12 }}
-            {{- include "spring.elasticsearch.env.credentials" $ | nindent 12 }}
+            {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
           ports:
               - name: http
                 containerPort: 8080
