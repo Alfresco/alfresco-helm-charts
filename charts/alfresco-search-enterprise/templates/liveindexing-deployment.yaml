@@ -38,7 +38,7 @@ spec:
             - configMapRef:
                 name: {{ template "alfresco-search-enterprise.fullName" $ }}-configmap
             - secretRef:
-                name: {{ template "alfresco-search-enterprise.existingSecretName" $ }}
+                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullName" $)) $.Values.messageBroker.existingSecretName }}
           env:
             {{- include "spring.activemq.env" . | nindent 12 }}
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}

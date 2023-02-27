@@ -1,4 +1,4 @@
-{{- define "alfresco-search-enterprise.existingSecretName" -}}
+{{- define "alfresco-search-enterprise.searchIndexExistingSecretName" -}}
 {{ $.Values.searchIndex.existingSecretName | default $.Values.global.searchIndex.existingSecretName | default (printf "%s-elasticsearch-secret" (include "alfresco-search-enterprise.fullName" $)) }}
 {{- end -}}
 
@@ -17,11 +17,11 @@
 - name: SPRING_ELASTICSEARCH_REST_USERNAME
   valueFrom:
     secretKeyRef:
-      name: {{ template "alfresco-search-enterprise.existingSecretName" $ }}
+      name: {{ template "alfresco-search-enterprise.searchIndexExistingSecretName" $ }}
       key: ELASTICSEARCH_USERNAME
 - name: SPRING_ELASTICSEARCH_REST_PASSWORD
   valueFrom:
     secretKeyRef:
-      name: {{ template "alfresco-search-enterprise.existingSecretName" $ }}
+      name: {{ template "alfresco-search-enterprise.searchIndexExistingSecretName" $ }}
       key: ELASTICSEARCH_PASSWORD
 {{- end -}}
