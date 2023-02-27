@@ -28,6 +28,15 @@ targets:
       file: "Chart.yaml"
       key: "dependencies[0].version"
       versionincrement: patch
+  elasticsearchTarget:
+    name: Bump alfresco-common upstream chart version
+    kind: helmchart
+    scmid: ourRepo
+    spec:
+      name: "charts/alfresco-search-enterprise"
+      file: "Chart.yaml"
+      key: "dependencies[0].version"
+      versionincrement: patch
 
 actions:
   default:
