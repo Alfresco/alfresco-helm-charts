@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco-search-enterprise.fullName" . }}-configmap
+  labels:
+    {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
+data:
+  ELASTICSEARCH_INDEXNAME: "{{ .Values.indexName }}"
+  {{- template "alfresco-search-enterprise.config.spring" . }}
+  ALFRESCO_SHAREDFILESTORE_BASEURL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file/
+  ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ template "alfresco.shortname" . }}-router/transform/config
+  ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_REFRESHTIME: "{{ .Values.contentMediaTypeCache.refreshTime }}"
+  ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_ENABLED: "{{ .Values.contentMediaTypeCache.enabled }}"
+  ALFRESCO_PATHINDEXINGCOMPONENT_ENABLED: "{{ .Values.pathIndexingComponent.enabled }}"
+  {{- if .Values.liveIndexing.environment }}
+  {{- range $key, $val := .Values.liveIndexing.environment }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+  {{- end }}

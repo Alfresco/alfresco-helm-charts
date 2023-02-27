@@ -1,0 +1,75 @@
+{{- range $serviceName, $service := .Values.liveIndexing }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "alfresco-search-enterprise.fullName" $ }}-{{ $serviceName }}
+  labels:
+    {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
+spec:
+  {{- if eq $serviceName "mediation"}}
+  replicas: 1
+  {{- else }}
+  replicas: {{ $service.replicaCount | default 1 }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "alfresco-search-enterprise.selectorLabels" $ | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/secret-broker: {{ include (print $.Template.BasePath "/secret-messagebroker.yaml") $ | sha256sum }}
+        checksum/secret-database: {{ include (print $.Template.BasePath "/secret-database.yaml") $ | sha256sum }}
+        checksum/secret-elasticsearch: {{ include (print $.Template.BasePath "/secret-elasticsearch.yaml") $ | sha256sum }}
+      {{- with $.Values.podAnnotations }}
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "alfresco-search-enterprise.selectorLabels" $ | nindent 8 }}
+    spec:
+      {{- include "component-pod-security-context" .Values | indent 4 }}
+      {{- include "alfresco-content-services.imagePullSecrets" $ | indent 6 }}
+      containers:
+        - name: {{ $.Chart.Name }}-{{ $serviceName }}
+          image: "{{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "repository" }}:\
+            {{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "tag" }}"
+          imagePullPolicy: {{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "pullPolicy" }}
+            {{- include "component-security-context" .Values | indent 8 }}
+          envFrom:
+            - configMapRef:
+                name: {{ template "alfresco-search-enterprise.fullName" $ }}-configmap
+            - secretRef:
+                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullName" $)) $.Values.messageBroker.existingSecretName }}
+          env:
+            {{- include "spring.activemq.env" . | nindent 12 }}
+            {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: 300
+            timeoutSeconds: 60
+            httpGet:
+              path: /actuator/health
+              port: http
+          readinessProbe:
+            initialDelaySeconds: 60
+            timeoutSeconds: 60
+            httpGet:
+              path: /actuator/health
+              port: http
+          resources: {{- toYaml $.Values.resources | nindent 12 }}
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+---
+{{- end }}

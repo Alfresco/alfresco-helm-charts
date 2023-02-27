@@ -1,0 +1,62 @@
+---
+suite: test liveindexing template rendering
+templates:
+  - liveindexing-config.yaml
+  - liveindexing-deployment.yaml
+  - secret-elasticsearch.yaml
+  - secret-database.yaml
+  - secret-messagebroker.yaml
+tests:
+  - it: |
+      Render elasticsearch Liveindexing configmap,
+      using global config to ensure it overrides default values.
+    set:
+      activemq:
+        enabled: true
+      global.elasticsearch:
+          host: someglobally.used.host
+          user: admin
+          protocol: https
+          port: 1443
+    asserts:
+      - equal:
+          path: data.SPRING_ELASTICSEARCH_REST_URIS
+          value: https://someglobally.used.host:1443
+          template: liveindexing-config.yaml
+
+  - it: |
+      Render elasticsearch Liveindexing configmap,
+      using embedded elasticsearch chart.
+    values: &testvalues
+      - values/embedded-charts-values.yaml
+    asserts:
+      - equal:
+          path: data.SPRING_ELASTICSEARCH_REST_URIS
+          value: http://elasticsearch-master:9200
+          template: liveindexing-config.yaml
+
+  - it: should have env vars for elasticsearch credentials
+    values: *testvalues
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[3].name
+          value: SPRING_ELASTICSEARCH_REST_USERNAME
+        template: liveindexing-deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[0].env[4].name
+          value: SPRING_ELASTICSEARCH_REST_PASSWORD
+        template: liveindexing-deployment.yaml
+
+  - it: should render cpu and memory limits
+    values: *testvalues
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "0.5"
+              memory: "256Mi"
+            limits:
+              cpu: "2"
+              memory: "2048Mi"
+        template: liveindexing-deployment.yaml
