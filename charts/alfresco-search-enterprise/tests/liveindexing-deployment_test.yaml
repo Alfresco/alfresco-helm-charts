@@ -13,7 +13,7 @@ tests:
     set:
       activemq:
         enabled: true
-      global.searchIndex:
+      global.elasticsearch:
           host: someglobally.used.host
           user: admin
           protocol: https

@@ -1,8 +1,6 @@
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-parentNameOverride: ""
-# Common deployment values
 podAnnotations: {}
 podSecurityContext: {}
 securityContext: {}
@@ -16,7 +14,7 @@ resources:
   limits:
     cpu: "2"
     memory: "2048Mi"
-# Connector properties
+# -- Name of the existing search index, usually created by repo
 indexName: alfresco
 pathIndexingComponent:
   enabled: true
@@ -49,6 +47,7 @@ liveIndexing:
       pullPolicy: IfNotPresent
     replicaCount: 1
 reindexing:
+  # -- Create the one-shot job to trigger the reindexing of repo contents
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-elasticsearch-reindexing
@@ -57,12 +56,17 @@ reindexing:
   pathIndexingEnabled: true
   postgresql:
     url:
+    # -- The host where database service is available
     hostname: postgresql-acs
-    database: alfresco
+    # -- The port where service is available
     port: 5432
+    # -- The database name to use
+    database: alfresco
+    # -- The username required to access the service
     user:
+    # -- The password required to access the service
     password:
-    # -- An existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys
+    # -- Alternatively, provide connection details via an existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys
     existingSecretName:
   resources:
     requests:
@@ -78,13 +82,13 @@ reindexing:
           cpu: "0.25"
           memory: "10Mi"
 elasticsearch:
-  # -- Enable embedded elasticsearch - useful when using this chart standalone
+  # -- Enable embedded elasticsearch - useful when using this chart in standalone
   enabled: false
   image: "docker.elastic.co/elasticsearch/elasticsearch-oss"
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 activemq:
-  # -- Enable embedded broker - useful when using this chart standalone
+  # -- Enable embedded broker - useful when testing this chart in standalone
   enabled: false
 messageBroker:
   # --  Broker URL formatted as per:
@@ -94,8 +98,9 @@ messageBroker:
   user: null
   # -- Broker password
   password: null
+  # -- Provide connection details alternatively via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName:
-# -- Overrides .Values.global.searchIndex
+# -- Overrides .Values.global.elasticsearch
 searchIndex:
   # -- The host where service is available
   host: null
@@ -107,12 +112,12 @@ searchIndex:
   user: null
   # -- The password required to access the service, if any
   password: null
-  # -- An existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
+  # -- Alternatively, provide connection details via an an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
   existingSecretName:
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
-  # -- Shared connections details for Elasticsearch/Opensearch
-  searchIndex:
+  # -- Shared connections details for Elasticsearch/Opensearch cluster
+  elasticsearch:
     # -- The host where service is available
     host: null
     # -- The port where service is available
@@ -123,5 +128,5 @@ global:
     user: null
     # -- The password required to access the service, if any
     password: null
-    # -- An existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
+    # -- Alternatively, provide connection details via an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
     existingSecretName:
