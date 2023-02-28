@@ -16,7 +16,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.35.0
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@ee2cd4fe23aa5ab35fcd8f22732fe177cfbabe99
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.35.2
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.35.2
         with:
           auto-commit: "true"
