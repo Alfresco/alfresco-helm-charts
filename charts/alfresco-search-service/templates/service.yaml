@@ -11,8 +11,8 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.externalPort }}
-      targetPort: {{ template "alfresco-search.internalPort" . }}
+    - port: {{ template "alfresco-search.svcPort" . }}
+      targetPort: {{ template "alfresco-search.containerPort" . }}
       name: {{ .Values.service.name }}
   selector:
     app: {{ template "alfresco-search.fullName" . }}-solr

@@ -5,7 +5,7 @@ templates:
 tests:
   - it: should contains default env vars
     values: &testvalues
-      - ../../../tests/values/test_values.yaml
+      - values/test_values.yaml
     asserts:
       - equal:
           path: data.SOLR_ALFRESCO_HOST
@@ -26,18 +26,21 @@ tests:
           path: data.SOLR_CREATE_ALFRESCO_DEFAULTS
           value: alfresco,archive
 
-  - it: should contains default env vars
+  - it: should contains customized env vars
     values: *testvalues
     set:
+      repository:
+        host: somehost
+        port: 8888
       environment:
         whatever: value
     asserts:
       - equal:
           path: data.SOLR_ALFRESCO_HOST
-          value: RELEASE-NAME-alfresco-cs-repository
+          value: somehost
       - equal:
           path: data.SOLR_ALFRESCO_PORT
-          value: "80"
+          value: "8888"
       - equal:
           path: data.SOLR_SOLR_HOST
           value: RELEASE-NAME-alfresco-search-solr

@@ -5,7 +5,7 @@ templates:
 tests:
   - it: should have basic metadata in place
     values: &testvalues
-      - ../../../tests/values/test_values.yaml
+      - values/test_values.yaml
       - values/ingress.yaml
     asserts:
       - equal:

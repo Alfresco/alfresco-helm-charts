@@ -1,14 +1,21 @@
 {{/* THE TEMPLATES DEFINED BELOW ARE SUPPOSSED TO BE USED FOR THIS CHART ONLY */}}
 
 {{/*
-Get Alfresco Search Internal Port
+Get Alfresco Search container Port ("internal")
 */}}
-{{- define "alfresco-search.internalPort" -}}
+{{- define "alfresco-search.containerPort" -}}
 {{- if and (.Values.type) (eq (.Values.type | toString) "insight-engine") }}
-{{- print .Values.insightEngineImage.internalPort -}}
+{{- .Values.insightEngineImage.internalPort | default 8983 | int -}}
 {{- else }}
-{{- print .Values.searchServicesImage.internalPort -}}
+{{- .Values.searchServicesImage.internalPort | default 8983 | int -}}
 {{- end }}
+{{- end -}}
+
+{{/*
+Get Alfresco Search Service Port
+*/}}
+{{- define "alfresco-search.svcPort" -}}
+{{- .Values.service.externallPort | default 80 | int -}}
 {{- end -}}
 
 {{/*
