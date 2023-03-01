@@ -1,4 +1,5 @@
-name: "Helm autodiscovery using git scm"
+name: "Update helm chart dependencies"
+
 scms:
   ourRepo:
     kind: github
@@ -10,7 +11,7 @@ scms:
       branch: main
       username: alfresco-build
       token: {{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}
-    
+
 sources:
   alfrescoCommonSource:
     kind: helmchart
@@ -46,3 +47,4 @@ actions:
       draft: true
       labels:
         - updatecli
+      title: "Update helm charts dependencies"
