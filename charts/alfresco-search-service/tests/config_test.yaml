@@ -15,7 +15,7 @@ tests:
           value: "80"
       - equal:
           path: data.SOLR_SOLR_HOST
-          value: RELEASE-NAME-alfresco-search-solr
+          value: RELEASE-NAME-alfresco-search-service-solr
       - equal:
           path: data.SOLR_SOLR_PORT
           value: "80"
@@ -43,7 +43,7 @@ tests:
           value: "8888"
       - equal:
           path: data.SOLR_SOLR_HOST
-          value: RELEASE-NAME-alfresco-search-solr
+          value: RELEASE-NAME-alfresco-search-service-solr
       - equal:
           path: data.SOLR_SOLR_PORT
           value: "80"

@@ -10,7 +10,7 @@ tests:
     asserts:
       - equal:
           path: metadata.name
-          value: RELEASE-NAME-alfresco-search-solr
+          value: RELEASE-NAME-alfresco-search-service-solr
         template: deployment.yaml
 
   - it: should render cpu and memory limits
