@@ -95,4 +95,35 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-search-enterprise-1.0.0/alfresco-search-enterprise-1.0.0.tgz
     version: 1.0.0
-generated: "2023-02-27T14:48:38.317674417Z"
+  alfresco-search-service:
+  - apiVersion: v2
+    appVersion: 2.0.6
+    created: "2023-03-06T13:22:30.611305241Z"
+    dependencies:
+    - condition: alfresco-insight-zeppelin.enabled
+      name: alfresco-insight-zeppelin
+      repository: ""
+      version: 2.0.0
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 1.0.0
+    description: A Helm chart for deploying Alfresco Search Service
+    digest: 019f7c902a01f39057d5fc38043ea09c35832a839ae7eae86260a22abfcafd66
+    home: https://www.alfresco.com
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - search
+    - search services
+    - alfresco search services
+    - insight
+    - insight engine
+    - alfresco insight engine
+    - solr
+    - alfresco solr
+    name: alfresco-search-service
+    sources:
+    - https://github.com/Alfresco/alfresco-helm-charts
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-search-service-1.0.0/alfresco-search-service-1.0.0.tgz
+    version: 1.0.0
+generated: "2023-03-06T13:22:30.611316841Z"
