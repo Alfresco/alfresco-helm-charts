@@ -12,7 +12,6 @@ nodeSelector: {}
 # alfrescoRegistryPullSecrets has to be set
 # More information can be found on
 # https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/registry-authentication.md
-type: search-services
 podSecurityContext:
   runAsNonRoot: true
   runAsUser: 33007

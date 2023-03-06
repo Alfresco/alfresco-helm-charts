@@ -52,10 +52,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | persistence | object | `{"EbsPvConfiguration":{"fsType":"ext4"},"VolumeSizeRequest":"10Gi","enabled":true,"search":{"data":{"mountPath":"/opt/alfresco-search-services/data","subPath":"alfresco-content-services/solr-data"}}}` | Defines the persistence |
 | persistence.VolumeSizeRequest | string | `"10Gi"` | Only define if you have a specific claim already created existingClaim: "search-master-claim" |
 | persistence.enabled | bool | `true` | If set to false data will be lost with pods |
-| podSecurityContext.fsGroup | int | `33007` |  |
-| podSecurityContext.runAsGroup | int | `33007` |  |
-| podSecurityContext.runAsNonRoot | bool | `true` |  |
-| podSecurityContext.runAsUser | int | `33007` |  |
+| podSecurityContext | object | `{"fsGroup":33007,"runAsGroup":33007,"runAsNonRoot":true,"runAsUser":33007}` | set alfresco-insight-zeppelin.enabled=true As the Docker Image for Insight Engine is not publicly available the alfrescoRegistryPullSecrets has to be set More information can be found on https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/registry-authentication.md |
 | readinessProbe.initialDelaySeconds | int | `60` |  |
 | readinessProbe.periodSeconds | int | `20` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
@@ -72,4 +69,3 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | service.name | string | `"solr"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | tolerations | string | `nil` | Define Tolerations for scheduling SOLR |
-| type | string | `"search-services"` | set alfresco-insight-zeppelin.enabled=true As the Docker Image for Insight Engine is not publicly available the alfrescoRegistryPullSecrets has to be set More information can be found on https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/registry-authentication.md |
