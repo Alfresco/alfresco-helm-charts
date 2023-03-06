@@ -51,7 +51,7 @@ jobs:
       - name: Create kind cluster
         uses: helm/kind-action@v1.5.0
         with:
-          node_image: kindest/node:v1.24.0@sha256:0866296e693efe1fed79d5e6c7af8df71fc73ae45e3679af05342239cdc5bc8e
+          node_image: kindest/node:v1.24.7@sha256:577c630ce8e509131eab1aea12c022190978dd2f745aac5eb1fe65c0807eb315
         if: steps.list-changed.outputs.changed == 'true'
 
       - name: Login to Quay.io
