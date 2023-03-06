@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       INSTALL_NAMESPACE: alfresco
+      TEST_ALL_CHARTS: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && 'true' || 'false' }}
+      TEST_ALL_CHARTS_ARG: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && '--all' || '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -41,12 +43,12 @@ jobs:
         id: list-changed
         run: |
           changed=$(ct list-changed --config ct-lint.yaml)
-          if [[ -n "$changed" ]]; then
+          if [[ -n "$changed" || "$TEST_ALL_CHARTS" == "true" ]]; then
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Run chart-testing (lint)
-        run: ct lint --config ct-lint.yaml
+        run: ct lint --config ct-lint.yaml $TEST_ALL_CHARTS_ARG
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.5.0
@@ -71,4 +73,4 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
-          ct install --config ct-install.yaml --namespace "$INSTALL_NAMESPACE"
+          ct install --config ct-install.yaml --namespace "$INSTALL_NAMESPACE" $TEST_ALL_CHARTS_ARG
