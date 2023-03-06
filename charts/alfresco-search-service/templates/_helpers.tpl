@@ -17,6 +17,17 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
+Alfresco Search Service Host
+*/}}
+{{- define "alfresco-search.host" -}}
+{{- if index .Values.enabled -}}
+  {{ printf "%s-solr" (include "alfresco-search.fullName" .) -}}
+{{- else -}}
+  {{ index .Values "external" "host" | default "localhost" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Get Alfresco Search container Port ("internal")
 */}}
 {{- define "alfresco-search.containerPort" -}}
