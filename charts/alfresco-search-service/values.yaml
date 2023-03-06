@@ -1,0 +1,146 @@
+---
+# -- Define the alfresco-search properties to use in the k8s cluster
+# This is the search provider used by alfresco-content-repository
+nodeSelector: {}
+# -- Define the type of Alfresco Search to use. The default is Alfresco Search
+# Services.
+# The type can be set to use Insight Engine with
+# --set alfresco-search.type=insight-engine
+# --set alfresco-search.global.alfrescoRegistryPullSecrets=quay-registry-secret
+# --set alfresco-insight-zeppelin.enabled=true
+# As the Docker Image for Insight Engine is not publicly available the
+# alfrescoRegistryPullSecrets has to be set
+# More information can be found on
+# https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/registry-authentication.md
+type: search-services
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 33007
+  runAsGroup: 33007
+  fsGroup: 33007
+searchServicesImage:
+  repository: quay.io/alfresco/search-services
+  tag: 2.0.6
+  pullPolicy: &searchDockerImagePullPolicy IfNotPresent
+  # -- container's port search service is listening on
+  # change if your custom image use a different port.
+  internalPort:
+insightEngineImage:
+  repository: quay.io/alfresco/insight-engine
+  tag: 2.0.6
+  pullPolicy: *searchDockerImagePullPolicy
+  # -- container's port search service is listening on
+  # change if your custom image use a different port.
+  internalPort:
+service:
+  name: solr
+  type: ClusterIP
+  # -- Should you want to change the service port
+  # externalPort: 80
+ingress:
+  # -- Expose the solr admin console behind basic auth
+  enabled: false
+  path: /solr
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+  # -- Default solr basic auth user/password: admin / admin
+  # You can create your own with htpasswd utilility & encode it with base640.
+  # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'`
+  # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
+  basicAuth:
+  # -- An existing secret that contains an `auth` key with a value in the same
+  # format of `ingress.basicAuth`
+  existingSecretName:
+  # -- Comma separated list of CIDR to restrict search endpoint access.
+  whitelist_ips: 0.0.0.0/0
+# Below values must be set by parent chart
+repository:
+  # -- ACS repository hostname
+  host:
+  # -- ACS repository port
+  port:
+environment:
+  SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
+resources:
+  requests:
+    cpu: "0.50"
+    memory: "1200Mi"
+  limits:
+    cpu: "4"
+    memory: "2000Mi"
+# -- Defines the persistence
+persistence:
+  # -- If set to false data will be lost with pods
+  enabled: true
+  # -- Only define if you have a specific claim already created
+  # existingClaim: "search-master-claim"
+  VolumeSizeRequest: 10Gi
+  search:
+    data:
+      mountPath: "/opt/alfresco-search-services/data"
+      subPath: "alfresco-content-services/solr-data"
+  EbsPvConfiguration:
+    fsType: ext4
+alfresco-insight-zeppelin:
+  enabled: false
+readinessProbe:
+  initialDelaySeconds: 60
+  periodSeconds: 20
+  timeoutSeconds: 10
+livenessProbe:
+  initialDelaySeconds: 130
+  periodSeconds: 20
+  timeoutSeconds: 10
+
+initContainer:
+  image:
+    repository: busybox
+    tag: 1.35.0
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      memory: "5Mi"
+    limits:
+      memory: "10Mi"
+
+global:
+  tracking:
+    # -- Select how solr and repo authenticate to each other
+    # none: work only prior to acs 7.2 (and was the default)
+    # secret: use a shared secret (to specify using `tracking.sharedsecret`)
+    # https: to use mTLS auth (require appropriate certificate configuration)
+    auth: secret
+    # -- Shared secret to authenticate repo/solr traffic
+    sharedsecret: null
+  alfrescoRegistryPullSecrets: quay-registry-secret
+
+# -- Define Affinity for scheduling SOLR
+affinity:
+#   nodeAffinity:
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       nodeSelectorTerms:
+#         - matchExpressions:
+#           - key: "SolrMasterOnly"
+#             operator: In
+#             values:
+#             - "true"
+
+# -- Define Tolerations for scheduling SOLR
+tolerations:
+# - key: "SolrMasterOnly"
+#   operator: "Equal"
+#   value: "true"
+#   effect: "NoSchedule"
+
+# -- Define PVNodeAffinity for scheduling SOLR
+PvNodeAffinity:
+#   required:
+#     nodeSelectorTerms:
+#     - matchExpressions:
+#       - key: "SolrMasterOnly"
+#         operator: In
+#         values:
+#         - "true"

@@ -1,0 +1,4 @@
+---
+global:
+  tracking:
+    sharedsecret: dummy
