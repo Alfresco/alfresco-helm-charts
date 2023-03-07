@@ -42,7 +42,11 @@ Get Alfresco Search container Port ("internal")
 Get Alfresco Search Service Port
 */}}
 {{- define "alfresco-search.svcPort" -}}
-{{- .Values.service.externallPort | default 80 | int -}}
+{{- $svcPort := 80 }}
+{{- if hasKey .Values "service" }}
+  {{- $svcPort := default 80 .Values.service.externalPort }}
+{{- end }}
+{{- $svcPort | int }}
 {{- end -}}
 
 {{/*
