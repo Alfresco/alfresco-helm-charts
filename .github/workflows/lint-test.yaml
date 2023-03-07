@@ -10,6 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       INSTALL_NAMESPACE: alfresco
+      # See latest https://github.com/kubernetes-sigs/kind/releases for the latest available builds
+      KIND_NODE_IMAGE: kindest/node:v1.24.7@sha256:577c630ce8e509131eab1aea12c022190978dd2f745aac5eb1fe65c0807eb315
+      TEST_ALL_CHARTS: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && 'true' || 'false' }}
+      TEST_ALL_CHARTS_ARG: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && '--all' || '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -41,17 +45,17 @@ jobs:
         id: list-changed
         run: |
           changed=$(ct list-changed --config ct-lint.yaml)
-          if [[ -n "$changed" ]]; then
+          if [[ -n "$changed" || "$TEST_ALL_CHARTS" == "true" ]]; then
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Run chart-testing (lint)
-        run: ct lint --config ct-lint.yaml
+        run: ct lint --config ct-lint.yaml $TEST_ALL_CHARTS_ARG
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.5.0
         with:
-          node_image: kindest/node:v1.24.0@sha256:0866296e693efe1fed79d5e6c7af8df71fc73ae45e3679af05342239cdc5bc8e
+          node_image: ${{ env.KIND_NODE_IMAGE }}
         if: steps.list-changed.outputs.changed == 'true'
 
       - name: Login to Quay.io
@@ -71,4 +75,4 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
-          ct install --config ct-install.yaml --namespace "$INSTALL_NAMESPACE"
+          ct install --config ct-install.yaml --namespace "$INSTALL_NAMESPACE" $TEST_ALL_CHARTS_ARG
