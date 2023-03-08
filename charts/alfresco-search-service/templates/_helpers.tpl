@@ -20,11 +20,7 @@ If release name contains chart name it will be used as a full name.
 Alfresco Search Service Host
 */}}
 {{- define "alfresco-search.host" -}}
-{{- if index .Values.enabled -}}
-  {{ printf "%s-solr" (include "alfresco-search.fullName" .) -}}
-{{- else -}}
-  {{ index .Values "external" "host" | default "localhost" -}}
-{{- end -}}
+  {{ printf "%s-solr" (include "alfresco-search.fullName" .) }}
 {{- end -}}
 
 {{/*
@@ -42,11 +38,12 @@ Get Alfresco Search container Port ("internal")
 Get Alfresco Search Service Port
 */}}
 {{- define "alfresco-search.svcPort" -}}
-{{- $svcPort := 80 }}
+{{- $defaultSvcPort := 80 }}
 {{- if hasKey .Values "service" }}
-  {{- $svcPort := default 80 .Values.service.externalPort }}
+  {{- coalesce .Values.service.externalPort $defaultSvcPort | int }}
+{{- else }}
+  {{- $defaultSvcPort | int }}
 {{- end }}
-{{- $svcPort | int }}
 {{- end -}}
 
 {{/*
@@ -65,8 +62,8 @@ Get Alfresco Search Docker Image
 */}}
 {{- define "alfresco-search.dockerImage" -}}
 {{- if and (.Values.type) (eq (.Values.type | toString) "insight-engine") }}
-{{- printf "%s:%s" .Values.insightEngineImage.repository .Values.insightEngineImage.tag -}}
+  {{- printf "%s:%s" .Values.insightEngineImage.repository .Values.insightEngineImage.tag }}
 {{- else }}
-{{- printf "%s:%s" .Values.searchServicesImage.repository .Values.searchServicesImage.tag -}}
+  {{- printf "%s:%s" .Values.searchServicesImage.repository .Values.searchServicesImage.tag }}
 {{- end }}
 {{- end -}}
