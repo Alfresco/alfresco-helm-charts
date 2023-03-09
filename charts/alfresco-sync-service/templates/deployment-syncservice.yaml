@@ -41,7 +41,7 @@ spec:
         - configMapRef:
             name: {{ template "syncservice.fullname" . }}-configmap
         - secretRef:
-            name: {{ .Values.messageBroker.existingSecretName | default .Values.messageBroker.secretName }}
+            name: {{ template "syncservice.brokerSecret" . }}
         args:
           - -c
           - echo "Checking for ActiveMQ broker availability";
@@ -79,7 +79,7 @@ spec:
         - configMapRef:
             name: {{ template "syncservice.fullname" . }}-configmap
         - secretRef:
-            name: {{ .Values.messageBroker.existingSecretName | default .Values.messageBroker.secretName }}
+            name: {{ template "syncservice.brokerSecret" . }}
         ports:
         - name: serviceport
           containerPort: 9090

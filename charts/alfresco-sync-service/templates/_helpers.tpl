@@ -18,3 +18,7 @@ chart: {{ .Chart.Name }}
 {{ include "syncservice.selectorLabels" . }}
 heritage: {{ .Release.Service }}
 {{- end }}
+
+{{- define "syncservice.brokerSecret" -}}
+{{- .Values.messageBroker.existingSecretName | default (printf "%s-messagebroker-secret" (include "syncservice.fullname" . )) -}}
+{{- end }}

@@ -43,7 +43,7 @@ Alfresco Sync Service
 | livenessProbe.initialDelaySeconds | int | `150` |  |
 | livenessProbe.periodSeconds | int | `30` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| messageBroker | object | `{"existingSecretName":null,"url":null}` | messageBroker object allow to pass ActiveMQ connection details. url: provides URI formatted string, see: https://activemq.apache.org/failover-transport-reference user: username to authenticate as. password: credential to use to authenticate to the broker. |
+| messageBroker | object | `{"existingSecretName":null,"password":"admin","url":"failover(nio://acs-activemq-broker:61616)?timeout=3000&jms.useCompression=true","user":"admin"}` | messageBroker object allow to pass ActiveMQ connection details. url: provides URI formatted string, see: https://activemq.apache.org/failover-transport-reference user: username to authenticate as. password: credential to use to authenticate to the broker. |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
 | podSecurityContext.runAsGroup | int | `1000` |  |
