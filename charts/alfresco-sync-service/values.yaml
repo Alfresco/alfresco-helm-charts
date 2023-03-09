@@ -57,10 +57,6 @@ repository:
 messageBroker:
   url: null
   existingSecretName: null
-contentServices:
-  # -- Specify when installing as a standalone chart, not as a subchart of ACS.
-  # must match the release name of the ACS release
-  installationName:
 # -- Defines properties required by sync service for connecting to the database
 # If you set database.external to true you will have to setup the JDBC driver,
 # user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements

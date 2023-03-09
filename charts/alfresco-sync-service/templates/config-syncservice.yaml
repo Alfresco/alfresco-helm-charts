@@ -19,7 +19,7 @@ data:
       {{- end }}
       -Dsql.db.username=$DATABASE_USERNAME
       -Dsql.db.password=$DATABASE_PASSWORD
-      -Drepo.hostname={{ printf "%s-%s" (include "acs.release.name" .) .Values.repository.host }}
+      -Drepo.hostname={{ .Values.repository.host }}
       -Drepo.port={{ .Values.repository.port }}
       -Ddw.server.applicationConnectors[0].type=http
       -Dmessaging.broker.url=$BROKER_URL

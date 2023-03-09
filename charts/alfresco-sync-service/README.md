@@ -19,7 +19,6 @@ Alfresco Sync Service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| contentServices.installationName | string | `nil` | Specify when installing as a standalone chart, not as a subchart of ACS. must match the release name of the ACS release |
 | database | object | `{"external":false}` | Defines properties required by sync service for connecting to the database If you set database.external to true you will have to setup the JDBC driver, user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements of `database`. Also make sure that the container has the db driver |
 | environment.EXTRA_JAVA_OPTS | string | `""` |  |
 | environment.JAVA_OPTS | string | `"-Dsync.metrics.reporter.graphite.enabled=false -Dsync.metrics.reporter.graphite.address=127.0.0.1 -Dsync.metrics.reporter.graphite.port=2003 -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
