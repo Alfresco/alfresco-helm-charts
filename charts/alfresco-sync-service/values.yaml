@@ -1,3 +1,4 @@
+---
 replicaCount: 1
 nodeSelector: {}
 # -- Global definition of Docker registry pull secret which can be overridden
@@ -31,8 +32,6 @@ syncservice:
     name: syncservice
     type: NodePort
     externalPort: 80
-  ingress:
-    path: /syncservice
   resources:
     requests:
       cpu: "0.5"
@@ -123,3 +122,4 @@ ingress:
   #    hosts:
   #      - chart-example.local
   tls: []
+  path: /syncservice

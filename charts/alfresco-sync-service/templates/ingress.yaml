@@ -33,7 +33,7 @@ spec:
   - http:
   {{- end }}
       paths:
-      - path: {{ .Values.syncservice.ingress.path }}(/|$)(.*)
+      - path: {{ .Values.ingress.path }}(/|$)(.*)
         {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
         pathType: Prefix
         {{- end }}
