@@ -1,0 +1,30 @@
+---
+suite: test configmaps
+templates:
+  - config.yaml
+tests:
+  - it: should have default port and hosts
+    asserts:
+      - equal:
+          path: data.REPO_HOST
+          value: RELEASE-NAME-alfresco-cs-repository
+        template: config.yaml
+      - equal:
+          path: data.REPO_PORT
+          value: "80"
+        template: config.yaml
+
+  - it: should have provided host and port
+    set:
+      repository:
+        host: somacshost
+        port: 888
+    asserts:
+      - equal:
+          path: data.REPO_HOST
+          value: somacshost
+        template: config.yaml
+      - equal:
+          path: data.REPO_PORT
+          value: "888"
+        template: config.yaml

@@ -17,5 +17,12 @@ Get Alfresco Zeppelin Host
 Get Alfresco Repo Host
 */}}
 {{- define "alfresco-repo-host" -}}
-{{- printf "%s-%s-%s" .Release.Name .Values.repository.host "repository" -}}
+{{- .Values.repository.host | default (printf "%s-repository" (include "content-services.shortname" $)) }}
+{{- end -}}
+
+{{/*
+Get Alfresco Repo Port
+*/}}
+{{- define "alfresco-repo-port" -}}
+{{- .Values.repository.port | default 80 }}
 {{- end -}}
