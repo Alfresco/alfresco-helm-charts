@@ -1,18 +1,15 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "syncservice.fullname" . }}
   labels:
-    app: {{ template "syncservice.fullname" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "syncservice.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "syncservice.fullname" . }}
-      release: {{ .Release.Name }}
+      {{- include "syncservice.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:

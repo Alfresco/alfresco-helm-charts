@@ -4,10 +4,7 @@ kind: ConfigMap
 metadata:
   name: {{ template "syncservice.fullname" . }}-configmap
   labels:
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: syncservice
+    {{- include "syncservice.labels" . | nindent 4 }}
 data:
   JAVA_OPTS: >-
       {{- if eq .Values.database.external false }}
