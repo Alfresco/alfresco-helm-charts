@@ -1,4 +1,3 @@
-{{- if .Values.syncservice.enabled }}
 {{- $serviceName :=  (include "syncservice.fullname" .) -}}
 {{- $servicePort := .Values.syncservice.service.externalPort -}}
 apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
@@ -39,4 +38,3 @@ spec:
         pathType: Prefix
         {{- end }}
         backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
-{{- end }}

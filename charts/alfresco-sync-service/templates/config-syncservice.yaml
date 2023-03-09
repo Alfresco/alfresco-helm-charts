@@ -1,5 +1,4 @@
 # Defines the properties required by the sync-service app
-{{- if .Values.syncservice.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -28,4 +27,3 @@ data:
       -Dmessaging.password=$BROKER_PASSWORD
       {{ .Values.syncservice.environment.JAVA_OPTS }}
       {{ .Values.syncservice.environment.EXTRA_JAVA_OPTS }}
-{{- end }}
