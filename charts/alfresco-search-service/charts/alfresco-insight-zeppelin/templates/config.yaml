@@ -11,4 +11,4 @@ metadata:
     component: zeppelin
 data:
   REPO_HOST: "{{ template "alfresco-repo-host" . }}"
-  REPO_PORT: "{{ .Values.repository.port }}"
+  REPO_PORT: "{{ template "alfresco-repo-port" . }}"
