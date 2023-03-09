@@ -14,40 +14,38 @@ podSecurityContext:
   runAsGroup: 1000
   runAsNonRoot: true
   fsGroup: 1000
-syncservice:
-  enabled: true
-  image:
-    repository: quay.io/alfresco/service-sync
-    tag: 4.0.0-M6
-    pullPolicy: IfNotPresent
-    internalPort: 9090
-  environment:
-    JAVA_OPTS: >-
-      -Dsync.metrics.reporter.graphite.enabled=false
-      -Dsync.metrics.reporter.graphite.address=127.0.0.1
-      -Dsync.metrics.reporter.graphite.port=2003
-      -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
-    EXTRA_JAVA_OPTS: ""
-  service:
-    name: syncservice
-    type: NodePort
-    externalPort: 80
-  resources:
-    requests:
-      cpu: "0.5"
-      memory: "800Mi"
-    limits:
-      cpu: "2"
-      memory: "2000Mi"
-  livenessProbe:
-    initialDelaySeconds: 150
-    periodSeconds: 30
-    timeoutSeconds: 10
-  readinessProbe:
-    initialDelaySeconds: 20
-    periodSeconds: 10
-    failureThreshold: 12
-    timeoutSeconds: 10
+image:
+  repository: quay.io/alfresco/service-sync
+  tag: 4.0.0-M6
+  pullPolicy: IfNotPresent
+  internalPort: 9090
+environment:
+  JAVA_OPTS: >-
+    -Dsync.metrics.reporter.graphite.enabled=false
+    -Dsync.metrics.reporter.graphite.address=127.0.0.1
+    -Dsync.metrics.reporter.graphite.port=2003
+    -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+  EXTRA_JAVA_OPTS: ""
+service:
+  name: syncservice
+  type: NodePort
+  externalPort: 80
+resources:
+  requests:
+    cpu: "0.5"
+    memory: "800Mi"
+  limits:
+    cpu: "2"
+    memory: "2000Mi"
+livenessProbe:
+  initialDelaySeconds: 150
+  periodSeconds: 30
+  timeoutSeconds: 10
+readinessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 10
+  failureThreshold: 12
+  timeoutSeconds: 10
 repository:
   host: alfresco-cs-repository
   port: 80

@@ -1,5 +1,5 @@
 {{- $serviceName :=  (include "syncservice.fullname" .) -}}
-{{- $servicePort := .Values.syncservice.service.externalPort -}}
+{{- $servicePort := .Values.service.externalPort -}}
 apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:

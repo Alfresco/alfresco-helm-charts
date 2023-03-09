@@ -25,5 +25,5 @@ data:
       -Dmessaging.broker.url=$BROKER_URL
       -Dmessaging.username=$BROKER_USERNAME
       -Dmessaging.password=$BROKER_PASSWORD
-      {{ .Values.syncservice.environment.JAVA_OPTS }}
-      {{ .Values.syncservice.environment.EXTRA_JAVA_OPTS }}
+      {{ .Values.environment.JAVA_OPTS }}
+      {{ .Values.environment.EXTRA_JAVA_OPTS }}

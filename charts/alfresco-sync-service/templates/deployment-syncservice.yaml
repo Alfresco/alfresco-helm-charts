@@ -73,8 +73,8 @@ spec:
       terminationGracePeriodSeconds: 60
       containers:
       - name: syncservice
-        image: "{{ .Values.syncservice.image.repository }}:{{ .Values.syncservice.image.tag }}"
-        imagePullPolicy: {{ .Values.syncservice.image.pullPolicy }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         {{- include "component-security-context" .Values | indent 6 }}
         envFrom:
         - secretRef:
@@ -86,20 +86,20 @@ spec:
         ports:
         - name: serviceport
           containerPort: 9090
-        resources: {{- toYaml .Values.syncservice.resources | nindent 12 }}
+        resources: {{- toYaml .Values.resources | nindent 12 }}
         readinessProbe:
           httpGet:
             path: /alfresco/healthcheck
             port: serviceport
-          initialDelaySeconds: {{ .Values.syncservice.readinessProbe.initialDelaySeconds }}
-          failureThreshold: {{ .Values.syncservice.readinessProbe.failureThreshold }}
-          periodSeconds: {{ .Values.syncservice.readinessProbe.periodSeconds }}
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
         livenessProbe:
           httpGet:
             path: /alfresco/healthcheck
             port: serviceport
-          initialDelaySeconds: {{ .Values.syncservice.livenessProbe.initialDelaySeconds }}
-          periodSeconds: {{ .Values.syncservice.livenessProbe.periodSeconds }}
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
         lifecycle:
           preStop:
             exec:
