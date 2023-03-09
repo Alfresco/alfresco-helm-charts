@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
+  version: 1.17.1
+- name: alfresco-common
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 1.0.0
+digest: sha256:e514f546173889900bd38967d2f918ca54648d41c53ddc8b66b582fb731e5124
+generated: "2023-02-28T16:18:24.861318+01:00"
