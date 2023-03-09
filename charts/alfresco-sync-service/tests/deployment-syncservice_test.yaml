@@ -4,11 +4,8 @@ templates:
   - deployment-syncservice.yaml
   - config-syncservice.yaml
   - secret-database.yaml
-  - ../../../templates/secret-repository.yaml
 tests:
   - it: should have basic metadata in place
-    values: &testvalues
-      - ../../../tests/values/test_values.yaml
     asserts:
       - equal:
           path: metadata.name
@@ -16,7 +13,6 @@ tests:
         template: deployment-syncservice.yaml
 
   - it: should render cpu and memory limits
-    values: *testvalues
     asserts:
       - equal:
           path: spec.template.spec.containers[0].resources
