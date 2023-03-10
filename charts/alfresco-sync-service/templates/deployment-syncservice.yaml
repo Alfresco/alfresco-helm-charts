@@ -27,45 +27,6 @@ spec:
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
       {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
-      initContainers:
-      {{- if .Values.activemq }}
-      {{ fail "Using activemq.[host|port|user|password|external] in subcharts is not supported anymore. Use messageBroker.* instead" }}
-      {{- end }}
-      - name: init-activemq
-        image: "{{ .Values.initContainers.activemq.image.repository }}:{{ .Values.initContainers.activemq.image.tag }}"
-        imagePullPolicy: {{ .Values.initContainers.activemq.image.pullPolicy }}
-        {{- include "component-security-context" .Values.initContainers.activemq | indent 6 }}
-        resources: {{- toYaml .Values.initContainers.activemq.resources | nindent 12 }}
-        envFrom:
-        - configMapRef:
-            name: {{ template "syncservice.fullname" . }}-configmap
-        - secretRef:
-            name: {{ template "syncservice.brokerSecret" . }}
-        args:
-          - -c
-          - echo "Checking for ActiveMQ broker availability";
-            IFS=, read -r -a array < <(echo "${BROKER_URL}" | sed -r 's/([a-z]+:\()*([^\)]*)(\)?.*)*/\2/');
-            while [ -z $MQREADY ]; do
-              for broker in "${array[@]}"; do broker_socket=${broker%%\?*};
-                [[ "${broker_socket#*://}" == *":"* ]] || NCPORT=61616;
-                echo "Trying ${broker_socket#*://} $NCPORT";
-                nc -w1 ${broker_socket#*://} $NCPORT;
-                if [ $? -eq 0 ]; then echo "ok";
-                  MQREADY=1;
-                  break;
-                else echo "not ok";
-                  sleep 5;
-                fi;
-              done;
-            done
-      {{- if eq .Values.database.external false }}
-      - name: init-postgres
-        image: "{{ .Values.initContainers.postgres.image.repository }}:{{ .Values.initContainers.postgres.image.tag }}"
-        imagePullPolicy: {{ .Values.initContainers.postgres.image.pullPolicy }}
-        {{- include "component-security-context" .Values.initContainers.postgres | indent 6 }}
-        resources: {{- toYaml .Values.initContainers.postgres.resources | nindent 12 }}
-        command: ['sh', '-c', 'until nc -w1 {{ .Release.Name }}-postgresql-syncservice 5432; do echo "waiting for postgresql"; sleep 2; done;']
-      {{- end }}
       terminationGracePeriodSeconds: 60
       containers:
       - name: syncservice
