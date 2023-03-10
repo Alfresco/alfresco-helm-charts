@@ -14,6 +14,7 @@ Alfresco Sync Service
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
 | https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | common | 1.x.x |
+| oci://registry-1.docker.io/bitnamicharts/postgresql | postgresql | 12.x.x |
 
 ## Values
 
