@@ -12,6 +12,7 @@ Alfresco Sync Service
 
 | Repository | Name | Version |
 |------------|------|---------|
+| https://alfresco.github.io/alfresco-helm-charts/ | messageBroker(activemq) | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
 | oci://registry-1.docker.io/bitnamicharts | common | 2.x.x |
 | oci://registry-1.docker.io/bitnamicharts | database(postgresql) | 12.x.x |
