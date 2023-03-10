@@ -30,10 +30,11 @@ tests:
   - it: should default JDBC varlues
     set:
       database:
-        url: jdbc:mysql://mysqldb:1234/somedb
-        user: scott
-        password: tiger
-        driver: com.mysql.cj.jdbc.Driver
+        external:
+          url: jdbc:mysql://mysqldb:1234/somedb
+          user: scott
+          password: tiger
+          driver: com.mysql.cj.jdbc.Driver
     asserts:
       - matchRegex:
           path: data.JAVA_OPTS

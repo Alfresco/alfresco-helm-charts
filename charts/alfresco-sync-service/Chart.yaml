@@ -13,13 +13,13 @@ appVersion: 4.0.0-M7
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
 dependencies:
   - name: common
-    repository: >-
-      https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
-    version: 1.x.x
+    repository: oci://registry-1.docker.io/bitnamicharts
+    version: 2.x.x
   - name: alfresco-common
     version: 2.0.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: postgresql
+    alias: database
     version: 12.x.x
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: database.enabled

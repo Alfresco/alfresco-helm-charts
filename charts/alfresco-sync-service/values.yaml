@@ -55,7 +55,8 @@ repository:
 # user: username to authenticate as.
 # password: credential to use to authenticate to the broker.
 messageBroker:
-  url: failover:(nio://acs-activemq-broker:61616)?timeout=3000&jms.useCompression=true
+  url: >-
+    failover:(nio://acs-activemq-broker:61616)?timeout=3000&jms.useCompression=true
   user: admin
   password: admin
   existingSecretName: null
@@ -68,35 +69,39 @@ database:
   # cluster for sync-service to use it.
   # When set to `false` the chart expects you provide DB configuration details.
   enabled: false
-  # -- The JDBC Driver to connect to the DB.
-  # Note: if different from the default make sure your container image ships it.
-  driver: org.postgresql.Driver
-  # -- JDBC url to connect to the external DB
-  url:
-  # -- JDBC username to use to connect to the DB
-  user: &dbUser alfresco
-  # -- JDBC password to use to connect to the DB
-  password: &dbPass admin
-  # -- An existing kubernetes secret with DB info (prefered over using values)
-  existingSecretName:
-  postgresql:
-    nameOverride: postgresql-syncservice
-    auth:
-      enablePostgresUser: false
-      username: *dbUser
-      password: *dbPass
-      database: alfrescosync
-      existingSecret:
-    primary:
-      extendedConfiguration: |
-        shared_buffers = 256MB
-        max_connections = 50
-        effective_cache_size = 1024GB
-        log_min_messages = LOG
-    resources:
-      limits:
-        cpu: "2"
-        memory: "2Gi"
+  external:
+    # -- The JDBC Driver to connect to the DB.
+    # If different from the default make sure your container image ships it.
+    driver: org.postgresql.Driver
+    # -- JDBC url to connect to the external DB. Required if `.database.enabled`
+    # is set to `true`
+    url:
+    # -- JDBC username to use to connect to the DB
+    user: alfresco
+    # -- JDBC password to use to connect to the DB
+    password: admin
+    # -- An existing kubernetes secret with DB info (prefered over using values)
+    existingSecretName:
+
+  # Postgresql chart options (see [Bitnami charts
+  # documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql))
+  nameOverride: postgresql-syncservice
+  auth:
+    enablePostgresUser: false
+    username: alfresco
+    password: admin
+    database: alfrescosync
+    existingSecret:
+  primary:
+    extendedConfiguration: |
+      shared_buffers = 256MB
+      max_connections = 80
+      effective_cache_size = 1024GB
+      log_min_messages = LOG
+  resources:
+    limits:
+      cpu: "2"
+      memory: "2Gi"
 
 initContainers:
   activemq:

@@ -13,20 +13,20 @@ Alfresco Sync Service
 | Repository | Name | Version |
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
-| https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | common | 1.x.x |
-| oci://registry-1.docker.io/bitnamicharts | postgresql | 12.x.x |
+| oci://registry-1.docker.io/bitnamicharts | common | 2.x.x |
+| oci://registry-1.docker.io/bitnamicharts | database(postgresql) | 12.x.x |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| database | object | `{"driver":"org.postgresql.Driver","enabled":false,"existingSecretName":null,"password":"admin","postgresql":{"auth":{"database":"alfrescosync","enablePostgresUser":false,"existingSecret":null,"password":"admin","username":"alfresco"},"nameOverride":"postgresql-syncservice","primary":{"extendedConfiguration":"shared_buffers = 256MB\nmax_connections = 50\neffective_cache_size = 1024GB\nlog_min_messages = LOG\n"},"resources":{"limits":{"cpu":"2","memory":"2Gi"}}},"url":null,"user":"alfresco"}` | Defines properties required by sync service for connecting to the database If you set database.external to true you will have to setup the JDBC driver, user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements of `database`. Also make sure that the container has the db driver |
-| database.driver | string | `"org.postgresql.Driver"` | The JDBC Driver to connect to the DB. Note: if different from the default make sure your container image ships it. |
+| database | object | `{"auth":{"database":"alfrescosync","enablePostgresUser":false,"existingSecret":null,"password":"admin","username":"alfresco"},"enabled":false,"external":{"driver":"org.postgresql.Driver","existingSecretName":null,"password":"admin","url":null,"user":"alfresco"},"nameOverride":"postgresql-syncservice","primary":{"extendedConfiguration":"shared_buffers = 256MB\nmax_connections = 80\neffective_cache_size = 1024GB\nlog_min_messages = LOG\n"},"resources":{"limits":{"cpu":"2","memory":"2Gi"}}}` | Defines properties required by sync service for connecting to the database If you set database.external to true you will have to setup the JDBC driver, user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements of `database`. Also make sure that the container has the db driver |
 | database.enabled | bool | `false` | If set to `true` a dedicated postgres instance will be deployed in the cluster for sync-service to use it. When set to `false` the chart expects you provide DB configuration details. |
-| database.existingSecretName | string | `nil` | An existing kubernetes secret with DB info (prefered over using values) |
-| database.password | string | `"admin"` | JDBC password to use to connect to the DB |
-| database.url | string | `nil` | JDBC url to connect to the external DB |
-| database.user | string | `"alfresco"` | JDBC username to use to connect to the DB |
+| database.external.driver | string | `"org.postgresql.Driver"` | The JDBC Driver to connect to the DB. If different from the default make sure your container image ships it. |
+| database.external.existingSecretName | string | `nil` | An existing kubernetes secret with DB info (prefered over using values) |
+| database.external.password | string | `"admin"` | JDBC password to use to connect to the DB |
+| database.external.url | string | `nil` | JDBC url to connect to the external DB. Required if `.database.enabled` is set to `true` |
+| database.external.user | string | `"alfresco"` | JDBC username to use to connect to the DB |
 | environment.EXTRA_JAVA_OPTS | string | `""` |  |
 | environment.JAVA_OPTS | string | `"-Dsync.metrics.reporter.graphite.enabled=false -Dsync.metrics.reporter.graphite.address=127.0.0.1 -Dsync.metrics.reporter.graphite.port=2003 -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
