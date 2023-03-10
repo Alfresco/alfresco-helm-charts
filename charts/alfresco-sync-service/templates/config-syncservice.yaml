@@ -1,4 +1,4 @@
-# Defines the properties required by the sync-service app
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,13 +7,8 @@ metadata:
     {{- include "syncservice.labels" . | nindent 4 }}
 data:
   JAVA_OPTS: >-
-      {{- if .Values.database.enabled }}
-      -Dsql.db.driver="org.postgresql.Driver"
-      -Dsql.db.url=jdbc:postgresql://{{ printf "%s-%s" .Release.Name (index .Values "database" "postgresql" "nameOverride") }}:{{ index .Values "database" "postgresql" "service" "port" }}/{{ index .Values "database" "postgresql" "postgresqlDatabase" }}
-      {{- else }}
-      -Dsql.db.driver={{ .Values.database.driver}}
-      -Dsql.db.url={{ .Values.database.url}}
-      {{- end }}
+      -Dsql.db.url={{ include "syncservice.dbUrl" . }}
+      -Dsql.db.driver={{ include "syncservice.dbDriver" . | quote }}
       -Dsql.db.username=$DATABASE_USERNAME
       -Dsql.db.password=$DATABASE_PASSWORD
       -Drepo.hostname={{ .Values.repository.host }}

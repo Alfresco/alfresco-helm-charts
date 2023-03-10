@@ -78,15 +78,15 @@ database:
   # -- JDBC password to use to connect to the DB
   password: &dbPass admin
   # -- An existing kubernetes secret with DB info (prefered over using values)
-  existingSecretName: &dbSecret
+  existingSecretName:
   postgresql:
     nameOverride: postgresql-syncservice
     auth:
       enablePostgresUser: false
       username: *dbUser
       password: *dbPass
-      database: syncservice-postgresql
-      existingSecret: *dbSecret
+      database: alfrescosync
+      existingSecret:
     primary:
       extendedConfiguration: |
         shared_buffers = 256MB

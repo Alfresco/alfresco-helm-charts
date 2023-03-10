@@ -6,6 +6,9 @@ templates:
   - secret-database.yaml
 tests:
   - it: should have basic metadata in place
+    set: &values
+      database:
+        enabled: true
     asserts:
       - equal:
           path: metadata.name
@@ -13,6 +16,7 @@ tests:
         template: deployment-syncservice.yaml
 
   - it: should render cpu and memory limits
+    set: *values
     asserts:
       - equal:
           path: spec.template.spec.containers[0].resources
