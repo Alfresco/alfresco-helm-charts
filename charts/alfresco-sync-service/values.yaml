@@ -55,7 +55,7 @@ repository:
 # user: username to authenticate as.
 # password: credential to use to authenticate to the broker.
 messageBroker:
-  url: failover(nio://acs-activemq-broker:61616)?timeout=3000&jms.useCompression=true
+  url: failover:(nio://acs-activemq-broker:61616)?timeout=3000&jms.useCompression=true
   user: admin
   password: admin
   existingSecretName: null
@@ -64,32 +64,40 @@ messageBroker:
 # user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements
 # of `database`. Also make sure that the container has the db driver
 database:
-  external: false
-postgresql-syncservice:
-  name: postgresql-syncservice
-  # -- If true, install the postgresql chart alongside Alfresco Sync service.
-  # Note: Set this to false if you use an external database.
-  enabled: true
-  replicaCount: 1
-  nameOverride: postgresql-syncservice
-  image:
-    tag: 11.7.0
-    pullPolicy: IfNotPresent
-  postgresqlUsername: alfresco
-  postgresqlPassword: admin
-  postgresqlDatabase: syncservice-postgresql
-  postgresConfig:
-    max_connections: 450
-    log_min_messages: LOG
-  service:
-    port: 5432
-  resources:
-    requests:
-      cpu: "0.5"
-      memory: "600Mi"
-    limits:
-      cpu: "2"
-      memory: "1500Mi"
+  # -- If set to `true` a dedicated postgres instance will be deployed in the
+  # cluster for sync-service to use it.
+  # When set to `false` the chart expects you provide DB configuration details.
+  enabled: false
+  # -- The JDBC Driver to connect to the DB.
+  # Note: if different from the default make sure your container image ships it.
+  driver: org.postgresql.Driver
+  # -- JDBC url to connect to the external DB
+  url:
+  # -- JDBC username to use to connect to the DB
+  user: &dbUser alfresco
+  # -- JDBC password to use to connect to the DB
+  password: &dbPass admin
+  # -- An existing kubernetes secret with DB info (prefered over using values)
+  existingSecretName: &dbSecret
+  postgresql:
+    nameOverride: postgresql-syncservice
+    auth:
+      enablePostgresUser: false
+      username: *dbUser
+      password: *dbPass
+      database: syncservice-postgresql
+      existingSecret: *dbSecret
+    primary:
+      extendedConfiguration: |
+        shared_buffers = 256MB
+        max_connections = 50
+        effective_cache_size = 1024GB
+        log_min_messages = LOG
+    resources:
+      limits:
+        cpu: "2"
+        memory: "2Gi"
+
 initContainers:
   activemq:
     image:

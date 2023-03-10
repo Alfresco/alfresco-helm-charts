@@ -8,7 +8,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{- define "syncservice.selectorLabels" -}}
-app: {{ template "content-services.shortname" . }}-syncservice
+app: {{ template "syncservice.fullname" . }}
 release: {{ .Release.Name }}
 component: syncservice
 {{- end }}

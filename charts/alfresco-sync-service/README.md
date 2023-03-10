@@ -20,7 +20,13 @@ Alfresco Sync Service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| database | object | `{"external":false}` | Defines properties required by sync service for connecting to the database If you set database.external to true you will have to setup the JDBC driver, user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements of `database`. Also make sure that the container has the db driver |
+| database | object | `{"driver":"org.postgresql.Driver","enabled":false,"existingSecretName":null,"password":"admin","postgresql":{"auth":{"database":"syncservice-postgresql","enablePostgresUser":false,"existingSecret":null,"password":"admin","username":"alfresco"},"nameOverride":"postgresql-syncservice","primary":{"extendedConfiguration":"shared_buffers = 256MB\nmax_connections = 50\neffective_cache_size = 1024GB\nlog_min_messages = LOG\n"},"resources":{"limits":{"cpu":"2","memory":"2Gi"}}},"url":null,"user":"alfresco"}` | Defines properties required by sync service for connecting to the database If you set database.external to true you will have to setup the JDBC driver, user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements of `database`. Also make sure that the container has the db driver |
+| database.driver | string | `"org.postgresql.Driver"` | The JDBC Driver to connect to the DB. Note: if different from the default make sure your container image ships it. |
+| database.enabled | bool | `false` | If set to `true` a dedicated postgres instance will be deployed in the cluster for sync-service to use it. When set to `false` the chart expects you provide DB configuration details. |
+| database.existingSecretName | string | `nil` | An existing kubernetes secret with DB info (prefered over using values) |
+| database.password | string | `"admin"` | JDBC password to use to connect to the DB |
+| database.url | string | `nil` | JDBC url to connect to the external DB |
+| database.user | string | `"alfresco"` | JDBC username to use to connect to the DB |
 | environment.EXTRA_JAVA_OPTS | string | `""` |  |
 | environment.JAVA_OPTS | string | `"-Dsync.metrics.reporter.graphite.enabled=false -Dsync.metrics.reporter.graphite.address=127.0.0.1 -Dsync.metrics.reporter.graphite.port=2003 -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
@@ -44,28 +50,12 @@ Alfresco Sync Service
 | livenessProbe.initialDelaySeconds | int | `150` |  |
 | livenessProbe.periodSeconds | int | `30` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| messageBroker | object | `{"existingSecretName":null,"password":"admin","url":"failover(nio://acs-activemq-broker:61616)?timeout=3000&jms.useCompression=true","user":"admin"}` | messageBroker object allow to pass ActiveMQ connection details. url: provides URI formatted string, see: https://activemq.apache.org/failover-transport-reference user: username to authenticate as. password: credential to use to authenticate to the broker. |
+| messageBroker | object | `{"existingSecretName":null,"password":"admin","url":"failover:(nio://acs-activemq-broker:61616)?timeout=3000&jms.useCompression=true","user":"admin"}` | messageBroker object allow to pass ActiveMQ connection details. url: provides URI formatted string, see: https://activemq.apache.org/failover-transport-reference user: username to authenticate as. password: credential to use to authenticate to the broker. |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
 | podSecurityContext.runAsGroup | int | `1000` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | podSecurityContext.runAsUser | int | `33020` |  |
-| postgresql-syncservice.enabled | bool | `true` | If true, install the postgresql chart alongside Alfresco Sync service. Note: Set this to false if you use an external database. |
-| postgresql-syncservice.image.pullPolicy | string | `"IfNotPresent"` |  |
-| postgresql-syncservice.image.tag | string | `"11.7.0"` |  |
-| postgresql-syncservice.name | string | `"postgresql-syncservice"` |  |
-| postgresql-syncservice.nameOverride | string | `"postgresql-syncservice"` |  |
-| postgresql-syncservice.postgresConfig.log_min_messages | string | `"LOG"` |  |
-| postgresql-syncservice.postgresConfig.max_connections | int | `450` |  |
-| postgresql-syncservice.postgresqlDatabase | string | `"syncservice-postgresql"` |  |
-| postgresql-syncservice.postgresqlPassword | string | `"admin"` |  |
-| postgresql-syncservice.postgresqlUsername | string | `"alfresco"` |  |
-| postgresql-syncservice.replicaCount | int | `1` |  |
-| postgresql-syncservice.resources.limits.cpu | string | `"2"` |  |
-| postgresql-syncservice.resources.limits.memory | string | `"1500Mi"` |  |
-| postgresql-syncservice.resources.requests.cpu | string | `"0.5"` |  |
-| postgresql-syncservice.resources.requests.memory | string | `"600Mi"` |  |
-| postgresql-syncservice.service.port | int | `5432` |  |
 | readinessProbe.failureThreshold | int | `12` |  |
 | readinessProbe.initialDelaySeconds | int | `20` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
