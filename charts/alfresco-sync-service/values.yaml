@@ -55,11 +55,28 @@ repository:
 # user: username to authenticate as.
 # password: credential to use to authenticate to the broker.
 messageBroker:
-  url: >-
-    failover:(nio://acs-activemq-broker:61616)?timeout=3000&jms.useCompression=true
-  user: admin
-  password: admin
-  existingSecretName: null
+  enabled: false
+  external:
+    url:
+    # failover:(nio://acs-activemq-broker:61616)?timeout=3000&jms.useCompression=true
+    user: alfresco
+    password: admin
+    existingSecretName:
+  # Activemq chart options (see [Alfresco ActiveMQ chart
+  # documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/activemq))
+  nameOverride: activemq
+  adminUser:
+    # -- User to use to set as the connection user for ActiveMQ
+    user:
+    # -- Password to use to set as the connection user for ActiveMQ
+    password:
+    # -- A secret containing authentication information for ActiveMQ
+    existingSecretName:
+  services:
+    broker:
+      ports:
+        external:
+          openwire: 61616
 # -- Defines properties required by sync service for connecting to the database
 # If you set database.external to true you will have to setup the JDBC driver,
 # user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements

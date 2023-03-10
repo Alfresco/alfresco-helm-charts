@@ -50,7 +50,10 @@ Alfresco Sync Service
 | livenessProbe.initialDelaySeconds | int | `150` |  |
 | livenessProbe.periodSeconds | int | `30` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| messageBroker | object | `{"existingSecretName":null,"password":"admin","url":"failover:(nio://acs-activemq-broker:61616)?timeout=3000&jms.useCompression=true","user":"admin"}` | messageBroker object allow to pass ActiveMQ connection details. url: provides URI formatted string, see: https://activemq.apache.org/failover-transport-reference user: username to authenticate as. password: credential to use to authenticate to the broker. |
+| messageBroker | object | `{"adminUser":{"existingSecretName":null,"password":null,"user":null},"enabled":false,"external":{"existingSecretName":null,"password":"admin","url":null,"user":"alfresco"},"nameOverride":"activemq","services":{"broker":{"ports":{"external":{"openwire":61616}}}}}` | messageBroker object allow to pass ActiveMQ connection details. url: provides URI formatted string, see: https://activemq.apache.org/failover-transport-reference user: username to authenticate as. password: credential to use to authenticate to the broker. |
+| messageBroker.adminUser.existingSecretName | string | `nil` | A secret containing authentication information for ActiveMQ |
+| messageBroker.adminUser.password | string | `nil` | Password to use to set as the connection user for ActiveMQ |
+| messageBroker.adminUser.user | string | `nil` | User to use to set as the connection user for ActiveMQ |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
 | podSecurityContext.runAsGroup | int | `1000` |  |
