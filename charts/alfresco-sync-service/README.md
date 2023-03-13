@@ -29,26 +29,16 @@ Alfresco Sync Service
 | database.external.url | string | `nil` | JDBC url to connect to the external DB. Required if `.database.enabled` is set to `true` |
 | database.external.user | string | `"alfresco"` | JDBC username to use to connect to the DB |
 | environment.EXTRA_JAVA_OPTS | string | `""` |  |
-| environment.JAVA_OPTS | string | `"-Dsync.metrics.reporter.graphite.enabled=false -Dsync.metrics.reporter.graphite.address=127.0.0.1 -Dsync.metrics.reporter.graphite.port=2003 -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
+| environment.JAVA_OPTS | string | `"-Dsync.metrics.reporter.graphite.enabled=false -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/service-sync"` |  |
-| image.tag | string | `"4.0.0-M6"` |  |
+| image.tag | string | `"4.0.0-M7"` |  |
 | ingress.extraAnnotations | string | `nil` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes nginx.ingress.kubernetes.io/ssl-redirect: "false" |
 | ingress.path | string | `"/syncservice"` |  |
 | ingress.tls | list | `[]` |  |
-| initContainers.activemq.image.pullPolicy | string | `"IfNotPresent"` |  |
-| initContainers.activemq.image.repository | string | `"bash"` |  |
-| initContainers.activemq.image.tag | string | `"5.1.16"` |  |
-| initContainers.activemq.resources.limits.cpu | string | `"0.25"` |  |
-| initContainers.activemq.resources.limits.memory | string | `"10Mi"` |  |
-| initContainers.postgres.image.pullPolicy | string | `"IfNotPresent"` |  |
-| initContainers.postgres.image.repository | string | `"busybox"` |  |
-| initContainers.postgres.image.tag | string | `"1.35.0"` |  |
-| initContainers.postgres.resources.limits.cpu | string | `"0.25"` |  |
-| initContainers.postgres.resources.limits.memory | string | `"10Mi"` |  |
-| livenessProbe.initialDelaySeconds | int | `150` |  |
+| livenessProbe.initialDelaySeconds | int | `30` |  |
 | livenessProbe.periodSeconds | int | `30` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | messageBroker | object | `{"adminUser":{"existingSecretName":null,"password":null,"user":null},"enabled":false,"external":{"existingSecretName":null,"password":"admin","url":null,"user":"alfresco"},"nameOverride":"activemq","services":{"broker":{"ports":{"external":{"openwire":61616}}}}}` | messageBroker object allow to pass ActiveMQ connection details. url: provides URI formatted string, see: https://activemq.apache.org/failover-transport-reference user: username to authenticate as. password: credential to use to authenticate to the broker. |

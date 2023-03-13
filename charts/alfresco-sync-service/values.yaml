@@ -16,14 +16,12 @@ podSecurityContext:
   fsGroup: 1000
 image:
   repository: quay.io/alfresco/service-sync
-  tag: 4.0.0-M6
+  tag: 4.0.0-M7
   pullPolicy: IfNotPresent
   internalPort: 9090
 environment:
   JAVA_OPTS: >-
     -Dsync.metrics.reporter.graphite.enabled=false
-    -Dsync.metrics.reporter.graphite.address=127.0.0.1
-    -Dsync.metrics.reporter.graphite.port=2003
     -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
   EXTRA_JAVA_OPTS: ""
 service:
@@ -38,7 +36,7 @@ resources:
     cpu: "2"
     memory: "2000Mi"
 livenessProbe:
-  initialDelaySeconds: 150
+  initialDelaySeconds: 30
   periodSeconds: 30
   timeoutSeconds: 10
 readinessProbe:
@@ -119,26 +117,6 @@ database:
     limits:
       cpu: "2"
       memory: "2Gi"
-
-initContainers:
-  activemq:
-    image:
-      repository: bash
-      tag: 5.1.16
-      pullPolicy: IfNotPresent
-    resources:
-      limits:
-        cpu: "0.25"
-        memory: "10Mi"
-  postgres:
-    image:
-      repository: busybox
-      tag: 1.35.0
-      pullPolicy: IfNotPresent
-    resources:
-      limits:
-        cpu: "0.25"
-        memory: "10Mi"
 ingress:
   # -- useful when running Sync service without SSL termination done by a load
   # balancer, e.g. when ran on Minikube for testing purposes
