@@ -2,13 +2,13 @@
 Get ActiveMQ URL
 */}}
 {{- define "syncservice.brokerUrl" -}}
-{{- if .Values.messageBroker.enabled }}
 {{- $brokerOptions := "?timeout=3000&jms.useCompression=true" }}
 {{- $brokerPort := .Values.messageBroker.services.broker.ports.external.openwire | int }}
+{{- if .Values.messageBroker.enabled }}
 {{- $brokerHostname := include "activemq.fullname" (dict "Values" .Values.messageBroker "Chart" .Chart "Release" .Release) }}
-{{- coalesce .Values.messageBroker.url (printf "failover:(nio://%s-broker:%d)%s" $brokerHostname $brokerPort $brokerOptions) }}
+{{- printf "failover:(nio://%s-broker:%d)%s" $brokerHostname $brokerPort $brokerOptions }}
 {{- else }}
-{{- required "Please provide a failover URL when using external message broker" .Values.messageBroker.external.url -}}
+{{- coalesce .Values.messageBroker.external.url (printf "failover:(nio://%s-%s-broker:%d)%s" .Release.Name .Values.messageBroker.nameOverride $brokerPort $brokerOptions) -}}
 {{- end }}
 {{- end -}}
 
