@@ -4,9 +4,9 @@ templates:
   - config-syncservice.yaml
   - secret-database.yaml
 tests:
-  - it: should render default JDBC varlues
+  - it: should render default JDBC values
     set:
-      database:
+      postgresql:
         enabled: true
     asserts:
       - matchRegex:
@@ -27,14 +27,13 @@ tests:
           path: data.DATABASE_PASSWORD
           value: YWRtaW4=
         template: secret-database.yaml
-  - it: should default JDBC varlues
+  - it: should render provided JDBC varlues
     set:
       database:
-        external:
-          url: jdbc:mysql://mysqldb:1234/somedb
-          user: scott
-          password: tiger
-          driver: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://mysqldb:1234/somedb
+        user: scott
+        password: tiger
+        driver: com.mysql.cj.jdbc.Driver
     asserts:
       - matchRegex:
           path: data.JAVA_OPTS

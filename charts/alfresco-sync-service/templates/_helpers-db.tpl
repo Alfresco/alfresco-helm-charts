@@ -3,10 +3,10 @@ Get Database Username
 */}}
 {{- define "syncservice.dbUser" -}}
 {{- $defaultUser := "alfresco" }}
-{{- if .Values.database.enabled }}
-{{- coalesce .Values.database.auth.username $defaultUser }}
+{{- if .Values.postgresql.enabled }}
+{{- coalesce .Values.postgresql.auth.username $defaultUser }}
 {{- else }}
-{{- coalesce .Values.database.external.user $defaultUser }}
+{{- coalesce .Values.database.user $defaultUser }}
 {{- end }}
 {{- end -}}
 
@@ -15,10 +15,10 @@ Get Database Password
 */}}
 {{- define "syncservice.dbPass" -}}
 {{- $defaultPass := "admin" }}
-{{- if .Values.database.enabled }}
-{{- coalesce .Values.database.auth.password $defaultPass }}
+{{- if .Values.postgresql.enabled }}
+{{- coalesce .Values.postgresql.auth.password $defaultPass }}
 {{- else }}
-{{- coalesce .Values.database.external.password $defaultPass }}
+{{- coalesce .Values.database.password $defaultPass }}
 {{- end }}
 {{- end -}}
 
@@ -27,10 +27,10 @@ Get Database Driver
 */}}
 {{- define "syncservice.dbDriver" -}}
 {{- $defaultDriver := "org.postgresql.Driver" }}
-{{- if .Values.database.enabled }}
+{{- if .Values.postgresql.enabled }}
 {{- $defaultDriver }}
 {{- else }}
-{{- coalesce .Values.database.external.driver $defaultDriver }}
+{{- coalesce .Values.database.driver $defaultDriver }}
 {{- end }}
 {{- end -}}
 
@@ -38,14 +38,14 @@ Get Database Driver
 Get Database URL
 */}}
 {{- define "syncservice.dbUrl" -}}
-{{- if .Values.database.enabled }}
-{{- $pgsvcname := printf "%s-%s" .Release.Name .Values.database.nameOverride }}
+{{- if .Values.postgresql.enabled }}
+{{- $pgsvcname := printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}
 {{- $pgsvcport := "" }}
-{{- if hasKey .Values.database.primary "service" }}
-{{- $pgsvcport := printf ":%s" (.Values.database.primary.service.port | default 5432) }}
+{{- if hasKey .Values.postgresql.primary "service" }}
+{{- $pgsvcport := printf ":%s" (.Values.postgresql.primary.service.port | default 5432) }}
 {{- end }}
-{{- printf "jdbc:postgresql://%s%s/%s" $pgsvcname $pgsvcport .Values.database.auth.database }}
+{{- printf "jdbc:postgresql://%s%s/%s" $pgsvcname $pgsvcport .Values.postgresql.auth.database }}
 {{- else }}
-{{- required "To enable SyncService external database please provide .database.external.url" .Values.database.external.url }}
+{{- required "To enable SyncService external database please provide .database.url" .Values.database.url }}
 {{- end }}
 {{- end -}}
