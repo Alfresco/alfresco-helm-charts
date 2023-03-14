@@ -1,0 +1,9 @@
+---
+repository:
+  host: dummy-repo
+messageBroker:
+  enabled: true
+  nameOverride: mqsync
+database:
+  enabled: true
+  nameOverride: pgsync
