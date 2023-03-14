@@ -33,7 +33,10 @@ Alfresco Sync Service
 | database.user | string | `"alfresco"` | JDBC username to use to connect to the DB |
 | environment.EXTRA_JAVA_OPTS | string | `""` |  |
 | environment.JAVA_OPTS | string | `"-Dsync.metrics.reporter.graphite.enabled=false -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
-| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
+| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","messageBroker":{"password":null,"url":null,"user":null},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
+| global.messageBroker.password | string | `nil` | Credential to use to authenticate to the broker. |
+| global.messageBroker.url | string | `nil` | A failover URI formatted string, see: https://activemq.apache.org/failover-transport-reference |
+| global.messageBroker.user | string | `nil` | Username to authenticate as. |
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/service-sync"` |  |
@@ -46,9 +49,9 @@ Alfresco Sync Service
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | messageBroker.existingSecretName | string | `nil` | An existing k8s secret with broker details (prefered over using values) |
 | messageBroker.nameOverride | string | `"activemq"` | A name that will be used as a base to get broker conenction details |
-| messageBroker.password | string | `"admin"` | Credential to use to authenticate to the broker. |
+| messageBroker.password | string | `nil` | Credential to use to authenticate to the broker. |
 | messageBroker.url | string | `nil` | A failover URI formatted string, see: https://activemq.apache.org/failover-transport-reference |
-| messageBroker.user | string | `"alfresco"` | Username to authenticate as. |
+| messageBroker.user | string | `nil` | Username to authenticate as. |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
 | podSecurityContext.runAsGroup | int | `1000` |  |

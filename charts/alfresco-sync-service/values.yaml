@@ -4,6 +4,14 @@ nodeSelector: {}
 # -- Global definition of Docker registry pull secret which can be overridden
 # from parent ACS Helm chart(s)
 global:
+  messageBroker:
+    # -- A failover URI formatted string, see:
+    # https://activemq.apache.org/failover-transport-reference
+    url:
+    # -- Username to authenticate as.
+    user:
+    # -- Credential to use to authenticate to the broker.
+    password:
   alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
     rollingUpdate:
@@ -70,9 +78,9 @@ messageBroker:
   # -- A name that will be used as a base to get broker conenction details
   nameOverride: activemq
   # -- Username to authenticate as.
-  user: alfresco
+  user:
   # -- Credential to use to authenticate to the broker.
-  password: admin
+  password:
   # -- An existing k8s secret with broker details (prefered over using values)
   existingSecretName:
 # -- Defines properties required by sync service for connecting to the database

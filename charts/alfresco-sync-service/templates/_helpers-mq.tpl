@@ -8,7 +8,7 @@ Get ActiveMQ URL
 {{- $brokerHostname := include "activemq.fullname" (dict "Values" .Values.activemq "Chart" .Chart "Release" .Release) }}
 {{- printf "failover:(nio://%s-broker:%d)%s" $brokerHostname $brokerPort $brokerOptions }}
 {{- else }}
-{{- coalesce .Values.messageBroker.url (printf "failover:(nio://%s-%s-broker:%d)%s" .Release.Name .Values.messageBroker.nameOverride $brokerPort $brokerOptions) -}}
+{{- coalesce .Values.messageBroker.url .Values.global.messageBroker.url (printf "failover:(nio://%s-%s-broker:%d)%s" .Release.Name .Values.messageBroker.nameOverride $brokerPort $brokerOptions) -}}
 {{- end }}
 {{- end -}}
 
@@ -19,7 +19,7 @@ Get ActiveMQ Username
 {{- if .Values.activemq.enabled }}
 {{- .Values.activemq.adminUser.user -}}
 {{- else }}
-{{- .Values.messageBroker.user -}}
+{{- coalesce .Values.messageBroker.user .Values.global.messageBroker.user "alfresco" -}}
 {{- end }}
 {{- end -}}
 
@@ -30,7 +30,7 @@ Get ActiveMQ Password
 {{- if .Values.activemq.enabled }}
 {{- .Values.activemq.adminUser.password -}}
 {{- else }}
-{{- .Values.messageBroker.password -}}
+{{- coalesce .Values.messageBroker.password .Values.global.messageBroker.password "admin" -}}
 {{- end }}
 {{- end -}}
 
@@ -41,6 +41,6 @@ Get ActiveMQ secret
 {{- if .Values.activemq.enabled }}
 {{- coalesce .Values.activemq.existingSecretName (printf "%s-messagebroker-secret" (include "syncservice.fullname" . )) -}}
 {{- else }}
-{{- .Values.messageBroker.existingSecretName -}}
+{{- coalesce .Values.messageBroker.existingSecretName .Values.global.messageBroker.existingSecretName -}}
 {{- end }}
 {{- end -}}
