@@ -59,9 +59,9 @@ activemq:
   nameOverride: activemq
   adminUser:
     # -- User to use to set as the connection user for ActiveMQ
-    user:
+    user: admin
     # -- Password to use to set as the connection user for ActiveMQ
-    password:
+    password: admin
   services:
     broker:
       ports:

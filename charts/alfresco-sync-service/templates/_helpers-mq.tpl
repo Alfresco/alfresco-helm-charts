@@ -17,7 +17,7 @@ Get ActiveMQ Username
 */}}
 {{- define "syncservice.brokerUser" -}}
 {{- if .Values.activemq.enabled }}
-{{- .Values.activemq.adminUser.user | default "admin" -}}
+{{- .Values.activemq.adminUser.user -}}
 {{- else }}
 {{- .Values.messageBroker.user -}}
 {{- end }}
@@ -28,7 +28,7 @@ Get ActiveMQ Password
 */}}
 {{- define "syncservice.brokerPass" -}}
 {{- if .Values.activemq.enabled }}
-{{- .Values.activemq.adminUser.pass | default "admin" -}}
+{{- .Values.activemq.adminUser.password -}}
 {{- else }}
 {{- .Values.messageBroker.password -}}
 {{- end }}
