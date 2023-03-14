@@ -59,6 +59,7 @@ messageBroker:
     # failover:(nio://acs-activemq-broker:61616)?timeout=3000&jms.useCompression=true
     user: alfresco
     password: admin
+    # -- An existing kubernetes secret with MQ info (prefered over using values)
     existingSecretName:
   # Activemq chart options (see [Alfresco ActiveMQ chart
   # documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/activemq))
@@ -68,8 +69,6 @@ messageBroker:
     user:
     # -- Password to use to set as the connection user for ActiveMQ
     password:
-    # -- A secret containing authentication information for ActiveMQ
-    existingSecretName:
   services:
     broker:
       ports:
@@ -106,7 +105,6 @@ database:
     username: alfresco
     password: admin
     database: alfrescosync
-    existingSecret:
   primary:
     extendedConfiguration: |
       shared_buffers = 256MB

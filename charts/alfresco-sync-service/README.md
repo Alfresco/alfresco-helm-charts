@@ -21,7 +21,7 @@ Alfresco Sync Service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| database | object | `{"auth":{"database":"alfrescosync","enablePostgresUser":false,"existingSecret":null,"password":"admin","username":"alfresco"},"enabled":false,"external":{"driver":"org.postgresql.Driver","existingSecretName":null,"password":"admin","url":null,"user":"alfresco"},"nameOverride":"postgresql-syncservice","primary":{"extendedConfiguration":"shared_buffers = 256MB\nmax_connections = 80\neffective_cache_size = 1024GB\nlog_min_messages = LOG\n"},"resources":{"limits":{"cpu":"2","memory":"2Gi"}}}` | Defines properties required by sync service for connecting to the database If you set database.external to true you will have to setup the JDBC driver, user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements of `database`. Also make sure that the container has the db driver |
+| database | object | `{"auth":{"database":"alfrescosync","enablePostgresUser":false,"password":"admin","username":"alfresco"},"enabled":false,"external":{"driver":"org.postgresql.Driver","existingSecretName":null,"password":"admin","url":null,"user":"alfresco"},"nameOverride":"postgresql-syncservice","primary":{"extendedConfiguration":"shared_buffers = 256MB\nmax_connections = 80\neffective_cache_size = 1024GB\nlog_min_messages = LOG\n"},"resources":{"limits":{"cpu":"2","memory":"2Gi"}}}` | Defines properties required by sync service for connecting to the database If you set database.external to true you will have to setup the JDBC driver, user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements of `database`. Also make sure that the container has the db driver |
 | database.enabled | bool | `false` | If set to `true` a dedicated postgres instance will be deployed in the cluster for sync-service to use it. When set to `false` the chart expects you provide DB configuration details. |
 | database.external.driver | string | `"org.postgresql.Driver"` | The JDBC Driver to connect to the DB. If different from the default make sure your container image ships it. |
 | database.external.existingSecretName | string | `nil` | An existing kubernetes secret with DB info (prefered over using values) |
@@ -41,10 +41,10 @@ Alfresco Sync Service
 | livenessProbe.initialDelaySeconds | int | `30` |  |
 | livenessProbe.periodSeconds | int | `30` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| messageBroker | object | `{"adminUser":{"existingSecretName":null,"password":null,"user":null},"enabled":false,"external":{"existingSecretName":null,"password":"admin","url":null,"user":"alfresco"},"nameOverride":"activemq","services":{"broker":{"ports":{"external":{"openwire":61616}}}}}` | messageBroker object allow to pass ActiveMQ connection details. url: provides URI formatted string, see: https://activemq.apache.org/failover-transport-reference user: username to authenticate as. password: credential to use to authenticate to the broker. |
-| messageBroker.adminUser.existingSecretName | string | `nil` | A secret containing authentication information for ActiveMQ |
+| messageBroker | object | `{"adminUser":{"password":null,"user":null},"enabled":false,"external":{"existingSecretName":null,"password":"admin","url":null,"user":"alfresco"},"nameOverride":"activemq","services":{"broker":{"ports":{"external":{"openwire":61616}}}}}` | messageBroker object allow to pass ActiveMQ connection details. url: provides URI formatted string, see: https://activemq.apache.org/failover-transport-reference user: username to authenticate as. password: credential to use to authenticate to the broker. |
 | messageBroker.adminUser.password | string | `nil` | Password to use to set as the connection user for ActiveMQ |
 | messageBroker.adminUser.user | string | `nil` | User to use to set as the connection user for ActiveMQ |
+| messageBroker.external.existingSecretName | string | `nil` | An existing kubernetes secret with MQ info (prefered over using values) |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
 | podSecurityContext.runAsGroup | int | `1000` |  |
