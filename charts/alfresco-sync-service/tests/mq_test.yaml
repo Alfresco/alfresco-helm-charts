@@ -5,7 +5,7 @@ templates:
 tests:
   - it: should render default ActiveMQ details
     set:
-      messageBroker:
+      activemq:
         enabled: true
     asserts:
       - equal:
@@ -24,8 +24,7 @@ tests:
   - it: should render broker URL based on sole nameOverride
     set:
       messageBroker:
-        external:
-          url:
+        url:
         nameOverride: aKnownBrokerName
     asserts:
       - equal:
@@ -36,11 +35,10 @@ tests:
   - it: should render custom MQ config
     set:
       messageBroker:
-        external:
-          url: >-
-            failover:(ssl://somemoresecuremq-1:61617,ssl://somemoresecuremq-2:61617)
-          user: scott
-          password: tiger
+        url: >-
+          failover:(ssl://somemoresecuremq-1:61617,ssl://somemoresecuremq-2:61617)
+        user: scott
+        password: tiger
     asserts:
       - equal:
           path: data.BROKER_URL

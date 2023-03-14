@@ -52,16 +52,9 @@ repository:
 # https://activemq.apache.org/failover-transport-reference
 # user: username to authenticate as.
 # password: credential to use to authenticate to the broker.
-messageBroker:
+activemq:
   enabled: false
-  external:
-    url:
-    # failover:(nio://acs-activemq-broker:61616)?timeout=3000&jms.useCompression=true
-    user: alfresco
-    password: admin
-    # -- An existing kubernetes secret with MQ info (prefered over using values)
-    existingSecretName:
-  # Activemq chart options (see [Alfresco ActiveMQ chart
+  # -- Activemq chart options (see [Alfresco ActiveMQ chart
   # documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/activemq))
   nameOverride: activemq
   adminUser:
@@ -74,6 +67,12 @@ messageBroker:
       ports:
         external:
           openwire: 61616
+messageBroker:
+  url:
+  user: alfresco
+  password: admin
+  # -- An existing kubernetes secret with MQ info (prefered over using values)
+  existingSecretName:
 # -- Defines properties required by sync service for connecting to the database
 # If you set database.external to true you will have to setup the JDBC driver,
 # user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements
