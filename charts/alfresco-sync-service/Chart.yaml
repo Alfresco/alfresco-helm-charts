@@ -19,10 +19,9 @@ dependencies:
     version: 2.0.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: activemq
-    alias: messageBroker
     version: 3.0.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    condition: messageBroker.enabled
+    condition: activemq.enabled
   - name: postgresql
     alias: database
     version: 12.x.x
