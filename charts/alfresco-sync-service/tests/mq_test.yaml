@@ -21,6 +21,18 @@ tests:
           path: data.BROKER_PASSWORD
           value: YWRtaW4=
         template: secret-message-broker.yaml
+  - it: should render broker URL based on sole nameOverride
+    set:
+      messageBroker:
+        external:
+          url:
+        nameOverride: aKnownBrokerName
+    asserts:
+      - equal:
+          path: data.BROKER_URL
+          value: >-
+            ZmFpbG92ZXI6KG5pbzovL1JFTEVBU0UtTkFNRS1hS25vd25Ccm9rZXJOYW1lLWJyb2tlcjo2MTYxNik/dGltZW91dD0zMDAwJmptcy51c2VDb21wcmVzc2lvbj10cnVl
+        template: secret-message-broker.yaml
   - it: should render custom MQ config
     set:
       messageBroker:
