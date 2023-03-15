@@ -7,7 +7,7 @@ templates:
 tests:
   - it: should have basic metadata in place
     set: &values
-      database:
+      postgresql:
         enabled: true
     asserts:
       - equal:

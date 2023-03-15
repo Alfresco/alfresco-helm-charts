@@ -2,13 +2,13 @@
 Get ActiveMQ URL
 */}}
 {{- define "syncservice.brokerUrl" -}}
-{{- if .Values.messageBroker.enabled }}
 {{- $brokerOptions := "?timeout=3000&jms.useCompression=true" }}
-{{- $brokerPort := .Values.messageBroker.services.broker.ports.external.openwire | int }}
-{{- $brokerHostname := include "activemq.fullname" (dict "Values" .Values.messageBroker "Chart" .Chart "Release" .Release) }}
-{{- coalesce .Values.messageBroker.url (printf "failover:(nio://%s-broker:%d)%s" $brokerHostname $brokerPort $brokerOptions) }}
+{{- $brokerPort := .Values.activemq.services.broker.ports.external.openwire | int }}
+{{- if .Values.activemq.enabled }}
+{{- $brokerHostname := include "activemq.fullname" (dict "Values" .Values.activemq "Chart" .Chart "Release" .Release) }}
+{{- printf "failover:(nio://%s-broker:%d)%s" $brokerHostname $brokerPort $brokerOptions }}
 {{- else }}
-{{- required "Please provide a failover URL when using external message broker" .Values.messageBroker.external.url -}}
+{{- coalesce .Values.messageBroker.url .Values.global.messageBroker.url (printf "failover:(nio://%s-%s-broker:%d)%s" .Release.Name .Values.messageBroker.nameOverride $brokerPort $brokerOptions) -}}
 {{- end }}
 {{- end -}}
 
@@ -16,10 +16,10 @@ Get ActiveMQ URL
 Get ActiveMQ Username
 */}}
 {{- define "syncservice.brokerUser" -}}
-{{- if .Values.messageBroker.enabled }}
-{{- .Values.messageBroker.adminUser.user | default "admin" -}}
+{{- if .Values.activemq.enabled }}
+{{- .Values.activemq.adminUser.user -}}
 {{- else }}
-{{- .Values.messageBroker.external.user -}}
+{{- coalesce .Values.messageBroker.user .Values.global.messageBroker.user "alfresco" -}}
 {{- end }}
 {{- end -}}
 
@@ -27,10 +27,10 @@ Get ActiveMQ Username
 Get ActiveMQ Password
 */}}
 {{- define "syncservice.brokerPass" -}}
-{{- if .Values.messageBroker.enabled }}
-{{- .Values.messageBroker.adminUser.pass | default "admin" -}}
+{{- if .Values.activemq.enabled }}
+{{- .Values.activemq.adminUser.password -}}
 {{- else }}
-{{- .Values.messageBroker.external.password -}}
+{{- coalesce .Values.messageBroker.password .Values.global.messageBroker.password "admin" -}}
 {{- end }}
 {{- end -}}
 
@@ -38,9 +38,9 @@ Get ActiveMQ Password
 Get ActiveMQ secret
 */}}
 {{- define "syncservice.brokerSecret" -}}
-{{- if .Values.messageBroker.enabled }}
-{{- coalesce .Values.messageBroker.existingSecretName (printf "%s-messagebroker-secret" (include "syncservice.fullname" . )) -}}
+{{- if .Values.activemq.enabled }}
+{{- coalesce .Values.activemq.existingSecretName (printf "%s-messagebroker-secret" (include "syncservice.fullname" . )) -}}
 {{- else }}
-{{- .Values.messageBroker.external.existingSecretName -}}
+{{- coalesce .Values.messageBroker.existingSecretName .Values.global.messageBroker.existingSecretName -}}
 {{- end }}
 {{- end -}}

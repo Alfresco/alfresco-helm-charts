@@ -4,6 +4,14 @@ nodeSelector: {}
 # -- Global definition of Docker registry pull secret which can be overridden
 # from parent ACS Helm chart(s)
 global:
+  messageBroker:
+    # -- A failover URI formatted string, see:
+    # https://activemq.apache.org/failover-transport-reference
+    url:
+    # -- Username to authenticate as.
+    user:
+    # -- Credential to use to authenticate to the broker.
+    password:
   alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
     rollingUpdate:
@@ -47,58 +55,43 @@ readinessProbe:
 repository:
   host: alfresco-cs-repository
   port: 80
-# -- messageBroker object allow to pass ActiveMQ connection details.
-# url: provides URI formatted string, see:
-# https://activemq.apache.org/failover-transport-reference
-# user: username to authenticate as.
-# password: credential to use to authenticate to the broker.
-messageBroker:
-  enabled: false
-  external:
-    url:
-    # failover:(nio://acs-activemq-broker:61616)?timeout=3000&jms.useCompression=true
-    user: alfresco
-    password: admin
-    # -- An existing kubernetes secret with MQ info (prefered over using values)
-    existingSecretName:
-  # Activemq chart options (see [Alfresco ActiveMQ chart
+activemq:
+  # -- Toggle ActiveMQ chart dependency
+  # see [Alfresco ActiveMQ chart
   # documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/activemq))
+  enabled: false
   nameOverride: activemq
   adminUser:
     # -- User to use to set as the connection user for ActiveMQ
-    user:
+    user: admin
     # -- Password to use to set as the connection user for ActiveMQ
-    password:
+    password: admin
   services:
     broker:
       ports:
         external:
           openwire: 61616
+messageBroker:
+  # -- A failover URI formatted string, see:
+  # https://activemq.apache.org/failover-transport-reference
+  url:
+  # -- A name that will be used as a base to get broker conenction details
+  nameOverride: activemq
+  # -- Username to authenticate as.
+  user:
+  # -- Credential to use to authenticate to the broker.
+  password:
+  # -- An existing k8s secret with broker details (prefered over using values)
+  existingSecretName:
 # -- Defines properties required by sync service for connecting to the database
 # If you set database.external to true you will have to setup the JDBC driver,
 # user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements
 # of `database`. Also make sure that the container has the db driver
-database:
-  # -- If set to `true` a dedicated postgres instance will be deployed in the
-  # cluster for sync-service to use it.
-  # When set to `false` the chart expects you provide DB configuration details.
-  enabled: false
-  external:
-    # -- The JDBC Driver to connect to the DB.
-    # If different from the default make sure your container image ships it.
-    driver: org.postgresql.Driver
-    # -- JDBC url to connect to the external DB. Required if `.database.enabled`
-    # is set to `true`
-    url:
-    # -- JDBC username to use to connect to the DB
-    user: alfresco
-    # -- JDBC password to use to connect to the DB
-    password: admin
-    # -- An existing kubernetes secret with DB info (prefered over using values)
-    existingSecretName:
-
-  # Postgresql chart options (see [Bitnami charts
+postgresql:
+  # -- Toggle PostgreSQL chart dependency
+  # see [PostgreSQL Bitnami charts
   # documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql))
+  enabled: false
   nameOverride: postgresql-syncservice
   auth:
     enablePostgresUser: false
@@ -115,6 +108,19 @@ database:
     limits:
       cpu: "2"
       memory: "2Gi"
+database:
+  # -- The JDBC Driver to connect to the DB.
+  # If different from the default make sure your container image ships it.
+  driver: org.postgresql.Driver
+  # -- JDBC url to connect to the external DB
+  url:
+  # -- JDBC username to use to connect to the DB
+  user: alfresco
+  # -- JDBC password to use to connect to the DB
+  password: admin
+  # -- An existing kubernetes secret with DB info (prefered over using values)
+  existingSecretName:
+
 ingress:
   # -- useful when running Sync service without SSL termination done by a load
   # balancer, e.g. when ran on Minikube for testing purposes
