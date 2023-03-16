@@ -11,7 +11,7 @@ data:
       -Dsql.db.driver={{ include "syncservice.dbDriver" . | quote }}
       -Dsql.db.username=$DATABASE_USERNAME
       -Dsql.db.password=$DATABASE_PASSWORD
-      -Drepo.hostname={{ .Values.repository.host }}
+      -Drepo.hostname={{ template "syncservice.repository" . }}
       -Drepo.port={{ .Values.repository.port }}
       -Ddw.server.applicationConnectors[0].type=http
       -Dmessaging.broker.url=$BROKER_URL

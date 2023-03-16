@@ -18,3 +18,11 @@ chart: {{ .Chart.Name }}
 {{ include "syncservice.selectorLabels" . }}
 heritage: {{ .Release.Service }}
 {{- end }}
+
+{{- define "syncservice.repository" -}}
+{{- if .Values.repository.nameOverride }}
+{{- printf "%s-%s" .Release.Name .Values.repository.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- .Values.repository.host }}
+{{- end }}
+{{- end -}}
