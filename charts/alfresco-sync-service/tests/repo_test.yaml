@@ -1,0 +1,50 @@
+---
+suite: test deployment
+templates:
+  - config-syncservice.yaml
+tests:
+  - it: should render default options
+    set:
+      postgresql:
+        enabled: true
+    asserts:
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: >-
+            -Drepo.hostname=alfresco-cs-repository\s+
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: >-
+            -Drepo.port=80\s+
+  - it: should render options based on repo nameOverride
+    set:
+      postgresql:
+        enabled: true
+      repository:
+        nameOverride: myKnownServiceName
+        port: 8080
+    asserts:
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: >-
+            -Drepo.hostname=RELEASE-NAME-myKnownServiceName\s+
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: >-
+            -Drepo.port=8080\s+
+  - it: should render options as provided in values
+    set:
+      postgresql:
+        enabled: true
+      repository:
+        host: somerepohost
+        port: 8888
+    asserts:
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: >-
+            -Drepo.hostname=somerepohost\s+
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: >-
+            -Drepo.port=8888\s+
