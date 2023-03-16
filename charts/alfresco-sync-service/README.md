@@ -1,6 +1,6 @@
 # alfresco-sync-service
 
-![Version: 4.0.1](https://img.shields.io/badge/Version-4.0.1-informational?style=flat-square) ![AppVersion: 4.0.0-M7](https://img.shields.io/badge/AppVersion-4.0.0--M7-informational?style=flat-square)
+![Version: 4.0.2](https://img.shields.io/badge/Version-4.0.2-informational?style=flat-square) ![AppVersion: 4.0.0-M7](https://img.shields.io/badge/AppVersion-4.0.0--M7-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -64,8 +64,9 @@ Alfresco Sync Service
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | replicaCount | int | `1` |  |
-| repository.host | string | `"alfresco-cs-repository"` |  |
-| repository.port | int | `80` |  |
+| repository.host | string | `"alfresco-cs-repository"` | ACS repository host |
+| repository.nameOverride | string | `nil` | A nameOverride use to compute an ACS repository service name |
+| repository.port | int | `80` | ACS repository port |
 | resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2000Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
