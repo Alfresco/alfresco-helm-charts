@@ -2,6 +2,7 @@
 
 ![Version: 4.0.4](https://img.shields.io/badge/Version-4.0.4-informational?style=flat-square) ![AppVersion: 4.0.0-M7](https://img.shields.io/badge/AppVersion-4.0.0--M7-informational?style=flat-square)
 
+
 Alfresco Sync Service
 
 ## Source Code
