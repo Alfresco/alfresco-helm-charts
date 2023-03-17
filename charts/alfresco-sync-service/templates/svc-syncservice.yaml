@@ -6,6 +6,8 @@ metadata:
   labels:
     {{- include "syncservice.labels" . | nindent 4 }}
 spec:
+  selector:
+    {{- include "syncservice.selectorLabels" . | nindent 4 }}
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.externalPort }}
