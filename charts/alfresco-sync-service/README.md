@@ -1,6 +1,6 @@
 # alfresco-sync-service
 
-![Version: 4.0.2](https://img.shields.io/badge/Version-4.0.2-informational?style=flat-square) ![AppVersion: 4.0.0-M7](https://img.shields.io/badge/AppVersion-4.0.0--M7-informational?style=flat-square)
+![Version: 4.0.4](https://img.shields.io/badge/Version-4.0.4-informational?style=flat-square) ![AppVersion: 4.0.0-M7](https://img.shields.io/badge/AppVersion-4.0.0--M7-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -57,7 +57,7 @@ Alfresco Sync Service
 | podSecurityContext.runAsGroup | int | `1000` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | podSecurityContext.runAsUser | int | `33020` |  |
-| postgresql | object | `{"auth":{"database":"alfrescosync","enablePostgresUser":false,"password":"admin","username":"alfresco"},"enabled":false,"nameOverride":"postgresql-syncservice","primary":{"extendedConfiguration":"shared_buffers = 256MB\nmax_connections = 80\neffective_cache_size = 1024GB\nlog_min_messages = LOG\n"},"resources":{"limits":{"cpu":"2","memory":"2Gi"}}}` | Defines properties required by sync service for connecting to the database If you set database.external to true you will have to setup the JDBC driver, user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements of `database`. Also make sure that the container has the db driver |
+| postgresql | object | `{"auth":{"database":"alfrescosync","enablePostgresUser":false,"password":"admin","username":"alfresco"},"enabled":false,"nameOverride":"postgresql-syncservice","primary":{"extendedConfiguration":"shared_buffers = 256MB\nmax_connections = 100\nwal_level = minimal\nmax_wal_senders = 0\nmax_replication_slots = 0\neffective_cache_size = 1024GB\nlog_min_messages = LOG\n"},"resources":{"limits":{"cpu":"2","memory":"2Gi"}}}` | Defines properties required by sync service for connecting to the database If you set database.external to true you will have to setup the JDBC driver, user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements of `database`. Also make sure that the container has the db driver |
 | postgresql.enabled | bool | `false` | Toggle PostgreSQL chart dependency see [PostgreSQL Bitnami charts documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql)) |
 | readinessProbe.failureThreshold | int | `12` |  |
 | readinessProbe.initialDelaySeconds | int | `20` |  |
