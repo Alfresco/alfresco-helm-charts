@@ -12,7 +12,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 1.0.0 |
-| https://helm.elastic.co | elasticsearch | 7.10.1 |
+| https://helm.elastic.co | elasticsearch | 8.5.1 |
 
 ## Values
 

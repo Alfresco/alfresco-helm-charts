@@ -11,10 +11,19 @@ repos:
     hooks:
       - id: helm-docs
   - repo: https://github.com/bridgecrewio/checkov.git
-    rev: 2.3.3
+    rev: 2.3.130
     hooks:
       - id: checkov
         files: \.yaml$
         args:
         - --quiet
         - --compact
+  - repo: https://github.com/jtyr/kubeconform-helm
+    rev: v0.1.12
+    hooks:
+      - id: kubeconform-helm
+        files: ^charts/[^/]+/(\.kubeconform|\.helmignore|templates/NOTES.txt|.*\.(ya?ml|json|tpl))$
+        args:
+          - --kubernetes-version=1.25.0
+          - --exclude-charts=alfresco-common
+          - --values-dir=ci
