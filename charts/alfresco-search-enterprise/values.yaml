@@ -84,6 +84,7 @@ reindexing:
 elasticsearch:
   # -- Enable embedded elasticsearch - useful when using this chart in standalone
   enabled: false
+  protocol: http
   image: "docker.elastic.co/elasticsearch/elasticsearch-oss"
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
