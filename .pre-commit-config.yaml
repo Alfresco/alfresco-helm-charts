@@ -25,5 +25,5 @@ repos:
         files: ^charts/[^/]+/(\.kubeconform|\.helmignore|templates/NOTES.txt|.*\.(ya?ml|json|tpl))$
         args:
           - --kubernetes-version=1.25.0
-          - --exclude-charts=alfresco-common
+          - --exclude-charts=alfresco-common,alfresco-sync-service
           - --values-dir=ci
