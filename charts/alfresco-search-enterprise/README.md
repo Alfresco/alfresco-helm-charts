@@ -12,7 +12,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 1.0.0 |
-| https://helm.elastic.co | elasticsearch | 8.5.1 |
+| https://helm.elastic.co | elasticsearch | 7.17.3 |
 
 ## Values
 
@@ -26,7 +26,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.enabled | bool | `false` | Enable embedded elasticsearch - useful when using this chart in standalone |
 | elasticsearch.image | string | `"docker.elastic.co/elasticsearch/elasticsearch-oss"` |  |
 | elasticsearch.imageTag | string | `"7.10.2"` |  |
-| elasticsearch.protocol | string | `"http"` |  |
 | elasticsearch.replicas | int | `1` |  |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
