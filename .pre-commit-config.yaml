@@ -22,8 +22,19 @@ repos:
     rev: v0.1.12
     hooks:
       - id: kubeconform-helm
+        alias: kubeconform-helm-min
+        name: "Kubeconform Helm - min k8s version"
         files: ^charts/[^/]+/(\.kubeconform|\.helmignore|templates/NOTES.txt|.*\.(ya?ml|json|tpl))$
         args:
-          - --kubernetes-version=1.25.0
+          - --kubernetes-version=1.21.0
+          - --exclude-charts=alfresco-common,alfresco-sync-service
+          - --values-dir=ci
+  - repo: https://github.com/jtyr/kubeconform-helm
+    rev: v0.1.12
+    hooks:
+      - id: kubeconform-helm
+        name: "Kubeconform Helm - current k8s version"
+        files: ^charts/[^/]+/(\.kubeconform|\.helmignore|templates/NOTES.txt|.*\.(ya?ml|json|tpl))$
+        args:
           - --exclude-charts=alfresco-common,alfresco-sync-service
           - --values-dir=ci
