@@ -9,5 +9,5 @@ chart-repos:
   - self=https://alfresco.github.io/alfresco-helm-charts/
   - bitnami=https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
   - elastic=https://helm.elastic.co
-helm-extra-args: --timeout 900s
+helm-extra-args: --timeout 600s
 validate-maintainers: false

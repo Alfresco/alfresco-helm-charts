@@ -24,8 +24,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | contentMediaTypeCache.refreshTime | string | `"0 0 * * * *"` |  |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch.enabled | bool | `false` | Enable embedded elasticsearch - useful when using this chart in standalone |
-| elasticsearch.image | string | `"docker.elastic.co/elasticsearch/elasticsearch-oss"` |  |
-| elasticsearch.imageTag | string | `"7.10.2"` |  |
 | elasticsearch.replicas | int | `1` |  |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
