@@ -1,6 +1,6 @@
 # alfresco-search-enterprise
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.0-A9](https://img.shields.io/badge/AppVersion-3.3.0--A9-informational?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.0-A9](https://img.shields.io/badge/AppVersion-3.3.0--A9-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -12,7 +12,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 1.0.0 |
-| https://helm.elastic.co | elasticsearch | 7.10.1 |
+| https://helm.elastic.co | elasticsearch | 7.17.3 |
 
 ## Values
 
@@ -24,7 +24,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | contentMediaTypeCache.refreshTime | string | `"0 0 * * * *"` |  |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
 | elasticsearch.enabled | bool | `false` | Enable embedded elasticsearch - useful when using this chart in standalone |
-| elasticsearch.image | string | `"docker.elastic.co/elasticsearch/elasticsearch-oss"` |  |
 | elasticsearch.replicas | int | `1` |  |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |

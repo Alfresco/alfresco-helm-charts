@@ -9,6 +9,17 @@ This repository follows the [helm/charts-repo-actions-demo](https://github.com/h
 * https://github.com/helm/chart-testing
 * https://github.com/helm/chart-releaser
 
+In order to install all the tools required for development on MacOS via [Homebrew](https://brew.sh), run: `brew bundle install`
+
+To setup [pre-commit](https://github.com/pre-commit/pre-commit), run: `pre-commit install`
+
+To install required helm plugins:
+
+```shell
+helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.1.12
+helm plugin install https://github.com/vbehar/helm3-unittest --version v1.0.16
+```
+
 ### PR workflow
 
 Each time a PR is raised, `ct` automatically detect which charts has been changed and run for them:
@@ -22,3 +33,4 @@ Once a PR that contains a chart version bump is merged, the main workflow will r
 ### Update dependencies
 
 There is an initial support for bumping charts dependencies with updatecli via a manually triggered [GHA workflow](https://github.com/Alfresco/alfresco-helm-charts/actions/workflows/updatecli.yaml).
+
