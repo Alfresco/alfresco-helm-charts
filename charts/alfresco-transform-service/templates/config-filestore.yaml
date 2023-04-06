@@ -1,11 +1,11 @@
-# Defines the properties required by the shared file store container
 {{- if eq .Values.repository.edition "Enterprise" }}
+{{- $componentScope := (dict "Values" (dict "nameOverride" "filestore" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco.shortname" . }}-filestore-configmap
+  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
   labels:
-    {{- include "filestore.labels" . | nindent 4 }}
+    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
 data:
   # The JAVA_OPTS defined in the values.yaml file for "shared file store" are set here using proper quotes
   {{- if .Values.filestore.environment }}

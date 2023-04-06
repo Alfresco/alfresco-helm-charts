@@ -1,10 +1,10 @@
-# Defines the service for the imagemagick transformer app
+{{- $componentScope := (dict "Values" (dict "nameOverride" "imagemagick" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "content-services.shortname" . }}-imagemagick
+  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
   labels:
-    {{- include "imagemagick.labels" . | nindent 4 }}
+    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
 spec:
   type: {{ .Values.imagemagick.service.type }}
   ports:
@@ -12,4 +12,4 @@ spec:
       targetPort: {{ .Values.imagemagick.image.internalPort }}
       name: {{ .Values.imagemagick.service.name }}
   selector:
-    {{- include "imagemagick.selectorLabels" . | nindent 4 }}
+    {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 4 }}

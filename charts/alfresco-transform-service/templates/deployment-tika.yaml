@@ -1,26 +1,25 @@
-# Defines the deployment for the tika transformer app
-# Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
+{{- $componentScope := (dict "Values" (dict "nameOverride" "tika" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "content-services.shortname" . }}-tika
+  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
   labels:
-    {{- include "tika.labels" . | nindent 4 }}
+    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
 spec:
   replicas: {{ .Values.tika.replicaCount }}
   selector:
     matchLabels:
-      {{- include "tika.selectorLabels" . | nindent 6 }}
+      {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
-{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+      {{- toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-tika.yaml") . | sha256sum }}
       labels:
-        {{- include "tika.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 8 }}
     spec:
     {{- include "component-pod-security-context" .Values.tika | indent 4 }}
     {{- if .Values.tika.nodeSelector }}
@@ -55,10 +54,9 @@ spec:
           {{- include "component-security-context" .Values.tika | indent 8 }}
           envFrom:
           - configMapRef:
-              # config map to use, defined in config-tika.yaml
-              name: {{ template "content-services.shortname" . }}-tika-configmap
+              name: {{ template "alfresco-transform-service.fullname" $componentScope }}
           - secretRef:
-              name: {{ .Values.messageBroker.existingSecretName | default .Values.messageBroker.secretName }}
+              name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-transform-service.fullname" $)) $.Values.messageBroker.existingSecretName }}
           env:
             {{- include "activemq.env" . | nindent 12 }}
           ports:

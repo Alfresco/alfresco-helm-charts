@@ -1,27 +1,25 @@
-# Defines the deployment for the libreoffice transformer app
-# Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
----
+{{- $componentScope := (dict "Values" (dict "nameOverride" "libreoffice" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "content-services.shortname" . }}-libreoffice
+  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
   labels:
-    {{- include "libreoffice.labels" . | nindent 4 }}
+    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
 spec:
   replicas: {{ .Values.libreoffice.replicaCount }}
   selector:
     matchLabels:
-      {{- include "libreoffice.selectorLabels" . | nindent 6 }}
+      {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
-{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+      {{- toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-libreoffice.yaml") . | sha256sum }}
       labels:
-        {{- include "libreoffice.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 8 }}
     spec:
     {{- include "component-pod-security-context" .Values.libreoffice | indent 4 }}
     {{- if .Values.libreoffice.nodeSelector }}
@@ -56,10 +54,9 @@ spec:
           {{- include "component-security-context" .Values.libreoffice | indent 8 }}
           envFrom:
           - configMapRef:
-              # config map to use, defined in config-libreoffice.yaml
-              name: {{ template "content-services.shortname" . }}-libreoffice-configmap
+              name: {{ template "alfresco-transform-service.fullname" $componentScope }}
           - secretRef:
-              name: {{ .Values.messageBroker.existingSecretName | default .Values.messageBroker.secretName }}
+              name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-transform-service.fullname" $)) $.Values.messageBroker.existingSecretName }}
           env:
             {{- include "activemq.env" . | nindent 12 }}
           ports:

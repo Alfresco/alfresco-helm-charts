@@ -1,15 +1,16 @@
 {{- if eq .Values.repository.edition "Enterprise" }}
+{{- $componentScope := (dict "Values" (dict "nameOverride" "router" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco.shortname" . }}-router
+  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
   labels:
-    {{- include "transform-router.labels" . | nindent 4 }}
+    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
 spec:
   replicas: {{ .Values.transformrouter.replicaCount }}
   selector:
     matchLabels:
-      {{- include "transform-router.selectorLabels" . | nindent 6 }}
+      {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,9 +19,8 @@ spec:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-transform-router.yaml") . | sha256sum }}
-        checksum/config-routes: {{ include (print $.Template.BasePath "/config-transformer-routes.yaml") . | sha256sum }}
       labels:
-        {{- include "transform-router.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 8 }}
     spec:
     {{- include "component-pod-security-context" .Values.transformrouter | indent 4 }}
     {{- if .Values.transformrouter.nodeSelector }}
@@ -55,10 +55,9 @@ spec:
           {{- include "component-security-context" .Values.transformrouter | indent 8 }}
           envFrom:
           - configMapRef:
-              # config map to use, defined in config-transform-router.yaml
-              name: {{ template "alfresco.shortname" . }}-router-configmap
+              name: {{ template "alfresco-transform-service.fullname" $componentScope }}
           - secretRef:
-              name: {{ .Values.messageBroker.existingSecretName | default .Values.messageBroker.secretName }}
+              name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-transform-service.fullname" $)) $.Values.messageBroker.existingSecretName }}
           env:
             {{- include "activemq.env" . | nindent 12 }}
           ports:

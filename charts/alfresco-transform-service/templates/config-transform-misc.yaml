@@ -1,11 +1,11 @@
 {{- if .Values.transformmisc.enabled }}
-# Defines the properties required by the alfresco-transform-misc container
+{{- $componentScope := (dict "Values" (dict "nameOverride" "misc" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "content-services.shortname" . }}-transform-misc-configmap
+  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
   labels:
-    {{- include "transform-misc.labels" . | nindent 4 }}
+    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
 data:
   # The JAVA_OPTS defined in the values.yaml file for "transform-misc" are set here using proper quotes
   {{- if .Values.transformmisc.environment }}

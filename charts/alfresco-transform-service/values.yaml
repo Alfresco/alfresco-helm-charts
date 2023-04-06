@@ -1,5 +1,5 @@
 repository:
-  edition: "enterprise"
+  edition: "Enterprise"
 transformrouter:
   replicaCount: 2
   nodeSelector: {}
@@ -307,10 +307,10 @@ messageBroker: &acs_messageBroker
   # -- Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName: null
 global:
-  alfrescoRegistryPullSecrets:
-  registryPullSecrets:
-    - quay-registry-secret
+  alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
+  ai:
+    enabled: false

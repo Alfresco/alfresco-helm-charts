@@ -1,10 +1,10 @@
-# Defines the properties required by the imagemagick container
+{{- $componentScope := (dict "Values" (dict "nameOverride" "imagemagick" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "content-services.shortname" . }}-imagemagick-configmap
+  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
   labels:
-    {{- include "imagemagick.labels" . | nindent 4 }}
+    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
 data:
   # The JAVA_OPTS defined in the values.yaml file for the "imagemagick" are set here using proper quotes
   {{- if .Values.imagemagick.environment }}

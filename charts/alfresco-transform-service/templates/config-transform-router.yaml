@@ -1,11 +1,12 @@
 # Defines the properties required by the transform router container
 {{- if eq .Values.repository.edition "Enterprise" }}
+{{- $componentScope := (dict "Values" (dict "nameOverride" "router" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco.shortname" . }}-router-configmap
+  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
   labels:
-    {{- include "transform-router.labels" . | nindent 4 }}
+    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
 data:
   # The JAVA_OPTS defined in the values.yaml file for "transformrouter" are set here using proper quotes
   {{- if .Values.transformrouter.environment }}
@@ -25,6 +26,5 @@ data:
   TRANSFORMER_URL_AWS_AI: http://{{ template "content-services.shortname" . }}-ai-transformer:80
   TRANSFORMER_QUEUE_AWS_AI: "org.alfresco.transform.engine.ai-aws.acs"
   TRANSFORMER_ROUTES_ADDITIONAL_AI: "/mnt/routes/ai-pipeline-routes.json"
-
-    {{- end }}
+  {{- end }}
 {{- end }}

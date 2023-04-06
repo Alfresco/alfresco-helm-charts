@@ -1,11 +1,11 @@
 {{- if .Values.transformmisc.enabled }}
-# Defines the service for the transform-misc transformer app
+{{- $componentScope := (dict "Values" (dict "nameOverride" "misc" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "content-services.shortname" . }}-transform-misc
+  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
   labels:
-    {{- include "transform-misc.labels" . | nindent 4 }}
+    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
 spec:
   type: {{ .Values.transformmisc.service.type }}
   ports:
@@ -13,5 +13,5 @@ spec:
       targetPort: {{ .Values.transformmisc.image.internalPort }}
       name: {{ .Values.transformmisc.service.name }}
   selector:
-    {{- include "transform-misc.selectorLabels" . | nindent 4 }}
+    {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 4 }}
 {{- end }}

@@ -1,17 +1,16 @@
 {{- if .Values.transformmisc.enabled }}
-# Defines the deployment for the transform-misc transformer app
-# Details: https://git.alfresco.com/Repository/alfresco-docker-transformers
+{{- $componentScope := (dict "Values" (dict "nameOverride" "misc" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "content-services.shortname" . }}-transform-misc
+  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
   labels:
-    {{- include "transform-misc.labels" . | nindent 4 }}
+    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
 spec:
   replicas: {{ .Values.transformmisc.replicaCount }}
   selector:
     matchLabels:
-      {{- include "transform-misc.selectorLabels" . | nindent 6 }}
+      {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -21,7 +20,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-transform-misc.yaml") . | sha256sum }}
       labels:
-        {{- include "transform-misc.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 8 }}
     spec:
     {{- include "component-pod-security-context" .Values.transformmisc | indent 4 }}
     {{- if .Values.transformmisc.nodeSelector }}
@@ -38,7 +37,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - {{ template "content-services.shortname" . }}-transform-misc
+                  - {{ template "alfresco-transform-service.fullname" $componentScope }}
               topologyKey: failure-domain.beta.kubernetes.io/zone
           - weight: 5
             podAffinityTerm:
@@ -47,7 +46,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - {{ template "content-services.shortname" . }}-transform-misc
+                  - {{ template "alfresco-transform-service.fullname" $componentScope }}
               topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ .Chart.Name }}
@@ -56,10 +55,9 @@ spec:
           {{- include "component-security-context" .Values.transformmisc | indent 8 }}
           envFrom:
           - configMapRef:
-              # config map to use, defined in config-transformmisc.yaml
-              name: {{ template "content-services.shortname" . }}-transform-misc-configmap
+              name: {{ template "alfresco-transform-service.fullname" $componentScope }}
           - secretRef:
-              name: {{ .Values.messageBroker.existingSecretName | default .Values.messageBroker.secretName }}
+              name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-transform-service.fullname" $)) $.Values.messageBroker.existingSecretName }}
           env:
             {{- include "activemq.env" . | nindent 12 }}
           ports:
