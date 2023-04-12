@@ -39,7 +39,7 @@ Get ActiveMQ secret
 */}}
 {{- define "syncservice.brokerSecret" -}}
 {{- if .Values.activemq.enabled }}
-{{- coalesce .Values.activemq.existingSecretName (printf "%s-messagebroker-secret" (include "syncservice.fullname" . )) -}}
+{{- coalesce .Values.activemq.existingSecretName (printf "%s-messagebroker-secret" (include "alfresco-sync-service.fullname" . )) -}}
 {{- else }}
 {{- coalesce .Values.messageBroker.existingSecretName .Values.global.messageBroker.existingSecretName -}}
 {{- end }}
