@@ -12,7 +12,7 @@ A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate A
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 1.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 1.0.1 |
 
 ## Values
 
