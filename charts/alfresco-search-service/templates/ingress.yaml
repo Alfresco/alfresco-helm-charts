@@ -25,7 +25,7 @@ spec:
   rules:
   {{- if .Values.ingress.hostName }}
   - host: {{ tpl .Values.ingress.hostName . }}
-  {{- else }}
+  {{- end }}
   - http:
       paths:
       - path: {{ .Values.ingress.path }}
