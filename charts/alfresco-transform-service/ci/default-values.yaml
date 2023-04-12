@@ -68,6 +68,5 @@ filestore:
       cpu: "0.01"
       memory: "128Mi"
     limits:
-      cpu: "0.1"
       memory: "700Mi"
   replicaCount: 1
