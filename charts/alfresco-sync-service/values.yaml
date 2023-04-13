@@ -140,4 +140,5 @@ ingress:
   path: /syncservice
 
 alfresco-mocks:
+  # -- enable alfresco repository mock - useful when testing the chart standalone
   enabled: false
