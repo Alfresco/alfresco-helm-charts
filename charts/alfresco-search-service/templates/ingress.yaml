@@ -25,9 +25,6 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-  {{- if .Values.ingress.hostName }}
-  - host: {{ tpl .Values.ingress.hostName . }}
-  {{- end }}
   - http:
       paths:
       - path: {{ .Values.ingress.path }}
@@ -35,4 +32,7 @@ spec:
         pathType: Prefix
         {{- end }}
         backend: {{- include "common.ingress.backend" $backendSvc | nindent 10 }}
+    {{- if .Values.ingress.hostName }}
+    host: {{ tpl .Values.ingress.hostName . }}
+    {{- end }}
 {{- end }}
