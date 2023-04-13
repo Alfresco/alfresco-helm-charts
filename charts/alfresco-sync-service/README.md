@@ -14,6 +14,7 @@ Alfresco Sync Service
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
+| oci://registry-1.docker.io/bitnamicharts | apache | 9.3.0 |
 | oci://registry-1.docker.io/bitnamicharts | common | 2.x.x |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.x.x |
 
@@ -74,5 +75,6 @@ Alfresco Sync Service
 | service.externalPort | int | `80` |  |
 | service.name | string | `"syncservice"` |  |
 | service.type | string | `"NodePort"` |  |
+| testing.enabled | bool | `false` |  |
 
 Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for information on the Helm charts and deployment instructions.
