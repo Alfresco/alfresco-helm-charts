@@ -138,3 +138,6 @@ ingress:
   #      - chart-example.local
   tls: []
   path: /syncservice
+
+testing:
+  enabled: false

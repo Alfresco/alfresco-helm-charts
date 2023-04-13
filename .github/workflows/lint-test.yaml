@@ -73,18 +73,6 @@ jobs:
           kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson="${HOME}"/.docker/config.json --type=kubernetes.io/dockerconfigjson -n "$INSTALL_NAMESPACE"
           kubectl create secret generic broker-secret --from-literal=BROKER_URL="failover:(nio://activemq:61616)?timeout=3000" --from-literal=BROKER_USERNAME=admin --from-literal=BROKER_PASSWORD=admin -n "$INSTALL_NAMESPACE"
 
-      - name: Prepare charts mocks for testing
-        if: steps.list-changed.outputs.changed == 'true'
-        run: |
-          for C in $(ct lsc --config ct-lint.yaml); do
-            if [ -d "${C}/ci/kustomize/" ]; then
-              pushd "${C}/ci/kustomize/"
-              kubectl kustomize --enable-helm . | \
-              kubectl -n "$INSTALL_NAMESPACE" apply -f -
-              popd
-            fi
-          done
-
       - name: Run chart-testing (install)
         run: |
           ct install --config ct-install.yaml \

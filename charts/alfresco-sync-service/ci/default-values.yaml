@@ -8,3 +8,11 @@ messageBroker:
 postgresql:
   enabled: true
   nameOverride: pgsync
+testing:
+  enabled: true
+apache:
+  fullnameOverride: dummy-repo
+  htdocsConfigMap: apache-configmap
+  httpdConfConfigMap: apacheconf-configmap
+  service:
+    type: ClusterIP

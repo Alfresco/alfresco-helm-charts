@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: apache-configmap
+  labels:
+    {{- include "syncservice.labels" . | nindent 4 }}
+data:
+  config: |-
+    {
+      "id": "0",
+      "uri": "http://dummy-repo/syncservice",
+      "config": {
+        "filters": {
+          "nodeAspects": [],
+          "nodeTypes": [],
+          "smartFolderNodeAspects": [],
+          "nodeTypesWhitelist": []
+        },
+        "dsyncClientVersionMin": "1.0.1",
+        "repoInfo": {
+          "versionLabel": "7.4.0",
+          "edition": "Enterprise",
+          "clusterEnabled": false
+        }
+      }
+    }
+  authentication: |-
+    {
+      "data": {
+        "creationAllowed": true
+      }
+    }

@@ -26,3 +26,7 @@ dependencies:
     version: 12.x.x
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
+  - name: apache
+    repository: oci://registry-1.docker.io/bitnamicharts
+    version: 9.3.0
+    condition: testing.enabled
