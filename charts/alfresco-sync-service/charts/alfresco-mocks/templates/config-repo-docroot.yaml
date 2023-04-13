@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: apache-configmap
+  name: repo-docroot-configmap
   labels:
     {{- include "syncservice.labels" . | nindent 4 }}
 data:

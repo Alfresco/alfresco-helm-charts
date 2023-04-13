@@ -12,9 +12,9 @@ Alfresco Sync Service
 
 | Repository | Name | Version |
 |------------|------|---------|
+|  | alfresco-mocks | 0.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
-| oci://registry-1.docker.io/bitnamicharts | apache | 9.3.0 |
 | oci://registry-1.docker.io/bitnamicharts | common | 2.x.x |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.x.x |
 
@@ -27,6 +27,7 @@ Alfresco Sync Service
 | activemq.enabled | bool | `false` | Toggle ActiveMQ chart dependency see [Alfresco ActiveMQ chart documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/activemq)) |
 | activemq.nameOverride | string | `"activemq"` |  |
 | activemq.services.broker.ports.external.openwire | int | `61616` |  |
+| alfresco-mocks.enabled | bool | `false` |  |
 | database.driver | string | `"org.postgresql.Driver"` | The JDBC Driver to connect to the DB. If different from the default make sure your container image ships it. |
 | database.existingSecretName | string | `nil` | An existing kubernetes secret with DB info (prefered over using values) |
 | database.password | string | `"admin"` | JDBC password to use to connect to the DB |
@@ -75,6 +76,5 @@ Alfresco Sync Service
 | service.externalPort | int | `80` |  |
 | service.name | string | `"syncservice"` |  |
 | service.type | string | `"NodePort"` |  |
-| testing.enabled | bool | `false` |  |
 
 Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for information on the Helm charts and deployment instructions.

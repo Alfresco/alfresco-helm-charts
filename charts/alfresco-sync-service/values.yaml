@@ -139,5 +139,5 @@ ingress:
   tls: []
   path: /syncservice
 
-testing:
+alfresco-mocks:
   enabled: false

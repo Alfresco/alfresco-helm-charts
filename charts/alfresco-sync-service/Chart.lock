@@ -11,8 +11,8 @@ dependencies:
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 12.2.7
-- name: apache
-  repository: oci://registry-1.docker.io/bitnamicharts
-  version: 9.3.0
-digest: sha256:92fea58641000864778c34053f86bf76e34b2c8ca43bac9cae47e9f4c0b0703b
-generated: "2023-04-13T10:54:21.590749+02:00"
+- name: alfresco-mocks
+  repository: ""
+  version: 0.1.0
+digest: sha256:f96ddc46d90d30b451dc263f3977987026472b55ae86bd0483afea2862bca5e0
+generated: "2023-04-13T17:38:38.098328+02:00"
