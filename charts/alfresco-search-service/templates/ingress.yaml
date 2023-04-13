@@ -1,6 +1,7 @@
 {{- if .Values.ingress.enabled }}
 {{- $serviceName :=  printf "%s-%s" (include  "alfresco-search.fullName" .) "solr" -}}
-{{- $servicePort := .Values.service.externalPort -}}
+{{- $servicePort := default .Values.service.name (.Values.service.externalPort | int) -}}
+{{- $backendSvc := dict "serviceName" $serviceName "servicePort" $servicePort "context" $ -}}
 apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
@@ -23,14 +24,14 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-  {{- if .Values.ingress.hostName }}
-  - host: {{ tpl .Values.ingress.hostName . }}
-  {{- end }}
   - http:
       paths:
       - path: {{ .Values.ingress.path }}
         {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
         pathType: Prefix
         {{- end }}
-        backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
+        backend: {{- include "common.ingress.backend" $backendSvc | nindent 10 }}
+    {{- if .Values.ingress.hostName }}
+    host: {{ tpl .Values.ingress.hostName . }}
+    {{- end }}
 {{- end }}
