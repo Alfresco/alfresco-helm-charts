@@ -26,6 +26,7 @@ data:
     </Directory>
     ErrorLog "logs/error_log"
     LogLevel warn
+    # Hacking around paths to make repo mock behaving as expected
     <IfModule alias_module>
       Alias /alfresco/s/api "/opt/bitnami/apache/htdocs"
       Alias /alfresco/service/devicesync "/opt/bitnami/apache/htdocs"
