@@ -41,5 +41,5 @@ Alfresco Sync Service
 Sync endpoint available at {{ printf "%s/%s" (default "" .Values.ingress.hostName) .Values.ingress.path }}
 Using required components:
  - Content repostory: http://{{ .Values.repository.host }}:{{ .Values.repository.port }}
- - ActiveMQ: {{ template "syncservice.brokerUrl" . }}
- - SQL datbase: {{ template "syncservice.dbUrl" . }}
+ - ActiveMQ: {{ template "alfresco-sync-service.brokerUrl" . }}
+ - SQL datbase: {{ template "alfresco-sync-service.dbUrl" . }}

@@ -50,7 +50,7 @@ app.kubernetes.io/name: {{ include "alfresco-sync-service.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{- define "syncservice.repository" -}}
+{{- define "alfresco-sync-service.repository" -}}
 {{- if .Values.repository.nameOverride }}
 {{- printf "%s-%s" .Release.Name .Values.repository.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}

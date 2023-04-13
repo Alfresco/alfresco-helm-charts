@@ -39,7 +39,7 @@ spec:
         - configMapRef:
             name: {{ template "alfresco-sync-service.fullname" . }}-configmap
         - secretRef:
-            name: {{ template "syncservice.brokerSecret" . }}
+            name: {{ template "alfresco-sync-service.brokerSecret" . }}
         ports:
         - name: serviceport
           containerPort: 9090

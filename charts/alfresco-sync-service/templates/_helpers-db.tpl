@@ -1,7 +1,7 @@
 {{/*
 Get Database Username
 */}}
-{{- define "syncservice.dbUser" -}}
+{{- define "alfresco-sync-service.dbUser" -}}
 {{- $defaultUser := "alfresco" }}
 {{- if .Values.postgresql.enabled }}
 {{- coalesce .Values.postgresql.auth.username $defaultUser }}
@@ -13,7 +13,7 @@ Get Database Username
 {{/*
 Get Database Password
 */}}
-{{- define "syncservice.dbPass" -}}
+{{- define "alfresco-sync-service.dbPass" -}}
 {{- $defaultPass := "admin" }}
 {{- if .Values.postgresql.enabled }}
 {{- coalesce .Values.postgresql.auth.password $defaultPass }}
@@ -25,7 +25,7 @@ Get Database Password
 {{/*
 Get Database Driver
 */}}
-{{- define "syncservice.dbDriver" -}}
+{{- define "alfresco-sync-service.dbDriver" -}}
 {{- $defaultDriver := "org.postgresql.Driver" }}
 {{- if .Values.postgresql.enabled }}
 {{- $defaultDriver }}
@@ -37,7 +37,7 @@ Get Database Driver
 {{/*
 Get Database URL
 */}}
-{{- define "syncservice.dbUrl" -}}
+{{- define "alfresco-sync-service.dbUrl" -}}
 {{- if .Values.postgresql.enabled }}
 {{- $pgsvcname := printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}
 {{- $pgsvcport := "" }}

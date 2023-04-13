@@ -7,11 +7,11 @@ metadata:
     {{- include "alfresco-sync-service.labels" . | nindent 4 }}
 data:
   JAVA_OPTS: >-
-      -Dsql.db.url={{ include "syncservice.dbUrl" . }}
-      -Dsql.db.driver={{ include "syncservice.dbDriver" . | quote }}
+      -Dsql.db.url={{ include "alfresco-sync-service.dbUrl" . }}
+      -Dsql.db.driver={{ include "alfresco-sync-service.dbDriver" . | quote }}
       -Dsql.db.username=$DATABASE_USERNAME
       -Dsql.db.password=$DATABASE_PASSWORD
-      -Drepo.hostname={{ template "syncservice.repository" . }}
+      -Drepo.hostname={{ template "alfresco-sync-service.repository" . }}
       -Drepo.port={{ .Values.repository.port }}
       -Ddw.server.applicationConnectors[0].type=http
       -Dmessaging.broker.url=$BROKER_URL
