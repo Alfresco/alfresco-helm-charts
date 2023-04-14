@@ -27,7 +27,7 @@ Alfresco Sync Service
 | activemq.enabled | bool | `false` | Toggle ActiveMQ chart dependency see [Alfresco ActiveMQ chart documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/activemq)) |
 | activemq.nameOverride | string | `"activemq"` |  |
 | activemq.services.broker.ports.external.openwire | int | `61616` |  |
-| alfresco-mocks.enabled | bool | `false` | enable alfresco repository mock - useful when testing the chart standalone |
+| alfresco-mocks.enabled | bool | `true` | enable alfresco repository mock - useful when testing the chart standalone |
 | database.driver | string | `"org.postgresql.Driver"` | The JDBC Driver to connect to the DB. If different from the default make sure your container image ships it. |
 | database.existingSecretName | string | `nil` | An existing kubernetes secret with DB info (prefered over using values) |
 | database.password | string | `"admin"` | JDBC password to use to connect to the DB |
