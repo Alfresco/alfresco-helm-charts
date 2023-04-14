@@ -1,7 +1,7 @@
 {{/*
 Get ActiveMQ URL
 */}}
-{{- define "syncservice.brokerUrl" -}}
+{{- define "alfresco-sync-service.brokerUrl" -}}
 {{- $brokerOptions := "?timeout=3000&jms.useCompression=true" }}
 {{- $brokerPort := .Values.activemq.services.broker.ports.external.openwire | int }}
 {{- if .Values.activemq.enabled }}
@@ -15,7 +15,7 @@ Get ActiveMQ URL
 {{/*
 Get ActiveMQ Username
 */}}
-{{- define "syncservice.brokerUser" -}}
+{{- define "alfresco-sync-service.brokerUser" -}}
 {{- if .Values.activemq.enabled }}
 {{- .Values.activemq.adminUser.user -}}
 {{- else }}
@@ -26,7 +26,7 @@ Get ActiveMQ Username
 {{/*
 Get ActiveMQ Password
 */}}
-{{- define "syncservice.brokerPass" -}}
+{{- define "alfresco-sync-service.brokerPass" -}}
 {{- if .Values.activemq.enabled }}
 {{- .Values.activemq.adminUser.password -}}
 {{- else }}
@@ -37,9 +37,9 @@ Get ActiveMQ Password
 {{/*
 Get ActiveMQ secret
 */}}
-{{- define "syncservice.brokerSecret" -}}
+{{- define "alfresco-sync-service.brokerSecret" -}}
 {{- if .Values.activemq.enabled }}
-{{- coalesce .Values.activemq.existingSecretName (printf "%s-messagebroker-secret" (include "syncservice.fullname" . )) -}}
+{{- coalesce .Values.activemq.existingSecretName (printf "%s-messagebroker-secret" (include "alfresco-sync-service.fullname" . )) -}}
 {{- else }}
 {{- coalesce .Values.messageBroker.existingSecretName .Values.global.messageBroker.existingSecretName -}}
 {{- end }}
