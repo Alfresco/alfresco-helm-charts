@@ -8,6 +8,7 @@ excluded-charts:
 chart-repos:
   - self=https://alfresco.github.io/alfresco-helm-charts/
   - bitnami=https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
+  - bitnamicharts=oci://registry-1.docker.io/bitnamicharts
   - elastic=https://helm.elastic.co
 helm-extra-args: --timeout 600s
 validate-maintainers: false
