@@ -77,3 +77,10 @@ jobs:
         run: |
           ct install --config ct-install.yaml \
             --namespace "$INSTALL_NAMESPACE" $TEST_ALL_CHARTS_ARG
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: failure()
+        with:
+          # provide access to SSH user that triggered the build
+          limit-access-to-actor: true
