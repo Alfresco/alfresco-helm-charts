@@ -1,0 +1,6 @@
+dependencies:
+- name: apache
+  repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
+  version: 9.3.0
+digest: sha256:fccea17798b9302570a4ee745ae84dee86480fd1089737e6dc589f00d79f5bb9
+generated: "2023-04-14T11:01:33.441954813Z"

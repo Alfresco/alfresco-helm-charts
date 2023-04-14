@@ -8,7 +8,7 @@ Install a repository mock - useful for testing charts in standalone mode
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://registry-1.docker.io/bitnamicharts | apache | 9.3.0 |
+| https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | apache | 9.3.0 |
 
 ## Values
 

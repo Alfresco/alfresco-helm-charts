@@ -15,8 +15,8 @@ Alfresco Sync Service
 |  | alfresco-mocks | 0.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
-| oci://registry-1.docker.io/bitnamicharts | common | 2.x.x |
-| oci://registry-1.docker.io/bitnamicharts | postgresql | 12.x.x |
+| https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | common | 2.x.x |
+| https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | postgresql | 12.x.x |
 
 ## Values
 
