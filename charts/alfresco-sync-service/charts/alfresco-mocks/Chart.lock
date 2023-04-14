@@ -1,6 +1,0 @@
-dependencies:
-- name: apache
-  repository: oci://registry-1.docker.io/bitnamicharts
-  version: 9.3.0
-digest: sha256:ab5a45c29314adc5a4499d24a52cc8b644597cda389dffc47d3d8ac5143115ae
-generated: "2023-04-13T17:44:36.233751+02:00"
