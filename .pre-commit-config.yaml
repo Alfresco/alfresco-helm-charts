@@ -15,6 +15,7 @@ repos:
     hooks:
       - id: checkov
         files: \.yaml$
+        verbose: true
         args:
         - --quiet
         - --compact
