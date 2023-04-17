@@ -1,0 +1,6 @@
+apache:
+  fullnameOverride: dummy-repo
+  htdocsConfigMap: repo-docroot-configmap
+  httpdConfConfigMap: repo-httpdconf-configmap
+  service:
+    type: ClusterIP

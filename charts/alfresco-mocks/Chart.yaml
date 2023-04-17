@@ -1,0 +1,11 @@
+apiVersion: v2
+name: alfresco-mocks
+description: Install a repository mock - useful for testing charts in standalone mode
+type: application
+version: 0.1.0-0
+appVersion: "0.1.0"
+icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+dependencies:
+  - name: apache
+    repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
+    version: 9.3.0
