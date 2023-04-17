@@ -1,6 +1,6 @@
 # alfresco-mocks
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
+![Version: 0.1.0-0](https://img.shields.io/badge/Version-0.1.0--0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
 
 Install a repository mock - useful for testing charts in standalone mode
 
@@ -8,7 +8,7 @@ Install a repository mock - useful for testing charts in standalone mode
 
 | Repository | Name | Version |
 |------------|------|---------|
-| oci://registry-1.docker.io/bitnamicharts | apache | 9.3.0 |
+| https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/ | apache | 9.3.0 |
 
 ## Values
 
