@@ -1,0 +1,15 @@
+apiVersion: v2
+name: alfresco-repository
+description: A Helm chart for installing Alfresco Repository together with Share
+type: application
+version: 0.1.0-0
+appVersion: "7.4.0-M3"
+icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+dependencies:
+  - name: alfresco-common
+    version: 1.0.0
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+  - name: activemq
+    version: 3.0.1
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    condition: activemq.enabled
