@@ -2,3 +2,5 @@
 fullnameOverride: dummy-repo
 htdocsConfigMap: dummy-repo
 httpdConfConfigMap: httpd-conf
+service:
+  type: ClusterIP
