@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco-repository.config-share.name" . }}
+  labels:
+    {{- include "alfresco-repository.share.labels" . | nindent 4 }}
+data:
+  {{- $alfUrl := include "share.url" $ -}}
+  {{- $alfproxy := printf "-Dalfresco.proxy=%s" $alfUrl }}
+  REPO_HOST: "{{ template "alfresco-repository.deployment-repository.name" . }}"
+  REPO_PORT: "{{ .Values.repository.service.externalPort }}"
+  CSRF_FILTER_REFERER: "{{ $alfUrl }}/.*"
+  CSRF_FILTER_ORIGIN: "{{ $alfUrl }}"
+  {{- $environment := .Values.share.environment | default dict }}
+  JAVA_OPTS: {{ tpl (printf "%s %s" ($environment.JAVA_OPTS | default "") $alfproxy) $ | trim | quote }}
+  {{- range $key, $val := omit $environment "JAVA_OPTS" }}
+  {{ $key }}: {{ tpl $val $ | quote }}
+  {{- end }}

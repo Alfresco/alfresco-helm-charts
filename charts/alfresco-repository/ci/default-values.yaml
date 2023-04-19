@@ -1,0 +1,24 @@
+---
+repository:
+  replicaCount: 1
+  persistence:
+    accessModes:
+      - ReadWriteOnce
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "1024Mi"
+    limits:
+      memory: "1560Mi"
+share:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      memory: "512Mi"
+activemq:
+  enabled: true
+global:
+  tracking:
+    sharedsecret: dummy

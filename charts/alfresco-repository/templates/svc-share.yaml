@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-repository.deployment-share.name" . }}
+  labels:
+    {{- include "alfresco-repository.share.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.share.service.type }}
+  ports:
+    - port: {{ .Values.share.service.externalPort }}
+      targetPort: {{ .Values.share.image.internalPort }}
+      name: {{ .Values.share.service.name }}
+  selector:
+    {{- include "alfresco-repository.share.selectorLabels" . | nindent 4 }}

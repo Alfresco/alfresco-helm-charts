@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-repository.deployment-repository.name" . }}
+  labels:
+    {{- include "alfresco-repository.repository.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.repository.service.type }}
+  ports:
+    - port: {{ .Values.repository.service.externalPort }}
+      targetPort: {{ .Values.repository.image.internalPort }}
+      name: {{ .Values.repository.service.name }}
+    {{- if and .Values.email.server.enabled .Values.email.inbound.enabled }}
+    - port: {{ .Values.email.server.port }}
+      targetPort: {{ .Values.email.server.port }}
+      name: {{ .Values.repository.service.name }}-email-inbound
+      protocol: TCP
+    - port: {{ .Values.imap.server.port }}
+      targetPort: {{ .Values.imap.server.port }}
+      name: {{ .Values.repository.service.name }}-email-imap
+      protocol: TCP
+    - port: {{ .Values.imap.server.imaps.port }}
+      targetPort: {{ .Values.imap.server.imaps.port }}
+      name: {{ .Values.repository.service.name }}-email-imap-secure
+      protocol: TCP
+    {{- end }}
+  selector:
+    {{- include "alfresco-repository.repository.selectorLabels" . | nindent 4 }}
