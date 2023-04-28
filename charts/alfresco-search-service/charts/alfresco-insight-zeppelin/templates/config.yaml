@@ -12,3 +12,6 @@ metadata:
 data:
   REPO_HOST: "{{ template "alfresco-repo-host" . }}"
   REPO_PORT: "{{ template "alfresco-repo-port" . }}"
+  {{- range $key, $value := .Values.environment }}
+  {{ $key }}: {{ $value }}
+  {{- end }}
