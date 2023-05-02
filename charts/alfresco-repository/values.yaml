@@ -36,6 +36,8 @@ repository:
         limits:
           cpu: "0.25"
           memory: "10Mi"
+      securityContext:
+        runAsUser: 1000
   service:
     name: alfresco
     type: ClusterIP

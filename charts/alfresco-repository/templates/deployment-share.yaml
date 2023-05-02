@@ -69,9 +69,16 @@ spec:
             preStop:
               exec:
                 command: ["/bin/bash", "-c", "sleep 20"]
-      {{- if .Values.share.extraInitContainers }}
       initContainers:
-{{ tpl .Values.share.extraInitContainers . | indent 8 }}
+        - name: wait-repository-ready
+          image: "{{ .Values.repository.initContainers.db.image.repository }}:{{ .Values.repository.initContainers.db.image.tag }}"
+          imagePullPolicy: {{ .Values.repository.initContainers.db.image.pullPolicy }}
+          {{- include "component-security-context" .Values.repository.initContainers.db | indent 8 }}
+          resources: {{- toYaml .Values.repository.initContainers.db.resources | nindent 12 }}
+          {{- $serviceTarget :=  cat (include "alfresco-repository.deployment-repository.name" .) .Values.repository.service.externalPort }}
+          command: ['sh', '-c', 'until nc -w1 {{ $serviceTarget }}; do echo "waiting for repository reachable at {{ $serviceTarget }}"; sleep 2; done;']
+      {{- if .Values.share.extraInitContainers }}
+        {{- tpl .Values.share.extraInitContainers . | indent 8 }}
       {{- end }}
       {{- if .Values.share.extraVolumes }}
       volumes:
