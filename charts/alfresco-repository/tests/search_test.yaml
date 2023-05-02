@@ -7,8 +7,9 @@ tests:
     values: &testvalues
       - values/test_values.yaml
     set:
-      alfresco-search:
-        enabled: false
+      repository:
+        index:
+          subsystem: none
     asserts:
       - matchRegex:
           path: data.ALFRESCO_OPTS
@@ -17,11 +18,9 @@ tests:
   - it: should configure ACS with external Solr
     values: *testvalues
     set:
-      alfresco-search:
-        enabled: false
-        external:
-          host: somehostwheresolrservesrequests
-          port: 8983
+      solr6:
+        host: somehostwheresolrservesrequests
+        port: 8983
     asserts:
       - matchRegex:
           path: data.ALFRESCO_OPTS
@@ -42,10 +41,10 @@ tests:
   - it: should configure ACS with external ElasticSearch
     values: *testvalues
     set:
-      alfresco-search:
-        enabled: false
+      repository:
+        index:
+          subsystem: elasticsearch
       alfresco-search-enterprise:
-        enabled: true
         elasticsearch:
           host: some.opensearch.endpoint
           port: 443
