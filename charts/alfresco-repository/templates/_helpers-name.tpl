@@ -48,3 +48,8 @@
 {{- $scope := (dict "Values" (dict "nameOverride" "repository-secret" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-repository.fullname" $scope }}
 {{- end }}
+
+{{- define "alfresco-repository.secret-s3.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "repository-secret-s3" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-repository.fullname" $scope }}
+{{- end }}
