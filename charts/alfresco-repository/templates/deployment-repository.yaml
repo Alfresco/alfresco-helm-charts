@@ -196,7 +196,7 @@ spec:
       {{- if .Values.repository.extraLogStatements }}
         - name : repository-logging-properties-volume
           configMap:
-            name: {{ template "alfresco.shortname" . }}-custom-log4j-properties-configmap
+            name: {{ template "alfresco-repository.config-dev-log4j-properties.name" . }}
             items:
             - key: custom-log4j.properties
               path: custom-log4j.properties

@@ -1,0 +1,19 @@
+{{- if .Values.repository.extraLogStatements }}
+# Defines log4j properties
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco-repository.config-dev-log4j-properties.name" . }}
+  labels:
+    {{- include "alfresco-repository.repository.labels" . | nindent 4 }}
+data:
+  custom-log4j.properties: |-
+  {{- range $key, $val := .Values.repository.extraLogStatements }}
+   log4j.logger.{{ $key }}={{ $val }}
+  {{- end }}
+  custom-log4j2.properties: |-
+  {{- range $key, $val := .Values.repository.extraLogStatements }}
+   logger.{{ $key | replace "." "-" }}.name={{ $key }}
+   logger.{{ $key | replace "." "-" }}.level={{ $val }}
+  {{- end }}
+{{- end }}

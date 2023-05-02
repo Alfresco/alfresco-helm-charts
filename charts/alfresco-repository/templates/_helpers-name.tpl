@@ -1,3 +1,8 @@
+{{- define "alfresco-repository.config-dev-log4j-properties.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "repository-custom-log4j-properties-configmap" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-repository.fullname" $scope }}
+{{- end }}
+
 {{- define "alfresco-repository.config-repository.name" -}}
 {{- $scope := (dict "Values" (dict "nameOverride" "repository-configmap" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-repository.fullname" $scope }}
