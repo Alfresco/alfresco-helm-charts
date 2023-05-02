@@ -81,7 +81,7 @@ A Helm chart for installing Alfresco Repository together with Share
 | repository.image.pullPolicy | string | `"IfNotPresent"` |  |
 | repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
 | repository.image.tag | string | `"7.4.0-M3"` |  |
-| repository.index.subsystem | string | `"solr6"` | The search service to use, between none, solr6 or elasticsearch |
+| repository.index.subsystem | string | `"solr6"` | The search service to use, between noindex, solr6 or elasticsearch |
 | repository.ingress.annotations | object | `{}` |  |
 | repository.ingress.maxUploadSize | string | `"5g"` |  |
 | repository.ingress.path | string | `"/"` |  |

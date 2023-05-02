@@ -10,6 +10,8 @@ repository:
       memory: "1024Mi"
     limits:
       memory: "1560Mi"
+  index:
+    subsystem: noindex
 share:
   resources:
     requests:

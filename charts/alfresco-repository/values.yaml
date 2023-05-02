@@ -95,7 +95,7 @@ repository:
       mountPath: /usr/local/tomcat/alf_data
       subPath: alfresco-content-services/repository-data
   index:
-    # -- The search service to use, between none, solr6 or elasticsearch
+    # -- The search service to use, between noindex, solr6 or elasticsearch
     subsystem: solr6
   extraVolumes: []
   extraVolumeMounts: []
