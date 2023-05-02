@@ -22,7 +22,11 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Apply your secret file in k8s environment to access quay.io images (Example: https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md) Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
+| environment.ZEPPELIN_INTP_MEM | string | `"-Xms512m -Xmx1g"` |  |
+| environment.ZEPPELIN_MEM | string | `"-Xms512m -Xmx1g"` |  |
+| global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
+| global.strategy.rollingUpdate.maxSurge | int | `1` |  |
+| global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/insight-zeppelin"` |  |
