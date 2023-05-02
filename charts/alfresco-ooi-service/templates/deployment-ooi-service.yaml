@@ -1,5 +1,4 @@
 {{- if eq .Values.repository.edition "Enterprise" }}
-{{- if .Values.ooi.enabled }}
 # Defines the deployment for the ooi-service app
 # Details: https://github.com/Alfresco/onedrive
 apiVersion: apps/v1

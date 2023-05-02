@@ -1,4 +1,3 @@
-{{- if .Values.ooi.enabled }}
 # Defines the properties required by the alfresco-ooi-service container
 apiVersion: v1
 kind: ConfigMap
