@@ -18,11 +18,11 @@
 
 You can access Alfresco Search using:
 {{- if .Values.ingress.enabled }}
- * Solr: {{ template "httpTransport" . }}://{{ template "httpHost" . }}/{{ default "solr" .Values.ingress.path }}
+ * Solr: {{ template "httpTransport" . }}://{{ template "httpHost" . }}/{{ .Values.ingress.path | default "solr" }}
 
 {{- with (index .Values "alfresco-insight-zeppelin") }}
 {{ if .enabled }}
- * Zeppelin: {{ template "httpTransport" (dict "Values" .) }}://{{ template "httpHost" (dict "Values" .) }}/{{ default "zeppelin" .ingress.path }}
+ * Zeppelin: {{ template "httpTransport" (dict "Values" .) }}://{{ template "httpHost" (dict "Values" .) }}/{{ .ingress.path | default "zeppelin" }}
 {{ end }}
 {{- end }}
 {{- else }}

@@ -1,6 +1,6 @@
 {{- if .Values.ingress.enabled }}
 {{- $serviceName :=  printf "%s-%s" (include  "alfresco-search.fullName" .) "solr" -}}
-{{- $servicePort := default (include "alfresco-search.svcPort" .) .Values.service.name -}}
+{{- $servicePort := .Values.service.name | default (include "alfresco-search.svcPort" .) -}}
 {{- $backendSvc := dict "serviceName" $serviceName "servicePort" $servicePort "context" $ -}}
 
 apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
@@ -10,7 +10,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/auth-type: basic
-    nginx.ingress.kubernetes.io/auth-secret: {{ default (printf "%s-ingress-secret" (include "alfresco-search.fullName" $)) $.Values.ingress.existingSecretName }}
+    nginx.ingress.kubernetes.io/auth-secret: {{ $.Values.ingress.existingSecretName | default (printf "%s-ingress-secret" (include "alfresco-search.fullName" $)) }}
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required - Alfresco Search Services"
     nginx.ingress.kubernetes.io/whitelist-source-range: {{ .Values.ingress.whitelist_ips }}
 
