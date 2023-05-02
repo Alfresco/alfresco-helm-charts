@@ -44,4 +44,3 @@ Selector labels
 app.kubernetes.io/name: {{ include "alfresco-repository.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
-

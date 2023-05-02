@@ -102,6 +102,7 @@ A Helm chart for installing Alfresco Repository together with Share
 | repository.initContainers.db.image.tag | string | `"1.35.0"` |  |
 | repository.initContainers.db.resources.limits.cpu | string | `"0.25"` |  |
 | repository.initContainers.db.resources.limits.memory | string | `"10Mi"` |  |
+| repository.initContainers.db.securityContext.runAsUser | int | `1000` |  |
 | repository.licenseSecret | string | `nil` | The name of the secret holding the ACS repository license if any. it must be contained within a `data['*.lic']` property For details on how to manage license, see: https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/alf_license.md |
 | repository.livenessProbe.initialDelaySeconds | int | `130` |  |
 | repository.livenessProbe.periodSeconds | int | `20` |  |
