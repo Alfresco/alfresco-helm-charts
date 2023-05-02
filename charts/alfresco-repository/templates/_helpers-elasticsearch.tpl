@@ -1,5 +1,5 @@
 {{- define "repo.elasticsearch.config" -}}
-{{- if eq (index .Values "alfresco-search-enterprise" "elasticsearch" "protocol" | default .Values.global.elasticsearch.protocol) "https" }}
+{{- if eq (index .Values "alfresco-search-enterprise" "elasticsearch" "protocol" | default .Values.global.elasticsearch.protocol) "https" -}}
 -Delasticsearch.secureComms=https
 {{- end }}
 -Delasticsearch.host={{ index .Values "alfresco-search-enterprise" "elasticsearch" "host" | default .Values.global.elasticsearch.host }}
