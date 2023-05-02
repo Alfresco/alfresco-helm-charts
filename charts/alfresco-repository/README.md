@@ -16,14 +16,7 @@ A Helm chart for installing Alfresco Repository together with Share
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` |  |
-| alfresco-search-enterprise.enabled | bool | `false` |  |
-| alfresco-search.enabled | bool | `true` |  |
-| alfresco-search.external.host | string | `nil` | Host dns/ip of the external solr6 instance. |
-| alfresco-search.external.port | string | `nil` | Port of the external solr6 instance. |
-| alfresco-search.repository.host | string | `"alfresco-cs"` |  |
-| alfresco-search.repository.port | int | `80` |  |
-| alfresco-search.service.externalPort | int | `9999` |  |
+| activemq.enabled | bool | `false` | Enable embedded broker - useful when testing this chart in standalone |
 | alfresco-sync-service.enabled | bool | `false` |  |
 | apiexplorer.ingress.path | string | `"/api-explorer"` |  |
 | database.driver | string | `nil` | Postgresql jdbc driver name ex: org.postgresql.Driver. It should be available in the container image. |
@@ -34,9 +27,8 @@ A Helm chart for installing Alfresco Repository together with Share
 | database.url | string | `nil` | External Postgresql jdbc url ex: `jdbc:postgresql://oldfashioned-mule-postgresql-acs:5432/alfresco` |
 | database.user | string | `nil` | External Postgresql database user |
 | email | object | `{"handler":{"folder":{"overwriteDuplicates":true}},"inbound":{"emailContributorsAuthority":"EMAIL_CONTRIBUTORS","enabled":false,"unknownUser":"anonymous"},"initContainers":{"pemToKeystore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"pemToTruststore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"setPerms":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"}}},"server":{"allowed":{"senders":".*"},"auth":{"enabled":true},"blocked":{"senders":null},"connections":{"max":3},"domain":null,"enableTLS":true,"enabled":false,"hideTLS":false,"port":1125,"requireTLS":false},"ssl":{"secretName":null}}` | For a full information of configuring the inbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-inbound-emails |
-| fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
-| global.elasticsearch | object | `{"existingSecretName":null,"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Shared connections details for Elasticsearch/Opensearch cluster |
+| global.elasticsearch | object | `{"existingSecretName":null,"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Shared connections details for search subsystem based on Elasticsearch/Opensearch |
 | global.elasticsearch.existingSecretName | string | `nil` | Alternatively, provide connection details via an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys |
 | global.elasticsearch.host | string | `nil` | The host where service is available |
 | global.elasticsearch.password | string | `nil` | The password required to access the service, if any |
@@ -52,15 +44,11 @@ A Helm chart for installing Alfresco Repository together with Share
 | mail.existingSecretName | string | `nil` | An existing kubernetes secret that contains MAIL_PASSWORD as per `mail.password` value |
 | mail.from.default | string | `nil` | Specifies the email address from which email notifications are sent |
 | mail.host | string | `nil` | SMTP(S) host server to enable delivery of site invitations, activity notifications and workflow tasks by email |
-| messageBroker | object | `{"existingSecretName":null,"password":null,"secretName":"acs-alfresco-cs-brokersecret","url":null,"user":null}` | external activemq connection setting when activemq.enabled=false |
+| messageBroker | object | `{"existingSecretName":null,"password":null,"secretName":"acs-alfresco-cs-brokersecret","url":null,"user":null}` | external activemq connection settings when activemq.enabled=false |
 | messageBroker.existingSecretName | string | `nil` | Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
-| messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
+| messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret created by this chart when an existing is not provided |
 | metadataKeystore.defaultKeyPassword | string | `"oKIWzVdEdA"` |  |
 | metadataKeystore.defaultKeystorePassword | string | `"mp6yc0UD9e"` |  |
-| nameOverride | string | `""` |  |
-| nodeSelector | object | `{}` |  |
-| podAnnotations | object | `{}` |  |
-| podSecurityContext | object | `{}` |  |
 | postgresql.auth.database | string | `"alfresco"` |  |
 | postgresql.auth.existingSecret | string | `nil` |  |
 | postgresql.auth.password | string | `"alfresco"` |  |
@@ -93,6 +81,7 @@ A Helm chart for installing Alfresco Repository together with Share
 | repository.image.pullPolicy | string | `"IfNotPresent"` |  |
 | repository.image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
 | repository.image.tag | string | `"7.4.0-M3"` |  |
+| repository.index.subsystem | string | `"solr6"` | The search service to use, between none, solr6 or elasticsearch |
 | repository.ingress.annotations | object | `{}` |  |
 | repository.ingress.maxUploadSize | string | `"5g"` |  |
 | repository.ingress.path | string | `"/"` |  |
@@ -133,7 +122,6 @@ A Helm chart for installing Alfresco Repository together with Share
 | repository.service.type | string | `"ClusterIP"` |  |
 | repository.startupProbe | object | `{"failureThreshold":10,"periodSeconds":30}` | The startup probe to cover the worse case startup time for slow clusters |
 | repository.strategy.type | string | `"Recreate"` |  |
-| resources | object | `{}` |  |
 | s3connector.config.bucketLocation | string | `nil` |  |
 | s3connector.config.bucketName | string | `nil` |  |
 | s3connector.enabled | bool | `false` | Enable the S3 Connector For a full list of properties on the S3 connector see: https://docs.alfresco.com/s3connector/references/s3-contentstore-ref-config-props.html |
@@ -142,9 +130,11 @@ A Helm chart for installing Alfresco Repository together with Share
 | s3connector.secrets.awsKmsKeyId | string | `nil` |  |
 | s3connector.secrets.encryption | string | `nil` |  |
 | s3connector.secrets.secretKey | string | `nil` |  |
-| securityContext | object | `{}` |  |
 | share | object | `{"command":[],"environment":{"CATALINA_OPTS":"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"},"extraInitContainers":[],"extraSideContainers":[],"extraVolumeMounts":[],"extraVolumes":[],"image":{"internalPort":8080,"pullPolicy":"IfNotPresent","repository":"quay.io/alfresco/alfresco-share","tag":"7.4.0-M3"},"ingress":{"annotations":{},"path":"/share","tls":[]},"livenessProbe":{"initialDelaySeconds":200,"periodSeconds":20,"timeoutSeconds":10},"nodeSelector":{},"podSecurityContext":{"runAsNonRoot":true},"readinessProbe":{"initialDelaySeconds":60,"periodSeconds":20,"timeoutSeconds":15},"replicaCount":1,"resources":{"limits":{"cpu":"4","memory":"2000Mi"},"requests":{"cpu":"1","memory":"512Mi"}},"securityContext":{"capabilities":{"drop":["NET_RAW","ALL"]},"runAsNonRoot":false},"service":{"externalPort":80,"name":"share","type":"ClusterIP"}}` | Define the alfresco-share properties to use in the k8s cluster This is the default presentation layer(UI) of Alfresco Content Services |
-| tolerations | list | `[]` |  |
+| solr6 | object | `{"context":"/solr","host":null,"port":null}` | Connections details for Search subsystem based on Solr6 |
+| solr6.context | string | `"/solr"` | Context for the Solr6 instance |
+| solr6.host | string | `nil` | Host dns/ip of Solr6 instance |
+| solr6.port | string | `nil` | Port of the Solr6 instance |
 | transformmisc.enabled | bool | `false` |  |
 
 ----------------------------------------------
