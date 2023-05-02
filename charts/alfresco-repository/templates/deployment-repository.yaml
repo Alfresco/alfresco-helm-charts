@@ -123,6 +123,14 @@ spec:
       {{- if .Values.repository.extraInitContainers }}
         {{- toYaml .Values.repository.extraInitContainers | nindent 8 }}
       {{- end }}
+      {{- if not .Values.database.external }}
+        - name: wait-db-ready
+          image: "{{ .Values.repository.initContainers.db.image.repository }}:{{ .Values.repository.initContainers.db.image.tag }}"
+          imagePullPolicy: {{ .Values.repository.initContainers.db.image.pullPolicy }}
+          {{- include "component-security-context" .Values.repository.initContainers.db | indent 8 }}
+          resources: {{- toYaml .Values.repository.initContainers.db.resources | nindent 12 }}
+          command: ['sh', '-c', 'until nc -w1 {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }} {{ .Values.postgresql.primary.service.ports.postgresql }}; do echo "waiting for {{ printf "%s-%s" .Release.Name .Values.postgresql.nameOverride }}"; sleep 2; done;']
+      {{- end }}
       {{- if and .Values.email.server.enabled .Values.email.inbound.enabled .Values.email.server.enableTLS }}
         - name: pem-to-keystore
           image: "{{ .Values.email.initContainers.pemToKeystore.image.repository }}:{{ .Values.email.initContainers.pemToKeystore.image.tag }}"

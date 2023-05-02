@@ -1,0 +1,9 @@
+---
+alfresco-search:
+  enabled: true
+alfresco-search-enterprise:
+  enabled: false
+global:
+  tracking:
+    sharedsecret: dummy
+  alfrescoRegistryPullSecrets: secretsecret
