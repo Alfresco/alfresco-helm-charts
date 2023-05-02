@@ -17,6 +17,7 @@ A Helm chart for installing Alfresco Repository together with Share
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| alfresco-search-enterprise.enabled | bool | `false` |  |
 | alfresco-search.enabled | bool | `true` |  |
 | alfresco-search.external.host | string | `nil` | Host dns/ip of the external solr6 instance. |
 | alfresco-search.external.port | string | `nil` | Port of the external solr6 instance. |
@@ -35,6 +36,13 @@ A Helm chart for installing Alfresco Repository together with Share
 | email | object | `{"handler":{"folder":{"overwriteDuplicates":true}},"inbound":{"emailContributorsAuthority":"EMAIL_CONTRIBUTORS","enabled":false,"unknownUser":"anonymous"},"initContainers":{"pemToKeystore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"pemToTruststore":{"image":{"pullPolicy":"IfNotPresent","repository":"registry.access.redhat.com/redhat-sso-7/sso71-openshift","tag":"1.1-16"}},"setPerms":{"image":{"pullPolicy":"IfNotPresent","repository":"busybox","tag":"1.35.0"}}},"server":{"allowed":{"senders":".*"},"auth":{"enabled":true},"blocked":{"senders":null},"connections":{"max":3},"domain":null,"enableTLS":true,"enabled":false,"hideTLS":false,"port":1125,"requireTLS":false},"ssl":{"secretName":null}}` | For a full information of configuring the inbound email system, see https://docs.alfresco.com/content-services/latest/config/email/#manage-inbound-emails |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
+| global.elasticsearch | object | `{"existingSecretName":null,"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Shared connections details for Elasticsearch/Opensearch cluster |
+| global.elasticsearch.existingSecretName | string | `nil` | Alternatively, provide connection details via an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys |
+| global.elasticsearch.host | string | `nil` | The host where service is available |
+| global.elasticsearch.password | string | `nil` | The password required to access the service, if any |
+| global.elasticsearch.port | string | `nil` | The port where service is available |
+| global.elasticsearch.protocol | string | `nil` | Valid values are http or https |
+| global.elasticsearch.user | string | `nil` | The username required to access the service, if any |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | global.tracking.auth | string | `"secret"` | Select how solr and repo authenticate to each other none: work only prior to acs 7.2 (and was the default) secret: use a shared secret (to specify using `tracking.sharedsecret`) https: to use mTLS auth (require appropriate certificate configuration) |
