@@ -1,6 +1,4 @@
-{{- if eq .Values.repository.edition "Enterprise" }}
-# Defines the deployment for the ooi-service app
-# Details: https://github.com/Alfresco/onedrive
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -74,5 +72,3 @@ spec:
             periodSeconds: {{ .Values.ooiService.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.ooiService.livenessProbe.timeoutSeconds }}
-{{- end }}
-{{- end }}
