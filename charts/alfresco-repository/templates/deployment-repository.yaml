@@ -52,7 +52,7 @@ spec:
           {{- end }}
           {{- if and .Values.mail.host (or .Values.mail.password .Values.mail.existingSecretName) }}
           - secretRef:
-              name: {{ default (printf "%s-mail-password" (include "content-services.shortname" .)) .Values.mail.existingSecretName }}
+              name: {{ .Values.mail.existingSecretName | default (include "alfresco-repository.secret-mail-password.name" .) }}
           {{- end }}
           - secretRef:
               name: {{ template "alfresco-repository.secret-metadata-keystore.name" . }}
