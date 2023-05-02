@@ -1,0 +1,17 @@
+{{- if .Values.ooi.enabled }}
+# Defines the service for the ooi-service app
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-ooi-service.fullname" . }}
+  labels:
+    {{- include "alfresco-ooi-service.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.ooiService.service.type }}
+  ports:
+    - port: {{ .Values.ooiService.service.externalPort }}
+      targetPort: {{ .Values.ooiService.image.internalPort }}
+      name: {{ .Values.ooiService.service.name }}
+  selector:
+    {{- include "alfresco-ooi-service.selectorLabels" . | nindent 4 }}
+{{- end }}
