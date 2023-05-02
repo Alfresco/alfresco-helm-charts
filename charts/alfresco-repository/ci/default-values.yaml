@@ -19,6 +19,13 @@ share:
       memory: "512Mi"
 activemq:
   enabled: true
+postgresql:
+  resources:
+    requests:
+      cpu: "0.1"
+      memory: "500Mi"
+    limits:
+      memory: "500Mi"
 global:
   tracking:
     sharedsecret: dummy
