@@ -12,4 +12,3 @@ data:
   {{ $key }}: {{ tpl $val $ | quote }}
   {{- end }}
   {{- end }}
-{{- end }}

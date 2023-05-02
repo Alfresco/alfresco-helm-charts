@@ -1,12 +1,11 @@
-{{- if .Values.ooi.enabled }}
-{{- $serviceName :=  printf "%s-%s" (include "content-services.shortname" .) "ooi-service" -}}
+{{- $serviceName :=  printf "%s-%s" (include "alfresco-ooi-service.fullname" .)  -}}
 {{- $servicePort := .Values.ooiService.service.externalPort -}}
 apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
-  name: {{ template "content-services.shortname" . }}-ooi-service
+  name: {{ template "alfresco-ooi-service.fullname" . }}-ingress
   labels:
-    {{- include "ooi-service.labels" . | nindent 4 }}
+    {{- include "alfresco-ooi-service.labels" . | nindent 4 }}
   annotations:
     kubernetes.io/ingress.class: "nginx"
 {{- if .Values.ooiService.extraAnnotations }}
@@ -37,4 +36,3 @@ spec:
         pathType: Prefix
         {{- end }}
         backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
-{{- end }} 

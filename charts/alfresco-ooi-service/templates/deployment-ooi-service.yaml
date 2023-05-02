@@ -75,4 +75,4 @@ spec:
             failureThreshold: 1
             timeoutSeconds: {{ .Values.ooiService.livenessProbe.timeoutSeconds }}
 {{- end }}
-{{- end }}
+
