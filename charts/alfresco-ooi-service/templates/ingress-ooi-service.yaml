@@ -1,9 +1,9 @@
-{{- $serviceName :=  printf "%s-%s" (include "alfresco-ooi-service.fullname" .)  -}}
+{{- $serviceName :=  printf "%s-%s" (include "alfresco-ooi-service.fullname" .)  "ooi-service" -}}
 {{- $servicePort := .Values.ooiService.service.externalPort -}}
 apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
-  name: {{ template "alfresco-ooi-service.fullname" . }}-ingress
+  name: {{ template "alfresco-ooi-service.fullname" . }}-ooi-service
   labels:
     {{- include "alfresco-ooi-service.labels" . | nindent 4 }}
   annotations:
