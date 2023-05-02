@@ -42,11 +42,9 @@ livenessProbe:
 environment:
   ZEPPELIN_MEM: "-Xms512m -Xmx1g"
   ZEPPELIN_INTP_MEM: "-Xms512m -Xmx1g"
-# -- Apply your secret file in k8s environment to access quay.io images (see:
-# https://github.com/Alfresco/alfresco-anaxes-shipyard/blob/master/SECRETS.md)
-# Global definition of Docker registry pull secret which can be overridden from
-# parent ACS Helm chart(s)
 global:
+  # -- Global definition of Docker registry pull secret which can be overridden
+  # from parent ACS Helm chart(s)
   alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
     rollingUpdate:
