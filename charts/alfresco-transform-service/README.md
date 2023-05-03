@@ -65,7 +65,7 @@ A Helm chart for deploying Alfresco Transform Services
 | imagemagick.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | imagemagick.image.internalPort | int | `8090` |  |
 | imagemagick.image.pullPolicy | string | `"IfNotPresent"` |  |
-| imagemagick.image.repository | string | `"alfresco/alfresco-imagemagick"` |  |
+| imagemagick.image.repository | string | `"quay.io/alfresco/alfresco-imagemagick"` |  |
 | imagemagick.image.tag | string | `"3.0.0"` |  |
 | imagemagick.livenessProbe.initialDelaySeconds | int | `10` |  |
 | imagemagick.livenessProbe.livenessPercent | int | `150` |  |
@@ -91,7 +91,7 @@ A Helm chart for deploying Alfresco Transform Services
 | libreoffice.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | libreoffice.image.internalPort | int | `8090` |  |
 | libreoffice.image.pullPolicy | string | `"IfNotPresent"` |  |
-| libreoffice.image.repository | string | `"alfresco/alfresco-libreoffice"` |  |
+| libreoffice.image.repository | string | `"quay.io/alfresco/alfresco-libreoffice"` |  |
 | libreoffice.image.tag | string | `"3.0.0"` |  |
 | libreoffice.livenessProbe.initialDelaySeconds | int | `10` |  |
 | libreoffice.livenessProbe.livenessPercent | int | `250` |  |
@@ -120,7 +120,7 @@ A Helm chart for deploying Alfresco Transform Services
 | pdfrenderer.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | pdfrenderer.image.internalPort | int | `8090` |  |
 | pdfrenderer.image.pullPolicy | string | `"IfNotPresent"` |  |
-| pdfrenderer.image.repository | string | `"alfresco/alfresco-pdf-renderer"` |  |
+| pdfrenderer.image.repository | string | `"quay.io/alfresco/alfresco-pdf-renderer"` |  |
 | pdfrenderer.image.tag | string | `"3.0.0"` |  |
 | pdfrenderer.livenessProbe.initialDelaySeconds | int | `10` |  |
 | pdfrenderer.livenessProbe.livenessPercent | int | `150` |  |
@@ -147,7 +147,7 @@ A Helm chart for deploying Alfresco Transform Services
 | tika.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | tika.image.internalPort | int | `8090` |  |
 | tika.image.pullPolicy | string | `"IfNotPresent"` |  |
-| tika.image.repository | string | `"alfresco/alfresco-tika"` |  |
+| tika.image.repository | string | `"quay.io/alfresco/alfresco-tika"` |  |
 | tika.image.tag | string | `"3.0.0"` |  |
 | tika.livenessProbe.initialDelaySeconds | int | `60` |  |
 | tika.livenessProbe.livenessPercent | int | `400` |  |
@@ -174,7 +174,7 @@ A Helm chart for deploying Alfresco Transform Services
 | transformmisc.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | transformmisc.image.internalPort | int | `8090` |  |
 | transformmisc.image.pullPolicy | string | `"IfNotPresent"` |  |
-| transformmisc.image.repository | string | `"alfresco/alfresco-transform-misc"` |  |
+| transformmisc.image.repository | string | `"quay.io/alfresco/alfresco-transform-misc"` |  |
 | transformmisc.image.tag | string | `"3.0.0"` |  |
 | transformmisc.livenessProbe.initialDelaySeconds | int | `10` |  |
 | transformmisc.livenessProbe.livenessPercent | int | `400` |  |
