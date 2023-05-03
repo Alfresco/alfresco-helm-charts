@@ -13,6 +13,11 @@
 {{- include "alfresco-transform-service.fullname" $scope }}
 {{- end }}
 
+{{- define "alfresco-transform-service.config-pdfrenderer.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "pdfrenderer-configmap" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-transform-service.fullname" $scope }}
+{{- end }}
+
 {{- define "alfresco-transform-service.deployment-filestore.name" -}}
 {{- $scope := (dict "Values" (dict "nameOverride" "filestore" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-transform-service.fullname" $scope }}
@@ -25,5 +30,10 @@
 
 {{- define "alfresco-transform-service.deployment-libreoffice.name" -}}
 {{- $scope := (dict "Values" (dict "nameOverride" "libreoffice" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-transform-service.fullname" $scope }}
+{{- end }}
+
+{{- define "alfresco-transform-service.deployment-pdfrenderer.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "pdfrenderer" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-transform-service.fullname" $scope }}
 {{- end }}

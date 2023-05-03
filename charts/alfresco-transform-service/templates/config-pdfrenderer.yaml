@@ -1,10 +1,9 @@
-{{- $componentScope := (dict "Values" (dict "nameOverride" "pdfrenderer" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
+  name: {{ template "alfresco-transform-service.config-pdfrenderer.name" . }}
   labels:
-    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
+    {{- include "alfresco-transform-service.pdfrenderer.labels" . | nindent 4 }}
 data:
   # The JAVA_OPTS defined in the values.yaml file for the "pdfrenderer" are set here using proper quotes
   {{- if .Values.pdfrenderer.environment }}
