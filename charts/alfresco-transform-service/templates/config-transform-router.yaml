@@ -21,5 +21,7 @@ data:
   TRANSFORMER_ROUTES_ADDITIONAL_AI: "/mnt/routes/ai-pipeline-routes.json"
   {{- end }}
   {{- toYaml .Values.transformrouter.environment | nindent 2 }}
-  {{- toYaml .Values.transformrouter.livenessProbe | nindent 2 }}
+  {{- range $key, $val := .Values.transformrouter.livenessProbe }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
 {{- end }}

@@ -7,4 +7,6 @@ metadata:
 data:
   FILE_STORE_URL: http://{{ template "alfresco-transform-service.deployment-filestore.name" . }}/alfresco/api/-default-/private/sfs/versions/1/file
   {{- toYaml .Values.pdfrenderer.environment | nindent 2 }}
-  {{- toYaml .Values.pdfrenderer.livenessProbe | nindent 2 }}
+  {{- range $key, $val := .Values.pdfrenderer.livenessProbe }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}

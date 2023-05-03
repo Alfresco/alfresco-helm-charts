@@ -7,4 +7,6 @@ metadata:
 data:
   FILE_STORE_URL: http://{{ template "alfresco-transform-service.deployment-filestore.name" . }}/alfresco/api/-default-/private/sfs/versions/1/file
   {{- toYaml .Values.libreoffice.environment | nindent 2 }}
-  {{- toYaml .Values.libreoffice.livenessProbe | nindent 2 }}
+  {{- range $key, $val := .Values.libreoffice.livenessProbe }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
