@@ -5,14 +5,6 @@ metadata:
   labels:
     {{- include "alfresco-transform-service.pdfrenderer.labels" . | nindent 4 }}
 data:
-  # The JAVA_OPTS defined in the values.yaml file for the "pdfrenderer" are set here using proper quotes
-  {{- if .Values.pdfrenderer.environment }}
-  {{- range $key, $val := .Values.pdfrenderer.environment }}
-  {{ $key }}: {{ $val | quote }}
-  {{- end }}
-  {{- end }}
-  FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
-  livenessPercent: "{{ .Values.pdfrenderer.livenessProbe.livenessPercent }}"
-  livenessTransformPeriodSeconds: "{{ .Values.pdfrenderer.livenessProbe.livenessTransformPeriodSeconds }}"
-  maxTransforms: "{{ .Values.pdfrenderer.livenessProbe.maxTransforms }}"
-  maxTransformSeconds: "{{ .Values.pdfrenderer.livenessProbe.maxTransformSeconds }}"
+  FILE_STORE_URL: http://{{ template "alfresco-transform-service.deployment-filestore.name" . }}/alfresco/api/-default-/private/sfs/versions/1/file
+  {{- toYaml .Values.pdfrenderer.environment | nindent 2 }}
+  {{- toYaml .Values.pdfrenderer.livenessProbe | nindent 2 }}

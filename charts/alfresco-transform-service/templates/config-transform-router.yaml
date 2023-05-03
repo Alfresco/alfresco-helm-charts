@@ -7,23 +7,19 @@ metadata:
   labels:
     {{- include "alfresco-transform-service.transform-router.labels" . | nindent 4 }}
 data:
-  # The JAVA_OPTS defined in the values.yaml file for "transformrouter" are set here using proper quotes
-  {{- if .Values.transformrouter.environment }}
-  {{- range $key, $val := .Values.transformrouter.environment }}
-  {{ $key }}: {{ $val | quote }}
-  {{- end }}
-  {{- end }}
-  IMAGEMAGICK_URL: http://{{ template "content-services.shortname" . }}-imagemagick:80
-  PDF_RENDERER_URL: http://{{ template "content-services.shortname" . }}-pdfrenderer:80
-  LIBREOFFICE_URL: http://{{ template "content-services.shortname" . }}-libreoffice:80
-  TIKA_URL: http://{{ template "content-services.shortname" . }}-tika:80
+  FILE_STORE_URL: http://{{ template "alfresco-transform-service.deployment-filestore.name" . }}/alfresco/api/-default-/private/sfs/versions/1/file
+  IMAGEMAGICK_URL: http://{{ template "alfresco-transform-service.deployment-imagemagick.name" . }}:80
+  PDF_RENDERER_URL: http://{{ template "alfresco-transform-service.deployment-pdfrenderer.name" . }}:80
+  LIBREOFFICE_URL: http://{{ template "alfresco-transform-service.deployment-libreoffice.name" . }}:80
+  TIKA_URL: http://{{ template "alfresco-transform-service.deployment-tika.name" . }}:80
   {{- if .Values.transformmisc.enabled }}
-  MISC_URL: http://{{ template "content-services.shortname" . }}-transform-misc:80
+  MISC_URL: http://{{ template "alfresco-transform-service.deployment-transform-misc.name" . }}:80
   {{- end }}
-  FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
   {{- if .Values.global.ai.enabled }}
   TRANSFORMER_URL_AWS_AI: http://{{ template "content-services.shortname" . }}-ai-transformer:80
   TRANSFORMER_QUEUE_AWS_AI: "org.alfresco.transform.engine.ai-aws.acs"
   TRANSFORMER_ROUTES_ADDITIONAL_AI: "/mnt/routes/ai-pipeline-routes.json"
   {{- end }}
+  {{- toYaml .Values.transformrouter.environment | nindent 2 }}
+  {{- toYaml .Values.transformrouter.livenessProbe | nindent 2 }}
 {{- end }}

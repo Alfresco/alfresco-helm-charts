@@ -6,15 +6,7 @@ metadata:
   labels:
     {{- include "alfresco-transform-service.transform-misc.labels" . | nindent 4 }}
 data:
-  # The JAVA_OPTS defined in the values.yaml file for "transform-misc" are set here using proper quotes
-  {{- if .Values.transformmisc.environment }}
-  {{- range $key, $val := .Values.transformmisc.environment }}
-  {{ $key }}: {{ $val | quote }}
-  {{- end }}
-  {{- end }}
-  FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
-  livenessPercent: "{{ .Values.transformmisc.livenessProbe.livenessPercent }}"
-  livenessTransformPeriodSeconds: "{{ .Values.transformmisc.livenessProbe.livenessTransformPeriodSeconds }}"
-  maxTransforms: "{{ .Values.transformmisc.livenessProbe.maxTransforms }}"
-  maxTransformSeconds: "{{ .Values.transformmisc.livenessProbe.maxTransformSeconds }}"
+  FILE_STORE_URL: http://{{ template "alfresco-transform-service.deployment-filestore.name" . }}/alfresco/api/-default-/private/sfs/versions/1/file
+  {{- toYaml .Values.transformmisc.environment | nindent 2 }}
+  {{- toYaml .Values.transformmisc.livenessProbe | nindent 2 }}
 {{- end }}

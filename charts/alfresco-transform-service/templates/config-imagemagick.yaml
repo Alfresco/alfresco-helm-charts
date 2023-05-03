@@ -5,14 +5,6 @@ metadata:
   labels:
     {{- include "alfresco-transform-service.imagemagick.labels" . | nindent 4 }}
 data:
-  # The JAVA_OPTS defined in the values.yaml file for the "imagemagick" are set here using proper quotes
-  {{- if .Values.imagemagick.environment }}
-  {{- range $key, $val := .Values.imagemagick.environment }}
-  {{ $key }}: {{ $val | quote }}
-  {{- end }}
-  {{- end }}
-  FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
-  livenessPercent: "{{ .Values.imagemagick.livenessProbe.livenessPercent }}"
-  livenessTransformPeriodSeconds: "{{ .Values.imagemagick.livenessProbe.livenessTransformPeriodSeconds }}"
-  maxTransforms: "{{ .Values.imagemagick.livenessProbe.maxTransforms }}"
-  maxTransformSeconds: "{{ .Values.imagemagick.livenessProbe.maxTransformSeconds }}"
+  FILE_STORE_URL: http://{{ template "alfresco-transform-service.deployment-filestore.name" . }}/alfresco/api/-default-/private/sfs/versions/1/file
+  {{- toYaml .Values.imagemagick.environment | nindent 2 }}
+  {{- toYaml .Values.imagemagick.livenessProbe | nindent 2 }}
