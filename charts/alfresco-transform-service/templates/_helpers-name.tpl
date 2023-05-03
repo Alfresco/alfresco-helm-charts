@@ -28,6 +28,11 @@
 {{- include "alfresco-transform-service.fullname" $scope }}
 {{- end }}
 
+{{- define "alfresco-transform-service.config-transform-router.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "transform-router-configmap" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-transform-service.fullname" $scope }}
+{{- end }}
+
 {{- define "alfresco-transform-service.deployment-filestore.name" -}}
 {{- $scope := (dict "Values" (dict "nameOverride" "filestore" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-transform-service.fullname" $scope }}
@@ -55,5 +60,10 @@
 
 {{- define "alfresco-transform-service.deployment-transform-misc.name" -}}
 {{- $scope := (dict "Values" (dict "nameOverride" "transform-misc" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-transform-service.fullname" $scope }}
+{{- end }}
+
+{{- define "alfresco-transform-service.deployment-transform-router.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "transform-router" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-transform-service.fullname" $scope }}
 {{- end }}

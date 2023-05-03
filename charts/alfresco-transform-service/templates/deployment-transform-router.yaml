@@ -1,26 +1,25 @@
 {{- if eq .Values.repository.edition "Enterprise" }}
-{{- $componentScope := (dict "Values" (dict "nameOverride" "router" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
+  name: {{ template "alfresco-transform-service.deployment-transform-router.name" . }}
   labels:
-    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
+    {{- include "alfresco-transform-service.transform-router.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.transformrouter.replicaCount }}
   selector:
     matchLabels:
-      {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 6 }}
+      {{- include "alfresco-transform-service.transform-router.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
-{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+      {{- toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-transform-router.yaml") . | sha256sum }}
       labels:
-        {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 8 }}
+        {{- include "alfresco-transform-service.transform-router.selectorLabels" . | nindent 8 }}
     spec:
     {{- include "component-pod-security-context" .Values.transformrouter | indent 4 }}
     {{- if .Values.transformrouter.nodeSelector }}
@@ -37,7 +36,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - {{ template "alfresco.shortname" . }}-router
+                  - {{ template "alfresco-transform-service.deployment-transform-router.name" . }}
               topologyKey: failure-domain.beta.kubernetes.io/zone
           - weight: 5
             podAffinityTerm:
@@ -46,7 +45,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - {{ template "alfresco.shortname" . }}-router
+                  - {{ template "alfresco-transform-service.deployment-transform-router.name" . }}
               topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ .Chart.Name }}
@@ -55,7 +54,7 @@ spec:
           {{- include "component-security-context" .Values.transformrouter | indent 8 }}
           envFrom:
           - configMapRef:
-              name: {{ template "alfresco-transform-service.fullname" $componentScope }}
+              name: {{ template "alfresco-transform-service.config-transform-router.name" . }}
           - secretRef:
               name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-transform-service.fullname" $)) $.Values.messageBroker.existingSecretName }}
           env:

@@ -57,3 +57,13 @@
 {{- $scope := (dict "Values" (dict "nameOverride" "transform-misc" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-transform-service.selectorLabels" $scope }}
 {{- end }}
+
+{{- define "alfresco-transform-service.transform-router.labels" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "transform-router" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-transform-service.labels" $scope }}
+{{- end }}
+
+{{- define "alfresco-transform-service.transform-router.selectorLabels" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "transform-router" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-transform-service.selectorLabels" $scope }}
+{{- end }}
