@@ -1,4 +1,5 @@
 global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
     rollingUpdate:
       maxSurge: 1
