@@ -18,9 +18,9 @@ tests:
         template: config-libreoffice.yaml
       - equal:
           path: data.livenessPercent
-          value: 250
+          value: "250"
         template: config-libreoffice.yaml
       - equal:
           path: data.livenessTransformPeriodSeconds
-          value: 600
+          value: "600"
         template: config-libreoffice.yaml
