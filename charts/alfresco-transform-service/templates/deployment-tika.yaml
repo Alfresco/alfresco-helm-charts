@@ -1,15 +1,14 @@
-{{- $componentScope := (dict "Values" (dict "nameOverride" "tika" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
+  name: {{ template "alfresco-transform-service.deployment-tika.name" . }}
   labels:
-    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
+    {{- include "alfresco-transform-service.tika.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.tika.replicaCount }}
   selector:
     matchLabels:
-      {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 6 }}
+      {{- include "alfresco-transform-service.tika.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -19,7 +18,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-tika.yaml") . | sha256sum }}
       labels:
-        {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 8 }}
+        {{- include "alfresco-transform-service.tika.selectorLabels" . | nindent 8 }}
     spec:
     {{- include "component-pod-security-context" .Values.tika | indent 4 }}
     {{- if .Values.tika.nodeSelector }}
@@ -54,7 +53,7 @@ spec:
           {{- include "component-security-context" .Values.tika | indent 8 }}
           envFrom:
           - configMapRef:
-              name: {{ template "alfresco-transform-service.fullname" $componentScope }}
+              name: {{ template "alfresco-transform-service.config-tika.name" . }}
           - secretRef:
               name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-transform-service.fullname" $)) $.Values.messageBroker.existingSecretName }}
           env:

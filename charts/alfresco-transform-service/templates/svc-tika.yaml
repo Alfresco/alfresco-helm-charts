@@ -1,10 +1,9 @@
-{{- $componentScope := (dict "Values" (dict "nameOverride" "tika" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
+  name: {{ template "alfresco-transform-service.deployment-tika.name" . }}
   labels:
-    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
+    {{- include "alfresco-transform-service.tika.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.tika.service.type }}
   ports:
@@ -12,4 +11,4 @@ spec:
       targetPort: {{ .Values.tika.image.internalPort }}
       name: {{ .Values.tika.service.name }}
   selector:
-    {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 4 }}
+    {{- include "alfresco-transform-service.tika.selectorLabels" . | nindent 4 }}
