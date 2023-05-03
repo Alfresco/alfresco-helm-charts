@@ -47,3 +47,13 @@
 {{- $scope := (dict "Values" (dict "nameOverride" "tika" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-transform-service.selectorLabels" $scope }}
 {{- end }}
+
+{{- define "alfresco-transform-service.transform-misc.labels" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "transform-misc" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-transform-service.labels" $scope }}
+{{- end }}
+
+{{- define "alfresco-transform-service.transform-misc.selectorLabels" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "transform-misc" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-transform-service.selectorLabels" $scope }}
+{{- end }}

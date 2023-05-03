@@ -1,16 +1,15 @@
 {{- if .Values.transformmisc.enabled }}
-{{- $componentScope := (dict "Values" (dict "nameOverride" "misc" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
+  name: {{ template "alfresco-transform-service.deployment-transform-misc.name" . }}
   labels:
-    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
+    {{- include "alfresco-transform-service.transform-misc.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.transformmisc.replicaCount }}
   selector:
     matchLabels:
-      {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 6 }}
+      {{- include "alfresco-transform-service.transform-misc.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -20,7 +19,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-transform-misc.yaml") . | sha256sum }}
       labels:
-        {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 8 }}
+        {{- include "alfresco-transform-service.transform-misc.selectorLabels" . | nindent 8 }}
     spec:
     {{- include "component-pod-security-context" .Values.transformmisc | indent 4 }}
     {{- if .Values.transformmisc.nodeSelector }}
@@ -37,7 +36,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - {{ template "alfresco-transform-service.fullname" $componentScope }}
+                  - {{ template "alfresco-transform-service.deployment-transform-misc.name" . }}
               topologyKey: failure-domain.beta.kubernetes.io/zone
           - weight: 5
             podAffinityTerm:
@@ -46,7 +45,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - {{ template "alfresco-transform-service.fullname" $componentScope }}
+                  - {{ template "alfresco-transform-service.deployment-transform-misc.name" . }}
               topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ .Chart.Name }}
@@ -55,7 +54,7 @@ spec:
           {{- include "component-security-context" .Values.transformmisc | indent 8 }}
           envFrom:
           - configMapRef:
-              name: {{ template "alfresco-transform-service.fullname" $componentScope }}
+              name: {{ template "alfresco-transform-service.config-transform-misc.name" . }}
           - secretRef:
               name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-transform-service.fullname" $)) $.Values.messageBroker.existingSecretName }}
           env:
