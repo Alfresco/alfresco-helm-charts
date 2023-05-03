@@ -1,5 +1,6 @@
 repository:
   edition: "Enterprise"
+
 transformrouter:
   replicaCount: 2
   nodeSelector: {}
@@ -34,11 +35,12 @@ transformrouter:
     limits:
       cpu: "1"
       memory: "512Mi"
+
 pdfrenderer:
   replicaCount: 2
   nodeSelector: {}
   image:
-    repository: alfresco/alfresco-pdf-renderer
+    repository: quay.io/alfresco/alfresco-pdf-renderer
     tag: 3.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
@@ -72,11 +74,12 @@ pdfrenderer:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1200
+
 imagemagick:
   replicaCount: 2
   nodeSelector: {}
   image:
-    repository: alfresco/alfresco-imagemagick
+    repository: quay.io/alfresco/alfresco-imagemagick
     tag: 3.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
@@ -110,11 +113,12 @@ imagemagick:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 900
+
 libreoffice:
   replicaCount: 2
   nodeSelector: {}
   image:
-    repository: alfresco/alfresco-libreoffice
+    repository: quay.io/alfresco/alfresco-libreoffice
     tag: 3.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
@@ -148,11 +152,12 @@ libreoffice:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 99999
     maxTransformSeconds: 1800
+
 tika:
   replicaCount: 2
   nodeSelector: {}
   image:
-    repository: alfresco/alfresco-tika
+    repository: quay.io/alfresco/alfresco-tika
     tag: 3.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
@@ -186,12 +191,13 @@ tika:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
+
 transformmisc:
   enabled: true
   replicaCount: 2
   nodeSelector: {}
   image:
-    repository: alfresco/alfresco-transform-misc
+    repository: quay.io/alfresco/alfresco-transform-misc
     tag: 3.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
@@ -225,6 +231,7 @@ transformmisc:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
+
 filestore:
   replicaCount: 1
   nodeSelector: {}
@@ -286,6 +293,7 @@ filestore:
     data:
       mountPath: "/tmp/Alfresco"
       subPath: "alfresco-content-services/filestore-data"
+
 activemq:
   nameOverride: activemq
   enabled: false
@@ -297,15 +305,17 @@ activemq:
     user: admin
     # -- Default password for the embedded broker admin user
     password: admin
+
 # -- external activemq connection setting when activemq.enabled=false
-messageBroker: &acs_messageBroker
+messageBroker:
   url: null
   user: null
   password: null
   # -- Name of the secret managed by this chart
-  secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
+  secretName: acs-alfresco-cs-brokersecret
   # -- Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName: null
+
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
