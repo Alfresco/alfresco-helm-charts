@@ -8,8 +8,8 @@ metadata:
     {{- include "alfresco-ooi-service.labels" . | nindent 4 }}
   annotations:
     kubernetes.io/ingress.class: "nginx"
-{{- if .Values.ooiService.extraAnnotations }}
-{{ toYaml .Values.ooiService.extraAnnotations | indent 4 }}
+{{- if .Values.ooiService.ingress.extraAnnotations }}
+{{ toYaml .Values.ooiService.ingress.extraAnnotations | indent 4 }}
 {{- end }}
 
 spec:
@@ -27,7 +27,6 @@ spec:
   {{- if .Values.ooiService.ingress.hostName }}
   - host: {{ tpl .Values.ooiService.ingress.hostName $ }}
     http:
-  {{- else }}
   - http:
   {{- end }}
       paths:

@@ -1,6 +1,6 @@
 1. Get the application URL by running these commands:
 {{- if .Values.ooiService.ingress.enabled }}
-{{- range $host := .Values.ooiService.ingress.hosts }}
+{{- range $host := .Values.ooiService.ingress }}
   {{- range .paths }}
   http{{ if $.Values.ooiService.ingress.tls }}s{{ end }}://{{ $host.host }}{{ .path }}
   {{- end }}
