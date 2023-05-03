@@ -8,7 +8,7 @@ A Helm chart for deploying Alfresco OfficeOnline service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 1.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
 
 ## Values
 
