@@ -1,11 +1,10 @@
 {{- if eq .Values.repository.edition "Enterprise" }}
-{{- $componentScope := (dict "Values" (dict "nameOverride" "filestore" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
+  name: {{ template "alfresco-transform-service.deployment-filestore.name" . }}
   labels:
-    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
+    {{- include "alfresco-transform-service.filestore.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.filestore.service.type }}
   ports:
@@ -13,5 +12,5 @@ spec:
       targetPort: {{ .Values.filestore.image.internalPort }}
       name: {{ .Values.filestore.service.name }}
   selector:
-    {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 4 }}
+    {{- include "alfresco-transform-service.filestore.selectorLabels" . | nindent 4 }}
 {{- end }}
