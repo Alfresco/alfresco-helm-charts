@@ -13,4 +13,3 @@ spec:
       name: {{ .Values.ooiService.service.name }}
   selector:
     {{- include "alfresco-ooi-service.selectorLabels" . | nindent 4 }}
-

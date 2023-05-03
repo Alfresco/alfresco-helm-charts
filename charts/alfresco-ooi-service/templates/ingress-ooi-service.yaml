@@ -1,4 +1,4 @@
-{{- $serviceName :=  printf "%s-%s" (include "alfresco-ooi-service.fullname" .)  "ooi-service" -}}
+{{- $serviceName := (include "alfresco-ooi-service.fullname" .)  -}}
 {{- $servicePort := .Values.ooiService.service.externalPort -}}
 apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
@@ -27,6 +27,7 @@ spec:
   {{- if .Values.ooiService.ingress.hostName }}
   - host: {{ tpl .Values.ooiService.ingress.hostName $ }}
     http:
+  {{- else }}
   - http:
   {{- end }}
       paths:
