@@ -36,7 +36,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - {{ template "alfresco.shortname" . }}-filestore
+                  - {{ template "alfresco-transform-service.deployment-filestore.name" . }}
               topologyKey: failure-domain.beta.kubernetes.io/zone
           - weight: 5
             podAffinityTerm:
@@ -45,7 +45,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - {{ template "alfresco.shortname" . }}-filestore
+                  - {{ template "alfresco-transform-service.deployment-filestore.name" . }}
               topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ .Chart.Name }}

@@ -35,7 +35,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - {{ template "content-services.shortname" . }}-libreoffice
+                  - {{ template "alfresco-transform-service.deployment-libreoffice.name" . }}
               topologyKey: failure-domain.beta.kubernetes.io/zone
           - weight: 5
             podAffinityTerm:
@@ -44,7 +44,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - {{ template "content-services.shortname" . }}-libreoffice
+                  - {{ template "alfresco-transform-service.deployment-libreoffice.name" . }}
               topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ .Chart.Name }}
