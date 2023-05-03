@@ -8,6 +8,11 @@
 {{- include "alfresco-transform-service.fullname" $scope }}
 {{- end }}
 
+{{- define "alfresco-transform-service.config-libreoffice.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "libreoffice-configmap" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-transform-service.fullname" $scope }}
+{{- end }}
+
 {{- define "alfresco-transform-service.deployment-filestore.name" -}}
 {{- $scope := (dict "Values" (dict "nameOverride" "filestore" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-transform-service.fullname" $scope }}
@@ -15,5 +20,10 @@
 
 {{- define "alfresco-transform-service.deployment-imagemagick.name" -}}
 {{- $scope := (dict "Values" (dict "nameOverride" "imagemagick" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-transform-service.fullname" $scope }}
+{{- end }}
+
+{{- define "alfresco-transform-service.deployment-libreoffice.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "libreoffice" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-transform-service.fullname" $scope }}
 {{- end }}

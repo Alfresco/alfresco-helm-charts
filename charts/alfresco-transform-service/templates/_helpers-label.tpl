@@ -17,3 +17,13 @@
 {{- $scope := (dict "Values" (dict "nameOverride" "imagemagick" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-transform-service.selectorLabels" $scope }}
 {{- end }}
+
+{{- define "alfresco-transform-service.libreoffice.labels" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "libreoffice" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-transform-service.labels" $scope }}
+{{- end }}
+
+{{- define "alfresco-transform-service.libreoffice.selectorLabels" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "libreoffice" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-transform-service.selectorLabels" $scope }}
+{{- end }}

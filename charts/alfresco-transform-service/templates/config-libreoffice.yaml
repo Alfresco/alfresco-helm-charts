@@ -1,10 +1,9 @@
-{{- $componentScope := (dict "Values" (dict "nameOverride" "libreoffice" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
+  name: {{ template "alfresco-transform-service.config-libreoffice.name" . }}
   labels:
-    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
+    {{- include "alfresco-transform-service.libreoffice.labels" . | nindent 4 }}
 data:
   # The JAVA_OPTS defined in the values.yaml file for the "libreoffice" are set here using proper quotes
   {{- if .Values.libreoffice.environment }}
