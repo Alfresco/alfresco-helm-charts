@@ -21,9 +21,9 @@ tests:
           path: spec.template.spec.containers[0].resources
           value:
             requests:
-              cpu: "0.5"
-              memory: "800Mi"
+              cpu: "0.25"
+              memory: "1000Mi"
             limits:
               cpu: "2"
-              memory: "2000Mi"
+              memory: "1000Mi"
         template: deployment-ooi-service.yaml
