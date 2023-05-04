@@ -1,0 +1,29 @@
+---
+suite: test ooi deployment
+templates:
+  - deployment-ooi-service.yaml
+  - config-ooi-service.yaml
+tests:
+  - it: should have basic metadata in place
+    set: &values
+      postgresql:
+        enabled: true
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-ooi-service
+        template: deployment-ooi-service.yaml
+
+  - it: should render cpu and memory limits
+    set: *values
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "0.5"
+              memory: "800Mi"
+            limits:
+              cpu: "2"
+              memory: "2000Mi"
+        template: deployment-ooi-service.yaml
