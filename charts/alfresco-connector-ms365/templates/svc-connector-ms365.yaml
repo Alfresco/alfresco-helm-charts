@@ -1,0 +1,15 @@
+# Defines the service for the connector-ms365 app
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-connector-ms365.fullname" . }}
+  labels:
+    {{- include "alfresco-connector-ms365.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.externalPort }}
+      targetPort: {{ .Values.image.internalPort }}
+      name: {{ .Values.service.name }}
+  selector:
+    {{- include "alfresco-connector-ms365.selectorLabels" . | nindent 4 }}

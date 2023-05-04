@@ -1,0 +1,44 @@
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+replicaCount: 2
+nodeSelector: {}
+image:
+  repository: quay.io/alfresco/alfresco-connector-ms365
+  tag: 1.1.3
+  pullPolicy: IfNotPresent
+  internalPort: 9095
+service:
+  name: ms365-service
+  type: ClusterIP
+  externalPort: 80
+ingress:
+  path: /ms365-service
+  tls: []
+  extraAnnotations:
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 33006
+resources:
+  requests:
+    cpu: "0.25"
+    memory: "1000Mi"
+  limits:
+    cpu: "2"
+    memory: "1000Mi"
+environment:
+  JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
+readinessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 60
+  timeoutSeconds: 10
+livenessProbe:
+  initialDelaySeconds: 10
+  periodSeconds: 20
+  timeoutSeconds: 10

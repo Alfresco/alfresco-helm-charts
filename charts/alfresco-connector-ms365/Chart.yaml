@@ -1,10 +1,10 @@
 ---
 apiVersion: v2
-name: alfresco-ooi-service
+name: alfresco-connector-ms365
 description: A Helm chart for deploying Alfresco OfficeOnline service
 type: application
 version: 0.1.0
-appVersion: "1.16.0"
+appVersion: "1.1.3"
 dependencies:
   - name: alfresco-common
     version: 2.0.0
