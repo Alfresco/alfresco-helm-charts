@@ -20,7 +20,7 @@ A Helm chart for deploying Alfresco OfficeOnline service
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | image.internalPort | int | `9095` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"quay.io/alfresco/alfresco-connector-ms365"` |  |
+| image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
 | image.tag | string | `"1.1.3"` |  |
 | ingress.extraAnnotations | string | `nil` |  |
 | ingress.path | string | `"/ms365-service"` |  |
