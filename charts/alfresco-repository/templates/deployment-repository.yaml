@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-repository.deployment-repository.name" . }}
+  name: {{ template "alfresco-repository.deployment-repository.fullname" . }}
   labels:
     {{- include "alfresco-repository.repository.labels" . | nindent 4 }}
 spec:

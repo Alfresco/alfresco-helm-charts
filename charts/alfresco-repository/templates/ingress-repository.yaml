@@ -3,7 +3,7 @@
 apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
-  name: {{ template "alfresco-repository.deployment-repository.name" . }}
+  name: {{ template "alfresco-repository.deployment-repository.fullname" . }}
   labels:
     {{- include "alfresco-repository.repository.labels" . | nindent 4 }}
   annotations:

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-repository.deployment-share.name" . }}
+  name: {{ template "alfresco-repository.deployment-share.fullname" . }}
   labels:
     {{- include "alfresco-repository.share.labels" . | nindent 4 }}
   annotations:
@@ -75,7 +75,7 @@ spec:
           imagePullPolicy: {{ .Values.repository.initContainers.db.image.pullPolicy }}
           {{- include "component-security-context" .Values.repository.initContainers.db | indent 8 }}
           resources: {{- toYaml .Values.repository.initContainers.db.resources | nindent 12 }}
-          {{- $serviceTarget :=  cat (include "alfresco-repository.deployment-repository.name" .) .Values.repository.service.externalPort }}
+          {{- $serviceTarget :=  cat (include "alfresco-repository.deployment-repository.fullname" .) .Values.repository.service.externalPort }}
           command: ['sh', '-c', 'until nc -w1 {{ $serviceTarget }}; do echo "waiting for repository reachable at {{ $serviceTarget }}"; sleep 2; done;']
       {{- if .Values.share.extraInitContainers }}
         {{- tpl .Values.share.extraInitContainers . | indent 8 }}

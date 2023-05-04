@@ -3,7 +3,7 @@
 {{- end -}}
 
 {{- define "alf.repo.host" -}}
-{{ .Values.externalHost | default (include "alfresco-repository.deployment-repository.name" .) }}
+{{ .Values.externalHost | default (include "alfresco-repository.deployment-repository.fullname" .) }}
 {{- end -}}
 
 {{- define "alf.repo.port" -}}
@@ -11,7 +11,7 @@
 {{- end -}}
 
 {{- define "alf.share.host" -}}
-{{ .Values.externalHost | default (include "alfresco-repository.deployment-share.name" .) }}
+{{ .Values.externalHost | default (include "alfresco-repository.deployment-share.fullname" .) }}
 {{- end -}}
 
 {{- define "alf.share.port" -}}

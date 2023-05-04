@@ -7,7 +7,7 @@ metadata:
 data:
   {{- $alfUrl := include "share.url" $ -}}
   {{- $alfproxy := printf "-Dalfresco.proxy=%s" $alfUrl }}
-  REPO_HOST: "{{ template "alfresco-repository.deployment-repository.name" . }}"
+  REPO_HOST: "{{ template "alfresco-repository.deployment-repository.fullname" . }}"
   REPO_PORT: "{{ .Values.repository.service.externalPort }}"
   CSRF_FILTER_REFERER: "{{ $alfUrl }}/.*"
   CSRF_FILTER_ORIGIN: "{{ $alfUrl }}"
