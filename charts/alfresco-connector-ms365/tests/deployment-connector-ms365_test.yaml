@@ -2,6 +2,7 @@
 suite: test connector-ms365 deployment
 templates:
   - deployment-connector-ms365.yaml
+  - config-connector-ms365.yaml
 tests:
   - it: should have basic metadata in place
     set: &values

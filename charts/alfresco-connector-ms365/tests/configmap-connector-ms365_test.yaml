@@ -1,8 +1,8 @@
-  ---
-  suite: test connector-ms365 configmap url
-  templates:
+---
+suite: test connector-ms365 deployment
+templates:
     - config-connector-ms365.yaml
-  tests:
+tests:
     - it: should render just the URL in JAVA_OPTS
       values: *testvalues
       asserts:
