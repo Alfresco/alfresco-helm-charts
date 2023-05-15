@@ -11,4 +11,4 @@ tests:
       asserts:
        - equal:
            path: data.JAVA_OPTS
-           value: -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
+           value: -Dalfresco.base-url=http://acs-alfresco-cs-repository:80
