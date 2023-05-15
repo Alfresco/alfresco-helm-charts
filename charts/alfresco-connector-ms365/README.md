@@ -1,6 +1,6 @@
 # alfresco-connector-ms365
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.3](https://img.shields.io/badge/AppVersion-1.1.3-informational?style=flat-square)
+![Version: 0.1.0-Alpha](https://img.shields.io/badge/Version-0.1.0--Alpha-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.1.3](https://img.shields.io/badge/AppVersion-1.1.3-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector ms365 service
 
@@ -33,7 +33,7 @@ A Helm chart for deploying Alfresco connector ms365 service
 | readinessProbe.periodSeconds | int | `60` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | replicaCount | int | `2` |  |
-| repository.host | string | `"alfresco-cs-repository"` | ACS repository host |
+| repository.host | string | `"acs-alfresco-cs-repository"` | ACS repository host |
 | repository.port | int | `80` | ACS repository port |
 | resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"1000Mi"` |  |
