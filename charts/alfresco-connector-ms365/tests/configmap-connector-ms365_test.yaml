@@ -1,0 +1,11 @@
+  ---
+  suite: test connector-ms365 configmap url
+  templates:
+    - config-connector-ms365.yaml
+  tests:
+    - it: should render just the URL in JAVA_OPTS
+      values: *testvalues
+      asserts:
+       - equal:
+           path: data.JAVA_OPTS
+           value: -Dalfresco.base-url==http://acs-alfresco-cs-repository:80"
