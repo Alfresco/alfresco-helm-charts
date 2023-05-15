@@ -27,7 +27,7 @@ tests:
         template: deployment-connector-ms365.yaml
 
   - it: should render just the URL in JAVA_OPTS
-    values: *testvalues
+    values: *values
     asserts:
       - equal:
           path: data.JAVA_OPTS
