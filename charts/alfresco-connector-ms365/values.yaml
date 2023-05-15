@@ -44,7 +44,7 @@ livenessProbe:
   timeoutSeconds: 10
 repository:
   # -- ACS repository host
-  host: alfresco-cs-repository
+  host: acs-alfresco-cs-repository
   # -- ACS repository port
   port: 80
   # -- A nameOverride use to compute an ACS repository service name

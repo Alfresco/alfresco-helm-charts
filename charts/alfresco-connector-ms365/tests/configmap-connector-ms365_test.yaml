@@ -6,7 +6,7 @@ tests:
     - it: should render just the URL in JAVA_OPTS
       values: &testvalues
       set:
-       repository.host: alfresco-cs-repository
+       repository.host: acs-alfresco-cs-repository
        repository.port: 80
       asserts:
        - equal:
