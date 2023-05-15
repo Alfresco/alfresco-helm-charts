@@ -6,8 +6,6 @@ templates:
 tests:
   - it: should have basic metadata in place
     set: &values
-      postgresql:
-        enabled: true
     asserts:
       - equal:
           path: metadata.name
@@ -27,3 +25,11 @@ tests:
               cpu: "2"
               memory: "1000Mi"
         template: deployment-connector-ms365.yaml
+
+  - it: should render just the URL in JAVA_OPTS
+    values: *testvalues
+    asserts:
+      - equal:
+          path: data.JAVA_OPTS
+          value: -Dalfresco.base-url==http://acs-alfresco-cs-repository:80"
+        template: config-connector-ms365.yaml

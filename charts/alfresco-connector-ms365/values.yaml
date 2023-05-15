@@ -1,9 +1,9 @@
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
+strategy:
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 0
 replicaCount: 2
 nodeSelector: {}
 image:
@@ -16,7 +16,7 @@ service:
   type: ClusterIP
   externalPort: 80
 ingress:
-  path: /ms365-service
+  path: /ooi-service
   tls: []
   extraAnnotations:
   #  - secretName: chart-example-tls
@@ -33,7 +33,7 @@ resources:
     cpu: "2"
     memory: "1000Mi"
 environment:
-  JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
+#  JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
 readinessProbe:
   initialDelaySeconds: 20
   periodSeconds: 60
@@ -42,3 +42,9 @@ livenessProbe:
   initialDelaySeconds: 10
   periodSeconds: 20
   timeoutSeconds: 10
+repository:
+  # -- ACS repository host
+  host: alfresco-cs-repository
+  # -- ACS repository port
+  port: 80
+  # -- A nameOverride use to compute an ACS repository service name
