@@ -13,7 +13,7 @@ spec:
   strategy:
     type: RollingUpdate
     rollingUpdate:
-    {{ toYaml .Values.strategy.rollingUpdate | indent 2 }}
+{{ toYaml .Values.strategy.rollingUpdate | indent 6 }}
   template:
     metadata:
       annotations:
