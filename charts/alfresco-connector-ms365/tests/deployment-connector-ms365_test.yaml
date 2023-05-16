@@ -5,7 +5,8 @@ templates:
   - config-connector-ms365.yaml
 tests:
   - it: should have basic metadata in place
-    set: &values
+    values: &testvalues
+      - values/test_values.yam
     asserts:
       - equal:
           path: metadata.name
@@ -13,7 +14,7 @@ tests:
         template: deployment-connector-ms365.yaml
 
   - it: should render cpu and memory limits
-    set: *values
+    values: *testvalues
     asserts:
       - equal:
           path: spec.template.spec.containers[0].resources

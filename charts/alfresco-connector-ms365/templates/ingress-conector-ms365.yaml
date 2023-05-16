@@ -8,9 +8,9 @@ metadata:
     {{- include "alfresco-connector-ms365.labels" . | nindent 4 }}
   annotations:
     kubernetes.io/ingress.class: "nginx"
-{{- if .Values.ingress.extraAnnotations }}
-{{ toYaml .Values.ingress.extraAnnotations | indent 4 }}
-{{- end }}
+    {{- if .Values.ingress.extraAnnotations }}
+    {{ toYaml .Values.ingress.extraAnnotations }}
+    {{- end }}
 
 spec:
   {{- if .Values.ingress.tls }}
@@ -24,15 +24,13 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-  {{- if .Values.ingress.hostName }}
-  - host: {{ tpl .Values.ingress.hostName $ }}
-    http:
-  {{- else }}
   - http:
-  {{- end }}
       paths:
       - path: {{ .Values.ingress.path }}
         {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
         pathType: Prefix
         {{- end }}
         backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
+  {{- if .Values.ingress.hostName }}
+    host: {{ tpl .Values.ingress.hostName $ }}
+  {{- end }}
