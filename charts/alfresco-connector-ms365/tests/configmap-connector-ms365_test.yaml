@@ -4,7 +4,7 @@ templates:
     - config-connector-ms365.yaml
 tests:
     - it: should render just the URL in JAVA_OPTS
-      values: *testvalues
+      values: &testvalues
       set:
        repository.host: acs-alfresco-cs-repository
        repository.port: 80
