@@ -1,4 +1,3 @@
-# Defines the service for the ms-teams-service app
 apiVersion: v1
 kind: Service
 metadata:

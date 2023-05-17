@@ -62,7 +62,7 @@ spec:
           {{- include "component-security-context" .Values.msTeams | indent 8 }}
           envFrom:
             - configMapRef:
-                # config map to use, defined in config-ms-teams-service.yaml
+                # config map to use, defined in config-connector-msteams.yaml
                 name: {{ template "alfresco-connector-msteams.fullname" . }}
           ports:
               - containerPort: {{ .Values.image.internalPort }}
