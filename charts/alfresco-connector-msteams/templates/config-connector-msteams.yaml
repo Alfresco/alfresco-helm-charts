@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "alfresco-connector-msteams.labels" . | nindent 4 }}
 data:
-  # The JAVA_OPTS defined in the values.yaml file set here using proper quotes
   {{- if .Values.environment }}
   {{- range $key, $val := .Values.environment }}
   {{ $key }}: {{ $val | quote }}
