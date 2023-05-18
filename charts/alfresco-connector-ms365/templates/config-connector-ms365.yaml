@@ -6,10 +6,9 @@ metadata:
   labels:
     {{- include "alfresco-connector-ms365.labels" . | nindent 4 }}
 data:
-  # The JAVA_OPTS defined in the values.yaml file for the "alfresco-connector-ms365" are set here using proper quotes
   {{- $alfbaseurl := printf "-Dalfresco.base-url=http://%s:%d" .Values.repository.host (int .Values.repository.port ) -}}
   {{- $environment := .Values.environment | default dict }}
   JAVA_OPTS: {{ tpl (printf "%s %s" ($environment.JAVA_OPTS | default "") $alfbaseurl) $ | trim | quote }}
   {{- range $key, $val := omit $environment "JAVA_OPTS" }}
-  {{ $key }}: {{ $val | quote}}
+  {{ $key }}: {{ $val | quote }}
   {{- end }}
