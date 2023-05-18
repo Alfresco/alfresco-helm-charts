@@ -1,0 +1,28 @@
+---
+suite: test connector-ms365 deployment
+templates:
+  - deployment-connector-ms365.yaml
+  - config-connector-ms365.yaml
+tests:
+  - it: should have basic metadata in place
+    values: &testvalues
+      - values/test_values.yaml
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-connector-ms365
+        template: deployment-connector-ms365.yaml
+
+  - it: should render cpu and memory limits
+    values: *testvalues
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "0.25"
+              memory: "1000Mi"
+            limits:
+              cpu: "2"
+              memory: "1000Mi"
+        template: deployment-connector-ms365.yaml

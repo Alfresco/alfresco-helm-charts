@@ -1,0 +1,14 @@
+# Defines the properties required by the alfresco-connector-ms365 container
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco-connector-ms365.fullname" . }}
+  labels:
+    {{- include "alfresco-connector-ms365.labels" . | nindent 4 }}
+data:
+  {{- $alfbaseurl := printf "-Dalfresco.base-url=http://%s:%d" .Values.repository.host (int .Values.repository.port ) -}}
+  {{- $environment := .Values.environment | default dict }}
+  JAVA_OPTS: {{ tpl (printf "%s %s" ($environment.JAVA_OPTS | default "") $alfbaseurl) $ | trim | quote }}
+  {{- range $key, $val := omit $environment "JAVA_OPTS" }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
