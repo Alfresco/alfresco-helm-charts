@@ -1,0 +1,10 @@
+apiVersion: v2
+name: alfresco-connector-msteams
+description: A Helm chart for deploying Alfresco connector msteams service
+type: application
+version: 0.1.0-alpha.0
+appVersion: "2.0.0-A2"
+dependencies:
+  - name: alfresco-common
+    version: 2.0.0
+    repository: https://alfresco.github.io/alfresco-helm-charts/
