@@ -62,7 +62,6 @@ spec:
           {{- include "component-security-context" .Values | indent 8 }}
           envFrom:
             - configMapRef:
-                # config map to use, defined in config-connector-ms365.yaml
                 name: {{ template "alfresco-connector-ms365.fullname" . }}
           ports:
               - containerPort: {{ .Values.image.internalPort }}
