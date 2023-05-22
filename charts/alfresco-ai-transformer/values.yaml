@@ -47,9 +47,9 @@ ai:
     region: XZYWER
     s3Bucket: QWEXYZ
     comprehendRoleARN: QAZQWE
-messageBroker: &acs_messageBroker
+messageBroker:
   url: null
   user: null
   password: null
-  secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
+  secretName: null
   existingSecretName: null
