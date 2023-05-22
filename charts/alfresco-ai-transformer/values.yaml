@@ -42,11 +42,11 @@ livenessProbe:
   maxTransformSeconds: 1800
 ai:
   aws:
-    accessKey:
-    secretAccessKey:
-    region:
-    s3Bucket:
-    comprehendRoleARN:
+    accessKey: XZYABC
+    secretAccessKey: ABCXYZ
+    region: XZYWER
+    s3Bucket: QWEXYZ
+    comprehendRoleARN: QAZQWE
 messageBroker: &acs_messageBroker
   url: null
   user: null

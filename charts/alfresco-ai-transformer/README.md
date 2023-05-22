@@ -14,11 +14,11 @@ A Helm chart for deploying Alfresco ai transformer service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| ai.aws.accessKey | string | `nil` |  |
-| ai.aws.comprehendRoleARN | string | `nil` |  |
-| ai.aws.region | string | `nil` |  |
-| ai.aws.s3Bucket | string | `nil` |  |
-| ai.aws.secretAccessKey | string | `nil` |  |
+| ai.aws.accessKey | string | `"XZYABC"` |  |
+| ai.aws.comprehendRoleARN | string | `"QAZQWE"` |  |
+| ai.aws.region | string | `"XZYWER"` |  |
+| ai.aws.s3Bucket | string | `"QWEXYZ"` |  |
+| ai.aws.secretAccessKey | string | `"ABCXYZ"` |  |
 | environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `8090` |  |
