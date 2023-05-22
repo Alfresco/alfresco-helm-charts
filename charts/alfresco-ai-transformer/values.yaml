@@ -1,0 +1,55 @@
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
+strategy:
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 0
+replicaCount: 2
+nodeSelector: {}
+image:
+  repository: quay.io/alfresco/alfresco-ai-docker-engine
+  tag: 1.4.5
+  pullPolicy: IfNotPresent
+  internalPort: 8090
+service:
+  name: ai-transformer
+  type: ClusterIP
+  externalPort: 80
+podSecurityContext:
+  runAsUser: 33015
+resources:
+  requests:
+    cpu: "0.25"
+    memory: "1000Mi"
+  limits:
+    cpu: "2"
+    memory: "1000Mi"
+environment:
+  JAVA_OPTS: >-
+    -XX:MinRAMPercentage=50
+    -XX:MaxRAMPercentage=80
+readinessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 60
+  timeoutSeconds: 10
+livenessProbe:
+  initialDelaySeconds: 10
+  periodSeconds: 20
+  timeoutSeconds: 10
+  livenessPercent: 400
+  livenessTransformPeriodSeconds: 600
+  maxTransforms: 10000
+  maxTransformSeconds: 1800
+ai:
+  aws:
+    accessKey:
+    secretAccessKey:
+    region:
+    s3Bucket:
+    comprehendRoleARN:
+messageBroker: &acs_messageBroker
+  url: null
+  user: null
+  password: null
+  secretName: &acs_messageBroker_secretName acs-alfresco-cs-brokersecret
+  existingSecretName: null

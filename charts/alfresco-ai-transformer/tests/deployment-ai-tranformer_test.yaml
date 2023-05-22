@@ -1,0 +1,27 @@
+suite: test ai-transformer deployment
+templates:
+- deployment-ai-transformer.yaml
+- config-ai-transformer.yaml
+tests:
+- it: should have basic metadata in place
+  values: &testvalues
+  - values/test_values.yaml
+  asserts:
+  - equal:
+      path: metadata.name
+      value: RELEASE-NAME-alfresco-ai-transformer
+    template: deployment-ai-transformer.yaml
+
+- it: should render cpu and memory limits
+  values: *testvalues
+  asserts:
+  - equal:
+      path: spec.template.spec.containers[0].resources
+      value:
+        requests:
+          cpu: "0.25"
+          memory: "1000Mi"
+        limits:
+          cpu: "2"
+          memory: "1000Mi"
+    template: deployment-ai-transformer.yaml

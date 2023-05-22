@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco-ai-transformer.fullname" . }}
+  labels:
+    {{- include "alfresco-ai-transformer.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "alfresco-ai-transformer.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      {{- toYaml .Values.strategy.rollingUpdate | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-ai-transformer.yaml") . | sha256sum }}
+      labels:
+        {{- include "alfresco-ai-transformer.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- include "component-pod-security-context" .Values | indent 4 }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
+    {{- end }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 10
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - {{ template "alfresco-ai-transformer.name" . }}
+                    - key: app.kubernetes.io/instance
+                      operator: In
+                      values:
+                        - {{ .Release.Name }}
+                topologyKey: failure-domain.beta.kubernetes.io/zone
+            - weight: 5
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - {{ template "alfresco-ai-transformer.name" . }}
+                    - key: app.kubernetes.io/instance
+                      operator: In
+                      values:
+                        - {{ .Release.Name }}
+                topologyKey: failure-domain.beta.kubernetes.io/zone
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- include "component-security-context" .Values | indent 8 }}
+          envFrom:
+          - configMapRef:
+              name: {{ template "alfresco-ai-transformer.fullname" . }}
+          - secretRef:
+              name: {{ .Values.messageBroker.existingSecretName | default .Values.messageBroker.secretName }}
+          env:
+            {{- include "activemq.env" . | nindent 12 }}
+          ports:
+              - containerPort: {{ .Values.image.internalPort }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: {{ .Values.image.internalPort }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /live
+              port: {{ .Values.image.internalPort }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            failureThreshold: 1
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
