@@ -14,6 +14,7 @@ A Helm chart for deploying Alfresco ai transformer service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| activemq.enabled | bool | `false` | Enable embedded broker - useful when testing this chart in standalone |
 | ai.aws.accessKey | string | `"XZYABC"` |  |
 | ai.aws.comprehendRoleARN | string | `"QAZQWE"` |  |
 | ai.aws.region | string | `"XZYWER"` |  |
