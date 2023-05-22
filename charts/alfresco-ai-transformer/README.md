@@ -32,9 +32,9 @@ A Helm chart for deploying Alfresco ai transformer service
 | livenessProbe.maxTransforms | int | `10000` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| messageBroker.existingSecretName | string | `nil` |  |
+| messageBroker.existingSecretName | string | `nil` | Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
 | messageBroker.password | string | `nil` |  |
-| messageBroker.secretName | string | `nil` |  |
+| messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
 | messageBroker.url | string | `nil` |  |
 | messageBroker.user | string | `nil` |  |
 | nodeSelector | object | `{}` |  |

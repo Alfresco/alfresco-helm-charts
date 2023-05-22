@@ -63,7 +63,7 @@ spec:
           - configMapRef:
               name: {{ template "alfresco-ai-transformer.fullname" . }}
           - secretRef:
-              name: {{ .Values.messageBroker.existingSecretName | default .Values.messageBroker.secretName }}
+              name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-ai-transformer.fullname" $)) $.Values.messageBroker.existingSecretName }}
           env:
             {{- include "activemq.env" . | nindent 12 }}
           ports:
