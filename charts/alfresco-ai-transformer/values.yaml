@@ -45,9 +45,9 @@ ai:
     # To configure these, you need to provide or export your AWS credentials https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration
     accessKey: XXXXXXXXXXXXXXXXXXXXXXXX
     secretAccessKey: XXXXXXXXXXXXXXXXXXXXXXXX
-    region: "<region-name>"
-    s3Bucket: "<s3-bucket-name>"
-    comprehendRoleARN: "arn:aws:iam::XXXXXXXXXXXX:role/ComprehendAsyncJobs"
+    region: region-name
+    s3Bucket: s3-bucket-name
+    comprehendRoleARN: arn:aws:iam::XXXXXXXXXXXX:role/ComprehendAsyncJobs
 messageBroker:
   url: null
   user: null

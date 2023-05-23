@@ -22,8 +22,8 @@ A Helm chart for deploying Alfresco ai transformer service
 | activemq.resources.requests.memory | string | `"512Mi"` |  |
 | ai.aws.accessKey | string | `"XXXXXXXXXXXXXXXXXXXXXXXX"` |  |
 | ai.aws.comprehendRoleARN | string | `"arn:aws:iam::XXXXXXXXXXXX:role/ComprehendAsyncJobs"` |  |
-| ai.aws.region | string | `"<region-name>"` |  |
-| ai.aws.s3Bucket | string | `"<s3-bucket-name>"` |  |
+| ai.aws.region | string | `"region-name"` |  |
+| ai.aws.s3Bucket | string | `"s3-bucket-name"` |  |
 | ai.aws.secretAccessKey | string | `"XXXXXXXXXXXXXXXXXXXXXXXX"` |  |
 | environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
