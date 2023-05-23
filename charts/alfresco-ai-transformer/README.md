@@ -20,11 +20,11 @@ A Helm chart for deploying Alfresco ai transformer service
 | activemq.resources.limits.memory | string | `"1Gi"` |  |
 | activemq.resources.requests.cpu | string | `"100m"` |  |
 | activemq.resources.requests.memory | string | `"512Mi"` |  |
-| ai.aws.accessKey | string | `"XZYABC"` |  |
-| ai.aws.comprehendRoleARN | string | `"QAZQWE"` |  |
-| ai.aws.region | string | `"XZYWER"` |  |
-| ai.aws.s3Bucket | string | `"QWEXYZ"` |  |
-| ai.aws.secretAccessKey | string | `"ABCXYZ"` |  |
+| ai.aws.accessKey | string | `"XXXXXXXXXXXXXXXXXXXXXXXX"` |  |
+| ai.aws.comprehendRoleARN | string | `"arn:aws:iam::XXXXXXXXXXXX:role/ComprehendAsyncJobs"` |  |
+| ai.aws.region | string | `"<region-name>"` |  |
+| ai.aws.s3Bucket | string | `"<s3-bucket-name>"` |  |
+| ai.aws.secretAccessKey | string | `"XXXXXXXXXXXXXXXXXXXXXXXX"` |  |
 | environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `8090` |  |
