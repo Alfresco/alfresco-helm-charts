@@ -55,3 +55,12 @@ messageBroker:
   secretName: acs-alfresco-cs-brokersecret
   # -- Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName: null
+activemq:
+  enabled: true
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"

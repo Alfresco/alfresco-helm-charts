@@ -8,12 +8,18 @@ A Helm chart for deploying Alfresco ai transformer service
 
 | Repository | Name | Version |
 |------------|------|---------|
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| activemq.enabled | bool | `true` |  |
+| activemq.resources.limits.cpu | string | `"1000m"` |  |
+| activemq.resources.limits.memory | string | `"1Gi"` |  |
+| activemq.resources.requests.cpu | string | `"100m"` |  |
+| activemq.resources.requests.memory | string | `"512Mi"` |  |
 | ai.aws.accessKey | string | `"XZYABC"` |  |
 | ai.aws.comprehendRoleARN | string | `"QAZQWE"` |  |
 | ai.aws.region | string | `"XZYWER"` |  |
