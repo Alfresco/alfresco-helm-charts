@@ -15,16 +15,8 @@ A Helm chart for deploying Alfresco ai transformer service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| activemq.enabled | bool | `true` |  |
-| activemq.resources.limits.cpu | string | `"1000m"` |  |
-| activemq.resources.limits.memory | string | `"1Gi"` |  |
-| activemq.resources.requests.cpu | string | `"100m"` |  |
-| activemq.resources.requests.memory | string | `"512Mi"` |  |
-| ai.aws.accessKey | string | `"XXXXXXXXXXXXXXXXXXXXXXXX"` |  |
-| ai.aws.comprehendRoleARN | string | `"arn:aws:iam::XXXXXXXXXXXX:role/ComprehendAsyncJobs"` |  |
-| ai.aws.region | string | `"region-name"` |  |
-| ai.aws.s3Bucket | string | `"s3-bucket-name"` |  |
-| ai.aws.secretAccessKey | string | `"XXXXXXXXXXXXXXXXXXXXXXXX"` |  |
+| activemq.enabled | bool | `false` |  |
+| aws | object | `{"accessKey":"XXXXXXXXXXXXXXXXXXXXXXXX","comprehendRoleARN":"arn:aws:iam::XXXXXXXXXXXX:role/ComprehendAsyncJobs","region":"region-name","s3Bucket":"s3-bucket-name","secretAccessKey":"XXXXXXXXXXXXXXXXXXXXXXXX"}` | To configure these, you need to provide or export your AWS credentials https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration |
 | environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `8090` |  |
