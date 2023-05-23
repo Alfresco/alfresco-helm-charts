@@ -5,3 +5,12 @@ resources:
   limits:
     cpu: "1"
     memory: "500Mi"
+activemq:
+  enabled: true
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
