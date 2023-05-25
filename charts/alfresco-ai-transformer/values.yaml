@@ -1,0 +1,59 @@
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
+strategy:
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 0
+replicaCount: 2
+nodeSelector: {}
+image:
+  repository: quay.io/alfresco/alfresco-ai-docker-engine
+  tag: 1.4.5
+  pullPolicy: IfNotPresent
+  internalPort: 8090
+service:
+  name: ai-transformer
+  type: ClusterIP
+  externalPort: 80
+podSecurityContext:
+  runAsUser: 33015
+resources:
+  requests:
+    cpu: "0.25"
+    memory: "1000Mi"
+  limits:
+    cpu: "2"
+    memory: "1000Mi"
+environment:
+  JAVA_OPTS: >-
+    -XX:MinRAMPercentage=50
+    -XX:MaxRAMPercentage=80
+readinessProbe:
+  initialDelaySeconds: 20
+  periodSeconds: 60
+  timeoutSeconds: 10
+livenessProbe:
+  initialDelaySeconds: 10
+  periodSeconds: 20
+  timeoutSeconds: 10
+  livenessPercent: 400
+  livenessTransformPeriodSeconds: 600
+  maxTransforms: 10000
+  maxTransformSeconds: 1800
+aws:
+# -- To configure these, you need to provide or export your AWS credentials https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration
+  accessKey: XXXXXXXXXXXXXXXXXXXXXXXX
+  secretAccessKey: XXXXXXXXXXXXXXXXXXXXXXXX
+  region: region-name
+  s3Bucket: s3-bucket-name
+  comprehendRoleARN: arn:aws:iam::XXXXXXXXXXXX:role/ComprehendAsyncJobs
+messageBroker:
+  url: null
+  user: null
+  password: null
+  # -- Name of the secret managed by this chart
+  secretName: acs-alfresco-cs-brokersecret
+  # -- Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
+  existingSecretName: null
+activemq:
+  enabled: false
