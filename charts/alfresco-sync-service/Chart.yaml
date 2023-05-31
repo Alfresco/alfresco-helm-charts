@@ -8,8 +8,8 @@ keywords:
 name: alfresco-sync-service
 sources:
   - https://github.com/Alfresco/acs-deployment
-version: 4.0.5
-appVersion: 4.0.0-M7
+version: 4.1.0
+appVersion: 3.9.0
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
 dependencies:
   - name: common
@@ -19,7 +19,7 @@ dependencies:
     version: 2.0.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: activemq
-    version: 3.0.1
+    version: 3.1.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: activemq.enabled
   - name: postgresql
