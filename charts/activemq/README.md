@@ -24,7 +24,7 @@ A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate A
 | enabled | bool | `true` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"alfresco/alfresco-activemq"` |  |
-| image.tag | string | `"5.17.1-jre11-rockylinux8"` |  |
+| image.tag | string | `"5.17.4-jre17-rockylinux8"` |  |
 | livenessProbe.failureThreshold | int | `6` |  |
 | livenessProbe.initialDelaySeconds | int | `60` |  |
 | livenessProbe.periodSeconds | int | `10` |  |
