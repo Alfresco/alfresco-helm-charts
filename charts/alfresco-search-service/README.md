@@ -30,12 +30,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | global.tracking.auth | string | `"secret"` | Select how solr and repo authenticate to each other none: work only prior to acs 7.2 (and was the default) secret: use a shared secret (to specify using `tracking.sharedsecret`) https: to use mTLS auth (require appropriate certificate configuration) |
 | global.tracking.sharedsecret | string | `nil` | Shared secret to authenticate repo/solr traffic |
+| ingress.annotations | object | `{"nginx.ingress.kubernetes.io/auth-realm":"Authentication Required - Alfresco Search Services","nginx.ingress.kubernetes.io/auth-type":"basic","nginx.ingress.kubernetes.io/whitelist-source-range":"0.0.0.0/0"}` | nginx ingress annotations (see https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations) |
 | ingress.basicAuth | string | `nil` | Default solr basic auth user/password: admin / admin You can create your own with htpasswd utilility & encode it with base640. Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'` basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg== |
 | ingress.enabled | bool | `false` | Expose the solr admin console behind basic auth |
 | ingress.existingSecretName | string | `nil` | An existing secret that contains an `auth` key with a value in the same format of `ingress.basicAuth` |
 | ingress.path | string | `"/solr"` |  |
 | ingress.tls | list | `[]` |  |
-| ingress.whitelist_ips | string | `"0.0.0.0/0"` | Comma separated list of CIDR to restrict search endpoint access. |
 | initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainer.image.repository | string | `"busybox"` |  |
 | initContainer.image.tag | string | `"1.35.0"` |  |
