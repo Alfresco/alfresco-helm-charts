@@ -54,8 +54,13 @@ ingress:
   # -- An existing secret that contains an `auth` key with a value in the same
   # format of `ingress.basicAuth`
   existingSecretName:
-  # -- Comma separated list of CIDR to restrict search endpoint access.
-  whitelist_ips: 0.0.0.0/0
+  # -- nginx ingress annotations (see
+  # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations)
+  annotations:
+    nginx.ingress.kubernetes.io/auth-type: basic
+    nginx.ingress.kubernetes.io/auth-realm: >-
+      Authentication Required - Alfresco Search Services
+    nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
 # Below values must be set by parent chart
 repository:
   # -- ACS repository hostname
