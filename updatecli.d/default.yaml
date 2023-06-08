@@ -5,4 +5,5 @@ autodiscovery:
   crawlers:
     helm:
       ignore:
+        #  Search Service do not follow the usual image.repo & image.tag path
         - path: charts/alfresco-search-service/*
