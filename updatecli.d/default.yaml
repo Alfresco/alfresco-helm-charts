@@ -5,17 +5,17 @@ scms:
   charts-pr:
     kind: github
     spec:
-      branch: '{{ requiredEnv "BRANCH" }}'
+      branch: '{{ requiredEnv "BRANCH_NAME" }}'
       user: alfresco-build
       email: alfresco-build@hyland.com
-      owner: Updatecli
-      repository: Alfresco/alfresco-helm-charts
+      owner: Alfresco
+      repository: alfresco-helm-charts
       token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      username: '{{ requiredEnv "GITHUB_AUTHOR" }}'
+      username: '{{ requiredEnv "GITHUB_ACTOR" }}'
 
 actions:
   helm-charts:
-    kind: github
+    kind: github/pullrequest
     scmid: charts-pr
     spec:
       description: |
@@ -27,6 +27,7 @@ actions:
       title: Bump Charts and Image tags
 
 autodiscovery:
+  scmid: charts-pr
   crawlers:
     helm:
       ignore:
