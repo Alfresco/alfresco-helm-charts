@@ -33,3 +33,6 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        with:
+          commit_message: |
+            🛠 Updatecli pipeline bump
