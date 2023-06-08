@@ -1,0 +1,33 @@
+---
+name: "Helm autodiscovery using git scm"
+
+scms:
+  charts-pr:
+    kind: github
+    spec:
+      branch: '{{ requiredEnv "BRANCH" }}'
+      user: alfresco-build
+      email: alfresco-build@hyland.com
+      owner: Updatecli
+      repository: Alfresco/alfresco-helm-charts
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "GITHUB_AUTHOR" }}'
+
+actions:
+  helm-charts:
+    kind: github
+    scmid: charts-pr
+    spec:
+      description: |
+        Bump Charts and Image tags whithin each individual chart metadata file
+        & `values.yaml` file
+      draft: true
+      labels:
+        - chores
+      title: Bump Charts and Image tags
+
+autodiscovery:
+  crawlers:
+    helm:
+      ignore:
+        - path: charts/alfresco-search-service/*
