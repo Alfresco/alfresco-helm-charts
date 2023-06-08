@@ -1,33 +1,7 @@
 ---
 name: "Helm autodiscovery using git scm"
 
-scms:
-  charts-pr:
-    kind: github
-    spec:
-      branch: '{{ requiredEnv "BRANCH_NAME" }}'
-      user: alfresco-build
-      email: alfresco-build@hyland.com
-      owner: Alfresco
-      repository: alfresco-helm-charts
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      username: '{{ requiredEnv "GITHUB_ACTOR" }}'
-
-actions:
-  helm-charts:
-    kind: github/pullrequest
-    scmid: charts-pr
-    spec:
-      description: |
-        Bump Charts and Image tags whithin each individual chart metadata file
-        & `values.yaml` file
-      draft: true
-      labels:
-        - chores
-      title: Bump Charts and Image tags
-
 autodiscovery:
-  scmid: charts-pr
   crawlers:
     helm:
       ignore:
