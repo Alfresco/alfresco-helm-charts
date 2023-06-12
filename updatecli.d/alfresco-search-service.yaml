@@ -1,0 +1,54 @@
+---
+name: Alfresco Search Service pipeline
+
+sources:
+  alfresco-insight-zeppelin-subchart:
+    name: Alfresco Insight Zeppelin subchart
+    kind: yaml
+    spec:
+      file: >-
+        charts/alfresco-search-service/charts/alfresco-insight-zeppelin/Chart.yaml
+      key: $.version
+  alfresco-search-service-image:
+    name: Alfresco Search Search Image
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/search-services
+      versionfilter:
+        kind: semver
+        pattern: ">=2.0.3"
+  alfresco-insight-engine-image:
+    name: Alfresco Insight Engine Image
+    kind: dockerimage
+    spec:
+      image: quay.io/alfresco/insight-engine
+      versionfilter:
+        kind: semver
+        pattern: ">=2.0.3"
+
+targets:
+  alfresco-search-service-image:
+    name: Alfresco Search Services Image tags
+    kind: helmchart
+    sourceid: alfresco-search-service-image
+    spec:
+      name: charts/alfresco-search-service
+      file: values.yaml
+      key: $.searchServicesImage.tag
+  alfresco-inssight-engine-image:
+    name: Alfresco Insight Engine Image tags
+    kind: helmchart
+    sourceid: alfresco-insight-engine-image
+    spec:
+      name: charts/alfresco-search-service
+      file: values.yaml
+      key: $.insightEngineImage.tag
+  alfresco-search-service-depcharts:
+    name: Alfresco Search Services Chart dependency (Insight Zeppelin)
+    kind: helmchart
+    sourceid: alfresco-insight-zeppelin-subchart
+    spec:
+      appversion: true
+      name: charts/alfresco-search-service
+      file: Chart.yaml
+      key: $.dependencies[0].version
