@@ -8,7 +8,7 @@ replicaCount: 2
 nodeSelector: {}
 image:
   repository: quay.io/alfresco/alfresco-ai-docker-engine
-  tag: 1.4.5
+  tag: 1.5.0
   pullPolicy: IfNotPresent
   internalPort: 8090
 service:
@@ -41,7 +41,7 @@ livenessProbe:
   maxTransforms: 10000
   maxTransformSeconds: 1800
 aws:
-# -- To configure these, you need to provide or export your AWS credentials https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration
+  # -- To configure these, you need to provide or export your AWS credentials https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration
   accessKey: XXXXXXXXXXXXXXXXXXXXXXXX
   secretAccessKey: XXXXXXXXXXXXXXXXXXXXXXXX
   region: region-name
