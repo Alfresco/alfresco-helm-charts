@@ -8,8 +8,5 @@ dependencies:
 - name: activemq
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 3.1.0
-- name: postgresql
-  repository: oci://registry-1.docker.io/bitnamicharts
-  version: 12.5.6
-digest: sha256:e39405a7071d52fabbfb5c13dadabdd196cdfec40637bc26fd2444700c67d7e5
-generated: "2023-06-01T10:44:55.970183+02:00"
+digest: sha256:f40d3d9ffc57c43e549d85b72cf09e18ec036599e46d250ef3997eea791aa861
+generated: "2023-06-20T08:13:19.38452971Z"
