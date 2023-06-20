@@ -22,7 +22,7 @@ dependencies:
     version: 3.1.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: activemq.enabled
-  # - name: postgresql
-  #   version: 12.x.x
-  #   repository: oci://registry-1.docker.io/bitnamicharts
-  #   condition: postgresql.enabled
+  - name: postgresql
+    version: 12.x.x
+    repository: oci://registry-1.docker.io/bitnamicharts
+    condition: postgresql.enabled
