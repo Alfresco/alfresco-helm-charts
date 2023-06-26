@@ -36,3 +36,5 @@ jobs:
         with:
           commit_message: |
             🛠 Updatecli pipeline bump #${{ github.event.pull_request.number }}
+          branch: ${{ github.event_name == 'workflow_dispatch' && 'updatecli-bump'}}
+          create_branch: ${{ github.event_name == 'workflow_dispatch' && true }}
