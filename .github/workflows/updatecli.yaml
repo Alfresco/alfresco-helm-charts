@@ -37,6 +37,6 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
           commit_message: |
-            🛠 Updatecli pipeline bump #${{ github.event.pull_request.number }}
+            🛠 Updatecli pipeline bump
           branch: ${{ github.event_name == 'workflow_dispatch' && 'updatecli-bump' || '' }}
           create_branch: ${{ github.event_name == 'workflow_dispatch' }}
