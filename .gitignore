@@ -2,4 +2,7 @@
 *.tgz
 .idea
 .DS_Store
+
+# Github workflows related
 merged.yaml
+alfresco/alfresco-updatecli
