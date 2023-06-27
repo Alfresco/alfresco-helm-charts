@@ -55,7 +55,7 @@ reindexing:
     pullPolicy: IfNotPresent
   pathIndexingEnabled: true
   postgresql:
-    url:
+    url: null
     # -- The host where database service is available
     hostname: postgresql-acs
     # -- The port where service is available
@@ -67,7 +67,7 @@ reindexing:
     # -- The password required to access the service
     password:
     # -- Alternatively, provide connection details via an existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys
-    existingSecretName:
+    existingSecretName: null
   resources:
     requests:
       cpu: "0.5"
@@ -98,7 +98,7 @@ messageBroker:
   # -- Broker password
   password: null
   # -- Provide connection details alternatively via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
-  existingSecretName:
+  existingSecretName: null
 # -- Overrides .Values.global.elasticsearch
 searchIndex:
   # -- The host where service is available
@@ -112,7 +112,7 @@ searchIndex:
   # -- The password required to access the service, if any
   password: null
   # -- Alternatively, provide connection details via an an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
-  existingSecretName:
+  existingSecretName: null
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
   # -- Shared connections details for Elasticsearch/Opensearch cluster
@@ -128,4 +128,4 @@ global:
     # -- The password required to access the service, if any
     password: null
     # -- Alternatively, provide connection details via an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
-    existingSecretName:
+    existingSecretName: null
