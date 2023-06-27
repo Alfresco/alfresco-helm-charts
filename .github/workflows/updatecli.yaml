@@ -77,7 +77,9 @@ jobs:
         # path to values file must be relative https://github.com/updatecli/updatecli/issues/1253
         run: updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v ./merged.yaml
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+          QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
+          UPDATECLI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
