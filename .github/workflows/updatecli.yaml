@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 jobs:
-  bump:
+  bump-helm-dependencies:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -38,6 +38,43 @@ jobs:
         with:
           commit_message: |
             🛠 Updatecli pipeline bump
-          branch: ${{ github.event_name == 'workflow_dispatch' && 'updatecli-bump' || '' }}
+          branch: ${{ github.event_name == 'workflow_dispatch' && 'updatecli-bump-helm' || '' }}
+          create_branch: ${{ github.event_name == 'workflow_dispatch' }}
+
+  bump-acs-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: >-
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.41.0
+      - name: Login to quay.io
+        uses: docker/login-action@v2
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_PASSWORD }}
+      - name: Install Updatecli
+        uses: updatecli/updatecli-action@v2
+        with:
+          version: v0.54.0
+      - name: Checkout updatecli configs
+        uses: actions/checkout@v3
+        with:
+          repository: alfresco/alfresco-updatecli
+          ref: master
+          path: alfresco-updatecli
+      - name: Preprocess values file appending existing keys only
+        run: yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") | explode(.)' matrix-targets.yaml | tee /tmp/merged.yaml
+      - run: updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl --values /tmp/merged.yaml
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Git Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        with:
+          commit_message: |
+            🛠 Updatecli pipeline acs bump
+          branch: ${{ github.event_name == 'workflow_dispatch' && 'updatecli-bump-acs' || '' }}
           create_branch: ${{ github.event_name == 'workflow_dispatch' }}
           push_options: ${{ github.event_name == 'workflow_dispatch' && '--force' || '' }}

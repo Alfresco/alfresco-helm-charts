@@ -1,0 +1,40 @@
+---
+# yaml-language-server: $schema=./matrix-targets.yaml
+# This file is meant to be used with updatecli uber-manifest pipeline
+# https://github.com/Alfresco/alfresco-updatecli/tree/master/deployments
+matrix:
+  latest:
+    id: latest
+    search:
+      version:
+      pattern:
+      image:
+      helm_target: >-
+        charts/alfresco-search-services/values.yaml
+      helm_keys:
+        search: searchServicesImage.tag
+        insight: insightEngineImage.tag
+    search-enterprise:
+      version:
+      pattern:
+      helm_target: >-
+        charts/alfresco-search-enterprise/values.yaml
+      helm_keys:
+        Reindexing: reindexing.image.tag
+        Liveindexing:
+          Mediation: liveIndexing.mediation.image.tag
+          Content: liveIndexing.content.image.tag
+          Metadata: liveIndexing.metadata.image.tag
+          Path: liveIndexing.path.image.tag
+    sync:
+      version:
+      pattern:
+      helm_target: >-
+        charts/alfresco-sync-service/values.yaml
+      helm_key: image.tag
+    # onedrive:
+    #   helm_target: *helmvalues
+    #   helm_key: ooiService.image.tag
+    # msteams:
+    #   helm_target: *helmvalues
+    #   helm_key: msTeamsService.image.tag
