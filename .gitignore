@@ -2,3 +2,4 @@
 *.tgz
 .idea
 .DS_Store
+merged.yaml

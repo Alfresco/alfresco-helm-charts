@@ -6,6 +6,7 @@ repos:
         args: ["--fix=lf"]
       - id: end-of-file-fixer
         exclude: README.md
+      - id: trailing-whitespace
   - repo: https://github.com/norwoodj/helm-docs
     rev: v1.11.0
     hooks:
