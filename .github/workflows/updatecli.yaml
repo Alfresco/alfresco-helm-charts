@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.41.0
       - name: Login to quay.io
@@ -27,7 +29,7 @@ jobs:
       - name: Install Updatecli
         uses: updatecli/updatecli-action@v2
         with:
-          version: v0.52.0
+          version: v0.54.0
       - run: updatecli apply --experimental
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -35,4 +37,6 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
         with:
           commit_message: |
-            🛠 Updatecli pipeline bump #${{ github.event.pull_request.number }}
+            🛠 Updatecli pipeline bump
+          branch: ${{ github.event_name == 'workflow_dispatch' && 'updatecli-bump' || '' }}
+          create_branch: ${{ github.event_name == 'workflow_dispatch' }}
