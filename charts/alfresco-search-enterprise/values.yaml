@@ -63,9 +63,9 @@ reindexing:
     # -- The database name to use
     database: alfresco
     # -- The username required to access the service
-    user:
+    user: null
     # -- The password required to access the service
-    password:
+    password: null
     # -- Alternatively, provide connection details via an existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys
     existingSecretName: null
   resources:
