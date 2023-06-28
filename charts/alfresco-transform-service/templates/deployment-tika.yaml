@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config-tika.yaml") . | sha256sum }}
+        {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "tika") | indent 8 }}
       labels:
         {{- include "alfresco-transform-service.tika.selectorLabels" . | nindent 8 }}
     spec:

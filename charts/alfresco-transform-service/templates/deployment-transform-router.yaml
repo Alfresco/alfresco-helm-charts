@@ -17,7 +17,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config-transform-router.yaml") . | sha256sum }}
+        {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "transform-router") | indent 8 }}
       labels:
         {{- include "alfresco-transform-service.transform-router.selectorLabels" . | nindent 8 }}
     spec:

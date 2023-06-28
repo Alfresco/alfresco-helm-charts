@@ -60,3 +60,14 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create checksum annotations to trigger pods recreation on config changes
+*/}}
+{{- define "alfresco-transform-service.configsums" -}}
+{{- $context := .Context -}}
+{{- $component_config := printf "config-%s" .Component -}}
+{{- range list "secret-messagebroker" $component_config }}
+checksum.alfresco.org/{{ . }}: {{ include (print $context.Template.BasePath "/" . ".yaml") $context | sha256sum }}
+{{- end }}
+{{- end -}}

@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config-libreoffice.yaml") . | sha256sum }}
+        {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "libreoffice") | indent 8 }}
       labels:
         {{- include "alfresco-transform-service.libreoffice.selectorLabels" . | nindent 8 }}
     spec:

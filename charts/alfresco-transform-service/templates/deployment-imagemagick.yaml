@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config-imagemagick.yaml") . | sha256sum }}
+        {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "imagemagick") | indent 8 }}
       labels:
         {{- include "alfresco-transform-service.imagemagick.selectorLabels" . | nindent 8 }}
     spec:

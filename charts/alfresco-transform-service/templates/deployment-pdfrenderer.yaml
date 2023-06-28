@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config-pdfrenderer.yaml") . | sha256sum }}
+        {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "pdfrenderer") | indent 8 }}
       labels:
         {{- include "alfresco-transform-service.pdfrenderer.selectorLabels" . | nindent 8 }}
     spec:
