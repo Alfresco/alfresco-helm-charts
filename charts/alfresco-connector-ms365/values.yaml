@@ -8,7 +8,7 @@ replicaCount: 2
 nodeSelector: {}
 image:
   repository: quay.io/alfresco/alfresco-ooi-service
-  tag: 1.1.3
+  tag: 2.0.0
   pullPolicy: IfNotPresent
   internalPort: 9095
 service:
@@ -18,10 +18,9 @@ service:
 ingress:
   path: /ooi-service
   tls: []
-  extraAnnotations:
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  extraAnnotations: #  - secretName: chart-example-tls
+#    hosts:
+#      - chart-example.local
 podSecurityContext:
   runAsNonRoot: true
   runAsUser: 33006
@@ -32,8 +31,7 @@ resources:
   limits:
     cpu: "2"
     memory: "1000Mi"
-environment:
-#  JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
+environment: #  JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
 readinessProbe:
   initialDelaySeconds: 20
   periodSeconds: 60
