@@ -40,6 +40,7 @@ jobs:
             🛠 Updatecli pipeline bump
           branch: ${{ github.event_name == 'workflow_dispatch' && 'updatecli-bump-helm' || '' }}
           create_branch: ${{ github.event_name == 'workflow_dispatch' }}
+          push_options: ${{ github.event_name == 'workflow_dispatch' && '--force' || '' }}
 
   bump-acs-dependencies:
     runs-on: ubuntu-latest
