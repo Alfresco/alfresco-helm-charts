@@ -32,9 +32,13 @@ matrix:
       helm_target: >-
         charts/alfresco-sync-service/values.yaml
       helm_key: image.tag
-    # onedrive:
-    #   helm_target: *helmvalues
-    #   helm_key: ooiService.image.tag
-    # msteams:
-    #   helm_target: *helmvalues
-    #   helm_key: msTeamsService.image.tag
+    onedrive:
+      version:
+      pattern:
+      helm_target: charts/alfresco-connector-ms365/values.yaml
+      helm_key: image.tag
+    msteams:
+      version:
+      pattern:
+      helm_target: charts/alfresco-connector-msteams/values.yaml
+      helm_key: image.tag
