@@ -1,6 +1,6 @@
 # alfresco-insight-zeppelin
 
-![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![AppVersion: 2.0.6](https://img.shields.io/badge/AppVersion-2.0.6-informational?style=flat-square)
+![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![AppVersion: 2.0.7](https://img.shields.io/badge/AppVersion-2.0.7-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Insight Zeppelin
 
@@ -30,7 +30,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/insight-zeppelin"` |  |
-| image.tag | string | `"2.0.6"` |  |
+| image.tag | string | `"2.0.7"` |  |
 | ingress.path | string | `"/zeppelin"` |  |
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
