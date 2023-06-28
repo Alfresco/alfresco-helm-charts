@@ -78,13 +78,14 @@ activemq:
 messageBroker:
   # -- A failover URI formatted string, see:
   # https://activemq.apache.org/failover-transport-reference
-  url: # -- A name that will be used as a base to get broker conenction details
+  url: null
+  # -- A name that will be used as a base to get broker connection details
   nameOverride: activemq
   # -- Username to authenticate as.
   user:
   # -- Credential to use to authenticate to the broker.
   password:
-  # -- An existing k8s secret with broker details (prefered over using values)
+  # -- An existing k8s secret with broker details (preferred over using values)
   existingSecretName: null
 # -- Defines properties required by sync service for connecting to the database
 # If you set database.external to true you will have to setup the JDBC driver,
@@ -119,18 +120,18 @@ database:
   # If different from the default make sure your container image ships it.
   driver: org.postgresql.Driver
   # -- JDBC url to connect to the external DB
-  url: # -- JDBC username to use to connect to the DB
+  url: null
+  # -- JDBC username to use to connect to the DB
   user: alfresco
   # -- JDBC password to use to connect to the DB
   password: admin
   # -- An existing kubernetes secret with DB info (prefered over using values)
   existingSecretName: null
+
 ingress:
   # -- useful when running Sync service without SSL termination done by a load
   # balancer, e.g. when ran on Minikube for testing purposes
   # nginx.ingress.kubernetes.io/ssl-redirect: "false"
-  extraAnnotations: #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  extraAnnotations: {}
   tls: []
   path: /syncservice

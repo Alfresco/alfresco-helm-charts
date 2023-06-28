@@ -22,7 +22,7 @@ A Helm chart for deploying Alfresco connector msteams service
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
 | image.tag | string | `"2.0.0-A2"` |  |
-| ingress.extraAnnotations | string | `nil` |  |
+| ingress.extraAnnotations | object | `{}` |  |
 | ingress.path | string | `"/ms-teams-service"` |  |
 | ingress.tls | list | `[]` |  |
 | livenessProbe.initialDelaySeconds | int | `10` |  |

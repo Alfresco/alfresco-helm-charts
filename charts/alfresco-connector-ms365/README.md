@@ -14,13 +14,13 @@ A Helm chart for deploying Alfresco connector ms365 service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| environment | string | `nil` |  |
+| environment | object | `{}` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `9095` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
 | image.tag | string | `"1.1.3"` |  |
-| ingress.extraAnnotations | string | `nil` |  |
+| ingress.extraAnnotations | object | `{}` |  |
 | ingress.path | string | `"/ooi-service"` |  |
 | ingress.tls | list | `[]` |  |
 | livenessProbe.initialDelaySeconds | int | `10` |  |

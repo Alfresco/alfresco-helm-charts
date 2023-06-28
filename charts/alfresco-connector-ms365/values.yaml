@@ -18,9 +18,7 @@ service:
 ingress:
   path: /ooi-service
   tls: []
-  extraAnnotations: #  - secretName: chart-example-tls
-#    hosts:
-#      - chart-example.local
+  extraAnnotations: {}
 podSecurityContext:
   runAsNonRoot: true
   runAsUser: 33006
@@ -31,7 +29,7 @@ resources:
   limits:
     cpu: "2"
     memory: "1000Mi"
-environment: #  JAVA_OPTS: " -Dalfresco.base-url=http://acs-alfresco-cs-repository:80"
+environment: {}
 readinessProbe:
   initialDelaySeconds: 20
   periodSeconds: 60
@@ -45,4 +43,3 @@ repository:
   host: acs-alfresco-cs-repository
   # -- ACS repository port
   port: 80
-  # -- A nameOverride use to compute an ACS repository service name
