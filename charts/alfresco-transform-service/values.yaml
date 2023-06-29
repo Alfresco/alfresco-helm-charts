@@ -6,7 +6,7 @@ transformrouter:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: 2.0.0
+    tag: 3.0.0
     pullPolicy: IfNotPresent
     internalPort: 8095
   service:
@@ -18,11 +18,11 @@ transformrouter:
       -XX:MinRAMPercentage=50
       -XX:MaxRAMPercentage=80
   readinessProbe:
-    initialDelaySeconds: 140
+    initialDelaySeconds: 90
     periodSeconds: 60
     timeoutSeconds: 10
   livenessProbe:
-    initialDelaySeconds: 140
+    initialDelaySeconds: 30
     periodSeconds: 120
     timeoutSeconds: 60
   podSecurityContext:
@@ -41,7 +41,7 @@ pdfrenderer:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-pdf-renderer
-    tag: 3.0.0
+    tag: 4.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -80,7 +80,7 @@ imagemagick:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-imagemagick
-    tag: 3.0.0
+    tag: 4.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -119,7 +119,7 @@ libreoffice:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-libreoffice
-    tag: 3.0.0
+    tag: 4.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -158,7 +158,7 @@ tika:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-tika
-    tag: 3.0.0
+    tag: 4.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -180,11 +180,11 @@ tika:
       -XX:MinRAMPercentage=50
       -XX:MaxRAMPercentage=80
   readinessProbe:
-    initialDelaySeconds: 60
+    initialDelaySeconds: 30
     periodSeconds: 60
     timeoutSeconds: 10
   livenessProbe:
-    initialDelaySeconds: 60
+    initialDelaySeconds: 30
     periodSeconds: 20
     timeoutSeconds: 10
     livenessPercent: 400
@@ -198,7 +198,7 @@ transformmisc:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-misc
-    tag: 3.0.0
+    tag: 4.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -237,7 +237,7 @@ filestore:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
-    tag: 2.0.0
+    tag: 3.0.0
     pullPolicy: IfNotPresent
     internalPort: 8099
   initContainer:
