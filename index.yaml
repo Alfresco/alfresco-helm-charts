@@ -128,6 +128,20 @@ entries:
     version: 1.0.0
   alfresco-connector-ms365:
   - apiVersion: v2
+    appVersion: 2.0.0
+    created: "2023-06-30T10:25:39.077425873Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 2.0.0
+    description: A Helm chart for deploying Alfresco connector ms365 service
+    digest: 9387c30d4cd40a6d280ea18f1865975f5e0ae0f4bb35d0655ffdbb461b124aad
+    name: alfresco-connector-ms365
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-ms365-0.1.0/alfresco-connector-ms365-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
     appVersion: 1.1.3
     created: "2023-05-18T13:44:22.81333381Z"
     dependencies:
@@ -142,6 +156,20 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-ms365-0.1.0-alpha.0/alfresco-connector-ms365-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-connector-msteams:
+  - apiVersion: v2
+    appVersion: 2.0.0
+    created: "2023-06-30T10:25:39.291550533Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 2.0.0
+    description: A Helm chart for deploying Alfresco connector msteams service
+    digest: 32764623e2ed905ac109550c241684b2240ae046955d9756f22fdd7bf25a6761
+    name: alfresco-connector-msteams
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-msteams-0.1.0/alfresco-connector-msteams-0.1.0.tgz
+    version: 0.1.0
   - apiVersion: v2
     appVersion: 2.0.0-A2
     created: "2023-05-18T13:46:39.682317546Z"
@@ -480,6 +508,37 @@ entries:
     version: 1.0.0
   alfresco-sync-service:
   - apiVersion: v2
+    appVersion: 3.10.0
+    created: "2023-06-30T10:25:39.488583629Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 2.x.x
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 2.0.0
+    - condition: activemq.enabled
+      name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.0
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 12.x.x
+    description: Alfresco Sync Service
+    digest: 7ad7f7c03dbd57b1c9935a9f778deef0786f80d2682b94ed5f305a17b64a4f92
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - syncservice
+    - alfresco
+    - application
+    name: alfresco-sync-service
+    sources:
+    - https://github.com/Alfresco/acs-deployment
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-sync-service-4.2.0/alfresco-sync-service-4.2.0.tgz
+    version: 4.2.0
+  - apiVersion: v2
     appVersion: 3.9.0
     created: "2023-06-05T10:22:07.765606699Z"
     dependencies:
@@ -698,4 +757,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-sync-service-4.0.0/alfresco-sync-service-4.0.0.tgz
     version: 4.0.0
-generated: "2023-06-30T10:23:44.197952075Z"
+generated: "2023-06-30T10:25:39.488644029Z"
