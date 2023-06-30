@@ -8,7 +8,7 @@ replicaCount: 2
 nodeSelector: {}
 image:
   repository: quay.io/alfresco/alfresco-ms-teams-service
-  tag: 2.0.0-A2
+  tag: 2.0.0
   pullPolicy: IfNotPresent
   internalPort: 3978
 service:
@@ -18,10 +18,7 @@ service:
 ingress:
   path: /ms-teams-service
   tls: []
-  extraAnnotations:
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  extraAnnotations: {}
 podSecurityContext:
   runAsNonRoot: true
   runAsUser: 33041
@@ -40,7 +37,7 @@ livenessProbe:
   initialDelaySeconds: 10
   periodSeconds: 20
   timeoutSeconds: 10
-environment:
+environment: null
 alfresco:
   baseUrl: change_me_alf_base_url
   digitalWorkspace:

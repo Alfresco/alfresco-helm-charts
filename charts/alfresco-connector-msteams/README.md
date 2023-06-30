@@ -1,6 +1,6 @@
 # alfresco-connector-msteams
 
-![Version: 0.1.0-alpha.0](https://img.shields.io/badge/Version-0.1.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0-A2](https://img.shields.io/badge/AppVersion-2.0.0--A2-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector msteams service
 
@@ -21,8 +21,8 @@ A Helm chart for deploying Alfresco connector msteams service
 | image.internalPort | int | `3978` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
-| image.tag | string | `"2.0.0-A2"` |  |
-| ingress.extraAnnotations | string | `nil` |  |
+| image.tag | string | `"2.0.0"` |  |
+| ingress.extraAnnotations | object | `{}` |  |
 | ingress.path | string | `"/ms-teams-service"` |  |
 | ingress.tls | list | `[]` |  |
 | livenessProbe.initialDelaySeconds | int | `10` |  |

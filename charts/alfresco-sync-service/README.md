@@ -1,6 +1,6 @@
 # alfresco-sync-service
 
-![Version: 4.1.0](https://img.shields.io/badge/Version-4.1.0-informational?style=flat-square) ![AppVersion: 3.9.0](https://img.shields.io/badge/AppVersion-3.9.0-informational?style=flat-square)
+![Version: 4.2.0](https://img.shields.io/badge/Version-4.2.0-informational?style=flat-square) ![AppVersion: 3.10.0](https://img.shields.io/badge/AppVersion-3.10.0-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -40,15 +40,15 @@ Alfresco Sync Service
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/service-sync"` |  |
-| image.tag | string | `"3.9.0"` |  |
-| ingress.extraAnnotations | string | `nil` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes nginx.ingress.kubernetes.io/ssl-redirect: "false" |
+| image.tag | string | `"3.10.0"` |  |
+| ingress.extraAnnotations | object | `{}` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes nginx.ingress.kubernetes.io/ssl-redirect: "false" |
 | ingress.path | string | `"/syncservice"` |  |
 | ingress.tls | list | `[]` |  |
 | livenessProbe.initialDelaySeconds | int | `30` |  |
 | livenessProbe.periodSeconds | int | `30` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| messageBroker.existingSecretName | string | `nil` | An existing k8s secret with broker details (prefered over using values) |
-| messageBroker.nameOverride | string | `"activemq"` | A name that will be used as a base to get broker conenction details |
+| messageBroker.existingSecretName | string | `nil` | An existing k8s secret with broker details (preferred over using values) |
+| messageBroker.nameOverride | string | `"activemq"` | A name that will be used as a base to get broker connection details |
 | messageBroker.password | string | `nil` | Credential to use to authenticate to the broker. |
 | messageBroker.url | string | `nil` | A failover URI formatted string, see: https://activemq.apache.org/failover-transport-reference |
 | messageBroker.user | string | `nil` | Username to authenticate as. |
