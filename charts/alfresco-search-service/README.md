@@ -1,6 +1,6 @@
 # alfresco-search-service
 
-![Version: 1.2.0-alpha.0](https://img.shields.io/badge/Version-1.2.0--alpha.0-informational?style=flat-square) ![AppVersion: 2.0.7](https://img.shields.io/badge/AppVersion-2.0.7-informational?style=flat-square)
+![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![AppVersion: 2.0.7](https://img.shields.io/badge/AppVersion-2.0.7-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
@@ -16,7 +16,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | alfresco-insight-zeppelin | 2.0.0 |
+|  | alfresco-insight-zeppelin | 2.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
 
 ## Values
