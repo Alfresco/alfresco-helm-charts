@@ -18,13 +18,15 @@ transformrouter:
       -XX:MinRAMPercentage=50
       -XX:MaxRAMPercentage=80
   readinessProbe:
-    initialDelaySeconds: 90
+    path: /actuator/health
+    initialDelaySeconds: 20
     periodSeconds: 60
     timeoutSeconds: 10
   livenessProbe:
-    initialDelaySeconds: 30
-    periodSeconds: 120
-    timeoutSeconds: 60
+    path: /actuator/health
+    initialDelaySeconds: 20
+    periodSeconds: 30
+    timeoutSeconds: 10
   podSecurityContext:
     runAsNonRoot: true
     runAsUser: 33016
@@ -63,10 +65,12 @@ pdfrenderer:
       -XX:MinRAMPercentage=50
       -XX:MaxRAMPercentage=80
   readinessProbe:
+    path: /ready
     initialDelaySeconds: 20
     periodSeconds: 60
     timeoutSeconds: 10
   livenessProbe:
+    path: /live
     initialDelaySeconds: 10
     periodSeconds: 20
     timeoutSeconds: 10
@@ -102,10 +106,12 @@ imagemagick:
       -XX:MinRAMPercentage=50
       -XX:MaxRAMPercentage=80
   readinessProbe:
+    path: /ready
     initialDelaySeconds: 20
     periodSeconds: 60
     timeoutSeconds: 10
   livenessProbe:
+    path: /live
     initialDelaySeconds: 10
     periodSeconds: 20
     timeoutSeconds: 10
@@ -141,10 +147,12 @@ libreoffice:
       -XX:MinRAMPercentage=50
       -XX:MaxRAMPercentage=80
   readinessProbe:
+    path: /ready
     initialDelaySeconds: 20
     periodSeconds: 60
     timeoutSeconds: 10
   livenessProbe:
+    path: /live
     initialDelaySeconds: 10
     periodSeconds: 20
     timeoutSeconds: 10
@@ -180,10 +188,12 @@ tika:
       -XX:MinRAMPercentage=50
       -XX:MaxRAMPercentage=80
   readinessProbe:
+    path: /ready
     initialDelaySeconds: 30
     periodSeconds: 60
     timeoutSeconds: 10
   livenessProbe:
+    path: /live
     initialDelaySeconds: 30
     periodSeconds: 20
     timeoutSeconds: 10
@@ -220,10 +230,12 @@ transformmisc:
       -XX:MinRAMPercentage=50
       -XX:MaxRAMPercentage=80
   readinessProbe:
+    path: /ready
     initialDelaySeconds: 20
     periodSeconds: 60
     timeoutSeconds: 10
   livenessProbe:
+    path: /live
     initialDelaySeconds: 10
     periodSeconds: 20
     timeoutSeconds: 10
@@ -271,10 +283,12 @@ filestore:
       -XX:MinRAMPercentage=50
       -XX:MaxRAMPercentage=80
   readinessProbe:
+    path: /ready
     initialDelaySeconds: 20
     periodSeconds: 60
     timeoutSeconds: 10
   livenessProbe:
+    path: /live
     initialDelaySeconds: 10
     periodSeconds: 20
     timeoutSeconds: 10
