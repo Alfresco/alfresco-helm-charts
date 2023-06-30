@@ -330,11 +330,13 @@ messageBroker:
   # -- Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName: null
 
+ai:
+  enabled: false
+  nameOverride: alfresco-ai
+
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-  ai:
-    enabled: false

@@ -9,6 +9,7 @@ A Helm chart for deploying Alfresco Transform Services
 | Repository | Name | Version |
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | ai(alfresco-ai-transformer) | 0.1.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
 
 ## Values
@@ -20,6 +21,8 @@ A Helm chart for deploying Alfresco Transform Services
 | activemq.enabled | bool | `false` |  |
 | activemq.nameOverride | string | `"activemq"` |  |
 | activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, with a key-value pair label e.g {"kubernetes.io/hostname": multinode-demo-m02} |
+| ai.enabled | bool | `false` |  |
+| ai.nameOverride | string | `"alfresco-ai"` |  |
 | filestore.environment."scheduler.cleanup.interval" | string | `"86400000"` |  |
 | filestore.environment."scheduler.content.age.millis" | string | `"86400000"` |  |
 | filestore.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
@@ -60,7 +63,6 @@ A Helm chart for deploying Alfresco Transform Services
 | filestore.service.externalPort | int | `80` |  |
 | filestore.service.name | string | `"filestore"` |  |
 | filestore.service.type | string | `"ClusterIP"` |  |
-| global.ai.enabled | bool | `false` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |

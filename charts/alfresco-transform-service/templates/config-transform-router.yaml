@@ -15,8 +15,8 @@ data:
   {{- if .Values.transformmisc.enabled }}
   MISC_URL: http://{{ template "alfresco-transform-service.deployment-transform-misc.name" . }}:80
   {{- end }}
-  {{- if .Values.global.ai.enabled }}
-  TRANSFORMER_URL_AWS_AI: http://{{ template "content-services.shortname" . }}-ai-transformer:80
+  {{- if .Values.ai.enabled }}
+  TRANSFORMER_URL_AWS_AI: http://{{ template "alfresco-transform-service.fullname" (dict "Values" .Values.ai "Release" .Release "Chart" .Chart) }}
   TRANSFORMER_QUEUE_AWS_AI: "org.alfresco.transform.engine.ai-aws.acs"
   TRANSFORMER_ROUTES_ADDITIONAL_AI: "/mnt/routes/ai-pipeline-routes.json"
   {{- end }}
