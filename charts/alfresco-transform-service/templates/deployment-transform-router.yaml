@@ -62,21 +62,7 @@ spec:
           ports:
             - containerPort: {{ .Values.transformrouter.image.internalPort }}
           resources: {{- toYaml .Values.transformrouter.resources | nindent 12 }}
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: {{ .Values.transformrouter.image.internalPort }}
-            initialDelaySeconds: {{ .Values.transformrouter.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.transformrouter.livenessProbe.periodSeconds }}
-            failureThreshold: 1
-            timeoutSeconds: {{ .Values.transformrouter.livenessProbe.timeoutSeconds }}
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: {{ .Values.transformrouter.image.internalPort }}
-            initialDelaySeconds: {{ .Values.transformrouter.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.transformrouter.readinessProbe.periodSeconds }}
-            timeoutSeconds: {{ .Values.transformrouter.readinessProbe.timeoutSeconds }}
+          {{ include "alfresco-transform-service.probes" .Values.transformrouter | nindent 10 }}
           {{- if .Values.global.ai.enabled }}
           volumeMounts:
           - name: config-volume

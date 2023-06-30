@@ -61,18 +61,4 @@ spec:
           ports:
             - containerPort: {{ .Values.tika.image.internalPort }}
           resources: {{- toYaml .Values.tika.resources | nindent 12 }}
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: {{ .Values.tika.image.internalPort }}
-            initialDelaySeconds: {{ .Values.tika.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.tika.readinessProbe.periodSeconds }}
-            timeoutSeconds: {{ .Values.tika.readinessProbe.timeoutSeconds }}
-          livenessProbe:
-            httpGet:
-              path: /live
-              port: {{ .Values.tika.image.internalPort }}
-            initialDelaySeconds: {{ .Values.tika.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.tika.livenessProbe.periodSeconds }}
-            failureThreshold: 1
-            timeoutSeconds: {{ .Values.tika.livenessProbe.timeoutSeconds }}
+          {{ include "alfresco-transform-service.probes" .Values.tika | nindent 10 }}

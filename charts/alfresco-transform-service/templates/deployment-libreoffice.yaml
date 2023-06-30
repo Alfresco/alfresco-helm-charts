@@ -61,18 +61,4 @@ spec:
           ports:
             - containerPort: {{ .Values.libreoffice.image.internalPort }}
           resources: {{- toYaml .Values.libreoffice.resources | nindent 12 }}
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: {{ .Values.libreoffice.image.internalPort }}
-            initialDelaySeconds: {{ .Values.libreoffice.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.libreoffice.readinessProbe.periodSeconds }}
-            timeoutSeconds: {{ .Values.libreoffice.readinessProbe.timeoutSeconds }}
-          livenessProbe:
-            httpGet:
-              path: /live
-              port: {{ .Values.libreoffice.image.internalPort }}
-            initialDelaySeconds: {{ .Values.libreoffice.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.libreoffice.livenessProbe.periodSeconds }}
-            failureThreshold: 1
-            timeoutSeconds: {{ .Values.libreoffice.livenessProbe.timeoutSeconds }}
+          {{ include "alfresco-transform-service.probes" .Values.libreoffice | nindent 10 }}

@@ -58,21 +58,7 @@ spec:
           ports:
             - containerPort: {{ .Values.filestore.image.internalPort }}
           resources: {{- toYaml .Values.filestore.resources | nindent 12 }}
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: {{ .Values.filestore.image.internalPort }}
-            initialDelaySeconds: {{ .Values.filestore.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.filestore.readinessProbe.periodSeconds }}
-            timeoutSeconds: {{ .Values.filestore.readinessProbe.timeoutSeconds }}
-          livenessProbe:
-            httpGet:
-              path: /live
-              port: {{ .Values.filestore.image.internalPort }}
-            initialDelaySeconds: {{ .Values.filestore.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.filestore.livenessProbe.periodSeconds }}
-            failureThreshold: 1
-            timeoutSeconds: {{ .Values.filestore.livenessProbe.timeoutSeconds }}
+          {{ include "alfresco-transform-service.probes" .Values.filestore | nindent 10 }}
           volumeMounts:
             - name: data
               mountPath: {{ .Values.filestore.persistence.data.mountPath }}
