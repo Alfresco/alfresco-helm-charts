@@ -8,8 +8,8 @@ A Helm chart for deploying Alfresco Transform Services
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 1.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
 
 ## Values
 
@@ -216,12 +216,12 @@ A Helm chart for deploying Alfresco Transform Services
 | transformrouter.image.tag | string | `"3.0.0"` |  |
 | transformrouter.livenessProbe.initialDelaySeconds | int | `20` |  |
 | transformrouter.livenessProbe.path | string | `"/actuator/health"` |  |
-| transformrouter.livenessProbe.periodSeconds | int | `120` |  |
-| transformrouter.livenessProbe.timeoutSeconds | int | `60` |  |
+| transformrouter.livenessProbe.periodSeconds | int | `30` |  |
+| transformrouter.livenessProbe.timeoutSeconds | int | `10` |  |
 | transformrouter.nodeSelector | object | `{}` |  |
 | transformrouter.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | transformrouter.podSecurityContext.runAsUser | int | `33016` |  |
-| transformrouter.readinessProbe.initialDelaySeconds | int | `30` |  |
+| transformrouter.readinessProbe.initialDelaySeconds | int | `20` |  |
 | transformrouter.readinessProbe.path | string | `"/actuator/health"` |  |
 | transformrouter.readinessProbe.periodSeconds | int | `60` |  |
 | transformrouter.readinessProbe.timeoutSeconds | int | `10` |  |
