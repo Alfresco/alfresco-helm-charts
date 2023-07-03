@@ -42,3 +42,8 @@ matrix:
       pattern:
       helm_target: charts/alfresco-connector-msteams/values.yaml
       helm_key: image.tag
+    intelligence:
+      version:
+      pattern:
+      helm_target: charts/alfresco-ai-transformer/values.yaml
+      helm_key: image.tag
