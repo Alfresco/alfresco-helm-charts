@@ -157,7 +157,6 @@ A Helm chart for deploying Alfresco Transform Services
 | pdfrenderer.service.externalPort | int | `80` |  |
 | pdfrenderer.service.name | string | `"pdfrenderer"` |  |
 | pdfrenderer.service.type | string | `"ClusterIP"` |  |
-| repository.edition | string | `"Enterprise"` |  |
 | tika.enabled | bool | `true` |  |
 | tika.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | tika.image.internalPort | int | `8090` |  |
