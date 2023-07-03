@@ -1,3 +1,4 @@
+{{- if .Values.libreoffice.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,3 +11,4 @@ data:
   {{- range $key, $val := .Values.libreoffice.livenessProbe }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
+{{- end }}

@@ -50,12 +50,24 @@ tests:
           kind: Deployment
           apiVersion: apps/v1
         template: deployment-pdfrenderer.yaml
-  - it: should render community config by default
+  - it: should not render any component by evaluaating false expression
     values: &testvalues
       - values/test_values.yaml
     set:
-      repository:
-        edition: community
+      filestore:
+        enabled: false
+      transformrouter:
+        enabled: false
+      imagemagick:
+        enabled: false
+      libreoffice:
+        enabled: false
+      tika:
+        enabled: false
+      transformmisc:
+        enabled: false
+      pdfrenderer:
+        enabled: false
     asserts:
       - hasDocuments:
         count: 0
@@ -63,23 +75,18 @@ tests:
       - hasDocuments:
         count: 0
         template: deployment-transform-router.yaml
-      - containsDocument:
-          kind: Deployment
-          apiVersion: apps/v1
+      - hasDocuments:
+        count: 0
         template: deployment-imagemagick.yaml
-      - containsDocument:
-          kind: Deployment
-          apiVersion: apps/v1
+      - hasDocuments:
+        count: 0
         template: deployment-libreoffice.yaml
-      - containsDocument:
-          kind: Deployment
-          apiVersion: apps/v1
+      - hasDocuments:
+        count: 0
         template: deployment-tika.yaml
-      - containsDocument:
-          kind: Deployment
-          apiVersion: apps/v1
+      - hasDocuments:
+        count: 0
         template: deployment-transform-misc.yaml
-      - containsDocument:
-          kind: Deployment
-          apiVersion: apps/v1
+      - hasDocuments:
+        count: 0
         template: deployment-pdfrenderer.yaml

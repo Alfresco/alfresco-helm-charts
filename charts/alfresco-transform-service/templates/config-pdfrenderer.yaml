@@ -1,3 +1,4 @@
+{{- if .Values.pdfrenderer.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,3 +11,4 @@ data:
   {{- range $key, $val := .Values.pdfrenderer.livenessProbe }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
+{{- end }}

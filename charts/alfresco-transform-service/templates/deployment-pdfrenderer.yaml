@@ -1,3 +1,4 @@
+{{- if .Values.pdfrenderer.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -62,3 +63,4 @@ spec:
             - containerPort: {{ .Values.pdfrenderer.image.internalPort }}
           resources: {{- toYaml .Values.pdfrenderer.resources | nindent 12 }}
           {{ include "alfresco-transform-service.probes" .Values.pdfrenderer | nindent 10 }}
+{{- end }}

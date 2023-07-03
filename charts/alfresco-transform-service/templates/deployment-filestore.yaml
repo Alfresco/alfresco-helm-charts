@@ -1,4 +1,4 @@
-{{- if eq .Values.repository.edition "Enterprise" }}
+{{- if .Values.filestore.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:

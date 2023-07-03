@@ -1,4 +1,4 @@
-{{- if eq .Values.repository.edition "Enterprise" }}
+{{- if .Values.transformrouter.enabled }}
 {{- $componentScope := (dict "Values" (dict "nameOverride" "router" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: v1
 kind: Service

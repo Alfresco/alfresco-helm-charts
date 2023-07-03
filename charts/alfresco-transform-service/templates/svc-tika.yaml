@@ -1,3 +1,4 @@
+{{- if .Values.tika.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -12,3 +13,4 @@ spec:
       name: {{ .Values.tika.service.name }}
   selector:
     {{- include "alfresco-transform-service.tika.selectorLabels" . | nindent 4 }}
+{{- end }}

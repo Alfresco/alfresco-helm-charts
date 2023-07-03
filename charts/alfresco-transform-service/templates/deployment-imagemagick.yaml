@@ -1,3 +1,4 @@
+{{- if .Values.imagemagick.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -62,3 +63,4 @@ spec:
             - containerPort: {{ .Values.imagemagick.image.internalPort }}
           resources: {{- toYaml .Values.imagemagick.resources | nindent 12 }}
           {{ include "alfresco-transform-service.probes" .Values.imagemagick | nindent 10 }}
+{{- end }}

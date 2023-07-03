@@ -1,5 +1,5 @@
+{{- if .Values.transformrouter.enabled }}
 # Defines the properties required by the transform router container
-{{- if eq .Values.repository.edition "Enterprise" }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
