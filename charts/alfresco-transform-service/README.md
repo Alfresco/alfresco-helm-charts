@@ -23,6 +23,7 @@ A Helm chart for deploying Alfresco Transform Services
 | activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, with a key-value pair label e.g {"kubernetes.io/hostname": multinode-demo-m02} |
 | ai.enabled | bool | `false` |  |
 | ai.nameOverride | string | `"alfresco-ai"` |  |
+| filestore.enabled | bool | `true` |  |
 | filestore.environment."scheduler.cleanup.interval" | string | `"86400000"` |  |
 | filestore.environment."scheduler.content.age.millis" | string | `"86400000"` |  |
 | filestore.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
@@ -66,6 +67,7 @@ A Helm chart for deploying Alfresco Transform Services
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
+| imagemagick.enabled | bool | `true` |  |
 | imagemagick.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | imagemagick.image.internalPort | int | `8090` |  |
 | imagemagick.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -94,6 +96,7 @@ A Helm chart for deploying Alfresco Transform Services
 | imagemagick.service.externalPort | int | `80` |  |
 | imagemagick.service.name | string | `"imagemagick"` |  |
 | imagemagick.service.type | string | `"ClusterIP"` |  |
+| libreoffice.enabled | bool | `true` |  |
 | libreoffice.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | libreoffice.image.internalPort | int | `8090` |  |
 | libreoffice.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -125,6 +128,7 @@ A Helm chart for deploying Alfresco Transform Services
 | messageBroker | object | `{"existingSecretName":null,"password":null,"secretName":"acs-alfresco-cs-brokersecret","url":null,"user":null}` | external activemq connection setting when activemq.enabled=false |
 | messageBroker.existingSecretName | string | `nil` | Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
 | messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
+| pdfrenderer.enabled | bool | `true` |  |
 | pdfrenderer.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | pdfrenderer.image.internalPort | int | `8090` |  |
 | pdfrenderer.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -154,6 +158,7 @@ A Helm chart for deploying Alfresco Transform Services
 | pdfrenderer.service.name | string | `"pdfrenderer"` |  |
 | pdfrenderer.service.type | string | `"ClusterIP"` |  |
 | repository.edition | string | `"Enterprise"` |  |
+| tika.enabled | bool | `true` |  |
 | tika.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | tika.image.internalPort | int | `8090` |  |
 | tika.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -211,6 +216,7 @@ A Helm chart for deploying Alfresco Transform Services
 | transformmisc.service.externalPort | int | `80` |  |
 | transformmisc.service.name | string | `"transformmisc"` |  |
 | transformmisc.service.type | string | `"ClusterIP"` |  |
+| transformrouter.enabled | bool | `true` |  |
 | transformrouter.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | transformrouter.image.internalPort | int | `8095` |  |
 | transformrouter.image.pullPolicy | string | `"IfNotPresent"` |  |
