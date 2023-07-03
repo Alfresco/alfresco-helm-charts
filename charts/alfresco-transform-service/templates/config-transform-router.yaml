@@ -7,7 +7,7 @@ metadata:
   labels:
     {{- include "alfresco-transform-service.transform-router.labels" . | nindent 4 }}
 data:
-  FILE_STORE_URL: http://{{ template "alfresco-transform-service.deployment-filestore.name" . }}/alfresco/api/-default-/private/sfs/versions/1/file
+  {{- include "alfresco-transform-service.sfs.url" . | nindent 2 }}
   IMAGEMAGICK_URL: http://{{ template "alfresco-transform-service.deployment-imagemagick.name" . }}:80
   PDF_RENDERER_URL: http://{{ template "alfresco-transform-service.deployment-pdfrenderer.name" . }}:80
   LIBREOFFICE_URL: http://{{ template "alfresco-transform-service.deployment-libreoffice.name" . }}:80

@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "alfresco-transform-service.imagemagick.labels" . | nindent 4 }}
 data:
-  FILE_STORE_URL: http://{{ template "alfresco-transform-service.deployment-filestore.name" . }}/alfresco/api/-default-/private/sfs/versions/1/file
+  {{- include "alfresco-transform-service.sfs.url" . | indent 2 }}
   {{- toYaml .Values.imagemagick.environment | nindent 2 }}
   {{- range $key, $val := .Values.imagemagick.livenessProbe }}
   {{ $key }}: {{ $val | quote }}
