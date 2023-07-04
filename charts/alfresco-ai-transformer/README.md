@@ -1,6 +1,6 @@
 # alfresco-ai-transformer
 
-![Version: 0.1.0-alpha.0](https://img.shields.io/badge/Version-0.1.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.4.5](https://img.shields.io/badge/AppVersion-1.4.5-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco ai transformer service
 
@@ -8,7 +8,7 @@ A Helm chart for deploying Alfresco ai transformer service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.0.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
 
 ## Values
@@ -16,7 +16,7 @@ A Helm chart for deploying Alfresco ai transformer service
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | activemq.enabled | bool | `false` |  |
-| aws.accessKey | string | `"XXXXXXXXXXXXXXXXXXXXXXXX"` | To configure these, you need to provide or export your AWS credentials https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration |
+| aws.accessKey | string | `"XXXXXXXXXXXXXXXXXXXXXXXX"` | AWS credentials are required as documented at https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration |
 | aws.comprehendRoleARN | string | `"arn:aws:iam::XXXXXXXXXXXX:role/ComprehendAsyncJobs"` |  |
 | aws.region | string | `"region-name"` |  |
 | aws.s3Bucket | string | `"s3-bucket-name"` |  |
@@ -26,7 +26,7 @@ A Helm chart for deploying Alfresco ai transformer service
 | image.internalPort | int | `8090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
-| image.tag | string | `"1.4.5"` |  |
+| image.tag | string | `"2.0.0"` |  |
 | livenessProbe.initialDelaySeconds | int | `10` |  |
 | livenessProbe.livenessPercent | int | `400` |  |
 | livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
