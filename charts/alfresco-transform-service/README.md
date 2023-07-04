@@ -18,8 +18,9 @@ A Helm chart for deploying Alfresco Transform Services
 |-----|------|---------|-------------|
 | activemq.adminUser.password | string | `"admin"` | Default password for the embedded broker admin user |
 | activemq.adminUser.user | string | `"admin"` | Default username for the embedded broker admin user |
-| activemq.enabled | bool | `false` |  |
-| activemq.nameOverride | string | `"activemq"` |  |
+| activemq.enabled | bool | `false` | Deploy ActiveMQ chart as a dependency dependencies should only be called from the root chart |
+| activemq.fullnameOverride | string | `nil` | Provide a static name that's used accross the whole Helm release |
+| activemq.nameOverride | string | `nil` | Provide a partially static name that's used accross the whole Helm release |
 | activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, with a key-value pair label e.g {"kubernetes.io/hostname": multinode-demo-m02} |
 | ai.enabled | bool | `false` |  |
 | ai.nameOverride | string | `"alfresco-ai"` |  |
