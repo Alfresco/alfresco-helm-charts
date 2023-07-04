@@ -3,7 +3,7 @@ suite: test persistence
 templates:
   - config-filestore.yaml
   - deployment-filestore.yaml
-  - pvc.yaml
+  - pvc-filestore.yaml
 tests:
   - it: should render an ephemeral volume
     values: &testvalues
@@ -53,7 +53,7 @@ tests:
         template: deployment-filestore.yaml
       - isNull:
           path: spec.storageClassName
-        template: pvc.yaml
+        template: pvc-filestore.yaml
 
   - it: should render a deployment with provided storage class
     values: *testvalues
@@ -71,4 +71,4 @@ tests:
       - equal:
           path: spec.storageClassName
           value: cheap
-        template: pvc.yaml
+        template: pvc-filestore.yaml
