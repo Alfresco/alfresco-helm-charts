@@ -1,0 +1,17 @@
+{{- if .Values.imagemagick.enabled }}
+{{- $componentScope := (dict "Values" (dict "nameOverride" "imagemagick" ) "Chart" .Chart "Release" .Release) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-transform-service.deployment-imagemagick.name" . }}
+  labels:
+    {{- include "alfresco-transform-service.imagemagick.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.imagemagick.service.type }}
+  ports:
+    - port: {{ .Values.imagemagick.service.externalPort }}
+      targetPort: {{ .Values.imagemagick.image.internalPort }}
+      name: {{ .Values.imagemagick.service.name }}
+  selector:
+    {{- include "alfresco-transform-service.imagemagick.selectorLabels" . | nindent 4 }}
+{{- end }}

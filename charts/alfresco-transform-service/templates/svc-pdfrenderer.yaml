@@ -1,0 +1,16 @@
+{{- if .Values.pdfrenderer.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-transform-service.deployment-pdfrenderer.name" . }}
+  labels:
+    {{- include "alfresco-transform-service.pdfrenderer.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.pdfrenderer.service.type }}
+  ports:
+    - port: {{ .Values.pdfrenderer.service.externalPort }}
+      targetPort: {{ .Values.pdfrenderer.image.internalPort }}
+      name: {{ .Values.pdfrenderer.service.name }}
+  selector:
+    {{- include "alfresco-transform-service.pdfrenderer.selectorLabels" . | nindent 4 }}
+{{- end }}

@@ -1,0 +1,66 @@
+{{- if .Values.pdfrenderer.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco-transform-service.deployment-pdfrenderer.name" . }}
+  labels:
+    {{- include "alfresco-transform-service.pdfrenderer.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.pdfrenderer.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "alfresco-transform-service.pdfrenderer.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      {{- toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "pdfrenderer") | indent 8 }}
+      labels:
+        {{- include "alfresco-transform-service.pdfrenderer.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- include "component-pod-security-context" .Values.pdfrenderer | indent 4 }}
+    {{- if .Values.pdfrenderer.nodeSelector }}
+      nodeSelector: {{- .Values.pdfrenderer.nodeSelector | toYaml | nindent 8 }}
+    {{- end }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "alfresco-transform-service.deployment-pdfrenderer.name" . }}
+              topologyKey: failure-domain.beta.kubernetes.io/zone
+          - weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "alfresco-transform-service.deployment-pdfrenderer.name" . }}
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.pdfrenderer.image.repository }}:{{ .Values.pdfrenderer.image.tag }}"
+          imagePullPolicy: {{ .Values.pdfrenderer.image.pullPolicy }}
+          {{- include "component-security-context" .Values.pdfrenderer | indent 8 }}
+          envFrom:
+          - configMapRef:
+              name: {{ template "alfresco-transform-service.config-pdfrenderer.name" . }}
+          - secretRef:
+              name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-transform-service.fullname" $)) $.Values.messageBroker.existingSecretName }}
+          env:
+            {{- include "activemq.env" . | nindent 12 }}
+          ports:
+            - containerPort: {{ .Values.pdfrenderer.image.internalPort }}
+          resources: {{- toYaml .Values.pdfrenderer.resources | nindent 12 }}
+          {{ include "alfresco-transform-service.probes" .Values.pdfrenderer | nindent 10 }}
+{{- end }}

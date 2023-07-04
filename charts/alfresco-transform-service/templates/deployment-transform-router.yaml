@@ -1,0 +1,77 @@
+{{- if .Values.transformrouter.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco-transform-service.deployment-transform-router.name" . }}
+  labels:
+    {{- include "alfresco-transform-service.transform-router.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.transformrouter.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "alfresco-transform-service.transform-router.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      {{- toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "transform-router") | indent 8 }}
+      labels:
+        {{- include "alfresco-transform-service.transform-router.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- include "component-pod-security-context" .Values.transformrouter | indent 4 }}
+    {{- if .Values.transformrouter.nodeSelector }}
+      nodeSelector: {{- .Values.transformrouter.nodeSelector | toYaml | nindent 8 }}
+    {{- end }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "alfresco-transform-service.deployment-transform-router.name" . }}
+              topologyKey: failure-domain.beta.kubernetes.io/zone
+          - weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{ template "alfresco-transform-service.deployment-transform-router.name" . }}
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.transformrouter.image.repository }}:{{ .Values.transformrouter.image.tag }}"
+          imagePullPolicy: {{ .Values.transformrouter.image.pullPolicy }}
+          {{- include "component-security-context" .Values.transformrouter | indent 8 }}
+          envFrom:
+          - configMapRef:
+              name: {{ template "alfresco-transform-service.config-transform-router.name" . }}
+          - secretRef:
+              name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-transform-service.fullname" $)) $.Values.messageBroker.existingSecretName }}
+          env:
+            {{- include "activemq.env" . | nindent 12 }}
+          ports:
+            - containerPort: {{ .Values.transformrouter.image.internalPort }}
+          resources: {{- toYaml .Values.transformrouter.resources | nindent 12 }}
+          {{ include "alfresco-transform-service.probes" .Values.transformrouter | nindent 10 }}
+          {{- if .Values.ai.enabled }}
+          volumeMounts:
+          - name: config-volume
+            mountPath: /mnt/routes
+          {{- end }}
+      {{- if .Values.ai.enabled }}
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ template "alfresco.shortname" . }}-transform-routes-configmap
+      {{- end }}
+{{- end }}

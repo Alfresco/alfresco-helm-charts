@@ -1,0 +1,16 @@
+{{- if .Values.libreoffice.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-transform-service.deployment-libreoffice.name" . }}
+  labels:
+    {{- include "alfresco-transform-service.libreoffice.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.libreoffice.service.type }}
+  ports:
+    - port: {{ .Values.libreoffice.service.externalPort }}
+      targetPort: {{ .Values.libreoffice.image.internalPort }}
+      name: {{ .Values.libreoffice.service.name }}
+  selector:
+    {{- include "alfresco-transform-service.libreoffice.selectorLabels" . | nindent 4 }}
+{{- end }}

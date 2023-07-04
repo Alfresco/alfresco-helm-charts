@@ -1,0 +1,16 @@
+{{- if .Values.transformmisc.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-transform-service.deployment-transform-misc.name" . }}
+  labels:
+    {{- include "alfresco-transform-service.transform-misc.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.transformmisc.service.type }}
+  ports:
+    - port: {{ .Values.transformmisc.service.externalPort }}
+      targetPort: {{ .Values.transformmisc.image.internalPort }}
+      name: {{ .Values.transformmisc.service.name }}
+  selector:
+    {{- include "alfresco-transform-service.transform-misc.selectorLabels" . | nindent 4 }}
+{{- end }}

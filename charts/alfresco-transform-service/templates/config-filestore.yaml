@@ -1,0 +1,13 @@
+{{- if .Values.filestore.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco-transform-service.config-filestore.name" . }}
+  labels:
+    {{- include "alfresco-transform-service.filestore.labels" . | nindent 4 }}
+data:
+  {{- toYaml .Values.filestore.environment | nindent 2 }}
+  {{- range $key, $val := .Values.filestore.livenessProbe }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+{{- end }}

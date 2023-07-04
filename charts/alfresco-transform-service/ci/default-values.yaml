@@ -1,0 +1,71 @@
+activemq:
+  enabled: true
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
+transformrouter:
+  replicaCount: 1
+pdfrenderer:
+  livenessProbe:
+    initialDelaySeconds: 30
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      memory: "512Mi"
+  replicaCount: 1
+imagemagick:
+  livenessProbe:
+    initialDelaySeconds: 30
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      memory: "512Mi"
+  replicaCount: 1
+libreoffice:
+  livenessProbe:
+    initialDelaySeconds: 30
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "512Mi"
+    limits:
+      memory: "1024Mi"
+  replicaCount: 1
+tika:
+  livenessProbe:
+    initialDelaySeconds: 30
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      memory: "512Mi"
+  replicaCount: 1
+transformmisc:
+  livenessProbe:
+    initialDelaySeconds: 30
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "256Mi"
+    limits:
+      memory: "512Mi"
+  replicaCount: 1
+filestore:
+  livenessProbe:
+    initialDelaySeconds: 30
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "128Mi"
+    limits:
+      memory: "700Mi"
+  replicaCount: 1

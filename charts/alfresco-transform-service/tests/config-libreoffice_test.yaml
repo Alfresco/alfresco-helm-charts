@@ -1,0 +1,26 @@
+---
+suite: test libreoffice configmap
+templates:
+  - config-libreoffice.yaml
+
+tests:
+  - it: should render default contents
+    values: &testvalues
+      - values/test_values.yaml
+    asserts:
+      - equal:
+          path: data.JAVA_OPTS
+          value: -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+        template: config-libreoffice.yaml
+      - equal:
+          path: data.FILE_STORE_URL
+          value: http://RELEASE-NAME-filestore/alfresco/api/-default-/private/sfs/versions/1/file
+        template: config-libreoffice.yaml
+      - equal:
+          path: data.livenessPercent
+          value: "250"
+        template: config-libreoffice.yaml
+      - equal:
+          path: data.livenessTransformPeriodSeconds
+          value: "600"
+        template: config-libreoffice.yaml

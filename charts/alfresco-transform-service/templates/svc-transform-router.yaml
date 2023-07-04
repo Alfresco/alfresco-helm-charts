@@ -1,0 +1,18 @@
+{{- if .Values.transformrouter.enabled }}
+{{- $componentScope := (dict "Values" (dict "nameOverride" "router" ) "Chart" .Chart "Release" .Release) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-transform-service.fullname" $componentScope }}
+  labels:
+    {{- include "alfresco-transform-service.labels" $componentScope | nindent 4 }}
+spec:
+  type: {{ .Values.transformrouter.service.type }}
+  ports:
+    - port: {{ .Values.transformrouter.service.externalPort }}
+      targetPort: {{ .Values.transformrouter.image.internalPort }}
+      protocol: TCP
+      name: {{ .Values.transformrouter.service.name }}
+  selector:
+    {{- include "alfresco-transform-service.selectorLabels" $componentScope | nindent 4 }}
+{{- end }}

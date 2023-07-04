@@ -1,0 +1,92 @@
+---
+suite: test components deployed based on ACS flavor (enterprise vs community)
+templates:
+  - config-libreoffice.yaml
+  - deployment-libreoffice.yaml
+  - config-imagemagick.yaml
+  - deployment-imagemagick.yaml
+  - config-tika.yaml
+  - deployment-tika.yaml
+  - config-transform-router.yaml
+  - deployment-transform-router.yaml
+  - config-transform-misc.yaml
+  - deployment-transform-misc.yaml
+  - config-pdfrenderer.yaml
+  - deployment-pdfrenderer.yaml
+  - config-filestore.yaml
+  - deployment-filestore.yaml
+  - secret-messagebroker.yaml
+
+tests:
+  - it: should render Enterprise config by default
+    values: &testvalues
+      - values/test_values.yaml
+    asserts:
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+        template: deployment-filestore.yaml
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+        template: deployment-transform-router.yaml
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+        template: deployment-imagemagick.yaml
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+        template: deployment-libreoffice.yaml
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+        template: deployment-tika.yaml
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+        template: deployment-transform-misc.yaml
+      - containsDocument:
+          kind: Deployment
+          apiVersion: apps/v1
+        template: deployment-pdfrenderer.yaml
+  - it: should not render any component by evaluaating false expression
+    values: &testvalues
+      - values/test_values.yaml
+    set:
+      filestore:
+        enabled: false
+      transformrouter:
+        enabled: false
+      imagemagick:
+        enabled: false
+      libreoffice:
+        enabled: false
+      tika:
+        enabled: false
+      transformmisc:
+        enabled: false
+      pdfrenderer:
+        enabled: false
+    asserts:
+      - hasDocuments:
+        count: 0
+        template: deployment-filestore.yaml
+      - hasDocuments:
+        count: 0
+        template: deployment-transform-router.yaml
+      - hasDocuments:
+        count: 0
+        template: deployment-imagemagick.yaml
+      - hasDocuments:
+        count: 0
+        template: deployment-libreoffice.yaml
+      - hasDocuments:
+        count: 0
+        template: deployment-tika.yaml
+      - hasDocuments:
+        count: 0
+        template: deployment-transform-misc.yaml
+      - hasDocuments:
+        count: 0
+        template: deployment-pdfrenderer.yaml

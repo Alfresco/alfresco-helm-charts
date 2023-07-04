@@ -1,0 +1,27 @@
+{{- if .Values.transformrouter.enabled }}
+# Defines the properties required by the transform router container
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco-transform-service.config-transform-router.name" . }}
+  labels:
+    {{- include "alfresco-transform-service.transform-router.labels" . | nindent 4 }}
+data:
+  {{- include "alfresco-transform-service.sfs.url" . | nindent 2 }}
+  IMAGEMAGICK_URL: http://{{ template "alfresco-transform-service.deployment-imagemagick.name" . }}:80
+  PDF_RENDERER_URL: http://{{ template "alfresco-transform-service.deployment-pdfrenderer.name" . }}:80
+  LIBREOFFICE_URL: http://{{ template "alfresco-transform-service.deployment-libreoffice.name" . }}:80
+  TIKA_URL: http://{{ template "alfresco-transform-service.deployment-tika.name" . }}:80
+  {{- if .Values.transformmisc.enabled }}
+  MISC_URL: http://{{ template "alfresco-transform-service.deployment-transform-misc.name" . }}:80
+  {{- end }}
+  {{- if .Values.ai.enabled }}
+  TRANSFORMER_URL_AWS_AI: http://{{ template "alfresco-transform-service.fullname" (dict "Values" .Values.ai "Release" .Release "Chart" .Chart) }}
+  TRANSFORMER_QUEUE_AWS_AI: "org.alfresco.transform.engine.ai-aws.acs"
+  TRANSFORMER_ROUTES_ADDITIONAL_AI: "/mnt/routes/ai-pipeline-routes.json"
+  {{- end }}
+  {{- toYaml .Values.transformrouter.environment | nindent 2 }}
+  {{- range $key, $val := .Values.transformrouter.livenessProbe }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,16 @@
+{{- if .Values.tika.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-transform-service.deployment-tika.name" . }}
+  labels:
+    {{- include "alfresco-transform-service.tika.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.tika.service.type }}
+  ports:
+    - port: {{ .Values.tika.service.externalPort }}
+      targetPort: {{ .Values.tika.image.internalPort }}
+      name: {{ .Values.tika.service.name }}
+  selector:
+    {{- include "alfresco-transform-service.tika.selectorLabels" . | nindent 4 }}
+{{- end }}
