@@ -30,11 +30,11 @@ transformrouter:
     runAsUser: 33016
   resources:
     requests:
-      cpu: "0.25"
-      memory: "300Mi"
+      cpu: "100m"
+      memory: "250Mi"
     limits:
       cpu: "1"
-      memory: "512Mi"
+      memory: "1Gi"
 
 pdfrenderer:
   enabled: true
@@ -54,11 +54,11 @@ pdfrenderer:
     runAsUser: 33001
   resources:
     requests:
-      cpu: "0.25"
-      memory: "300Mi"
+      cpu: "100m"
+      memory: "250Mi"
     limits:
       cpu: "2"
-      memory: "1000Mi"
+      memory: "2Gi"
   environment:
     JAVA_OPTS: >-
       -XX:MinRAMPercentage=50
@@ -96,11 +96,11 @@ imagemagick:
     runAsUser: 33002
   resources:
     requests:
-      cpu: "0.5"
-      memory: "300Mi"
+      cpu: "250m"
+      memory: "250Mi"
     limits:
       cpu: "4"
-      memory: "1000Mi"
+      memory: "4Gi"
   environment:
     JAVA_OPTS: >-
       -XX:MinRAMPercentage=50
@@ -135,11 +135,11 @@ libreoffice:
     externalPort: 80
   resources:
     requests:
-      cpu: "0.5"
-      memory: "400Mi"
+      cpu: "250m"
+      memory: "500Mi"
     limits:
       cpu: "4"
-      memory: "1000Mi"
+      memory: "4Gi"
   podSecurityContext:
     runAsNonRoot: true
     runAsUser: 33003
@@ -180,11 +180,11 @@ tika:
     runAsUser: 33004
   resources:
     requests:
-      cpu: "0.25"
+      cpu: "250m"
       memory: "600Mi"
     limits:
-      cpu: "2"
-      memory: "1000Mi"
+      cpu: "4"
+      memory: "4Gi"
   environment:
     JAVA_OPTS: >-
       -XX:MinRAMPercentage=50
@@ -222,11 +222,11 @@ transformmisc:
     runAsUser: 33006
   resources:
     requests:
-      cpu: "0.25"
-      memory: "300Mi"
+      cpu: "100m"
+      memory: "250Mi"
     limits:
       cpu: "2"
-      memory: "1000Mi"
+      memory: "2Gi"
   environment:
     JAVA_OPTS: >-
       -XX:MinRAMPercentage=50
@@ -274,11 +274,11 @@ filestore:
     fsGroup: 1000
   resources:
     requests:
-      cpu: "0.25"
-      memory: "200Mi"
+      cpu: "100m"
+      memory: "250Mi"
     limits:
       cpu: "2"
-      memory: "1000Mi"
+      memory: "1Gi"
   environment:
     scheduler.content.age.millis: "86400000"
     scheduler.cleanup.interval: "86400000"
@@ -299,7 +299,7 @@ filestore:
     livenessSavePeriodSeconds: 600
   persistence:
     # -- Persist filestore data
-    enabled: true
+    enabled: false
     # -- Specify a storageClass for dynamic provisioning
     accessModes:
       - ReadWriteOnce
@@ -312,13 +312,8 @@ filestore:
       subPath: "alfresco-content-services/filestore-data"
 
 activemq:
-  # -- Deploy ActiveMQ chart as a dependency
-  # dependencies should only be called from the root chart
+  nameOverride: activemq
   enabled: false
-  # -- Provide a partially static name that's used accross the whole Helm release
-  nameOverride: null
-  # -- Provide a static name that's used accross the whole Helm release
-  fullnameOverride: null
   # -- Possibility to choose Node for pod, with a key-value pair label
   # e.g {"kubernetes.io/hostname": multinode-demo-m02}
   nodeSelector: {}
@@ -335,8 +330,7 @@ messageBroker:
   password: null
   # -- Name of the secret managed by this chart
   secretName: acs-alfresco-cs-brokersecret
-  # -- Alternatively, provide credentials via an existing secret that contains
-  # BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
+  # -- Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName: null
 
 ai:

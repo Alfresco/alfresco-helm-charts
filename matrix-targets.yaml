@@ -3,8 +3,8 @@
 # This file is meant to be used with updatecli uber-manifest pipeline
 # https://github.com/Alfresco/alfresco-updatecli/tree/master/deployments
 matrix:
-  latest:
-    id: latest
+  7.4.N:
+    id: 74n
     search:
       version:
       pattern:
@@ -47,3 +47,38 @@ matrix:
       pattern:
       helm_target: charts/alfresco-ai-transformer/values.yaml
       helm_key: image.tag
+    trouter:
+      version:
+      pattern:
+      helm_target: charts/alfresco-transform-service/values.yaml
+      helm_key: transformrouter.image.tag
+    sfs:
+      version:
+      pattern:
+      helm_target: charts/alfresco-transform-service/values.yaml
+      helm_key: filestore.image.tag
+    tengine-misc:
+      version:
+      pattern:
+      helm_target: charts/alfresco-transform-service/values.yaml
+      helm_key: transformmisc.image.tag
+    tengine-im:
+      version:
+      pattern:
+      helm_target: charts/alfresco-transform-service/values.yaml
+      helm_key: imagemagick.image.tag
+    tengine-lo:
+      version:
+      pattern:
+      helm_target: charts/alfresco-transform-service/values.yaml
+      helm_key: libreoffice.image.tag
+    tengine-pdf:
+      version:
+      pattern:
+      helm_target: charts/alfresco-transform-service/values.yaml
+      helm_key: pdfrenderer.image.tag
+    tengine-tika:
+      version:
+      pattern:
+      helm_target: charts/alfresco-transform-service/values.yaml
+      helm_key: tika.image.tag

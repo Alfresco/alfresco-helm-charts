@@ -1,6 +1,5 @@
 activemq:
   enabled: true
-  nameOverride: activemq
   resources:
     requests:
       cpu: "100m"

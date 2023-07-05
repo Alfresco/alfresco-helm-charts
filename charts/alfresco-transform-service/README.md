@@ -1,6 +1,6 @@
 # alfresco-transform-service
 
-![Version: 0.1.0-alpha.1](https://img.shields.io/badge/Version-0.1.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Transform Services
 
@@ -18,9 +18,8 @@ A Helm chart for deploying Alfresco Transform Services
 |-----|------|---------|-------------|
 | activemq.adminUser.password | string | `"admin"` | Default password for the embedded broker admin user |
 | activemq.adminUser.user | string | `"admin"` | Default username for the embedded broker admin user |
-| activemq.enabled | bool | `false` | Deploy ActiveMQ chart as a dependency dependencies should only be called from the root chart |
-| activemq.fullnameOverride | string | `nil` | Provide a static name that's used accross the whole Helm release |
-| activemq.nameOverride | string | `nil` | Provide a partially static name that's used accross the whole Helm release |
+| activemq.enabled | bool | `false` |  |
+| activemq.nameOverride | string | `"activemq"` |  |
 | activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, with a key-value pair label e.g {"kubernetes.io/hostname": multinode-demo-m02} |
 | ai.enabled | bool | `false` |  |
 | ai.nameOverride | string | `"alfresco-ai"` |  |
@@ -47,7 +46,7 @@ A Helm chart for deploying Alfresco Transform Services
 | filestore.persistence.accessModes | list | `["ReadWriteOnce"]` | Specify a storageClass for dynamic provisioning |
 | filestore.persistence.data.mountPath | string | `"/tmp/Alfresco"` |  |
 | filestore.persistence.data.subPath | string | `"alfresco-content-services/filestore-data"` |  |
-| filestore.persistence.enabled | bool | `true` | Persist filestore data |
+| filestore.persistence.enabled | bool | `false` | Persist filestore data |
 | filestore.persistence.existingClaim | string | `nil` | Use pre-provisioned pv through its claim (e.g. static provisionning) |
 | filestore.persistence.storageClass | string | `nil` | Bind PVC based on storageClass (e.g. dynamic provisionning) |
 | filestore.podSecurityContext.fsGroup | int | `1000` |  |
@@ -59,9 +58,9 @@ A Helm chart for deploying Alfresco Transform Services
 | filestore.readinessProbe.timeoutSeconds | int | `10` |  |
 | filestore.replicaCount | int | `1` |  |
 | filestore.resources.limits.cpu | string | `"2"` |  |
-| filestore.resources.limits.memory | string | `"1000Mi"` |  |
-| filestore.resources.requests.cpu | string | `"0.25"` |  |
-| filestore.resources.requests.memory | string | `"200Mi"` |  |
+| filestore.resources.limits.memory | string | `"1Gi"` |  |
+| filestore.resources.requests.cpu | string | `"100m"` |  |
+| filestore.resources.requests.memory | string | `"250Mi"` |  |
 | filestore.service.externalPort | int | `80` |  |
 | filestore.service.name | string | `"filestore"` |  |
 | filestore.service.type | string | `"ClusterIP"` |  |
@@ -91,9 +90,9 @@ A Helm chart for deploying Alfresco Transform Services
 | imagemagick.readinessProbe.timeoutSeconds | int | `10` |  |
 | imagemagick.replicaCount | int | `2` |  |
 | imagemagick.resources.limits.cpu | string | `"4"` |  |
-| imagemagick.resources.limits.memory | string | `"1000Mi"` |  |
-| imagemagick.resources.requests.cpu | string | `"0.5"` |  |
-| imagemagick.resources.requests.memory | string | `"300Mi"` |  |
+| imagemagick.resources.limits.memory | string | `"4Gi"` |  |
+| imagemagick.resources.requests.cpu | string | `"250m"` |  |
+| imagemagick.resources.requests.memory | string | `"250Mi"` |  |
 | imagemagick.service.externalPort | int | `80` |  |
 | imagemagick.service.name | string | `"imagemagick"` |  |
 | imagemagick.service.type | string | `"ClusterIP"` |  |
@@ -120,9 +119,9 @@ A Helm chart for deploying Alfresco Transform Services
 | libreoffice.readinessProbe.timeoutSeconds | int | `10` |  |
 | libreoffice.replicaCount | int | `2` |  |
 | libreoffice.resources.limits.cpu | string | `"4"` |  |
-| libreoffice.resources.limits.memory | string | `"1000Mi"` |  |
-| libreoffice.resources.requests.cpu | string | `"0.5"` |  |
-| libreoffice.resources.requests.memory | string | `"400Mi"` |  |
+| libreoffice.resources.limits.memory | string | `"4Gi"` |  |
+| libreoffice.resources.requests.cpu | string | `"250m"` |  |
+| libreoffice.resources.requests.memory | string | `"500Mi"` |  |
 | libreoffice.service.externalPort | int | `80` |  |
 | libreoffice.service.name | string | `"libreoffice"` |  |
 | libreoffice.service.type | string | `"ClusterIP"` |  |
@@ -152,9 +151,9 @@ A Helm chart for deploying Alfresco Transform Services
 | pdfrenderer.readinessProbe.timeoutSeconds | int | `10` |  |
 | pdfrenderer.replicaCount | int | `2` |  |
 | pdfrenderer.resources.limits.cpu | string | `"2"` |  |
-| pdfrenderer.resources.limits.memory | string | `"1000Mi"` |  |
-| pdfrenderer.resources.requests.cpu | string | `"0.25"` |  |
-| pdfrenderer.resources.requests.memory | string | `"300Mi"` |  |
+| pdfrenderer.resources.limits.memory | string | `"2Gi"` |  |
+| pdfrenderer.resources.requests.cpu | string | `"100m"` |  |
+| pdfrenderer.resources.requests.memory | string | `"250Mi"` |  |
 | pdfrenderer.service.externalPort | int | `80` |  |
 | pdfrenderer.service.name | string | `"pdfrenderer"` |  |
 | pdfrenderer.service.type | string | `"ClusterIP"` |  |
@@ -180,9 +179,9 @@ A Helm chart for deploying Alfresco Transform Services
 | tika.readinessProbe.periodSeconds | int | `60` |  |
 | tika.readinessProbe.timeoutSeconds | int | `10` |  |
 | tika.replicaCount | int | `2` |  |
-| tika.resources.limits.cpu | string | `"2"` |  |
-| tika.resources.limits.memory | string | `"1000Mi"` |  |
-| tika.resources.requests.cpu | string | `"0.25"` |  |
+| tika.resources.limits.cpu | string | `"4"` |  |
+| tika.resources.limits.memory | string | `"4Gi"` |  |
+| tika.resources.requests.cpu | string | `"250m"` |  |
 | tika.resources.requests.memory | string | `"600Mi"` |  |
 | tika.service.externalPort | int | `80` |  |
 | tika.service.name | string | `"tika"` |  |
@@ -210,9 +209,9 @@ A Helm chart for deploying Alfresco Transform Services
 | transformmisc.readinessProbe.timeoutSeconds | int | `10` |  |
 | transformmisc.replicaCount | int | `2` |  |
 | transformmisc.resources.limits.cpu | string | `"2"` |  |
-| transformmisc.resources.limits.memory | string | `"1000Mi"` |  |
-| transformmisc.resources.requests.cpu | string | `"0.25"` |  |
-| transformmisc.resources.requests.memory | string | `"300Mi"` |  |
+| transformmisc.resources.limits.memory | string | `"2Gi"` |  |
+| transformmisc.resources.requests.cpu | string | `"100m"` |  |
+| transformmisc.resources.requests.memory | string | `"250Mi"` |  |
 | transformmisc.service.externalPort | int | `80` |  |
 | transformmisc.service.name | string | `"transformmisc"` |  |
 | transformmisc.service.type | string | `"ClusterIP"` |  |
@@ -235,9 +234,9 @@ A Helm chart for deploying Alfresco Transform Services
 | transformrouter.readinessProbe.timeoutSeconds | int | `10` |  |
 | transformrouter.replicaCount | int | `2` |  |
 | transformrouter.resources.limits.cpu | string | `"1"` |  |
-| transformrouter.resources.limits.memory | string | `"512Mi"` |  |
-| transformrouter.resources.requests.cpu | string | `"0.25"` |  |
-| transformrouter.resources.requests.memory | string | `"300Mi"` |  |
+| transformrouter.resources.limits.memory | string | `"1Gi"` |  |
+| transformrouter.resources.requests.cpu | string | `"100m"` |  |
+| transformrouter.resources.requests.memory | string | `"250Mi"` |  |
 | transformrouter.service.externalPort | int | `80` |  |
 | transformrouter.service.name | string | `"transform-router"` |  |
 | transformrouter.service.type | string | `"ClusterIP"` |  |
