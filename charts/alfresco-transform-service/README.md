@@ -46,7 +46,7 @@ A Helm chart for deploying Alfresco Transform Services
 | filestore.persistence.accessModes | list | `["ReadWriteOnce"]` | Specify a storageClass for dynamic provisioning |
 | filestore.persistence.data.mountPath | string | `"/tmp/Alfresco"` |  |
 | filestore.persistence.data.subPath | string | `"alfresco-content-services/filestore-data"` |  |
-| filestore.persistence.enabled | bool | `true` | Persist filestore data |
+| filestore.persistence.enabled | bool | `false` | Persist filestore data |
 | filestore.persistence.existingClaim | string | `nil` | Use pre-provisioned pv through its claim (e.g. static provisionning) |
 | filestore.persistence.storageClass | string | `nil` | Bind PVC based on storageClass (e.g. dynamic provisionning) |
 | filestore.podSecurityContext.fsGroup | int | `1000` |  |

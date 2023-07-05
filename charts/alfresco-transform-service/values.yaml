@@ -299,7 +299,7 @@ filestore:
     livenessSavePeriodSeconds: 600
   persistence:
     # -- Persist filestore data
-    enabled: true
+    enabled: false
     # -- Specify a storageClass for dynamic provisioning
     accessModes:
       - ReadWriteOnce
