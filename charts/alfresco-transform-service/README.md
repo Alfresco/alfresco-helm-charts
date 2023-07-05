@@ -1,6 +1,6 @@
 # alfresco-transform-service
 
-![Version: 0.1.0-alpha.1](https://img.shields.io/badge/Version-0.1.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square)
+![Version: 0.1.0-alpha.0](https://img.shields.io/badge/Version-0.1.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Transform Services
 
@@ -18,9 +18,8 @@ A Helm chart for deploying Alfresco Transform Services
 |-----|------|---------|-------------|
 | activemq.adminUser.password | string | `"admin"` | Default password for the embedded broker admin user |
 | activemq.adminUser.user | string | `"admin"` | Default username for the embedded broker admin user |
-| activemq.enabled | bool | `false` | Deploy ActiveMQ chart as a dependency dependencies should only be called from the root chart |
-| activemq.fullnameOverride | string | `nil` | Provide a static name that's used accross the whole Helm release |
-| activemq.nameOverride | string | `nil` | Provide a partially static name that's used accross the whole Helm release |
+| activemq.enabled | bool | `false` |  |
+| activemq.nameOverride | string | `"activemq"` |  |
 | activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, with a key-value pair label e.g {"kubernetes.io/hostname": multinode-demo-m02} |
 | ai.enabled | bool | `false` |  |
 | ai.nameOverride | string | `"alfresco-ai"` |  |

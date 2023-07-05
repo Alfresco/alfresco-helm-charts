@@ -312,13 +312,8 @@ filestore:
       subPath: "alfresco-content-services/filestore-data"
 
 activemq:
-  # -- Deploy ActiveMQ chart as a dependency
-  # dependencies should only be called from the root chart
+  nameOverride: activemq
   enabled: false
-  # -- Provide a partially static name that's used accross the whole Helm release
-  nameOverride: null
-  # -- Provide a static name that's used accross the whole Helm release
-  fullnameOverride: null
   # -- Possibility to choose Node for pod, with a key-value pair label
   # e.g {"kubernetes.io/hostname": multinode-demo-m02}
   nodeSelector: {}
@@ -335,8 +330,7 @@ messageBroker:
   password: null
   # -- Name of the secret managed by this chart
   secretName: acs-alfresco-cs-brokersecret
-  # -- Alternatively, provide credentials via an existing secret that contains
-  # BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
+  # -- Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName: null
 
 ai:
