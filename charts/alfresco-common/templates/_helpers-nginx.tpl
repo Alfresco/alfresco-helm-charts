@@ -12,6 +12,7 @@ Define annotations as provided in values
 
 {{/*
 Define required annotations for secure nginx ingress
+We're overridong here ANY server snippet annotation and applying only ours trusted ones
 */}}
 {{- define "alfresco-common.nginx.secure.annotations" }}
 {{- template "alfresco-common.nginx.annotations" . }}
