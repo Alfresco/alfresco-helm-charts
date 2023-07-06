@@ -11,6 +11,6 @@ data:
   CSRF_FILTER_REFERER: {{ include "alfresco-share.csrf.referer" (.Values.global.known_urls | default "http://localhost,https://localhost") }}
   CSRF_FILTER_ORIGIN: {{ include "alfresco-share.csrf.origin" (.Values.global.known_urls | default "http://localhost,https://localhost") }}
   EXTERNAL_HOST: {{ include "alfresco-share.external.url" (.Values.global.known_urls | default "http://localhost,https://localhost") }}
-  {{ toYaml (.Values.environment) }}
+  {{ toYaml (omit .Values.environment "JAVA_OPTS") }}
   JAVA_OPTS: >-
     {{ (printf "%s %s" (.Values.environment.JAVA_OPTS | default "") "-Dalfresco.proxy=$EXTERNAL_HOST") | trim | quote }}
