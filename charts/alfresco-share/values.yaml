@@ -1,0 +1,105 @@
+# Default values for alfresco-share.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+repository:
+  host: acs-repository
+  port: 80
+
+image:
+  repository: quay.io/alfresco/alfresco-share
+  tag: 7.4.0.1
+  pullPolicy: IfNotPresent
+  port: 8080
+
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 0
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: share-sa
+
+podAnnotations: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+
+securityContext:
+  runAsNonRoot: false
+  capabilities:
+    drop:
+      - NET_RAW
+      - ALL
+
+service:
+  name: share
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 5g
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "alfrescoShare"
+    nginx.ingress.kubernetes.io/session-cookie-path: "/share"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "604800"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "604800"
+
+  hosts:
+    - paths:
+        - path: /share
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  requests:
+    cpu: "1"
+    memory: "512Mi"
+  limits:
+    cpu: "4"
+    memory: "2000Mi"
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+environment:
+  CATALINA_OPTS: >-
+    -XX:MinRAMPercentage=50
+    -XX:MaxRAMPercentage=80
+readinessProbe:
+  initialDelaySeconds: 15
+  periodSeconds: 30
+  timeoutSeconds: 5
+livenessProbe:
+  initialDelaySeconds: 15
+  periodSeconds: 20
+  timeoutSeconds: 5
+extraVolumeMounts: []
+extraVolumes: []
+extraSideContainers: []
+extraInitContainers: []
+command: []
+args: []
+global:
+  # -- If a private image registry a secret can be defined and passed to
+  # kubernetes, see:
+  # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
+  alfrescoRegistryPullSecrets: null

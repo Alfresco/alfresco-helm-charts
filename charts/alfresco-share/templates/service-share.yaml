@@ -1,0 +1,15 @@
+# Defines the service for the alfresco share app
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-share.fullname" . }}
+  labels:
+    {{- include "alfresco-share.selectorLabels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.image.port }}
+      name: {{ .Values.service.name }}
+  selector:
+    {{- include "alfresco-share.selectorLabels" . | nindent 4 }}

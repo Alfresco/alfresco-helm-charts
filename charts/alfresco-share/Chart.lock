@@ -1,0 +1,6 @@
+dependencies:
+- name: alfresco-common
+  repository: https://alfresco.github.io/alfresco-helm-charts
+  version: 2.0.0
+digest: sha256:e423645717fd7818e9336931a2c8cd98c03e8395df463c9a3570c1713cf8fe78
+generated: "2023-07-05T21:48:44.080867+02:00"
