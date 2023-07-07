@@ -4,9 +4,9 @@
 
 repository:
   # -- repository hostname/servicename
-  host: acs-repository
+  host: localhost
   # -- repository port where service is exposed
-  port: 80
+  port: 8080
   # -- a pre-existing configmap which provides expected configuration for Share
   #   REPO_HOST
   #   REPO_PORT
