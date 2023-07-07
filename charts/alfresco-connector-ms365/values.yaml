@@ -43,3 +43,5 @@ repository:
   host: acs-alfresco-cs-repository
   # -- ACS repository port
   port: 80
+  # -- A nameOverride use to compute an ACS repository service name
+  nameOverride: null
