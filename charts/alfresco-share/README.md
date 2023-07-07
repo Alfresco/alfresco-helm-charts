@@ -49,6 +49,7 @@ Alfresco Share Helm chart for Kubernetes
 | readinessProbe.initialDelaySeconds | int | `15` |  |
 | readinessProbe.periodSeconds | int | `30` |  |
 | readinessProbe.timeoutSeconds | int | `5` |  |
+| repository.existingConfigMap | string | `nil` | a pre-existing configmap which provides expected configuration for Share   REPO_HOST   REPO_PORT   CSRF_FILTER_REFERER   CSRF_FILTER_ORIGIN   EXTERNAL_HOST  |
 | repository.host | string | `"acs-repository"` | repository hostname/servicename |
 | repository.port | int | `80` | repository port where service is exposed |
 | resources.limits.cpu | string | `"4"` |  |

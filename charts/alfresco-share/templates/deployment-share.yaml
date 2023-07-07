@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "content-services.shortname" . }}-share
+  name: {{ template "alfresco-share.fullname" . }}
   labels:
     {{- include "alfresco-share.labels" . | nindent 4 }}
   annotations:
@@ -50,7 +50,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           envFrom:
           - configMapRef:
-              name: {{ template "alfresco-share.fullname" . }}-configmap
+              name: {{ .Values.repository.existingConfigMap | default (print (include "alfresco-share.fullname" .) "-configmap") }}
           env:
             {{- range $key, $value := (omit .Values.environment "JAVA_OPTS") }}
             - name: {{ $key }}
