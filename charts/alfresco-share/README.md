@@ -24,6 +24,7 @@ Alfresco Share Helm chart for Kubernetes
 | extraVolumes | list | `[]` |  |
 | fullnameOverride | string | `""` | Define a fully static name |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
+| global.known_urls | string | `nil` | a fallback for .Values.known_urls that can be shared between charts |
 | image.port | int | `8080` | Internal port where the pod is listening. Should only be changed is you use a custom image which uses a different port. |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
@@ -39,6 +40,7 @@ Alfresco Share Helm chart for Kubernetes
 | ingress.hosts[0].paths[0].path | string | `"/share"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
+| known_urls | string | `nil` | Provide the list of URL considered allowed to access Share resources (used for CSRF protection). The value be either a list of strings or a single string separated by spaces. |
 | livenessProbe.initialDelaySeconds | int | `15` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `5` |  |
@@ -49,7 +51,7 @@ Alfresco Share Helm chart for Kubernetes
 | readinessProbe.initialDelaySeconds | int | `15` |  |
 | readinessProbe.periodSeconds | int | `30` |  |
 | readinessProbe.timeoutSeconds | int | `5` |  |
-| repository.existingConfigMap | string | `nil` | a pre-existing configmap which provides expected configuration for Share   REPO_HOST   REPO_PORT   CSRF_FILTER_REFERER   CSRF_FILTER_ORIGIN   EXTERNAL_HOST  |
+| repository.existingConfigMap | string | `nil` | a pre-existing configmap which provides expected configuration for Share   REPO_HOST   REPO_PORT   CSRF_FILTER_REFERER   CSRF_FILTER_ORIGIN   EXTERNAL_HOST |
 | repository.host | string | `"localhost"` | repository hostname/servicename |
 | repository.port | int | `8080` | repository port where service is exposed |
 | resources.limits.cpu | string | `"4"` |  |
