@@ -1,5 +1,6 @@
 {{/*
 Define annotations as provided in values
+Skip ANY server snippet annotation
 */}}
 {{- define "alfresco-common.nginx.annotations" }}
 {{- range $annotation, $value := .ingress.annotations }}
@@ -12,10 +13,9 @@ Define annotations as provided in values
 
 {{/*
 Define required annotations for secure nginx ingress
-We're overridong here ANY server snippet annotation and applying only ours trusted ones
+Apply our trusted server snippet for Nginx
 */}}
 {{- define "alfresco-common.nginx.secure.annotations" }}
-{{- template "alfresco-common.nginx.annotations" . }}
     nginx.ingress.kubernetes.io/server-snippet: |
       location ~ ^/.*/(wc)?s(ervice)?/api/solr/.*$ {return 403;}
       location ~ ^/.*/proxy/.*/api/solr/.*$ {return 403;}
