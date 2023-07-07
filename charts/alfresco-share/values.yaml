@@ -3,13 +3,17 @@
 # Declare variables to be passed into your templates.
 
 repository:
+  # -- repository hostname/servicename
   host: acs-repository
+  # -- repository port where service is exposed
   port: 80
 
 image:
   repository: quay.io/alfresco/alfresco-share
   tag: 7.4.0.1
   pullPolicy: IfNotPresent
+  # -- Internal port where the pod is listening. Should only be changed is you
+  # use a custom image which uses a different port.
   port: 8080
 
 strategy:
@@ -19,15 +23,17 @@ strategy:
     maxUnavailable: 0
 
 imagePullSecrets: []
+# -- Define a partially static name
 nameOverride: ""
+# -- Define a fully static name
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
+  # -- Specifies whether a service account should be created
   create: true
-  # Annotations to add to the service account
+  # -- Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
+  # -- The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: share-sa
 

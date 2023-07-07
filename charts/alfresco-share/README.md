@@ -22,9 +22,9 @@ Alfresco Share Helm chart for Kubernetes
 | extraSideContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
-| fullnameOverride | string | `""` |  |
+| fullnameOverride | string | `""` | Define a fully static name |
 | global.alfrescoRegistryPullSecrets | string | `nil` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
-| image.port | int | `8080` |  |
+| image.port | int | `8080` | Internal port where the pod is listening. Should only be changed is you use a custom image which uses a different port. |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
 | image.tag | string | `"7.4.0.1"` |  |
@@ -42,15 +42,15 @@ Alfresco Share Helm chart for Kubernetes
 | livenessProbe.initialDelaySeconds | int | `15` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `5` |  |
-| nameOverride | string | `""` |  |
+| nameOverride | string | `""` | Define a partially static name |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | readinessProbe.initialDelaySeconds | int | `15` |  |
 | readinessProbe.periodSeconds | int | `30` |  |
 | readinessProbe.timeoutSeconds | int | `5` |  |
-| repository.host | string | `"acs-repository"` |  |
-| repository.port | int | `80` |  |
+| repository.host | string | `"acs-repository"` | repository hostname/servicename |
+| repository.port | int | `80` | repository port where service is exposed |
 | resources.limits.cpu | string | `"4"` |  |
 | resources.limits.memory | string | `"2000Mi"` |  |
 | resources.requests.cpu | string | `"1"` |  |
@@ -61,9 +61,9 @@ Alfresco Share Helm chart for Kubernetes
 | service.name | string | `"share"` |  |
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.create | bool | `true` |  |
-| serviceAccount.name | string | `"share-sa"` |  |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `"share-sa"` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | strategy.rollingUpdate.maxSurge | int | `1` |  |
 | strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | strategy.type | string | `"RollingUpdate"` |  |
