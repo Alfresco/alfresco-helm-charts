@@ -51,6 +51,14 @@ spec:
           envFrom:
           - configMapRef:
               name: {{ template "alfresco-share.fullname" . }}-configmap
+          env:
+            {{- range $key, $value := (omit .Values.environment "JAVA_OPTS") }}
+            - name: {{ $key }}
+              value: {{ $value }}
+            {{- end }}
+            - name: JAVA_OPTS
+              value: >-
+                {{ (printf "%s %s" (.Values.environment.JAVA_OPTS | default "") "-Dalfresco.proxy=$EXTERNAL_HOST") }}
           volumeMounts:
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
           readinessProbe:
