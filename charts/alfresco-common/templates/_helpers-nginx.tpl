@@ -1,6 +1,6 @@
 {{/*
 Define annotations as provided in values
-Skip ANY server snippet annotation
+Skip ANY server-snippet annotation (CVE-2021-25742)
 */}}
 {{- define "alfresco-common.nginx.annotations" }}
 {{- range $annotation, $value := .ingress.annotations }}
@@ -12,8 +12,7 @@ Skip ANY server snippet annotation
 {{- end }}
 
 {{/*
-Define required annotations for secure nginx ingress
-Apply our trusted server snippet for Nginx
+Define required annotations for secure ACS/SHARE API access
 */}}
 {{- define "alfresco-common.nginx.secure.annotations" }}
     nginx.ingress.kubernetes.io/server-snippet: |
