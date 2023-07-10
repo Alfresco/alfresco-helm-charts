@@ -19,7 +19,9 @@ spec:
   template:
     metadata:
       annotations:
+        {{- if not .Values.repository.existingConfigMap }}
         checksum/config: {{ include (print $.Template.BasePath "/config-share.yaml") . | sha256sum }}
+        {{- end }}
       labels:
         {{- include "alfresco-share.selectorLabels" . | nindent 8 }}
     spec:
