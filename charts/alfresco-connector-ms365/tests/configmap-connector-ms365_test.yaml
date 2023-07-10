@@ -18,7 +18,7 @@ tests:
             nameOverride: myKnownServiceName
             port: 80
       asserts:
-       - matchRegex:
+       - equal:
            path: data.JAVA_OPTS
            pattern: -Dalfresco.base-url=http://RELEASE-NAME-myKnownServiceName:80
     - it: should render options as provided in values
@@ -27,6 +27,6 @@ tests:
             host: somerepohost
             port: 80
       asserts:
-       - matchRegex:
+       - equal:
             path: data.JAVA_OPTS
             pattern: -Dalfresco.base-url=http://somerepohost:80
