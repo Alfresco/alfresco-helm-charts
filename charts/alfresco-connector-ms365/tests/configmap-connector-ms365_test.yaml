@@ -13,7 +13,6 @@ tests:
            path: data.JAVA_OPTS
            value: -Dalfresco.base-url=http://acs-alfresco-cs-repository:80
     - it: should render options based on repo nameOverride
-      values: *testvalues
       set:
         repository:
             nameOverride: myKnownServiceName
@@ -23,7 +22,6 @@ tests:
            path: data.JAVA_OPTS
            pattern: -Dalfresco.base-url=http://RELEASE-NAME-myKnownServiceName:80
     - it: should render options as provided in values
-      values: *testvalues
       set:
         repository:
             host: somerepohost
