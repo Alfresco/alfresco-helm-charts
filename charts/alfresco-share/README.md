@@ -56,7 +56,7 @@ Alfresco Share Helm chart for Kubernetes
 | repository.port | int | `8080` | repository port where service is exposed |
 | resources.limits.cpu | string | `"4"` |  |
 | resources.limits.memory | string | `"2000Mi"` |  |
-| resources.requests.cpu | string | `"1"` |  |
+| resources.requests.cpu | string | `"250m"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
 | securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
 | securityContext.capabilities.drop[1] | string | `"ALL"` |  |
