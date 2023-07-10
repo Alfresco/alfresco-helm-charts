@@ -26,7 +26,7 @@ Build up CSRF Origin
 {{- end }}
 {{- range $known_urls }}
   {{- $parsed_url := urlParse . }}
-  {{- $known_url := urlJoin (dict "host" $parsed_url.host "path" $parsed_url.path "scheme" $parsed_url.scheme) }}
+  {{- $known_url := urlJoin (dict "host" $parsed_url.host "scheme" $parsed_url.scheme) }}
   {{- $csrf_origins = append $csrf_origins $known_url }}
 {{- end }}
 {{- $csrf_origins | join "," }}
