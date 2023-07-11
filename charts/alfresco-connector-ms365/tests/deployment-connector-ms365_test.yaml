@@ -28,6 +28,7 @@ tests:
         template: deployment-connector-ms365.yaml
 
   - it: should leverage provided exisintg configmap
+    values: *testvalues
     set:
       repository:
         existingConfigMap: service/test
