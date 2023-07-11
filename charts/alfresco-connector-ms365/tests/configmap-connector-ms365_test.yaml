@@ -12,15 +12,13 @@ tests:
        - equal:
            path: data.JAVA_OPTS
            value: -Dalfresco.base-url=http://acs-alfresco-cs-repository:80
-    - it: should render options based on repo nameOverride
+    - it: should not render a configmap
       set:
         repository:
-            nameOverride: myKnownServiceName
-            port: 80
-      asserts:
-       - matchRegex:
-           path: data.JAVA_OPTS
-           pattern: -Dalfresco.base-url=http://RELEASE-NAME-myKnownServiceName:80
+            existingConfigMap: service/test
+    asserts:
+        - hasDocuments:
+             count: 0
     - it: should render options as provided in values
       set:
         repository:
