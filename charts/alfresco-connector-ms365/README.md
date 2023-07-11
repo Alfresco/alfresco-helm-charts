@@ -33,8 +33,8 @@ A Helm chart for deploying Alfresco connector ms365 service
 | readinessProbe.periodSeconds | int | `60` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | replicaCount | int | `2` |  |
+| repository.existingConfigMap | string | `nil` | a pre-existing configmap which provides expected configuration for ms365 |
 | repository.host | string | `"acs-alfresco-cs-repository"` | ACS repository host |
-| repository.nameOverride | string | `nil` | A nameOverride use to compute an ACS repository service name |
 | repository.port | int | `80` | ACS repository port |
 | resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"1000Mi"` |  |

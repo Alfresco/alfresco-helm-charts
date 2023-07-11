@@ -49,11 +49,3 @@ Selector labels
 app.kubernetes.io/name: {{ include "alfresco-connector-ms365.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
-
-{{- define "alfresco-connector-ms365.repository" -}}
-{{- if .Values.repository.nameOverride }}
-{{- printf "%s-%s" .Release.Name .Values.repository.nameOverride | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- .Values.repository.host }}
-{{- end }}
-{{- end -}}
