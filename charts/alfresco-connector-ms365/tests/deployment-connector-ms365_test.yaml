@@ -36,5 +36,5 @@ tests:
           path: spec.template.spec.containers[0].envFrom
           content:
             configMapRef:
-              name: myns/mycm
+              name: service/test
         template: deployment-share.yaml
