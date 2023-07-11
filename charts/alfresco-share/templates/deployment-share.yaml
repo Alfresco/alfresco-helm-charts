@@ -1,4 +1,4 @@
-# Defines the deployment for the alfresco share app
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
