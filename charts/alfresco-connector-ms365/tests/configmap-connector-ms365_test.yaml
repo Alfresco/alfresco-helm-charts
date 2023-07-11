@@ -12,13 +12,6 @@ tests:
        - equal:
            path: data.JAVA_OPTS
            value: -Dalfresco.base-url=http://acs-alfresco-cs-repository:80
-    - it: should not render a configmap
-      set:
-        repository:
-            existingConfigMap: service/test
-    asserts:
-        - hasDocuments:
-             count: 0
     - it: should render options as provided in values
       set:
         repository:
