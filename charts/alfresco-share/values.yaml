@@ -1,0 +1,126 @@
+# Default values for alfresco-share.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+repository:
+  # -- repository hostname/servicename
+  host: localhost
+  # -- repository port where service is exposed
+  port: 8080
+  # -- a pre-existing configmap which provides expected configuration for Share
+  #   REPO_HOST
+  #   REPO_PORT
+  #   CSRF_FILTER_REFERER
+  #   CSRF_FILTER_ORIGIN
+  #   EXTERNAL_HOST
+  existingConfigMap:
+
+# -- Provide the list of URL considered allowed to access Share resources (used
+# for CSRF protection). The value be either a list of strings or a single
+# string separated by spaces.
+known_urls:
+
+image:
+  repository: quay.io/alfresco/alfresco-share
+  tag: 7.4.0.1
+  pullPolicy: IfNotPresent
+  # -- Internal port where the pod is listening. Should only be changed is you
+  # use a custom image which uses a different port.
+  port: 8080
+
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 0
+
+imagePullSecrets: []
+# -- Define a partially static name
+nameOverride: ""
+# -- Define a fully static name
+fullnameOverride: ""
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: share-sa
+
+podAnnotations: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+
+securityContext:
+  runAsNonRoot: false
+  capabilities:
+    drop:
+      - NET_RAW
+      - ALL
+
+service:
+  name: share
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 5g
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "alfrescoShare"
+    nginx.ingress.kubernetes.io/session-cookie-path: "/share"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "604800"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "604800"
+
+  hosts:
+    - paths:
+        - path: /share
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  requests:
+    cpu: "250m"
+    memory: "512Mi"
+  limits:
+    cpu: "4"
+    memory: "2000Mi"
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+environment:
+  CATALINA_OPTS: >-
+    -XX:MinRAMPercentage=50
+    -XX:MaxRAMPercentage=80
+readinessProbe:
+  initialDelaySeconds: 15
+  periodSeconds: 30
+  timeoutSeconds: 5
+livenessProbe:
+  initialDelaySeconds: 15
+  periodSeconds: 20
+  timeoutSeconds: 5
+extraVolumeMounts: []
+extraVolumes: []
+extraSideContainers: []
+extraInitContainers: []
+command: []
+args: []
+
+global:
+  # -- If a private image registry a secret can be defined and passed to
+  # kubernetes, see:
+  # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
+  alfrescoRegistryPullSecrets: quay-registry-secret
+  # -- a fallback for .Values.known_urls that can be shared between charts
+  known_urls:

@@ -1,0 +1,25 @@
+---
+suite: test Alfresco Share ingress
+templates:
+  - ingress.yaml
+tests:
+  - it: should render with default security annotations
+    asserts:
+      - equal:
+          path: metadata.annotations['nginx.ingress.kubernetes.io/server-snippet']
+          value: |
+            location ~ ^/.*/(wc)?s(ervice)?/api/solr/.*$ {return 403;}
+            location ~ ^/.*/proxy/.*/api/solr/.*$ {return 403;}
+            location ~ ^/.*/-default-/proxy/.*/api/.*$ {return 403;}
+            location ~ ^/.*/s/prometheus$ {return 403;}
+        template: ingress.yaml
+  - it: should trim out any custom server-snippet
+    set:
+      ingress:
+        annotations:
+          nginx.ingress.kubernetes.io/server-snippet: listen 6666;
+    asserts:
+      - notMatchRegex:
+          path: metadata.annotations['nginx.ingress.kubernetes.io/server-snippet']
+          pattern: listen 6666;
+        template: ingress.yaml

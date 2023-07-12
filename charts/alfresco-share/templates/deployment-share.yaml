@@ -1,0 +1,86 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco-share.fullname" . }}
+  labels:
+    {{- include "alfresco-share.labels" . | nindent 4 }}
+  annotations:
+    checkov.io/skip1: CKV_K8S_20=Requires APPS-1832
+    checkov.io/skip2: CKV_K8S_23=Requires APPS-1832
+    checkov.io/skip3: CKV_K8S_40=Requires APPS-1832
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "alfresco-share.selectorLabels" . | nindent 6 }}
+  strategy:
+    {{- toYaml (.Values.strategy | default .Values.global.strategy) | nindent 4 }}
+  template:
+    metadata:
+      annotations:
+        {{- if not .Values.repository.existingConfigMap }}
+        checksum/config: {{ include (print $.Template.BasePath "/config-share.yaml") . | sha256sum }}
+        {{- end }}
+      labels:
+        {{- include "alfresco-share.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "alfresco-share.serviceAccountName" . }}
+      {{- include "component-pod-security-context" .Values | indent 4 }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      containers:
+        - name: alfresco-share
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- include "component-security-context" .Values | indent 8 }}
+          {{- if .Values.command }}
+          command:
+            {{- toYaml .Values.command | nindent 12 }}
+          args:
+            {{- toYaml .Values.args | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: tomcat-shutdown
+              containerPort: 8005
+              protocol: TCP
+            - name: http
+              containerPort: {{ .Values.image.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          envFrom:
+          - configMapRef:
+              name: {{ .Values.repository.existingConfigMap | default (print (include "alfresco-share.fullname" .) "-configmap") }}
+          env:
+            {{- range $key, $value := (omit .Values.environment "JAVA_OPTS") }}
+            - name: {{ $key }}
+              value: {{ $value }}
+            {{- end }}
+            - name: JAVA_OPTS
+              value: >-
+                {{ (printf "%s %s" (.Values.environment.JAVA_OPTS | default "") "-Dalfresco.proxy=$EXTERNAL_HOST") }}
+          volumeMounts:
+            {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /share
+              port: {{ .Values.image.port }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            httpGet:
+              path: /share
+              port: {{ .Values.image.port }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+        {{- if .Values.extraSideContainers }}
+        {{- toYaml .Values.extraSideContainers | nindent 8 }}
+        {{- end }}
+      initContainers:
+        {{- toYaml .Values.extraInitContainers | nindent 8 }}
+      volumes:
+        {{- toYaml .Values.extraVolumes | nindent 8 }}

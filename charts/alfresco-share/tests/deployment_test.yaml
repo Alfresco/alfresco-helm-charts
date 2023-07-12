@@ -1,0 +1,68 @@
+---
+suite: test Alfresco Share deployment
+templates:
+  - deployment-share.yaml
+  - config-share.yaml
+tests:
+  - it: should have basic metadata in place in deployment
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-share
+        template: deployment-share.yaml
+
+  - it: should leverage provided exisintg configmap
+    set:
+      repository:
+        existingConfigMap: myns/mycm
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            configMapRef:
+              name: myns/mycm
+        template: deployment-share.yaml
+
+  - it: should render extra configs
+    set:
+      extraSideContainers:
+        - image: busybox:latest
+      extraVolumes:
+        - name: share-config
+          configMap:
+            name: anotherns/morecm
+      extraVolumeMounts:
+        - name: share-config
+          mountPath: /usr/local/tomcat/shared/classes/Alfresco/web-extension/share-config-custom.xml
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: share-config
+            configMap:
+              name: anotherns/morecm
+        template: deployment-share.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: >-
+              /usr/local/tomcat/shared/classes/Alfresco/web-extension/share-config-custom.xml
+            name: share-config
+        template: deployment-share.yaml
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 2
+        template: deployment-share.yaml
+
+  - it: should render cpu and memory limits
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "4"
+              memory: "2000Mi"
+        template: deployment-share.yaml

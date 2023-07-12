@@ -1,0 +1,16 @@
+{{- if not .Values.repository.existingConfigMap -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco-share.fullname" . }}-configmap
+  labels:
+    {{- include "alfresco-share.labels" . | nindent 4 }}
+data:
+  REPO_HOST: {{ .Values.repository.host | quote }}
+  REPO_PORT: {{ .Values.repository.port | quote }}
+  {{- $known_urls := coalesce .Values.known_urls .Values.global.known_urls "http://localhost,https://localhost" }}
+  CSRF_FILTER_REFERER: {{ include "alfresco-common.csrf.referer" $known_urls }}
+  CSRF_FILTER_ORIGIN: {{ include "alfresco-common.csrf.origin" $known_urls }}
+  EXTERNAL_HOST: {{ include "alfresco-common.external.url" $known_urls }}
+{{- end -}}
