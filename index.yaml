@@ -539,6 +539,21 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-search-service-1.0.0/alfresco-search-service-1.0.0.tgz
     version: 1.0.0
+  alfresco-share:
+  - apiVersion: v2
+    appVersion: 7.4.0
+    created: "2023-07-12T08:07:43.666376662Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts
+      version: 2.1.0-alpha.0
+    description: Alfresco Share Helm chart for Kubernetes
+    digest: 5d12fc5f35cb6b3a1a49f79f4deffed71e1f31c53036cd404c8b47461e5c79f9
+    name: alfresco-share
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-share-0.1.0-alpha.0/alfresco-share-0.1.0-alpha.0.tgz
+    version: 0.1.0-alpha.0
   alfresco-sync-service:
   - apiVersion: v2
     appVersion: 3.10.0
@@ -860,4 +875,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2023-07-10T15:58:31.672132143Z"
+generated: "2023-07-12T08:07:43.666524862Z"
