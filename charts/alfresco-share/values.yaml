@@ -7,13 +7,14 @@ repository:
   host: localhost
   # -- repository port where service is exposed
   port: 8080
-  # -- a pre-existing configmap which provides expected configuration for Share
-  #   REPO_HOST
-  #   REPO_PORT
-  #   CSRF_FILTER_REFERER
-  #   CSRF_FILTER_ORIGIN
-  #   EXTERNAL_HOST
   existingConfigMap:
+    # -- a pre-existing configmap which provides expected configuration for Share
+    name:
+    keys:
+      # -- name of the key in the configMap where to find the repository service host
+      host:
+      # -- name of the key in the configMap where to find the repository service port
+      port:
 
 # -- Provide the list of URL considered allowed to access Share resources (used
 # for CSRF protection). The value be either a list of strings or a single
