@@ -6,7 +6,8 @@ tests:
   - it: should not render a configmap
     set:
       repository:
-        existingConfigMap: myns/mycm
+        existingConfigMap:
+          name:  myns/mycm
     asserts:
       - hasDocuments:
           count: 0

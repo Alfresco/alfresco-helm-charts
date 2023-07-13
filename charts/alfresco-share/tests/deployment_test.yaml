@@ -11,16 +11,15 @@ tests:
           value: RELEASE-NAME-alfresco-share
         template: deployment-share.yaml
 
-  - it: should leverage provided exisintg configmap
+  - it: should leverage provided existing configmap
     set:
       repository:
-        existingConfigMap: myns/mycm
+        existingConfigMap:
+          name: myns/mycm
     asserts:
-      - contains:
-          path: spec.template.spec.containers[0].envFrom
-          content:
-            configMapRef:
-              name: myns/mycm
+      - equal:
+          path: spec.template.spec.containers[0].env[5].valueFrom.configmapKeyRef.name
+          value: myns/mycm
         template: deployment-share.yaml
 
   - it: |
