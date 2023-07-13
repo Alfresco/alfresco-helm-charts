@@ -8,7 +8,7 @@ Alfresco Share Helm chart for Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts | alfresco-common | 2.1.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts | alfresco-common | 2.1.0-alpha.1 |
 
 ## Values
 

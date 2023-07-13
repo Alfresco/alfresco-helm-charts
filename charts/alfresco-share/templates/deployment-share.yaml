@@ -54,13 +54,19 @@ spec:
           - configMapRef:
               name: {{ .Values.repository.existingConfigMap | default (print (include "alfresco-share.fullname" .) "-configmap") }}
           env:
+            - name: CSRF_FILTER_REFERER
+              value: {{ include "alfresco-common.csrf.referer" . }}
+            - name: CSRF_FILTER_ORIGIN
+              value: {{ include "alfresco-common.csrf.origin" . }}
+            - name: BASEURL
+              value: {{ include "alfresco-common.external.url" . }}
+            - name: JAVA_OPTS
+              value: >-
+                {{ (printf "%s %s" (.Values.environment.JAVA_OPTS | default "") "-Dalfresco.proxy=$BASEURL") }}
             {{- range $key, $value := (omit .Values.environment "JAVA_OPTS") }}
             - name: {{ $key }}
               value: {{ $value }}
             {{- end }}
-            - name: JAVA_OPTS
-              value: >-
-                {{ (printf "%s %s" (.Values.environment.JAVA_OPTS | default "") "-Dalfresco.proxy=$EXTERNAL_HOST") }}
           volumeMounts:
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
           readinessProbe:
