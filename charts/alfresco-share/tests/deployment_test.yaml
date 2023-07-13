@@ -23,6 +23,45 @@ tests:
               name: myns/mycm
         template: deployment-share.yaml
 
+  - it: |
+      should render custom CSRF config.
+      referers MUST be a regex with pipes escaped (due to the way vars are substitued in Share pods
+      origins MUST be a list of hosts (without paths) separated by commas.
+    set:
+      known_urls:
+        - https://ecm.domain.tld/myapp/callback
+        - https://ecm.domain.tld/alfresco
+        - http://app.domain.local:8000
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].value
+          value: >-
+            https://ecm.domain.tld/myapp/callback/.*\|https://ecm.domain.tld/alfresco/.*\|http://app.domain.local:8000/.*
+        template: deployment-share.yaml
+      - equal:
+          path: spec.template.spec.containers[0].env[1].value
+          value: https://ecm.domain.tld,https://ecm.domain.tld,http://app.domain.local:8000
+        template: deployment-share.yaml
+      - equal:
+          path: spec.template.spec.containers[0].env[2].value
+          value: https://ecm.domain.tld
+        template: deployment-share.yaml
+
+  - it: should render a default Xorigin restriction config
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].value
+          value: http://localhost/.*\|https://localhost/.*
+        template: deployment-share.yaml
+      - equal:
+          path: spec.template.spec.containers[0].env[1].value
+          value: http://localhost,https://localhost
+        template: deployment-share.yaml
+      - equal:
+          path: spec.template.spec.containers[0].env[2].value
+          value: http://localhost
+        template: deployment-share.yaml
+
   - it: should render extra configs
     set:
       extraSideContainers:
