@@ -44,4 +44,4 @@ repository:
   # -- ACS repository port
   port: 80
   # -- a pre-existing configmap which provides expected configuration for ms365
-  existingConfigMap:
+  existingConfigMap: null
