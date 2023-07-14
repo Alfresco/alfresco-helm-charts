@@ -3,7 +3,6 @@ suite: test connector-ms365 deployment
 templates:
     - config-connector-ms365.yaml
 tests:
-tests:
   - it: should not render a configmap
     set:
       repository:
