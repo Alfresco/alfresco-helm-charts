@@ -17,7 +17,9 @@ spec:
   template:
     metadata:
       annotations:
+        {{- if not .Values.repository.existingConfigMap }}
         checksum/config: {{ include (print $.Template.BasePath "/config-connector-ms365.yaml") . | sha256sum }}
+        {{- end }}
       labels:
         {{- include "alfresco-connector-ms365.selectorLabels" . | nindent 8 }}
     spec:
@@ -62,7 +64,15 @@ spec:
           {{- include "component-security-context" .Values | indent 8 }}
           envFrom:
             - configMapRef:
-                name: {{ template "alfresco-connector-ms365.fullname" . }}
+                name: {{ .Values.repository.existingConfigMap | default (print (include "alfresco-connector-ms365.fullname" .)) }}
+          env:
+            {{- range $key, $value := (omit .Values.environment "JAVA_OPTS") }}
+            - name: {{ $key }}
+              value: {{ $value }}
+            {{- end }}
+            - name: JAVA_OPTS
+              value: >-
+                {{ (printf "%s %s" (.Values.environment.JAVA_OPTS | default "") "-Dalfresco.base-url=$REPO_URL") }}
           ports:
               - containerPort: {{ .Values.image.internalPort }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
