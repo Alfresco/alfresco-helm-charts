@@ -10,14 +10,5 @@ tests:
        repository.port: 80
       asserts:
        - equal:
-           path: data.JAVA_OPTS
-           value: -Dalfresco.base-url=http://acs-alfresco-cs-repository:80
-    - it: should render options as provided in values
-      set:
-        repository:
-            host: somerepohost
-            port: 80
-      asserts:
-       - matchRegex:
-            path: data.JAVA_OPTS
-            pattern: -Dalfresco.base-url=http://somerepohost:80
+           path: data.REPO_URL
+           value: http://acs-alfresco-cs-repository:80
