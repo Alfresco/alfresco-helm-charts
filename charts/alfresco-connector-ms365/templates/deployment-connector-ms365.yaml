@@ -65,6 +65,14 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ .Values.repository.existingConfigMap | default (print (include "alfresco-connector-ms365.fullname" .)) }}
+          env:
+            {{- range $key, $value := (omit .Values.environment "JAVA_OPTS") }}
+            - name: {{ $key }}
+              value: {{ $value }}
+            {{- end }}
+            - name: JAVA_OPTS
+              value: >-
+                {{ (printf "%s %s" (.Values.environment.JAVA_OPTS | default "") "-Dalfresco.base-url=$REPO_URL") }}
           ports:
               - containerPort: {{ .Values.image.internalPort }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
