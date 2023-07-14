@@ -8,6 +8,6 @@ metadata:
   labels:
     {{- include "alfresco-connector-ms365.labels" . | nindent 4 }}
 data:
-  {{- $alfbaseurl := printf "http://%s:%d" .Values.repository.host (int .Values.repository.port ) -}}
-  REPO_URL: {{ $alfbaseurl }}
+    {{- $alfbaseurl := printf "http://%s:%d" .Values.repository.host (int .Values.repository.port ) }}
+    REPO_URL: {{ $alfbaseurl }}
 {{- end }}
