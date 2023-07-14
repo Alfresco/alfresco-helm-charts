@@ -13,6 +13,7 @@ tests:
         template: config-connector-ms365.yaml
 
   - it: should render custom configmap
+    values: &testvalues
     set:
       repository:
         host: myKnownServiceName
