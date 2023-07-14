@@ -11,3 +11,21 @@ tests:
       - hasDocuments:
           count: 0
         template: config-connector-ms365.yaml
+
+  - it: should render custom configmap
+    set:
+      repository:
+        host: myKnownServiceName
+        port: 80
+      - equal:
+          path: data.REPO_URL
+          value: http://myKnownServiceName:80
+        template: config-connector-ms365.yaml
+
+  - it: should render a default config
+    asserts:
+      - equal:
+          path: data.REPO_URL
+          value: http://acs-alfresco-cs-repository:80
+        template: config-share.yaml
+        template: config-connector-ms365.yaml
