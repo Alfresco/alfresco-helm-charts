@@ -3,12 +3,12 @@ suite: test connector-ms365 deployment
 templates:
     - config-connector-ms365.yaml
 tests:
-    - it: should render just the URL in JAVA_OPTS
-      values: &testvalues
-      set:
-       repository.host: acs-alfresco-cs-repository
-       repository.port: 80
-      asserts:
-       - equal:
-           path: data.REPO_URL
-           value: http://acs-alfresco-cs-repository:80
+tests:
+  - it: should not render a configmap
+    set:
+      repository:
+        existingConfigMap: myns/mycm
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: config-connector-ms365.yaml
