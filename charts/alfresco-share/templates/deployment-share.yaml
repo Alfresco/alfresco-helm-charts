@@ -63,12 +63,12 @@ spec:
                 {{ (printf "%s %s" (.Values.environment.JAVA_OPTS | default "") "-Dalfresco.proxy=$BASEURL") }}
             - name: REPO_HOST
               valueFrom:
-                configmapKeyRef:
+                configMapKeyRef:
                   name: {{ $repo_details_cm }}
                   key: {{ .Values.repository.existingConfigMap.keys.host | default "REPO_HOST" }}
             - name: REPO_PORT
               valueFrom:
-                configmapKeyRef:
+                configMapKeyRef:
                   name: {{ $repo_details_cm }}
                   key: {{ .Values.repository.existingConfigMap.keys.port | default "REPO_HOST" }}
             {{- range $key, $value := (omit .Values.environment "JAVA_OPTS") }}
