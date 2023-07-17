@@ -57,7 +57,7 @@ Returns empty if not specified, consuming template should handle defaults
 */}}
 {{- define "alfresco-common.external.port" -}}
 {{- $parsed_url := urlParse (index (include "alfresco-common.known.urls" . | fromJson) "known_urls" | first) }}
-{{- if gt ($parsed_url.host | splitList ":") 1 }}
+{{- if gt ($parsed_url.host | splitList ":" | len) 1 }}
   {{- $parsed_url.host | splitList ":" | last }}
 {{- end }}
 {{- end -}}
