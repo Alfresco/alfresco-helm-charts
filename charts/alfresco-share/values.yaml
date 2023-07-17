@@ -12,9 +12,9 @@ repository:
     name:
     keys:
       # -- name of the key in the configMap where to find the repository service host
-      host:
+      host: REPO_HOST
       # -- name of the key in the configMap where to find the repository service port
-      port:
+      port: REPO_PORT
 
 # -- Provide the list of URL considered allowed to access Share resources (used
 # for CSRF protection). The value be either a list of strings or a single

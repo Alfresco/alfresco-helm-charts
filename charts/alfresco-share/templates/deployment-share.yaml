@@ -65,12 +65,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{ $repo_details_cm }}
-                  key: {{ .Values.repository.existingConfigMap.keys.host | default "REPO_HOST" }}
+                  key: {{ .Values.repository.existingConfigMap.keys.host }}
             - name: REPO_PORT
               valueFrom:
                 configMapKeyRef:
                   name: {{ $repo_details_cm }}
-                  key: {{ .Values.repository.existingConfigMap.keys.port | default "REPO_HOST" }}
+                  key: {{ .Values.repository.existingConfigMap.keys.port }}
             {{- range $key, $value := (omit .Values.environment "JAVA_OPTS") }}
             - name: {{ $key }}
               value: {{ $value }}

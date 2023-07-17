@@ -18,7 +18,7 @@ tests:
           name: myns/mycm
     asserts:
       - equal:
-          path: spec.template.spec.containers[0].env[5].valueFrom.configmapKeyRef.name
+          path: spec.template.spec.containers[0].env[5].valueFrom.configMapKeyRef.name
           value: myns/mycm
         template: deployment-share.yaml
 
