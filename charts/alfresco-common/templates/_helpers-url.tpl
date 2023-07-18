@@ -6,6 +6,11 @@ Known URLs are the URL we can trust
 {{- if kindIs "string" $known_urls }}
   {{- $known_urls = splitList "," $known_urls }}
 {{- end }}
+{{- range $known_urls }}
+{{- if not (or (hasPrefix "http://" .) (hasPrefix "https://" .)) }}
+{{- fail "provided known_urls MUST start with a scheme (http :// or https://)" }}
+{{- end }}
+{{- end }}
 {{- mustToJson (dict "known_urls" $known_urls) }}
 {{- end -}}
 
@@ -48,17 +53,18 @@ Pick the main external host
 */}}
 {{- define "alfresco-common.external.host" -}}
 {{- $parsed_url := urlParse (index (include "alfresco-common.known.urls" . | fromJson) "known_urls" | first) }}
-{{- $parsed_url.host }}
+{{- $parsed_url.host | splitList ":" | first }}
 {{- end -}}
 
 {{/*
 Pick the main external port.
-Returns empty if not specified, consuming template should handle defaults
 */}}
 {{- define "alfresco-common.external.port" -}}
 {{- $parsed_url := urlParse (index (include "alfresco-common.known.urls" . | fromJson) "known_urls" | first) }}
-{{- if gt ($parsed_url.host | splitList ":") 1 }}
+{{- if gt ($parsed_url.host | splitList ":" | len) 1 }}
   {{- $parsed_url.host | splitList ":" | last }}
+{{- else }}
+  {{- eq (include "alfresco-common.external.scheme" .) "https" | ternary 443 80 }}
 {{- end }}
 {{- end -}}
 
