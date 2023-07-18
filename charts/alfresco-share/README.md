@@ -1,6 +1,6 @@
 # alfresco-share
 
-![Version: 0.1.0-alpha.0](https://img.shields.io/badge/Version-0.1.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 7.4.0](https://img.shields.io/badge/AppVersion-7.4.0-informational?style=flat-square)
+![Version: 0.1.0-alpha.1](https://img.shields.io/badge/Version-0.1.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 7.4.0](https://img.shields.io/badge/AppVersion-7.4.0-informational?style=flat-square)
 
 Alfresco Share Helm chart for Kubernetes
 
@@ -8,7 +8,7 @@ Alfresco Share Helm chart for Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts | alfresco-common | 2.1.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts | alfresco-common | 2.1.0-alpha.2 |
 
 ## Values
 
@@ -51,7 +51,9 @@ Alfresco Share Helm chart for Kubernetes
 | readinessProbe.initialDelaySeconds | int | `15` |  |
 | readinessProbe.periodSeconds | int | `30` |  |
 | readinessProbe.timeoutSeconds | int | `5` |  |
-| repository.existingConfigMap | string | `nil` | a pre-existing configmap which provides expected configuration for Share   REPO_HOST   REPO_PORT   CSRF_FILTER_REFERER   CSRF_FILTER_ORIGIN   EXTERNAL_HOST |
+| repository.existingConfigMap.keys.host | string | `"REPO_HOST"` | name of the key in the configMap where to find the repository service host |
+| repository.existingConfigMap.keys.port | string | `"REPO_PORT"` | name of the key in the configMap where to find the repository service port |
+| repository.existingConfigMap.name | string | `nil` | a pre-existing configmap which provides expected configuration for Share |
 | repository.host | string | `"localhost"` | repository hostname/servicename |
 | repository.port | int | `8080` | repository port where service is exposed |
 | resources.limits.cpu | string | `"4"` |  |

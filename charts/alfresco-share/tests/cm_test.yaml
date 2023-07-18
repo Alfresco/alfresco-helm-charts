@@ -6,7 +6,8 @@ tests:
   - it: should not render a configmap
     set:
       repository:
-        existingConfigMap: myns/mycm
+        existingConfigMap:
+          name:  myns/mycm
     asserts:
       - hasDocuments:
           count: 0
@@ -20,20 +21,7 @@ tests:
       repository:
         host: release-service.cluster.local
         port: 80
-      known_urls:
-        - https://ecm.domain.tld/myapp/callback
-        - https://ecm.domain.tld/alfresco
-        - http://app.domain.local:8000
     asserts:
-      - equal:
-          path: data.CSRF_FILTER_REFERER
-          value: >-
-            https://ecm.domain.tld/myapp/callback/.*\|https://ecm.domain.tld/alfresco/.*\|http://app.domain.local:8000/.*
-        template: config-share.yaml
-      - equal:
-          path: data.CSRF_FILTER_ORIGIN
-          value: https://ecm.domain.tld,https://ecm.domain.tld,http://app.domain.local:8000
-        template: config-share.yaml
       - equal:
           path: data.REPO_HOST
           value: release-service.cluster.local
@@ -41,31 +29,4 @@ tests:
       - equal:
           path: data.REPO_PORT
           value: "80"
-        template: config-share.yaml
-
-  - it: should render a default config
-    asserts:
-      - equal:
-          path: data.CSRF_FILTER_REFERER
-          value: http://localhost/.*\|https://localhost/.*
-        template: config-share.yaml
-      - equal:
-          path: data.CSRF_FILTER_ORIGIN
-          value: http://localhost,https://localhost
-        template: config-share.yaml
-      - equal:
-          path: data.REPO_HOST
-          value: localhost
-        template: config-share.yaml
-      - equal:
-          path: data.REPO_PORT
-          value: "8080"
-        template: config-share.yaml
-
-  - it: should render a default Xorigin restriction config
-    asserts:
-      - equal:
-          path: data.CSRF_FILTER_REFERER
-          value: >-
-            http://localhost/.*\|https://localhost/.*
         template: config-share.yaml
