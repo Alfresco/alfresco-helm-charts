@@ -1,5 +1,5 @@
 # Defines the properties required by the alfresco-connector-ms365 container
-{{- if not .Values.repository.existingConfigMap -}}
+{{- if not .Values.repository.existingConfigMap.name -}}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -8,6 +8,6 @@ metadata:
   labels:
     {{- include "alfresco-connector-ms365.labels" . | nindent 4 }}
 data:
-    {{- $alfbaseurl := printf "http://%s:%d" .Values.repository.host (int .Values.repository.port ) }}
-    REPO_URL: {{ $alfbaseurl }}
+  REPO_HOST: {{ .Values.repository.host | quote }}
+  REPO_PORT: {{ .Values.repository.port | quote }}
 {{- end }}
