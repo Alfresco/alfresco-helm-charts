@@ -22,6 +22,15 @@ tests:
           value: myns/mycm
         template: deployment-share.yaml
 
+  - it: Fail due to broken input
+    set:
+      known_urls:
+        - not.an/url
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            provided known_urls MUST start with a scheme (htpp :// or https://)
+        template: deployment-share.yaml
   - it: |
       should render custom CSRF config.
       referers MUST be a regex with pipes escaped (due to the way vars are substitued in Share pods
