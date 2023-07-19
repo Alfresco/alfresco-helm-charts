@@ -1,5 +1,4 @@
 {{- if .Values.imagemagick.enabled }}
-{{- $componentScope := (dict "Values" (dict "nameOverride" "imagemagick" ) "Chart" .Chart "Release" .Release) }}
 apiVersion: v1
 kind: Service
 metadata:
