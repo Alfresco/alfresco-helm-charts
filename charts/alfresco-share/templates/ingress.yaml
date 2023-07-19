@@ -6,8 +6,7 @@ We only support nginx ingress for now: https://alfresco.atlassian.net/browse/OPS
 */}}
 {{- if not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   {{- $_ := unset .Values.ingress.annotations "kubernetes.io/ingress.class" }}
-  {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" "nginx" }}
-*/}}
+  {{- $_ = set .Values.ingress.annotations "kubernetes.io/ingress.class" "nginx" }}
 {{- end }}
 {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1
@@ -29,7 +28,7 @@ spec:
 {{/*
 We only support nginx ingress for now: https://alfresco.atlassian.net/browse/OPSEXP-131
 */}}
-  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
+  {{- if (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName: nginx
   {{- end }}
   {{- if .Values.ingress.tls }}

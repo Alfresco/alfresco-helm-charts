@@ -13,13 +13,26 @@ tests:
             location ~ ^/.*/-default-/proxy/.*/api/.*$ {return 403;}
             location ~ ^/.*/s/prometheus$ {return 403;}
         template: ingress.yaml
-  - it: should trim out any custom server-snippet
+      - equal:
+          path: spec.ingressClassName
+          value: nginx
+        template: ingress.yaml
+
+  - it: should sanitize ingress
+    capabilities:
+      majorVersion: 1
+      minorVersion: 17
     set:
       ingress:
         annotations:
+          kubernetes.io/ingress.class: myfancyClass
           nginx.ingress.kubernetes.io/server-snippet: listen 6666;
     asserts:
       - notMatchRegex:
           path: metadata.annotations['nginx.ingress.kubernetes.io/server-snippet']
           pattern: listen 6666;
+        template: ingress.yaml
+      - equal:
+          path: metadata.annotations['kubernetes.io/ingress.class']
+          value: nginx
         template: ingress.yaml
