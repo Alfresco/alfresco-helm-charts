@@ -8,6 +8,6 @@ metadata:
   labels:
     {{- include "alfresco-connector-ms365.labels" . | nindent 4 }}
 data:
-  REPO_HOST: {{ .Values.repository.host | quote }}
-  REPO_PORT: {{ .Values.repository.port | quote }}
+    REPO_HOST: {{ .Values.repository.host | quote }}
+    REPO_PORT: {{ .Values.repository.port | quote }}
 {{- end }}
