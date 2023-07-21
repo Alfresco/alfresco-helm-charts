@@ -1,7 +1,7 @@
 ---
 suite: test connector-ms365 deployment
 templates:
-    - config-connector-ms365.yaml
+  - config-connector-ms365.yaml
 tests:
   - it: should not render a configmap
     set:
@@ -13,7 +13,7 @@ tests:
           count: 0
         template: config-connector-ms365.yaml
 
- - it: should render custom repo & CSRF config
+  - it: should render custom repo & CSRF config
     set:
       repository:
         host: release-service.cluster.local
