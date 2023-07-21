@@ -26,3 +26,14 @@ tests:
               cpu: "2"
               memory: "1000Mi"
         template: deployment-connector-ms365.yaml
+
+  - it: should leverage provided existing configmap
+    set:
+      repository:
+        existingConfigMap:
+          name: myns/mycm
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[2].valueFrom.configMapKeyRef.name
+          value: myns/mycm
+        template: deployment-connector-ms365.yaml
