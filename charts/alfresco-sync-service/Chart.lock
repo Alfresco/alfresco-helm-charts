@@ -1,7 +1,7 @@
 dependencies:
 - name: common
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 2.4.0
+  version: 2.6.0
 - name: alfresco-common
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 2.0.0
@@ -11,5 +11,5 @@ dependencies:
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 12.5.6
-digest: sha256:e39405a7071d52fabbfb5c13dadabdd196cdfec40637bc26fd2444700c67d7e5
-generated: "2023-06-01T10:44:55.970183+02:00"
+digest: sha256:0b170e8034f115b475b6e93c52d0b57b07eb23b60d4c1324c540886422e053f2
+generated: "2023-07-24T15:36:54.518253+05:30"
