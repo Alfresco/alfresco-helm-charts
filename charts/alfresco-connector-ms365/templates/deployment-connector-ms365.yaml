@@ -62,15 +62,15 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- include "component-security-context" .Values | indent 8 }}
-           {{- $repo_details_cm := .Values.repository.existingConfigMap.name | default (include "alfresco-connector-ms365.fullname" .) }}
-            {{- $repo_url := printf "-Dalfresco.base-url=http://%s:%s" "$REPO_HOST" "$REPO_PORT" }}
+          {{- $repo_details_cm := .Values.repository.existingConfigMap.name | default (include "alfresco-connector-ms365.fullname" .) }}
+          {{- $repo_url := printf "-Dalfresco.base-url=http://%s:%s" "$REPO_HOST" "$REPO_PORT" }}
           env:
             {{- range $key, $value := (omit .Values.environment "JAVA_OPTS") }}
             - name: {{ $key }}
               value: {{ $value }}
             {{- end }}
             - name: JAVA_OPTS
-              value: {{ printf "%s %s" (.Values.environment.JAVA_OPTS | default "") ($repo_url) }}
+              value: {{ printf "%s%s" (.Values.environment.JAVA_OPTS | default "") ($repo_url) }}
             - name: REPO_HOST
               valueFrom:
                 configMapKeyRef:

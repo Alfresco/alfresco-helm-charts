@@ -13,7 +13,7 @@ tests:
           count: 0
         template: config-connector-ms365.yaml
 
-  - it: should render custom repo & CSRF config
+  - it: should render custom repo configuration
     set:
       repository:
         host: release-service.cluster.local
