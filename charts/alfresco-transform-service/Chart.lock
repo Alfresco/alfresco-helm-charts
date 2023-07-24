@@ -7,6 +7,6 @@ dependencies:
   version: 3.1.0
 - name: alfresco-ai-transformer
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 0.1.0-alpha.0
-digest: sha256:d93888d0b6fd50d5b929e79ec4487ef6228c4fd32cc1c14c0a0e261e1eeca45c
-generated: "2023-07-03T09:10:55.357184+02:00"
+  version: 0.2.0
+digest: sha256:8f147ba1a59c995c4f95e5cdada1b7dbaefb58ece5548fa7772f32fff163cda6
+generated: "2023-07-24T23:42:04.522392321Z"
