@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "alfresco-repository.fullname" . }}
+  labels:
+    {{- include "alfresco-repository.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "alfresco-repository.selectorLabels" . | nindent 6 }}
+    strategy:
+      {{- toYaml (.Values.strategy | default .Values.global.strategy) | nindent 4 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "alfresco-repository.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "alfresco-repository.serviceAccountName" . }}
+      {{- include "component-pod-security-context" .Values | indent 4 }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- include "component-security-context" .Values | indent 8 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if .Values.command }}
+          command:
+            {{- toYaml .Values.command | nindent 12 }}
+          args:
+            {{- toYaml .Values.args | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.image.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
