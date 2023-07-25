@@ -43,5 +43,11 @@ repository:
   host: acs-alfresco-cs-repository
   # -- ACS repository port
   port: 80
-  # -- a pre-existing configmap which provides expected configuration for ms365
-  existingConfigMap: null
+  existingConfigMap:
+    # -- a pre-existing configmap which provides expected configuration for ms365
+    name:
+    keys:
+      # -- name of the key in the configMap where to find the repository service host
+      host: REPO_HOST
+      # -- name of the key in the configMap where to find the repository service port
+      port: REPO_PORT

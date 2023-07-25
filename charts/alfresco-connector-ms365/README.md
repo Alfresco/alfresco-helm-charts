@@ -1,6 +1,6 @@
 # alfresco-connector-ms365
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector ms365 service
 
@@ -8,7 +8,7 @@ A Helm chart for deploying Alfresco connector ms365 service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0-alpha.2 |
 
 ## Values
 
@@ -33,7 +33,9 @@ A Helm chart for deploying Alfresco connector ms365 service
 | readinessProbe.periodSeconds | int | `60` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | replicaCount | int | `2` |  |
-| repository.existingConfigMap | string | `nil` | a pre-existing configmap which provides expected configuration for ms365 |
+| repository.existingConfigMap.keys.host | string | `"REPO_HOST"` | name of the key in the configMap where to find the repository service host |
+| repository.existingConfigMap.keys.port | string | `"REPO_PORT"` | name of the key in the configMap where to find the repository service port |
+| repository.existingConfigMap.name | string | `nil` | a pre-existing configmap which provides expected configuration for ms365 |
 | repository.host | string | `"acs-alfresco-cs-repository"` | ACS repository host |
 | repository.port | int | `80` | ACS repository port |
 | resources.limits.cpu | string | `"2"` |  |

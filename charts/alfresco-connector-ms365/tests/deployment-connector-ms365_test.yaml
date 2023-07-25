@@ -27,14 +27,13 @@ tests:
               memory: "1000Mi"
         template: deployment-connector-ms365.yaml
 
-  - it: should leverage provided exisintg configmap
+  - it: should leverage provided existing configmap
     set:
       repository:
-        existingConfigMap: service/test
+        existingConfigMap:
+          name: myns/mycm
     asserts:
-      - contains:
-          path: spec.template.spec.containers[0].envFrom
-          content:
-            configMapRef:
-              name: service/test
+      - equal:
+          path: spec.template.spec.containers[0].env[2].valueFrom.configMapKeyRef.name
+          value: myns/mycm
         template: deployment-connector-ms365.yaml

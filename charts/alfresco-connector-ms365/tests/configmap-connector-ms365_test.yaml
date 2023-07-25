@@ -1,20 +1,29 @@
 ---
 suite: test connector-ms365 deployment
 templates:
-    - config-connector-ms365.yaml
+  - config-connector-ms365.yaml
 tests:
   - it: should not render a configmap
     set:
       repository:
-        existingConfigMap: myns/mycm
+        existingConfigMap:
+          name: myns/mycm
     asserts:
       - hasDocuments:
           count: 0
         template: config-connector-ms365.yaml
 
-  - it: should render a default config
+  - it: should render custom repo configuration
+    set:
+      repository:
+        host: release-service.cluster.local
+        port: 80
     asserts:
       - equal:
-          path: data.REPO_URL
-          value: http://acs-alfresco-cs-repository:80
+          path: data.REPO_HOST
+          value: release-service.cluster.local
+        template: config-connector-ms365.yaml
+      - equal:
+          path: data.REPO_PORT
+          value: "80"
         template: config-connector-ms365.yaml
