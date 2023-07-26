@@ -70,7 +70,8 @@ spec:
               value: {{ $value }}
             {{- end }}
             - name: JAVA_OPTS
-              value: {{ printf "%s %s" (.Values.environment.JAVA_OPTS | default "") ($repo_url) }}
+              value: >-
+                {{ (printf "%s %s" (.Values.environment.JAVA_OPTS | default "") ($repo_url)) }}
             - name: REPO_HOST
               valueFrom:
                 configMapKeyRef:
