@@ -2,6 +2,26 @@ apiVersion: v1
 entries:
   activemq:
   - apiVersion: v2
+    appVersion: 5.17.5
+    created: "2023-07-27T13:34:23.627850371Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 2.0.0
+    description: A Helm chart providing a basic Apache ActiveMQ deployment required
+      to evaluate ACS (not meant to be used in production).
+    digest: 8aec3629121f0a480ebd54903ca0035c6106ecc711339cc375dd2875c18159f2
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - activemq
+    - message broker
+    name: activemq
+    sources:
+    - https://github.com/Alfresco/alfresco-helm-charts
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/activemq-3.2.0/activemq-3.2.0.tgz
+    version: 3.2.0
+  - apiVersion: v2
     appVersion: 5.17.4
     created: "2023-05-31T14:10:50.105295452Z"
     dependencies:
@@ -1029,4 +1049,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2023-07-26T10:42:11.296621338Z"
+generated: "2023-07-27T13:34:23.628335985Z"
