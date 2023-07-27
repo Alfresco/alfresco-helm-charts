@@ -1,0 +1,11 @@
+---
+nameOverride: postgresql-acs
+image:
+  tag: 14.4.0
+  pullPolicy: IfNotPresent
+commonAnnotations:
+  application: alfresco-content-services
+auth:
+  username: alfresco
+  password: alfresco
+  database: alfresco

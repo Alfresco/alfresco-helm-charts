@@ -9,8 +9,8 @@ spec:
   selector:
     matchLabels:
       {{- include "alfresco-repository.selectorLabels" . | nindent 6 }}
-    strategy:
-      {{- toYaml (.Values.strategy | default .Values.global.strategy) | nindent 4 }}
+  strategy:
+    {{- toYaml (.Values.strategy | default .Values.global.strategy) | nindent 4 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -24,14 +24,36 @@ spec:
       {{- include "component-pod-security-context" .Values | indent 4 }}
       nodeSelector:
         {{- toYaml .Values.nodeSelector | nindent 8 }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      initContainers:
+        - name: wait-db-ready
+          image: busybox:1.35
+          imagePullPolicy: IfNotPresent
+          {{- include "component-security-context" dict | indent 8 }}
+          resources:
+            limits:
+              cpu: "0.25"
+              memory: "10Mi"
+          command:
+            - sh
+            - -c
+            - |
+              {{ $dbsocket := printf "%s:%s" (include "alfresco-repository.db.hostname" .Values.db ) (include "alfresco-repository.db.port" .Values.db) -}}
+              until nc -w1 {{ $dbsocket }}
+              do echo "waiting for {{  template "alfresco-repository.db.rdbms" .Values.db }} database on {{ $dbsocket }}"
+                sleep 2
+              done
       containers:
         - name: {{ .Chart.Name }}
           {{- include "component-security-context" .Values | indent 8 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                {{ $alfoptsCtx := dict "Values" (dict "nameOverride" "alfresco-opts") "Chart" .Chart "Release" .Release }}
+                name: {{ template "alfresco-repository.fullname" $alfoptsCtx }}
+            - secretRef:
+                name: {{ required "You must provide a secret where we can read credentials from" .Values.configuration.repository.existingSecret }}
           {{- if .Values.command }}
           command:
             {{- toYaml .Values.command | nindent 12 }}
@@ -42,19 +64,44 @@ spec:
             - name: http
               containerPort: {{ .Values.image.port }}
               protocol: TCP
+          startupProbe:
+            {{- toYaml .Values.startupProbe | nindent 12 }}
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: {{ .Values.persistence.data.mountPath }}
+              subPath: {{ .Values.persistence.data.subPath }}
+            {{- if .Values.configuration.repository.existingConfigMap }}
+            - name: global-properties
+              mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
+              subPath: alfresco-global.properties
+              readOnly: true
+            {{- end }}
+            {{- if .Values.extraVolumeMounts }}
+            {{- tpl (.Values.extraVolumeMounts | toYaml) . | nindent 12 }}
+            {{- end }}
+      volumes:
+        {{- include "data_volume" .Values | nindent 8 }}
+        {{- if .Values.configuration.repository.existingConfigMap }}
+        - name: global-properties
+          configMap:
+            name: {{ .Values.configuration.repository.existingConfigMap }}
+            defaultMode: 0400
+            items:
+              - key: alfresco-global.properties
+                path: alfresco-global.properties
+        {{- end }}
+        {{- if .Values.extraVolumes }}
+        {{- tpl (.Values.extraVolumes | toYaml) . | nindent 8 }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
+        {{- toYaml . | indent 8 }}
       {{- end }}
       {{- with .Values.affinity }}
       affinity:

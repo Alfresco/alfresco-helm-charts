@@ -1,0 +1,5 @@
+db:
+  url: postgresql://pg-postgresql-acs.alfresco/alfresco
+configuration:
+  repository:
+    existingSecret: alfsecrets

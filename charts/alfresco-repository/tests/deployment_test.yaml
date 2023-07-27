@@ -1,0 +1,150 @@
+---
+suite: test repository manifest
+templates:
+  - deployment.yaml
+values: &test_values
+  - values/test_values.yaml
+tests:
+  - it: should fail without proper input
+    set:
+      configuration:
+        repository:
+          existingSecret: null
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            You must provide a secret where we can read credentials from
+  - it: should have basic metadata in place in deployment
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-repository
+        template: deployment.yaml
+
+  - it: should have default configmap in env
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            configMapRef:
+              name: RELEASE-NAME-alfresco-opts
+        template: deployment.yaml
+
+#  - it: should have a volume and a volumeMount for license
+#    set:
+#      licenseSecret: somesecret
+#    asserts:
+#      - contains:
+#          path: spec.template.spec.volumes
+#          content:
+#            name: acs-license
+#            secret:
+#              secretName: somesecret
+#              defaultMode: 0400
+#        template: deployment.yaml
+#      - contains:
+#          path: spec.template.spec.containers[0].volumeMounts
+#          content:
+#            mountPath: >-
+#              /usr/local/tomcat/shared/classes/alfresco/extension/license/
+#            name: acs-license
+#        template: deployment.yaml
+
+  - it: should have a volume and a volumeMount for alfresco-global.properties
+    set:
+      configuration:
+        repository:
+          existingConfigMap: myprops
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: global-properties
+            configMap:
+              name: myprops
+              defaultMode: 0400
+              items:
+                - key: alfresco-global.properties
+                  path: alfresco-global.properties
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: global-properties
+            mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
+            subPath: alfresco-global.properties
+            readOnly: true
+        template: deployment.yaml
+
+  - it: should render cpu and memory limits
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "250m"
+              memory: "2Gi"
+            limits:
+              cpu: "4"
+              memory: "8Gi"
+        template: deployment.yaml
+
+  - it: should have wait-db-ready initcontainer
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[0].name
+          value: wait-db-ready
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.initContainers[0].command
+          content: |
+            until nc -w1 myhost1:1111
+            do echo "waiting for mysql database on myhost1:1111"
+              sleep 2
+            done
+        template: deployment.yaml
+
+  - it: should render MSSQL sockets
+    set:
+      db:
+        url: sqlserver://localhost;encrypt=true;databaseName=AdventureWorks;integratedSecurity=true;
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers[0].command
+          content: |
+            until nc -w1 localhost:1434
+            do echo "waiting for sqlserver database on localhost:1434"
+              sleep 2
+            done
+        template: deployment.yaml
+
+  - it: should render Oracle sockets
+    set:
+      db:
+        url: oracle:thin:@tcp://mydbhost:1521/mydbservice
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers[0].command
+          content: |
+            until nc -w1 mydbhost:1521
+            do echo "waiting for oracle database on mydbhost:1521"
+              sleep 2
+            done
+        template: deployment.yaml
+
+  - it: should have custom extra volumes when defined
+    set:
+      extraVolumes:
+        - name: test-volume
+          awsElasticBlockStore:
+            volumeID: "whatever"
+            fsType: ext4
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: test-volume
+            awsElasticBlockStore:
+              volumeID: "whatever"
+              fsType: ext4
+        template: deployment.yaml

@@ -2,6 +2,8 @@ framework:
   - helm
 directory:
   - charts
+skip-path:
+  - charts/[^/]+/ci/
 skip-check:
   - CKV_K8S_15
   - CKV_K8S_21

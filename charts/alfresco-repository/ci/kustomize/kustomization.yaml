@@ -1,0 +1,17 @@
+---
+namespace: alfresco
+secretGenerator:
+  - name: alfsecrets
+    literals:
+      - DATABASE_USERNAME=alfresco
+      - DATABASE_PASSWORD=alfresco
+generatorOptions:
+  disableNameSuffixHash: true
+
+helmChartInflationGenerator:
+  - chartName: postgresql
+    chartRepoUrl: https://charts.bitnami.com/bitnami
+    chartVersion: 12.5.6
+    releaseName: pg
+    releaseNamespace: database
+    values: values.yaml

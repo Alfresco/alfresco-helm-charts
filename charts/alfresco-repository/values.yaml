@@ -16,7 +16,50 @@ strategy:
     maxSurge: 1
     maxUnavailable: 0
 
-licenseSecret:
+db:
+  # -- JDBC url of the database WITHOUT the "jdbc:" prefix
+  # This is a mandatory parameter
+  url: null
+  # -- JDBC driver class of the driver if none is provided the it is guessed
+  # from the URL provided
+  driver: null
+
+configuration:
+  repository:
+    # -- a configmap containing the "alfresco-global.properties" key populated
+    # with actual Alfresco repository properties
+    existingConfigMap: null
+    # -- Name of a pre-existing secret
+    # TODO: secret documentation
+    existingSecret: null
+
+environment:
+  # -- Alfresco java system properties. These properties must be provided as a
+  # string following the pattern "-Dproperty=value". They override the content
+  # of the global properties file but you should prefer using an existing
+  # configuration.repository.existingConfigMap.
+  ALFRESCO_OPTS: null
+  # -- Apache Tomcat command line options
+  CATALINA_OPTS: null
+  # -- Set JVM options
+  JAVA_OPTS: >-
+    -XX:MaxRAMPercentage=80
+
+persistence:
+  # -- Persist Contentsotre data
+  enabled: false
+  baseSize: 20Gi
+  # -- Specify a storageClass for dynamic provisioning
+  accessModes:
+    - ReadWriteMany
+  # -- Bind PVC based on storageClass (e.g. dynamic provisioning)
+  storageClass: null
+  # -- Use pre-provisioned pv through its claim (e.g. static provisioning)
+  existingClaim: null
+  data:
+    mountPath: /usr/local/tomcat/alf_data
+    subPath: alfresco-content-services/repository-data
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -68,6 +111,26 @@ resources:
   limits:
     cpu: "4"
     memory: "8Gi"
+
+startupProbe:
+  periodSeconds: 30
+  failureThreshold: 5
+  timeoutSeconds: 3
+  httpGet:
+    path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-live-
+    port: http
+readinessProbe:
+  periodSeconds: 20
+  timeoutSeconds: 3
+  httpGet:
+    path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
+    port: http
+livenessProbe:
+  periodSeconds: 20
+  timeoutSeconds: 3
+  httpGet:
+    path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-live-
+    port: http
 
 extraVolumes: []
 extraVolumeMounts: []

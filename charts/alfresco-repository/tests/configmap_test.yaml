@@ -1,0 +1,113 @@
+---
+suite: test repository default configmap
+templates:
+  - configmap.yaml
+values: &test_values
+  - values/test_values.yaml
+tests:
+  - it: should have some default properties
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-opts
+        template: configmap.yaml
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Ddeployment.method=HELM_CHART($|\s)
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: ^\$ALFRESCO_OPTS
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Ddb.username=\${DATABASE_USERNAME}($|\s)
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Ddb.password=\${DATABASE_PASSWORD}($|\s)
+
+  - it: should render environment vars
+    set:
+      environment:
+        ALFRESCO_OPTS: >-
+          -Dserver.allowWrite=false
+        CATALINA_OPTS: >-
+          -Dcatalina.base="/opt/tomcat/alternate"
+        JAVA_OPTS: >-
+          -Xmx32G
+    asserts:
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dserver.allowWrite=false($|\s)
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dcatalina.base="/opt/tomcat/alternate"($|\s)
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Xmx32G($|\s)
+
+  - it: should render MySQL properties
+    asserts:
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Ddb.url=jdbc:mysql://sandy:secret@myhost1:1111($|\s)
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Ddb.driver=com.mysql.jdbc.Driver($|\s)
+
+  - it: should render PostgreSQL properties
+    set:
+      db:
+        url: postgresql://pghost/alfdb
+    asserts:
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Ddb.url=jdbc:postgresql://pghost/alfdb($|\s)
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Ddb.driver=org.postgresql.Driver($|\s)
+
+  - it: should render MS SQL server properties
+    set:
+      db:
+        url: sqlserver://sqlservrhost;databaseName=alfdb;lockTimeout=1000;
+    asserts:
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Ddb.url=jdbc:sqlserver://sqlservrhost;databaseName=alfdb;lockTimeout=1000;($|\s)
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Ddb.driver=com.microsoft.sqlserver.jdbc.SQLServerDriver($|\s)
+
+  - it: should render Oracle properties
+    set:
+      db:
+        url: oracle:thin:@tcp://mydbhost:1521/mydbservice
+    asserts:
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Ddb.url=jdbc:oracle:thin:@tcp://mydbhost:1521/mydbservice($|\s)
+      - matchRegex:
+          path: data.ALFRESCO_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Ddb.driver=oracle.jdbc.OracleDriver($|\s)
+
+  - it: should fail without proper db URL
+    set:
+      db:
+        url: jdbc:mysql://myhost/db
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            database URL MUST be provided WITHOUT the 'jdbc' prefix.

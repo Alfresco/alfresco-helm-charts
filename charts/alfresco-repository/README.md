@@ -17,6 +17,13 @@ Alfresco content repository Helm chart
 | affinity | object | `{}` |  |
 | args | list | `[]` |  |
 | command | list | `[]` |  |
+| configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties |
+| configuration.repository.existingSecret | string | `nil` | Name of a pre-existing secret TODO: secret documentation |
+| db.driver | string | `nil` | JDBC driver class of the driver if none is provided the it is guessed from the URL provided |
+| db.url | string | `nil` | JDBC url of the database WITHOUT the "jdbc:" prefix This is a mandatory parameter |
+| environment.ALFRESCO_OPTS | string | `nil` | Alfresco java system properties. These properties must be provided as a string following the pattern "-Dproperty=value". They override the content of the global properties file but you should prefer using an existing configuration.repository.existingConfigMap. |
+| environment.CATALINA_OPTS | string | `nil` | Apache Tomcat command line options |
+| environment.JAVA_OPTS | string | `"-XX:MaxRAMPercentage=80"` | Set JVM options |
 | extraInitContainers | list | `[]` |  |
 | extraSideContainers | list | `[]` |  |
 | extraVolumeMounts | list | `[]` |  |
@@ -37,14 +44,28 @@ Alfresco content repository Helm chart
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| licenseSecret | string | `nil` |  |
+| livenessProbe.httpGet.path | string | `"/alfresco/api/-default-/public/alfresco/versions/1/probes/-live-"` |  |
+| livenessProbe.httpGet.port | string | `"http"` |  |
+| livenessProbe.periodSeconds | int | `20` |  |
+| livenessProbe.timeoutSeconds | int | `3` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
+| persistence.accessModes | list | `["ReadWriteMany"]` | Specify a storageClass for dynamic provisioning |
+| persistence.baseSize | string | `"20Gi"` |  |
+| persistence.data.mountPath | string | `"/usr/local/tomcat/alf_data"` |  |
+| persistence.data.subPath | string | `"alfresco-content-services/repository-data"` |  |
+| persistence.enabled | bool | `false` | Persist Contentsotre data |
+| persistence.existingClaim | string | `nil` | Use pre-provisioned pv through its claim (e.g. static provisioning) |
+| persistence.storageClass | string | `nil` | Bind PVC based on storageClass (e.g. dynamic provisioning) |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
 | podSecurityContext.runAsGroup | int | `1000` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | podSecurityContext.runAsUser | int | `33000` |  |
+| readinessProbe.httpGet.path | string | `"/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-"` |  |
+| readinessProbe.httpGet.port | string | `"http"` |  |
+| readinessProbe.periodSeconds | int | `20` |  |
+| readinessProbe.timeoutSeconds | int | `3` |  |
 | replicaCount | int | `1` |  |
 | resources.limits.cpu | string | `"4"` |  |
 | resources.limits.memory | string | `"8Gi"` |  |
@@ -57,6 +78,11 @@ Alfresco content repository Helm chart
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `"alfresco-repo-sa"` |  |
+| startupProbe.failureThreshold | int | `5` |  |
+| startupProbe.httpGet.path | string | `"/alfresco/api/-default-/public/alfresco/versions/1/probes/-live-"` |  |
+| startupProbe.httpGet.port | string | `"http"` |  |
+| startupProbe.periodSeconds | int | `30` |  |
+| startupProbe.timeoutSeconds | int | `3` |  |
 | strategy.rollingUpdate.maxSurge | int | `1` |  |
 | strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | strategy.type | string | `"RollingUpdate"` |  |
