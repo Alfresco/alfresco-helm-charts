@@ -8,7 +8,7 @@ image:
   pullPolicy: IfNotPresent
 adminUser:
   # -- An existing kubernetes secret that contains BROKER_USERNAME and BROKER_PASSWORD keys to override the default user credentials
-  existingSecretName:
+  existingSecretName: null
   # -- Username for the default user with administrative privileges
   user: admin
   # -- Password for the default user with administrative privileges
@@ -58,12 +58,12 @@ livenessProbe:
 persistence:
   enabled: true
   baseSize: 20Gi
-  storageClass:
+  storageClass: null
   # -- defines type of access required by the persistent volume
   # [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
   accessModes:
     - ReadWriteOnce
-  existingClaim:
+  existingClaim: null
   data:
     mountPath: "/opt/activemq/data"
     subPath: "alfresco-infrastructure/activemq-data"
