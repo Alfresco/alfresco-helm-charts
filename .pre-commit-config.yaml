@@ -15,7 +15,8 @@ repos:
     rev: 2.3.130
     hooks:
       - id: checkov
-        files: \.yaml$
+        files: charts/.*\.yaml$
+        verbose: true
         args:
         - --quiet
         - --compact

@@ -1,0 +1,9 @@
+postgresql:
+  enabled: true
+activemq:
+  enabled: true
+elasticsearch:
+  enabled: true
+global:
+  tracking:
+    sharedsecret: dummy
