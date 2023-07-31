@@ -50,7 +50,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - configMapRef:
-                {{ $alfoptsCtx := dict "Values" (dict "nameOverride" "alfresco-opts") "Chart" .Chart "Release" .Release }}
+                {{- $alfoptsCtx := dict "Values" (dict "nameOverride" "alfresco-opts") "Chart" .Chart "Release" .Release }}
                 name: {{ template "alfresco-repository.fullname" $alfoptsCtx }}
           {{- $dbsecretCtx := dict "Values" (dict "nameOverride" "secret-database") "Chart" .Chart "Release" .Release }}
           {{- $dbsecret := coalesce .Values.db.existingSecret.name (include "alfresco-repository.fullname" $dbsecretCtx) }}
