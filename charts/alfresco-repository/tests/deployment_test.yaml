@@ -5,15 +5,6 @@ templates:
 values: &test_values
   - values/test_values.yaml
 tests:
-  - it: should fail without proper input
-    set:
-      configuration:
-        repository:
-          existingSecret: null
-    asserts:
-      - failedTemplate:
-          errorMessage: >-
-            You must provide a secret where we can read credentials from
   - it: should have basic metadata in place in deployment
     asserts:
       - equal:

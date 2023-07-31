@@ -1,12 +1,5 @@
 ---
 namespace: alfresco
-secretGenerator:
-  - name: alfsecrets
-    literals:
-      - DATABASE_USERNAME=alfresco
-      - DATABASE_PASSWORD=alfresco
-generatorOptions:
-  disableNameSuffixHash: true
 
 helmChartInflationGenerator:
   - chartName: postgresql

@@ -20,7 +20,13 @@ Alfresco content repository Helm chart
 | configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties |
 | configuration.repository.existingSecret | string | `nil` | Name of a pre-existing secret TODO: secret documentation |
 | db.driver | string | `nil` | JDBC driver class of the driver if none is provided the it is guessed from the URL provided |
+| db.existingSecret | object | `{"keys":{"password":"DATABASE_PASSWORD","username":"DATABASE_USERNAME"},"name":null}` | Existing secret and their keys where to find the database username & password. |
+| db.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password |
+| db.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username |
+| db.existingSecret.name | string | `nil` | Name of a pre-existing secret containing database credentials |
+| db.password | string | `nil` | Password to authentication to the repository database |
 | db.url | string | `nil` | JDBC url of the database WITHOUT the "jdbc:" prefix This is a mandatory parameter |
+| db.username | string | `nil` | Username to authentication to the repository database |
 | environment.ALFRESCO_OPTS | string | `nil` | Alfresco java system properties. These properties must be provided as a string following the pattern "-Dproperty=value". They override the content of the global properties file but you should prefer using an existing configuration.repository.existingConfigMap. |
 | environment.CATALINA_OPTS | string | `nil` | Apache Tomcat command line options |
 | environment.JAVA_OPTS | string | `"-XX:MaxRAMPercentage=80"` | Set JVM options |
