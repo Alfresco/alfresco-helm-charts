@@ -67,7 +67,7 @@ spec:
           env:
             {{- range $key, $value := (omit .Values.environment "JAVA_OPTS") }}
             - name: {{ $key }}
-              value: {{ $value }}
+              value: {{ $value | quote }}
             {{- end }}
             - name: JAVA_OPTS
               value: >-
