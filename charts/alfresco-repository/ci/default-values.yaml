@@ -1,4 +1,13 @@
 db:
-  url: postgresql://pg-postgresql-acs.alfresco/alfresco
-  username: pguser
-  password: pgpass
+  url: postgresql://pg-postgresql-acs/alfresco
+  username: &pguser pguser
+  password: &pgpass pgpass
+postgresql:
+  enabled: true
+  fullnameOverride: pg-postgresql-acs
+  image:
+    tag: 14.4.0
+  auth:
+    username: *pguser
+    password: *pgpass
+    database: alfresco
