@@ -21,26 +21,6 @@ tests:
               name: RELEASE-NAME-alfresco-opts
         template: deployment.yaml
 
-#  - it: should have a volume and a volumeMount for license
-#    set:
-#      licenseSecret: somesecret
-#    asserts:
-#      - contains:
-#          path: spec.template.spec.volumes
-#          content:
-#            name: acs-license
-#            secret:
-#              secretName: somesecret
-#              defaultMode: 0400
-#        template: deployment.yaml
-#      - contains:
-#          path: spec.template.spec.containers[0].volumeMounts
-#          content:
-#            mountPath: >-
-#              /usr/local/tomcat/shared/classes/alfresco/extension/license/
-#            name: acs-license
-#        template: deployment.yaml
-
   - it: should have a volume and a volumeMount for alfresco-global.properties
     set:
       configuration:
