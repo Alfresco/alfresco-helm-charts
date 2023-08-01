@@ -48,12 +48,10 @@ spec:
           {{- include "component-security-context" .Values | indent 8 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          envFrom:
-            - configMapRef:
-                {{- $alfoptsCtx := dict "Values" (dict "nameOverride" "alfresco-opts") "Chart" .Chart "Release" .Release }}
-                name: {{ template "alfresco-repository.fullname" $alfoptsCtx }}
           {{- $dbsecretCtx := dict "Values" (dict "nameOverride" "secret-database") "Chart" .Chart "Release" .Release }}
           {{- $dbsecret := coalesce .Values.db.existingSecret.name (include "alfresco-repository.fullname" $dbsecretCtx) }}
+          {{- $mqsecretCtx := dict "Values" (dict "nameOverride" "secret-mq") "Chart" .Chart "Release" .Release }}
+          {{- $mqsecret := coalesce .Values.configuration.messageBroker.existingSecret.name (include "alfresco-repository.fullname" $mqsecretCtx) }}
           env:
             - name: DATABASE_USERNAME
               valueFrom:
@@ -72,6 +70,20 @@ spec:
              {{- list $repoSecretsEnv | toYaml | nindent 12 }}
            {{- end }}
           {{- end }}
+            - name: BROKER_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $mqsecret }}
+                  key: {{ .Values.configuration.messageBroker.existingSecret.keys.username }}
+            - name: BROKER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $mqsecret }}
+                  key: {{ .Values.configuration.messageBroker.existingSecret.keys.password }}
+          {{- $alfoptsCtx := dict "Values" (dict "nameOverride" "alfresco-opts") "Chart" .Chart "Release" .Release }}
+          envFrom:
+            - configMapRef:
+                name: {{ template "alfresco-repository.fullname" $alfoptsCtx }}
           {{- if .Values.command }}
           command:
             {{- toYaml .Values.command | nindent 12 }}

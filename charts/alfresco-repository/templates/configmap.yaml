@@ -21,6 +21,8 @@ data:
     -Dmetadata-keystore.metadata.algorithm=DESede
     -Dmetadata-keystore.password=mp6yc0UD9e
     -Dmetadata-keystore.metadata.password=oKIWzVdEdA
+    -Dmessaging.broker.username=${BROKER_USERNAME}
+    -Dmessaging.broker.password=${BROKER_PASSWORD}
     {{ .Values.environment.ALFRESCO_OPTS | default "" }}
   CATALINA_OPTS: >-
     $ALFRESCO_OPTS
