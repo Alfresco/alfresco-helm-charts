@@ -34,7 +34,7 @@ tests:
           name: myns/mycm
     asserts:
       - equal:
-          path: spec.template.spec.containers[0].env[2].valueFrom.configMapKeyRef.name
+          path: spec.template.spec.containers[0].env[0].valueFrom.configMapKeyRef.name
           value: myns/mycm
         template: deployment-connector-ms365.yaml
 
@@ -44,8 +44,20 @@ tests:
         test_data: 80
     asserts:
         - equal:
-            path: spec.template.spec.containers[0].env[0]
+            path: spec.template.spec.containers[0].env[2]
             value:
                 name: test_data
                 value: "80"
+          template: deployment-connector-ms365.yaml
+
+  - it: should set environment variables correctly with quotes
+    set:
+      environment:
+        JAVA_OPTS: "-Xmx 2GB"
+      asserts:
+        - equal:
+            path: spec.template.spec.containers[0].env[2]
+            value:
+                name: JAVA_OPTS
+                value: "-Xmx 2GB -Dalfresco.base-url=http://$(REPO_HOST):$(REPO_PORT)"
           template: deployment-connector-ms365.yaml
