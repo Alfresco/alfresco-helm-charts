@@ -74,7 +74,7 @@ configuration:
       name: null
       keys:
         # -- Key within the configmap  holding the message broker URL
-        url: null
+        url: BROKER_URL
 
 environment:
   # -- Alfresco java system properties. These properties must be provided as a

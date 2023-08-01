@@ -18,7 +18,7 @@ Alfresco content repository Helm chart
 | affinity | object | `{}` |  |
 | args | list | `[]` |  |
 | command | list | `[]` |  |
-| configuration.messageBroker.existingConfigMap.keys.url | string | `nil` | Key within the configmap  holding the message broker URL |
+| configuration.messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap  holding the message broker URL |
 | configuration.messageBroker.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing the meesage broker URL |
 | configuration.messageBroker.existingSecret | object | `{"keys":{"password":"BROKER_PASSWORD","username":"BROKER_USERNAME"},"name":null}` | Existing secret and their keys where to find the message broker username & password. |
 | configuration.messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` | Key within the secret holding the database password |
