@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "alfresco-repository.fullname" . }}
+  labels:
+    {{- include "alfresco-repository.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "alfresco-repository.selectorLabels" . | nindent 6 }}
+  strategy:
+    {{- toYaml (.Values.strategy | default .Values.global.strategy) | nindent 4 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "alfresco-repository.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "alfresco-repository.serviceAccountName" . }}
+      {{- include "component-pod-security-context" .Values | indent 4 }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      initContainers:
+        - name: wait-db-ready
+          image: busybox:1.35
+          imagePullPolicy: IfNotPresent
+          {{- include "component-security-context" dict | indent 8 }}
+          resources:
+            limits:
+              cpu: "0.25"
+              memory: "10Mi"
+          command:
+            - sh
+            - -c
+            - |
+              {{ $dbsocket := printf "%s:%s" (include "alfresco-repository.db.hostname" .Values.db ) (include "alfresco-repository.db.port" .Values.db) -}}
+              until nc -w1 {{ $dbsocket }}
+              do echo "waiting for {{  template "alfresco-repository.db.rdbms" .Values.db }} database on {{ $dbsocket }}"
+                sleep 2
+              done
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- include "component-security-context" .Values | indent 8 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                {{ $alfoptsCtx := dict "Values" (dict "nameOverride" "alfresco-opts") "Chart" .Chart "Release" .Release }}
+                name: {{ template "alfresco-repository.fullname" $alfoptsCtx }}
+          {{- $dbsecretCtx := dict "Values" (dict "nameOverride" "secret-database") "Chart" .Chart "Release" .Release }}
+          {{- $dbsecret := coalesce .Values.db.existingSecret.name (include "alfresco-repository.fullname" $dbsecretCtx) }}
+          env:
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $dbsecret }}
+                  key: {{ .Values.db.existingSecret.keys.username }}
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $dbsecret }}
+                  key: {{ .Values.db.existingSecret.keys.password }}
+          {{- if .Values.command }}
+          command:
+            {{- toYaml .Values.command | nindent 12 }}
+          args:
+            {{- toYaml .Values.args | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.image.port }}
+              protocol: TCP
+          startupProbe:
+            {{- toYaml .Values.startupProbe | nindent 12 }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: {{ .Values.persistence.data.mountPath }}
+              subPath: {{ .Values.persistence.data.subPath }}
+            {{- if .Values.configuration.repository.existingConfigMap }}
+            - name: global-properties
+              mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
+              subPath: alfresco-global.properties
+              readOnly: true
+            {{- end }}
+            {{- if .Values.extraVolumeMounts }}
+            {{- tpl (.Values.extraVolumeMounts | toYaml) . | nindent 12 }}
+            {{- end }}
+      volumes:
+        {{- include "data_volume" .Values | nindent 8 }}
+        {{- if .Values.configuration.repository.existingConfigMap }}
+        - name: global-properties
+          configMap:
+            name: {{ .Values.configuration.repository.existingConfigMap }}
+            defaultMode: 0400
+            items:
+              - key: alfresco-global.properties
+                path: alfresco-global.properties
+        {{- end }}
+        {{- if .Values.extraVolumes }}
+        {{- tpl (.Values.extraVolumes | toYaml) . | nindent 8 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

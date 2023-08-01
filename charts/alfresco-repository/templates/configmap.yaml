@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: >-
+    {{- $alfoptsCtx := dict "Values" (dict "nameOverride" "alfresco-opts") "Chart" .Chart "Release" .Release }}
+    {{ template "alfresco-repository.fullname" $alfoptsCtx }}
+  labels:
+    {{- include "alfresco-repository.labels" . | nindent 4 }}
+data:
+  ALFRESCO_OPTS: >-
+    -Ddeployment.method=HELM_CHART
+    -Ddb.url=jdbc:{{ .Values.db.url }}
+    -Ddb.username=${DATABASE_USERNAME}
+    -Ddb.password=${DATABASE_PASSWORD}
+    -Ddb.driver={{ include "alfresco-repository.db.driver" .Values.db }}
+    -Dencryption.keystore.type=JCEKS
+    -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
+    -Dencryption.keyAlgorithm=DESede
+    -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
+    -Dmetadata-keystore.aliases=metadata
+    -Dmetadata-keystore.metadata.algorithm=DESede
+    -Dmetadata-keystore.password=mp6yc0UD9e
+    -Dmetadata-keystore.metadata.password=oKIWzVdEdA
+    {{ .Values.environment.ALFRESCO_OPTS | default "" }}
+  CATALINA_OPTS: >-
+    $ALFRESCO_OPTS
+    {{ .Values.environment.CATALINA_OPTS | default "" }}
+  JAVA_OPTS: >-
+    {{ .Values.environment.JAVA_OPTS | default "" }}

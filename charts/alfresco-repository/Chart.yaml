@@ -1,0 +1,14 @@
+apiVersion: v2
+name: alfresco-repository
+description: Alfresco content repository Helm chart
+type: application
+version: 0.1.0-alpha.0
+appVersion: 23.1.0-A21
+dependencies:
+  - name: alfresco-common
+    version: 2.1.0-alpha.2
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+  - name: postgresql
+    version: 12.5.6
+    repository: oci://registry-1.docker.io/bitnamicharts
+    condition: postgresql.enabled

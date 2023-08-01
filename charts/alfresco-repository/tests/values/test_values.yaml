@@ -1,0 +1,2 @@
+db:
+  url: mysql://sandy:secret@myhost1:1111
