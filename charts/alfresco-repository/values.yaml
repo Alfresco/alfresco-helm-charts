@@ -43,9 +43,12 @@ configuration:
     # -- a configmap containing the "alfresco-global.properties" key populated
     # with actual Alfresco repository properties
     existingConfigMap: null
-    # -- Name of a pre-existing secret
-    # TODO: secret documentation
-    existingSecret: null
+    existingSecret:
+      # -- Name of a multi-purpose pre-existing secret
+      name: repository-secrets
+      keys:
+        # -- Key within the secret that contains the license file (MUST end with ".lic")
+        license: license.lic
 
 environment:
   # -- Alfresco java system properties. These properties must be provided as a

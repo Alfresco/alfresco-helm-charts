@@ -19,7 +19,8 @@ Alfresco content repository Helm chart
 | args | list | `[]` |  |
 | command | list | `[]` |  |
 | configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties |
-| configuration.repository.existingSecret | string | `nil` | Name of a pre-existing secret TODO: secret documentation |
+| configuration.repository.existingSecret.keys.license | string | `"license.lic"` | Key within the secret that contains the license file (MUST end with ".lic") |
+| configuration.repository.existingSecret.name | string | `"repository-secrets"` | Name of a multi-purpose pre-existing secret |
 | db.driver | string | `nil` | JDBC driver class of the driver if none is provided the it is guessed from the URL provided |
 | db.existingSecret | object | `{"keys":{"password":"DATABASE_PASSWORD","username":"DATABASE_USERNAME"},"name":null}` | Existing secret and their keys where to find the database username & password. |
 | db.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password |

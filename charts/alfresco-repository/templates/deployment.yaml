@@ -93,6 +93,9 @@ spec:
               subPath: alfresco-global.properties
               readOnly: true
             {{- end }}
+            - name: license
+              mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license
+              readOnly: true
             {{- if .Values.extraVolumeMounts }}
             {{- tpl (.Values.extraVolumeMounts | toYaml) . | nindent 12 }}
             {{- end }}
@@ -107,6 +110,11 @@ spec:
               - key: alfresco-global.properties
                 path: alfresco-global.properties
         {{- end }}
+        - name: license
+          secret:
+            secretName: {{ .Values.configuration.repository.existingSecret.name }}
+            optional: true
+            defaultMode: 0400
         {{- if .Values.extraVolumes }}
         {{- tpl (.Values.extraVolumes | toYaml) . | nindent 8 }}
         {{- end }}
