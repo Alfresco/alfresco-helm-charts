@@ -1,0 +1,56 @@
+---
+suite: test Alfresco repository ingress
+templates:
+  - ingress.yaml
+tests:
+  - it: should render with default security annotations
+    asserts:
+      - equal:
+          path: metadata.annotations['nginx.ingress.kubernetes.io/server-snippet']
+          value: |
+            location ~ ^/.*/(wc)?s(ervice)?/api/solr/.*$ {return 403;}
+            location ~ ^/.*/proxy/.*/api/solr/.*$ {return 403;}
+            location ~ ^/.*/-default-/proxy/.*/api/.*$ {return 403;}
+            location ~ ^/.*/s/prometheus$ {return 403;}
+        template: ingress.yaml
+      - equal:
+          path: spec.ingressClassName
+          value: nginx
+        template: ingress.yaml
+
+  - it: should sanitize ingress
+    capabilities:
+      majorVersion: 1
+      minorVersion: 17
+    set:
+      ingress:
+        annotations:
+          kubernetes.io/ingress.class: myfancyClass
+          nginx.ingress.kubernetes.io/server-snippet: listen 6666;
+    asserts:
+      - notMatchRegex:
+          path: metadata.annotations['nginx.ingress.kubernetes.io/server-snippet']
+          pattern: listen 6666;
+        template: ingress.yaml
+      - equal:
+          path: metadata.annotations['kubernetes.io/ingress.class']
+          value: nginx
+        template: ingress.yaml
+
+  - it: should sanitize ingress
+    capabilities:
+      majorVersion: 1
+      minorVersion: 19
+    set:
+      ingress:
+        annotations:
+          nginx.ingress.kubernetes.io/server-snippet: listen 6666;
+    asserts:
+      - notMatchRegex:
+          path: metadata.annotations['nginx.ingress.kubernetes.io/server-snippet']
+          pattern: listen 6666;
+        template: ingress.yaml
+      - equal:
+          path: spec.ingressClassName
+          value: nginx
+        template: ingress.yaml

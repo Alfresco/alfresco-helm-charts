@@ -3,6 +3,7 @@
 {{- $svcPort := .Values.service.port -}}
 {{/*
 We only support nginx ingress for now: https://alfresco.atlassian.net/browse/OPSEXP-131
+so forcibly set the ingress.class annotation to nginx for pre 1.18 k8s
 */}}
 {{- if not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   {{- $_ := unset .Values.ingress.annotations "kubernetes.io/ingress.class" }}
@@ -30,6 +31,7 @@ spec:
   {{- end }}
 {{/*
 We only support nginx ingress for now: https://alfresco.atlassian.net/browse/OPSEXP-131
+so forcibly set the ingressClassName to nginx for post 1.18 k8s
 */}}
   {{- if (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
   ingressClassName: nginx
