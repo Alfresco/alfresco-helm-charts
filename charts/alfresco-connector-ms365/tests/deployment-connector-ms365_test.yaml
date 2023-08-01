@@ -51,11 +51,13 @@ tests:
           template: deployment-connector-ms365.yaml
 
   - it: should set environment variables correctly with quotes
-    values: *testvalues
-    asserts:
+    set:
+      environment:
+        JAVA_OPTS: "-Xmx 2GB"
+      asserts:
         - equal:
             path: spec.template.spec.containers[0].env[2]
             value:
                 name: JAVA_OPTS
-                value: "-Dalfresco.base-url=http://$(REPO_HOST):$(REPO_PORT)"
+                value: "-Xmx 2GB -Dalfresco.base-url=http://$(REPO_HOST):$(REPO_PORT)"
           template: deployment-connector-ms365.yaml
