@@ -110,6 +110,9 @@ spec:
             {{- if .Values.extraVolumeMounts }}
             {{- tpl (.Values.extraVolumeMounts | toYaml) . | nindent 12 }}
             {{- end }}
+        {{- range .Values.extraSideContainers }}
+          {{ tpl (toYaml (list .)) $ | nindent 8 }}
+        {{- end }}
       volumes:
         {{- include "data_volume" .Values | nindent 8 }}
         {{- if .Values.configuration.repository.existingConfigMap }}
