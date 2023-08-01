@@ -2,6 +2,9 @@ db:
   url: postgresql://pg-postgresql-acs/alfresco
   username: &pguser pguser
   password: &pgpass pgpass
+configuration:
+  messageBroker:
+    url: failover:(tcp://localhost:61616)
 postgresql:
   enabled: true
   fullnameOverride: pg-postgresql-acs

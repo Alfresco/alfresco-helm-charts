@@ -18,6 +18,15 @@ Alfresco content repository Helm chart
 | affinity | object | `{}` |  |
 | args | list | `[]` |  |
 | command | list | `[]` |  |
+| configuration.messageBroker.existingConfigMap.keys.url | string | `nil` | Key within the configmap  holding the message broker URL |
+| configuration.messageBroker.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing the meesage broker URL |
+| configuration.messageBroker.existingSecret | object | `{"keys":{"password":"BROKER_PASSWORD","username":"BROKER_USERNAME"},"name":null}` | Existing secret and their keys where to find the message broker username & password. |
+| configuration.messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` | Key within the secret holding the database password |
+| configuration.messageBroker.existingSecret.keys.username | string | `"BROKER_USERNAME"` | Key within the secret holding the database username |
+| configuration.messageBroker.existingSecret.name | string | `nil` | Name of a pre-existing secret containing database credentials |
+| configuration.messageBroker.password | string | `nil` | Password to authenticate to the message broker |
+| configuration.messageBroker.url | string | `nil` | Message Broker URL as per the Failover transport spec. See https://activemq.apache.org/failover-transport-reference.html |
+| configuration.messageBroker.username | string | `nil` | Username to authenticate to the message broker |
 | configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties |
 | configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repo as env vars. It's also used to pass the Alfresco license which will be mounted as a file when the secret as the `purpose` value set to `acs-license`. Other secrets will be used as env variables. |
 | db.driver | string | `nil` | JDBC driver class of the driver if none is provided the it is guessed from the URL provided |
