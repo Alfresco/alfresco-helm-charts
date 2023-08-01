@@ -77,11 +77,13 @@ spec:
                 secretKeyRef:
                   name: {{ $mqsecret }}
                   key: {{ .Values.configuration.messageBroker.existingSecret.keys.username }}
+                  optional: true
             - name: BROKER_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ $mqsecret }}
                   key: {{ .Values.configuration.messageBroker.existingSecret.keys.password }}
+                  optional: true
             - name: BROKER_URL
               valueFrom:
                 configMapKeyRef:
