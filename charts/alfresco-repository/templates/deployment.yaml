@@ -89,10 +89,10 @@ spec:
                 configMapKeyRef:
                   name: {{ $mqconfig }}
                   key: {{ .Values.configuration.messageBroker.existingConfigMap.keys.url }}
-          {{- $alfoptsCtx := dict "Values" (dict "nameOverride" "alfresco-opts") "Chart" .Chart "Release" .Release }}
+          {{- $optsCtx := dict "Values" (dict "nameOverride" "alfresco-opts") "Chart" .Chart "Release" .Release }}
           envFrom:
             - configMapRef:
-                name: {{ template "alfresco-repository.fullname" $alfoptsCtx }}
+                name: {{ template "alfresco-repository.fullname" $optsCtx }}
           {{- if .Values.command }}
           command:
             {{- toYaml .Values.command | nindent 12 }}

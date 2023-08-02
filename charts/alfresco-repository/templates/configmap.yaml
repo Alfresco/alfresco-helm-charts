@@ -2,12 +2,12 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: >-
-    {{- $alfoptsCtx := dict "Values" (dict "nameOverride" "alfresco-opts") "Chart" .Chart "Release" .Release }}
-    {{ template "alfresco-repository.fullname" $alfoptsCtx }}
+    {{- $optsCtx := dict "Values" (dict "nameOverride" "alfresco-opts") "Chart" .Chart "Release" .Release }}
+    {{ template "alfresco-repository.fullname" $optsCtx }}
   labels:
     {{- include "alfresco-repository.labels" . | nindent 4 }}
 data:
-  ALFRESCO_OPTS: >-
+  CATALINA_OPTS: >-
     -Ddeployment.method=HELM_CHART
     -Ddb.url=jdbc:{{ .Values.db.url }}
     -Ddb.username=${DATABASE_USERNAME}
@@ -21,9 +21,6 @@ data:
     -Dmetadata-keystore.metadata.algorithm=DESede
     -Dmetadata-keystore.password=mp6yc0UD9e
     -Dmetadata-keystore.metadata.password=oKIWzVdEdA
-    {{ .Values.environment.ALFRESCO_OPTS | default "" }}
-  CATALINA_OPTS: >-
-    $ALFRESCO_OPTS
     -Dmessaging.broker.url="$BROKER_URL"
     -Dmessaging.broker.username="$BROKER_USERNAME"
     -Dmessaging.broker.password="$BROKER_PASSWORD"

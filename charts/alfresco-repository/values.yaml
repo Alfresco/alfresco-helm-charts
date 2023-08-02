@@ -78,12 +78,10 @@ configuration:
         url: BROKER_URL
 
 environment:
-  # -- Alfresco java system properties. These properties must be provided as a
-  # string following the pattern "-Dproperty=value". They override the content
-  # of the global properties file but you should prefer using an existing
-  # configuration.repository.existingConfigMap.
-  ALFRESCO_OPTS: null
-  # -- Apache Tomcat command line options
+  # -- Java or Tomcat system properties. These properties must be provided as a
+  # single string following the pattern "-Dproperty=value -Dmoreprop=morevalue".
+  # They override the content of the global properties file but you should
+  # prefer using an existing configuration.repository.existingConfigMap.
   CATALINA_OPTS: null
   # -- Set JVM options
   JAVA_OPTS: >-
