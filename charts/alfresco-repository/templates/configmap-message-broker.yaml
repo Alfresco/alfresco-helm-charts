@@ -10,6 +10,8 @@ metadata:
 data:
   BROKER_URL: >-
     {{- with .Values.configuration.messageBroker }}
-    {{ required "You must either provide a valid Message broker URL or use an existingConfigMap.name with that URL" .url }}
+      {{- $reqmsg := "You must either provide a valid Message broker URL or use an existingConfigMap.name with that URL" }}
+      {{- $mqurl := required $reqmsg .url }}
+      {{- hasPrefix "failover:(" $mqurl | ternary $mqurl (printf "failover:(%s)" $mqurl) | nindent 4 }}
     {{- end }}
 {{- end }}

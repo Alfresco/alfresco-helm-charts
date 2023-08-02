@@ -21,12 +21,12 @@ data:
     -Dmetadata-keystore.metadata.algorithm=DESede
     -Dmetadata-keystore.password=mp6yc0UD9e
     -Dmetadata-keystore.metadata.password=oKIWzVdEdA
-    -Dmessaging.broker.url=$(BROKER_URL)
-    -Dmessaging.broker.username=${BROKER_USERNAME}
-    -Dmessaging.broker.password=${BROKER_PASSWORD}
     {{ .Values.environment.ALFRESCO_OPTS | default "" }}
   CATALINA_OPTS: >-
     $ALFRESCO_OPTS
+    -Dmessaging.broker.url="$BROKER_URL"
+    -Dmessaging.broker.username="$BROKER_USERNAME"
+    -Dmessaging.broker.password="$BROKER_PASSWORD"
     {{ .Values.environment.CATALINA_OPTS | default "" }}
   JAVA_OPTS: >-
     {{ .Values.environment.JAVA_OPTS | default "" }}

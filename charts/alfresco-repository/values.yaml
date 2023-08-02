@@ -52,8 +52,7 @@ configuration:
         key: license.lic
         purpose: acs-license
   messageBroker:
-    # -- Message Broker URL as per the Failover transport spec. See
-    # https://activemq.apache.org/failover-transport-reference.html
+    # -- Message Broker URL
     url: null
     # -- Username to authenticate to the message broker
     username: null
@@ -73,7 +72,9 @@ configuration:
       # -- Name of a pre-existing configmap containing the meesage broker URL
       name: null
       keys:
-        # -- Key within the configmap  holding the message broker URL
+        # -- Key within the configmap  holding the message broker URL. It MUST
+        # be a failover URL as per the spec below:
+        # https://activemq.apache.org/failover-transport-reference.html
         url: BROKER_URL
 
 environment:
