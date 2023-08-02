@@ -119,3 +119,50 @@ tests:
               volumeID: "whatever"
               fsType: ext4
         template: deployment.yaml
+
+  - it: should have default license volume
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content: &acsLicenseVol
+            name: acs-license
+            secret:
+              defaultMode: 0400
+              items:
+              - key: license.lic
+                path: license.lic
+              optional: true
+              secretName: repository-secrets
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content: &acsLicenseMount
+            name: acs-license
+            mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license
+            readOnly: true
+        template: deployment.yaml
+  - it: should not have any license volume but vars instead
+    set:
+      configuration:
+        repository:
+          existingSecrets:
+            - name: mysecret
+              key: MYSECRETVAR
+    asserts:
+      - notContains:
+          path: spec.template.spec.volumes
+          content: *acsLicenseVol
+        template: deployment.yaml
+      - notContains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content: *acsLicenseMount
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MYSECRETVAR
+            valueFrom:
+              secretKeyRef:
+                key: MYSECRETVAR
+                name: mysecret
+        template: deployment.yaml
