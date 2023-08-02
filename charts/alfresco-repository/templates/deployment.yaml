@@ -65,6 +65,13 @@ spec:
                 secretKeyRef:
                   name: {{ $dbsecret }}
                   key: {{ .Values.db.existingSecret.keys.password }}
+          {{- range .Values.configuration.repository.existingSecrets }}
+           {{- if not (eq "acs-license" .purpose) }}
+             {{- $repoSecretsKeyRef := dict "name" .name "key" .key }}
+             {{- $repoSecretsEnv:= dict "name" .key "valueFrom" (dict "secretKeyRef" $repoSecretsKeyRef) }}
+             {{- list $repoSecretsEnv | toYaml | nindent 12 }}
+           {{- end }}
+          {{- end }}
           {{- if .Values.command }}
           command:
             {{- toYaml .Values.command | nindent 12 }}
