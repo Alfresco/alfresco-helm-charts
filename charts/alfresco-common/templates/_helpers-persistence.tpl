@@ -1,4 +1,10 @@
-{{- define "data_volume" -}}
+{{/*
+Provide a PVC based on service and persistence values
+
+Usage: include "alfresco-common.data_volume" $
+
+*/}}
+{{- define "alfresco-comon.data_volume" -}}
 - name: data
 {{- $svc_name := .service.name }}
 {{- with .persistence }}
@@ -14,7 +20,17 @@
 {{- end }}
 {{- end -}}
 
-{{- define "component_pvc" -}}
+{{- define "data_volume" -}}
+{{- template "alfresco-common.data_volume" . }}
+{{- end -}}
+
+{{/*
+Provide a PVC based on service and persistence values
+
+Usage: include "alfresco-common.component_pvc" $
+
+*/}}
+{{- define "alfresco-common.component_pvc" -}}
 {{ $svc_name := .service.name }}
 {{- with .persistence }}
 {{- $sc_name := .storageClass | default "default" -}}
@@ -38,4 +54,8 @@ spec:
     requests:
       storage: {{ .baseSize | default "20Gi" | quote }}
 {{- end }}
+{{- end -}}
+
+{{- define "component_pvc" -}}
+{{- template "alfresco-common.component_pvc" . }}
 {{- end -}}
