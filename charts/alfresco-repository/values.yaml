@@ -58,15 +58,13 @@ configuration:
     username: null
     # -- Password to authenticate to the message broker
     password: null
-    # -- Existing secret and their keys where to find the message broker
-    # username & password.
     existingSecret:
-      # -- Name of a pre-existing secret containing database credentials
+      # -- Name of a pre-existing secret containing message broker credentials
       name: null
       keys:
-        # -- Key within the secret holding the database username
+        # -- Key within the secret holding the message broker username
         username: BROKER_USERNAME
-        # -- Key within the secret holding the database password
+        # -- Key within the secret holding the message broker password
         password: BROKER_PASSWORD
     existingConfigMap:
       # -- Name of a pre-existing configmap containing the meesage broker URL
@@ -81,7 +79,7 @@ environment:
   # -- Java or Tomcat system properties. These properties must be provided as a
   # single string following the pattern "-Dproperty=value -Dmoreprop=morevalue".
   # They override the content of the global properties file but you should
-  # prefer using an existing configuration.repository.existingConfigMap.
+  # prefer providing configuration.repository.existingConfigMap.
   CATALINA_OPTS: null
   # -- Set JVM options
   JAVA_OPTS: >-

@@ -20,10 +20,9 @@ Alfresco content repository Helm chart
 | command | list | `[]` |  |
 | configuration.messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap  holding the message broker URL. It MUST be a failover URL as per the spec below: https://activemq.apache.org/failover-transport-reference.html |
 | configuration.messageBroker.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing the meesage broker URL |
-| configuration.messageBroker.existingSecret | object | `{"keys":{"password":"BROKER_PASSWORD","username":"BROKER_USERNAME"},"name":null}` | Existing secret and their keys where to find the message broker username & password. |
-| configuration.messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` | Key within the secret holding the database password |
-| configuration.messageBroker.existingSecret.keys.username | string | `"BROKER_USERNAME"` | Key within the secret holding the database username |
-| configuration.messageBroker.existingSecret.name | string | `nil` | Name of a pre-existing secret containing database credentials |
+| configuration.messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` | Key within the secret holding the message broker password |
+| configuration.messageBroker.existingSecret.keys.username | string | `"BROKER_USERNAME"` | Key within the secret holding the message broker username |
+| configuration.messageBroker.existingSecret.name | string | `nil` | Name of a pre-existing secret containing message broker credentials |
 | configuration.messageBroker.password | string | `nil` | Password to authenticate to the message broker |
 | configuration.messageBroker.url | string | `nil` | Message Broker URL |
 | configuration.messageBroker.username | string | `nil` | Username to authenticate to the message broker |
@@ -37,7 +36,7 @@ Alfresco content repository Helm chart
 | db.password | string | `nil` | Password to authentication to the repository database |
 | db.url | string | `nil` | JDBC url of the database WITHOUT the "jdbc:" prefix This is a mandatory parameter |
 | db.username | string | `nil` | Username to authentication to the repository database |
-| environment.CATALINA_OPTS | string | `nil` | Java or Tomcat system properties. These properties must be provided as a single string following the pattern "-Dproperty=value -Dmoreprop=morevalue". They override the content of the global properties file but you should prefer using an existing configuration.repository.existingConfigMap. |
+| environment.CATALINA_OPTS | string | `nil` | Java or Tomcat system properties. These properties must be provided as a single string following the pattern "-Dproperty=value -Dmoreprop=morevalue". They override the content of the global properties file but you should prefer providing configuration.repository.existingConfigMap. |
 | environment.JAVA_OPTS | string | `"-XX:MaxRAMPercentage=80"` | Set JVM options |
 | extraInitContainers | list | `[]` |  |
 | extraSideContainers | list | `[]` |  |
