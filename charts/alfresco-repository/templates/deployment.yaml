@@ -175,6 +175,7 @@ spec:
         {{- if .Values.extraVolumes }}
         {{- tpl (.Values.extraVolumes | toYaml) . | nindent 8 }}
         {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | indent 8 }}
