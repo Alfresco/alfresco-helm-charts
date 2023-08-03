@@ -16,7 +16,7 @@ strategy:
     maxSurge: 1
     maxUnavailable: 0
 
-# -- How long to wait for tomcat to complete shutdown before kiling it
+# -- How long to wait for tomcat to complete shutdown before killing it
 terminationGracePeriod: 60
 
 configuration:

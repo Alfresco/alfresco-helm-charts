@@ -101,7 +101,7 @@ Alfresco content repository Helm chart
 | strategy.rollingUpdate.maxSurge | int | `1` |  |
 | strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | strategy.type | string | `"RollingUpdate"` |  |
-| terminationGracePeriod | int | `60` | How long to wait for tomcat to complete shutdown before kiling it |
+| terminationGracePeriod | int | `60` | How long to wait for tomcat to complete shutdown before killing it |
 | tolerations | list | `[]` |  |
 
 ----------------------------------------------
