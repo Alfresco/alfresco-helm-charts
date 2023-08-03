@@ -8,11 +8,12 @@ metadata:
     {{- include "alfresco-repository.labels" . | nindent 4 }}
 data:
   CATALINA_OPTS: >-
+    {{- with .Values.configuration }}
     -Ddeployment.method=HELM_CHART
-    -Ddb.url=jdbc:{{ .Values.configuration.db.url }}
+    -Ddb.url=jdbc:{{ .db.url }}
     -Ddb.username=${DATABASE_USERNAME}
     -Ddb.password=${DATABASE_PASSWORD}
-    -Ddb.driver={{ include "alfresco-repository.db.driver" .Values.configuration.db }}
+    -Ddb.driver={{ include "alfresco-repository.db.driver" .db }}
     -Dencryption.keystore.type=JCEKS
     -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
     -Dencryption.keyAlgorithm=DESede
@@ -24,6 +25,7 @@ data:
     -Dmessaging.broker.url="$BROKER_URL"
     -Dmessaging.broker.username="$BROKER_USERNAME"
     -Dmessaging.broker.password="$BROKER_PASSWORD"
-    {{ .Values.environment.CATALINA_OPTS | default "" }}
+    {{- end }}
+    {{- .Values.environment.CATALINA_OPTS | default "" }}
   JAVA_OPTS: >-
     {{ .Values.environment.JAVA_OPTS | default "" }}
