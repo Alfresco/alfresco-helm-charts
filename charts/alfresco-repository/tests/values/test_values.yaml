@@ -1,5 +1,5 @@
-db:
-  url: mysql://sandy:secret@myhost1:1111
 configuration:
   messageBroker:
     url: failover:(tcp://localhost:61616)
+  db:
+    url: mysql://sandy:secret@myhost1:1111

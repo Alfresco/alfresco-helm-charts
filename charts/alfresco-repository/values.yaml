@@ -16,27 +16,8 @@ strategy:
     maxSurge: 1
     maxUnavailable: 0
 
-db:
-  # -- JDBC url of the database WITHOUT the "jdbc:" prefix
-  # This is a mandatory parameter
-  url: null
-  # -- JDBC driver class of the driver if none is provided the it is guessed
-  # from the URL provided
-  driver: null
-  # -- Username to authentication to the repository database
-  username: null
-  # -- Password to authentication to the repository database
-  password: null
-  # -- Existing secret and their keys where to find the database username &
-  # password.
-  existingSecret:
-    # -- Name of a pre-existing secret containing database credentials
-    name: null
-    keys:
-      # -- Key within the secret holding the database username
-      username: DATABASE_USERNAME
-      # -- Key within the secret holding the database password
-      password: DATABASE_PASSWORD
+# -- How long to wait for tomcat to complete shutdown before killing it
+terminationGracePeriod: 60
 
 configuration:
   repository:
@@ -51,6 +32,27 @@ configuration:
       - name: repository-secrets
         key: license.lic
         purpose: acs-license
+  db:
+    # -- JDBC url of the database WITHOUT the "jdbc:" prefix
+    # This is a mandatory parameter
+    url: null
+    # -- JDBC driver class of the driver if none is provided the it is guessed
+    # from the URL provided
+    driver: null
+    # -- Username to authentication to the repository database
+    username: null
+    # -- Password to authentication to the repository database
+    password: null
+    # -- Existing secret and their keys where to find the database username &
+    # password.
+    existingSecret:
+      # -- Name of a pre-existing secret containing database credentials
+      name: null
+      keys:
+        # -- Key within the secret holding the database username
+        username: DATABASE_USERNAME
+        # -- Key within the secret holding the database password
+        password: DATABASE_PASSWORD
   messageBroker:
     # -- Message Broker URL
     url: null
@@ -74,6 +76,10 @@ configuration:
         # be a failover URL as per the spec below:
         # https://activemq.apache.org/failover-transport-reference.html
         url: BROKER_URL
+  hz:
+    # -- Hazelcast listener port Only change it if you use a custom image where
+    # the port has been changed from default
+    port: 5701
 
 environment:
   # -- Java or Tomcat system properties. These properties must be provided as a

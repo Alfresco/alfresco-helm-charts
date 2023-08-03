@@ -13,8 +13,10 @@ spec:
     {{- toYaml (.Values.strategy | default .Values.global.strategy) | nindent 4 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        {{- include "alfresco-repository.secret-checksum" (dict "release" $.Release.Name "context" . "configKey" "db") | indent 8 }}
+        {{- include "alfresco-repository.secret-checksum" (dict "release" $.Release.Name "context" . "configKey" "messageBroker") | indent 8 }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -38,9 +40,16 @@ spec:
             - sh
             - -c
             - |
-              {{ $dbsocket := printf "%s:%s" (include "alfresco-repository.db.hostname" .Values.db ) (include "alfresco-repository.db.port" .Values.db) -}}
-              until nc -w1 {{ $dbsocket }}
-              do echo "waiting for {{  template "alfresco-repository.db.rdbms" .Values.db }} database on {{ $dbsocket }}"
+              {{- $dbhost := "" }}
+              {{- $dbport := "" }}
+              {{- $dbrdbms := "" }}
+              {{- with .Values.configuration.db }}
+              {{- $dbhost = include "alfresco-repository.db.hostname" . }}
+              {{- $dbport = include "alfresco-repository.db.port" . }}
+              {{- $dbrdbms = include "alfresco-repository.db.rdbms" . }}
+              {{- end }}
+              until nc -w1 {{ $dbhost }}:{{ $dbport }}
+              do echo 'waiting for {{ $dbrdbms }} database on {{ $dbhost }}:{{ $dbport }}'
                 sleep 2
               done
       containers:
@@ -48,23 +57,31 @@ spec:
           {{- include "component-security-context" .Values | indent 8 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- $dbsecretCtx := dict "Values" (dict "nameOverride" "secret-database") "Chart" .Chart "Release" .Release }}
-          {{- $dbsecret := coalesce .Values.db.existingSecret.name (include "alfresco-repository.fullname" $dbsecretCtx) }}
-          {{- $mqsecretCtx := dict "Values" (dict "nameOverride" "secret-mq") "Chart" .Chart "Release" .Release }}
-          {{- $mqsecret := coalesce .Values.configuration.messageBroker.existingSecret.name (include "alfresco-repository.fullname" $mqsecretCtx) }}
-          {{- $mqconfigCtx := dict "Values" (dict "nameOverride" "configmap-mq") "Chart" .Chart "Release" .Release }}
-          {{- $mqconfig := coalesce .Values.configuration.messageBroker.existingConfigMap.name (include "alfresco-repository.fullname" $mqconfigCtx) }}
+          {{- $dbsecretCtx := dict }}
+          {{- $dbsecret := "" }}
+          {{- $mqsecretCtx := dict }}
+          {{- $mqsecret := "" }}
+          {{- $mqconfigCtx := dict }}
+          {{- $mqconfig := "" }}
+          {{- with .Values.configuration }}
+            {{- $dbsecretCtx = dict "Values" (dict "nameOverride" "secret-database") "Chart" $.Chart "Release" $.Release }}
+            {{- $dbsecret = coalesce .db.existingSecret.name (include "alfresco-repository.fullname" $dbsecretCtx) }}
+            {{- $mqsecretCtx = dict "Values" (dict "nameOverride" "secret-mq") "Chart" $.Chart "Release" $.Release }}
+            {{- $mqsecret = coalesce .messageBroker.existingSecret.name (include "alfresco-repository.fullname" $mqsecretCtx) }}
+            {{- $mqconfigCtx = dict "Values" (dict "nameOverride" "configmap-mq") "Chart" $.Chart "Release" $.Release }}
+            {{- $mqconfig = coalesce .messageBroker.existingConfigMap.name (include "alfresco-repository.fullname" $mqconfigCtx) }}
+          {{- end }}
           env:
             - name: DATABASE_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: {{ $dbsecret }}
-                  key: {{ .Values.db.existingSecret.keys.username }}
+                  key: {{ .Values.configuration.db.existingSecret.keys.username }}
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ $dbsecret }}
-                  key: {{ .Values.db.existingSecret.keys.password }}
+                  key: {{ .Values.configuration.db.existingSecret.keys.password }}
           {{- range .Values.configuration.repository.existingSecrets }}
            {{- if not (eq "acs-license" .purpose) }}
              {{- $repoSecretsKeyRef := dict "name" .name "key" .key }}
@@ -102,6 +119,9 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.image.port }}
+              protocol: TCP
+            - name: hazelcast
+              containerPort: {{ .Values.configuration.hz.port }}
               protocol: TCP
           startupProbe:
             {{- toYaml .Values.startupProbe | nindent 12 }}
@@ -155,6 +175,7 @@ spec:
         {{- if .Values.extraVolumes }}
         {{- tpl (.Values.extraVolumes | toYaml) . | nindent 8 }}
         {{- end }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | indent 8 }}
