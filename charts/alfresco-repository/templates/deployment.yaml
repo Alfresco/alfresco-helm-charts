@@ -13,8 +13,15 @@ spec:
     {{- toYaml (.Values.strategy | default .Values.global.strategy) | nindent 4 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        {{- with .Values.db }}
+        checksum.config.alfresco.org/db-existing: >-
+          {{- $defaultLookup := (dict "existingSecret" (dict "keys" dict)) }}
+          {{- $lookup := ((lookup "v1" "Secret" $.Release.Namespace (.existingSecret.name | default "")).data | default $defaultLookup) }}
+          {{- pick $lookup .existingSecret.keys.username .existingSecret.keys.password | toJson | sha256sum | nindent 10 }}
+        checksum.config.alfresco.org/db-values: {{ omit . "existingSecret" | toJson | sha256sum }}
+        {{- end }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -38,9 +45,14 @@ spec:
             - sh
             - -c
             - |
-              {{- $dbhost := include "alfresco-repository.db.hostname" .Values.db }}
-              {{- $dbport := include "alfresco-repository.db.port" .Values.db }}
-              {{- $dbrdbms := include "alfresco-repository.db.rdbms" .Values.db }}
+              {{- $dbhost := "" }}
+              {{- $dbport := "" }}
+              {{- $dbrdbms := "" }}
+              {{- with .Values.db }}
+              {{- $dbhost = include "alfresco-repository.db.hostname" . }}
+              {{- $dbport = include "alfresco-repository.db.port" . }}
+              {{- $dbrdbms = include "alfresco-repository.db.rdbms" . }}
+              {{- end }}
               until nc -w1 {{ $dbhost }}:{{ $dbport }}
               do echo 'waiting for {{ $dbrdbms }} database on {{ $dbhost }}:{{ $dbport }}'
                 sleep 2
