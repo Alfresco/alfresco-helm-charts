@@ -96,3 +96,62 @@ Usage: include "alfresco-common.external.scheme" $
 {{- $parsed_url := urlParse (index (include "alfresco-common.known.urls" . | fromJson) "known_urls" | first) }}
 {{- $parsed_url.scheme }}
 {{- end -}}
+
+{{/*
+Pick the URL scheme
+
+Usage: include "alfresco-common.url.scheme" "URL"
+
+*/}}
+{{- define "alfresco-common.url.scheme" -}}
+{{- $parsed_url := urlParse . }}
+{{- $parsed_url.scheme | default "http" }}
+{{- end -}}
+
+{{/*
+Pick the URL hostname
+
+Usage: include "alfresco-common.url.host" "URL"
+
+*/}}
+{{- define "alfresco-common.url.host" -}}
+{{- $parsed_url := urlParse . }}
+{{- $parsed_url.hostname }}
+{{- end -}}
+
+{{/*
+Pick the URL port
+
+Usage: include "alfresco-common.url.port" "URL"
+
+*/}}
+{{- define "alfresco-common.url.port" -}}
+{{- $parsed_url := urlParse . }}
+{{- if gt ($parsed_url.host | splitList ":" | len) 1 }}
+  {{- $parsed_url.host | splitList ":" | last }}
+{{- else }}
+  {{- eq (include "alfresco-common.url.scheme" .) "https" | ternary 443 80 }}
+{{- end }}
+{{- end -}}
+
+{{/*
+Pick the URL path
+
+Usage: include "alfresco-common.url.path" "URL"
+
+*/}}
+{{- define "alfresco-common.url.path" -}}
+{{- $parsed_url := urlParse . }}
+{{- $parsed_url.path }}
+{{- end -}}
+
+{{/*
+Pick the URL query params
+
+Usage: include "alfresco-common.url.query" "URL"
+
+*/}}
+{{- define "alfresco-common.url.query" -}}
+{{- $parsed_url := urlParse . }}
+{{- $parsed_url.query }}
+{{- end -}}
