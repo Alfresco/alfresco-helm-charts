@@ -37,6 +37,17 @@ Alfresco content repository Helm chart
 | configuration.messageBroker.username | string | `nil` | Username to authenticate to the message broker |
 | configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties |
 | configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repo as env vars. It's also used to pass the Alfresco license which will be mounted as a file when the secret as the `purpose` value set to `acs-license`. Other secrets will be used as env variables. |
+| configuration.search.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap  holding the search service URL. |
+| configuration.search.existingConfigMap.name | string | `nil` | Optional configmap containing the search service URL |
+| configuration.search.existingSecret.keys.password | string | `"SEARCH_PASSWORD"` | Key within the secret holding the search service password |
+| configuration.search.existingSecret.keys.shared-secret | string | `"SEARCH_SHARED_SECRET"` | Key within the secret holding the index shared secret |
+| configuration.search.existingSecret.keys.username | string | `"SEARCH_USERNAME"` | Key within the secret holding the search service username |
+| configuration.search.existingSecret.name | string | `nil` | Optional secret containing search service credentials |
+| configuration.search.flavor | string | `"none"` | Can be either `solr`, `elasticsearch` or `none` |
+| configuration.search.password | string | `nil` | Password to authenticate to the search service |
+| configuration.search.solr-secret | string | `nil` | Solr inter process shared secret |
+| configuration.search.url | string | `nil` | URL where the search service can be found |
+| configuration.search.username | string | `nil` | Username to authenticate to the search service |
 | environment.CATALINA_OPTS | string | `nil` | Java or Tomcat system properties. These properties must be provided as a single string following the pattern "-Dproperty=value -Dmoreprop=morevalue". They override the content of the global properties file but you should prefer providing configuration.repository.existingConfigMap. |
 | environment.JAVA_OPTS | string | `"-XX:MaxRAMPercentage=80"` | Set JVM options |
 | extraInitContainers | list | `[]` |  |

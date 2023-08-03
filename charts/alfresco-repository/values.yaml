@@ -80,6 +80,33 @@ configuration:
     # -- Hazelcast listener port Only change it if you use a custom image where
     # the port has been changed from default
     port: 5701
+  search:
+    # -- Can be either `solr`, `elasticsearch` or `none`
+    flavor: none
+    # -- URL where the search service can be found
+    url: null
+    # -- Username to authenticate to the search service
+    username: null
+    # -- Password to authenticate to the search service
+    password: null
+    # -- Solr inter process shared secret
+    solr-secret: null
+    existingSecret:
+      # -- Optional secret containing search service credentials
+      name: null
+      keys:
+        # -- Key within the secret holding the search service username
+        username: SEARCH_USERNAME
+        # -- Key within the secret holding the search service password
+        password: SEARCH_PASSWORD
+        # -- Key within the secret holding the index shared secret
+        shared-secret: SEARCH_SHARED_SECRET
+    existingConfigMap:
+      # -- Optional configmap containing the search service URL
+      name: null
+      keys:
+        # -- Key within the configmap  holding the search service URL.
+        url: SEARCH_URL
 
 environment:
   # -- Java or Tomcat system properties. These properties must be provided as a
