@@ -14,14 +14,8 @@ spec:
   template:
     metadata:
       annotations:
-        {{- with .Values.configuration.db }}
-        checksum.config.alfresco.org/db-existing: >-
-          {{- $defaultLookup := (dict "existingSecret" (dict "keys" dict)) }}
-          {{- $lookup := ((lookup "v1" "Secret" $.Release.Namespace (.existingSecret.name | default "")).data | default $defaultLookup) }}
-          {{- pick $lookup .existingSecret.keys.username .existingSecret.keys.password | toJson | sha256sum | nindent 10 }}
-        checksum.config.alfresco.org/db-values: {{ omit . "existingSecret" | toJson | sha256sum }}
-        {{- end }}
-        {{- include "alfresco-repository.secret-checksum" (dict "release" $.Release.Name "context" . "configKey" "messageBroker") | indent 8}}
+        {{- include "alfresco-repository.secret-checksum" (dict "release" $.Release.Name "context" . "configKey" "db") | indent 8 }}
+        {{- include "alfresco-repository.secret-checksum" (dict "release" $.Release.Name "context" . "configKey" "messageBroker") | indent 8 }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
