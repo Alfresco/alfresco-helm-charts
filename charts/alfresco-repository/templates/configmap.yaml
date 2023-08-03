@@ -9,10 +9,10 @@ metadata:
 data:
   CATALINA_OPTS: >-
     -Ddeployment.method=HELM_CHART
-    -Ddb.url=jdbc:{{ .Values.db.url }}
+    -Ddb.url=jdbc:{{ .Values.configuration.db.url }}
     -Ddb.username=${DATABASE_USERNAME}
     -Ddb.password=${DATABASE_PASSWORD}
-    -Ddb.driver={{ include "alfresco-repository.db.driver" .Values.db }}
+    -Ddb.driver={{ include "alfresco-repository.db.driver" .Values.configuration.db }}
     -Dencryption.keystore.type=JCEKS
     -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
     -Dencryption.keyAlgorithm=DESede

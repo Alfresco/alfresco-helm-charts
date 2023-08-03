@@ -59,8 +59,9 @@ tests:
 
   - it: should render PostgreSQL properties
     set:
-      db:
-        url: postgresql://pghost/alfdb
+      configuration:
+        db:
+          url: postgresql://pghost/alfdb
     asserts:
       - matchRegex:
           path: data.CATALINA_OPTS
@@ -73,8 +74,9 @@ tests:
 
   - it: should render MS SQL server properties
     set:
-      db:
-        url: sqlserver://sqlservrhost;databaseName=alfdb;lockTimeout=1000;
+      configuration:
+        db:
+          url: sqlserver://sqlservrhost;databaseName=alfdb;lockTimeout=1000;
     asserts:
       - matchRegex:
           path: data.CATALINA_OPTS
@@ -87,8 +89,9 @@ tests:
 
   - it: should render Oracle properties
     set:
-      db:
-        url: oracle:thin:@tcp://mydbhost:1521/mydbservice
+      configuration:
+        db:
+          url: oracle:thin:@tcp://mydbhost:1521/mydbservice
     asserts:
       - matchRegex:
           path: data.CATALINA_OPTS
@@ -101,8 +104,9 @@ tests:
 
   - it: should fail without proper db URL
     set:
-      db:
-        url: jdbc:mysql://myhost/db
+      configuration:
+        db:
+          url: jdbc:mysql://myhost/db
     asserts:
       - failedTemplate:
           errorMessage: >-
