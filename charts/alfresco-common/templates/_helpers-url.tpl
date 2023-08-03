@@ -1,5 +1,8 @@
 {{/*
 Known URLs are the URL we can trust
+
+Usage: include "alfresco-common.known.urls" $
+
 */}}
 {{- define "alfresco-common.known.urls" -}}
 {{- $known_urls := coalesce .Values.known_urls .Values.global.known_urls "http://localhost,https://localhost" }}
@@ -7,15 +10,18 @@ Known URLs are the URL we can trust
   {{- $known_urls = splitList "," $known_urls }}
 {{- end }}
 {{- range $known_urls }}
-{{- if not (or (hasPrefix "http://" .) (hasPrefix "https://" .)) }}
-{{- fail "provided known_urls MUST start with a scheme (http :// or https://)" }}
-{{- end }}
+  {{- if not (or (hasPrefix "http://" .) (hasPrefix "https://" .)) }}
+    {{- fail "provided known_urls MUST start with a scheme (http :// or https://)" }}
+  {{- end }}
 {{- end }}
 {{- mustToJson (dict "known_urls" $known_urls) }}
 {{- end -}}
 
 {{/*
 Build up CSRF referer
+
+Usage: include "alfresco-common.csrf.referer" $
+
 */}}
 {{- define "alfresco-common.csrf.referer" -}}
 {{- $csrf_referers := list }}
@@ -29,6 +35,9 @@ Build up CSRF referer
 
 {{/*
 Build up CSRF Origin
+
+Usage: include "alfresco-common.csrf.origin" $
+
 */}}
 {{- define "alfresco-common.csrf.origin" -}}
 {{- $csrf_origins := list }}
@@ -42,6 +51,9 @@ Build up CSRF Origin
 
 {{/*
 Pick the main external URL
+
+Usage: include "alfresco-common.external.url" $
+
 */}}
 {{- define "alfresco-common.external.url" -}}
 {{- $parsed_url := urlParse (index (include "alfresco-common.known.urls" . | fromJson) "known_urls" | first) }}
@@ -50,6 +62,9 @@ Pick the main external URL
 
 {{/*
 Pick the main external host
+
+Usage: include "alfresco-common.external.host" $
+
 */}}
 {{- define "alfresco-common.external.host" -}}
 {{- $parsed_url := urlParse (index (include "alfresco-common.known.urls" . | fromJson) "known_urls" | first) }}
@@ -58,6 +73,9 @@ Pick the main external host
 
 {{/*
 Pick the main external port.
+
+Usage: include "alfresco-common.external.port" $
+
 */}}
 {{- define "alfresco-common.external.port" -}}
 {{- $parsed_url := urlParse (index (include "alfresco-common.known.urls" . | fromJson) "known_urls" | first) }}
@@ -70,6 +88,9 @@ Pick the main external port.
 
 {{/*
 Pick the main external scheme
+
+Usage: include "alfresco-common.external.scheme" $
+
 */}}
 {{- define "alfresco-common.external.scheme" -}}
 {{- $parsed_url := urlParse (index (include "alfresco-common.known.urls" . | fromJson) "known_urls" | first) }}
