@@ -100,7 +100,7 @@ configuration:
         # -- Key within the secret holding the search service password
         password: SEARCH_PASSWORD
         # -- Key within the secret holding the index shared secret
-        shared-secret: SEARCH_SHARED_SECRET
+        solr-secret: SOLR_SECRET
     existingConfigMap:
       # -- Optional configmap containing the search service URL
       name: null

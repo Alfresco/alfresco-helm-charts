@@ -40,7 +40,7 @@ Alfresco content repository Helm chart
 | configuration.search.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap  holding the search service URL. |
 | configuration.search.existingConfigMap.name | string | `nil` | Optional configmap containing the search service URL |
 | configuration.search.existingSecret.keys.password | string | `"SEARCH_PASSWORD"` | Key within the secret holding the search service password |
-| configuration.search.existingSecret.keys.shared-secret | string | `"SEARCH_SHARED_SECRET"` | Key within the secret holding the index shared secret |
+| configuration.search.existingSecret.keys.solr-secret | string | `"SOLR_SECRET"` | Key within the secret holding the index shared secret |
 | configuration.search.existingSecret.keys.username | string | `"SEARCH_USERNAME"` | Key within the secret holding the search service username |
 | configuration.search.existingSecret.name | string | `nil` | Optional secret containing search service credentials |
 | configuration.search.flavor | string | `"none"` | Can be either `solr`, `elasticsearch` or `none` |
