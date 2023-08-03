@@ -48,12 +48,12 @@ spec:
           {{- include "component-security-context" .Values | indent 8 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          envFrom:
-            - configMapRef:
-                {{- $alfoptsCtx := dict "Values" (dict "nameOverride" "alfresco-opts") "Chart" .Chart "Release" .Release }}
-                name: {{ template "alfresco-repository.fullname" $alfoptsCtx }}
           {{- $dbsecretCtx := dict "Values" (dict "nameOverride" "secret-database") "Chart" .Chart "Release" .Release }}
           {{- $dbsecret := coalesce .Values.db.existingSecret.name (include "alfresco-repository.fullname" $dbsecretCtx) }}
+          {{- $mqsecretCtx := dict "Values" (dict "nameOverride" "secret-mq") "Chart" .Chart "Release" .Release }}
+          {{- $mqsecret := coalesce .Values.configuration.messageBroker.existingSecret.name (include "alfresco-repository.fullname" $mqsecretCtx) }}
+          {{- $mqconfigCtx := dict "Values" (dict "nameOverride" "configmap-mq") "Chart" .Chart "Release" .Release }}
+          {{- $mqconfig := coalesce .Values.configuration.messageBroker.existingConfigMap.name (include "alfresco-repository.fullname" $mqconfigCtx) }}
           env:
             - name: DATABASE_USERNAME
               valueFrom:
@@ -72,6 +72,27 @@ spec:
              {{- list $repoSecretsEnv | toYaml | nindent 12 }}
            {{- end }}
           {{- end }}
+            - name: BROKER_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $mqsecret }}
+                  key: {{ .Values.configuration.messageBroker.existingSecret.keys.username }}
+                  optional: true
+            - name: BROKER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $mqsecret }}
+                  key: {{ .Values.configuration.messageBroker.existingSecret.keys.password }}
+                  optional: true
+            - name: BROKER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $mqconfig }}
+                  key: {{ .Values.configuration.messageBroker.existingConfigMap.keys.url }}
+          {{- $optsCtx := dict "Values" (dict "nameOverride" "alfresco-opts") "Chart" .Chart "Release" .Release }}
+          envFrom:
+            - configMapRef:
+                name: {{ template "alfresco-repository.fullname" $optsCtx }}
           {{- if .Values.command }}
           command:
             {{- toYaml .Values.command | nindent 12 }}
@@ -110,6 +131,9 @@ spec:
             {{- if .Values.extraVolumeMounts }}
             {{- tpl (.Values.extraVolumeMounts | toYaml) . | nindent 12 }}
             {{- end }}
+        {{- range .Values.extraSideContainers }}
+          {{ tpl (toYaml (list .)) $ | nindent 8 }}
+        {{- end }}
       volumes:
         {{- include "data_volume" .Values | nindent 8 }}
         {{- if .Values.configuration.repository.existingConfigMap }}

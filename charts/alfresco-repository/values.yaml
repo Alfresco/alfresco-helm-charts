@@ -51,14 +51,35 @@ configuration:
       - name: repository-secrets
         key: license.lic
         purpose: acs-license
+  messageBroker:
+    # -- Message Broker URL
+    url: null
+    # -- Username to authenticate to the message broker
+    username: null
+    # -- Password to authenticate to the message broker
+    password: null
+    existingSecret:
+      # -- Name of a pre-existing secret containing message broker credentials
+      name: null
+      keys:
+        # -- Key within the secret holding the message broker username
+        username: BROKER_USERNAME
+        # -- Key within the secret holding the message broker password
+        password: BROKER_PASSWORD
+    existingConfigMap:
+      # -- Name of a pre-existing configmap containing the meesage broker URL
+      name: null
+      keys:
+        # -- Key within the configmap  holding the message broker URL. It MUST
+        # be a failover URL as per the spec below:
+        # https://activemq.apache.org/failover-transport-reference.html
+        url: BROKER_URL
 
 environment:
-  # -- Alfresco java system properties. These properties must be provided as a
-  # string following the pattern "-Dproperty=value". They override the content
-  # of the global properties file but you should prefer using an existing
-  # configuration.repository.existingConfigMap.
-  ALFRESCO_OPTS: null
-  # -- Apache Tomcat command line options
+  # -- Java or Tomcat system properties. These properties must be provided as a
+  # single string following the pattern "-Dproperty=value -Dmoreprop=morevalue".
+  # They override the content of the global properties file but you should
+  # prefer providing configuration.repository.existingConfigMap.
   CATALINA_OPTS: null
   # -- Set JVM options
   JAVA_OPTS: >-

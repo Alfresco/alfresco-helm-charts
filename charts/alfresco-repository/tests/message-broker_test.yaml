@@ -1,0 +1,53 @@
+---
+suite: test Message Queue Broker
+templates:
+  - secret-message-broker.yaml
+  - deployment.yaml
+  - configmap-message-broker.yaml
+tests:
+  - it: should render ActiveMQ minimal config
+    values: &testvalues
+      - values/test_values.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_URL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-configmap-mq
+                key: BROKER_URL
+        template: deployment.yaml
+      - equal:
+          path: data.BROKER_URL
+          value: failover:(tcp://localhost:61616)
+        template: configmap-message-broker.yaml
+
+  - it: should render custom secret
+    values:
+      - values/test_values.yaml
+    set:
+      configuration:
+        messageBroker:
+          existingSecret:
+            name: mqSecret
+            keys:
+              username: mquser
+              password: mqpass
+          existingConfigMap:
+            name: mqConfigmap
+            keys:
+              url: myurl
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_URL
+            valueFrom:
+              configMapKeyRef:
+                name: mqConfigmap
+                key: myurl
+        template: deployment.yaml
+      - hasDocuments:
+          count: 0
+        template: secret-message-broker.yaml

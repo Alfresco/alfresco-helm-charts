@@ -1,6 +1,6 @@
 # alfresco-repository
 
-![Version: 0.1.0-alpha.2](https://img.shields.io/badge/Version-0.1.0--alpha.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.1.0-A21](https://img.shields.io/badge/AppVersion-23.1.0--A21-informational?style=flat-square)
+![Version: 0.1.0-alpha.3](https://img.shields.io/badge/Version-0.1.0--alpha.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.1.0-A21](https://img.shields.io/badge/AppVersion-23.1.0--A21-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -18,6 +18,14 @@ Alfresco content repository Helm chart
 | affinity | object | `{}` |  |
 | args | list | `[]` |  |
 | command | list | `[]` |  |
+| configuration.messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap  holding the message broker URL. It MUST be a failover URL as per the spec below: https://activemq.apache.org/failover-transport-reference.html |
+| configuration.messageBroker.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing the meesage broker URL |
+| configuration.messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` | Key within the secret holding the message broker password |
+| configuration.messageBroker.existingSecret.keys.username | string | `"BROKER_USERNAME"` | Key within the secret holding the message broker username |
+| configuration.messageBroker.existingSecret.name | string | `nil` | Name of a pre-existing secret containing message broker credentials |
+| configuration.messageBroker.password | string | `nil` | Password to authenticate to the message broker |
+| configuration.messageBroker.url | string | `nil` | Message Broker URL |
+| configuration.messageBroker.username | string | `nil` | Username to authenticate to the message broker |
 | configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties |
 | configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repo as env vars. It's also used to pass the Alfresco license which will be mounted as a file when the secret as the `purpose` value set to `acs-license`. Other secrets will be used as env variables. |
 | db.driver | string | `nil` | JDBC driver class of the driver if none is provided the it is guessed from the URL provided |
@@ -28,8 +36,7 @@ Alfresco content repository Helm chart
 | db.password | string | `nil` | Password to authentication to the repository database |
 | db.url | string | `nil` | JDBC url of the database WITHOUT the "jdbc:" prefix This is a mandatory parameter |
 | db.username | string | `nil` | Username to authentication to the repository database |
-| environment.ALFRESCO_OPTS | string | `nil` | Alfresco java system properties. These properties must be provided as a string following the pattern "-Dproperty=value". They override the content of the global properties file but you should prefer using an existing configuration.repository.existingConfigMap. |
-| environment.CATALINA_OPTS | string | `nil` | Apache Tomcat command line options |
+| environment.CATALINA_OPTS | string | `nil` | Java or Tomcat system properties. These properties must be provided as a single string following the pattern "-Dproperty=value -Dmoreprop=morevalue". They override the content of the global properties file but you should prefer providing configuration.repository.existingConfigMap. |
 | environment.JAVA_OPTS | string | `"-XX:MaxRAMPercentage=80"` | Set JVM options |
 | extraInitContainers | list | `[]` |  |
 | extraSideContainers | list | `[]` |  |
