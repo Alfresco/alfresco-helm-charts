@@ -4,7 +4,7 @@ Provide a PVC based on service and persistence values
 Usage: include "alfresco-common.data_volume" $
 
 */}}
-{{- define "alfresco-comon.data_volume" -}}
+{{- define "alfresco-common.data_volume" -}}
 - name: data
 {{- $svc_name := .service.name }}
 {{- with .persistence }}

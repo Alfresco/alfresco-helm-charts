@@ -48,10 +48,10 @@ Usage: include "alfresco-common.jdbc.parser" "URL"
 {{/*
 Compute default ports based on URL
 
-Usage: include "alfresco-comon.db.default.port" "URL"
+Usage: include "alfresco-common.db.default.port" "URL"
 
 */}}
-{{- define "alfresco-comon.db.default.port" -}}
+{{- define "alfresco-common.db.default.port" -}}
 {{- $pg_rdbms := dict "name" "postgresql" "port" 5432 }}
 {{- $my_rdbms := dict "name" "mysql" "port" 3306 }}
 {{- $maria_rdbms := dict "name" "mariadb" "port" 3306 }}
@@ -65,10 +65,10 @@ Usage: include "alfresco-comon.db.default.port" "URL"
 {{/*
 Compute default driver based on URL
 
-Usage: include "alfresco-comon.db.default.driver" "URL"
+Usage: include "alfresco-common.db.default.driver" "URL"
 
 */}}
-{{- define "alfresco-comon.db.default.driver" -}}
+{{- define "alfresco-common.db.default.driver" -}}
 {{- $pg_rdbms := dict "name" "postgresql" "driver" "org.postgresql.Driver" }}
 {{- $my_rdbms := dict "name" "mysql" "driver" "com.mysql.jdbc.Driver" }}
 {{- $maria_rdbms := dict "name" "mariadb" "driver" "org.mariadb.jdbc.Driver" }}
@@ -110,7 +110,7 @@ Usage: include "alfresco-common.db.port" (dict "url" "someurl")
 {{- if gt ($socket | splitList ":" | len) 1 }}
   {{- $socket | splitList ":" | last }}
 {{- else }}
-  {{- template "alfresco-comon.db.default.port" (index (include "alfresco-common.jdbc.parser" .url | fromJson) "jdbc" "scheme") }}
+  {{- template "alfresco-common.db.default.port" (index (include "alfresco-common.jdbc.parser" .url | fromJson) "jdbc" "scheme") }}
 {{- end }}
 {{- end -}}
 
@@ -122,5 +122,5 @@ Usage: include "alfresco-common.db.driver" (dict "url" "someurl" "driver" "drive
 */}}
 {{- define "alfresco-common.db.driver" -}}
 {{- $scheme := index (include "alfresco-common.jdbc.parser" .url | fromJson) "jdbc" "scheme" }}
-{{- coalesce .driver (include "alfresco-comon.db.default.driver" $scheme) }}
+{{- coalesce .driver (include "alfresco-common.db.default.driver" $scheme) }}
 {{- end -}}
