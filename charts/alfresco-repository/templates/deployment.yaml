@@ -120,6 +120,9 @@ spec:
             - name: http
               containerPort: {{ .Values.image.port }}
               protocol: TCP
+            - name: hazelcast
+              containerPort: {{ .Values.configuration.hz.port }}
+              protocol: TCP
           startupProbe:
             {{- toYaml .Values.startupProbe | nindent 12 }}
           livenessProbe:

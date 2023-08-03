@@ -73,6 +73,10 @@ configuration:
         # be a failover URL as per the spec below:
         # https://activemq.apache.org/failover-transport-reference.html
         url: BROKER_URL
+  hz:
+    # -- Hazelcast listener port Only change it if you use a custom image where
+    # the port has been changed from default
+    port: 5701
 
 environment:
   # -- Java or Tomcat system properties. These properties must be provided as a
