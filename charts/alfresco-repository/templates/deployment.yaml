@@ -38,9 +38,11 @@ spec:
             - sh
             - -c
             - |
-              {{ $dbsocket := printf "%s:%s" (include "alfresco-repository.db.hostname" .Values.db ) (include "alfresco-repository.db.port" .Values.db) -}}
-              until nc -w1 {{ $dbsocket }}
-              do echo "waiting for {{  template "alfresco-repository.db.rdbms" .Values.db }} database on {{ $dbsocket }}"
+              {{- $dbhost := include "alfresco-repository.db.hostname" .Values.db }}
+              {{- $dbport := include "alfresco-repository.db.port" .Values.db }}
+              {{- $dbrdbms := include "alfresco-repository.db.rdbms" .Values.db }}
+              until nc -w1 {{ $dbhost }}:{{ $dbport }}
+              do echo 'waiting for {{ $dbrdbms }} database on {{ $dbhost }}:{{ $dbport }}'
                 sleep 2
               done
       containers:
