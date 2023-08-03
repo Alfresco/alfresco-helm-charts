@@ -65,6 +65,13 @@ spec:
                 secretKeyRef:
                   name: {{ $dbsecret }}
                   key: {{ .Values.db.existingSecret.keys.password }}
+          {{- range .Values.configuration.repository.existingSecrets }}
+           {{- if not (eq "acs-license" .purpose) }}
+             {{- $repoSecretsKeyRef := dict "name" .name "key" .key }}
+             {{- $repoSecretsEnv:= dict "name" .key "valueFrom" (dict "secretKeyRef" $repoSecretsKeyRef) }}
+             {{- list $repoSecretsEnv | toYaml | nindent 12 }}
+           {{- end }}
+          {{- end }}
           {{- if .Values.command }}
           command:
             {{- toYaml .Values.command | nindent 12 }}
@@ -93,6 +100,13 @@ spec:
               subPath: alfresco-global.properties
               readOnly: true
             {{- end }}
+            {{- range .Values.configuration.repository.existingSecrets }}
+             {{- if eq "acs-license" .purpose }}
+            - name: acs-license
+              mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license
+              readOnly: true
+              {{- end }}
+            {{- end }}
             {{- if .Values.extraVolumeMounts }}
             {{- tpl (.Values.extraVolumeMounts | toYaml) . | nindent 12 }}
             {{- end }}
@@ -106,6 +120,13 @@ spec:
             items:
               - key: alfresco-global.properties
                 path: alfresco-global.properties
+        {{- end }}
+        {{- range .Values.configuration.repository.existingSecrets }}
+         {{- if eq "acs-license" .purpose }}
+           {{- $licitems := list (dict "key" .key "path" "license.lic") }}
+           {{- $licvol := dict "name" "acs-license" "secret" (dict "secretName" .name "defaultMode" 0400 "optional" true "items" $licitems ) }}
+           {{- list $licvol | toYaml | nindent 8 }}
+         {{- end }}
         {{- end }}
         {{- if .Values.extraVolumes }}
         {{- tpl (.Values.extraVolumes | toYaml) . | nindent 8 }}

@@ -43,9 +43,14 @@ configuration:
     # -- a configmap containing the "alfresco-global.properties" key populated
     # with actual Alfresco repository properties
     existingConfigMap: null
-    # -- Name of a pre-existing secret
-    # TODO: secret documentation
-    existingSecret: null
+    # -- A list of secrets to make available to the repo as env vars. It's also
+    # used to pass the Alfresco license which will be mounted as a file when
+    # the secret as the `purpose` value set to `acs-license`. Other secrets
+    # will be used as env variables.
+    existingSecrets:
+      - name: repository-secrets
+        key: license.lic
+        purpose: acs-license
 
 environment:
   # -- Alfresco java system properties. These properties must be provided as a
