@@ -21,6 +21,13 @@ spec:
           {{- pick $lookup .existingSecret.keys.username .existingSecret.keys.password | toJson | sha256sum | nindent 10 }}
         checksum.config.alfresco.org/db-values: {{ omit . "existingSecret" | toJson | sha256sum }}
         {{- end }}
+        {{- with .Values.configuration.messageBroker }}
+        checksum.config.alfresco.org/mq-values: {{ omit . "existingSecret" | toJson | sha256sum }}
+        checksum.config.alfresco.org/mq-existing: >-
+          {{- $defaultLookup := (dict "existingSecret" (dict "keys" dict)) }}
+          {{- $lookup := ((lookup "v1" "Secret" $.Release.Namespace (.existingSecret.name | default "")).data | default $defaultLookup) }}
+          {{- pick $lookup .existingSecret.keys.username .existingSecret.keys.password | toJson | sha256sum | nindent 10 }}
+        {{- end }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
