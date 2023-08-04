@@ -19,6 +19,8 @@ Alfresco content repository Helm chart
 | args | list | `[]` |  |
 | command | list | `[]` |  |
 | configuration.db.driver | string | `nil` | JDBC driver class of the driver if none is provided the it is guessed from the URL provided |
+| configuration.db.existingConfigMap.keys | object | `{}` |  |
+| configuration.db.existingConfigMap.name | string | `nil` |  |
 | configuration.db.existingSecret | object | `{"keys":{"password":"DATABASE_PASSWORD","username":"DATABASE_USERNAME"},"name":null}` | Existing secret and their keys where to find the database username & password. |
 | configuration.db.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password |
 | configuration.db.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username |

@@ -53,6 +53,9 @@ configuration:
         username: DATABASE_USERNAME
         # -- Key within the secret holding the database password
         password: DATABASE_PASSWORD
+    existingConfigMap:
+      name: null
+      keys: {}
   messageBroker:
     # -- Message Broker URL
     url: null
