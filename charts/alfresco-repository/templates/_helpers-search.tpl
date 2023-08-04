@@ -13,25 +13,6 @@ Usage: include "alfresco-repository.search.flavor.valid" "FLAVOR"
 {{- end -}}
 
 {{/*
-Get Alfresco Repository search URL from values or secret
-
-Usage: include "alfresco-repository.search.url" (dict "ns" "" "search" (dict "url" "" "existingConfigMap" (dict "name" "" "keys" (dict "url" ""))))
-
-*/}}
-{{- define "alfresco-repository.search.url" -}}
-{{ $ns := .ns }}
-{{- with .Values.configuration.search }}
-  {{- if .existingConfigMap.name }}
-    {{- $defaultLookup := (dict "data" dict) }}
-    {{- $lookup := lookup "v1" "ConfigMap" $ns .existingConfgMap.name | default $defaultLookup }}
-    {{- pick $lookup.data .existingConfigMap.keys.url }}
-  {{- else -}}
-    {{- required "If you want to use a search service, either provide a url or a configmap containing that URL" .url }}
-  {{- end }}
-{{- end }}
-{{- end -}}
-
-{{/*
 Check whether a Solr shared secret was provided
 
 Usage: include "alfresco-repository.solr.security" (dict "ns" "" "search" (dict "existingConfigMap" (dict "name" "" "keys" (dict "solr-secret" ""))))
@@ -57,8 +38,8 @@ Usage: include "alfresco-repository.search.config" $
 
 */}}
 {{- define "alfresco-repository.search.config" -}}
-{{- $search_url := include "alfresco-repository.search.url" . }}
 {{- with .Values.configuration.search }}
+  {{- $search_url := include "alfresco-common.read.cm.then.value" (dict "ns" $.Release.Namespace "key" "url" "context" .) }}
   {{- if eq "solr6" (include "alfresco-repository.search.flavor.valid" .flavor) }}
   -Dsolr.host={{ template "alfresco-common.url.host" $search_url }}
   -Dsolr.port={{ template "alfresco-common.url.port" $search_url }}
