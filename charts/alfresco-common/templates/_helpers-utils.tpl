@@ -13,9 +13,22 @@ Usage: include "alfresco-common.read.cm.then.value" (dict "ns" "" "key" "" "cont
     {{- $lookup := lookup "v1" "ConfigMap" $ns .existingConfigMap.name | default $defaultLookup }}
     {{- get $lookup.data (index .existingConfigMap.keys $key) }}
   {{- else -}}
-    {{- required "If you want to use a search service, either provide a url or a configmap containing that URL" (index . $key) }}
+    {{- index . $key }}
   {{- end }}
 {{- end }}
+{{- end -}}
+
+{{/*
+Read from either a Configmap entry or a value (in this order) and fail if returns empty
+
+Usage: include "alfresco-common.reqRead.cm.then.value" (dict "ns" "" "key" "" "context" (dict "existingConfigMap" (dict "name" "" "keys" dict ...)))
+
+*/}}
+{{- define "alfresco-common.reqRead.cm.then.value" -}}
+{{- $ns := .ns }}
+{{- $key := .key }}
+{{- $result := include "alfresco-common.read.cm.then.value" . }}
+{{- required (printf "key %s not found in provided context neither in ConfigMap %s/%s" $key $ns .context.existingConfigMap.name) $result }}
 {{- end -}}
 
 {{/*
