@@ -1,26 +1,26 @@
----
 apiVersion: v2
+appVersion: 2.0.7
+dependencies:
+- condition: alfresco-insight-zeppelin.enabled
+  name: alfresco-insight-zeppelin
+  repository: ""
+  version: 2.1.0
+- name: alfresco-common
+  repository: https://alfresco.github.io/alfresco-helm-charts/
+  version: 2.0.0
 description: A Helm chart for deploying Alfresco Search Service
 home: https://www.alfresco.com
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
 keywords:
-  - search
-  - search services
-  - alfresco search services
-  - insight
-  - insight engine
-  - alfresco insight engine
-  - solr
-  - alfresco solr
+- search
+- search services
+- alfresco search services
+- insight
+- insight engine
+- alfresco insight engine
+- solr
+- alfresco solr
 name: alfresco-search-service
 sources:
-  - https://github.com/Alfresco/alfresco-helm-charts
-version: 1.2.0
-appVersion: 2.0.7
-dependencies:
-  - name: alfresco-insight-zeppelin
-    version: 2.1.0
-    condition: alfresco-insight-zeppelin.enabled
-  - name: alfresco-common
-    version: 2.0.0
-    repository: https://alfresco.github.io/alfresco-helm-charts/
+- https://github.com/Alfresco/alfresco-helm-charts
+version: 1.4.0

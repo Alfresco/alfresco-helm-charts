@@ -1,15 +1,9 @@
-# Default values for alfresco-insight-zeppelin.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-# -- Define the alfresco-insight-zeppelin properties to use in the k8s cluster
-# This is chart will be installed as part of Alfresco Insight Engine
 ---
 replicaCount: 1
 nodeSelector: {}
 image:
   repository: quay.io/alfresco/insight-zeppelin
-  tag: 2.0.7
+  tag: 2.0.8
   pullPolicy: IfNotPresent
   internalPort: 9090
 podSecurityContext:

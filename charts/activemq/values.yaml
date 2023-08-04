@@ -4,7 +4,7 @@ replicaCount: 1
 nodeSelector: {}
 image:
   repository: alfresco/alfresco-activemq
-  tag: 5.17.5-jre17-rockylinux8
+  tag: 5.18.2-jre17-rockylinux8
   pullPolicy: IfNotPresent
 adminUser:
   # -- An existing kubernetes secret that contains BROKER_USERNAME and BROKER_PASSWORD keys to override the default user credentials

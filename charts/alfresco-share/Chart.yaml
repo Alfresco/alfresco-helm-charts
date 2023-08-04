@@ -1,10 +1,10 @@
 apiVersion: v2
-name: alfresco-share
-description: Alfresco Share Helm chart for Kubernetes
-type: application
-version: 0.1.0-alpha.2
 appVersion: 7.4.0
 dependencies:
-  - repository: https://alfresco.github.io/alfresco-helm-charts
-    version: 2.1.0-alpha.2
-    name: alfresco-common
+- name: alfresco-common
+  repository: https://alfresco.github.io/alfresco-helm-charts
+  version: 2.0.0
+description: Alfresco Share Helm chart for Kubernetes
+name: alfresco-share
+type: application
+version: 0.2.0
