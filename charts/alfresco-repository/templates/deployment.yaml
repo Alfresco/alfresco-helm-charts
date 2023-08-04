@@ -46,9 +46,9 @@ spec:
               {{- $dbport := "" }}
               {{- $dbrdbms := "" }}
               {{- with .Values.configuration.db }}
-              {{- $dbhost = include "alfresco-repository.db.hostname" . }}
-              {{- $dbport = include "alfresco-repository.db.port" . }}
-              {{- $dbrdbms = include "alfresco-repository.db.rdbms" . }}
+              {{- $dbhost = include "alfresco-common.db.hostname" .url }}
+              {{- $dbport = include "alfresco-common.db.port" . }}
+              {{- $dbrdbms = include "alfresco-common.db.rdbms" .url }}
               {{- end }}
               until nc -w1 {{ $dbhost }}:{{ $dbport }}
               do echo 'waiting for {{ $dbrdbms }} database on {{ $dbhost }}:{{ $dbport }}'

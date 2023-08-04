@@ -13,7 +13,7 @@ data:
     -Ddb.url=jdbc:{{ .db.url }}
     -Ddb.username=${DATABASE_USERNAME}
     -Ddb.password=${DATABASE_PASSWORD}
-    -Ddb.driver={{ include "alfresco-repository.db.driver" .db }}
+    -Ddb.driver={{ include "alfresco-common.db.driver" .db }}
     -Dencryption.keystore.type=JCEKS
     -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
     -Dencryption.keyAlgorithm=DESede
@@ -30,6 +30,6 @@ data:
       {{- include "alfresco-repository.search.config" $ | indent 2 }}
     {{- end }}
     {{- end }}
-    {{- .Values.environment.CATALINA_OPTS | default "" }}
+    {{ .Values.environment.CATALINA_OPTS | default "" }}
   JAVA_OPTS: >-
     {{ .Values.environment.JAVA_OPTS | default "" }}
