@@ -43,7 +43,7 @@ Alfresco content repository Helm chart
 | configuration.search.existingSecret.keys.solr-secret | string | `"SOLR_SECRET"` | Key within the secret holding the index shared secret |
 | configuration.search.existingSecret.keys.username | string | `"ELASTICSEARCH_USERNAME"` | Key within the secret holding the search service username |
 | configuration.search.existingSecret.name | string | `nil` | Optional secret containing search service credentials |
-| configuration.search.flavor | string | `"none"` | Can be either `solr`, `elasticsearch` or `none` |
+| configuration.search.flavor | string | `"noindex"` | Can be either `solr`, `elasticsearch` or `noindex` |
 | configuration.search.password | string | `nil` | Password to authenticate to the search service |
 | configuration.search.solr-secret | string | `nil` | Solr inter process shared secret |
 | configuration.search.url | string | `nil` | URL where the search service can be found |

@@ -1,12 +1,12 @@
 {{/*
-Validate search flavor by checking it is set to either "none", "solr6" or "elasticsearch"
+Validate search flavor by checking it is set to either "noindex", "solr6" or "elasticsearch"
 
 Usage: include "alfresco-repository.search.flavor.valid" "FLAVOR"
 
 */}}
 {{- define "alfresco-repository.search.flavor.valid" -}}
-{{- if not (mustHas . (list "none" "solr6" "elasticsearch")) }}
-  {{- fail "Search Service flavor MUST be one of 'none', 'solr6' or 'elasticsearch'" }}
+{{- if not (mustHas . (list "noindex" "solr6" "elasticsearch")) }}
+  {{- fail "Search Service flavor MUST be one of 'noindex', 'solr6' or 'elasticsearch'" }}
 {{- else -}}
   {{- . }}
 {{- end }}

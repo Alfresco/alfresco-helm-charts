@@ -81,8 +81,8 @@ configuration:
     # the port has been changed from default
     port: 5701
   search:
-    # -- Can be either `solr`, `elasticsearch` or `none`
-    flavor: none
+    # -- Can be either `solr`, `elasticsearch` or `noindex`
+    flavor: noindex
     # -- URL where the search service can be found
     url: null
     # -- Username to authenticate to the search service
