@@ -23,8 +23,8 @@ Usage: include "alfresco-repository.search.url" (dict "ns" "" "search" (dict "ur
 {{- with .Values.configuration.search }}
   {{- if .existingConfigMap.name }}
     {{- $defaultLookup := (dict "data" dict) }}
-    {{- $lookup := ((lookup "v1" "ConfigMap" $ns (.existingConfgMap.name)).data | default $defaultLookup) }}
-    {{- pick $lookup .existingConfigMap.keys.url }}
+    {{- $lookup := lookup "v1" "ConfigMap" $ns .existingConfgMap.name | default $defaultLookup }}
+    {{- pick $lookup.data .existingConfigMap.keys.url }}
   {{- else -}}
     {{- required "If you want to use a search service, either provide a url or a configmap containing that URL" .url }}
   {{- end }}
@@ -42,8 +42,8 @@ Usage: include "alfresco-repository.solr.security" (dict "ns" "" "search" (dict 
 {{- with .search }}
   {{- if .existingSecret.name }}
     {{- $defaultLookup := (dict "data" dict) }}
-    {{- $lookup := ((lookup "v1" "Secret" $ns (.existingSecret.name)).data | default $defaultLookup) }}
-    {{- hasKey $lookup (index .existingSecret.keys "solr-secret") | ternary "secret" "none" }}
+    {{- $lookup := lookup "v1" "Secret" $ns .existingSecret.name | default $defaultLookup }}
+    {{- hasKey $lookup.data (index .existingSecret.keys "solr-secret") | ternary "secret" "none" }}
   {{- else -}}
     {{- not (empty (index . "solr-secret")) | ternary "secret" "none" }}
   {{- end }}
@@ -63,7 +63,7 @@ Usage: include "alfresco-repository.search.config" $
   -Dsolr.host={{ template "alfresco-common.url.host" $search_url }}
   -Dsolr.port={{ template "alfresco-common.url.port" $search_url }}
   -Dsolr.base.url={{ include "alfresco-common.url.path" $search_url | default "/solr" }}
-  {{ $solr_comms := include "alfresco-repository.solr.security" (dict "ns" $.Release.Namespace "search" . ) }}
+  {{- $solr_comms := include "alfresco-repository.solr.security" (dict "ns" $.Release.Namespace "search" . ) }}
   -Dsolr.secureComms={{ $solr_comms }}
   {{- if eq "secret" $solr_comms }}
   -Dsolr.sharedSecret=$SOLR_SECRET
