@@ -65,6 +65,8 @@ spec:
           {{- $mqsecret := "" }}
           {{- $mqconfigCtx := dict }}
           {{- $mqconfig := "" }}
+          {{- $searchsecretCtx := dict }}
+          {{- $searchsecret := "" }}
           {{- with .Values.configuration }}
             {{- $dbsecretCtx = dict "Values" (dict "nameOverride" "secret-database") "Chart" $.Chart "Release" $.Release }}
             {{- $dbsecret = coalesce .db.existingSecret.name (include "alfresco-repository.fullname" $dbsecretCtx) }}
@@ -72,6 +74,8 @@ spec:
             {{- $mqsecret = coalesce .messageBroker.existingSecret.name (include "alfresco-repository.fullname" $mqsecretCtx) }}
             {{- $mqconfigCtx = dict "Values" (dict "nameOverride" "configmap-mq") "Chart" $.Chart "Release" $.Release }}
             {{- $mqconfig = coalesce .messageBroker.existingConfigMap.name (include "alfresco-repository.fullname" $mqconfigCtx) }}
+            {{- $searchsecretCtx = dict "Values" (dict "nameOverride" "secret-search") "Chart" $.Chart "Release" $.Release }}
+            {{- $searchsecret = coalesce .search.existingSecret.name (include "alfresco-repository.fullname" $searchsecretCtx) }}
           {{- end }}
           env:
             - name: DATABASE_USERNAME
@@ -91,6 +95,12 @@ spec:
              {{- list $repoSecretsEnv | toYaml | nindent 12 }}
            {{- end }}
           {{- end }}
+            - name: SOLR_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $searchsecret }}
+                  key: {{ .Values.configuration.messageBroker.existingSecret.keys.username }}
+                  optional: true
             - name: BROKER_USERNAME
               valueFrom:
                 secretKeyRef:

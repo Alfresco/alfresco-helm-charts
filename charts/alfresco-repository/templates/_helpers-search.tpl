@@ -63,7 +63,11 @@ Usage: include "alfresco-repository.search.config" $
   -Dsolr.host={{ template "alfresco-common.url.host" $search_url }}
   -Dsolr.port={{ template "alfresco-common.url.port" $search_url }}
   -Dsolr.base.url={{ include "alfresco-common.url.path" $search_url | default "/solr" }}
-  -Dsolr.secureComms={{ include "alfresco-repository.solr.security" (dict "ns" $.Release.Namespace "search" . )}}
+  {{ $solr_comms := include "alfresco-repository.solr.security" (dict "ns" $.Release.Namespace "search" . ) }}
+  -Dsolr.secureComms={{ $solr_comms }}
+  {{- if eq "secret" $solr_comms }}
+  -Dsolr.sharedSecret=$SOLR_SECRET
+  {{- end }}
   {{- else if eq "elasticsearch" (include "alfresco-repository.search.flavor.valid" .flavor) }}
   -Delasticsearch.host={{ template "alfresco-common.url.host" $search_url }}
   -Delasticsearch.port={{ template "alfresco-common.url.port" $search_url }}
