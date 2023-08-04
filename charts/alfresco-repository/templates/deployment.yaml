@@ -14,8 +14,10 @@ spec:
   template:
     metadata:
       annotations:
-        {{- include "alfresco-repository.secret-checksum" (dict "release" $.Release.Name "context" . "configKey" "db") | indent 8 }}
-        {{- include "alfresco-repository.secret-checksum" (dict "release" $.Release.Name "context" . "configKey" "messageBroker") | indent 8 }}
+        {{- with .Values.configuration }}
+          {{- include "alfresco-common.secret-checksum" (dict "ns" $.Release.Name "context" . "configKey" "db") | indent 8 }}
+          {{- include "alfresco-common.secret-checksum" (dict "ns" $.Release.Name "context" . "configKey" "messageBroker") | indent 8 }}
+        {{- end }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}

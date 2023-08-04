@@ -8,7 +8,7 @@ Alfresco content repository Helm chart
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0-alpha.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0-alpha.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
