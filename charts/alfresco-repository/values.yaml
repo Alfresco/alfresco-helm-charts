@@ -96,9 +96,9 @@ configuration:
       name: null
       keys:
         # -- Key within the secret holding the search service username
-        username: SEARCH_USERNAME
+        username: ELASTICSEARCH_USERNAME
         # -- Key within the secret holding the search service password
-        password: SEARCH_PASSWORD
+        password: ELASTICSEARCH_PASSWORD
         # -- Key within the secret holding the index shared secret
         solr-secret: SOLR_SECRET
     existingConfigMap:

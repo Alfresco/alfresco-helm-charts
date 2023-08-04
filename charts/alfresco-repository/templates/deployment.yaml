@@ -95,11 +95,23 @@ spec:
              {{- list $repoSecretsEnv | toYaml | nindent 12 }}
            {{- end }}
           {{- end }}
+            - name: ELASTICSEARCH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $searchsecret }}
+                  key: {{ .Values.configuration.search.existingSecret.keys.username }}
+                  optional: true
+            - name: ELASTICSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $searchsecret }}
+                  key: {{ .Values.configuration.search.existingSecret.keys.password }}
+                  optional: true
             - name: SOLR_SECRET
               valueFrom:
                 secretKeyRef:
                   name: {{ $searchsecret }}
-                  key: {{ .Values.configuration.messageBroker.existingSecret.keys.username }}
+                  key: {{ index .Values.configuration.search.existingSecret.keys "solr-secret" }}
                   optional: true
             - name: BROKER_USERNAME
               valueFrom:

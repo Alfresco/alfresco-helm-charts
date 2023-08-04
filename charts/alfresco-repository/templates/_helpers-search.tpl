@@ -72,6 +72,8 @@ Usage: include "alfresco-repository.search.config" $
   -Delasticsearch.host={{ template "alfresco-common.url.host" $search_url }}
   -Delasticsearch.port={{ template "alfresco-common.url.port" $search_url }}
   -Delasticsearch.secureComms={{ template "alfresco-common.url.scheme" $search_url }}
+  -Delasticsearch.user=$ELASTICSEARCH_USERNAME
+  -Delasticsearch.password=$ELASTICSEARCH_PASSWORD
   -Delasticsearch.createIndexIfNotExists=true
   {{- end }}
 {{- end }}
