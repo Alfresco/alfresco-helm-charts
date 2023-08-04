@@ -52,19 +52,39 @@ Usage: include "alfresco-common.haskey.secret" (dict "ns" "" "key" "" "context" 
 {{/*
 Compute Secret checksum whether it's read from values or from secrets
 
-Usage: include "alfresco-common.secret-checksum" (dict "ns" $.Release.Namespace "context" (dict "some-key" (dict "existingSecret" (dict "keys" (dict "username" "" "password" "")))) "configKey" "some-key")
+Usage: include "alfresco-common.secret-checksum" (dict "ns" "" "configKey" "somekey" "context" (dict "somekey" (dict "existingConfigMap" (dict "keys" dict))(dict "existingSecret" (dict "keys" dict))...) "configKey" "some-key")
 
 */}}
 {{- define "alfresco-common.checksum.config" -}}
 {{- $ns := required "template needs to be given the release namepace" .ns }}
-{{- with (index .context .configKey) }}
-{{- if .existingSecret.name }}
-checksum.config.alfresco.org/{{ $.configKey }}-existing:
-  {{- $defaultLookup := dict "data" dict }}
-  {{- $lookup := lookup "v1" "Secret" $ns (.existingSecret.name) | default $defaultLookup }}
-  {{- pick $lookup.data .existingSecret.keys.username .existingSecret.keys.password | toJson | sha256sum | indent 1}}
+{{- $configCtx := index .context .configKey }}
+{{- $lookedup_secret := "" }}
+{{- $lookedup_cm := "" }}
+{{- $defaultLookup := dict "data" dict -}}
+{{/* If configmap is given, checksum & concat its keys otherwise checksum & concat values */}}
+{{- with $configCtx }}
+{{- if .existingConfigMap.name }}
+  {{- $lookup := lookup "v1" "ConfigMap" $ns .existingConfigMap.name | default $defaultLookup }}
+  {{- range $k := (keys .existingConfigMap.keys | sortAlpha) }}
+    {{- $lookedup_cm = cat $lookedup_cm (pick $lookup.data (index $configCtx "existingConfigMap" "keys" $k) | toJson | sha256sum) }}
+  {{- end }}
 {{- else }}
-checksum.config.alfresco.org/{{ $.configKey }}-values: {{ omit . "existingSecret" | toJson | sha256sum }}
+  {{- range $k := (keys .existingConfigMap.keys | sortAlpha) }}
+    {{- $lookedup_cm = cat $lookedup_cm (index $configCtx $k | toJson | sha256sum) }}
+  {{- end }}
+{{- end -}}
+{{/* If secret is given, checksum & concat its keys otherwise checksum & concat values */}}
+{{- if .existingSecret.name }}
+  {{- $lookup := lookup "v1" "Secret" $ns .existingSecret.name | default $defaultLookup }}
+  {{- range $k := (keys .existingSecret.keys | sortAlpha) }}
+    {{- $lookedup_secret = cat $lookedup_secret (pick $lookup.data (index $configCtx "existingSecret" "keys" $k) | toJson | sha256sum) }}
+  {{- end }}
+{{- else }}
+  {{- range $k := (keys .existingSecret.keys | sortAlpha) }}
+    {{- $lookedup_secret = cat $lookedup_secret (index $configCtx (index $configCtx "existingSecret" "keys" $k) | toJson | sha256sum) }}
+  {{- end }}
 {{- end }}
-{{- end }}
+{{- end -}}
+{{/*  Finaly checksums both concatenated hashes */}}
+checksum.config.alfresco.org/{{ $.configKey }}: {{- cat $lookedup_cm $lookedup_secret | trim | sha256sum | indent 1 }}
 {{- end -}}
