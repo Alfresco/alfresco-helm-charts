@@ -7,10 +7,13 @@ Usage: include "alfresco-common.secret-checksum" (dict "ns" $.Release.Namespace 
 {{- define "alfresco-common.secret-checksum" -}}
 {{- $ns := required "template needs to be given the release namepace" .ns }}
 {{- with (index .context .configKey) }}
-checksum.config.alfresco.org/{{ $.configKey }}-values: {{ omit . "existingSecret" | toJson | sha256sum }}
+{{- if .existingSecret.name }}
 checksum.config.alfresco.org/{{ $.configKey }}-existing:
-  {{- $defaultLookup := (dict "existingSecret" (dict "keys" dict)) }}
-  {{- $lookup := ((lookup "v1" "Secret" $ns ( .existingSecret.name | default "")).data | default $defaultLookup) }}
-  {{- pick $lookup .existingSecret.keys.username .existingSecret.keys.password | toJson | sha256sum | indent 1}}
+  {{- $defaultLookup := dict "data" dict }}
+  {{- $lookup := lookup "v1" "Secret" $ns (.existingSecret.name) | default $defaultLookup }}
+  {{- pick $lookup.data .existingSecret.keys.username .existingSecret.keys.password | toJson | sha256sum | indent 1}}
+{{- else }}
+checksum.config.alfresco.org/{{ $.configKey }}-values: {{ omit . "existingSecret" | toJson | sha256sum }}
+{{- end }}
 {{- end }}
 {{- end -}}
