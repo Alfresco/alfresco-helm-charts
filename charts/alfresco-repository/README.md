@@ -39,6 +39,7 @@ Alfresco content repository Helm chart
 | configuration.messageBroker.username | string | `nil` | Username to authenticate to the message broker |
 | configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties |
 | configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repo as env vars. It's also used to pass the Alfresco license which will be mounted as a file when the secret as the `purpose` value set to `acs-license`. Other secrets will be used as env variables. |
+| configuration.search.existingConfigMap.keys.flavor | string | `"SEARCH_FLAVOR"` |  |
 | configuration.search.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap  holding the search service URL. |
 | configuration.search.existingConfigMap.name | string | `nil` | Optional configmap containing the search service URL |
 | configuration.search.existingSecret.keys.password | string | `"ELASTICSEARCH_PASSWORD"` | Key within the secret holding the search service password |

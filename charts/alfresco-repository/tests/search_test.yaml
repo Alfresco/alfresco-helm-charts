@@ -200,10 +200,6 @@ tests:
           elasticsearch_password: epass
           solr-secret: mysupersecret
           url: https://search.domain.tld/index
-          existingConfigMap:
-            name:  mycm
-            keys:
-              url: MYURL
           existingSecret:
             name: mysecret
             keys:

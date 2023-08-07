@@ -110,6 +110,7 @@ configuration:
       keys:
         # -- Key within the configmap  holding the search service URL.
         url: SEARCH_URL
+        flavor: SEARCH_FLAVOR
 
 environment:
   # -- Java or Tomcat system properties. These properties must be provided as a
