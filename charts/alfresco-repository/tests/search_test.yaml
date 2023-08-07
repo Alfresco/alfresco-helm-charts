@@ -1,0 +1,231 @@
+---
+suite: TestsSearch configurations
+templates:
+  - deployment.yaml
+  - configmap.yaml
+  - secret-search.yaml
+values:
+  - values/test_values.yaml
+tests:
+  - it: Should render a config without any index engine
+    asserts:
+      - &default_to_noindex
+        matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dindex.subsystem.name=noindex($|\s)
+        template: configmap.yaml
+
+  - it: should render a working Solr6 config based on values
+    set:
+      configuration:
+        search: &solrValues
+          flavor: solr6
+          solr-secret: mysupersecret
+          url: https://search.domain.tld/index
+    asserts:
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dindex.subsystem.name=solr6($|\s)
+        template: configmap.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.port=443($|\s)
+        template: configmap.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.base\.url=/index($|\s)
+        template: configmap.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.secureComms=secret($|\s)
+        template: configmap.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.host=search.domain.tld($|\s)
+        template: configmap.yaml
+      - equal:
+          path: data.SOLR_SECRET
+          value: bXlzdXBlcnNlY3JldA==
+        template: secret-search.yaml
+
+  - it: should render a working Solr6 config based on values (noauth)
+    set:
+      configuration:
+        search:
+          << : *solrValues
+          solr-secret: null
+    asserts:
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.secureComms=none($|\s)
+        template: configmap.yaml
+
+  - it: should render a working Solr6 config based on existing resources
+    set:
+      configuration:
+        search: &solrK8sResources
+          flavor: solr6
+          existingConfigMAp:
+            name: mysolrcm
+            keys:
+              url: INDEX_SERVICE_LOCATION
+          existingSecret:
+            name: mysolrsecret
+            keys:
+              solr-secret: SOME_SECRET
+    asserts:
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dindex.subsystem.name=solr6($|\s)
+        template: configmap.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SOLR_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: mysolrsecret
+                key: SOME_SECRET
+                optional: true
+        template: deployment.yaml
+
+  - it: should render a working ES config based on values
+    set:
+      configuration:
+        search: &esValues
+          flavor: elasticsearch
+          username: esuser
+          password: espass
+          url: https://search.domain.tld/index
+    asserts:
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dindex.subsystem.name=elasticsearch($|\s)
+        template: configmap.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Delasticsearch\.port=443($|\s)
+        template: configmap.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Delasticsearch\.secureComms=https($|\s)
+        template: configmap.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Delasticsearch\.host=search.domain.tld($|\s)
+        template: configmap.yaml
+      - equal:
+          path: data.ELASTICSEARCH_USERNAME
+          value: ZXN1c2Vy
+        template: secret-search.yaml
+      - equal:
+          path: data.ELASTICSEARCH_PASSWORD
+          value: ZXNwYXNz
+        template: secret-search.yaml
+
+  - it: should render a working ES config based on values (noauth)
+    set:
+      configuration:
+        search:
+          flavor: elasticsearch
+          url: http://search.domain.tld/index
+    asserts:
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Delasticsearch\.secureComms=none($|\s)
+        template: configmap.yaml
+      - hasDocuments:
+          count: 0
+        template: secret-search.yaml
+
+  - it: should render a workingES config based on values k8s existing resources
+    set:
+      configuration:
+        search: &esK8sResources
+          flavor: elasticsearch
+          existingConfigMAp:
+            name: myescm
+            keys:
+              url: INDEX_SERVICE_LOCATION
+          existingSecret:
+            name: myessecret
+            keys:
+              username: USER
+              password: PASS
+    asserts:
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dindex.subsystem.name=elasticsearch($|\s)
+        template: configmap.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ELASTICSEARCH_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: myessecret
+                key: USER
+                optional: true
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ELASTICSEARCH_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: myessecret
+                key: PASS
+                optional: true
+        template: deployment.yaml
+
+  - it: Should default to noindex despite all other configs
+    set: &messyconfig_all_noindex
+      configuration:
+        search:
+          elasticsearch_username: euser
+          elasticsearch_password: epass
+          solr-secret: mysupersecret
+          url: https://search.domain.tld/index
+          existingConfigMap:
+            name:  mycm
+            keys:
+              url: MYURL
+          existingSecret:
+            name: mysecret
+            keys:
+              username: USERNAME
+              password: PASSWORD
+              solr_secret: SOLR_SECRET
+    asserts:
+      - *default_to_noindex
+      - notMatchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.(port|secureComms|host|base\.url)=($|\s)
+        template: configmap.yaml
+
+  - it: Should default to noindex despite all other configs
+    set:
+      << : *messyconfig_all_noindex
+      configuration:
+        search:
+          flavor: solrsearchindex
+    asserts:
+      - failedTemplate:
+          errorMessage: |-
+            Search Service flavor MUST be one of 'noindex', 'solr6' or 'elasticsearch'
+        template: configmap.yaml
