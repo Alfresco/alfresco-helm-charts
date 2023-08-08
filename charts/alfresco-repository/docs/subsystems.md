@@ -54,7 +54,8 @@ Create the secret using `kubectl`
 kubectl create secret generic S3--from-file=s3-config/
 ```
 
-Pass the following `configuration.repository.existingSecrets`:
+Pass the following `configuration.repository.existingSecrets` together with the
+property to set the new contentstore subsystem as the default contentstore:
 
 ```yaml
 configuration:
@@ -65,6 +66,9 @@ configuration:
         purpose: acs-license
       - name: S3
         purpose: subsystems:ContentStore:S3
+environment:
+  CATALINA_OPTS: >-
+    -Dfilecontentstore.subsystem.name=S3
 ```
 
 > As a list `configuration.repository/existignSecrets` cannot be merged so you
