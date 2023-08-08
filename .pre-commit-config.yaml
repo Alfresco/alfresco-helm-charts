@@ -12,7 +12,7 @@ repos:
     hooks:
       - id: helm-docs
   - repo: https://github.com/bridgecrewio/checkov.git
-    rev: 2.3.130
+    rev: 2.3.358
     hooks:
       - id: checkov
         files: charts/.*\.yaml$
@@ -21,7 +21,7 @@ repos:
         - --quiet
         - --compact
   - repo: https://github.com/jtyr/kubeconform-helm
-    rev: v0.1.12
+    rev: v0.1.15
     hooks:
       - id: kubeconform-helm
         alias: kubeconform-helm-min
@@ -32,7 +32,7 @@ repos:
           - --exclude-charts=alfresco-common,alfresco-sync-service
           - --values-dir=ci
   - repo: https://github.com/jtyr/kubeconform-helm
-    rev: v0.1.12
+    rev: v0.1.15
     hooks:
       - id: kubeconform-helm
         name: "Kubeconform Helm - current k8s version"
