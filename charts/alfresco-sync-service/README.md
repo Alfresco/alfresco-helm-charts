@@ -1,6 +1,6 @@
 # alfresco-sync-service
 
-![Version: 4.2.1](https://img.shields.io/badge/Version-4.2.1-informational?style=flat-square) ![AppVersion: 3.10.0](https://img.shields.io/badge/AppVersion-3.10.0-informational?style=flat-square)
+![Version: 4.2.2](https://img.shields.io/badge/Version-4.2.2-informational?style=flat-square) ![AppVersion: 3.10.0](https://img.shields.io/badge/AppVersion-3.10.0-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -14,7 +14,6 @@ Alfresco Sync Service
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.1.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
-| oci://registry-1.docker.io/bitnamicharts | common | 2.x.x |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
