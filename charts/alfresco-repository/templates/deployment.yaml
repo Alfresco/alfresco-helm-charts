@@ -91,7 +91,7 @@ spec:
                   name: {{ $dbsecret }}
                   key: {{ .Values.configuration.db.existingSecret.keys.password }}
           {{- range .Values.configuration.repository.existingSecrets }}
-            {{- if not (or (eq "acs-license" .purpose) (hasPrefix "subsystems:" .purpose)) }}
+            {{- if not (or (eq "acs-license" .purpose) (hasPrefix "subsystems:" (.purpose | default ""))) }}
               {{- $repoSecretsKeyRef := dict "name" .name "key" .key }}
               {{- $repoSecretsEnv:= dict "name" .key "valueFrom" (dict "secretKeyRef" $repoSecretsKeyRef) }}
               {{- list $repoSecretsEnv | toYaml | nindent 12 }}
@@ -172,9 +172,9 @@ spec:
             - name: acs-license
               mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license
               readOnly: true
-             {{- else if and (hasPrefix "subsystems:" .purpose) (eq (splitList ":" .purpose | len) 3) }}
+             {{- else if and (hasPrefix "subsystems:" (.purpose | default "")) (eq (splitList ":" (.purpose | default "") | len) 3) }}
             - name: {{ .name }}
-              mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/{{ splitList ":" .purpose | join "/" }}/{{ .name }}
+              mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/{{ splitList ":" (.purpose | default "") | join "/" }}/{{ .name }}
               readOnly: true
               {{- end }}
             {{- end }}
@@ -200,8 +200,8 @@ spec:
             {{- $licitems := list (dict "key" .key "path" "license.lic") }}
             {{- $licvol := dict "name" "acs-license" "secret" (dict "secretName" .name "defaultMode" 0400 "optional" true "items" $licitems ) }}
             {{- list $licvol | toYaml | nindent 8 }}
-          {{- else if and (hasPrefix "subsystems:" .purpose) (eq (splitList ":" .purpose | len) 3) }}
-            {{- $subsysvol := dict "name" .name "secret" (dict "secretName" .name "optional" true "defaultMode" 0400) }}
+          {{- else if and (hasPrefix "subsystems:" (.purpose | default "")) (eq (splitList ":" (.purpose | default "") | len) 3) }}
+            {{- $subsysvol := dict "name" .name "secret" (dict "secretName" .name "defaultMode" 0400) }}
             {{- list $subsysvol | toYaml | nindent 8 }}
           {{- end }}
         {{- end }}
