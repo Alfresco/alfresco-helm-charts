@@ -91,11 +91,11 @@ spec:
                   name: {{ $dbsecret }}
                   key: {{ .Values.configuration.db.existingSecret.keys.password }}
           {{- range .Values.configuration.repository.existingSecrets }}
-           {{- if not (eq "acs-license" .purpose) }}
-             {{- $repoSecretsKeyRef := dict "name" .name "key" .key }}
-             {{- $repoSecretsEnv:= dict "name" .key "valueFrom" (dict "secretKeyRef" $repoSecretsKeyRef) }}
-             {{- list $repoSecretsEnv | toYaml | nindent 12 }}
-           {{- end }}
+            {{- if not (or (eq "acs-license" .purpose) (hasPrefix "subsystems:" .purpose)) }}
+              {{- $repoSecretsKeyRef := dict "name" .name "key" .key }}
+              {{- $repoSecretsEnv:= dict "name" .key "valueFrom" (dict "secretKeyRef" $repoSecretsKeyRef) }}
+              {{- list $repoSecretsEnv | toYaml | nindent 12 }}
+            {{- end }}
           {{- end }}
             - name: ELASTICSEARCH_USERNAME
               valueFrom:
@@ -172,6 +172,10 @@ spec:
             - name: acs-license
               mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license
               readOnly: true
+             {{- else if and (hasPrefix "subsystems:" .purpose) (eq (splitList ":" .purpose | len) 3) }}
+            - name: {{ .name }}
+              mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/{{ splitList ":" .purpose | join "/" }}/{{ .name }}
+              readOnly: true
               {{- end }}
             {{- end }}
             {{- if .Values.extraVolumeMounts }}
@@ -192,11 +196,14 @@ spec:
                 path: alfresco-global.properties
         {{- end }}
         {{- range .Values.configuration.repository.existingSecrets }}
-         {{- if eq "acs-license" .purpose }}
-           {{- $licitems := list (dict "key" .key "path" "license.lic") }}
-           {{- $licvol := dict "name" "acs-license" "secret" (dict "secretName" .name "defaultMode" 0400 "optional" true "items" $licitems ) }}
-           {{- list $licvol | toYaml | nindent 8 }}
-         {{- end }}
+          {{- if eq "acs-license" .purpose }}
+            {{- $licitems := list (dict "key" .key "path" "license.lic") }}
+            {{- $licvol := dict "name" "acs-license" "secret" (dict "secretName" .name "defaultMode" 0400 "optional" true "items" $licitems ) }}
+            {{- list $licvol | toYaml | nindent 8 }}
+          {{- else if and (hasPrefix "subsystems:" .purpose) (eq (splitList ":" .purpose | len) 3) }}
+            {{- $subsysvol := dict "name" .name "secret" (dict "secretName" .name "optional" true "defaultMode" 0400) }}
+            {{- list $subsysvol | toYaml | nindent 8 }}
+          {{- end }}
         {{- end }}
         {{- if .Values.extraVolumes }}
         {{- tpl (.Values.extraVolumes | toYaml) . | nindent 8 }}
