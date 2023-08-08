@@ -65,8 +65,6 @@ spec:
           {{- $dbsecret := "" }}
           {{- $mqsecretCtx := dict }}
           {{- $mqsecret := "" }}
-          {{- $mqconfigCtx := dict }}
-          {{- $mqconfig := "" }}
           {{- $searchsecretCtx := dict }}
           {{- $searchsecret := "" }}
           {{- with .Values.configuration }}
@@ -74,8 +72,6 @@ spec:
             {{- $dbsecret = coalesce .db.existingSecret.name (include "alfresco-repository.fullname" $dbsecretCtx) }}
             {{- $mqsecretCtx = dict "Values" (dict "nameOverride" "secret-mq") "Chart" $.Chart "Release" $.Release }}
             {{- $mqsecret = coalesce .messageBroker.existingSecret.name (include "alfresco-repository.fullname" $mqsecretCtx) }}
-            {{- $mqconfigCtx = dict "Values" (dict "nameOverride" "configmap-mq") "Chart" $.Chart "Release" $.Release }}
-            {{- $mqconfig = coalesce .messageBroker.existingConfigMap.name (include "alfresco-repository.fullname" $mqconfigCtx) }}
             {{- $searchsecretCtx = dict "Values" (dict "nameOverride" "secret-search") "Chart" $.Chart "Release" $.Release }}
             {{- $searchsecret = coalesce .search.existingSecret.name (include "alfresco-repository.fullname" $searchsecretCtx) }}
           {{- end }}
@@ -127,11 +123,6 @@ spec:
                   name: {{ $mqsecret }}
                   key: {{ .Values.configuration.messageBroker.existingSecret.keys.password }}
                   optional: true
-            - name: BROKER_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ $mqconfig }}
-                  key: {{ .Values.configuration.messageBroker.existingConfigMap.keys.url }}
           {{- $optsCtx := dict "Values" (dict "nameOverride" "alfresco-opts") "Chart" .Chart "Release" .Release }}
           envFrom:
             - configMapRef:
