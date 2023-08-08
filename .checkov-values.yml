@@ -4,10 +4,13 @@ activemq:
   enabled: true
 elasticsearch:
   enabled: true
-db:
-  url: postgresql://pg-postgresql-acs/alfresco
-  username: pguser
-  password: pgpass
+configuration:
+  db:
+    url: postgresql://pg-postgresql-acs/alfresco
+    username: pguser
+    password: pgpass
+  messageBroker:
+    url: nio://activemq:61616
 global:
   tracking:
     sharedsecret: dummy

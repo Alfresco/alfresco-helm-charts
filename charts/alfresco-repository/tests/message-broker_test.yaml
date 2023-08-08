@@ -4,10 +4,10 @@ templates:
   - secret-message-broker.yaml
   - deployment.yaml
   - configmap-message-broker.yaml
+values:
+  - values/test_values.yaml
 tests:
   - it: should render ActiveMQ minimal config
-    values: &testvalues
-      - values/test_values.yaml
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
@@ -22,10 +22,12 @@ tests:
           path: data.BROKER_URL
           value: failover:(tcp://localhost:61616)
         template: configmap-message-broker.yaml
+      - equal:
+          path: spec.template.metadata.annotations['checksum.config.alfresco.org/messageBroker']
+          value: &cfgsum c2939932894f879e156e0ccaebb43552058663dbbedd75c74afd20a86662e054
+        template: deployment.yaml
 
-  - it: should render custom secret
-    values:
-      - values/test_values.yaml
+  - it: should render custom secret with modified checksum
     set:
       configuration:
         messageBroker:
@@ -51,3 +53,7 @@ tests:
       - hasDocuments:
           count: 0
         template: secret-message-broker.yaml
+      - notEqual:
+          path: spec.template.metadata.annotations['checksum.config.alfresco.org/db']
+          value: *cfgsum
+        template: deployment.yaml

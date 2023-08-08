@@ -1,6 +1,6 @@
 # alfresco-repository
 
-![Version: 0.1.0-alpha.4](https://img.shields.io/badge/Version-0.1.0--alpha.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.1.0-A21](https://img.shields.io/badge/AppVersion-23.1.0--A21-informational?style=flat-square)
+![Version: 0.1.0-alpha.5](https://img.shields.io/badge/Version-0.1.0--alpha.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.1.0-A21](https://img.shields.io/badge/AppVersion-23.1.0--A21-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -8,7 +8,7 @@ Alfresco content repository Helm chart
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0-alpha.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0-alpha.4 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
@@ -19,6 +19,8 @@ Alfresco content repository Helm chart
 | args | list | `[]` |  |
 | command | list | `[]` |  |
 | configuration.db.driver | string | `nil` | JDBC driver class of the driver if none is provided the it is guessed from the URL provided |
+| configuration.db.existingConfigMap.keys | object | `{}` |  |
+| configuration.db.existingConfigMap.name | string | `nil` |  |
 | configuration.db.existingSecret | object | `{"keys":{"password":"DATABASE_PASSWORD","username":"DATABASE_USERNAME"},"name":null}` | Existing secret and their keys where to find the database username & password. |
 | configuration.db.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password |
 | configuration.db.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username |
@@ -37,6 +39,18 @@ Alfresco content repository Helm chart
 | configuration.messageBroker.username | string | `nil` | Username to authenticate to the message broker |
 | configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties |
 | configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repo as env vars. It's also used to pass the Alfresco license which will be mounted as a file when the secret as the `purpose` value set to `acs-license`. Other secrets will be used as env variables. |
+| configuration.search.existingConfigMap.keys.flavor | string | `"SEARCH_FLAVOR"` |  |
+| configuration.search.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap  holding the search service URL. |
+| configuration.search.existingConfigMap.name | string | `nil` | Optional configmap containing the search service URL |
+| configuration.search.existingSecret.keys.password | string | `"ELASTICSEARCH_PASSWORD"` | Key within the secret holding the search service password |
+| configuration.search.existingSecret.keys.solr-secret | string | `"SOLR_SECRET"` | Key within the secret holding the index shared secret |
+| configuration.search.existingSecret.keys.username | string | `"ELASTICSEARCH_USERNAME"` | Key within the secret holding the search service username |
+| configuration.search.existingSecret.name | string | `nil` | Optional secret containing search service credentials |
+| configuration.search.flavor | string | `"noindex"` | Can be either `solr`, `elasticsearch` or `noindex` |
+| configuration.search.password | string | `nil` | Password to authenticate to the search service |
+| configuration.search.solr-secret | string | `nil` | Solr inter process shared secret |
+| configuration.search.url | string | `nil` | URL where the search service can be found |
+| configuration.search.username | string | `nil` | Username to authenticate to the search service |
 | environment.CATALINA_OPTS | string | `nil` | Java or Tomcat system properties. These properties must be provided as a single string following the pattern "-Dproperty=value -Dmoreprop=morevalue". They override the content of the global properties file but you should prefer providing configuration.repository.existingConfigMap. |
 | environment.JAVA_OPTS | string | `"-XX:MaxRAMPercentage=80"` | Set JVM options |
 | extraInitContainers | list | `[]` |  |

@@ -53,6 +53,9 @@ configuration:
         username: DATABASE_USERNAME
         # -- Key within the secret holding the database password
         password: DATABASE_PASSWORD
+    existingConfigMap:
+      name: null
+      keys: {}
   messageBroker:
     # -- Message Broker URL
     url: null
@@ -80,6 +83,34 @@ configuration:
     # -- Hazelcast listener port Only change it if you use a custom image where
     # the port has been changed from default
     port: 5701
+  search:
+    # -- Can be either `solr`, `elasticsearch` or `noindex`
+    flavor: noindex
+    # -- URL where the search service can be found
+    url: null
+    # -- Username to authenticate to the search service
+    username: null
+    # -- Password to authenticate to the search service
+    password: null
+    # -- Solr inter process shared secret
+    solr-secret: null
+    existingSecret:
+      # -- Optional secret containing search service credentials
+      name: null
+      keys:
+        # -- Key within the secret holding the search service username
+        username: ELASTICSEARCH_USERNAME
+        # -- Key within the secret holding the search service password
+        password: ELASTICSEARCH_PASSWORD
+        # -- Key within the secret holding the index shared secret
+        solr-secret: SOLR_SECRET
+    existingConfigMap:
+      # -- Optional configmap containing the search service URL
+      name: null
+      keys:
+        # -- Key within the configmap  holding the search service URL.
+        url: SEARCH_URL
+        flavor: SEARCH_FLAVOR
 
 environment:
   # -- Java or Tomcat system properties. These properties must be provided as a
