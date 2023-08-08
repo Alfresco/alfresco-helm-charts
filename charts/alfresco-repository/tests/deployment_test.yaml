@@ -122,7 +122,16 @@ tests:
               fsType: ext4
         template: deployment.yaml
 
-  - it: should have default license volume
+  - it: should have custom secrets for license and subsytems
+    set:
+      configuration:
+        repository:
+          existingSecrets:
+            - name: repository-secrets
+              purpose: acs-license
+              key: license.lic
+            - name: myAzureAD
+              purpose: subsystems:Authentication:ldap-ad
     asserts:
       - contains:
           path: spec.template.spec.volumes
@@ -141,6 +150,21 @@ tests:
           content: &acsLicenseMount
             name: acs-license
             mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license
+            readOnly: true
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: myAzureAD
+            secret:
+              secretName: myAzureAD
+              defaultMode: 0400
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: myAzureAD
+            mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap-ad/myAzureAD
             readOnly: true
         template: deployment.yaml
   - it: should not have any license volume but vars instead
