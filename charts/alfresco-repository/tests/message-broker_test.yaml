@@ -12,7 +12,7 @@ tests:
       - matchRegex:
           path: data.CATALINA_OPTS
           pattern: |-
-            (^\s*|[^\s]\s+)-Dmessaging.broker.url=failover:\(tcp://localhost:61616\)($|\s)
+            (^\s*|[^\s]\s+)-Dmessaging.broker.url="failover:\(tcp://localhost:61616\)"($|\s)
         template: configmap.yaml
       - equal:
           path: spec.template.metadata.annotations['checksum.config.alfresco.org/messageBroker']
@@ -53,7 +53,7 @@ tests:
       - matchRegex:
           path: data.CATALINA_OPTS
           pattern: |-
-            (^\s*|[^\s]\s+)-Dmessaging.broker.url=failover:\(ssl://amqs:61617\)($|\s)
+            (^\s*|[^\s]\s+)-Dmessaging.broker.url="failover:\(ssl://amqs:61617\)"($|\s)
         template: configmap.yaml
       - hasDocuments:
           count: 0

@@ -24,7 +24,7 @@ data:
     -Dmetadata-keystore.password=mp6yc0UD9e
     -Dmetadata-keystore.metadata.password=oKIWzVdEdA
     {{- $mq_url := include "alfresco-common.reqRead.cm.then.value" (dict "ns" $.Release.Namespace "key" "url" "context" .messageBroker) }}
-    -Dmessaging.broker.url={{ template "alfresco-repository.mq.url.valid" $mq_url }}
+    -Dmessaging.broker.url={{ include "alfresco-repository.mq.url.valid" $mq_url | quote }}
     -Dmessaging.broker.username="$BROKER_USERNAME"
     -Dmessaging.broker.password="$BROKER_PASSWORD"
     {{- $search_flavor := include "alfresco-common.read.cm.then.value" (dict "ns" $.Release.Namespace "key" "flavor" "context" .search) }}
