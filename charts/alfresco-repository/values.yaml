@@ -24,10 +24,11 @@ configuration:
     # -- a configmap containing the "alfresco-global.properties" key populated
     # with actual Alfresco repository properties
     existingConfigMap: null
-    # -- A list of secrets to make available to the repo as env vars. It's also
-    # used to pass the Alfresco license which will be mounted as a file when
-    # the secret as the `purpose` value set to `acs-license`. Other secrets
-    # will be used as env variables.
+    # -- A list of secrets to make available to the repository as env vars.
+    # This list can contain special secrets marked with predifined `purpose`:
+    # `acs-license` to pass license as a secret or subsystems:*:* to configure
+    # an Alfresco subsystem. See [Configuring Alfresco
+    # Subsystem](#configuring-alfresco-subsystems) for more details.
     existingSecrets:
       - name: repository-secrets
         key: license.lic
@@ -166,7 +167,10 @@ service:
   port: 80
 
 ingress:
+  # -- Toggle ingress
   enabled: true
+  # -- provide annotations for nginx ingress (no toher ingress is supported at
+  # that point)
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 5g
     nginx.ingress.kubernetes.io/affinity: "cookie"
@@ -175,7 +179,7 @@ ingress:
   hosts:
     - paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

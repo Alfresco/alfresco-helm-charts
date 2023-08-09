@@ -1,6 +1,6 @@
 # alfresco-repository
 
-![Version: 0.1.0-alpha.5](https://img.shields.io/badge/Version-0.1.0--alpha.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.1.0-A21](https://img.shields.io/badge/AppVersion-23.1.0--A21-informational?style=flat-square)
+![Version: 0.1.0-alpha.6](https://img.shields.io/badge/Version-0.1.0--alpha.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.1.0-A21](https://img.shields.io/badge/AppVersion-23.1.0--A21-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -10,6 +10,82 @@ Alfresco content repository Helm chart
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0-alpha.4 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
+
+## Configuring Alfresco subsystems
+
+This chart offers a simple mechanism to configure Alfresco Subsystems.
+
+The way it's done is pretty simple, one just need to provide a secret which
+contains all the configuration files for the subsystems. The secret needs to be
+added to the list of `.Values.configuration.repository.existingSecrets`:
+
+```yaml
+configuration:
+  repository:
+    existingSecrets:
+      - name: ldap1
+        purpose: subsystems:Authentication:ldap
+```
+
+For the above configuration to work there are some rules to follow:
+
+* `name` must match both the secret name and the subsystem instance name (in
+   case the subsystem name must be referenced somewhere else, e.g. in
+  `authentication.chain`)
+* `purpose` must be of the form: `subsystems:subsystemName:subsystemType`
+* The secret must contain all necessary files to configure the subsystem.
+  Usually a bean definition XML file and properties file. (see example below)
+
+### Examples: ContentStore configuration
+
+Creating the subsystem's secret:
+
+Place all the configuration files in a folder on your local system. Sample
+files can be extracted from the S3 AMP file. For more details on the content of
+the files check out the [Alfresco S3 connector
+doc](https://docs.alfresco.com/aws-s3/latest/config/#content-store-subsystems#).
+
+```bash
+mkdir s3-config
+unzip -d s3-config ~/Downloads/alfresco-s3-connector-5.1.0.amp config/alfresco/subsystems/ContentStore/S3/
+tree s3-config
+s3-config/
+ ├── s3-contentstore-context.xml
+ └── s3-contentstore.properties
+...
+```
+
+> By default subsystem Beans may include other XML files from upper level
+> directories. This is not possible with as kubernetes secrets are projected
+> down from a single directory (mount point). If your subsystem config does
+> this kind of inclusion you'll need to amend the Bean to not use `import`
+> statement or import from the current directory.
+
+Create the secret using `kubectl`
+
+```shell
+kubectl create secret generic S3 --from-file=s3-config/
+```
+
+Pass the following `configuration.repository.existingSecrets` together with the
+property to set the new contentstore subsystem as the default contentstore:
+
+```yaml
+configuration:
+  repository:
+    existingSecrets:
+      - name: repository-secrets
+        key: license.lic
+        purpose: acs-license
+      - name: S3
+        purpose: subsystems:ContentStore:S3
+environment:
+  CATALINA_OPTS: >-
+    -Dfilecontentstore.subsystem.name=S3
+```
+
+> As a list, `configuration.repository/existingSecrets` cannot be merged so you
+> would need to re-define the license secret to have it deployed.
 
 ## Values
 
@@ -38,7 +114,7 @@ Alfresco content repository Helm chart
 | configuration.messageBroker.url | string | `nil` | Message Broker URL |
 | configuration.messageBroker.username | string | `nil` | Username to authenticate to the message broker |
 | configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties |
-| configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repo as env vars. It's also used to pass the Alfresco license which will be mounted as a file when the secret as the `purpose` value set to `acs-license`. Other secrets will be used as env variables. |
+| configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repository as env vars. This list can contain special secrets marked with predifined `purpose`: `acs-license` to pass license as a secret or subsystems:*:* to configure an Alfresco subsystem. See [Configuring Alfresco Subsystem](#configuring-alfresco-subsystems) for more details. |
 | configuration.search.existingConfigMap.keys.flavor | string | `"SEARCH_FLAVOR"` |  |
 | configuration.search.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap  holding the search service URL. |
 | configuration.search.existingConfigMap.name | string | `nil` | Optional configmap containing the search service URL |
@@ -65,13 +141,10 @@ Alfresco content repository Helm chart
 | image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
 | image.tag | string | `"23.1.0-A21"` |  |
 | imagePullSecrets | list | `[]` |  |
-| ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
-| ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
-| ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-hash" | string | `"sha1"` |  |
-| ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-name" | string | `"alfrescoRepo"` |  |
-| ingress.enabled | bool | `true` |  |
+| ingress.annotations | object | `{"nginx.ingress.kubernetes.io/affinity":"cookie","nginx.ingress.kubernetes.io/proxy-body-size":"5g","nginx.ingress.kubernetes.io/session-cookie-hash":"sha1","nginx.ingress.kubernetes.io/session-cookie-name":"alfrescoRepo"}` | provide annotations for nginx ingress (no toher ingress is supported at that point) |
+| ingress.enabled | bool | `true` | Toggle ingress |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
+| ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |
 | livenessProbe.httpGet.path | string | `"/alfresco/api/-default-/public/alfresco/versions/1/probes/-live-"` |  |
 | livenessProbe.httpGet.port | string | `"http"` |  |
@@ -118,5 +191,3 @@ Alfresco content repository Helm chart
 | terminationGracePeriod | int | `60` | How long to wait for tomcat to complete shutdown before killing it |
 | tolerations | list | `[]` |  |
 
-----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
