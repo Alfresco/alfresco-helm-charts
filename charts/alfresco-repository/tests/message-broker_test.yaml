@@ -3,25 +3,17 @@ suite: test Message Queue Broker
 templates:
   - secret-message-broker.yaml
   - deployment.yaml
-  - configmap-message-broker.yaml
+  - configmap.yaml
 values:
   - values/test_values.yaml
 tests:
   - it: should render ActiveMQ minimal config
     asserts:
-      - contains:
-          path: spec.template.spec.containers[0].env
-          content:
-            name: BROKER_URL
-            valueFrom:
-              configMapKeyRef:
-                name: RELEASE-NAME-configmap-mq
-                key: BROKER_URL
-        template: deployment.yaml
-      - equal:
-          path: data.BROKER_URL
-          value: failover:(tcp://localhost:61616)
-        template: configmap-message-broker.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dmessaging.broker.url="failover:\(tcp://localhost:61616\)"($|\s)
+        template: configmap.yaml
       - equal:
           path: spec.template.metadata.annotations['checksum.config.alfresco.org/messageBroker']
           value: &cfgsum c2939932894f879e156e0ccaebb43552058663dbbedd75c74afd20a86662e054
@@ -36,20 +28,33 @@ tests:
             keys:
               username: mquser
               password: mqpass
-          existingConfigMap:
-            name: mqConfigmap
-            keys:
-              url: myurl
+          url: ssl://amqs:61617
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
           content:
-            name: BROKER_URL
+            name: BROKER_USERNAME
             valueFrom:
-              configMapKeyRef:
-                name: mqConfigmap
-                key: myurl
+              secretKeyRef:
+                name: mqSecret
+                key: mquser
+                optional: true
         template: deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mqSecret
+                key: mqpass
+                optional: true
+        template: deployment.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dmessaging.broker.url="failover:\(ssl://amqs:61617\)"($|\s)
+        template: configmap.yaml
       - hasDocuments:
           count: 0
         template: secret-message-broker.yaml

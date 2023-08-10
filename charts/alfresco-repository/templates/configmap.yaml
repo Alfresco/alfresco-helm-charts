@@ -10,7 +10,8 @@ data:
   CATALINA_OPTS: >-
     {{- with .Values.configuration }}
     -Ddeployment.method=HELM_CHART
-    -Ddb.url=jdbc:{{ .db.url }}
+    {{- $db_url := include "alfresco-common.read.cm.then.value" (dict "ns" $.Release.Namespace "key" "url" "context" .db) }}
+    -Ddb.url=jdbc:{{ $db_url }}
     -Ddb.username=${DATABASE_USERNAME}
     -Ddb.password=${DATABASE_PASSWORD}
     -Ddb.driver={{ include "alfresco-common.db.driver" .db }}
@@ -22,7 +23,8 @@ data:
     -Dmetadata-keystore.metadata.algorithm=DESede
     -Dmetadata-keystore.password=mp6yc0UD9e
     -Dmetadata-keystore.metadata.password=oKIWzVdEdA
-    -Dmessaging.broker.url="$BROKER_URL"
+    {{- $mq_url := include "alfresco-common.reqRead.cm.then.value" (dict "ns" $.Release.Namespace "key" "url" "context" .messageBroker) }}
+    -Dmessaging.broker.url={{ include "alfresco-repository.mq.url.valid" $mq_url | quote }}
     -Dmessaging.broker.username="$BROKER_USERNAME"
     -Dmessaging.broker.password="$BROKER_PASSWORD"
     {{- $search_flavor := include "alfresco-common.read.cm.then.value" (dict "ns" $.Release.Namespace "key" "flavor" "context" .search) }}
