@@ -1,6 +1,6 @@
 # alfresco-search-service
 
-![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![AppVersion: 2.0.7](https://img.shields.io/badge/AppVersion-2.0.7-informational?style=flat-square)
+![Version: 1.3.0](https://img.shields.io/badge/Version-1.3.0-informational?style=flat-square) ![AppVersion: 2.0.8](https://img.shields.io/badge/AppVersion-2.0.8-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
@@ -16,7 +16,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | alfresco-insight-zeppelin | 2.1.0 |
+|  | alfresco-insight-zeppelin | 2.2.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
 
 ## Values
@@ -44,7 +44,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | insightEngineImage.internalPort | string | `nil` | container's port search service is listening on change if your custom image use a different port. |
 | insightEngineImage.pullPolicy | string | `"IfNotPresent"` |  |
 | insightEngineImage.repository | string | `"quay.io/alfresco/insight-engine"` |  |
-| insightEngineImage.tag | string | `"2.0.7"` |  |
+| insightEngineImage.tag | string | `"2.0.8"` |  |
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
@@ -68,7 +68,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | searchServicesImage.internalPort | string | `nil` | container's port search service is listening on change if your custom image use a different port. |
 | searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
 | searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
-| searchServicesImage.tag | string | `"2.0.7"` |  |
+| searchServicesImage.tag | string | `"2.0.8"` |  |
 | service.name | string | `"solr"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | tolerations | string | `nil` | Define Tolerations for scheduling SOLR |

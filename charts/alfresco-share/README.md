@@ -1,6 +1,6 @@
 # alfresco-share
 
-![Version: 0.1.0-alpha.2](https://img.shields.io/badge/Version-0.1.0--alpha.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 7.4.0](https://img.shields.io/badge/AppVersion-7.4.0-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 7.4.0](https://img.shields.io/badge/AppVersion-7.4.0-informational?style=flat-square)
 
 Alfresco Share Helm chart for Kubernetes
 
@@ -8,7 +8,7 @@ Alfresco Share Helm chart for Kubernetes
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts | alfresco-common | 2.1.0-alpha.2 |
+| https://alfresco.github.io/alfresco-helm-charts | alfresco-common | 2.1.0 |
 
 ## Values
 

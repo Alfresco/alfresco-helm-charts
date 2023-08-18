@@ -1,6 +1,6 @@
 # alfresco-insight-zeppelin
 
-![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![AppVersion: 2.0.7](https://img.shields.io/badge/AppVersion-2.0.7-informational?style=flat-square)
+![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square) ![AppVersion: 2.0.8](https://img.shields.io/badge/AppVersion-2.0.8-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Insight Zeppelin
 
@@ -16,7 +16,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0 |
 
 ## Values
 
@@ -30,7 +30,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/insight-zeppelin"` |  |
-| image.tag | string | `"2.0.7"` |  |
+| image.tag | string | `"2.0.8"` |  |
 | ingress.path | string | `"/zeppelin"` |  |
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
@@ -41,7 +41,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | readinessProbe.initialDelaySeconds | int | `60` |  |
 | readinessProbe.periodSeconds | int | `20` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
-| replicaCount | int | `1` | Define the alfresco-insight-zeppelin properties to use in the k8s cluster This is chart will be installed as part of Alfresco Insight Engine |
+| replicaCount | int | `1` |  |
 | repository | object | `{}` | The parent chart will set the values for "repository.host" and "repository.port" |
 | resources.limits.cpu | string | `"1"` |  |
 | resources.limits.memory | string | `"1024Mi"` |  |
