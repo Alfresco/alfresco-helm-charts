@@ -35,7 +35,7 @@ targets:
       name: charts/alfresco-search-service
       file: values.yaml
       key: $.searchServicesImage.tag
-  alfresco-inssight-engine-image:
+  alfresco-insight-engine-image:
     name: Alfresco Insight Engine Image tags
     kind: helmchart
     sourceid: alfresco-insight-engine-image
