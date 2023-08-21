@@ -28,7 +28,7 @@ Alfresco Share Helm chart for Kubernetes
 | image.port | int | `8080` | Internal port where the pod is listening. Should only be changed is you use a custom image which uses a different port. |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
-| image.tag | string | `"7.4.0.1"` |  |
+| image.tag | string | `"7.4.1"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
