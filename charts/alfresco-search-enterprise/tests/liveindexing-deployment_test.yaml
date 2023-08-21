@@ -22,7 +22,7 @@ tests:
       - equal:
           path: data.SPRING_ELASTICSEARCH_REST_URIS
           value: https://someglobally.used.host:1443
-          template: liveindexing-config.yaml
+        template: liveindexing-config.yaml
 
   - it: |
       Render elasticsearch Liveindexing configmap,
@@ -33,7 +33,7 @@ tests:
       - equal:
           path: data.SPRING_ELASTICSEARCH_REST_URIS
           value: http://elasticsearch-master:9200
-          template: liveindexing-config.yaml
+        template: liveindexing-config.yaml
 
   - it: should have env vars for elasticsearch credentials
     values: *testvalues
