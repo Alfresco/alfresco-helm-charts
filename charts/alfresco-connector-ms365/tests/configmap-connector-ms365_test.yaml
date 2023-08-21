@@ -1,5 +1,5 @@
 ---
-suite: test connector-ms365 deployment
+suite: test configmap
 templates:
   - config-connector-ms365.yaml
 tests:
