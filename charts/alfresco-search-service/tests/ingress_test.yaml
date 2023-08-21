@@ -13,15 +13,15 @@ tests:
           value: RELEASE-NAME-alfresco-search-service-solr
         template: ingress.yaml
       - equal:
-          path: metadata.annotations.nginx\.ingress\.kubernetes\.io/auth-secret
+          path: metadata.annotations['nginx.ingress.kubernetes.io/auth-secret']
           value: staging/solradmin
         template: ingress.yaml
       - equal:
-          path: metadata.annotations.nginx\.ingress\.kubernetes\.io/enable-cors
+          path: metadata.annotations['nginx.ingress.kubernetes.io/enable-cors']
           value: true
         template: ingress.yaml
       - equal:
-          path: metadata.annotations.nginx\.ingress\.kubernetes\.io/auth-type
+          path: metadata.annotations['nginx.ingress.kubernetes.io/auth-type']
           value: basic
         template: ingress.yaml
 
@@ -32,6 +32,6 @@ tests:
         existingSecretName: my-custom-ingress-secret
     asserts:
       - equal:
-          path: metadata.annotations.nginx\.ingress\.kubernetes\.io/auth-secret
+          path: metadata.annotations['nginx.ingress.kubernetes.io/auth-secret']
           value: my-custom-ingress-secret
         template: ingress.yaml
