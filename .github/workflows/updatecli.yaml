@@ -22,6 +22,8 @@ jobs:
     if: inputs.update-type == 'chart'
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.41.0
@@ -47,6 +49,8 @@ jobs:
         with:
           commit_message: |
             🛠 Updatecli pipeline bump
+          commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
+          commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
           branch: ${{ github.ref_name == 'main' && 'updatecli-bump-helm' || github.ref_name }}
           create_branch: ${{ github.ref_name == 'main' }}
           push_options: ${{ github.ref_name == 'main' && '--force' || '' }}
@@ -56,6 +60,8 @@ jobs:
     if: inputs.update-type == 'values'
     steps:
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.41.0
@@ -95,6 +101,8 @@ jobs:
         with:
           commit_message: |
             🛠 Updatecli pipeline acs bump
+          commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
+          commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
           branch: ${{ github.ref_name == 'main' && 'updatecli-bump-acs' || github.ref_name }}
           create_branch: ${{ github.ref_name == 'main' }}
           push_options: ${{ github.ref_name == 'main' && '--force' || '' }}
