@@ -48,7 +48,7 @@ jobs:
       - name: Regenerate helm docs if necessary
         uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@OPSEXP-2234
         with:
-          pre-commit-args: helm-docs
+          pre-commit-args: helm-docs || true
           skip_checkout: "true"
 
       - name: Git Auto Commit
@@ -107,7 +107,7 @@ jobs:
       - name: Regenerate helm docs if necessary
         uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@OPSEXP-2234
         with:
-          pre-commit-args: helm-docs
+          pre-commit-args: helm-docs || true
           skip_checkout: "true"
 
       - name: Git Auto Commit
