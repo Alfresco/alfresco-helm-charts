@@ -2,6 +2,13 @@
 name: Version bumps
 on:
   workflow_dispatch:
+    inputs:
+      update-type:
+        description: 'Which dependencies to bump'
+        type: choice
+        options:
+        - chart
+        - values
 
 permissions:
   contents: write
@@ -12,10 +19,9 @@ env:
 jobs:
   bump-helm-dependencies:
     runs-on: ubuntu-latest
+    if: inputs.update-type == 'chart'
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
 
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.41.0
@@ -41,16 +47,15 @@ jobs:
         with:
           commit_message: |
             🛠 Updatecli pipeline bump
-          branch: ${{ github.event_name == 'workflow_dispatch' && 'updatecli-bump-helm' || '' }}
-          create_branch: ${{ github.event_name == 'workflow_dispatch' }}
-          push_options: ${{ github.event_name == 'workflow_dispatch' && '--force' || '' }}
+          branch: ${{ github.ref_name == 'main' && 'updatecli-bump-helm' || github.ref_name }}
+          create_branch: ${{ github.ref_name == 'main' }}
+          push_options: ${{ github.ref_name == 'main' && '--force' || '' }}
 
   bump-acs-dependencies:
     runs-on: ubuntu-latest
+    if: inputs.update-type == 'values'
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
 
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v1.41.0
@@ -90,6 +95,6 @@ jobs:
         with:
           commit_message: |
             🛠 Updatecli pipeline acs bump
-          branch: ${{ github.event_name == 'workflow_dispatch' && 'updatecli-bump-acs' || '' }}
-          create_branch: ${{ github.event_name == 'workflow_dispatch' }}
-          push_options: ${{ github.event_name == 'workflow_dispatch' && '--force' || '' }}
+          branch: ${{ github.ref_name == 'main' && 'updatecli-bump-acs' || github.ref_name }}
+          create_branch: ${{ github.ref_name == 'main' }}
+          push_options: ${{ github.ref_name == 'main' && '--force' || '' }}
