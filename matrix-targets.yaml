@@ -81,4 +81,10 @@ matrix:
       version:
       pattern:
       helm_target: charts/alfresco-transform-service/values.yaml
-      helm_key: tika.image.tag
+      helm_key: $.tika.image.tag
+    share:
+      version:
+      pattern:
+      image:
+      helm_target: charts/alfresco-share/values.yaml
+      helm_key: $.image.tag
