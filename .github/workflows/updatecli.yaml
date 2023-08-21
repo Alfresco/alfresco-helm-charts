@@ -46,9 +46,10 @@ jobs:
 
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.36.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.36.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@OPSEXP-2234
         with:
           pre-commit-args: helm-docs
+          skip_checkout: "true"
 
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
@@ -104,9 +105,10 @@ jobs:
 
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v1.36.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v1.36.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@OPSEXP-2234
         with:
           pre-commit-args: helm-docs
+          skip_checkout: "true"
 
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v4.16.0
