@@ -10,9 +10,6 @@ on:
         - charts
         - values
 
-permissions:
-  contents: write
-
 env:
   UPDATE_CLI_VERSION: v0.57.0
 
