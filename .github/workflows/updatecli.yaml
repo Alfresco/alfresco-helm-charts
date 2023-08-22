@@ -1,5 +1,5 @@
 ---
-name: Version bumps
+name: Bump versions
 on:
   workflow_dispatch:
     inputs:
@@ -7,7 +7,7 @@ on:
         description: 'Which dependencies to bump'
         type: choice
         options:
-        - chart
+        - charts
         - values
 
 permissions:
@@ -17,9 +17,10 @@ env:
   UPDATE_CLI_VERSION: v0.57.0
 
 jobs:
-  bump-helm-dependencies:
+  bump-charts-dependencies:
     runs-on: ubuntu-latest
-    if: inputs.update-type == 'chart'
+    name: Helm charts dependencies
+    if: inputs.update-type == 'charts'
     steps:
       - uses: actions/checkout@v3
         with:
@@ -62,8 +63,9 @@ jobs:
           create_branch: ${{ github.ref_name == 'main' }}
           push_options: ${{ github.ref_name == 'main' && '--force' || '' }}
 
-  bump-acs-dependencies:
+  bump-values-dependencies:
     runs-on: ubuntu-latest
+    name: Image tags values dependencies
     if: inputs.update-type == 'values'
     steps:
       - uses: actions/checkout@v3
@@ -93,7 +95,7 @@ jobs:
           path: alfresco-updatecli
 
       - name: Preprocess values file appending existing keys only
-        run: yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") | explode(.)' matrix-targets.yaml | tee ./merged.yaml
+        run: yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") | explode(.)' updatecli-matrix-targets.yaml | tee ./merged.yaml
 
       - name: updatecli apply
         # path to values file must be relative https://github.com/updatecli/updatecli/issues/1253
