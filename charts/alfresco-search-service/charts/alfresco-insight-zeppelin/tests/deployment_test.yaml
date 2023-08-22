@@ -2,6 +2,7 @@
 suite: test deployment
 templates:
   - deployment.yaml
+  - config.yaml
 tests:
   - it: should have basic metadata in place
     asserts:
@@ -21,3 +22,4 @@ tests:
             limits:
               cpu: "1"
               memory: "1024Mi"
+        template: deployment.yaml

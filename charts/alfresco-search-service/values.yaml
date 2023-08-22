@@ -20,18 +20,18 @@ podSecurityContext:
   fsGroup: 33007
 searchServicesImage:
   repository: quay.io/alfresco/search-services
-  tag: 2.0.7
+  tag: 2.0.8
   pullPolicy: &searchDockerImagePullPolicy IfNotPresent
   # -- container's port search service is listening on
   # change if your custom image use a different port.
-  internalPort:
+  internalPort: null
 insightEngineImage:
   repository: quay.io/alfresco/insight-engine
-  tag: 2.0.7
+  tag: 2.0.8
   pullPolicy: *searchDockerImagePullPolicy
   # -- container's port search service is listening on
   # change if your custom image use a different port.
-  internalPort:
+  internalPort: null
 service:
   name: solr
   type: ClusterIP
@@ -45,7 +45,6 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-
   # -- Default solr basic auth user/password: admin / admin
   # You can create your own with htpasswd utilility & encode it with base640.
   # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'`
@@ -66,7 +65,7 @@ repository:
   # -- ACS repository hostname
   host:
   # -- ACS repository port
-  port:
+  port: null
 environment:
   SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
 resources:
@@ -99,7 +98,6 @@ livenessProbe:
   initialDelaySeconds: 130
   periodSeconds: 20
   timeoutSeconds: 10
-
 initContainer:
   image:
     repository: busybox
@@ -110,7 +108,6 @@ initContainer:
       memory: "5Mi"
     limits:
       memory: "10Mi"
-
 global:
   tracking:
     # -- Select how solr and repo authenticate to each other
@@ -121,7 +118,6 @@ global:
     # -- Shared secret to authenticate repo/solr traffic
     sharedsecret: null
   alfrescoRegistryPullSecrets: quay-registry-secret
-
 # -- Define Affinity for scheduling SOLR
 affinity:
 #   nodeAffinity:
@@ -132,14 +128,12 @@ affinity:
 #             operator: In
 #             values:
 #             - "true"
-
 # -- Define Tolerations for scheduling SOLR
 tolerations:
 # - key: "SolrMasterOnly"
 #   operator: "Equal"
 #   value: "true"
 #   effect: "NoSchedule"
-
 # -- Define PVNodeAffinity for scheduling SOLR
 PvNodeAffinity:
 #   required:
