@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       INSTALL_NAMESPACE: alfresco
-      # See latest https://github.com/kubernetes-sigs/kind/releases for the latest available builds
-      KIND_NODE_IMAGE: kindest/node:v1.24.7@sha256:577c630ce8e509131eab1aea12c022190978dd2f745aac5eb1fe65c0807eb315
+      # See https://github.com/kubernetes-sigs/kind/releases for the latest available images
+      KIND_NODE_IMAGE: kindest/node:v1.27.3@sha256:3966ac761ae0136263ffdb6cfd4db23ef8a83cba8a463690e98317add2c9ba72
       TEST_ALL_CHARTS: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && 'true' || 'false' }}
       TEST_ALL_CHARTS_ARG: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && '--all' || '' }}
     steps:
