@@ -77,7 +77,11 @@ jobs:
       - name: Prepare charts mocks for testing
         if: steps.list-changed.outputs.changed == 'true'
         run: |
-          for C in $(ct lsc --config ct-lint.yaml $TEST_ALL_CHARTS_ARG); do
+          ITER_CMD="ct lsc --config ct-lint.yaml"
+          if [[ "$TEST_ALL_CHARTS" == "true" ]]; then
+            ITER_CMD="ls -1 charts | awk -v prefix='charts/' '{print prefix $0}'"
+          fi
+          for C in $($ITER_CMD); do
             if [ -d "${C}/ci/kustomize/" ]; then
               echo "Prepare mocks for ${C}"
               pushd "${C}/ci/kustomize/"
