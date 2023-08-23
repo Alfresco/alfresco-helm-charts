@@ -77,11 +77,12 @@ jobs:
       - name: Prepare charts mocks for testing
         if: steps.list-changed.outputs.changed == 'true'
         run: |
-          for C in $(ct lsc --config ct-lint.yaml); do
+          for C in $(ct lsc --config ct-lint.yaml $TEST_ALL_CHARTS_ARG); do
             if [ -d "${C}/ci/kustomize/" ]; then
+              echo "Prepare mocks for ${C}"
               pushd "${C}/ci/kustomize/"
               kubectl kustomize --enable-helm . | \
-              kubectl -n "$INSTALL_NAMESPACE" apply -f -
+                kubectl -n "$INSTALL_NAMESPACE" apply -f -
               popd
             fi
           done
