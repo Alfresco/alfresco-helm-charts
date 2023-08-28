@@ -1,6 +1,6 @@
 # activemq
 
-![Version: 3.2.0](https://img.shields.io/badge/Version-3.2.0-informational?style=flat-square) ![AppVersion: 5.17.5](https://img.shields.io/badge/AppVersion-5.17.5-informational?style=flat-square)
+![Version: 3.3.0](https://img.shields.io/badge/Version-3.3.0-informational?style=flat-square) ![AppVersion: 5.17.5](https://img.shields.io/badge/AppVersion-5.17.5-informational?style=flat-square)
 
 A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (not meant to be used in production).
 
@@ -22,6 +22,7 @@ A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate A
 | adminUser.password | string | `"admin"` | Password for the default user with administrative privileges |
 | adminUser.user | string | `"admin"` | Username for the default user with administrative privileges |
 | enabled | bool | `true` |  |
+| global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` | Authenticate to image registry before pulling by providing an existing secret of type kubernetes.io/dockerconfigjson |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"alfresco/alfresco-activemq"` |  |
 | image.tag | string | `"5.17.5-jre17-rockylinux8"` |  |
