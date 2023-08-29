@@ -67,3 +67,7 @@ persistence:
   data:
     mountPath: "/opt/activemq/data"
     subPath: "alfresco-infrastructure/activemq-data"
+global:
+  # -- Authenticate to image registry before pulling by providing an existing
+  # secret of type kubernetes.io/dockerconfigjson
+  alfrescoRegistryPullSecrets: quay-registry-secret

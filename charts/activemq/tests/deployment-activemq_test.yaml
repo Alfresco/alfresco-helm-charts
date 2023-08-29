@@ -35,3 +35,21 @@ tests:
               cpu: "2"
               memory: "2048Mi"
         template: deployment-activemq.yaml
+
+  - it: should render default image pull secrets
+    asserts:
+      - contains:
+          path: spec.template.spec.imagePullSecrets
+          content:
+            name: quay-registry-secret
+        template: deployment-activemq.yaml
+
+  - it: should render custom image pull secrets
+    set:
+      global.alfrescoRegistryPullSecrets: regcred
+    asserts:
+      - contains:
+          path: spec.template.spec.imagePullSecrets
+          content:
+            name: regcred
+        template: deployment-activemq.yaml

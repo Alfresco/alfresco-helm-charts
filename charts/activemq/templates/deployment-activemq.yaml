@@ -22,6 +22,7 @@ spec:
         {{- include "activemq.selectorLabels" . | nindent 8 }}
     spec:
     {{- include "component-pod-security-context" .Values | indent 4 }}
+      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       containers:
       - name: {{ .Values.service.name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
