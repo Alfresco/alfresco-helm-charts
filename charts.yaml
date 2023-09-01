@@ -1,0 +1,16 @@
+charts:
+  activemq: null
+  alfresco-ai-transformer: null
+  alfresco-common:
+    noAppVersion: true
+  alfresco-connector-ms365: null
+  alfresco-connector-msteams: null
+  alfresco-repository: null
+  alfresco-search-enterprise:
+    tagKey: $.liveIndexing.mediation.image.tag
+  alfresco-search-service:
+    tagKey: $.searchServicesImage.tag
+  alfresco-share: null
+  alfresco-sync-service: null
+  alfresco-transform-service:
+    tagKey: $.transformrouter.image.tag

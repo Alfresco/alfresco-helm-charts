@@ -40,3 +40,9 @@ repos:
         args:
           - --exclude-charts=alfresco-common,alfresco-sync-service
           - --values-dir=ci
+  - repo: local
+    hooks:
+    -   id: update-charts-yml
+        name: update charts.yml file
+        language: system
+        entry: python gen_chartyml.py

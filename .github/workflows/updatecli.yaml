@@ -94,13 +94,22 @@ jobs:
       - name: Preprocess values file appending existing keys only
         run: yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") | explode(.)' updatecli-matrix-targets.yaml | tee ./merged.yaml
 
-      - name: updatecli apply
+      - name: updatecli apply to bump tags of images in values files
         # path to values file must be relative https://github.com/updatecli/updatecli/issues/1253
         run: updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v ./merged.yaml
         env:
           QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+
+      - name: Regenerate charts.yml if necessary
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v3.1.0
+        with:
+          pre-commit-args: update-charts-yml || true
+          skip_checkout: "true"
+
+      - name: updatecli apply to sync appVersion in every Chart.yaml
+        run: updatecli apply -c updatecli.d/appVersion.tpl -v ./charts.yaml
 
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v3.1.0
       - name: Regenerate helm docs if necessary
