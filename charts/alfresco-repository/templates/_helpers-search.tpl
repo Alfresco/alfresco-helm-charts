@@ -15,19 +15,14 @@ Usage: include "alfresco-repository.search.flavor.valid" "FLAVOR"
 {{/*
 Check whether a Solr shared secret was provided
 
-Usage: include "alfresco-repository.solr.security" (dict "ns" "" "search" (dict "existingConfigMap" (dict "name" "" "keys" (dict "solr-secret" ""))))
+Usage: include "alfresco-repository.solr.security" (dict "search" (dict "existingConfigMap" (dict "name" "" "keys" (dict "solr-secret" ""))))
 
 */}}
 {{- define "alfresco-repository.solr.security" -}}
-{{ $ns := .ns }}
-{{- with .search }}
-  {{- if .existingSecret.name }}
-    {{- $defaultLookup := (dict "data" dict) }}
-    {{- $lookup := lookup "v1" "Secret" $ns .existingSecret.name | default $defaultLookup }}
-    {{- hasKey $lookup.data (index .existingSecret.keys "solr-secret") | ternary "secret" "none" }}
-  {{- else -}}
-    {{- not (empty (index . "solr-secret")) | ternary "secret" "none" }}
-  {{- end }}
+{{- if .existingSecret.name }}
+  {{- print "secret" }}
+{{- else }}
+  {{- not (empty (index . "solr-secret")) | ternary "secret" "none" }}
 {{- end }}
 {{- end -}}
 
@@ -44,7 +39,7 @@ Usage: include "alfresco-repository.search.config" $
   -Dsolr.host={{ template "alfresco-common.url.host" $search_url }}
   -Dsolr.port={{ template "alfresco-common.url.port" $search_url }}
   -Dsolr.base.url={{ include "alfresco-common.url.path" $search_url | default "/solr" }}
-  {{- $solr_comms := include "alfresco-repository.solr.security" (dict "ns" $.Release.Namespace "search" . ) }}
+  {{- $solr_comms := include "alfresco-repository.solr.security" . }}
   -Dsolr.secureComms={{ $solr_comms }}
   {{- if eq "secret" $solr_comms }}
   -Dsolr.sharedSecret=$SOLR_SECRET
