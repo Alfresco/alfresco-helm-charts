@@ -44,5 +44,6 @@ repos:
     hooks:
     -   id: update-charts-yml
         name: update charts.yml file
-        language: system
-        entry: python gen_chartyml.py
+        language: docker_image
+        entry: ghcr.io/alfresco/build-tools-gen-index-yml:OPSEXP-1908@sha256:3c3c6e9bb3df80be1f63bb972588685b5e297faeb7dc56324da5ad24da81294b
+        pass_filenames: false
