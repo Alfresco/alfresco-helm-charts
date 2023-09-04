@@ -16,10 +16,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v3.1.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v3.2.0
       - name: Install kubeconform helm plugin
         run: |
           helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.1.12
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v3.1.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v3.2.0
         with:
           auto-commit: "true"
