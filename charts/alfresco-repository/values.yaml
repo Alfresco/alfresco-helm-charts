@@ -56,7 +56,8 @@ configuration:
         password: DATABASE_PASSWORD
     existingConfigMap:
       name: null
-      keys: {}
+      keys:
+        url: DATABASE_URL
   messageBroker:
     # -- Message Broker URL
     url: null

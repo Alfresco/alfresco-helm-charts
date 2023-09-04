@@ -63,6 +63,8 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- $dbsecretCtx := dict }}
           {{- $dbsecret := "" }}
+          {{- $dbcmCtx := dict }}
+          {{- $dbcm := "" }}
           {{- $mqsecretCtx := dict }}
           {{- $mqsecret := "" }}
           {{- $searchsecretCtx := dict }}
@@ -70,12 +72,24 @@ spec:
           {{- with .Values.configuration }}
             {{- $dbsecretCtx = dict "Values" (dict "nameOverride" "secret-database") "Chart" $.Chart "Release" $.Release }}
             {{- $dbsecret = coalesce .db.existingSecret.name (include "alfresco-repository.fullname" $dbsecretCtx) }}
+            {{- $dbcmCtx = dict "Values" (dict "nameOverride" "alfresco-database") "Chart" $.Chart "Release" $.Release }}
+            {{- $dbcm = coalesce .db.existingConfigMap.name (include "alfresco-repository.fullname" $dbcmCtx) }}
             {{- $mqsecretCtx = dict "Values" (dict "nameOverride" "secret-mq") "Chart" $.Chart "Release" $.Release }}
             {{- $mqsecret = coalesce .messageBroker.existingSecret.name (include "alfresco-repository.fullname" $mqsecretCtx) }}
             {{- $searchsecretCtx = dict "Values" (dict "nameOverride" "secret-search") "Chart" $.Chart "Release" $.Release }}
             {{- $searchsecret = coalesce .search.existingSecret.name (include "alfresco-repository.fullname" $searchsecretCtx) }}
           {{- end }}
           env:
+            - name: DATABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $dbcm }}
+                  key: {{ .Values.configuration.db.existingConfigMap.keys.url }}
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $dbsecret }}
+                  key: {{ .Values.configuration.db.existingSecret.keys.password }}
             - name: DATABASE_USERNAME
               valueFrom:
                 secretKeyRef:
