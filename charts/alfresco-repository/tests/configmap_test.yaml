@@ -3,6 +3,7 @@ suite: test repository default configmap
 templates:
   - configmap.yaml
   - configmap-database.yaml
+  - configmap-mq.yaml
 values: &test_values
   - values/test_values.yaml
 tests:
@@ -134,3 +135,36 @@ tests:
       - failedTemplate:
           errorMessage: >-
             database URL MUST be provided WITHOUT the 'jdbc' prefix.
+
+  - it: should render ActiveMQ config as needed
+    template: configmap-mq.yaml
+    asserts:
+      - equal:
+          path: data.BROKER_URL
+          value: failover:(tcp://localhost:61616)
+  - it: should render ActiveMQ minimal config
+    template: configmap-mq.yaml
+    set:
+      configuration:
+        messageBroker:
+          url: ssl://amqs:61617
+    asserts:
+      - equal:
+          path: data.BROKER_URL
+          value: failover:(ssl://amqs:61617)
+  - it: should NOT render configmaps
+    set:
+      configuration:
+        db:
+          existingConfigMap:
+            name: mydbcm
+        messageBroker:
+          existingConfigMap:
+            name: mymqcm
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: configmap-database.yaml
+      - hasDocuments:
+          count: 0
+        template: configmap-mq.yaml

@@ -9,11 +9,6 @@ values:
 tests:
   - it: should render ActiveMQ minimal config
     asserts:
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^\s*|[^\s]\s+)-Dmessaging.broker.url="failover:\(tcp://localhost:61616\)"($|\s)
-        template: configmap.yaml
       - equal:
           path: spec.template.metadata.annotations['checksum.config.alfresco.org/messageBroker']
           value: &cfgsum c2939932894f879e156e0ccaebb43552058663dbbedd75c74afd20a86662e054
@@ -28,7 +23,6 @@ tests:
             keys:
               username: mquser
               password: mqpass
-          url: ssl://amqs:61617
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
@@ -50,11 +44,6 @@ tests:
                 key: mqpass
                 optional: true
         template: deployment.yaml
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^\s*|[^\s]\s+)-Dmessaging.broker.url="failover:\(ssl://amqs:61617\)"($|\s)
-        template: configmap.yaml
       - hasDocuments:
           count: 0
         template: secret-message-broker.yaml
