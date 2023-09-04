@@ -192,3 +192,33 @@ tests:
                 key: MYSECRETVAR
                 name: mysecret
         template: deployment.yaml
+
+  - it: should render default DATABASE URL
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-database
+                key: DATABASE_URL
+
+  - it: should render configured DATABASE URL
+    set:
+      configuration:
+        db:
+          existingConfigMap:
+            name: mycm
+            keys:
+              url: DBURL
+              driver: DBDRIVER
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: mycm
+                key: DBURL
