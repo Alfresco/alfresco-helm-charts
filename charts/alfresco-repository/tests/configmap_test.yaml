@@ -54,6 +54,15 @@ tests:
       - equal:
           path: data.DATABASE_URL
           value: mysql://sandy:secret@myhost1:1111
+      - equal:
+          path: data.DATABASE_HOST
+          value: myhost1
+      - equal:
+          path: data.DATABASE_PORT
+          value: "1111"
+      - equal:
+          path: data.DATABASE_DRIVER
+          value: com.mysql.jdbc.Driver
 
   - it: should render PostgreSQL properties
     template: configmap-database.yaml
@@ -65,17 +74,35 @@ tests:
       - equal:
           path: data.DATABASE_URL
           value: postgresql://pghost/alfdb
+      - equal:
+          path: data.DATABASE_HOST
+          value: pghost
+      - equal:
+          path: data.DATABASE_PORT
+          value: "5432"
+      - equal:
+          path: data.DATABASE_DRIVER
+          value: org.postgresql.Driver
 
   - it: should render MS SQL server properties
     template: configmap-database.yaml
     set:
       configuration:
         db:
-          url: sqlserver://sqlservrhost;databaseName=alfdb;lockTimeout=1000;
+          url: sqlserver://sqlserverhost;databaseName=alfdb;lockTimeout=1000;
     asserts:
       - equal:
           path: data.DATABASE_URL
-          value: sqlserver://sqlservrhost;databaseName=alfdb;lockTimeout=1000;
+          value: sqlserver://sqlserverhost;databaseName=alfdb;lockTimeout=1000;
+      - equal:
+          path: data.DATABASE_HOST
+          value: sqlserverhost
+      - equal:
+          path: data.DATABASE_PORT
+          value: "1434"
+      - equal:
+          path: data.DATABASE_DRIVER
+          value: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   - it: should render Oracle properties
     template: configmap-database.yaml
@@ -87,6 +114,15 @@ tests:
       - equal:
           path: data.DATABASE_URL
           value: oracle:thin:@tcp://mydbhost:1521/mydbservice
+      - equal:
+          path: data.DATABASE_HOST
+          value: mydbhost
+      - equal:
+          path: data.DATABASE_PORT
+          value: "1521"
+      - equal:
+          path: data.DATABASE_DRIVER
+          value: oracle.jdbc.OracleDriver
 
   - it: should fail without proper db URL
     template: configmap.yaml
