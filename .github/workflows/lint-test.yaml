@@ -16,7 +16,7 @@ jobs:
       TEST_ALL_CHARTS_ARG: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && '--all' || '' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
