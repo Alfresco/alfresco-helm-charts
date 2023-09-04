@@ -95,6 +95,9 @@ environment:
 | args | list | `[]` |  |
 | command | list | `[]` |  |
 | configuration.db.driver | string | `nil` | JDBC driver class of the driver if none is provided the it is guessed from the URL provided |
+| configuration.db.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` |  |
+| configuration.db.existingConfigMap.keys.host | string | `"DATABASE_HOST"` |  |
+| configuration.db.existingConfigMap.keys.port | string | `"DATABASE_PORT"` |  |
 | configuration.db.existingConfigMap.keys.url | string | `"DATABASE_URL"` |  |
 | configuration.db.existingConfigMap.name | string | `nil` |  |
 | configuration.db.existingSecret | object | `{"keys":{"password":"DATABASE_PASSWORD","username":"DATABASE_USERNAME"},"name":null}` | Existing secret and their keys where to find the database username & password. |

@@ -58,6 +58,9 @@ configuration:
       name: null
       keys:
         url: DATABASE_URL
+        host: DATABASE_HOST
+        port: DATABASE_PORT
+        driver: DATABASE_DRIVER
   messageBroker:
     # -- Message Broker URL
     url: null

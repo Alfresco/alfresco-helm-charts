@@ -10,11 +10,10 @@ data:
   CATALINA_OPTS: >-
     {{- with .Values.configuration }}
     -Ddeployment.method=HELM_CHART
-    {{- $db_url := include "alfresco-common.read.cm.then.value" (dict "ns" $.Release.Namespace "key" "url" "context" .db) }}
-    -Ddb.url=jdbc:{{ $db_url }}
+    -Ddb.url="jdbc:$DATABASE_URL"
     -Ddb.username=${DATABASE_USERNAME}
     -Ddb.password=${DATABASE_PASSWORD}
-    -Ddb.driver={{ include "alfresco-common.db.driver" .db }}
+    -Ddb.driver="$DATABASE_DRIVER"
     -Dencryption.keystore.type=JCEKS
     -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
     -Dencryption.keyAlgorithm=DESede

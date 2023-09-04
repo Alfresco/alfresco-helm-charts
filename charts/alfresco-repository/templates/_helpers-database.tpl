@@ -103,3 +103,33 @@ Provide repository database driverClass
 {{- $scheme := index (include "alfresco-repository.jdbc.parser" .url | fromJson) "jdbc" "scheme" }}
 {{- coalesce .driver (include "alfresco-repository.db.default.driver" $scheme) }}
 {{- end -}}
+
+{{/*
+Render database config as env vars
+*/}}
+{{- define "alfresco-repository.db.env" -}}
+{{- $dbcmCtx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
+{{- with .Values.configuration.db }}
+{{- $dbcm := coalesce .existingConfigMap.name (include "alfresco-repository.fullname" $dbcmCtx) }}
+- name: DATABASE_URL
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $dbcm }}
+      key: {{ .existingConfigMap.keys.url }}
+- name: DATABASE_HOST
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $dbcm }}
+      key: {{ .existingConfigMap.keys.host }}
+- name: DATABASE_PORT
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $dbcm }}
+      key: {{ .existingConfigMap.keys.port }}
+- name: DATABASE_DRIVER
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $dbcm }}
+      key: {{ .existingConfigMap.keys.driver }}
+{{- end }}
+{{- end -}}
