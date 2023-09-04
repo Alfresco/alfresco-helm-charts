@@ -4,7 +4,7 @@ We're just manipulating the string URl to make it parseable by urlParse.
 It MUST NOT be used directly.
 */}}
 {{- define "alfresco-repository.jdbc.parser" -}}
-{{- $jdbc_url := required "Alfresco repository needs a database to start. Please provide a valid URL in db.url value" . }}
+{{- $jdbc_url := required "Alfresco repository needs a database to start. Please provide a valid URL in configuration.db.url value" . }}
 {{- if hasPrefix "jdbc:" $jdbc_url }}
 {{- fail "database URL MUST be provided WITHOUT the 'jdbc' prefix." }}
 {{- end }}
