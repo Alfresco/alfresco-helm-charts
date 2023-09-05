@@ -77,3 +77,27 @@ SEARCH_HOST: {{ template "alfresco-common.url.host" . }}
 SEARCH_PORT: {{ include "alfresco-common.url.port" . | quote }}
 SEARCH_SECURECOMMS: {{ eq "https" (include "alfresco-common.url.scheme" .) | ternary "https" "none"  }}
 {{- end -}}
+
+{{/*
+Render search config as env vars in deployment
+*/}}
+{{- define "alfresco-repository.search.env" -}}
+{{- $cmCtx := dict "Values" (dict "nameOverride" "alfresco-search") "Chart" .Chart "Release" .Release }}
+{{- with .Values.configuration.search }}
+{{- $cm := coalesce .existingConfigMap.name (include "alfresco-repository.fullname" $cmCtx) }}
+{{- range list "host" "port" "securecomms" }}
+- name: {{ printf "SEARCH_%s" . }}
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $cm }}
+      key: {{ index $.Values.configuration.search.existingConfigMap.keys . }}
+{{- if eq "solr6" (include "alfresco-repository.search.flavor.valid" $.Values.configuration.search.flavor) }}
+- name: SOLR_BASE_URL
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $cm }}
+      key: {{ $.Values.configuration.search.existingConfigMap.keys.solr_base_url }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end -}}

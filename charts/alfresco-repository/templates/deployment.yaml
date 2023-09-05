@@ -75,6 +75,7 @@ spec:
           {{- end }}
           env:
             {{ include "alfresco-repository.db.env" . | indent 12 }}
+            {{ include "alfresco-repository.search.env" . | indent 12 }}
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
