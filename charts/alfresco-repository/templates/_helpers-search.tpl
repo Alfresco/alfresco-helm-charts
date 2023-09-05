@@ -83,23 +83,29 @@ Render search config as env vars in deployment
 */}}
 {{- define "alfresco-repository.search.env" -}}
 {{- $cmCtx := dict "Values" (dict "nameOverride" "alfresco-search") "Chart" .Chart "Release" .Release }}
+{{- $flavor := include "alfresco-repository.search.flavor.valid" $.Values.configuration.search.flavor }}
 {{- with .Values.configuration.search }}
 {{- $cm := coalesce .existingConfigMap.name (include "alfresco-repository.fullname" $cmCtx) }}
+- name: SEARCH_FLAVOR
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $cm }}
+      key: {{ .existingConfigMap.keys.flavor }}
+{{- if ne "noindex" $flavor }}
 {{- range list "host" "port" "securecomms" }}
 - name: {{ printf "SEARCH_%s" (upper .) }}
   valueFrom:
     configMapKeyRef:
       name: {{ $cm }}
       key: {{ index $.Values.configuration.search.existingConfigMap.keys . }}
-      optional: true
 {{- end }}
-{{- if eq "solr6" (include "alfresco-repository.search.flavor.valid" $.Values.configuration.search.flavor) }}
+{{- end }}
+{{- if eq "solr6" $flavor }}
 - name: SOLR_BASE_URL
   valueFrom:
     configMapKeyRef:
       name: {{ $cm }}
       key: {{ .existingConfigMap.keys.solr_base_url }}
-      optional: true
 {{- end }}
 {{- end }}
 {{- end -}}

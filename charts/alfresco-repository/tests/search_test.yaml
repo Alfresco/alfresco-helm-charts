@@ -19,6 +19,16 @@ tests:
           path: data.SEARCH_FLAVOR
           value: noindex
         template: configmap-search.yaml
+      - &has_default_search_flavor
+        contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SEARCH_FLAVOR
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-search
+                key: SEARCH_FLAVOR
+        template: deployment.yaml
 
   - it: should render a working Solr6 config based on values
     set:
@@ -28,7 +38,8 @@ tests:
           solr-secret: mysupersecret
           url: https://search.domain.tld/index
     template: configmap-search.yaml
-    asserts:
+    asserts: !merge-maps
+      - *has_default_search_flavor
       - equal:
           path: data.SEARCH_FLAVOR
           value: solr6
@@ -60,7 +71,8 @@ tests:
         search:
           << : *solrValues
           solr-secret: null
-    asserts:
+    asserts: !merge-maps
+      - *has_default_search_flavor
       - equal:
           path: data.SEARCH_SECURECOMMS
           value: none
@@ -83,6 +95,14 @@ tests:
               solr-secret: SOME_SECRET
     template: deployment.yaml
     asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SEARCH_FLAVOR
+            valueFrom:
+              configMapKeyRef:
+                name: mysolrcm
+                key: SEARCH_FLAVOR
       - hasDocuments:
           count: 0
         template: configmap-search.yaml
@@ -94,7 +114,6 @@ tests:
               configMapKeyRef:
                 name: mysolrcm
                 key: INDEX_SERVICE_HOST
-                optional: true
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -103,7 +122,6 @@ tests:
               configMapKeyRef:
                 name: mysolrcm
                 key: INDEX_SERVICE_PORT
-                optional: true
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -112,7 +130,6 @@ tests:
               configMapKeyRef:
                 name: mysolrcm
                 key: INDEX_SERVICE_SECURITY
-                optional: true
       - contains:
           path: spec.template.spec.containers[0].env
           content:
