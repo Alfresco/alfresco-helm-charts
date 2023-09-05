@@ -79,11 +79,6 @@ spec:
                 secretKeyRef:
                   name: {{ $dbsecret }}
                   key: {{ .Values.configuration.db.existingSecret.keys.username }}
-            - name: DATABASE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ $dbsecret }}
-                  key: {{ .Values.configuration.db.existingSecret.keys.password }}
           {{- range .Values.configuration.repository.existingSecrets }}
             {{- if not (or (eq "acs-license" .purpose) (hasPrefix "subsystems:" (.purpose | default ""))) }}
               {{- $repoSecretsKeyRef := dict "name" .name "key" .key }}
