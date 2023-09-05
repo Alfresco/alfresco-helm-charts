@@ -27,32 +27,32 @@ tests:
           flavor: solr6
           solr-secret: mysupersecret
           url: https://search.domain.tld/index
+    template: configmap-search.yaml
     asserts:
       - equal:
           path: data.SEARCH_FLAVOR
           value: solr6
-        template: configmap-search.yaml
       - equal:
-          path: data.SOLR_PORT
+          path: data.SEARCH_PORT
           value: "443"
-        template: configmap-search.yaml
       - equal:
-          path: data.SOLR_HOST
+          path: data.SEARCH_HOST
           value: search.domain.tld
-        template: configmap-search.yaml
       - equal:
           path: data.SOLR_BASE_URL
           value: /index
-        template: configmap-search.yaml
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^\s*|[^\s]\s+)-Dsolr\.secureComms=secret($|\s)
-        template: configmap.yaml
+      - equal:
+          path: data.SEARCH_SECURECOMMS
+          value: secret
       - equal:
           path: data.SOLR_SECRET
           value: bXlzdXBlcnNlY3JldA==
         template: secret-search.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.secureComms="\$SEARCH_SECURECOMMS"($|\s)
+        template: configmap.yaml
 
   - it: should render a working Solr6 config based on values (noauth)
     set:
@@ -61,11 +61,10 @@ tests:
           << : *solrValues
           solr-secret: null
     asserts:
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^\s*|[^\s]\s+)-Dsolr\.secureComms=none($|\s)
-        template: configmap.yaml
+      - equal:
+          path: data.SEARCH_SECURECOMMS
+          value: none
+        template: configmap-search.yaml
 
   - it: should not render any search configmap
     set:
@@ -109,13 +108,13 @@ tests:
           path: data.SEARCH_FLAVOR
           value: elasticsearch
       - equal:
-          path: data.ELASTICSEARCH_PORT
+          path: data.SEARCH_PORT
           value: "443"
       - equal:
-          path: data.ELASTICSEARCH_SECURECOMMS
+          path: data.SEARCH_SECURECOMMS
           value: https
       - equal:
-          path: data.ELASTICSEARCH_HOST
+          path: data.SEARCH_HOST
           value: search.domain.tld
       - equal:
           path: data.ELASTICSEARCH_USERNAME
@@ -125,6 +124,11 @@ tests:
           path: data.ELASTICSEARCH_PASSWORD
           value: ZXNwYXNz
         template: secret-search.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Delasticsearch\.secureComms=\$SEARCH_SECURECOMMS($|\s)
+        template: configmap.yaml
 
   - it: should render a working ES config based on values (noauth)
     set:
@@ -134,7 +138,7 @@ tests:
           url: http://search.domain.tld/index
     asserts:
       - equal:
-          path: data.ELASTICSEARCH_SECURECOMMS
+          path: data.SEARCH_SECURECOMMS
           value: none
         template: configmap-search.yaml
       - hasDocuments:

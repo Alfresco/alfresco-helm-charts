@@ -15,7 +15,7 @@ data:
   SEARCH_URL: {{ .url }}
   {{- end }}
   {{- if eq "solr6" $flavor }}
-  {{- include "alfresco-repository.solr.cm" .url | nindent 2 }}
+  {{- include "alfresco-repository.solr.cm" . | nindent 2 }}
   {{- else if eq "elasticsearch" $flavor }}
   {{- include "alfresco-repository.elasticsearch.cm" .url | nindent 2 }}
   {{- end }}

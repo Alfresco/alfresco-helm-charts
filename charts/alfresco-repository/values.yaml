@@ -116,6 +116,10 @@ configuration:
         # -- Key within the configmap  holding the search service URL.
         url: SEARCH_URL
         flavor: SEARCH_FLAVOR
+        host: SEARCH_HOST
+        port: SEARCH_PORT
+        securecomms: SEARCH_SECURECOMMS
+        solr_base_url: SOLR_BASE_URL
 
 environment:
   # -- Java or Tomcat system properties. These properties must be provided as a

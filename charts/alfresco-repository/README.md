@@ -119,6 +119,10 @@ environment:
 | configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties |
 | configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repository as env vars. This list can contain special secrets marked with predifined `purpose`: `acs-license` to pass license as a secret or subsystems:*:* to configure an Alfresco subsystem. See [Configuring Alfresco Subsystem](#configuring-alfresco-subsystems) for more details. |
 | configuration.search.existingConfigMap.keys.flavor | string | `"SEARCH_FLAVOR"` |  |
+| configuration.search.existingConfigMap.keys.host | string | `"SEARCH_HOST"` |  |
+| configuration.search.existingConfigMap.keys.port | string | `"SEARCH_PORT"` |  |
+| configuration.search.existingConfigMap.keys.securecomms | string | `"SEARCH_SECURECOMMS"` |  |
+| configuration.search.existingConfigMap.keys.solr_base_url | string | `"SOLR_BASE_URL"` |  |
 | configuration.search.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap  holding the search service URL. |
 | configuration.search.existingConfigMap.name | string | `nil` | Optional configmap containing the search service URL |
 | configuration.search.existingSecret.keys.password | string | `"ELASTICSEARCH_PASSWORD"` | Key within the secret holding the search service password |
