@@ -39,7 +39,7 @@ Usage: include "alfresco-repository.search.config" $
   -Dsolr.port="$SEARCH_PORT"
   -Dsolr.base.url="$SOLR_BASE_URL"
   -Dsolr.secureComms="$SEARCH_SECURECOMMS"
-  {{- if .existingSecret.name }}
+  {{- if or .existingSecret.name (index . "solr-secret") }}
   -Dsolr.sharedSecret=$SOLR_SECRET
   {{- end }}
   {{- else if eq "elasticsearch" (include "alfresco-repository.search.flavor.valid" .flavor) }}
@@ -56,7 +56,7 @@ Usage: include "alfresco-repository.search.config" $
 {{/*
 Compute Alfresco Repository Solr env from search configuration context
 
-Usage: include "alfresco-repository.solr.cm dict "url" "" flavor ""
+Usage: include "alfresco-repository.solr.cm dict "url" "" "solr-secret" "" "existingSecret" (dict "name" "")
 
 */}}
 {{- define "alfresco-repository.solr.cm" -}}
