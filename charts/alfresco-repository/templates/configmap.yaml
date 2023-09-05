@@ -25,11 +25,8 @@ data:
     -Dmessaging.broker.url="$BROKER_URL"
     -Dmessaging.broker.username="$BROKER_USERNAME"
     -Dmessaging.broker.password="$BROKER_PASSWORD"
-    {{- $search_flavor := include "alfresco-common.read.cm.then.value" (dict "ns" $.Release.Namespace "key" "flavor" "context" .search) }}
-    -Dindex.subsystem.name={{ template "alfresco-repository.search.flavor.valid" $search_flavor }}
-    {{- if not (eq "noindex" .search.flavor) }}
-      {{- include "alfresco-repository.search.config" $ | indent 2 }}
-    {{- end }}
+    -Dindex.subsystem.name="$SEARCH_FLAVOR"
+    {{- include "alfresco-repository.search.config" $ | indent 2 }}
     {{- end }}
     {{ .Values.environment.CATALINA_OPTS | default "" }}
   JAVA_OPTS: >-

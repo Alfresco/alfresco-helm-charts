@@ -1,0 +1,27 @@
+{{- with .Values.configuration.search }}
+{{- if not .existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: >-
+    {{- $ctx := dict "Values" (dict "nameOverride" "alfresco-search") "Chart" $.Chart "Release" $.Release }}
+    {{ template "alfresco-repository.fullname" $ctx }}
+  labels:
+    {{- include "alfresco-repository.labels" $ | nindent 4 }}
+data:
+  {{- $flavor := include "alfresco-repository.search.flavor.valid" .flavor }}
+  SEARCH_FLAVOR: {{ $flavor }}
+  {{- if ne "noindex" $flavor }}
+  SEARCH_URL: {{ .url }}
+  {{- end }}
+  {{- if eq "solr6" $flavor }}
+  SOLR_HOST: {{ template "alfresco-common.url.host" .url }}
+  SOLR_PORT: {{ include "alfresco-common.url.port" .url | quote }}
+  SOLR_BASE_URL: {{ include "alfresco-common.url.path" .url | default "/solr" }}
+  {{- else if eq "elasticsearch" $flavor }}
+  ELASTICSEARCH_HOST: {{ template "alfresco-common.url.host" .url }}
+  ELASTICSEARCH_PORT: {{ include "alfresco-common.url.port" .url | quote }}
+  ELASTICSEARCH_SECURECOMMS: {{ eq "https" (include "alfresco-common.url.scheme" .url) | ternary "https" "none"  }}
+  {{- end }}
+{{- end }}
+{{- end }}
