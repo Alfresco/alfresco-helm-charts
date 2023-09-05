@@ -91,7 +91,7 @@ tests:
           content:
             name: SEARCH_HOST
             valueFrom:
-              configmapKeyRef:
+              configMapKeyRef:
                 name: mysolrcm
                 key: INDEX_SERVICE_HOST
                 optional: true
@@ -100,7 +100,7 @@ tests:
           content:
             name: SEARCH_PORT
             valueFrom:
-              configmapKeyRef:
+              configMapKeyRef:
                 name: mysolrcm
                 key: INDEX_SERVICE_PORT
                 optional: true
@@ -109,7 +109,7 @@ tests:
           content:
             name: SEARCH_SECURECOMMS
             valueFrom:
-              configmapKeyRef:
+              configMapKeyRef:
                 name: mysolrcm
                 key: INDEX_SERVICE_SECURITY
                 optional: true
@@ -239,4 +239,4 @@ tests:
       - failedTemplate:
           errorMessage: |-
             Search Service flavor MUST be one of 'noindex', 'solr6' or 'elasticsearch'
-        template: configmap.yaml
+        template: deployment.yaml
