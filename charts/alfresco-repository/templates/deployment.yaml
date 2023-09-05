@@ -14,12 +14,6 @@ spec:
   template:
     metadata:
       annotations:
-        {{- with .Values.configuration }}
-          {{- $context := . }}
-          {{- range $k := (omit . "repository" "hz" | keys) }}
-            {{- include "alfresco-common.checksum.config" (dict "ns" $.Release.Namespace "context" $context "configKey" $k) | indent 8 }}
-          {{- end }}
-        {{- end }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
