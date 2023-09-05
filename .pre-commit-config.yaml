@@ -45,6 +45,6 @@ repos:
     -   id: update-charts-yml
         name: update charts.yml file
         language: docker_image
-        entry: ghcr.io/alfresco/build-tools-gen-index-yml:OPSEXP-1908@sha256:3c3c6e9bb3df80be1f63bb972588685b5e297faeb7dc56324da5ad24da81294b
+        entry: ghcr.io/alfresco/build-tools-gen-index-yml:master@sha256:8e077a69e29aff588221c02c4727525ca21c7912569c40122179086b8477f606
         files: ^charts/[^/]+/Chart.yaml
         pass_filenames: false
