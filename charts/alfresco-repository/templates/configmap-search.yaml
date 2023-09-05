@@ -15,13 +15,9 @@ data:
   SEARCH_URL: {{ .url }}
   {{- end }}
   {{- if eq "solr6" $flavor }}
-  SOLR_HOST: {{ template "alfresco-common.url.host" .url }}
-  SOLR_PORT: {{ include "alfresco-common.url.port" .url | quote }}
-  SOLR_BASE_URL: {{ include "alfresco-common.url.path" .url | default "/solr" }}
+  {{- include "alfresco-repository.solr.cm" .url | nindent 2 }}
   {{- else if eq "elasticsearch" $flavor }}
-  ELASTICSEARCH_HOST: {{ template "alfresco-common.url.host" .url }}
-  ELASTICSEARCH_PORT: {{ include "alfresco-common.url.port" .url | quote }}
-  ELASTICSEARCH_SECURECOMMS: {{ eq "https" (include "alfresco-common.url.scheme" .url) | ternary "https" "none"  }}
+  {{- include "alfresco-repository.elasticsearch.cm" .url | nindent 2 }}
   {{- end }}
 {{- end }}
 {{- end }}

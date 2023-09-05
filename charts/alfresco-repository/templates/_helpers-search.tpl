@@ -53,3 +53,27 @@ Usage: include "alfresco-repository.search.config" $
   {{- end }}
 {{- end }}
 {{- end -}}
+
+{{/*
+Compute Alfresco Repository Solr env from search URL
+
+Usage: include "alfresco-repository.solr.cm "URL"
+
+*/}}
+{{- define "alfresco-repository.solr.cm" -}}
+SOLR_HOST: {{ template "alfresco-common.url.host" . }}
+SOLR_PORT: {{ include "alfresco-common.url.port" . | quote }}
+SOLR_BASE_URL: {{ include "alfresco-common.url.path" . | default "/solr" }}
+{{- end -}}
+
+{{/*
+Compute Alfresco Repository Elasticsearch env from search URL
+
+Usage: include "alfresco-repository.elasticsearch.cm "URL"
+
+*/}}
+{{- define "alfresco-repository.elasticsearch.cm" -}}
+ELASTICSEARCH_HOST: {{ template "alfresco-common.url.host" . }}
+ELASTICSEARCH_PORT: {{ include "alfresco-common.url.port" . | quote }}
+ELASTICSEARCH_SECURECOMMS: {{ eq "https" (include "alfresco-common.url.scheme" .) | ternary "https" "none"  }}
+{{- end -}}
