@@ -30,3 +30,16 @@ Usage: include "alfresco-repository.db.env" $
       key: {{ .existingConfigMap.keys.driver }}
 {{- end }}
 {{- end -}}
+
+{{/*
+Render database configmap
+
+Usage: include "alfresco-repository.db.cm" (dict "url" "" "driver" "")
+
+*/}}
+{{- define "alfresco-repository.db.cm" -}}
+  DATABASE_URL: {{ .url }}
+  DATABASE_HOST: {{ template "alfresco-common.db.hostname" .url }}
+  DATABASE_PORT: {{ include "alfresco-common.db.port" . | quote }}
+  DATABASE_DRIVER: {{ template "alfresco-common.db.driver" . }}
+{{- end -}}

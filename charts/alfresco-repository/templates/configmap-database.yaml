@@ -8,10 +8,5 @@ metadata:
   labels:
     {{- include "alfresco-repository.labels" . | nindent 4 }}
 data:
-  {{- with .Values.configuration.db }}
-  DATABASE_URL: {{ .url }}
-  DATABASE_HOST: {{ template "alfresco-common.db.hostname" .url }}
-  DATABASE_PORT: {{ include "alfresco-common.db.port" . | quote }}
-  DATABASE_DRIVER: {{ template "alfresco-common.db.driver" . }}
-  {{- end }}
+  {{ template "alfresco-repository.db.cm" .Values.configuration.db }}
 {{- end }}
