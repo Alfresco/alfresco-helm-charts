@@ -94,19 +94,18 @@ environment:
 | affinity | object | `{}` |  |
 | args | list | `[]` |  |
 | command | list | `[]` |  |
-| configuration.db.driver | string | `nil` | JDBC driver class of the driver if none is provided the it is guessed from the URL provided |
+| configuration.db.driver | string | `""` | JDBC driver class of the driver if none is provided the it is guessed from the URL provided |
 | configuration.db.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` |  |
 | configuration.db.existingConfigMap.keys.host | string | `"DATABASE_HOST"` |  |
 | configuration.db.existingConfigMap.keys.port | string | `"DATABASE_PORT"` |  |
 | configuration.db.existingConfigMap.keys.url | string | `"DATABASE_URL"` |  |
-| configuration.db.existingConfigMap.name | string | `nil` |  |
-| configuration.db.existingSecret | object | `{"keys":{"password":"DATABASE_PASSWORD","username":"DATABASE_USERNAME"},"name":null}` | Existing secret and their keys where to find the database username & password. |
+| configuration.db.existingConfigMap.name | string | `""` |  |
 | configuration.db.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password |
 | configuration.db.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username |
-| configuration.db.existingSecret.name | string | `nil` | Name of a pre-existing secret containing database credentials |
-| configuration.db.password | string | `nil` | Password to authentication to the repository database |
-| configuration.db.url | string | `nil` | JDBC url of the database WITHOUT the "jdbc:" prefix This is a mandatory parameter |
-| configuration.db.username | string | `nil` | Username to authentication to the repository database |
+| configuration.db.existingSecret.name | string | `""` | Name of a pre-existing secret containing database credentials |
+| configuration.db.password | string | `""` | Password to authentication to the repository database |
+| configuration.db.url | string | `""` | JDBC url of the database WITHOUT the "jdbc:" prefix This is a mandatory parameter |
+| configuration.db.username | string | `""` | Username to authentication to the repository database |
 | configuration.hz.port | int | `5701` | Hazelcast listener port Only change it if you use a custom image where the port has been changed from default |
 | configuration.messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap  holding the message broker URL. It MUST be a failover URL as per the spec below: https://activemq.apache.org/failover-transport-reference.html |
 | configuration.messageBroker.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing the meesage broker URL |
