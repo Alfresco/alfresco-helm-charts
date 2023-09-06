@@ -55,7 +55,7 @@ reindexing:
     pullPolicy: IfNotPresent
   pathIndexingEnabled: true
   db:
-    # -- Provide the full JDBC url to connect to database service
+    # -- Provide the full JDBC url to connect to database service e.g.: `jdbc:postgresql://hostname:5432/database`
     url: null
     # -- The username required to access the service
     username: null
@@ -73,6 +73,7 @@ reindexing:
       # -- Alternatively, provide database connection details via an existing configmap
       name: null
       keys:
+        # -- Key within the configmap holding the full JDBC url to connect to database service
         url: DATABASE_URL
   resources:
     requests:
