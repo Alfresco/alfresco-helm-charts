@@ -1,0 +1,35 @@
+---
+suite: test database configmap
+templates:
+  - configmap-database.yaml
+tests:
+  - it: should have empty url as default
+    asserts:
+      - equal:
+          path: data.DATABASE_URL
+          value: null
+
+  - it: should have url populated when url value is set
+    set:
+      reindexing:
+        db:
+          url: jdbc:postgresql://hostname:5432/
+    asserts:
+      - equal:
+          path: data.DATABASE_URL
+          value: jdbc:postgresql://hostname:5432/
+
+  - it: should not render cm when existingConfigMap is set
+    set:
+      reindexing.db.existingConfigMap:
+        name: external-database-configmap
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not render cm when reindexing is disabled
+    set:
+      reindexing.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
