@@ -1,5 +1,5 @@
 {{- define "alfresco-search-enterprise.searchIndexExistingSecretName" -}}
-{{ $.Values.searchIndex.existingSecretName | default $.Values.global.elasticsearch.existingSecretName | default (printf "%s-elasticsearch-secret" (include "alfresco-search-enterprise.fullName" $)) }}
+{{ $.Values.searchIndex.existingSecretName | default $.Values.global.elasticsearch.existingSecretName | default (printf "%s-elasticsearch-secret" (include "alfresco-search-enterprise.fullname" $)) }}
 {{- end -}}
 
 {{- define "alfresco-search-enterprise.config.spring" -}}

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-search-enterprise.fullName" . }}-configmap
+  name: {{ template "alfresco-search-enterprise.fullname" . }}-configmap
   labels:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
 data:

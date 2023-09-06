@@ -1,6 +1,6 @@
 # alfresco-search-enterprise
 
-![Version: 1.4.0](https://img.shields.io/badge/Version-1.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
+![Version: 2.0.0-alpha.1](https://img.shields.io/badge/Version-2.0.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -60,6 +60,17 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | pathIndexingComponent.enabled | bool | `true` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
+| reindexing.db.database | string | `"alfresco"` | The database name to use |
+| reindexing.db.existingConfigMap.keys.url | string | `"DATABASE_URL"` |  |
+| reindexing.db.existingConfigMap.name | string | `nil` | Alternatively, provide database connection details via an existing configmap |
+| reindexing.db.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password |
+| reindexing.db.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username |
+| reindexing.db.existingSecret.name | string | `nil` | Alternatively, provide database credentials via an existing secret |
+| reindexing.db.hostname | string | `"postgresql-acs"` | The host where database service is available |
+| reindexing.db.password | string | `nil` | The password required to access the service |
+| reindexing.db.port | int | `5432` | The port where service is available |
+| reindexing.db.url | string | `nil` | Provide a full JDBC url |
+| reindexing.db.username | string | `nil` | The username required to access the service |
 | reindexing.enabled | bool | `true` | Create the one-shot job to trigger the reindexing of repo contents |
 | reindexing.image.pullPolicy | string | `"IfNotPresent"` |  |
 | reindexing.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-reindexing"` |  |
@@ -67,13 +78,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | reindexing.initcontainers.waitForRepository.resources.limits.cpu | string | `"0.25"` |  |
 | reindexing.initcontainers.waitForRepository.resources.limits.memory | string | `"10Mi"` |  |
 | reindexing.pathIndexingEnabled | bool | `true` |  |
-| reindexing.postgresql.database | string | `"alfresco"` | The database name to use |
-| reindexing.postgresql.existingSecretName | string | `nil` | Alternatively, provide connection details via an existing secret that contains DATABASE_USERNAME and DATABASE_PASSWORD keys |
-| reindexing.postgresql.hostname | string | `"postgresql-acs"` | The host where database service is available |
-| reindexing.postgresql.password | string | `nil` | The password required to access the service |
-| reindexing.postgresql.port | int | `5432` | The port where service is available |
-| reindexing.postgresql.url | string | `nil` |  |
-| reindexing.postgresql.user | string | `nil` | The username required to access the service |
 | reindexing.resources.limits.cpu | string | `"2"` |  |
 | reindexing.resources.limits.memory | string | `"512Mi"` |  |
 | reindexing.resources.requests.cpu | string | `"0.5"` |  |
