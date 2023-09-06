@@ -5,9 +5,8 @@ templates:
 tests:
   - it: should have empty url as default
     asserts:
-      - equal:
-          path: data.DATABASE_URL
-          value: null
+      - failedTemplate:
+          errorMessage: .reindexing.db.url is mandatory when not using existingConfigMap
 
   - it: should have url populated when url value is set
     set:
