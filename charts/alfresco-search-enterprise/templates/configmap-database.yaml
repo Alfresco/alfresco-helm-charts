@@ -1,4 +1,4 @@
-{{- if not .Values.reindexing.db.existingConfigMap.name }}
+{{- if and .Values.reindexing.enabled (not .Values.reindexing.db.existingConfigMap.name) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

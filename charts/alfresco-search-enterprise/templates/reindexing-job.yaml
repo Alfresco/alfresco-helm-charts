@@ -30,11 +30,6 @@ spec:
             - secretRef:
                 name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullname" .)) .Values.messageBroker.existingSecretName }}
           env:
-            - name: SPRING_DATASOURCE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Values.reindexing.db.existingConfigMap.name | default (printf "%s-postgresql-secret" (include "alfresco-search-enterprise.fullname" $)) }}
-                  key: {{ .Values.reindexing.db.existingConfigMap.keys.url }}
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -45,6 +40,12 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.reindexing.db.existingSecret.name | default (printf "%s-postgresql-secret" (include "alfresco-search-enterprise.fullname" $)) }}
                   key: {{ .Values.reindexing.db.existingSecret.keys.password }}
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  {{- $ctx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
+                  name: {{ .Values.reindexing.db.existingConfigMap.name | default (include "alfresco-search-enterprise.fullname" $ctx) }}
+                  key: {{ .Values.reindexing.db.existingConfigMap.keys.url }}
             {{- include "spring.activemq.env" . | nindent 12 }}
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
           ports:

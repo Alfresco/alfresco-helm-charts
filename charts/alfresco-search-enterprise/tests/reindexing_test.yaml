@@ -20,7 +20,7 @@ tests:
 
   - it: should have overridden secret for spring database credentials when existingSecretName is set
     set:
-      reindexing.postgresql.existingSecretName: my-custom-secret
+      reindexing.db.existingSecret.name: my-custom-secret
     asserts:
       - equal:
           path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
@@ -32,16 +32,16 @@ tests:
   - it: should have env vars for elasticsearch credentials
     asserts:
       - equal:
-          path: spec.template.spec.containers[0].env[5].name
+          path: spec.template.spec.containers[0].env[6].name
           value: SPRING_ELASTICSEARCH_REST_USERNAME
       - equal:
-          path: spec.template.spec.containers[0].env[5].valueFrom.secretKeyRef.name
+          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
           value: RELEASE-NAME-alfresco-search-enterprise-elasticsearch-secret
       - equal:
-          path: spec.template.spec.containers[0].env[6].name
+          path: spec.template.spec.containers[0].env[7].name
           value: SPRING_ELASTICSEARCH_REST_PASSWORD
       - equal:
-          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
+          path: spec.template.spec.containers[0].env[7].valueFrom.secretKeyRef.name
           value: RELEASE-NAME-alfresco-search-enterprise-elasticsearch-secret
 
   - it: should not be present when disabled

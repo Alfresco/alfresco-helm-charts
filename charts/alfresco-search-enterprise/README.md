@@ -60,16 +60,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | pathIndexingComponent.enabled | bool | `true` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| reindexing.db.database | string | `"alfresco"` | The database name to use |
 | reindexing.db.existingConfigMap.keys.url | string | `"DATABASE_URL"` |  |
 | reindexing.db.existingConfigMap.name | string | `nil` | Alternatively, provide database connection details via an existing configmap |
 | reindexing.db.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password |
 | reindexing.db.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username |
 | reindexing.db.existingSecret.name | string | `nil` | Alternatively, provide database credentials via an existing secret |
-| reindexing.db.hostname | string | `"postgresql-acs"` | The host where database service is available |
 | reindexing.db.password | string | `nil` | The password required to access the service |
-| reindexing.db.port | int | `5432` | The port where service is available |
-| reindexing.db.url | string | `nil` | Provide a full JDBC url |
+| reindexing.db.url | string | `nil` | Provide the full JDBC url to connect to database service |
 | reindexing.db.username | string | `nil` | The username required to access the service |
 | reindexing.enabled | bool | `true` | Create the one-shot job to trigger the reindexing of repo contents |
 | reindexing.image.pullPolicy | string | `"IfNotPresent"` |  |

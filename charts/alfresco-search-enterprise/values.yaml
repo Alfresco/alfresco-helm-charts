@@ -55,14 +55,8 @@ reindexing:
     pullPolicy: IfNotPresent
   pathIndexingEnabled: true
   db:
-    # -- Provide a full JDBC url
+    # -- Provide the full JDBC url to connect to database service
     url: null
-    # -- The host where database service is available
-    hostname: postgresql-acs
-    # -- The port where service is available
-    port: 5432
-    # -- The database name to use
-    database: alfresco
     # -- The username required to access the service
     username: null
     # -- The password required to access the service
