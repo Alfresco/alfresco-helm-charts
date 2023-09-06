@@ -44,9 +44,10 @@ jobs:
 
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v3.1.0
       - name: Regenerate helm docs if necessary
+        continue-on-error: true
         uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v3.1.0
         with:
-          pre-commit-args: helm-docs || true
+          pre-commit-args: helm-docs
           skip_checkout: "true"
 
       - name: Git Auto Commit
@@ -111,8 +112,9 @@ jobs:
 
       - name: Regenerate charts.yml if necessary
         uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v3.1.0
+        continue-on-error: true
         with:
-          pre-commit-args: update-charts-yml || true
+          pre-commit-args: update-charts-yml
           skip_checkout: "true"
 
       - name: updatecli apply to sync appVersion in every Chart.yaml
@@ -120,9 +122,10 @@ jobs:
 
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v3.1.0
       - name: Regenerate helm docs if necessary
+        continue-on-error: true
         uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v3.1.0
         with:
-          pre-commit-args: helm-docs || true
+          pre-commit-args: helm-docs
           skip_checkout: "true"
 
       - name: Git Auto Commit
