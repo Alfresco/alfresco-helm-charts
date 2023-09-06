@@ -2,7 +2,7 @@
 suite: TestsSearch configurations
 templates:
   - deployment.yaml
-  - configmap.yaml
+  - configmap-repository.yaml
   - configmap-search.yaml
   - secret-search.yaml
 values:
@@ -14,7 +14,7 @@ tests:
           path: data.CATALINA_OPTS
           pattern: |-
             (^\s*|[^\s]\s+)-D(solr|elasticsearch)\.
-        template: configmap.yaml
+        template: configmap-repository.yaml
       - equal:
           path: data.SEARCH_FLAVOR
           value: noindex
@@ -63,7 +63,7 @@ tests:
           path: data.CATALINA_OPTS
           pattern: |-
             (^\s*|[^\s]\s+)-Dsolr\.secureComms="\$SEARCH_SECURECOMMS"($|\s)
-        template: configmap.yaml
+        template: configmap-repository.yaml
 
   - it: should render a working Solr6 config based on values (noauth)
     set:
@@ -174,7 +174,7 @@ tests:
           path: data.CATALINA_OPTS
           pattern: |-
             (^\s*|[^\s]\s+)-Delasticsearch\.secureComms=\$SEARCH_SECURECOMMS($|\s)
-        template: configmap.yaml
+        template: configmap-repository.yaml
 
   - it: should render a working ES config based on values (noauth)
     set:

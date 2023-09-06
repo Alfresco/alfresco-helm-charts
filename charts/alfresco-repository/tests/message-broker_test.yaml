@@ -3,7 +3,7 @@ suite: test Message Queue Broker
 templates:
   - secret-message-broker.yaml
   - deployment.yaml
-  - configmap.yaml
+  - configmap-repository.yaml
 values:
   - values/test_values.yaml
 tests:

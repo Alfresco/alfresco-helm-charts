@@ -1,14 +1,14 @@
 ---
 suite: test repository default configmap
 templates:
-  - configmap.yaml
+  - configmap-repository.yaml
   - configmap-database.yaml
   - configmap-mq.yaml
 values: &test_values
   - values/test_values.yaml
 tests:
   - it: should have some default properties
-    template: configmap.yaml
+    template: configmap-repository.yaml
     asserts:
       - equal:
           path: metadata.name
@@ -27,7 +27,7 @@ tests:
             (^\s*|[^\s]\s+)-Ddb.password=\${DATABASE_PASSWORD}($|\s)
 
   - it: should render environment vars
-    template: configmap.yaml
+    template: configmap-repository.yaml
     set:
       environment:
         CATALINA_OPTS: >-
@@ -126,7 +126,7 @@ tests:
           value: oracle.jdbc.OracleDriver
 
   - it: should fail without proper db URL
-    template: configmap.yaml
+    template: configmap-repository.yaml
     set:
       configuration:
         db:
