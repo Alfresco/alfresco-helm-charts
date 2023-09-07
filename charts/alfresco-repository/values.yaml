@@ -239,3 +239,7 @@ global:
   alfrescoRegistryPullSecrets: quay-registry-secret
   # -- a fallback for .Values.known_urls that can be shared between charts
   known_urls:
+
+# @ignore
+tags:
+  ci: false

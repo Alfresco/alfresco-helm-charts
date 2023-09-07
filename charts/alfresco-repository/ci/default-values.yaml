@@ -6,7 +6,6 @@ configuration:
   messageBroker:
     url: failover:(tcp://localhost:61616)
 postgresql:
-  enabled: true
   fullnameOverride: pg-postgresql-acs
   image:
     tag: 14.4.0
@@ -14,3 +13,5 @@ postgresql:
     username: *pguser
     password: *pgpass
     database: alfresco
+tags:
+  ci: true
