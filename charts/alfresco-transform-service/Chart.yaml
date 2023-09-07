@@ -3,7 +3,7 @@ name: alfresco-transform-service
 description: A Helm chart for deploying Alfresco Transform Services
 type: application
 version: 0.2.0
-appVersion: "3.0.0"
+appVersion: 3.0.0
 dependencies:
   - name: alfresco-common
     version: 2.1.0
