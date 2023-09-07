@@ -11,3 +11,13 @@ Usage: include "alfresco-repository.mq.url.valid" "URL"
   {{- printf "failover:(%s)" . }}
 {{- end }}
 {{- end -}}
+
+{{/*
+Render message broker configmap
+
+Usage: include "alfresco-repository.mq.cm" "URL"
+
+*/}}
+{{- define "alfresco-repository.mq.cm" -}}
+  BROKER_URL: {{ template "alfresco-repository.mq.url.valid" . }}
+{{- end -}}

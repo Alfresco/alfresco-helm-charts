@@ -9,6 +9,6 @@ metadata:
     {{- include "alfresco-repository.labels" . | nindent 4 }}
 data:
   {{- with .Values.configuration.messageBroker }}
-  BROKER_URL: {{ template "alfresco-repository.mq.url.valid" .url }}
+  {{ template "alfresco-repository.mq.cm" .url }}
   {{- end }}
 {{- end }}

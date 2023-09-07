@@ -108,10 +108,10 @@ environment:
 | configuration.db.username | string | `""` | Username to authentication to the repository database |
 | configuration.hz.port | int | `5701` | Hazelcast listener port Only change it if you use a custom image where the port has been changed from default |
 | configuration.messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap  holding the message broker URL. It MUST be a failover URL as per the spec below: https://activemq.apache.org/failover-transport-reference.html |
-| configuration.messageBroker.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing the meesage broker URL |
+| configuration.messageBroker.existingConfigMap.name | string | `""` | Name of a pre-existing configmap containing the meesage broker URL |
 | configuration.messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` | Key within the secret holding the message broker password |
 | configuration.messageBroker.existingSecret.keys.username | string | `"BROKER_USERNAME"` | Key within the secret holding the message broker username |
-| configuration.messageBroker.existingSecret.name | string | `nil` | Name of a pre-existing secret containing message broker credentials |
+| configuration.messageBroker.existingSecret.name | string | `""` | Name of a pre-existing secret containing message broker credentials |
 | configuration.messageBroker.password | string | `nil` | Password to authenticate to the message broker |
 | configuration.messageBroker.url | string | `nil` | Message Broker URL |
 | configuration.messageBroker.username | string | `nil` | Username to authenticate to the message broker |
