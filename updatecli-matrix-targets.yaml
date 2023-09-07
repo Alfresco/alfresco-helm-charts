@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=./matrix-targets.yaml
 # This file is meant to be used with updatecli uber-manifest pipeline
 # https://github.com/Alfresco/alfresco-updatecli/tree/master/deployments
 matrix:
@@ -14,6 +13,7 @@ matrix:
       helm_keys:
         search: $.searchServicesImage.tag
         insight: $.insightEngineImage.tag
+      helm_update_appVersion: true
     search-enterprise:
       version:
       pattern:
@@ -26,32 +26,38 @@ matrix:
           Content: $.liveIndexing.content.image.tag
           Metadata: $.liveIndexing.metadata.image.tag
           Path: $.liveIndexing.path.image.tag
+      helm_update_appVersion: true
     sync:
       version:
       pattern:
       helm_target: >-
         charts/alfresco-sync-service/values.yaml
       helm_key: $.image.tag
+      helm_update_appVersion: true
     onedrive:
       version:
       pattern:
       helm_target: charts/alfresco-connector-ms365/values.yaml
       helm_key: $.image.tag
+      helm_update_appVersion: true
     msteams:
       version:
       pattern:
       helm_target: charts/alfresco-connector-msteams/values.yaml
       helm_key: $.image.tag
+      helm_update_appVersion: true
     intelligence:
       version:
       pattern:
       helm_target: charts/alfresco-ai-transformer/values.yaml
       helm_key: $.image.tag
+      helm_update_appVersion: true
     trouter:
       version:
       pattern:
       helm_target: charts/alfresco-transform-service/values.yaml
       helm_key: $.transformrouter.image.tag
+      helm_update_appVersion: true
     sfs:
       version:
       pattern:
@@ -88,3 +94,4 @@ matrix:
       image:
       helm_target: charts/alfresco-share/values.yaml
       helm_key: $.image.tag
+      helm_update_appVersion: true
