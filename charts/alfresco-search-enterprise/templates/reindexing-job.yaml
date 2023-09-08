@@ -32,23 +32,21 @@ spec:
           env:
             {{- $dbCtx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
             {{- $dbFullName := (include "alfresco-search-enterprise.fullname" $dbCtx) }}
-            {{- $dbExistingSecretName := .Values.reindexing.db.existingSecret.name }}
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ $dbExistingSecretName | default $dbFullName }}
-                  key: {{ if $dbExistingSecretName }}{{ .Values.reindexing.db.existingSecret.keys.password }}{{ else }}DATABASE_PASSWORD{{ end }}
+                  name: {{ .Values.reindexing.db.existingSecret.name | default $dbFullName }}
+                  key: {{ .Values.reindexing.db.existingSecret.keys.password }}
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ $dbExistingSecretName | default $dbFullName }}
-                  key: {{ if $dbExistingSecretName }}{{ .Values.reindexing.db.existingSecret.keys.username }}{{ else }}DATABASE_USERNAME{{ end }}
+                  name: {{ .Values.reindexing.db.existingSecret.name | default $dbFullName }}
+                  key: {{ .Values.reindexing.db.existingSecret.keys.username }}
             - name: SPRING_DATASOURCE_URL
               valueFrom:
                 configMapKeyRef:
-                  {{- $dbExistingConfigMapName := .Values.reindexing.db.existingConfigMap.name }}
-                  name: {{ $dbExistingConfigMapName | default $dbFullName }}
-                  key: {{ if $dbExistingConfigMapName }}{{ .Values.reindexing.db.existingConfigMap.keys.url }}{{ else }}DATABASE_URL{{ end }}
+                  name: {{ .Values.reindexing.db.existingConfigMap.name | default $dbFullName }}
+                  key: {{ .Values.reindexing.db.existingConfigMap.keys.url }}
             {{- include "spring.activemq.env" . | nindent 12 }}
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
           ports:
