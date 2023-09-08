@@ -1,0 +1,12 @@
+{{- if not .Values.configuration.db.existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: >-
+    {{- $ctx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
+    {{ template "alfresco-repository.fullname" $ctx }}
+  labels:
+    {{- include "alfresco-repository.labels" . | nindent 4 }}
+data:
+  {{ template "alfresco-repository.db.cm" .Values.configuration.db }}
+{{- end }}

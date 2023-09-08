@@ -14,12 +14,6 @@ spec:
   template:
     metadata:
       annotations:
-        {{- with .Values.configuration }}
-          {{- $context := . }}
-          {{- range $k := (omit . "repository" "hz" | keys) }}
-            {{- include "alfresco-common.checksum.config" (dict "ns" $.Release.Namespace "context" $context "configKey" $k) | indent 8 }}
-          {{- end }}
-        {{- end }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -40,20 +34,14 @@ spec:
             limits:
               cpu: "0.25"
               memory: "10Mi"
+          env:
+            {{ include "alfresco-repository.db.env" . | indent 12 }}
           command:
             - sh
             - -c
             - |
-              {{- $dbhost := "" }}
-              {{- $dbport := "" }}
-              {{- $dbrdbms := "" }}
-              {{- with .Values.configuration.db }}
-              {{- $dbhost = include "alfresco-common.db.hostname" .url }}
-              {{- $dbport = include "alfresco-common.db.port" . }}
-              {{- $dbrdbms = include "alfresco-common.db.rdbms" .url }}
-              {{- end }}
-              until nc -w1 {{ $dbhost }}:{{ $dbport }}
-              do echo 'waiting for {{ $dbrdbms }} database on {{ $dbhost }}:{{ $dbport }}'
+              until nc -w1 $(DATABASE_HOST):$(DATABASE_PORT)
+              do echo "waiting for database on $(DATABASE_HOST):$(DATABASE_PORT)"
                 sleep 2
               done
       containers:
@@ -63,6 +51,8 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- $dbsecretCtx := dict }}
           {{- $dbsecret := "" }}
+          {{- $mqcmCtx := dict }}
+          {{- $mqcm := "" }}
           {{- $mqsecretCtx := dict }}
           {{- $mqsecret := "" }}
           {{- $searchsecretCtx := dict }}
@@ -70,22 +60,25 @@ spec:
           {{- with .Values.configuration }}
             {{- $dbsecretCtx = dict "Values" (dict "nameOverride" "secret-database") "Chart" $.Chart "Release" $.Release }}
             {{- $dbsecret = coalesce .db.existingSecret.name (include "alfresco-repository.fullname" $dbsecretCtx) }}
+            {{- $mqcmCtx = dict "Values" (dict "nameOverride" "alfresco-mq") "Chart" $.Chart "Release" $.Release }}
+            {{- $mqcm = coalesce .messageBroker.existingConfigMap.name (include "alfresco-repository.fullname" $mqcmCtx) }}
             {{- $mqsecretCtx = dict "Values" (dict "nameOverride" "secret-mq") "Chart" $.Chart "Release" $.Release }}
             {{- $mqsecret = coalesce .messageBroker.existingSecret.name (include "alfresco-repository.fullname" $mqsecretCtx) }}
             {{- $searchsecretCtx = dict "Values" (dict "nameOverride" "secret-search") "Chart" $.Chart "Release" $.Release }}
             {{- $searchsecret = coalesce .search.existingSecret.name (include "alfresco-repository.fullname" $searchsecretCtx) }}
           {{- end }}
           env:
-            - name: DATABASE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ $dbsecret }}
-                  key: {{ .Values.configuration.db.existingSecret.keys.username }}
+            {{ include "alfresco-repository.db.env" . | indent 12 }}
             - name: DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ $dbsecret }}
                   key: {{ .Values.configuration.db.existingSecret.keys.password }}
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $dbsecret }}
+                  key: {{ .Values.configuration.db.existingSecret.keys.username }}
           {{- range .Values.configuration.repository.existingSecrets }}
             {{- if not (or (eq "acs-license" .purpose) (hasPrefix "subsystems:" (.purpose | default ""))) }}
               {{- $repoSecretsKeyRef := dict "name" .name "key" .key }}
@@ -93,6 +86,7 @@ spec:
               {{- list $repoSecretsEnv | toYaml | nindent 12 }}
             {{- end }}
           {{- end }}
+            {{ include "alfresco-repository.search.env" . | indent 12 }}
             - name: ELASTICSEARCH_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -111,6 +105,11 @@ spec:
                   name: {{ $searchsecret }}
                   key: {{ index .Values.configuration.search.existingSecret.keys "solr-secret" }}
                   optional: true
+            - name: BROKER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $mqcm }}
+                  key: {{ .Values.configuration.messageBroker.existingConfigMap.keys.url }}
             - name: BROKER_USERNAME
               valueFrom:
                 secretKeyRef:

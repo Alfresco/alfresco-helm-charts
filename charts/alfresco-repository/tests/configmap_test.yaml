@@ -1,16 +1,18 @@
 ---
 suite: test repository default configmap
 templates:
-  - configmap.yaml
+  - configmap-repository.yaml
+  - configmap-database.yaml
+  - configmap-mq.yaml
 values: &test_values
   - values/test_values.yaml
 tests:
   - it: should have some default properties
+    template: configmap-repository.yaml
     asserts:
       - equal:
           path: metadata.name
           value: RELEASE-NAME-alfresco-opts
-        template: configmap.yaml
       - matchRegex:
           path: data.CATALINA_OPTS
           pattern: |-
@@ -25,6 +27,7 @@ tests:
             (^\s*|[^\s]\s+)-Ddb.password=\${DATABASE_PASSWORD}($|\s)
 
   - it: should render environment vars
+    template: configmap-repository.yaml
     set:
       environment:
         CATALINA_OPTS: >-
@@ -47,62 +50,83 @@ tests:
             (^\s*|[^\s]\s+)-Xmx32G($|\s)
 
   - it: should render MySQL properties
+    template: configmap-database.yaml
     asserts:
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^\s*|[^\s]\s+)-Ddb.url=jdbc:mysql://sandy:secret@myhost1:1111($|\s)
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^\s*|[^\s]\s+)-Ddb.driver=com.mysql.jdbc.Driver($|\s)
+      - equal:
+          path: data.DATABASE_URL
+          value: mysql://sandy:secret@myhost1:1111
+      - equal:
+          path: data.DATABASE_HOST
+          value: myhost1
+      - equal:
+          path: data.DATABASE_PORT
+          value: "1111"
+      - equal:
+          path: data.DATABASE_DRIVER
+          value: com.mysql.jdbc.Driver
 
   - it: should render PostgreSQL properties
+    template: configmap-database.yaml
     set:
       configuration:
         db:
           url: postgresql://pghost/alfdb
     asserts:
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^\s*|[^\s]\s+)-Ddb.url=jdbc:postgresql://pghost/alfdb($|\s)
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^\s*|[^\s]\s+)-Ddb.driver=org.postgresql.Driver($|\s)
+      - equal:
+          path: data.DATABASE_URL
+          value: postgresql://pghost/alfdb
+      - equal:
+          path: data.DATABASE_HOST
+          value: pghost
+      - equal:
+          path: data.DATABASE_PORT
+          value: "5432"
+      - equal:
+          path: data.DATABASE_DRIVER
+          value: org.postgresql.Driver
 
   - it: should render MS SQL server properties
+    template: configmap-database.yaml
     set:
       configuration:
         db:
-          url: sqlserver://sqlservrhost;databaseName=alfdb;lockTimeout=1000;
+          url: sqlserver://sqlserverhost;databaseName=alfdb;lockTimeout=1000;
     asserts:
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^\s*|[^\s]\s+)-Ddb.url=jdbc:sqlserver://sqlservrhost;databaseName=alfdb;lockTimeout=1000;($|\s)
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^\s*|[^\s]\s+)-Ddb.driver=com.microsoft.sqlserver.jdbc.SQLServerDriver($|\s)
+      - equal:
+          path: data.DATABASE_URL
+          value: sqlserver://sqlserverhost;databaseName=alfdb;lockTimeout=1000;
+      - equal:
+          path: data.DATABASE_HOST
+          value: sqlserverhost
+      - equal:
+          path: data.DATABASE_PORT
+          value: "1434"
+      - equal:
+          path: data.DATABASE_DRIVER
+          value: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   - it: should render Oracle properties
+    template: configmap-database.yaml
     set:
       configuration:
         db:
           url: oracle:thin:@tcp://mydbhost:1521/mydbservice
     asserts:
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^\s*|[^\s]\s+)-Ddb.url=jdbc:oracle:thin:@tcp://mydbhost:1521/mydbservice($|\s)
-      - matchRegex:
-          path: data.CATALINA_OPTS
-          pattern: |-
-            (^\s*|[^\s]\s+)-Ddb.driver=oracle.jdbc.OracleDriver($|\s)
+      - equal:
+          path: data.DATABASE_URL
+          value: oracle:thin:@tcp://mydbhost:1521/mydbservice
+      - equal:
+          path: data.DATABASE_HOST
+          value: mydbhost
+      - equal:
+          path: data.DATABASE_PORT
+          value: "1521"
+      - equal:
+          path: data.DATABASE_DRIVER
+          value: oracle.jdbc.OracleDriver
 
   - it: should fail without proper db URL
+    template: configmap-repository.yaml
     set:
       configuration:
         db:
@@ -111,3 +135,36 @@ tests:
       - failedTemplate:
           errorMessage: >-
             database URL MUST be provided WITHOUT the 'jdbc' prefix.
+
+  - it: should render ActiveMQ config as needed
+    template: configmap-mq.yaml
+    asserts:
+      - equal:
+          path: data.BROKER_URL
+          value: failover:(tcp://localhost:61616)
+  - it: should render ActiveMQ minimal config
+    template: configmap-mq.yaml
+    set:
+      configuration:
+        messageBroker:
+          url: ssl://amqs:61617
+    asserts:
+      - equal:
+          path: data.BROKER_URL
+          value: failover:(ssl://amqs:61617)
+  - it: should NOT render configmaps
+    set:
+      configuration:
+        db:
+          existingConfigMap:
+            name: mydbcm
+        messageBroker:
+          existingConfigMap:
+            name: mymqcm
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: configmap-database.yaml
+      - hasDocuments:
+          count: 0
+        template: configmap-mq.yaml

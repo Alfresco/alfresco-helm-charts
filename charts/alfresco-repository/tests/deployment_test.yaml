@@ -69,38 +69,8 @@ tests:
       - contains:
           path: spec.template.spec.initContainers[0].command
           content: |
-            until nc -w1 myhost1:1111
-            do echo 'waiting for mysql database on myhost1:1111'
-              sleep 2
-            done
-        template: deployment.yaml
-
-  - it: should render MSSQL sockets
-    set:
-      configuration:
-        db:
-          url: sqlserver://localhost;encrypt=true;databaseName=AdventureWorks;integratedSecurity=true;
-    asserts:
-      - contains:
-          path: spec.template.spec.initContainers[0].command
-          content: |
-            until nc -w1 localhost:1434
-            do echo 'waiting for sqlserver database on localhost:1434'
-              sleep 2
-            done
-        template: deployment.yaml
-
-  - it: should render Oracle sockets
-    set:
-      configuration:
-        db:
-          url: oracle:thin:@tcp://mydbhost:1521/mydbservice
-    asserts:
-      - contains:
-          path: spec.template.spec.initContainers[0].command
-          content: |
-            until nc -w1 mydbhost:1521
-            do echo 'waiting for oracle database on mydbhost:1521'
+            until nc -w1 $(DATABASE_HOST):$(DATABASE_PORT)
+            do echo "waiting for database on $(DATABASE_HOST):$(DATABASE_PORT)"
               sleep 2
             done
         template: deployment.yaml
@@ -192,3 +162,33 @@ tests:
                 key: MYSECRETVAR
                 name: mysecret
         template: deployment.yaml
+
+  - it: should render default DATABASE URL
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-database
+                key: DATABASE_URL
+
+  - it: should render configured DATABASE URL
+    set:
+      configuration:
+        db:
+          existingConfigMap:
+            name: mycm
+            keys:
+              url: DBURL
+              driver: DBDRIVER
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: mycm
+                key: DBURL

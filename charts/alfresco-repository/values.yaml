@@ -56,7 +56,21 @@ configuration:
         password: DATABASE_PASSWORD
     existingConfigMap:
       name: null
-      keys: {}
+      keys:
+        # -- configmap key where to find the URL of the database
+        url: DATABASE_URL
+        # -- configmap key where to find the hostname part of the database URL.
+        # The configmap may leverage the alfresco-repository.db.cm named
+        # template to auto-generate it from the sole url parameter.
+        host: DATABASE_HOST
+        # -- configmap key where to find the port part of the database URL.
+        # The configmap may leverage the alfresco-repository.db.cm named
+        # template to auto-generate it from the sole url parameter.
+        port: DATABASE_PORT
+        # -- configmap key where to find the JDBC driver class to use.
+        # The configmap may leverage the alfresco-repository.db.cm named
+        # template to auto-generate it from the sole url parameter.
+        driver: DATABASE_DRIVER
   messageBroker:
     # -- Message Broker URL
     url: null
@@ -111,7 +125,25 @@ configuration:
       keys:
         # -- Key within the configmap  holding the search service URL.
         url: SEARCH_URL
+        # -- configmap key where to find the search engine used
         flavor: SEARCH_FLAVOR
+        # -- configmap key where to find the hostname part of the search URL.
+        # The configmap may leverage the alfresco-repository.solr.cm named
+        # template to auto-generate it from the sole url parameter.
+        host: SEARCH_HOST
+        # -- configmap key where to find the port part of the search URL.
+        # The configmap may leverage the alfresco-repository.solr.cm named
+        # template to auto-generate it from the sole url parameter.
+        port: SEARCH_PORT
+        # -- configmap key where to find the search communication security type.
+        # The configmap may leverage the alfresco-repository.solr.cm named
+        # template to auto-generate it from the sole url parameter.
+        securecomms: SEARCH_SECURECOMMS
+        # -- configmap key where to find the root path to Solr.
+        # The configmap may leverage the alfresco-repository.solr.cm named
+        # template to auto-generate it from the sole url parameter.
+        # Not applicable to Elasticsearch
+        solr_base_url: SOLR_BASE_URL
 
 environment:
   # -- Java or Tomcat system properties. These properties must be provided as a
@@ -233,3 +265,7 @@ global:
   alfrescoRegistryPullSecrets: quay-registry-secret
   # -- a fallback for .Values.known_urls that can be shared between charts
   known_urls:
+
+tags:
+  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
+  ci: false
