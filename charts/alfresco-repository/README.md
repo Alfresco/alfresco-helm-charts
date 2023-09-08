@@ -95,11 +95,11 @@ environment:
 | args | list | `[]` |  |
 | command | list | `[]` |  |
 | configuration.db.driver | string | `""` | JDBC driver class of the driver if none is provided the it is guessed from the URL provided |
-| configuration.db.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` |  |
-| configuration.db.existingConfigMap.keys.host | string | `"DATABASE_HOST"` |  |
-| configuration.db.existingConfigMap.keys.port | string | `"DATABASE_PORT"` |  |
-| configuration.db.existingConfigMap.keys.url | string | `"DATABASE_URL"` |  |
-| configuration.db.existingConfigMap.name | string | `""` |  |
+| configuration.db.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver class to use. The configmap may leverage the alfresco-repository.db.cm named template to auto-generate it from the sole url parameter. |
+| configuration.db.existingConfigMap.keys.host | string | `"DATABASE_HOST"` | configmap key where to find the hostname part of the database URL. The configmap may leverage the alfresco-repository.db.cm named template to auto-generate it from the sole url parameter. |
+| configuration.db.existingConfigMap.keys.port | string | `"DATABASE_PORT"` | configmap key where to find the port part of the database URL. The configmap may leverage the alfresco-repository.db.cm named template to auto-generate it from the sole url parameter. |
+| configuration.db.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database |
+| configuration.db.existingConfigMap.name | string | `""` | Name of a pre-existing configmap used to get database details |
 | configuration.db.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password |
 | configuration.db.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username |
 | configuration.db.existingSecret.name | string | `""` | Name of a pre-existing secret containing database credentials |
@@ -117,11 +117,11 @@ environment:
 | configuration.messageBroker.username | string | `nil` | Username to authenticate to the message broker |
 | configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties |
 | configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repository as env vars. This list can contain special secrets marked with predifined `purpose`: `acs-license` to pass license as a secret or subsystems:*:* to configure an Alfresco subsystem. See [Configuring Alfresco Subsystem](#configuring-alfresco-subsystems) for more details. |
-| configuration.search.existingConfigMap.keys.flavor | string | `"SEARCH_FLAVOR"` |  |
-| configuration.search.existingConfigMap.keys.host | string | `"SEARCH_HOST"` |  |
-| configuration.search.existingConfigMap.keys.port | string | `"SEARCH_PORT"` |  |
-| configuration.search.existingConfigMap.keys.securecomms | string | `"SEARCH_SECURECOMMS"` |  |
-| configuration.search.existingConfigMap.keys.solr_base_url | string | `"SOLR_BASE_URL"` |  |
+| configuration.search.existingConfigMap.keys.flavor | string | `"SEARCH_FLAVOR"` | configmap key where to find the search engine used |
+| configuration.search.existingConfigMap.keys.host | string | `"SEARCH_HOST"` | configmap key where to find the hostname part of the search URL. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. |
+| configuration.search.existingConfigMap.keys.port | string | `"SEARCH_PORT"` | configmap key where to find the port part of the search URL. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. |
+| configuration.search.existingConfigMap.keys.securecomms | string | `"SEARCH_SECURECOMMS"` | configmap key where to find the search communication security type. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. |
+| configuration.search.existingConfigMap.keys.solr_base_url | string | `"SOLR_BASE_URL"` | configmap key where to find the root path to Solr. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. Not applicable to Elasticsearch |
 | configuration.search.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap  holding the search service URL. |
 | configuration.search.existingConfigMap.name | string | `nil` | Optional configmap containing the search service URL |
 | configuration.search.existingSecret.keys.password | string | `"ELASTICSEARCH_PASSWORD"` | Key within the secret holding the search service password |
