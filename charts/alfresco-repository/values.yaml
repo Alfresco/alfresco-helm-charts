@@ -36,25 +36,26 @@ configuration:
   db:
     # -- JDBC url of the database WITHOUT the "jdbc:" prefix
     # This is a mandatory parameter
-    url: ""
+    url: null
     # -- JDBC driver class of the driver if none is provided the it is guessed
     # from the URL provided
-    driver: ""
+    driver: null
     # -- Username to authentication to the repository database
-    username: ""
+    username: null
     # -- Password to authentication to the repository database
-    password: ""
+    password: null
+    # -- Existing secret and their keys where to find the database username &
+    # password.
     existingSecret:
       # -- Name of a pre-existing secret containing database credentials
-      name: ""
+      name: null
       keys:
         # -- Key within the secret holding the database username
         username: DATABASE_USERNAME
         # -- Key within the secret holding the database password
         password: DATABASE_PASSWORD
     existingConfigMap:
-      # -- Name of a pre-existing configmap used to get database details
-      name: ""
+      name: null
       keys:
         # -- configmap key where to find the URL of the database
         url: DATABASE_URL

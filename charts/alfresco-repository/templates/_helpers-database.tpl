@@ -7,7 +7,7 @@ Usage: include "alfresco-repository.db.env" $
 {{- define "alfresco-repository.db.env" -}}
 {{- $dbcmCtx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
 {{- with .Values.configuration.db }}
-{{- $dbcm := coalesce (tpl .existingConfigMap.name $) (include "alfresco-repository.fullname" $dbcmCtx) }}
+{{- $dbcm := coalesce .existingConfigMap.name (include "alfresco-repository.fullname" $dbcmCtx) }}
 - name: DATABASE_URL
   valueFrom:
     configMapKeyRef:
