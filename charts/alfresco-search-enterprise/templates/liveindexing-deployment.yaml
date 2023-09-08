@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "alfresco-search-enterprise.fullName" $ }}-{{ $serviceName }}
+  name: {{ include "alfresco-search-enterprise.fullname" $ }}-{{ $serviceName }}
   labels:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
 spec:
@@ -36,9 +36,9 @@ spec:
             {{- include "component-security-context" .Values | indent 8 }}
           envFrom:
             - configMapRef:
-                name: {{ template "alfresco-search-enterprise.fullName" $ }}-configmap
+                name: {{ template "alfresco-search-enterprise.fullname" $ }}-configmap
             - secretRef:
-                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullName" $)) $.Values.messageBroker.existingSecretName }}
+                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullname" $)) $.Values.messageBroker.existingSecretName }}
           env:
             {{- include "spring.activemq.env" . | nindent 12 }}
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}

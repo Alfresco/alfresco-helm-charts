@@ -2,8 +2,6 @@ postgresql:
   enabled: true
 activemq:
   enabled: true
-elasticsearch:
-  enabled: true
 configuration:
   db:
     url: postgresql://pg-postgresql-acs/alfresco
@@ -14,3 +12,10 @@ configuration:
 global:
   tracking:
     sharedsecret: dummy
+
+# alfresco-search-enterprise
+elasticsearch:
+  enabled: true
+reindexing:
+  db:
+    url: something

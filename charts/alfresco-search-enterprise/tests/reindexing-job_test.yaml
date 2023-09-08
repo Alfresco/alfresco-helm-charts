@@ -1,0 +1,92 @@
+---
+suite: test reindexing job manifest
+templates:
+  - reindexing-job.yaml
+tests:
+  - it: should have env vars for spring database credentials referencing the main chart secret
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].name
+          value: SPRING_DATASOURCE_PASSWORD
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: RELEASE-NAME-alfresco-database
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
+          value: DATABASE_PASSWORD
+
+      - equal:
+          path: spec.template.spec.containers[0].env[1].name
+          value: SPRING_DATASOURCE_USERNAME
+      - equal:
+          path: spec.template.spec.containers[0].env[1].valueFrom.secretKeyRef.name
+          value: RELEASE-NAME-alfresco-database
+      - equal:
+          path: spec.template.spec.containers[0].env[1].valueFrom.secretKeyRef.key
+          value: DATABASE_USERNAME
+
+      - equal:
+          path: spec.template.spec.containers[0].env[2].name
+          value: SPRING_DATASOURCE_URL
+      - equal:
+          path: spec.template.spec.containers[0].env[2].valueFrom.configMapKeyRef.name
+          value: RELEASE-NAME-alfresco-database
+      - equal:
+          path: spec.template.spec.containers[0].env[2].valueFrom.configMapKeyRef.key
+          value: DATABASE_URL
+
+  - it: should have overridden secret for spring database credentials when existingSecretName is set
+    set:
+      reindexing.db:
+        existingSecret:
+          name: my-custom-secret
+          keys:
+            username: CUSTOM_USERNAME_KEY
+            password: CUSTOM_PASSWORD_KEY
+        existingConfigMap:
+          name: my-custom-configmap
+          keys:
+            url: CUSTOM_URL_KEY
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
+          value: my-custom-secret
+      - equal:
+          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
+          value: CUSTOM_PASSWORD_KEY
+
+      - equal:
+          path: spec.template.spec.containers[0].env[1].valueFrom.secretKeyRef.name
+          value: my-custom-secret
+      - equal:
+          path: spec.template.spec.containers[0].env[1].valueFrom.secretKeyRef.key
+          value: CUSTOM_USERNAME_KEY
+
+      - equal:
+          path: spec.template.spec.containers[0].env[2].valueFrom.configMapKeyRef.name
+          value: my-custom-configmap
+      - equal:
+          path: spec.template.spec.containers[0].env[2].valueFrom.configMapKeyRef.key
+          value: CUSTOM_URL_KEY
+
+  - it: should have env vars for elasticsearch credentials
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[6].name
+          value: SPRING_ELASTICSEARCH_REST_USERNAME
+      - equal:
+          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
+          value: RELEASE-NAME-alfresco-search-enterprise-elasticsearch-secret
+      - equal:
+          path: spec.template.spec.containers[0].env[7].name
+          value: SPRING_ELASTICSEARCH_REST_PASSWORD
+      - equal:
+          path: spec.template.spec.containers[0].env[7].valueFrom.secretKeyRef.name
+          value: RELEASE-NAME-alfresco-search-enterprise-elasticsearch-secret
+
+  - it: should not be present when disabled
+    set:
+      reindexing.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0

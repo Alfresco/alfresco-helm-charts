@@ -1,0 +1,12 @@
+{{- if and .Values.reindexing.enabled (not .Values.reindexing.db.existingConfigMap.name) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: >-
+    {{- $ctx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
+    {{ template "alfresco-search-enterprise.fullname" $ctx }}
+  labels:
+    {{- include "alfresco-search-enterprise.labels" . | nindent 4 }}
+data:
+  {{ .Values.reindexing.db.existingConfigMap.keys.url }}: {{ required ".reindexing.db.url is mandatory when not using existingConfigMap" .Values.reindexing.db.url }}
+{{- end }}

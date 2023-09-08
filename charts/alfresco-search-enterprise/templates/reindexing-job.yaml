@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "alfresco-search-enterprise.fullName" . }}-reindexing
+  name: {{ include "alfresco-search-enterprise.fullname" . }}-reindexing
   labels:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
 spec:
@@ -26,20 +26,27 @@ spec:
           resources: {{- toYaml .Values.reindexing.resources | nindent 12 }}
           envFrom:
             - configMapRef:
-                name: {{ template "alfresco-search-enterprise.fullName" . }}-reindexing-configmap
+                name: {{ template "alfresco-search-enterprise.fullname" . }}-reindexing-configmap
             - secretRef:
-                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullName" .)) .Values.messageBroker.existingSecretName }}
+                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullname" .)) .Values.messageBroker.existingSecretName }}
           env:
+            {{- $dbCtx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
+            {{- $dbFullName := (include "alfresco-search-enterprise.fullname" $dbCtx) }}
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ default (printf "%s-postgresql-secret" (include "alfresco-search-enterprise.fullName" $)) $.Values.reindexing.postgresql.existingSecretName }}
-                  key: DATABASE_PASSWORD
+                  name: {{ .Values.reindexing.db.existingSecret.name | default $dbFullName }}
+                  key: {{ .Values.reindexing.db.existingSecret.keys.password }}
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ default (printf "%s-postgresql-secret" (include "alfresco-search-enterprise.fullName" $)) $.Values.reindexing.postgresql.existingSecretName }}
-                  key: DATABASE_USERNAME
+                  name: {{ .Values.reindexing.db.existingSecret.name | default $dbFullName }}
+                  key: {{ .Values.reindexing.db.existingSecret.keys.username }}
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.reindexing.db.existingConfigMap.name | default $dbFullName }}
+                  key: {{ .Values.reindexing.db.existingConfigMap.keys.url }}
             {{- include "spring.activemq.env" . | nindent 12 }}
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
           ports:
