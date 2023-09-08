@@ -61,7 +61,7 @@ spec:
             {{- $dbsecretCtx = dict "Values" (dict "nameOverride" "secret-database") "Chart" $.Chart "Release" $.Release }}
             {{- $dbsecret = coalesce .db.existingSecret.name (include "alfresco-repository.fullname" $dbsecretCtx) }}
             {{- $mqcmCtx = dict "Values" (dict "nameOverride" "alfresco-mq") "Chart" $.Chart "Release" $.Release }}
-            {{- $mqcm = coalesce (tpl .messageBroker.existingConfigMap.name $) (include "alfresco-repository.fullname" $mqcmCtx) }}
+            {{- $mqcm = coalesce .messageBroker.existingConfigMap.name (include "alfresco-repository.fullname" $mqcmCtx) }}
             {{- $mqsecretCtx = dict "Values" (dict "nameOverride" "secret-mq") "Chart" $.Chart "Release" $.Release }}
             {{- $mqsecret = coalesce .messageBroker.existingSecret.name (include "alfresco-repository.fullname" $mqsecretCtx) }}
             {{- $searchsecretCtx = dict "Values" (dict "nameOverride" "secret-search") "Chart" $.Chart "Release" $.Release }}
