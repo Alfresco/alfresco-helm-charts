@@ -72,6 +72,8 @@ repository:
       password: SOLR_SECRET
   existingConfigMap:
     # -- Name of a pre-existing configmap containing Alfresco repository URL
+    # In addition to tjhe keys mentionned bellow the configMap may contain any
+    # solr property translated as an env variable (e.g SOLR_ALFRESCO_BASEURL).
     name: null
     keys:
       # -- Key within the configmap holding the repository hostname

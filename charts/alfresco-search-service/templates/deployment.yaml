@@ -49,9 +49,12 @@ spec:
               value: {{ template "alfresco-search-service.fullname" $envCtx }}
             - name: SOLR_SOLR_PORT
               value: {{ include "alfresco-search.svcPort" . | quote }}
+            - name: SOLR_SOLR_BASEURL
+              value: /solr
           envFrom:
           - configMapRef:
-              name: {{ template "alfresco-search-service.fullname" . }}-solr-configmap
+              name: {{ template "alfresco-search-service.fullname" $envCtx }}
+              optional: true
           {{- if eq .Values.global.tracking.auth "secret" }}
           - secretRef:
               name: {{ template "alfresco-search-service.fullname" . }}-solr-jtoolopts

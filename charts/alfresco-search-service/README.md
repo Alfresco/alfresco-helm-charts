@@ -61,7 +61,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | repository.existingConfigMap.keys.host | string | `"SOLR_ALFRESCO_HOST"` | Key within the configmap holding the repository hostname |
 | repository.existingConfigMap.keys.port | string | `"SOLR_ALFRESCO_PORT"` | Key within the configmap holding the repository port |
-| repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing Alfresco repository URL |
+| repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing Alfresco repository URL In addition to tjhe keys mentionned bellow the configMap may contain any solr property translated as an env variable (e.g SOLR_ALFRESCO_BASEURL). |
 | repository.existingSecret.keys.password | string | `"SOLR_SECRET"` | Key within the secret holding the repository shared secret |
 | repository.existingSecret.name | string | `nil` | Name of a pre-existing secret containing message broker credentials |
 | repository.url | string | `"http://alfresco-search-service/solr"` | Alfresco repository URL |
