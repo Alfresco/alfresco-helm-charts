@@ -26,5 +26,5 @@ You can access Alfresco Search using:
 {{ end }}
 {{- end }}
 {{- else }}
- * Solr: http://{{ template "alfresco-search.fullName" . }}-solr:{{ template "alfresco-search.svcPort" . }}/solr
+ * Solr: http://{{ template "alfresco-search-service.fullname" . }}-solr:{{ template "alfresco-search.svcPort" . }}/solr
 {{- end }}

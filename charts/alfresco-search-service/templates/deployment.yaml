@@ -2,9 +2,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-search.fullName" . }}-solr
+  name: {{ template "alfresco-search-service.fullname" . }}-solr
   labels:
-    app: {{ template "alfresco-search.fullName" . }}-solr
+    app: {{ template "alfresco-search-service.fullname" . }}-solr
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -15,14 +15,14 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: {{ template "alfresco-search.fullName" . }}-solr
+      app: {{ template "alfresco-search-service.fullname" . }}-solr
       release: {{ .Release.Name }}
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
       labels:
-        app: {{ template "alfresco-search.fullName" . }}-solr
+        app: {{ template "alfresco-search-service.fullname" . }}-solr
         release: {{ .Release.Name }}
     spec:
     {{- include "component-pod-security-context" .Values | indent 4 }}
@@ -45,10 +45,10 @@ spec:
           {{- include "component-security-context" .Values | indent 8 }}
           envFrom:
           - configMapRef:
-              name: {{ template "alfresco-search.fullName" . }}-solr-configmap
+              name: {{ template "alfresco-search-service.fullname" . }}-solr-configmap
           {{- if eq .Values.global.tracking.auth "secret" }}
           - secretRef:
-              name: {{ template "alfresco-search.fullName" . }}-solr-jtoolopts
+              name: {{ template "alfresco-search-service.fullname" . }}-solr-jtoolopts
           {{- end }}
           ports:
             - containerPort: {{ template "alfresco-search.containerPort" . }}
@@ -91,4 +91,4 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: |-
-            {{ .Values.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfresco-search.fullName" .)) }}
+            {{ .Values.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfresco-search-service.fullname" .)) }}

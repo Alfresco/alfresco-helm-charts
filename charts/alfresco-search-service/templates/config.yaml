@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-search.fullName" . }}-solr-configmap
+  name: {{ template "alfresco-search-service.fullname" . }}-solr-configmap
   labels:
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
@@ -14,7 +14,7 @@ data:
   SOLR_ALFRESCO_PORT: >-
     {{ .Values.repository.port | default 80 }}
   SOLR_SOLR_HOST: >-
-    {{ template "alfresco-search.fullName" . }}-solr
+    {{ template "alfresco-search-service.fullname" . }}-solr
   SOLR_SOLR_PORT: >-
     {{ .Values.service.externalPort | default 80 }}
   ALFRESCO_SECURE_COMMS: >-

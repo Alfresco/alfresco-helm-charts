@@ -3,7 +3,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "alfresco-search.fullName" -}}
+{{- define "alfresco-search-service.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -20,7 +20,7 @@ If release name contains chart name it will be used as a full name.
 Alfresco Search Service Host
 */}}
 {{- define "alfresco-search.host" -}}
-  {{ printf "%s-solr" (include "alfresco-search.fullName" .) }}
+  {{ printf "%s-solr" (include "alfresco-search-service.fullname" .) }}
 {{- end -}}
 
 {{/*
