@@ -15,6 +15,7 @@ tests:
 
   - it: should render cpu and memory limits
     values: *testvalues
+    template: deployment.yaml
     asserts:
       - equal:
           path: spec.template.spec.containers[0].resources
@@ -25,4 +26,13 @@ tests:
             limits:
               cpu: "4"
               memory: "2000Mi"
-        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SOLR_SOLR_HOST
+            value: RELEASE-NAME-alfresco-search-service-solr
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SOLR_SOLR_PORT
+            value: "80"

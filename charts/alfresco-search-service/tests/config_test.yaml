@@ -9,15 +9,9 @@ tests:
     asserts:
       - equal:
           path: data.SOLR_ALFRESCO_HOST
-          value: RELEASE-NAME-alfresco-cs-repository
+          value: alfresco-search-service
       - equal:
           path: data.SOLR_ALFRESCO_PORT
-          value: "80"
-      - equal:
-          path: data.SOLR_SOLR_HOST
-          value: RELEASE-NAME-alfresco-search-service-solr
-      - equal:
-          path: data.SOLR_SOLR_PORT
           value: "80"
       - equal:
           path: data.ALFRESCO_SECURE_COMMS
@@ -30,8 +24,7 @@ tests:
     values: *testvalues
     set:
       repository:
-        host: somehost
-        port: 8888
+        url: http://somehost:8888
       environment:
         whatever: value
     asserts:
@@ -41,12 +34,6 @@ tests:
       - equal:
           path: data.SOLR_ALFRESCO_PORT
           value: "8888"
-      - equal:
-          path: data.SOLR_SOLR_HOST
-          value: RELEASE-NAME-alfresco-search-service-solr
-      - equal:
-          path: data.SOLR_SOLR_PORT
-          value: "80"
       - equal:
           path: data.ALFRESCO_SECURE_COMMS
           value: secret

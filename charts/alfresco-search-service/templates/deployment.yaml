@@ -43,6 +43,12 @@ spec:
           image: {{ template "alfresco-search.dockerImage" . }}
           imagePullPolicy: {{ template "alfresco-search.pullPolicy" . }}
           {{- include "component-security-context" .Values | indent 8 }}
+          {{- $envCtx := dict "Values" (dict "nameOverride" (printf "%s-solr" $.Chart.Name )) "Chart" $.Chart "Release" $.Release }}
+          env:
+            - name: SOLR_SOLR_HOST
+              value: {{ template "alfresco-search-service.fullname" $envCtx }}
+            - name: SOLR_SOLR_PORT
+              value: {{ include "alfresco-search.svcPort" . | quote }}
           envFrom:
           - configMapRef:
               name: {{ template "alfresco-search-service.fullname" . }}-solr-configmap

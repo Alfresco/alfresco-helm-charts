@@ -16,10 +16,6 @@ data:
   SOLR_ALFRESCO_PORT: >-
     {{ template "alfresco-common.url.port" .url }}
   {{- end }}
-  SOLR_SOLR_HOST: >-
-    {{ template "alfresco-search-service.fullname" . }}-solr
-  SOLR_SOLR_PORT: >-
-    {{ .Values.service.externalPort | default 80 }}
   ALFRESCO_SECURE_COMMS: >-
     {{ .Values.global.tracking.auth | default "secret" }}
   {{- $environment := .Values.environment | default dict }}
