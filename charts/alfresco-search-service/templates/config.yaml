@@ -1,4 +1,4 @@
-# Defines the properties required by the Alfresco Search (Solr) App
+{{- if not .Values.repository.existingConfigMap.name }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -23,3 +23,4 @@ data:
   {{- range $key, $val := $environment }}
   {{ $key }}: {{ tpl $val $ | quote }}
   {{- end }}
+{{- end }}

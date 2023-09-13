@@ -59,8 +59,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | readinessProbe.initialDelaySeconds | int | `60` |  |
 | readinessProbe.periodSeconds | int | `20` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
-| repository.host | string | `nil` | ACS repository hostname |
-| repository.port | string | `nil` | ACS repository port |
+| repository.existingConfigMap.keys.host | string | `"SOLR_ALFRESCO_HOST"` | Key within the configmap holding the repository hostname |
+| repository.existingConfigMap.keys.port | string | `"SOLR_ALFRESCO_PORT"` | Key within the configmap holding the repository port |
+| repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing Alfresco repository URL |
+| repository.existingSecret.keys.password | string | `"SOLR_SECRET"` | Key within the secret holding the repository shared secret |
+| repository.existingSecret.name | string | `nil` | Name of a pre-existing secret containing message broker credentials |
+| repository.url | string | `nil` | Alfresco repository URL |
 | resources.limits.cpu | string | `"4"` |  |
 | resources.limits.memory | string | `"2000Mi"` |  |
 | resources.requests.cpu | string | `"0.50"` |  |
