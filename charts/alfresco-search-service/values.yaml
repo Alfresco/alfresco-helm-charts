@@ -80,6 +80,8 @@ repository:
       host: SOLR_ALFRESCO_HOST
       # -- Key within the configmap holding the repository port
       port: SOLR_ALFRESCO_PORT
+      # -- Key within the configmap holding the repository seucirty level
+      securecomms: SOLR_ALFRESCO_SECURE_COMMS
 environment:
   SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
 resources:

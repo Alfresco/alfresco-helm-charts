@@ -46,6 +46,23 @@ spec:
           {{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-solr" $.Chart.Name )) "Chart" $.Chart "Release" $.Release }}
           {{- $cm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-search-service.fullname" $cmCtx) }}
           env:
+            {{- with .Values.repository }}
+            - name: SOLR_ALFRESCO_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $cm }}
+                  key: {{ .existingConfigMap.keys.host }}
+            - name: SOLR_ALFRESCO_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $cm }}
+                  key: {{ .existingConfigMap.keys.port }}
+            - name: SOLR_ALFRESCO_SECURECOMMS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $cm }}
+                  key: {{ .existingConfigMap.keys.securecomms }}
+            {{- end }}
             - name: SOLR_SOLR_HOST
               value: {{ template "alfresco-search-service.fullname" $cmCtx }}
             - name: SOLR_SOLR_PORT
