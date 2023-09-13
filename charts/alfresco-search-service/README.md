@@ -17,7 +17,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | Repository | Name | Version |
 |------------|------|---------|
 |  | alfresco-insight-zeppelin | 2.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0 |
 
 ## Values
 
@@ -64,7 +64,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing Alfresco repository URL |
 | repository.existingSecret.keys.password | string | `"SOLR_SECRET"` | Key within the secret holding the repository shared secret |
 | repository.existingSecret.name | string | `nil` | Name of a pre-existing secret containing message broker credentials |
-| repository.url | string | `nil` | Alfresco repository URL |
+| repository.url | string | `"http://alfresco-search-service/solr"` | Alfresco repository URL |
 | resources.limits.cpu | string | `"4"` |  |
 | resources.limits.memory | string | `"2000Mi"` |  |
 | resources.requests.cpu | string | `"0.50"` |  |

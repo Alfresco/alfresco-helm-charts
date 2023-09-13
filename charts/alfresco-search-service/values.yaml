@@ -63,7 +63,7 @@ ingress:
 # Below values must be set by parent chart
 repository:
   # -- Alfresco repository URL
-  url: null
+  url: http://alfresco-search-service/solr
   existingSecret:
     # -- Name of a pre-existing secret containing message broker credentials
     name: null

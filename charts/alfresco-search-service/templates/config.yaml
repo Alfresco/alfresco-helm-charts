@@ -10,10 +10,12 @@ metadata:
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     component: search
 data:
+  {{- with .Values.repository }}
   SOLR_ALFRESCO_HOST: >-
-    {{ .Values.repository.host | default (printf "%s-repository" (include "content-services.shortname" $)) }}
+    {{ template "alfresco-common.url.host" .url }}
   SOLR_ALFRESCO_PORT: >-
-    {{ .Values.repository.port | default 80 }}
+    {{ template "alfresco-common.url.port" .url }}
+  {{- end }}
   SOLR_SOLR_HOST: >-
     {{ template "alfresco-search-service.fullname" . }}-solr
   SOLR_SOLR_PORT: >-
