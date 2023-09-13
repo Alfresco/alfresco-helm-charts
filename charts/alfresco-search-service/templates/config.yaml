@@ -18,8 +18,4 @@ data:
   {{- end }}
   ALFRESCO_SECURE_COMMS: >-
     {{ .Values.global.tracking.auth | default "secret" }}
-  {{- $environment := .Values.environment | default dict }}
-  {{- range $key, $val := $environment }}
-  {{ $key }}: {{ tpl $val $ | quote }}
-  {{- end }}
 {{- end }}
