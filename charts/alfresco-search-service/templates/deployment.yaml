@@ -113,11 +113,6 @@ spec:
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
-          # sleep to drain any existing connections
-          lifecycle:
-            preStop:
-              exec:
-                command: ["/bin/bash", "-c", "sleep 10"]
       volumes:
       - name: data
         persistentVolumeClaim:
