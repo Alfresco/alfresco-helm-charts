@@ -15,6 +15,9 @@ tests:
 
   - it: should render cpu and memory limits
     values: *testvalues
+    set:
+      environment:
+        someother: value
     template: deployment.yaml
     asserts:
       - equal:
@@ -36,3 +39,13 @@ tests:
           content:
             name: SOLR_SOLR_PORT
             value: "80"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SOLR_CREATE_ALFRESCO_DEFAULTS
+            value: alfresco,archive
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: someother
+            value: value

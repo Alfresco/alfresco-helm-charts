@@ -16,17 +16,12 @@ tests:
       - equal:
           path: data.ALFRESCO_SECURE_COMMS
           value: secret
-      - equal:
-          path: data.SOLR_CREATE_ALFRESCO_DEFAULTS
-          value: alfresco,archive
 
   - it: should contains customized env vars
     values: *testvalues
     set:
       repository:
         url: http://somehost:8888
-      environment:
-        whatever: value
     asserts:
       - equal:
           path: data.SOLR_ALFRESCO_HOST
@@ -37,9 +32,12 @@ tests:
       - equal:
           path: data.ALFRESCO_SECURE_COMMS
           value: secret
-      - equal:
-          path: data.SOLR_CREATE_ALFRESCO_DEFAULTS
-          value: alfresco,archive
-      - equal:
-          path: data.whatever
-          value: value
+  - it: should not render configmap
+    values: *testvalues
+    set:
+      repository:
+        existingConfigMap:
+          name: mycm
+    asserts:
+      - hasDocuments:
+          count: 0
