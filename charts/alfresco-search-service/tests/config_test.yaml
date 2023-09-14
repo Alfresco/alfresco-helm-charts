@@ -14,7 +14,7 @@ tests:
           path: data.SOLR_ALFRESCO_PORT
           value: "80"
       - equal:
-          path: data.ALFRESCO_SECURE_COMMS
+          path: data.SOLR_ALFRESCO_SECURE_COMMS
           value: secret
 
   - it: should contains customized env vars
@@ -30,7 +30,7 @@ tests:
           path: data.SOLR_ALFRESCO_PORT
           value: "8888"
       - equal:
-          path: data.ALFRESCO_SECURE_COMMS
+          path: data.SOLR_ALFRESCO_SECURE_COMMS
           value: secret
   - it: should not render configmap
     values: *testvalues

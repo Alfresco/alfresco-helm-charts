@@ -16,6 +16,6 @@ data:
   SOLR_ALFRESCO_PORT: >-
     {{ template "alfresco-common.url.port" .url }}
   {{- end }}
-  ALFRESCO_SECURE_COMMS: >-
+  SOLR_ALFRESCO_SECURE_COMMS: >-
     {{ .Values.global.tracking.auth | default "secret" }}
 {{- end }}
