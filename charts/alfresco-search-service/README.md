@@ -1,6 +1,6 @@
 # alfresco-search-service
 
-![Version: 1.3.0](https://img.shields.io/badge/Version-1.3.0-informational?style=flat-square) ![AppVersion: 2.0.8](https://img.shields.io/badge/AppVersion-2.0.8-informational?style=flat-square)
+![Version: 2.0.0-alpha.1](https://img.shields.io/badge/Version-2.0.0--alpha.1-informational?style=flat-square) ![AppVersion: 2.0.8](https://img.shields.io/badge/AppVersion-2.0.8-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
@@ -17,7 +17,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | Repository | Name | Version |
 |------------|------|---------|
 |  | alfresco-insight-zeppelin | 2.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0 |
 
 ## Values
 
@@ -59,8 +59,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | readinessProbe.initialDelaySeconds | int | `60` |  |
 | readinessProbe.periodSeconds | int | `20` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
-| repository.host | string | `nil` | ACS repository hostname |
-| repository.port | string | `nil` | ACS repository port |
+| repository.existingConfigMap.keys.host | string | `"SOLR_ALFRESCO_HOST"` | Key within the configmap holding the repository hostname |
+| repository.existingConfigMap.keys.port | string | `"SOLR_ALFRESCO_PORT"` | Key within the configmap holding the repository port |
+| repository.existingConfigMap.keys.securecomms | string | `"SOLR_ALFRESCO_SECURE_COMMS"` | Key within the configmap holding the repository seucirty level |
+| repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing Alfresco repository URL In addition to tjhe keys mentionned bellow the configMap may contain any solr property translated as an env variable (e.g SOLR_ALFRESCO_BASEURL). |
+| repository.existingSecret.keys.password | string | `"SOLR_SECRET"` | Key within the secret holding the repository shared secret |
+| repository.existingSecret.name | string | `nil` | Name of a pre-existing secret containing message broker credentials |
+| repository.url | string | `"http://alfresco-search-service/solr"` | Alfresco repository URL |
 | resources.limits.cpu | string | `"4"` |  |
 | resources.limits.memory | string | `"2000Mi"` |  |
 | resources.requests.cpu | string | `"0.50"` |  |

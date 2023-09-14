@@ -2,9 +2,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-search.fullName" . }}-solr
+  name: {{ template "alfresco-search-service.fullname" . }}-solr
   labels:
-    app: {{ template "alfresco-search.fullName" . }}-solr
+    app: {{ template "alfresco-search-service.fullname" . }}-solr
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -15,14 +15,14 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      app: {{ template "alfresco-search.fullName" . }}-solr
+      app: {{ template "alfresco-search-service.fullname" . }}-solr
       release: {{ .Release.Name }}
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
       labels:
-        app: {{ template "alfresco-search.fullName" . }}-solr
+        app: {{ template "alfresco-search-service.fullname" . }}-solr
         release: {{ .Release.Name }}
     spec:
     {{- include "component-pod-security-context" .Values | indent 4 }}
@@ -43,12 +43,43 @@ spec:
           image: {{ template "alfresco-search.dockerImage" . }}
           imagePullPolicy: {{ template "alfresco-search.pullPolicy" . }}
           {{- include "component-security-context" .Values | indent 8 }}
+          {{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-repository" $.Chart.Name )) "Chart" $.Chart "Release" $.Release }}
+          {{- $cm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-search-service.fullname" $cmCtx) }}
+          env:
+            {{- with .Values.repository }}
+            - name: SOLR_ALFRESCO_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $cm }}
+                  key: {{ .existingConfigMap.keys.host }}
+            - name: SOLR_ALFRESCO_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $cm }}
+                  key: {{ .existingConfigMap.keys.port }}
+            - name: SOLR_ALFRESCO_SECURECOMMS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $cm }}
+                  key: {{ .existingConfigMap.keys.securecomms }}
+            {{- end }}
+            - name: SOLR_SOLR_HOST
+              value: {{ template "alfresco-search-service.fullname" . }}-solr
+            - name: SOLR_SOLR_PORT
+              value: {{ include "alfresco-search.svcPort" . | quote }}
+            - name: SOLR_SOLR_BASEURL
+              value: /solr
+            {{- $environment := .Values.environment | default dict }}
+            {{- range $key, $val := $environment }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end }}
           envFrom:
           - configMapRef:
-              name: {{ template "alfresco-search.fullName" . }}-solr-configmap
+              name: {{ $cm }}
           {{- if eq .Values.global.tracking.auth "secret" }}
           - secretRef:
-              name: {{ template "alfresco-search.fullName" . }}-solr-jtoolopts
+              name: {{ template "alfresco-search-service.fullname" . }}-solr-jtoolopts
           {{- end }}
           ports:
             - containerPort: {{ template "alfresco-search.containerPort" . }}
@@ -82,13 +113,8 @@ spec:
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
-          # sleep to drain any existing connections
-          lifecycle:
-            preStop:
-              exec:
-                command: ["/bin/bash", "-c", "sleep 10"]
       volumes:
       - name: data
         persistentVolumeClaim:
           claimName: |-
-            {{ .Values.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfresco-search.fullName" .)) }}
+            {{ .Values.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfresco-search-service.fullname" .)) }}

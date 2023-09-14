@@ -1,15 +1,15 @@
 {{- if .Values.ingress.enabled }}
-{{- $serviceName :=  printf "%s-%s" (include  "alfresco-search.fullName" .) "solr" -}}
+{{- $serviceName :=  printf "%s-%s" (include  "alfresco-search-service.fullname" .) "solr" -}}
 {{- $servicePort := .Values.service.name | default (include "alfresco-search.svcPort" .) -}}
 {{- $backendSvc := dict "serviceName" $serviceName "servicePort" $servicePort "context" $ -}}
 
 apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
-  name: {{ template "alfresco-search.fullName" . }}-solr
+  name: {{ template "alfresco-search-service.fullname" . }}-solr
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/auth-secret: {{ $.Values.ingress.existingSecretName | default (printf "%s-ingress-secret" (include "alfresco-search.fullName" $)) }}
+    nginx.ingress.kubernetes.io/auth-secret: {{ $.Values.ingress.existingSecretName | default (printf "%s-ingress-secret" (include "alfresco-search-service.fullname" $)) }}
   {{- if .Values.ingress.annotations -}}
   {{ toYaml .Values.ingress.annotations | nindent 4 }}
   {{- end }}

@@ -62,10 +62,26 @@ ingress:
     nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
 # Below values must be set by parent chart
 repository:
-  # -- ACS repository hostname
-  host:
-  # -- ACS repository port
-  port: null
+  # -- Alfresco repository URL
+  url: http://alfresco-search-service/solr
+  existingSecret:
+    # -- Name of a pre-existing secret containing message broker credentials
+    name: null
+    keys:
+      # -- Key within the secret holding the repository shared secret
+      password: SOLR_SECRET
+  existingConfigMap:
+    # -- Name of a pre-existing configmap containing Alfresco repository URL
+    # In addition to tjhe keys mentionned bellow the configMap may contain any
+    # solr property translated as an env variable (e.g SOLR_ALFRESCO_BASEURL).
+    name: null
+    keys:
+      # -- Key within the configmap holding the repository hostname
+      host: SOLR_ALFRESCO_HOST
+      # -- Key within the configmap holding the repository port
+      port: SOLR_ALFRESCO_PORT
+      # -- Key within the configmap holding the repository seucirty level
+      securecomms: SOLR_ALFRESCO_SECURE_COMMS
 environment:
   SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
 resources:
