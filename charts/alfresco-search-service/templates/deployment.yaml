@@ -51,7 +51,7 @@ spec:
               {{- if eq .securecomms "secret" }}
             - name: SOLR_ALFRESCO_SECURECOMMS_SECRET
               valueFrom:
-                seretKeyRef:
+                secretKeyRef:
                   name: {{ $secret }}
                   key: {{ index .existingSecret.keys "shared-secret" }}
               {{- end }}
