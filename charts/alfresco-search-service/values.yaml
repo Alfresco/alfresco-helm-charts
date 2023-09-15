@@ -128,35 +128,6 @@ initContainer:
       memory: "5Mi"
     limits:
       memory: "10Mi"
+
 global:
-  tracking:
-    # -- Select how solr and repo authenticate to each other
-    # none: work only prior to acs 7.2 (and was the default)
-    # secret: use a shared secret (to specify using `tracking.sharedsecret`)
-    # https: to use mTLS auth (require appropriate certificate configuration)
-    auth: secret
-    # -- Shared secret to authenticate repo/solr traffic
-    sharedsecret: null
   alfrescoRegistryPullSecrets: quay-registry-secret
-# -- Define Affinity for scheduling SOLR
-affinity:
-#   nodeAffinity:
-#     requiredDuringSchedulingIgnoredDuringExecution:
-#       nodeSelectorTerms:
-#         - matchExpressions:
-#           - key: "SolrMasterOnly"
-#             operator: In
-#             values:
-#             - "true"
-# -- Define Tolerations for scheduling SOLR
-tolerations:
-# - key: "SolrMasterOnly"
-#   operator: "Equal"
-#   value: "true"
-#   effect: "NoSchedule"
-# -- Define PVNodeAffinity for scheduling SOLR
-PvNodeAffinity:
-#   required:
-#     nodeSelectorTerms:
-#     - matchExpressions:
-#       - key: "SolrMasterOnly"

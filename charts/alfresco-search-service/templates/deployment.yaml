@@ -48,11 +48,13 @@ spec:
           {{- $secret := coalesce .Values.repository.existingSecret.name (include "alfresco-search-service.fullname" $repoCtx) }}
           env:
             {{- with .Values.repository }}
+              {{- if eq .securecomms "secret" }}
             - name: SOLR_ALFRESCO_SECURECOMMS_SECRET
               valueFrom:
                 seretKeyRef:
                   name: {{ $secret }}
                   key: {{ index .existingSecret.keys "shared-secret" }}
+              {{- end }}
             - name: SOLR_ALFRESCO_HOST
               valueFrom:
                 configMapKeyRef:
@@ -94,10 +96,10 @@ spec:
             httpGet:
               path: /solr/alfresco/admin/ping
               port: {{ template "alfresco-search.containerPort" . }}
-              {{- if eq .Values.global.tracking.auth "secret" }}
+              {{- if eq .Values.repository.securecomms "secret" }}
               httpHeaders:
               - name: X-Alfresco-Search-Secret
-                value: "{{ .Values.global.tracking.sharedsecret }}"
+                value: "$(SOLR_ALFRESCO_SECURECOMMS_SECRET)"
               {{- end }}
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
@@ -106,10 +108,10 @@ spec:
             httpGet:
               path: /solr/admin/info/system
               port: {{ template "alfresco-search.containerPort" . }}
-              {{- if eq .Values.global.tracking.auth "secret" }}
+              {{- if eq .Values.repository.securecomms "secret" }}
               httpHeaders:
               - name: X-Alfresco-Search-Secret
-                value: "{{ .Values.global.tracking.sharedsecret }}"
+                value: "$(SOLR_ALFRESCO_SECURECOMMS_SECRET)"
               {{- end }}
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
