@@ -93,26 +93,32 @@ spec:
             mountPath: {{ .Values.persistence.search.data.mountPath }}
             subPath: {{ .Values.persistence.search.data.subPath }}
           readinessProbe:
-            httpGet:
-              path: /solr/alfresco/admin/ping
-              port: {{ template "alfresco-search.containerPort" . }}
-              {{- if eq .Values.repository.securecomms "secret" }}
-              httpHeaders:
-              - name: X-Alfresco-Search-Secret
-                value: "$(SOLR_ALFRESCO_SECURECOMMS_SECRET)"
-              {{- end }}
+            exec:
+              command:
+                - sh
+                - -c
+                - >-
+                  [
+                  $(
+                  curl -sH "X-Alfresco-Search-Secret: $SOLR_ALFRESCO_SECURECOMMS_SECRET" http://localhost:{{ template "alfresco-search.containerPort" . }}/solr/alfresco/admin/ping
+                  | xmllint --xpath '/response/str[@name="status"]/text()' -
+                  )
+                  = "OK" ]
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
           livenessProbe:
-            httpGet:
-              path: /solr/admin/info/system
-              port: {{ template "alfresco-search.containerPort" . }}
-              {{- if eq .Values.repository.securecomms "secret" }}
-              httpHeaders:
-              - name: X-Alfresco-Search-Secret
-                value: "$(SOLR_ALFRESCO_SECURECOMMS_SECRET)"
-              {{- end }}
+            exec:
+              command:
+                - sh
+                - -c
+                - >-
+                  [
+                  $(
+                  curl -sH "X-Alfresco-Search-Secret: $SOLR_ALFRESCO_SECURECOMMS_SECRET" http://localhost:{{ template "alfresco-search.containerPort" . }}/solr/admin/info/system
+                  | xmllint --xpath '/response/lst/int[@name="status"]/text()' -
+                  )
+                  -eq 0 ]
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             failureThreshold: 1
