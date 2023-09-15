@@ -43,10 +43,16 @@ spec:
           image: {{ template "alfresco-search.dockerImage" . }}
           imagePullPolicy: {{ template "alfresco-search.pullPolicy" . }}
           {{- include "component-security-context" .Values | indent 8 }}
-          {{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-repository" $.Chart.Name )) "Chart" $.Chart "Release" $.Release }}
-          {{- $cm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-search-service.fullname" $cmCtx) }}
+          {{- $repoCtx := dict "Values" (dict "nameOverride" (printf "%s-repository" $.Chart.Name )) "Chart" $.Chart "Release" $.Release }}
+          {{- $cm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-search-service.fullname" $repoCtx) }}
+          {{- $secret := coalesce .Values.repository.existingSecret.name (include "alfresco-search-service.fullname" $repoCtx) }}
           env:
             {{- with .Values.repository }}
+            - name: SOLR_ALFRESCO_SECURECOMMS_SECRET
+              valueFrom:
+                seretKeyRef:
+                  name: {{ $secret }}
+                  key: {{ index .existingSecret.keys "shared-secret" }}
             - name: SOLR_ALFRESCO_HOST
               valueFrom:
                 configMapKeyRef:
@@ -77,10 +83,6 @@ spec:
           envFrom:
           - configMapRef:
               name: {{ $cm }}
-          {{- if eq .Values.global.tracking.auth "secret" }}
-          - secretRef:
-              name: {{ template "alfresco-search-service.fullname" . }}-solr-jtoolopts
-          {{- end }}
           ports:
             - containerPort: {{ template "alfresco-search.containerPort" . }}
           resources: {{- toYaml .Values.resources | nindent 12 }}

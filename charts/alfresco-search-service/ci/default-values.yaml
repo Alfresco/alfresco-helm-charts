@@ -5,3 +5,5 @@ alfresco-insight-zeppelin:
 global:
   tracking:
     sharedsecret: dummy
+repository:
+  shared-secret: dummy
