@@ -3,4 +3,4 @@ alfresco-insight-zeppelin:
   nameOverride: zeppelin
   enabled: true
 repository:
-  shared-secret: dummy
+  sharedSecret: dummy

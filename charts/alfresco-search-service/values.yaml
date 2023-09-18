@@ -64,16 +64,16 @@ ingress:
 repository:
   # -- Alfresco repository URL
   url: http://alfresco-search-service/solr
-  # -- repository seucurity level to use when tracking the repo ('none' or 'secret')
+  # -- repository security level to use when tracking the repo ('none' or 'secret')
   securecomms: secret
   # -- Secret shared with the repository when securecomms is set to 'secret'
-  shared-secret: null
+  sharedSecret: null
   existingSecret:
     # -- Name of a pre-existing secret containing message broker credentials
     name: null
     keys:
       # -- Key within the secret holding the repository shared secret
-      shared-secret: SOLR_ALFRESCO_SECURECOMMS_SECRET
+      sharedSecret: SOLR_ALFRESCO_SECURECOMMS_SECRET
   existingConfigMap:
     # -- Name of a pre-existing configmap containing Alfresco repository URL
     # In addition to tjhe keys mentionned bellow the configMap may contain any

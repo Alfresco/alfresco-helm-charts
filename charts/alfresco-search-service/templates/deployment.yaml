@@ -53,7 +53,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ $secret }}
-                  key: {{ index .existingSecret.keys "shared-secret" }}
+                  key: {{ index .existingSecret.keys "sharedSecret" }}
               {{- end }}
             - name: SOLR_ALFRESCO_HOST
               valueFrom:
