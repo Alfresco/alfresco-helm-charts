@@ -1,6 +1,6 @@
 # alfresco-search-service
 
-![Version: 2.0.0-alpha.1](https://img.shields.io/badge/Version-2.0.0--alpha.1-informational?style=flat-square) ![AppVersion: 2.0.8](https://img.shields.io/badge/AppVersion-2.0.8-informational?style=flat-square)
+![Version: 2.0.0-alpha.2](https://img.shields.io/badge/Version-2.0.0--alpha.2-informational?style=flat-square) ![AppVersion: 2.0.8](https://img.shields.io/badge/AppVersion-2.0.8-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
@@ -23,13 +23,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| PvNodeAffinity | string | `nil` | Define PVNodeAffinity for scheduling SOLR |
-| affinity | string | `nil` | Define Affinity for scheduling SOLR |
 | alfresco-insight-zeppelin.enabled | bool | `false` |  |
 | environment.SOLR_CREATE_ALFRESCO_DEFAULTS | string | `"alfresco,archive"` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
-| global.tracking.auth | string | `"secret"` | Select how solr and repo authenticate to each other none: work only prior to acs 7.2 (and was the default) secret: use a shared secret (to specify using `tracking.sharedsecret`) https: to use mTLS auth (require appropriate certificate configuration) |
-| global.tracking.sharedsecret | string | `nil` | Shared secret to authenticate repo/solr traffic |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/auth-realm":"Authentication Required - Alfresco Search Services","nginx.ingress.kubernetes.io/auth-type":"basic","nginx.ingress.kubernetes.io/whitelist-source-range":"0.0.0.0/0"}` | nginx ingress annotations (see https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations) |
 | ingress.basicAuth | string | `nil` | Default solr basic auth user/password: admin / admin You can create your own with htpasswd utilility & encode it with base640. Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'` basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg== |
 | ingress.enabled | bool | `false` | Expose the solr admin console behind basic auth |
@@ -61,10 +57,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | repository.existingConfigMap.keys.host | string | `"SOLR_ALFRESCO_HOST"` | Key within the configmap holding the repository hostname |
 | repository.existingConfigMap.keys.port | string | `"SOLR_ALFRESCO_PORT"` | Key within the configmap holding the repository port |
-| repository.existingConfigMap.keys.securecomms | string | `"SOLR_ALFRESCO_SECURE_COMMS"` | Key within the configmap holding the repository seucirty level |
+| repository.existingConfigMap.keys.securecomms | string | `"SOLR_ALFRESCO_SECURE_COMMS"` | Key within the configmap holding the repository security level |
 | repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing Alfresco repository URL In addition to tjhe keys mentionned bellow the configMap may contain any solr property translated as an env variable (e.g SOLR_ALFRESCO_BASEURL). |
-| repository.existingSecret.keys.password | string | `"SOLR_SECRET"` | Key within the secret holding the repository shared secret |
+| repository.existingSecret.keys.sharedSecret | string | `"SOLR_ALFRESCO_SECURECOMMS_SECRET"` | Key within the secret holding the repository shared secret |
 | repository.existingSecret.name | string | `nil` | Name of a pre-existing secret containing message broker credentials |
+| repository.securecomms | string | `"secret"` | repository security level to use when tracking the repo ('none' or 'secret') |
+| repository.sharedSecret | string | `nil` | Secret shared with the repository when securecomms is set to 'secret' |
 | repository.url | string | `"http://alfresco-search-service/solr"` | Alfresco repository URL |
 | resources.limits.cpu | string | `"4"` |  |
 | resources.limits.memory | string | `"2000Mi"` |  |
@@ -76,5 +74,4 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | searchServicesImage.tag | string | `"2.0.8"` |  |
 | service.name | string | `"solr"` |  |
 | service.type | string | `"ClusterIP"` |  |
-| tolerations | string | `nil` | Define Tolerations for scheduling SOLR |
 | type | string | `"search-services"` | set alfresco-insight-zeppelin.enabled=true As the Docker Image for Insight Engine is not publicly available the alfrescoRegistryPullSecrets has to be set More information can be found on https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/registry-authentication.md |

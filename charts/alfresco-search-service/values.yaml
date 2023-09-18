@@ -64,12 +64,16 @@ ingress:
 repository:
   # -- Alfresco repository URL
   url: http://alfresco-search-service/solr
+  # -- repository security level to use when tracking the repo ('none' or 'secret')
+  securecomms: secret
+  # -- Secret shared with the repository when securecomms is set to 'secret'
+  sharedSecret: null
   existingSecret:
     # -- Name of a pre-existing secret containing message broker credentials
     name: null
     keys:
       # -- Key within the secret holding the repository shared secret
-      password: SOLR_SECRET
+      sharedSecret: SOLR_ALFRESCO_SECURECOMMS_SECRET
   existingConfigMap:
     # -- Name of a pre-existing configmap containing Alfresco repository URL
     # In addition to tjhe keys mentionned bellow the configMap may contain any
@@ -80,7 +84,7 @@ repository:
       host: SOLR_ALFRESCO_HOST
       # -- Key within the configmap holding the repository port
       port: SOLR_ALFRESCO_PORT
-      # -- Key within the configmap holding the repository seucirty level
+      # -- Key within the configmap holding the repository security level
       securecomms: SOLR_ALFRESCO_SECURE_COMMS
 environment:
   SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
@@ -124,38 +128,6 @@ initContainer:
       memory: "5Mi"
     limits:
       memory: "10Mi"
+
 global:
-  tracking:
-    # -- Select how solr and repo authenticate to each other
-    # none: work only prior to acs 7.2 (and was the default)
-    # secret: use a shared secret (to specify using `tracking.sharedsecret`)
-    # https: to use mTLS auth (require appropriate certificate configuration)
-    auth: secret
-    # -- Shared secret to authenticate repo/solr traffic
-    sharedsecret: null
   alfrescoRegistryPullSecrets: quay-registry-secret
-# -- Define Affinity for scheduling SOLR
-affinity:
-#   nodeAffinity:
-#     requiredDuringSchedulingIgnoredDuringExecution:
-#       nodeSelectorTerms:
-#         - matchExpressions:
-#           - key: "SolrMasterOnly"
-#             operator: In
-#             values:
-#             - "true"
-# -- Define Tolerations for scheduling SOLR
-tolerations:
-# - key: "SolrMasterOnly"
-#   operator: "Equal"
-#   value: "true"
-#   effect: "NoSchedule"
-# -- Define PVNodeAffinity for scheduling SOLR
-PvNodeAffinity:
-#   required:
-#     nodeSelectorTerms:
-#     - matchExpressions:
-#       - key: "SolrMasterOnly"
-#         operator: In
-#         values:
-#         - "true"
