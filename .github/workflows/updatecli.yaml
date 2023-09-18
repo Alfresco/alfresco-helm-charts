@@ -27,7 +27,7 @@ jobs:
           Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v3.1.0
 
       - name: Login to quay.io
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
@@ -73,7 +73,7 @@ jobs:
           Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v3.1.0
 
       - name: Login to quay.io
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
