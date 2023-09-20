@@ -44,7 +44,7 @@ Usage: include "alfresco-common.component-pod-security-context" $
 {{- if .podSecurityContext }}
     {{- .podSecurityContext | toYaml | nindent 4 }}
 {{- else }}
-{{- include "default-pod-security-context" . }}
+{{- include "alfresco-common.default-pod-security-context" . }}
 {{- end }}
 {{- end }}
 
@@ -63,7 +63,7 @@ Usage: include "alfresco-common.component-security-context" $
 {{- if .securityContext }}
   {{- .securityContext | toYaml | nindent 4 }}
 {{- else }}
-{{- include "default-security-context" . }}
+{{- include "alfresco-common.default-security-context" . }}
 {{- end }}
 {{- end }}
 
