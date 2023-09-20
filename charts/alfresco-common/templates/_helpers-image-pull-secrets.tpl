@@ -5,9 +5,14 @@ Usage: include "alfresco-common.imagePullSecrets" $
 
 */}}
 {{- define "alfresco-common.imagePullSecrets" }}
-{{- if .Values.global.alfrescoRegistryPullSecrets }}
 imagePullSecrets:
-  - name: {{ .Values.global.alfrescoRegistryPullSecrets }}
+{{- with .Values }}
+{{- range .imagePullSecrets }}
+  - {{ toYaml . }}
+{{- end }}
+{{- if .global.alfrescoRegistryPullSecrets }}
+  - name: {{ .global.alfrescoRegistryPullSecrets }}
+{{- end }}
 {{- end }}
 {{- end }}
 
