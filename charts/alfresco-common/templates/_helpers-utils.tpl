@@ -88,3 +88,38 @@ Usage: include "alfresco-common.secret-checksum" (dict "ns" "" "configKey" "some
 {{/*  Finaly checksums both concatenated hashes */}}
 checksum.config.alfresco.org/{{ $.configKey }}: {{- cat $lookedup_cm $lookedup_secret | trim | sha256sum | indent 1 }}
 {{- end -}}
+
+{{/*
+Gets a value from its path, return empty if not found
+Shamelessly inspired from bitnami "common.utils.getValueFromKey"
+
+Usage: include "alfresco-common.lazy.getValueFromKey" (dict "key" "path.to.key" "context" $)
+
+*/}}
+{{- define "alfresco-common.lazy.getValueFromKey" -}}
+{{- $splitKey := splitList "." .key -}}
+{{- $value := "" -}}
+{{- $latestObj := $.context.Values -}}
+{{- range $splitKey -}}
+  {{- if not $latestObj -}}
+    {{- break }}
+  {{- end -}}
+  {{- $value = ( index $latestObj . ) -}}
+  {{- $latestObj = $value -}}
+{{- end -}}
+{{- printf "%v" ( default "" $value) -}}
+{{- end -}}
+
+{{/*
+Evaluate a value within the chart's context given a path, otherwise fallback to the global context
+
+Usage: include "alfresco-common.may.glob.value" dict "rootCtx" $ "path" "path.to.key")
+
+*/}}
+{{- define "alfresco-common.may.glob.value" -}}
+{{- $chartValues := "" }}
+{{- $globalValues := "" }}
+{{- $chartValues = include "alfresco-common.utils.getValueFromKey" (dict "key" .path "context" .rootCtx) }}
+{{- $globalValues := include "alfresco-common.utils.getValueFromKey" (dict "key" (printf "global.%s" .path) "context" .rootCtx) }}
+{{- coalesce $chartValues $globalValues }}
+{{- end -}}
