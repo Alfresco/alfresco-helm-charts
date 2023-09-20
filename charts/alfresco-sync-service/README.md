@@ -1,6 +1,6 @@
 # alfresco-sync-service
 
-![Version: 4.3.0](https://img.shields.io/badge/Version-4.3.0-informational?style=flat-square) ![AppVersion: 3.10.0](https://img.shields.io/badge/AppVersion-3.10.0-informational?style=flat-square)
+![Version: 4.4.0](https://img.shields.io/badge/Version-4.4.0-informational?style=flat-square) ![AppVersion: 3.11.0](https://img.shields.io/badge/AppVersion-3.11.0-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -39,7 +39,7 @@ Alfresco Sync Service
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/service-sync"` |  |
-| image.tag | string | `"3.10.0"` |  |
+| image.tag | string | `"3.11.0"` |  |
 | ingress.extraAnnotations | object | `{}` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes nginx.ingress.kubernetes.io/ssl-redirect: "false" |
 | ingress.path | string | `"/syncservice"` |  |
 | ingress.tls | list | `[]` |  |

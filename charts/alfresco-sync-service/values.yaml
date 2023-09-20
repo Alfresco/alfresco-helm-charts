@@ -24,7 +24,7 @@ podSecurityContext:
   fsGroup: 1000
 image:
   repository: quay.io/alfresco/service-sync
-  tag: 3.10.0
+  tag: 3.11.0
   pullPolicy: IfNotPresent
   internalPort: 9090
 environment:
@@ -127,7 +127,6 @@ database:
   password: admin
   # -- An existing kubernetes secret with DB info (prefered over using values)
   existingSecretName: null
-
 ingress:
   # -- useful when running Sync service without SSL termination done by a load
   # balancer, e.g. when ran on Minikube for testing purposes
