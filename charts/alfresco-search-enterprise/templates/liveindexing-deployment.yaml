@@ -37,8 +37,10 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullname" $)) $.Values.messageBroker.existingSecretName }}
+            - configMapRef:
+                name: {{ template "alfresco-search-enterprise.fullname" $ }}-es
           env:
-            {{- $ats_cm := $.Values.ats.existingConfigMap.name | default (printf "%s-configmap" (include "alfresco-search-enterprise.fullname" $)) }}
+            {{- $ats_cm := $.Values.ats.existingConfigMap.name | default (printf "%s-ats" (include "alfresco-search-enterprise.fullname" $)) }}
             - name: ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL
               valueFrom:
                 configMapKeyRef:

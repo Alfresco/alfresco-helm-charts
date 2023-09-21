@@ -2,11 +2,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-search-enterprise.fullname" . }}-reindexing-configmap
+  name: {{ template "alfresco-search-enterprise.fullname" . }}-ats
   labels:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
 data:
-  {{ template "alfresco-search-enterprise.config.spring" . }}
   {{ template "alfresco-search-enterprise.ats.fullurl" (required "You need to provide the ATS URL using either ats.transform_url value or a configmap" .Values.ats.transform_url) }}
   {{ template "alfresco-search-enterprise.sfs.fullurl" (required "You need to provide the SFS URL using either ats.sfs_url value or a configmap" .Values.ats.sfs_url) }}
 {{- end }}
