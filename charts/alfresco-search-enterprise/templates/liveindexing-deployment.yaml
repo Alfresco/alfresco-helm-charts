@@ -42,8 +42,7 @@ spec:
           env:
             {{- include "spring.activemq.env" . | nindent 12 }}
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
-            - name: ELASTICSEARCH_INDEXNAME
-              value: {{ $.Values.indexName }}
+            {{- include "alfresco-search-enterprise.env" $ | nindent 12 }}
           ports:
             - name: http
               containerPort: 8080

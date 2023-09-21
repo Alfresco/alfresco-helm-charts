@@ -32,8 +32,7 @@ spec:
           env:
             {{- $dbCtx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
             {{- $dbFullName := (include "alfresco-search-enterprise.fullname" $dbCtx) }}
-            - name: ELASTICSEARCH_INDEXNAME
-              value: {{ .Values.indexName }}
+            {{- include "alfresco-search-enterprise.env" $ | nindent 12 }}
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
