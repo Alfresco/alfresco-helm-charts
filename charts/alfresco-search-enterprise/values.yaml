@@ -88,14 +88,24 @@ reindexing:
         limits:
           cpu: "0.25"
           memory: "10Mi"
+ats:
+  # -- URL of the alfresco transform (trouter or tengine-aio)
+  transform_url: null
+  # -- URL of the alfresco shared filestore (trouter or tengine-aio)
+  sfs_url: null
+  existingConfigMap:
+    # -- Alternatively, provide ATS details via an existing configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the alfresco transform
+      transform_url: ATS_URL
+      # -- Key within the configmap holding the URL of the alfresco shared filestore
+      sfs_url: SFS_URL
 elasticsearch:
   # -- Enable embedded elasticsearch - useful when using this chart in standalone
   enabled: false
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
-activemq:
-  # -- Enable embedded broker - useful when testing this chart in standalone
-  enabled: false
 messageBroker:
   # --  Broker URL formatted as per:
   # https://activemq.apache.org/failover-transport-reference
@@ -104,7 +114,8 @@ messageBroker:
   user: null
   # -- Broker password
   password: null
-  # -- Provide connection details alternatively via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
+  # -- Provide connection details alternatively via an existing secret that
+  # contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName: null
 # -- Overrides .Values.global.elasticsearch
 searchIndex:
@@ -118,7 +129,8 @@ searchIndex:
   user: null
   # -- The password required to access the service, if any
   password: null
-  # -- Alternatively, provide connection details via an an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
+  # -- Alternatively, provide connection details via an an existing secret that
+  # contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
   existingSecretName: null
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
@@ -134,5 +146,9 @@ global:
     user: null
     # -- The password required to access the service, if any
     password: null
-    # -- Alternatively, provide connection details via an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
+    # -- Alternatively, provide connection details via an existing secret that
+    # contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
     existingSecretName: null
+activemq:
+  # -- Enable embedded broker - useful when testing this chart in standalone
+  enabled: false

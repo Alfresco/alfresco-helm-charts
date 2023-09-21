@@ -1,6 +1,9 @@
 reindexing:
   # requires postgres database at startup
   enabled: false
+ats:
+  transform_url: http://alfresco-transform-services-router
+  sfs_url: http://alfresco-transform-services-sfs
 activemq:
   enabled: true
   resources:
