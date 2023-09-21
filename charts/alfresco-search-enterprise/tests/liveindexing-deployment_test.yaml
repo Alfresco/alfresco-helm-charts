@@ -10,10 +10,11 @@ tests:
   - it: |
       Render elasticsearch Liveindexing configmap,
       using global config to ensure it overrides default values.
+    values: &testvalues
+      - values/embedded-charts-values.yaml
     set:
-      activemq:
-        enabled: true
-      global.elasticsearch:
+      global:
+        elasticsearch:
           host: someglobally.used.host
           user: admin
           protocol: https
@@ -25,31 +26,35 @@ tests:
         template: liveindexing-config.yaml
 
   - it: |
-      Render elasticsearch Liveindexing configmap,
-      using embedded elasticsearch chart.
-    values: &testvalues
-      - values/embedded-charts-values.yaml
+      Render default mainfest with embedded elasticsearch and pre-existing secret
+    values: *testvalues
+    template: liveindexing-deployment.yaml
+    set:
+      elasticsearch:
+        enabled: true
+      searchIndex:
+        existingSecretName: nooneknows
     asserts:
       - equal:
           path: data.SPRING_ELASTICSEARCH_REST_URIS
           value: http://elasticsearch-master:9200
         template: liveindexing-config.yaml
-
-  - it: should have env vars for elasticsearch credentials
-    values: *testvalues
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[0].env[3].name
-          value: SPRING_ELASTICSEARCH_REST_USERNAME
-        template: liveindexing-deployment.yaml
-      - equal:
-          path: spec.template.spec.containers[0].env[4].name
-          value: SPRING_ELASTICSEARCH_REST_PASSWORD
-        template: liveindexing-deployment.yaml
-
-  - it: should render cpu and memory limits
-    values: *testvalues
-    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: nooneknows
+                key: ELASTICSEARCH_USERNAME
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: nooneknows
+                key: ELASTICSEARCH_PASSWORD
       - equal:
           path: spec.template.spec.containers[0].resources
           value:
@@ -59,4 +64,3 @@ tests:
             limits:
               cpu: "2"
               memory: "2048Mi"
-        template: liveindexing-deployment.yaml

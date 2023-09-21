@@ -1,4 +1,5 @@
 activemq:
   enabled: true
-elasticsearch:
-  enabled: true
+ats:
+  transform_url: http://transform
+  sfs_url: http://sfs

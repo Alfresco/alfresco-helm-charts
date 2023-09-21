@@ -5,35 +5,30 @@ templates:
 tests:
   - it: should have env vars for spring database credentials referencing the main chart secret
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].env[0].name
-          value: SPRING_DATASOURCE_PASSWORD
-      - equal:
-          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
-          value: RELEASE-NAME-alfresco-database
-      - equal:
-          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
-          value: DATABASE_PASSWORD
-
-      - equal:
-          path: spec.template.spec.containers[0].env[1].name
-          value: SPRING_DATASOURCE_USERNAME
-      - equal:
-          path: spec.template.spec.containers[0].env[1].valueFrom.secretKeyRef.name
-          value: RELEASE-NAME-alfresco-database
-      - equal:
-          path: spec.template.spec.containers[0].env[1].valueFrom.secretKeyRef.key
-          value: DATABASE_USERNAME
-
-      - equal:
-          path: spec.template.spec.containers[0].env[2].name
-          value: SPRING_DATASOURCE_URL
-      - equal:
-          path: spec.template.spec.containers[0].env[2].valueFrom.configMapKeyRef.name
-          value: RELEASE-NAME-alfresco-database
-      - equal:
-          path: spec.template.spec.containers[0].env[2].valueFrom.configMapKeyRef.key
-          value: DATABASE_URL
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-database
+                key: DATABASE_PASSWORD
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_DATASOURCE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-database
+                key: DATABASE_USERNAME
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_DATASOURCE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-database
+                key: DATABASE_URL
 
   - it: should have overridden secret for spring database credentials when existingSecretName is set
     set:
@@ -48,41 +43,49 @@ tests:
           keys:
             url: CUSTOM_URL_KEY
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.name
-          value: my-custom-secret
-      - equal:
-          path: spec.template.spec.containers[0].env[0].valueFrom.secretKeyRef.key
-          value: CUSTOM_PASSWORD_KEY
-
-      - equal:
-          path: spec.template.spec.containers[0].env[1].valueFrom.secretKeyRef.name
-          value: my-custom-secret
-      - equal:
-          path: spec.template.spec.containers[0].env[1].valueFrom.secretKeyRef.key
-          value: CUSTOM_USERNAME_KEY
-
-      - equal:
-          path: spec.template.spec.containers[0].env[2].valueFrom.configMapKeyRef.name
-          value: my-custom-configmap
-      - equal:
-          path: spec.template.spec.containers[0].env[2].valueFrom.configMapKeyRef.key
-          value: CUSTOM_URL_KEY
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_DATASOURCE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: my-custom-secret
+                key: CUSTOM_USERNAME_KEY
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: my-custom-secret
+                key: CUSTOM_PASSWORD_KEY
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_DATASOURCE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: my-custom-configmap
+                key: CUSTOM_URL_KEY
 
   - it: should have env vars for elasticsearch credentials
     asserts:
-      - equal:
-          path: spec.template.spec.containers[0].env[6].name
-          value: SPRING_ELASTICSEARCH_REST_USERNAME
-      - equal:
-          path: spec.template.spec.containers[0].env[6].valueFrom.secretKeyRef.name
-          value: RELEASE-NAME-alfresco-search-enterprise-elasticsearch-secret
-      - equal:
-          path: spec.template.spec.containers[0].env[7].name
-          value: SPRING_ELASTICSEARCH_REST_PASSWORD
-      - equal:
-          path: spec.template.spec.containers[0].env[7].valueFrom.secretKeyRef.name
-          value: RELEASE-NAME-alfresco-search-enterprise-elasticsearch-secret
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-elasticsearch-secret
+                key: ELASTICSEARCH_USERNAME
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-elasticsearch-secret
+                key: ELASTICSEARCH_PASSWORD
 
   - it: should not be present when disabled
     set:
