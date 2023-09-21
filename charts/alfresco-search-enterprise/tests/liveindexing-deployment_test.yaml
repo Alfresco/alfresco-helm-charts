@@ -36,6 +36,14 @@ tests:
         existingSecretName: nooneknows
     asserts:
       - equal:
+          path: data.ATS_URL
+          value: http://transform/transform/config
+        template: liveindexing-config.yaml
+      - equal:
+          path: data.SFS_URL
+          value: http://sfs/alfresco/api/-default-/private/sfs/versions/1/file/
+        template: liveindexing-config.yaml
+      - equal:
           path: data.SPRING_ELASTICSEARCH_REST_URIS
           value: http://elasticsearch-master:9200
         template: liveindexing-config.yaml

@@ -6,7 +6,7 @@ Usage: include "alfresco-search-enterprise.transform.fullurl" "URL"
 
 */}}
 {{- define "alfresco-search-enterprise.ats.fullurl" -}}
-  ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: {{ printf "%s/transform/config" . }}
+  ATS_URL: {{ printf "%s/transform/config" . }}
 {{- end -}}
 
 {{/*
@@ -17,7 +17,7 @@ Usage: include "alfresco-search-enterprise.sfs.fullurl" "URL"
 
 */}}
 {{- define "alfresco-search-enterprise.sfs.fullurl" -}}
-  ALFRESCO_SHAREDFILESTORE_BASEURL: {{ printf "%s/alfresco/api/-default-/private/sfs/versions/1/file/" . }}
+  SFS_URL: {{ printf "%s/alfresco/api/-default-/private/sfs/versions/1/file/" . }}
 {{- end -}}
 
 {{/*

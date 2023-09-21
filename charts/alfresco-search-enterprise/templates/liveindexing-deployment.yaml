@@ -35,11 +35,20 @@ spec:
           imagePullPolicy: {{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "pullPolicy" }}
             {{- include "component-security-context" .Values | indent 8 }}
           envFrom:
-            - configMapRef:
-                name: {{ template "alfresco-search-enterprise.fullname" $ }}-configmap
             - secretRef:
                 name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullname" $)) $.Values.messageBroker.existingSecretName }}
           env:
+            {{- $ats_cm := $.Values.ats.existingConfigMap.name | default (printf "%s-configmap" (include "alfresco-search-enterprise.fullname" $)) }}
+            - name: ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $ats_cm }}
+                  key: {{ $.Values.ats.existingConfigMap.keys.transform_url }}
+            - name: ALFRESCO_SHAREDFILESTORE_BASEURL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $ats_cm }}
+                  key: {{ $.Values.ats.existingConfigMap.keys.sfs_url }}
             {{- include "spring.activemq.env" . | nindent 12 }}
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
             {{- include "alfresco-search-enterprise.env" $ | nindent 12 }}
