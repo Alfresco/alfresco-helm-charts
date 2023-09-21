@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
 data:
-  ELASTICSEARCH_INDEXNAME: "{{ .Values.indexName }}"
   {{ template "alfresco-search-enterprise.config.spring" . }}
   ALFRESCO_SHAREDFILESTORE_BASEURL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file/
   ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ template "alfresco.shortname" . }}-router/transform/config
