@@ -6,9 +6,8 @@ metadata:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
 data:
   {{ template "alfresco-search-enterprise.config.spring" . }}
-  ALFRESCO_SHAREDFILESTORE_BASEURL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file/
-  ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL: http://{{ template "alfresco.shortname" . }}-router/transform/config
-  ALFRESCO_REINDEX_PATHINDEXINGENABLED: {{ .Values.reindexing.pathIndexingEnabled | quote }}
+  {{ template "alfresco-search-enterprise.ats.fullurl" (required "You need to provide the ATS URL using either ats.transform_url value or a configmap" .Values.ats.transform_url) }}
+  {{ template "alfresco-search-enterprise.sfs.fullurl" (required "You need to provide the SFS URL using either ats.sfs_url value or a configmap" .Values.ats.sfs_url) }}
   {{- if .Values.reindexing.environment }}
   {{- range $key, $val := .Values.reindexing.environment }}
   {{ $key }}: {{ $val | quote }}

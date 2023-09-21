@@ -33,6 +33,8 @@ spec:
             {{- $dbCtx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
             {{- $dbFullName := (include "alfresco-search-enterprise.fullname" $dbCtx) }}
             {{- include "alfresco-search-enterprise.env" $ | nindent 12 }}
+            - name: ALFRESCO_REINDEX_PATHINDEXINGENABLED
+              value: {{ .Values.reindexing.pathIndexingEnabled | quote }}
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
