@@ -1,14 +1,14 @@
 {{- define "alfresco-search-enterprise.searchIndexExistingSecretName" -}}
-{{ coalesce .Values.searchIndex.existingSecretName .Values.global.elasticsearch.existingSecretName (printf "%s-elasticsearch-secret" (include "alfresco-search-enterprise.fullname" .)) }}
+{{- coalesce .Values.searchIndex.existingSecretName .Values.global.elasticsearch.existingSecretName (printf "%s-elasticsearch-secret" (include "alfresco-search-enterprise.fullname" .)) }}
 {{- end -}}
 
 {{- define "alfresco-search-enterprise.config.spring" -}}
-{{- if .Values.elasticsearch.enabled }}
+{{- if .Values.elasticsearch.enabled -}}
   SPRING_ELASTICSEARCH_REST_URIS: "{{ .Values.elasticsearch.protocol }}://{{ .Values.elasticsearch.clusterName }}-{{ .Values.elasticsearch.nodeGroup }}:{{ .Values.elasticsearch.httpPort }}"
 {{- else }}
   {{- if and (not .Values.global.elasticsearch.host) (not .Values.searchIndex.host) }}
-    {{ fail "Please provide external elasticsearch connection details as values under .global.elasticsearch or .searchIndex or enable the embedded elasticsearch via .elasticsearch.enabled" }}
-  {{- end }}
+    {{- fail "Please provide external elasticsearch connection details as values under .global.elasticsearch or .searchIndex or enable the embedded elasticsearch via .elasticsearch.enabled" }}
+  {{- end -}}
   SPRING_ELASTICSEARCH_REST_URIS: "{{ .Values.searchIndex.protocol | default .Values.global.elasticsearch.protocol }}://{{ .Values.searchIndex.host | default .Values.global.elasticsearch.host }}:{{ .Values.searchIndex.port | default .Values.global.elasticsearch.port }}"
 {{- end -}}
 {{- end -}}
