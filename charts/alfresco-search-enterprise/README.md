@@ -1,6 +1,6 @@
 # alfresco-search-enterprise
 
-![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
+![Version: 3.0.0-alpha.1](https://img.shields.io/badge/Version-3.0.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -11,7 +11,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | Repository | Name | Version |
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.3.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0-alpha.1 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
 
 ## Values
@@ -20,6 +20,11 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 |-----|------|---------|-------------|
 | activemq.enabled | bool | `false` | Enable embedded broker - useful when testing this chart in standalone |
 | affinity | object | `{}` |  |
+| ats.existingConfigMap.keys.sfs_url | string | `"SFS_URL"` | Key within the configmap holding the URL of the alfresco shared filestore |
+| ats.existingConfigMap.keys.transform_url | string | `"ATS_URL"` | Key within the configmap holding the URL of the alfresco transform |
+| ats.existingConfigMap.name | string | `nil` | Alternatively, provide ATS details via an existing configmap |
+| ats.sfs_url | string | `nil` | URL of the alfresco shared filestore |
+| ats.transform_url | string | `nil` | URL of the alfresco transform (trouter or tengine-aio) |
 | contentMediaTypeCache.enabled | bool | `true` |  |
 | contentMediaTypeCache.refreshTime | string | `"0 0 * * * *"` |  |
 | elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |

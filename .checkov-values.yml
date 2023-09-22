@@ -19,3 +19,6 @@ elasticsearch:
 reindexing:
   db:
     url: something
+ats:
+  transform_url: http://transform
+  sfs_url: http://sfs
