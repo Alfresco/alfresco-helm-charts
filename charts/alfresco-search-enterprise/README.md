@@ -23,7 +23,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | ats.existingConfigMap.keys.sfs_url | string | `"SFS_URL"` | Key within the configmap holding the URL of the alfresco shared filestore |
 | ats.existingConfigMap.keys.transform_url | string | `"ATS_URL"` | Key within the configmap holding the URL of the alfresco transform |
 | ats.existingConfigMap.name | string | `nil` | Alternatively, provide ATS details via an existing configmap |
-| ats.sfs_url | string | `nil` | URL of the alfresco shared filestore (trouter or tengine-aio) |
+| ats.sfs_url | string | `nil` | URL of the alfresco shared filestore |
 | ats.transform_url | string | `nil` | URL of the alfresco transform (trouter or tengine-aio) |
 | contentMediaTypeCache.enabled | bool | `true` |  |
 | contentMediaTypeCache.refreshTime | string | `"0 0 * * * *"` |  |

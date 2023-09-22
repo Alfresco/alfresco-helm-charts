@@ -91,7 +91,7 @@ reindexing:
 ats:
   # -- URL of the alfresco transform (trouter or tengine-aio)
   transform_url: null
-  # -- URL of the alfresco shared filestore (trouter or tengine-aio)
+  # -- URL of the alfresco shared filestore
   sfs_url: null
   existingConfigMap:
     # -- Alternatively, provide ATS details via an existing configmap
@@ -101,11 +101,6 @@ ats:
       transform_url: ATS_URL
       # -- Key within the configmap holding the URL of the alfresco shared filestore
       sfs_url: SFS_URL
-elasticsearch:
-  # -- Enable embedded elasticsearch - useful when using this chart in standalone
-  enabled: false
-  replicas: 1
-  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 messageBroker:
   # --  Broker URL formatted as per:
   # https://activemq.apache.org/failover-transport-reference
@@ -152,3 +147,8 @@ global:
 activemq:
   # -- Enable embedded broker - useful when testing this chart in standalone
   enabled: false
+elasticsearch:
+  # -- Enable embedded elasticsearch - useful when using this chart in standalone
+  enabled: false
+  replicas: 1
+  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
