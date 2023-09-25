@@ -188,10 +188,10 @@ spec:
         {{- range .Values.configuration.repository.existingSecrets }}
           {{- if eq "acs-license" .purpose }}
             {{- $licitems := list (dict "key" .key "path" "license.lic") }}
-            {{- $licvol := dict "name" "acs-license" "secret" (dict "secretName" .name "defaultMode" 0400 "optional" true "items" $licitems ) }}
+            {{- $licvol := dict "name" "acs-license" "secret" (dict "secretName" .name "defaultMode" 0400 "optional" true "items" $licitems) }}
             {{- list $licvol | toYaml | nindent 8 }}
           {{- else if and (hasPrefix "subsystems:" (.purpose | default "")) (eq (splitList ":" (.purpose | default "") | len) 3) }}
-            {{- $subsysvol := dict "name" .name "secret" (dict "secretName" .name "defaultMode" 0400) }}
+            {{- $subsysvol := dict "name" .name "secret" (dict "secretName" .name "defaultMode" 0400 "optional" true) }}
             {{- list $subsysvol | toYaml | nindent 8 }}
           {{- end }}
         {{- end }}
