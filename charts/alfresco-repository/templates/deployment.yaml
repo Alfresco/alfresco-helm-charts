@@ -81,7 +81,7 @@ spec:
                   key: {{ .Values.configuration.db.existingSecret.keys.username }}
           {{- range .Values.configuration.repository.existingSecrets }}
             {{- if not (or (eq "acs-license" .purpose) (hasPrefix "subsystems:" (.purpose | default ""))) }}
-              {{- $repoSecretsKeyRef := dict "name" .name "key" .key }}
+              {{- $repoSecretsKeyRef := dict "name" .name "key" .key "optional" true }}
               {{- $repoSecretsEnv:= dict "name" .key "valueFrom" (dict "secretKeyRef" $repoSecretsKeyRef) }}
               {{- list $repoSecretsEnv | toYaml | nindent 12 }}
             {{- end }}
