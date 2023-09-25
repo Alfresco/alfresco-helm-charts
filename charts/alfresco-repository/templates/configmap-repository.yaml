@@ -10,7 +10,7 @@ data:
   CATALINA_OPTS: >-
     {{- with .Values.configuration }}
     -Ddeployment.method=HELM_CHART
-    -Ddb.url="jdbc:$DATABASE_URL"
+    -Ddb.url="$DATABASE_URL"
     -Ddb.username=${DATABASE_USERNAME}
     -Ddb.password=${DATABASE_PASSWORD}
     -Ddb.driver="$DATABASE_DRIVER"
