@@ -19,7 +19,7 @@ jobs:
     name: Helm charts dependencies
     if: inputs.update-type == 'charts'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
@@ -65,7 +65,7 @@ jobs:
     name: Image tags values dependencies
     if: inputs.update-type == 'values'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
@@ -85,7 +85,7 @@ jobs:
           version: ${{ env.UPDATE_CLI_VERSION }}
 
       - name: Checkout updatecli configs
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: alfresco/alfresco-updatecli
           ref: master
