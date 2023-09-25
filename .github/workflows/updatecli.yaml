@@ -24,7 +24,7 @@ jobs:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v3.1.0
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v3.3.3
 
       - name: Login to quay.io
         uses: docker/login-action@v3
@@ -42,9 +42,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v3.1.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v3.3.3
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v3.1.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v3.3.3
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
@@ -70,7 +70,7 @@ jobs:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v3.1.0
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v3.3.3
 
       - name: Login to quay.io
         uses: docker/login-action@v3
@@ -102,9 +102,9 @@ jobs:
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v3.1.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v3.3.3
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v3.1.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v3.3.3
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
