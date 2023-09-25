@@ -191,7 +191,7 @@ spec:
             {{- $licvol := dict "name" "acs-license" "secret" (dict "secretName" .name "defaultMode" 0400 "optional" true "items" $licitems) }}
             {{- list $licvol | toYaml | nindent 8 }}
           {{- else if and (hasPrefix "subsystems:" (.purpose | default "")) (eq (splitList ":" (.purpose | default "") | len) 3) }}
-            {{- $subsysvol := dict "name" .name "secret" (dict "secretName" .name "defaultMode" 0400 "optional" true) }}
+            {{- $subsysvol := dict "name" .name "secret" (dict "secretName" .name "defaultMode" 0400) }}
             {{- list $subsysvol | toYaml | nindent 8 }}
           {{- end }}
         {{- end }}

@@ -129,7 +129,6 @@ tests:
             secret:
               secretName: myAzureAD
               defaultMode: 0400
-              optional: true
         template: deployment.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
