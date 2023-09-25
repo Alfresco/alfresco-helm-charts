@@ -1,6 +1,6 @@
 # alfresco-common
 
-![Version: 3.0.0-alpha.1](https://img.shields.io/badge/Version-3.0.0--alpha.1-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square)
+![Version: 3.0.0-alpha.2](https://img.shields.io/badge/Version-3.0.0--alpha.2-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square)
 
 A helper subchart to avoid duplication in alfresco charts and set common
 external dependencies

@@ -9,7 +9,7 @@ Usage: include "alfresco-common.jdbc.parser" "URL"
 {{- define "alfresco-common.jdbc.parser" -}}
 {{- $jdbc_url := required "Alfresco repository needs a database to start. Please provide a valid URL in db.url value" . }}
 {{- if hasPrefix "jdbc:" $jdbc_url }}
-{{- fail "database URL MUST be provided WITHOUT the 'jdbc' prefix." }}
+{{- $jdbc_url = trimPrefix "jdbc:" $jdbc_url }}
 {{- end }}
 {{- if hasPrefix "oracle:thin:@" $jdbc_url }}
   {{- $ora_url := trimPrefix "oracle:thin:" $jdbc_url }}
