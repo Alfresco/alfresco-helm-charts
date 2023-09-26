@@ -27,6 +27,12 @@ data:
     -Dmessaging.broker.password="$BROKER_PASSWORD"
     -Dindex.subsystem.name="$SEARCH_FLAVOR"
     {{- include "alfresco-repository.search.config" $ | indent 2 }}
+    {{- range .repository.existingSecrets }}
+      {{- if and .key (hasPrefix "property:" .purpose) }}
+        {{- $property := trimPrefix "property:" .purpose }}
+        {{- printf "-D%s=\"$%s\"" $property .key | nindent 4 }}
+      {{- end }}
+    {{- end }}
     {{- end }}
     {{ .Values.environment.CATALINA_OPTS | default "" }}
   JAVA_OPTS: >-
