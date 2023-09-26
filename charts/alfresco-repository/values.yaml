@@ -25,6 +25,8 @@ configuration:
     # with actual Alfresco repository properties
     existingConfigMap: null
     # -- A list of secrets to make available to the repository as env vars.
+    # If the secrets needs to be used by the repo as a property on can use the
+    # following purpose syntax: 'property:name.of.the.prop'
     # This list can contain special secrets marked with predifined `purpose`:
     # `acs-license` to pass license as a secret or subsystems:*:* to configure
     # an Alfresco subsystem. See [Configuring Alfresco
