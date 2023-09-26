@@ -28,7 +28,7 @@ configuration:
     # This list can contain special secrets marked with predifined `purpose`:
     # `acs-license` to pass license as a secret or subsystems:*:* to configure
     # an Alfresco subsystem. See [Configuring Alfresco
-    # Subsystem](#configuring-alfresco-subsystems) for more details.
+    # Subsystem](./docs/subsystems.md) for more details.
     existingSecrets:
       - name: repository-secrets
         key: license.lic

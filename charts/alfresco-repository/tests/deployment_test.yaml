@@ -161,6 +161,7 @@ tests:
               secretKeyRef:
                 key: MYSECRETVAR
                 name: mysecret
+                optional: true
         template: deployment.yaml
 
   - it: should render default DATABASE URL
