@@ -34,7 +34,7 @@ configuration:
         key: license.lic
         purpose: acs-license
   db:
-    # -- JDBC url of the database WITHOUT the "jdbc:" prefix
+    # -- JDBC url of the database
     # This is a mandatory parameter
     url: null
     # -- JDBC driver class of the driver if none is provided the it is guessed

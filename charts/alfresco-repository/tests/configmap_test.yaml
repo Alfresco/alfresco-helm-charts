@@ -54,7 +54,7 @@ tests:
     asserts:
       - equal:
           path: data.DATABASE_URL
-          value: mysql://sandy:secret@myhost1:1111
+          value: jdbc:mysql://sandy:secret@myhost1:1111
       - equal:
           path: data.DATABASE_HOST
           value: myhost1
@@ -70,11 +70,11 @@ tests:
     set:
       configuration:
         db:
-          url: postgresql://pghost/alfdb
+          url: jdbc:postgresql://pghost/alfdb
     asserts:
       - equal:
           path: data.DATABASE_URL
-          value: postgresql://pghost/alfdb
+          value: jdbc:postgresql://pghost/alfdb
       - equal:
           path: data.DATABASE_HOST
           value: pghost
@@ -94,7 +94,7 @@ tests:
     asserts:
       - equal:
           path: data.DATABASE_URL
-          value: sqlserver://sqlserverhost;databaseName=alfdb;lockTimeout=1000;
+          value: jdbc:sqlserver://sqlserverhost;databaseName=alfdb;lockTimeout=1000;
       - equal:
           path: data.DATABASE_HOST
           value: sqlserverhost
@@ -110,11 +110,11 @@ tests:
     set:
       configuration:
         db:
-          url: oracle:thin:@tcp://mydbhost:1521/mydbservice
+          url: jdbc:oracle:thin:@tcp://mydbhost:1521/mydbservice
     asserts:
       - equal:
           path: data.DATABASE_URL
-          value: oracle:thin:@tcp://mydbhost:1521/mydbservice
+          value: jdbc:oracle:thin:@tcp://mydbhost:1521/mydbservice
       - equal:
           path: data.DATABASE_HOST
           value: mydbhost
@@ -124,17 +124,6 @@ tests:
       - equal:
           path: data.DATABASE_DRIVER
           value: oracle.jdbc.OracleDriver
-
-  - it: should fail without proper db URL
-    template: configmap-repository.yaml
-    set:
-      configuration:
-        db:
-          url: jdbc:mysql://myhost/db
-    asserts:
-      - failedTemplate:
-          errorMessage: >-
-            database URL MUST be provided WITHOUT the 'jdbc' prefix.
 
   - it: should render ActiveMQ config as needed
     template: configmap-mq.yaml
