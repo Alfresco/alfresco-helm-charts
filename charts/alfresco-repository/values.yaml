@@ -146,7 +146,16 @@ configuration:
         # template to auto-generate it from the sole url parameter.
         # Not applicable to Elasticsearch
         solr_base_url: SOLR_BASE_URL
-
+  imap:
+    # -- Enable/Disable Alfresco repository IMAP capabilities
+    enabled: false
+    # -- port to use to listen for IMAP clients
+    port: 1143
+    # -- Protocol to use to talk to IMAP clients (imap or imaps)
+    protocol: imap
+    service:
+      # -- Use annations below to get custom behavior of the loadbalancer exposing the service
+      annotations:
 environment:
   # -- Java or Tomcat system properties. These properties must be provided as a
   # single string following the pattern "-Dproperty=value -Dmoreprop=morevalue".
