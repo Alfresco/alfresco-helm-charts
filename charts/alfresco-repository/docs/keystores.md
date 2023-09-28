@@ -17,8 +17,7 @@ certificate. We describe below how to do both.
 This keystore is used for property encryption and needs to remain identical
 throughout the life of the repository. Losing this keystore or its passwords
 will result in a repository that cannot startup so it is absolutely crucial to
-store these assets in a version control system like git (both the keystore and
-its password).
+to back them up in some safe place.
 
 First create a local keystore. It is recommended to use p12 containers nowadays
 and leverage AES algorithm:
@@ -53,30 +52,29 @@ that keystore. To do so use the properties below:
 
 ```yaml
 ---
-alfresco-repository:
-  configuration:
-    repository:
-      existingSecrets:
-        - name: repository-keystores
-          key: ENC_METADATA_STOREPASS
-        - name: repository-keystores
-          key: ENC_METADATA_KEYPASS
-  environment:
-    JAVA_OPTS: >-
-      -Dencryption.keystore.type=PKCS12
-      -Dencryption.cipherAlgorithm=AES/CBC/PKCS5Padding
-      -Dencryption.keyAlgorithm=AES
-      -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore.p12
-      -Dmetadata-keystore.aliases=metadata
-      -Dmetadata-keystore.metadata.algorithm=AES
-  extraVolumes:
-    - name: keystore
-      secret:
-        secretName: repository-keystores
-  extraVolumeMounts:
-    - name: keystore
-      readOnly: true
-      mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/keystore
+configuration:
+  repository:
+    existingSecrets:
+      - name: repository-keystores
+        key: ENC_METADATA_STOREPASS
+      - name: repository-keystores
+        key: ENC_METADATA_KEYPASS
+environment:
+  JAVA_OPTS: >-
+    -Dencryption.keystore.type=PKCS12
+    -Dencryption.cipherAlgorithm=AES/CBC/PKCS5Padding
+    -Dencryption.keyAlgorithm=AES
+    -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore.p12
+    -Dmetadata-keystore.aliases=metadata
+    -Dmetadata-keystore.metadata.algorithm=AES
+extraVolumes:
+  - name: keystore
+    secret:
+      secretName: repository-keystores
+extraVolumeMounts:
+  - name: keystore
+    readOnly: true
+    mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/keystore
 ```
 
 > Note credentials are not passed directly using `environment.JAVA_OPTS` but
