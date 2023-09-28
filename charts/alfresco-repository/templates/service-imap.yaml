@@ -1,0 +1,23 @@
+{{- with .Values.configuration.imap }}
+{{- if .enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  {{- $imapCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) .protocol)) "Chart" $.Chart "Release" $.Release }}
+  name: {{ include "alfresco-repository.fullname" $imapCtx }}
+  labels:
+    {{- include "alfresco-repository.labels" $imapCtx | nindent 4 }}
+  annotations:
+    {{- toYaml .annotations | nindent 4 }}
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  ports:
+    - port: {{ .port }}
+      targetPort: {{ .port }}
+      protocol: TCP
+      name: {{ .protocol }}
+  selector:
+    {{- include "alfresco-repository.selectorLabels" $ | nindent 4 }}
+{{- end }}
+{{- end }}
