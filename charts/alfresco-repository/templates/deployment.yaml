@@ -143,6 +143,11 @@ spec:
             - name: hazelcast
               containerPort: {{ .Values.configuration.hz.port }}
               protocol: TCP
+            {{- if .Values.configuration.imap.enabled }}
+            - name: {{ .Values.configuration.imap.protocol }}
+              containerPort: {{ .Values.configuration.imap.port }}
+              protocol: TCP
+            {{- end }}
           startupProbe:
             {{- toYaml .Values.startupProbe | nindent 12 }}
           livenessProbe:
