@@ -68,6 +68,10 @@ spec:
             {{- $searchsecret = coalesce .search.existingSecret.name (include "alfresco-repository.fullname" $searchsecretCtx) }}
           {{- end }}
           env:
+            - name: ENC_METADATA_STOREPASS
+              value: mp6yc0UD9e
+            - name: ENC_METADATA_KEYPASS
+              value: oKIWzVdEdA
             {{ include "alfresco-repository.db.env" . | indent 12 }}
             - name: DATABASE_PASSWORD
               valueFrom:

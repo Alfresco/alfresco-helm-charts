@@ -2,7 +2,7 @@ apiVersion: v2
 name: alfresco-repository
 description: Alfresco content repository Helm chart
 type: application
-version: 0.1.0-alpha.11
+version: 0.1.0-alpha.12
 appVersion: 23.1.0-A21
 dependencies:
   - name: alfresco-common

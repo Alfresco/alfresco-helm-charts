@@ -14,21 +14,15 @@ data:
     -Ddb.username=${DATABASE_USERNAME}
     -Ddb.password=${DATABASE_PASSWORD}
     -Ddb.driver="$DATABASE_DRIVER"
-    -Dencryption.keystore.type=JCEKS
-    -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
-    -Dencryption.keyAlgorithm=DESede
-    -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
-    -Dmetadata-keystore.aliases=metadata
-    -Dmetadata-keystore.metadata.algorithm=DESede
-    -Dmetadata-keystore.password=mp6yc0UD9e
-    -Dmetadata-keystore.metadata.password=oKIWzVdEdA
     -Dmessaging.broker.url="$BROKER_URL"
     -Dmessaging.broker.username="$BROKER_USERNAME"
     -Dmessaging.broker.password="$BROKER_PASSWORD"
     -Dindex.subsystem.name="$SEARCH_FLAVOR"
+    -Dmetadata-keystore.password="$ENC_METADATA_STOREPASS"
+    -Dmetadata-keystore.metadata.password="$ENC_METADATA_KEYPASS"
     {{- include "alfresco-repository.search.config" $ | indent 2 }}
     {{- range .repository.existingSecrets }}
-      {{- if and .key (hasPrefix "property:" .purpose) }}
+      {{- if and .key (hasPrefix "property:" (.purpose |  default "")) }}
         {{- $property := trimPrefix "property:" .purpose }}
         {{- printf "-D%s=\"$%s\"" $property .key | nindent 4 }}
       {{- end }}
@@ -36,4 +30,10 @@ data:
     {{- end }}
     {{ .Values.environment.CATALINA_OPTS | default "" }}
   JAVA_OPTS: >-
+    -Dencryption.keystore.type=JCEKS
+    -Dencryption.cipherAlgorithm=DESede/CBC/PKCS5Padding
+    -Dencryption.keyAlgorithm=DESede
+    -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore
+    -Dmetadata-keystore.aliases=metadata
+    -Dmetadata-keystore.metadata.algorithm=DESede
     {{ .Values.environment.JAVA_OPTS | default "" }}
