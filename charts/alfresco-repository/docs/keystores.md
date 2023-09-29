@@ -79,3 +79,69 @@ extraVolumeMounts:
 
 > Note credentials are not passed directly using `environment.JAVA_OPTS` but
 > secrets.
+
+## Other keystore
+
+The same approach would work to deploy any keystore. Below example describes how
+to deploy a custom keystore (here for imaps configuration) together with the
+required option so the repository can use it.
+
+First let's create a keysotre with a self-signed cert & store it in a p12 file.
+
+```bash
+openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout server.key -out server.crt
+openssl pkcs12 -export -in server.crt -inkey server.key -out server.p12 -name localhost
+keytool -importkeystore \
+        -deststorepass secret -destkeypass secret -destkeystore keystore.p12 -deststoretype PKCS12 \
+        -srckeystore server.p12 -srcstoretype PKCS12 -srcstorepass secret \
+        -alias localhost
+```
+
+> Java prefers working with PKCS12 containers generated using keytool so that's
+> why we generate 2 p12 files
+
+Then create a secret from this keystore file:
+
+```bash
+kubectl create secret generic repository-keystores \
+  --from-file=keystore.p12 \
+```
+
+Now in order to make sure the repo can open the keystore we need to give the
+necessary credentials. We will pass credentials values as kubernetes secret
+keys' values and their related java properties as their keys. For example in
+order to pass the property `javax.net.ssl.keyStorePassword=secret` we would
+create the secret as follow:
+
+```bash
+kubectl create secret generic kesystore-secret \
+  --from-literal MYKEYSTORE_PASS=secret
+```
+
+> credentials can be held in the same secret as the keystore itself.
+
+Now we need to reference these secrets and pass the non sensitive properties
+as `environment.JAVA_OPTS` when deploying the alfresco-repository chart:
+
+```yaml
+extraVolumes:
+  - name: keystore
+    secret:
+      secretName: repository-keystores
+extraVolumeMounts:
+  - name: keystore
+    readOnly: true
+    mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/keystore
+configuration:
+  repository:
+    existingSecrets:
+      - name: kesystore-secret
+        key: javax.net.ssl.keyStorePassword
+        purpose: property:javax.net.ssl.keyStorePassword
+environment:
+  JAVA_OPTS: >-
+    -Djavax.net.ssl.keyStore=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore.p12
+```
+
+This very same procdure can apply to other service which require a
+certification to enable traffic encryption.
