@@ -1,0 +1,48 @@
+---
+suite: test Mail rela ted features
+templates:
+  - deployment.yaml
+  - service-imap.yaml
+values:
+  - values/test_values.yaml
+tests:
+  - it: should not render any mail resource by default
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: service-imap.yaml
+      - lengthEqual:
+          path: spec.template.spec.containers[0].ports
+          count: 2
+        template: deployment.yaml
+  - it: should render imap service deployment with corresponding ports
+    set:
+      configuration:
+        imap:
+          enabled: true
+          protocol: imaps
+          port: 1993
+          annotations:
+            a8r.io/description: &testAnnontaion that's a service to use mail client to browse repo
+    template: service-imap.yaml
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-repository-imaps
+      - equal:
+          path: metadata.annotations['a8r.io/description']
+          value: *testAnnontaion
+      - contains:
+          path: spec.ports
+          content:
+            name: imaps
+            port: 1993
+            protocol: TCP
+            targetPort: 1993
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: imaps
+            containerPort: 1993
+            protocol: TCP
+        template: deployment.yaml

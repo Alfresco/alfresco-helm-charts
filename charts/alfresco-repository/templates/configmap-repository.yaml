@@ -27,6 +27,8 @@ data:
         {{- printf "-D%s=\"$%s\"" $property .key | nindent 4 }}
       {{- end }}
     {{- end }}
+    -Dimap.server.{{ eq "imaps" .imap.protocol | ternary .imap.protocol "" }}enabled={{ .imap.enabled }}
+    -Dimap.server.{{ eq "imaps" .imap.protocol | ternary .imap.protocol "" }}port={{ .imap.port }}
     {{- end }}
     {{ .Values.environment.CATALINA_OPTS | default "" }}
   JAVA_OPTS: >-
