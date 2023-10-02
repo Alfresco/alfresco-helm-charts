@@ -29,6 +29,9 @@ data:
     {{- end }}
     -Dimap.server.{{ eq "imaps" .imap.protocol | ternary .imap.protocol "" }}enabled={{ .imap.enabled }}
     -Dimap.server.{{ eq "imaps" .imap.protocol | ternary .imap.protocol "" }}port={{ .imap.port }}
+    -Demail.server.enabled={{ .smtp.enabled | toString }}
+    -Demail.inbound.enabled={{ .smtp.enabled | toString }}
+    -Demail.server.port={{ .smtp.port | toString }}
     {{- end }}
     {{ .Values.environment.CATALINA_OPTS | default "" }}
   JAVA_OPTS: >-

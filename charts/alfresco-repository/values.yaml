@@ -146,6 +146,28 @@ configuration:
         # template to auto-generate it from the sole url parameter.
         # Not applicable to Elasticsearch
         solr_base_url: SOLR_BASE_URL
+  # -- Basic SMTP capabilities config (limited to enabling/disabling). In order
+  # to pass more SMTP properties and configure the subsystem more deeply,
+  # please use value `environment.CATALINA_OPTS` or
+  # `configuration.repository.existingConfiMap` and check the [available
+  # properties for this
+  # subsystem](https://github.com/Alfresco/alfresco-community-repo/blob/master/repository/src/main/resources/alfresco/subsystems/email/InboundSMTP/inboundSMTP.properties)
+  # @default -- see below
+  smtp:
+    # -- Enable/Disable Alfresco repository SMTP capabilities
+    enabled: false
+    # -- port to use to listen for SMTP clients
+    port: 1025
+    service:
+      # -- Use annations to get custom behavior of the loadbalancer exposing the service
+      annotations:
+  # -- Basic IMAP capabilities config (limited to enabling/disabling). In order
+  # to pass more IMAP properties and configure the subsystem more deeply,
+  # please use value `environment.CATALINA_OPTS` or
+  # `configuration.repository.existingConfiMap` and check the [available
+  # properties for this
+  # subsystem](https://docs.alfresco.com/content-services/latest/config/email/#imap-subsystem-properties)
+  # @default -- see below
   imap:
     # -- Enable/Disable Alfresco repository IMAP capabilities
     enabled: false
@@ -154,7 +176,7 @@ configuration:
     # -- Protocol to use to talk to IMAP clients (imap or imaps)
     protocol: imap
     service:
-      # -- Use annations below to get custom behavior of the loadbalancer exposing the service
+      # -- Use annations to get custom behavior of the loadbalancer exposing the service
       annotations:
 environment:
   # -- Java or Tomcat system properties. These properties must be provided as a
