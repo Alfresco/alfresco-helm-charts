@@ -1,0 +1,23 @@
+{{- with .Values.configuration.smtp }}
+{{- if .enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  {{- $smtpCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "smtp")) "Chart" $.Chart "Release" $.Release }}
+  name: {{ include "alfresco-repository.fullname" $smtpCtx }}
+  labels:
+    {{- include "alfresco-repository.labels" $smtpCtx | nindent 4 }}
+  annotations:
+    {{- toYaml .annotations | nindent 4 }}
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  ports:
+    - port: {{ .port }}
+      targetPort: {{ .port }}
+      protocol: TCP
+      name: smtp
+  selector:
+    {{- include "alfresco-repository.selectorLabels" $ | nindent 4 }}
+{{- end }}
+{{- end }}

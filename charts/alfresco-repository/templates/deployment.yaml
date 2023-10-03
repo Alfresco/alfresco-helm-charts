@@ -148,6 +148,11 @@ spec:
               containerPort: {{ .Values.configuration.imap.port }}
               protocol: TCP
             {{- end }}
+            {{- if .Values.configuration.smtp.enabled }}
+            - name: smtp
+              containerPort: {{ .Values.configuration.smtp.port }}
+              protocol: TCP
+            {{- end }}
           startupProbe:
             {{- toYaml .Values.startupProbe | nindent 12 }}
           livenessProbe:

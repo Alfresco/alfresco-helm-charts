@@ -1,6 +1,6 @@
 # alfresco-repository
 
-![Version: 0.1.0-alpha.13](https://img.shields.io/badge/Version-0.1.0--alpha.13-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.1.0-A21](https://img.shields.io/badge/AppVersion-23.1.0--A21-informational?style=flat-square)
+![Version: 0.1.0-alpha.14](https://img.shields.io/badge/Version-0.1.0--alpha.14-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.1.0-A21](https://img.shields.io/badge/AppVersion-23.1.0--A21-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -108,10 +108,11 @@ environment:
 | configuration.db.url | string | `nil` | JDBC url of the database This is a mandatory parameter |
 | configuration.db.username | string | `nil` | Username to authentication to the repository database |
 | configuration.hz.port | int | `5701` | Hazelcast listener port Only change it if you use a custom image where the port has been changed from default |
+| configuration.imap | object | see below | Basic IMAP capabilities config (limited to enabling/disabling). In order to pass more IMAP properties and configure the subsystem more deeply, please use value `environment.CATALINA_OPTS` or `configuration.repository.existingConfiMap` and check the [available properties for this subsystem](https://docs.alfresco.com/content-services/latest/config/email/#imap-subsystem-properties) |
 | configuration.imap.enabled | bool | `false` | Enable/Disable Alfresco repository IMAP capabilities |
 | configuration.imap.port | int | `1143` | port to use to listen for IMAP clients |
 | configuration.imap.protocol | string | `"imap"` | Protocol to use to talk to IMAP clients (imap or imaps) |
-| configuration.imap.service.annotations | string | `nil` | Use annations below to get custom behavior of the loadbalancer exposing the service |
+| configuration.imap.service.annotations | string | `nil` | Use annations to get custom behavior of the loadbalancer exposing the service |
 | configuration.messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap  holding the message broker URL. It MUST be a failover URL as per the spec below: https://activemq.apache.org/failover-transport-reference.html |
 | configuration.messageBroker.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing the meesage broker URL |
 | configuration.messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` | Key within the secret holding the message broker password |
@@ -138,6 +139,10 @@ environment:
 | configuration.search.solr-secret | string | `nil` | Solr inter process shared secret |
 | configuration.search.url | string | `nil` | URL where the search service can be found |
 | configuration.search.username | string | `nil` | Username to authenticate to the search service |
+| configuration.smtp | object | see below | Basic SMTP capabilities config (limited to enabling/disabling). In order to pass more SMTP properties and configure the subsystem more deeply, please use value `environment.CATALINA_OPTS` or `configuration.repository.existingConfiMap` and check the [available properties for this subsystem](https://github.com/Alfresco/alfresco-community-repo/blob/master/repository/src/main/resources/alfresco/subsystems/email/InboundSMTP/inboundSMTP.properties) |
+| configuration.smtp.enabled | bool | `false` | Enable/Disable Alfresco repository SMTP capabilities |
+| configuration.smtp.port | int | `1025` | port to use to listen for SMTP clients |
+| configuration.smtp.service.annotations | string | `nil` | Use annations to get custom behavior of the loadbalancer exposing the service |
 | environment.CATALINA_OPTS | string | `nil` | Java or Tomcat system properties. These properties must be provided as a single string following the pattern "-Dproperty=value -Dmoreprop=morevalue". They override the content of the global properties file but you should prefer providing configuration.repository.existingConfigMap. |
 | environment.JAVA_OPTS | string | `"-XX:MaxRAMPercentage=80"` | Set JVM options |
 | extraInitContainers | list | `[]` |  |
