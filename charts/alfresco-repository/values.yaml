@@ -160,7 +160,7 @@ configuration:
     port: 1025
     service:
       # -- Use annations to get custom behavior of the loadbalancer exposing the service
-      annotations:
+      annotations: null
   # -- Basic IMAP capabilities config (limited to enabling/disabling). In order
   # to pass more IMAP properties and configure the subsystem more deeply,
   # please use value `environment.CATALINA_OPTS` or
@@ -177,7 +177,7 @@ configuration:
     protocol: imap
     service:
       # -- Use annations to get custom behavior of the loadbalancer exposing the service
-      annotations:
+      annotations: null
 environment:
   # -- Java or Tomcat system properties. These properties must be provided as a
   # single string following the pattern "-Dproperty=value -Dmoreprop=morevalue".

@@ -1,6 +1,6 @@
 # Configuring Email related features
 
-Alfresco repository can interact with users through emails i different ways.
+Alfresco repository can interact with users through emails in different ways.
 Below we describe how to enable and configure the 3 main email features Alfresco
 offers:
 
@@ -10,9 +10,10 @@ offers:
 
 ## Sending emails
 
-For Alfresco to send email it needs to talk to an mail relay administrators
-must configure. This mail relay is considered part of the required architecture
-and admin can configure it using regular Alfresco properties.
+To enable Alfresco to send emails, it needs to communicate with a mail relay
+that administrators must configure. This mail relay is considered an integral
+part of the required architecture, and administrators can configure it using
+standard Alfresco properties.
 
 There are 2 ways to pass properties to the repository:
 
@@ -47,7 +48,7 @@ kubectl create configmap repo-config \
 
 ### Using a env vars
 
-Passing properties through the CATALINA_OPTS environment variable is done as
+Passing properties through the CATALINA_OPTS environment variable can be done as
 shown below:
 
 ```properties
@@ -63,8 +64,8 @@ environment:
 
 ### Passing credentials
 
-Regardless of whether you chose to pass properties using a configmap or
-directly values, you should not pass credentials that same way.
+Regardless of whether you choose to pass properties using a configmap or
+directly values, you should avoid passing credentials in the same way.
 To securely pass credentials we will create a secret so the Alfresco repository
 can authenticate to the mail relay:
 
@@ -73,7 +74,7 @@ kubectl create secret generic mail-secret \
   --from-literal "MAIL_PASSWORe=mysupersecret"
 ```
 
-Now when calling this charts use the properties below:
+Now when installing the chart you can use the values below:
 
 ```yaml
 configuration:
@@ -134,7 +135,7 @@ never be exposed directly on internet and have an SMTP proxy in front of it.
 In case you really need to terminate the SSL session on the Alfresco repo see
 the [keystore doc](./keystores.md)
 
-* IMAP interface to the repository
+## Enabling IMAP
 
 Similarly to SMTP inbound, it is possible to enable IMAP interface to the
 repository  using the configuration below:
