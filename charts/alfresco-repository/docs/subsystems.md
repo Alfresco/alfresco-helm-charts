@@ -1,10 +1,13 @@
-## Configuring Alfresco subsystems
+# Configuring Alfresco subsystems
 
-This chart offers a simple mechanism to configure Alfresco Subsystems.
+This chart offers a rather simple mechanism to configure Alfresco Subsystems.
+Although subsystems are well known to most Alfresco administrators, in a
+kubernetes environment they should be used only when necessary (e.g. if in need
+to instantiate several instances of the same subsystem)
 
-The way it's done is pretty simple, one just need to provide a secret which
-contains all the configuration files for the subsystems. The secret needs to be
-added to the list of `.Values.configuration.repository.existingSecrets`:
+Subsystem configuration relies on providing a secret which contains all the
+configuration files for the subsystems. The secret needs to be added to the
+list of `configuration.repository.existingSecrets`:
 
 ```yaml
 configuration:
@@ -23,7 +26,12 @@ For the above configuration to work there are some rules to follow:
 * The secret must contain all necessary files to configure the subsystem.
   Usually a bean definition XML file and properties file. (see example below)
 
-### Examples: ContentStore configuration
+> Kubernetes secrets can not be bigger than 1MB. That means that this method
+> will not work in case a subsystem contain 1MB of data or more. This should
+> not be the case for most subsystems but is important t know in case of
+> customizations
+
+## Examples: ContentStore configuration
 
 Creating the subsystem's secret:
 
