@@ -13,7 +13,5 @@
 
 {{ template "chart.requirementsSection" . }}
 
-{{ .Files.Get "docs/subsystems.md" }}
-
-{{ template "chart.valuesSection" . }}
+{{ template "chart.valuesSectionHtml" . }}
 
