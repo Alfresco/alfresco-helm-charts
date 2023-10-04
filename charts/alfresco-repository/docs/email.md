@@ -51,7 +51,7 @@ kubectl create configmap repo-config \
 Passing properties through the CATALINA_OPTS environment variable can be done as
 shown below:
 
-```properties
+```yaml
 environment:
   CATALINA_OPTS: >-
     -Dmail.host=mysmtp.infra.local
