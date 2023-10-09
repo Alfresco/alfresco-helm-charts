@@ -7,6 +7,9 @@ metadata:
   labels:
     {{- include "alfresco-repository.labels" . | nindent 4 }}
 data:
+  {{- range $key, $val := (omit .Values.environment "CATALINA_OPTS" "JAVA_OPTS") }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
   CATALINA_OPTS: >-
     {{- with .Values.configuration }}
     -Ddeployment.method=HELM_CHART
