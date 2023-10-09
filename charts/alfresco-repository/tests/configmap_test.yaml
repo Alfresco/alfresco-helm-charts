@@ -30,6 +30,7 @@ tests:
     template: configmap-repository.yaml
     set:
       environment:
+        SOMEOTHERVAR: somothervalue
         CATALINA_OPTS: >-
           -Dserver.allowWrite=false
           -Dcatalina.base="/opt/tomcat/alternate"
@@ -48,6 +49,9 @@ tests:
           path: data.JAVA_OPTS
           pattern: |-
             (^\s*|[^\s]\s+)-Xmx32G($|\s)
+      - equal:
+          path: data.SOMEOTHERVAR
+          value: somothervalue
 
   - it: should render MySQL properties
     template: configmap-database.yaml
