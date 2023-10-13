@@ -244,6 +244,8 @@ ingress:
     - paths:
         - path: /
           pathType: Prefix
+        - path: /api-explorer
+          pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
