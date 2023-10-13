@@ -258,8 +258,8 @@ resources:
     memory: "8Gi"
 
 startupProbe:
-  periodSeconds: 30
-  failureThreshold: 5
+  periodSeconds: 20
+  failureThreshold: 9
   timeoutSeconds: 3
   httpGet:
     path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-live-
