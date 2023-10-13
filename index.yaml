@@ -481,6 +481,25 @@ entries:
   alfresco-repository:
   - apiVersion: v2
     appVersion: 23.1.0-A21
+    created: "2023-10-13T16:29:18.486499812Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.0.0-alpha.2
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.5.6
+    description: Alfresco content repository Helm chart
+    digest: cdd71527d8d5fa5128c88b27c45cdc8d3e623cae6094ef13c5ce3d75ef4b7c63
+    name: alfresco-repository
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-repository-0.1.0-alpha.17/alfresco-repository-0.1.0-alpha.17.tgz
+    version: 0.1.0-alpha.17
+  - apiVersion: v2
+    appVersion: 23.1.0-A21
     created: "2023-10-09T13:27:19.712827892Z"
     dependencies:
     - name: alfresco-common
@@ -1847,4 +1866,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2023-10-09T13:27:19.713102408Z"
+generated: "2023-10-13T16:29:18.486781318Z"
