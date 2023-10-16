@@ -80,6 +80,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | reindexing.initcontainers.waitForRepository.resources.limits.cpu | string | `"0.25"` |  |
 | reindexing.initcontainers.waitForRepository.resources.limits.memory | string | `"10Mi"` |  |
 | reindexing.pathIndexingEnabled | bool | `true` |  |
+| reindexing.repository.existingConfigMap.keys.url | string | `"REPOSITORY_URL"` | Key within the configmap holding the full url to connect to the alfresco repository |
+| reindexing.repository.existingConfigMap.name | string | `nil` | Alternatively, provide repository connection details via an existing configmap |
+| reindexing.repository.url | string | `nil` | URL of the Alfresco repository |
 | reindexing.resources.limits.cpu | string | `"2"` |  |
 | reindexing.resources.limits.memory | string | `"512Mi"` |  |
 | reindexing.resources.requests.cpu | string | `"0.5"` |  |

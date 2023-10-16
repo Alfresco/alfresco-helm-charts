@@ -1,0 +1,16 @@
+{{- with .Values.reindexing }}
+{{- if and .enabled (not .repository.existingConfigMap.name) -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: >-
+    {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" $.Chart "Release" $.Release }}
+    {{ template "alfresco-search-enterprise.fullname" $ctx }}
+  labels:
+    {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
+data:
+  {{- $failmsg := ".reindexing.repository.url is mandatory when not using existingConfigMap" }}
+  REPOSITORY_URL: {{ required $failmsg .repository.url | quote }}
+{{- end -}}
+{{- end -}}

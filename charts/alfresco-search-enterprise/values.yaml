@@ -54,8 +54,20 @@ reindexing:
     tag: 3.3.1
     pullPolicy: IfNotPresent
   pathIndexingEnabled: true
+  repository:
+    # -- URL of the Alfresco repository
+    url: null
+    existingConfigMap:
+      # -- Alternatively, provide repository connection details via an existing
+      # configmap
+      name: null
+      keys:
+        # -- Key within the configmap holding the full url to connect to the
+        # alfresco repository
+        url: REPOSITORY_URL
   db:
-    # -- Provide the full JDBC url to connect to database service e.g.: `jdbc:postgresql://hostname:5432/database`
+    # -- Provide the full JDBC url to connect to database service e.g.:
+    # `jdbc:postgresql://hostname:5432/database`
     url: null
     # -- The username required to access the service
     username: null
@@ -70,10 +82,12 @@ reindexing:
         # -- Key within the secret holding the database password
         password: DATABASE_PASSWORD
     existingConfigMap:
-      # -- Alternatively, provide database connection details via an existing configmap
+      # -- Alternatively, provide database connection details via an existing
+      # configmap
       name: null
       keys:
-        # -- Key within the configmap holding the full JDBC url to connect to database service
+        # -- Key within the configmap holding the full JDBC url to connect to
+        # database service
         url: DATABASE_URL
   resources:
     requests:
