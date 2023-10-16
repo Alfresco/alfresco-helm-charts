@@ -16,14 +16,14 @@ spec:
         {{- include "alfresco-search-enterprise.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "alfresco-search-enterprise.serviceAccountName" . }}
-      {{- include "component-pod-security-context" .Values | indent 4 }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       restartPolicy: Never
       containers:
         - name: {{ .Chart.Name }}-reindexing
           image: "{{ .Values.reindexing.image.repository }}:{{ .Values.reindexing.image.tag }}"
           imagePullPolicy: {{ .Values.reindexing.image.pullPolicy }}
-          {{- include "component-security-context" .Values | indent 8 }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           resources: {{- toYaml .Values.reindexing.resources | nindent 12 }}
           envFrom:
             - configMapRef:
@@ -66,7 +66,7 @@ spec:
                 configMapKeyRef:
                   name: {{ .Values.reindexing.db.existingConfigMap.name | default $dbFullName }}
                   key: {{ .Values.reindexing.db.existingConfigMap.keys.url }}
-            {{- include "spring.activemq.env" . | nindent 12 }}
+            {{- include "alfresco-common.spring.activemq.env" . | nindent 12 }}
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
           ports:
               - name: http
@@ -75,7 +75,7 @@ spec:
       initContainers:
         - name: wait-for-repository
           image: curlimages/curl:7.79.1
-          {{- include "component-security-context" .Values | indent 8 }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           resources: {{- toYaml .Values.reindexing.initcontainers.waitForRepository.resources | nindent 12 }}
           env:
             - name: ALFRESCO_REPOSITORY_URL
