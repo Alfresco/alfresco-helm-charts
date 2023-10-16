@@ -96,4 +96,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | searchIndex.protocol | string | `nil` | Valid values are http or https |
 | searchIndex.user | string | `nil` | The username required to access the service, if any |
 | securityContext | object | `{}` |  |
+| serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.create | bool | `true` |  |
+| serviceAccount.name | string | `"alfresco-search-enterprise-sa"` |  |
 | tolerations | list | `[]` |  |
