@@ -26,6 +26,7 @@ spec:
       labels:
         {{- include "alfresco-search-enterprise.selectorLabels" $ | nindent 8 }}
     spec:
+      serviceAccountName: {{ include "alfresco-search-enterprise.serviceAccountName" $ }}
       {{- include "component-pod-security-context" .Values | indent 4 }}
       {{- include "alfresco-content-services.imagePullSecrets" $ | indent 6 }}
       containers:
