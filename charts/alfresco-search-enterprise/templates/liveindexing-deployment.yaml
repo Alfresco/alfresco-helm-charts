@@ -1,4 +1,4 @@
-{{- range $serviceName, $service := .Values.liveIndexing }}
+{{- range $serviceName, $service := omit .Values.liveIndexing "mediation" }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -7,11 +7,7 @@ metadata:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
     app.kubernetes.io/component: {{ printf "%s-indexing" $serviceName }}
 spec :
-  {{- if eq $serviceName "mediation"}}
-  replicas: 1
-  {{- else }}
   replicas: {{ $service.replicaCount | default 1 }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "alfresco-search-enterprise.selectorLabels" $ | nindent 6 }}
