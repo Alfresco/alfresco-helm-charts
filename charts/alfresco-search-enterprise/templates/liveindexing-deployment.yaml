@@ -40,7 +40,8 @@ spec :
             - configMapRef:
                 name: {{ template "alfresco-search-enterprise.fullname" $ }}-es
           env:
-            {{- $ats_cm := $.Values.ats.existingConfigMap.name | default (printf "%s-ats" (include "alfresco-search-enterprise.fullname" $)) }}
+            {{- $atsCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "ats")) "Chart" $.Chart "Release" $.Release }}
+            {{- $ats_cm := coalesce $.Values.ats.existingConfigMap.name (include "alfresco-search-enterprise.fullname" $atsCtx) }}
             - name: ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL
               valueFrom:
                 configMapKeyRef:
