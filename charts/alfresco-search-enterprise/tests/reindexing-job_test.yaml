@@ -3,8 +3,16 @@ suite: test reindexing job manifest
 templates:
   - reindexing-job.yaml
 tests:
-  - it: should have env vars for spring database credentials referencing the main chart secret
+  - it: should have default env vars
     asserts:
+      - contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: REPOSITORY_URL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-repository
+                key: REPOSITORY_URL
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -93,3 +101,21 @@ tests:
     asserts:
       - hasDocuments:
           count: 0
+
+  - it: render the initContainer with given configmap details
+    set:
+      reindexing:
+        repository:
+          existingConfigMap:
+            name: mycm
+            keys:
+              url: REPO_URL
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers[0].env
+          content:
+            name: REPOSITORY_URL
+            valueFrom:
+              configMapKeyRef:
+                name: mycm
+                key: REPO_URL
