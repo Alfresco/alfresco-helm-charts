@@ -1,4 +1,28 @@
 {{/*
+Validate ActiveMQ has a failover transport URL
+
+Usage: include "alfresco-common.activemq.url.withFailover" "URL"
+
+*/}}
+{{- define "alfresco-common.activemq.url.withFailover" -}}
+{{- if hasPrefix "failover:(" . }}
+  {{- . }}
+{{- else -}}
+  {{- printf "failover:(%s)" . }}
+{{- end }}
+{{- end -}}
+
+{{/*
+Render ActiveMQ broker configmap
+
+Usage: include "alfresco-common.activemq.cm" "URL"
+
+*/}}
+{{- define "alfresco-common.activemq.cm" -}}
+  BROKER_URL: {{ template "alfresco-common.activemq.url.withFailover" . }}
+{{- end -}}
+
+{{/*
 Provide generic ActiveMQ env vars
 
 Usage: include "alfresco-common.activemq.env" ""
