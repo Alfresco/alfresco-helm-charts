@@ -66,6 +66,7 @@ spec:
                 configMapKeyRef:
                   name: {{ .Values.reindexing.db.existingConfigMap.name | default $dbFullName }}
                   key: {{ .Values.reindexing.db.existingConfigMap.keys.url }}
+            {{- include "alfresco-search-enterprise.activemq.cm.env" $ | nindent 12 }}
             {{- include "alfresco-common.spring.activemq.env" . | nindent 12 }}
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
           ports:

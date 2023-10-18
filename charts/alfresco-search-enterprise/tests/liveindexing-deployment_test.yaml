@@ -20,11 +20,20 @@ tests:
           user: admin
           protocol: https
           port: 1443
+    template: liveindexing-deployment.yaml
     asserts:
       - equal:
           path: data.SPRING_ELASTICSEARCH_REST_URIS
           value: https://someglobally.used.host:1443
         template: config-elasticsearch.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_URL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-mq
+                key: BROKER_URL
 
   - it: |
       Render default mainfest with embedded elasticsearch and pre-existing secret
@@ -35,7 +44,20 @@ tests:
         enabled: true
       searchIndex:
         existingSecretName: nooneknows
+      messageBroker:
+        existingConfigMap:
+          name: mymqcm
+          keys:
+            url: MQ_URL
     asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_URL
+            valueFrom:
+              configMapKeyRef:
+                name: mymqcm
+                key: MQ_URL
       - equal:
           path: data.ATS_URL
           value: http://transform/transform/config

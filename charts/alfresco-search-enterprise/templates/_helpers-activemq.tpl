@@ -13,3 +13,18 @@ Usage: include "alfresco-search-enterprise.activemq.url" $
 {{- end }}
 {{- end }}
 {{- end -}}
+
+{{/*
+
+Usage: include "alfresco-search-enterprise.activemq.cm.env" $
+
+*/}}
+{{- define "alfresco-search-enterprise.activemq.cm.env" -}}
+{{- $mqCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "mq")) "Chart" $.Chart "Release" $.Release }}
+{{- $mqCm := coalesce $.Values.messageBroker.existingConfigMap.name (include "alfresco-search-enterprise.fullname" $mqCtx) }}
+- name: BROKER_URL
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $mqCm }}
+      key: {{ $.Values.messageBroker.existingConfigMap.keys.url }}
+{{- end -}}

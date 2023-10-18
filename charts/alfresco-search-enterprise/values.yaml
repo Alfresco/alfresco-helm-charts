@@ -138,7 +138,7 @@ messageBroker:
     name: null
     keys:
       # -- Key within the configmap holding the URL of the message broker
-      url: null
+      url: BROKER_URL
   # -- Provide connection details alternatively via an existing secret that
   # contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName: null
