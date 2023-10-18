@@ -16,6 +16,7 @@ spec:
         {{- include "alfresco-search-enterprise.labels" . | nindent 8 }}
         app.kubernetes.io/component: indexing-mediation
     spec:
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       containers:
         {{- with .Values.liveIndexing.mediation }}
