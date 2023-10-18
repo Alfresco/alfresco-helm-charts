@@ -2,7 +2,7 @@
 suite: test liveindexing template rendering
 templates:
   - configmap-ats.yaml
-  - config-elasticsearch.yaml
+  - configmap-elasticsearch.yaml
   - liveindexing-deployment.yaml
   - secret-elasticsearch.yaml
   - secret-database.yaml
@@ -25,7 +25,7 @@ tests:
       - equal:
           path: data.SPRING_ELASTICSEARCH_REST_URIS
           value: https://someglobally.used.host:1443
-        template: config-elasticsearch.yaml
+        template: configmap-elasticsearch.yaml
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -69,7 +69,7 @@ tests:
       - equal:
           path: data.SPRING_ELASTICSEARCH_REST_URIS
           value: http://elasticsearch-master:9200
-        template: config-elasticsearch.yaml
+        template: configmap-elasticsearch.yaml
       - contains:
           path: spec.template.spec.containers[0].env
           content:
