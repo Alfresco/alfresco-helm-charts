@@ -1,4 +1,4 @@
-#avoid too long resource names being truncated and conflicting
+# avoid too long resource names being truncated and conflicting
 nameOverride: aesc
 reindexing:
   # requires postgres database at startup

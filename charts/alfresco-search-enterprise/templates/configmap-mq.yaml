@@ -1,4 +1,4 @@
-{{- if not .Values.messageBroker.existingConfigMap.name }}
+{{- if not .Values.messageBroker.existingConfigMap.name -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -9,4 +9,4 @@ metadata:
     {{- include "alfresco-search-enterprise.labels" . | nindent 4 }}
 data:
   {{ template "alfresco-common.activemq.cm" (include "alfresco-search-enterprise.activemq.url" .) }}
-{{- end }}
+{{- end -}}
