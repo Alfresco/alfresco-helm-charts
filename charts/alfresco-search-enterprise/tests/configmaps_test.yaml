@@ -1,16 +1,38 @@
 ---
 suite: test configmaps
 templates:
+  - configmap-mq.yaml
   - configmap-database.yaml
   - configmap-repository.yaml
 tests:
-  - it: should fail rendering manifest without required values
+  - it: should fail rendering manifest without required Alfresco repository values
+    values: &testvalues
+      - values/embedded-charts-values.yaml
     asserts:
       - failedTemplate:
           errorMessage: .reindexing.repository.url is mandatory when not using existingConfigMap
         template: configmap-repository.yaml
 
+  - it: should fail rendering manifest without required ActiveMQ values
+    set:
+      reindexing.enabled: false
+    asserts:
+      - failedTemplate:
+          errorMessage: Disabling in-cluster ActiveMQ requires passing (at least) messageBroker.url
+        template: configmap-mq.yaml
+
+  - it: should fail rendering manifest without required Alfresco repository values
+    values: *testvalues
+    set:
+      reindexing.enabled: false
+    asserts:
+      - equal:
+          path: data.BROKER_URL
+          value: failover:(nio://RELEASE-NAME-activemq-broker:61616)?timeout=3000&jms.useCompression=true
+        template: configmap-mq.yaml
+
   - it: should fail rendering manifest without required values
+    values: *testvalues
     set:
       reindexing.repository.url: http://acs/alfresco
     asserts:
@@ -19,6 +41,7 @@ tests:
         template: configmap-database.yaml
 
   - it: should have url populated when url value is set
+    values: *testvalues
     set:
       reindexing:
         repository:
@@ -35,8 +58,23 @@ tests:
           value: https://mycm.domain.tld/alfresco
         template: configmap-repository.yaml
 
-  - it: should not render cm when existingConfigMap is set
+  - it: should have mq configmap render from values
     set:
+      reindexing:
+          enabled: false
+      messageBroker:
+        url: ssl://some.broker.domain.tld:61617
+    asserts:
+      - equal:
+          path: data.BROKER_URL
+          value: failover:(ssl://some.broker.domain.tld:61617)
+        template: configmap-mq.yaml
+
+  - it: should not render cm when existingConfigMap is set
+    values: *testvalues
+    set:
+      messageBroker.existingConfigMap:
+        name: external-mq-configmap
       reindexing.repository.existingConfigMap:
         name: external-repository-configmap
       reindexing.db.existingConfigMap:
@@ -47,9 +85,13 @@ tests:
         template: configmap-database.yaml
       - hasDocuments:
           count: 0
+        template: configmap-mq.yaml
+      - hasDocuments:
+          count: 0
         template: configmap-repository.yaml
 
   - it: should not render cm when reindexing is disabled
+    values: *testvalues
     set:
       reindexing.enabled: false
     asserts:
