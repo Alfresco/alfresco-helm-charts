@@ -1,10 +1,10 @@
 {{/*
 Validate ActiveMQ has a failover transport URL
 
-Usage: include "alfresco-common.activemq.url.valid" "URL"
+Usage: include "alfresco-common.activemq.url.withFailover" "URL"
 
 */}}
-{{- define "alfresco-common.activemq.url.valid" -}}
+{{- define "alfresco-common.activemq.url.withFailover" -}}
 {{- if hasPrefix "failover:(" . }}
   {{- . }}
 {{- else -}}
@@ -19,7 +19,7 @@ Usage: include "alfresco-common.activemq.cm" "URL"
 
 */}}
 {{- define "alfresco-common.activemq.cm" -}}
-  BROKER_URL: {{ template "alfresco-common.activemq.url.valid" . }}
+  BROKER_URL: {{ template "alfresco-common.activemq.url.withFailover" . }}
 {{- end -}}
 
 {{/*
