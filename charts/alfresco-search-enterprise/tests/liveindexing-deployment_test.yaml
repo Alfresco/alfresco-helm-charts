@@ -1,7 +1,7 @@
 ---
 suite: test liveindexing template rendering
 templates:
-  - config-ats.yaml
+  - configmap-ats.yaml
   - config-elasticsearch.yaml
   - liveindexing-deployment.yaml
   - secret-elasticsearch.yaml
@@ -61,11 +61,11 @@ tests:
       - equal:
           path: data.ATS_URL
           value: http://transform/transform/config
-        template: config-ats.yaml
+        template: configmap-ats.yaml
       - equal:
           path: data.SFS_URL
           value: http://sfs/alfresco/api/-default-/private/sfs/versions/1/file/
-        template: config-ats.yaml
+        template: configmap-ats.yaml
       - equal:
           path: data.SPRING_ELASTICSEARCH_REST_URIS
           value: http://elasticsearch-master:9200
