@@ -132,6 +132,13 @@ messageBroker:
   user: null
   # -- Broker password
   password: null
+  # -- Alternatively, provide message broker connection details via an existing
+  # configmap
+  existingConfigMap:
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the message broker
+      url: null
   # -- Provide connection details alternatively via an existing secret that
   # contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName: null
