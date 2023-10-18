@@ -6,7 +6,7 @@ version: 0.1.0-alpha.18
 appVersion: 23.1.0-A21
 dependencies:
   - name: alfresco-common
-    version: 3.0.0-alpha.2
+    version: 3.0.0-alpha.3
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: postgresql
     version: 12.5.6
