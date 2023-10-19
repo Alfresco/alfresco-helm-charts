@@ -496,6 +496,25 @@ entries:
   alfresco-repository:
   - apiVersion: v2
     appVersion: 23.1.0-A21
+    created: "2023-10-19T07:59:54.483034833Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.0.0-alpha.3
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.5.6
+    description: Alfresco content repository Helm chart
+    digest: e0824b9d0f0061682a21a3ae141983d4de6180b9a8dd66cf4a33c27126ea1038
+    name: alfresco-repository
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-repository-0.1.0-alpha.19/alfresco-repository-0.1.0-alpha.19.tgz
+    version: 0.1.0-alpha.19
+  - apiVersion: v2
+    appVersion: 23.1.0-A21
     created: "2023-10-13T17:45:45.140535163Z"
     dependencies:
     - name: alfresco-common
@@ -848,6 +867,28 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-repository-0.1.0-alpha.0/alfresco-repository-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-search-enterprise:
+  - apiVersion: v2
+    appVersion: 3.3.1
+    created: "2023-10-19T07:59:54.632519566Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.0.0-alpha.3
+    - condition: activemq.enabled
+      name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.3.0
+    - condition: elasticsearch.enabled
+      name: elasticsearch
+      repository: https://helm.elastic.co
+      version: 7.17.3
+    description: A Helm chart for deploying Alfresco Elasticsearch connector
+    digest: 2b10b1ec1cb33668a26a0ec3ff8004332676f17edad50723d6bbee8df2adcbaf
+    name: alfresco-search-enterprise
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-search-enterprise-3.0.0-alpha.2/alfresco-search-enterprise-3.0.0-alpha.2.tgz
+    version: 3.0.0-alpha.2
   - apiVersion: v2
     appVersion: 3.3.1
     created: "2023-09-22T09:30:08.652454293Z"
@@ -1900,4 +1941,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2023-10-18T12:34:57.556037895Z"
+generated: "2023-10-19T07:59:54.632891772Z"
