@@ -28,6 +28,6 @@ elasticsearch:
 activemq:
   fullnameOverride: activemq
 messageBroker:
-  url: nio://activemq:61616
+  url: nio://activemq-broker:61616
 tags:
   ci: true
