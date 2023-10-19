@@ -25,5 +25,9 @@ elasticsearch:
     limits:
       cpu: "1000m"
       memory: "1Gi"
+activemq:
+  fullnameOverride: activemq
+messageBroker:
+  url: nio://activemq:61616
 tags:
   ci: true
