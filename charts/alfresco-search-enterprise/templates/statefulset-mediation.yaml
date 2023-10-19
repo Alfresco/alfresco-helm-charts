@@ -27,7 +27,7 @@ spec:
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           envFrom:
             - secretRef:
-                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullname" .)) .Values.messageBroker.existingSecretName }}
+                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullname" .)) .Values.messageBroker.existingSecret.name }}
           env:
             {{- include "alfresco-search-enterprise.activemq.cm.env" $ | nindent 12 }}
             {{- $atsCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "ats")) "Chart" $.Chart "Release" $.Release }}

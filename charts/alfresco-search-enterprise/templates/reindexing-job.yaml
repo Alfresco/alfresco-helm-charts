@@ -29,7 +29,7 @@ spec:
             - configMapRef:
                 name: {{ template "alfresco-search-enterprise.fullname" . }}-es
             - secretRef:
-                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullname" .)) .Values.messageBroker.existingSecretName }}
+                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullname" .)) .Values.messageBroker.existingSecret.name }}
           env:
             {{- $dbCtx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
             {{- $dbFullName := (include "alfresco-search-enterprise.fullname" $dbCtx) }}

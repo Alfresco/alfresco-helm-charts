@@ -37,7 +37,7 @@ spec :
             {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           envFrom:
             - secretRef:
-                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullname" $)) $.Values.messageBroker.existingSecretName }}
+                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullname" $)) $.Values.messageBroker.existingSecret.name }}
             - configMapRef:
                 name: {{ template "alfresco-search-enterprise.fullname" $ }}-es
           env:
