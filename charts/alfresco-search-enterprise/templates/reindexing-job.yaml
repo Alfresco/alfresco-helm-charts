@@ -28,12 +28,14 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ template "alfresco-search-enterprise.fullname" . }}-es
-            - secretRef:
-                name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullname" .)) .Values.messageBroker.existingSecret.name }}
           env:
             {{- $dbCtx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
             {{- $dbFullName := (include "alfresco-search-enterprise.fullname" $dbCtx) }}
             {{- $ats_cm := .Values.ats.existingConfigMap.name | default (printf "%s-ats" (include "alfresco-search-enterprise.fullname" .)) }}
+            {{- include "alfresco-search-enterprise.activemq.secret.env" . | nindent 12 }}
+            {{- include "alfresco-search-enterprise.activemq.cm.env" . | nindent 12 }}
+            {{- include "alfresco-common.spring.activemq.env" . | nindent 12 }}
+            {{- include "alfresco-search-enterprise.config.spring.envCredentials" . | nindent 12 }}
             - name: ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL
               valueFrom:
                 configMapKeyRef:
@@ -66,9 +68,6 @@ spec:
                 configMapKeyRef:
                   name: {{ .Values.reindexing.db.existingConfigMap.name | default $dbFullName }}
                   key: {{ .Values.reindexing.db.existingConfigMap.keys.url }}
-            {{- include "alfresco-search-enterprise.activemq.cm.env" $ | nindent 12 }}
-            {{- include "alfresco-common.spring.activemq.env" . | nindent 12 }}
-            {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
           ports:
               - name: http
                 containerPort: 8080
