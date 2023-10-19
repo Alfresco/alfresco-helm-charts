@@ -54,8 +54,20 @@ reindexing:
     tag: 3.3.1
     pullPolicy: IfNotPresent
   pathIndexingEnabled: true
+  repository:
+    # -- URL of the Alfresco repository
+    url: null
+    existingConfigMap:
+      # -- Alternatively, provide repository connection details via an existing
+      # configmap
+      name: null
+      keys:
+        # -- Key within the configmap holding the full url to connect to the
+        # alfresco repository
+        url: REPOSITORY_URL
   db:
-    # -- Provide the full JDBC url to connect to database service e.g.: `jdbc:postgresql://hostname:5432/database`
+    # -- Provide the full JDBC url to connect to database service e.g.:
+    # `jdbc:postgresql://hostname:5432/database`
     url: null
     # -- The username required to access the service
     username: null
@@ -70,10 +82,12 @@ reindexing:
         # -- Key within the secret holding the database password
         password: DATABASE_PASSWORD
     existingConfigMap:
-      # -- Alternatively, provide database connection details via an existing configmap
+      # -- Alternatively, provide database connection details via an existing
+      # configmap
       name: null
       keys:
-        # -- Key within the configmap holding the full JDBC url to connect to database service
+        # -- Key within the configmap holding the full JDBC url to connect to
+        # database service
         url: DATABASE_URL
   resources:
     requests:
@@ -88,6 +102,15 @@ reindexing:
         limits:
           cpu: "0.25"
           memory: "10Mi"
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "alfresco-search-enterprise-sa"
+
 ats:
   # -- URL of the alfresco transform (trouter or tengine-aio)
   transform_url: null
@@ -109,6 +132,13 @@ messageBroker:
   user: null
   # -- Broker password
   password: null
+  # -- Alternatively, provide message broker connection details via an existing
+  # configmap
+  existingConfigMap:
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the message broker
+      url: BROKER_URL
   # -- Provide connection details alternatively via an existing secret that
   # contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
   existingSecretName: null

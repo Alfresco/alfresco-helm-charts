@@ -1,6 +1,6 @@
 # alfresco-search-enterprise
 
-![Version: 3.0.0-alpha.1](https://img.shields.io/badge/Version-3.0.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
+![Version: 3.0.0-alpha.2](https://img.shields.io/badge/Version-3.0.0--alpha.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -11,7 +11,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | Repository | Name | Version |
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.3.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0-alpha.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0-alpha.3 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
 
 ## Values
@@ -56,6 +56,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | liveIndexing.path.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-path"` |  |
 | liveIndexing.path.image.tag | string | `"3.3.1"` |  |
 | liveIndexing.path.replicaCount | int | `1` |  |
+| messageBroker.existingConfigMap | object | `{"keys":{"url":"BROKER_URL"},"name":null}` | Alternatively, provide message broker connection details via an existing configmap |
+| messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap holding the URL of the message broker |
 | messageBroker.existingSecretName | string | `nil` | Provide connection details alternatively via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
 | messageBroker.password | string | `nil` | Broker password |
 | messageBroker.url | string | `nil` | Broker URL formatted as per: https://activemq.apache.org/failover-transport-reference |
@@ -80,6 +82,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | reindexing.initcontainers.waitForRepository.resources.limits.cpu | string | `"0.25"` |  |
 | reindexing.initcontainers.waitForRepository.resources.limits.memory | string | `"10Mi"` |  |
 | reindexing.pathIndexingEnabled | bool | `true` |  |
+| reindexing.repository.existingConfigMap.keys.url | string | `"REPOSITORY_URL"` | Key within the configmap holding the full url to connect to the alfresco repository |
+| reindexing.repository.existingConfigMap.name | string | `nil` | Alternatively, provide repository connection details via an existing configmap |
+| reindexing.repository.url | string | `nil` | URL of the Alfresco repository |
 | reindexing.resources.limits.cpu | string | `"2"` |  |
 | reindexing.resources.limits.memory | string | `"512Mi"` |  |
 | reindexing.resources.requests.cpu | string | `"0.5"` |  |
@@ -96,4 +101,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | searchIndex.protocol | string | `nil` | Valid values are http or https |
 | searchIndex.user | string | `nil` | The username required to access the service, if any |
 | securityContext | object | `{}` |  |
+| serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.create | bool | `true` |  |
+| serviceAccount.name | string | `"alfresco-search-enterprise-sa"` |  |
 | tolerations | list | `[]` |  |

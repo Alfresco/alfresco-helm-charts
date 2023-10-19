@@ -1,19 +1,18 @@
-{{- range $serviceName, $service := .Values.liveIndexing }}
+{{- range $serviceName, $service := omit .Values.liveIndexing "mediation" }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "alfresco-search-enterprise.fullname" $ }}-{{ $serviceName }}
   labels:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
-spec:
-  {{- if eq $serviceName "mediation"}}
-  replicas: 1
-  {{- else }}
+    app.kubernetes.io/component: {{ printf "%s-indexing" $serviceName }}
+spec :
   replicas: {{ $service.replicaCount | default 1 }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "alfresco-search-enterprise.selectorLabels" $ | nindent 6 }}
+      app.kubernetes.io/component: {{ printf "%s-indexing" $serviceName }}
   template:
     metadata:
       annotations:
@@ -25,22 +24,26 @@ spec:
       {{- end }}
       labels:
         {{- include "alfresco-search-enterprise.selectorLabels" $ | nindent 8 }}
+        app.kubernetes.io/component: {{ printf "%s-indexing" $serviceName }}
     spec:
-      {{- include "component-pod-security-context" .Values | indent 4 }}
-      {{- include "alfresco-content-services.imagePullSecrets" $ | indent 6 }}
+      serviceAccountName: {{ include "alfresco-search-enterprise.serviceAccountName" $ }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
+      {{- include "alfresco-common.imagePullSecrets" $ | indent 6 }}
       containers:
         - name: {{ $.Chart.Name }}-{{ $serviceName }}
           image: "{{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "repository" }}:\
             {{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "tag" }}"
           imagePullPolicy: {{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "pullPolicy" }}
-            {{- include "component-security-context" .Values | indent 8 }}
+            {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           envFrom:
             - secretRef:
                 name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-search-enterprise.fullname" $)) $.Values.messageBroker.existingSecretName }}
             - configMapRef:
                 name: {{ template "alfresco-search-enterprise.fullname" $ }}-es
           env:
-            {{- $ats_cm := $.Values.ats.existingConfigMap.name | default (printf "%s-ats" (include "alfresco-search-enterprise.fullname" $)) }}
+            {{- include "alfresco-search-enterprise.activemq.cm.env" $ | nindent 12 }}
+            {{- $atsCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "ats")) "Chart" $.Chart "Release" $.Release }}
+            {{- $ats_cm := coalesce $.Values.ats.existingConfigMap.name (include "alfresco-search-enterprise.fullname" $atsCtx) }}
             - name: ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL
               valueFrom:
                 configMapKeyRef:
@@ -51,7 +54,7 @@ spec:
                 configMapKeyRef:
                   name: {{ $ats_cm }}
                   key: {{ $.Values.ats.existingConfigMap.keys.sfs_url }}
-            {{- include "spring.activemq.env" . | nindent 12 }}
+            {{- include "alfresco-common.spring.activemq.env" . | nindent 12 }}
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
             {{- include "alfresco-search-enterprise.env" $ | nindent 12 }}
             {{- range $key, $val := $.Values.liveIndexing.environment }}
@@ -87,5 +90,4 @@ spec:
       tolerations:
         {{- toYaml $ | nindent 8 }}
       {{- end }}
----
 {{- end }}

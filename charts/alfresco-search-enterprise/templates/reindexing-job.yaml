@@ -15,14 +15,15 @@ spec:
       labels:
         {{- include "alfresco-search-enterprise.selectorLabels" . | nindent 8 }}
     spec:
-      {{- include "component-pod-security-context" .Values | indent 4 }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      serviceAccountName: {{ include "alfresco-search-enterprise.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       restartPolicy: Never
       containers:
         - name: {{ .Chart.Name }}-reindexing
           image: "{{ .Values.reindexing.image.repository }}:{{ .Values.reindexing.image.tag }}"
           imagePullPolicy: {{ .Values.reindexing.image.pullPolicy }}
-          {{- include "component-security-context" .Values | indent 8 }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           resources: {{- toYaml .Values.reindexing.resources | nindent 12 }}
           envFrom:
             - configMapRef:
@@ -65,7 +66,8 @@ spec:
                 configMapKeyRef:
                   name: {{ .Values.reindexing.db.existingConfigMap.name | default $dbFullName }}
                   key: {{ .Values.reindexing.db.existingConfigMap.keys.url }}
-            {{- include "spring.activemq.env" . | nindent 12 }}
+            {{- include "alfresco-search-enterprise.activemq.cm.env" $ | nindent 12 }}
+            {{- include "alfresco-common.spring.activemq.env" . | nindent 12 }}
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
           ports:
               - name: http
@@ -74,12 +76,25 @@ spec:
       initContainers:
         - name: wait-for-repository
           image: curlimages/curl:7.79.1
-          {{- include "component-security-context" .Values | indent 8 }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           resources: {{- toYaml .Values.reindexing.initcontainers.waitForRepository.resources | nindent 12 }}
           env:
-            - name: ALFRESCO_REPOSITORY_URL
-              value: http://{{ template "content-services.shortname" . }}-repository/alfresco/api/-default-/public/alfresco/versions/1/probes/-ready-
+            {{- $repoCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" $.Chart "Release" $.Release }}
+            {{- $repoCm := coalesce .Values.reindexing.repository.existingConfigMap.name (include "alfresco-search-enterprise.fullname" $repoCtx) }}
+            - name: REPOSITORY_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $repoCm }}
+                  key: {{ .Values.reindexing.repository.existingConfigMap.keys.url }}
           command: [ "/bin/sh","-c" ]
           # Delay running the reindexing to give Alfresco Repository a chance to fully initialise
-          args: [ "while [ $(curl -sw '%{http_code}' $ALFRESCO_REPOSITORY_URL -o /dev/null) -ne 200 ]; do sleep 5; echo 'Waiting for the Alfresco Repository...'; done; echo 'Alfresco is ready, delay reindexing to give a chance to fully initialise.'; sleep 30; echo 'Reindexing started!'" ]
+          args:
+            - |
+              while [ $(curl -sw '%{http_code}' $(ALFRESCO_REPOSITORY_URL)/api/-default-/public/alfresco/versions/1/probes/-ready- -o /dev/null) -ne 200 ]
+              do echo 'Waiting for the Alfresco Repository...'
+                sleep 5
+              done
+              echo 'Alfresco is ready, delay reindexing to give a chance to fully initialise.'
+              sleep 30
+              echo 'Reindexing started!'
 {{ end }}
