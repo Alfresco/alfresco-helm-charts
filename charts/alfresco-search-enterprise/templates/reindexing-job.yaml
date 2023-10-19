@@ -87,11 +87,11 @@ spec:
                   name: {{ $repoCm }}
                   key: {{ .Values.reindexing.repository.existingConfigMap.keys.url }}
           command: [ "/bin/sh","-c" ]
-          # Delay running the reindexing to give Alfresco Repository a chance to fully initialise
+          # Delay running the reindexing to give Alfresco Repository a chance to initialise its database
           args:
             - |
-              while [ $(curl -sw '%{http_code}' $(REPOSITORY_URL)/api/-default-/public/alfresco/versions/1/probes/-ready- -o /dev/null) -ne 200 ]
-              do echo 'Waiting for the Alfresco Repository...'
+              while [ $(curl -sw '%{http_code}' ${REPOSITORY_URL}/api/-default-/public/alfresco/versions/1/probes/-ready- -o /dev/null) -ne 200 ]
+              do echo "Waiting for the Alfresco repository to come up at $REPOSITORY_URL ..."
                 sleep 5
               done
               echo 'Alfresco is ready, delay reindexing to give a chance to fully initialise.'
