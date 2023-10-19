@@ -141,7 +141,11 @@ messageBroker:
       url: BROKER_URL
   # -- Provide connection details alternatively via an existing secret that
   # contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
-  existingSecretName: null
+  existingSecret:
+    name: null
+    keys:
+      username: null
+      password: null
 # -- Overrides .Values.global.elasticsearch
 searchIndex:
   # -- The host where service is available
