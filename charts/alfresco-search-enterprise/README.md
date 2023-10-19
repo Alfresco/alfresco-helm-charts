@@ -18,7 +18,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| activemq.enabled | bool | `false` | Enable embedded broker - useful when testing this chart in standalone |
 | affinity | object | `{}` |  |
 | ats.existingConfigMap.keys.sfs_url | string | `"SFS_URL"` | Key within the configmap holding the URL of the alfresco shared filestore |
 | ats.existingConfigMap.keys.transform_url | string | `"ATS_URL"` | Key within the configmap holding the URL of the alfresco transform |
@@ -104,4 +103,5 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `"alfresco-search-enterprise-sa"` |  |
+| tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 | tolerations | list | `[]` |  |

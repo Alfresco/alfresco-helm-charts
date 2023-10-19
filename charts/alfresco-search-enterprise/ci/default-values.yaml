@@ -6,15 +6,6 @@ reindexing:
 ats:
   transform_url: http://alfresco-transform-services-router
   sfs_url: http://alfresco-transform-services-sfs
-activemq:
-  enabled: true
-  resources:
-    requests:
-      cpu: "100m"
-      memory: "512Mi"
-    limits:
-      cpu: "1000m"
-      memory: "1Gi"
 contentMediaTypeCache:
   enabled: false
 resources:
@@ -34,3 +25,5 @@ elasticsearch:
     limits:
       cpu: "1000m"
       memory: "1Gi"
+tags:
+  ci: true

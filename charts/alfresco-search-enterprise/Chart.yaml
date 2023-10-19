@@ -12,7 +12,8 @@ dependencies:
   - name: activemq
     version: 3.3.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    condition: activemq.enabled
+    tags:
+      - ci
   - name: elasticsearch
     repository: https://helm.elastic.co
     version: 7.17.3
