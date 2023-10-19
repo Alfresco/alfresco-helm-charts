@@ -129,7 +129,7 @@ messageBroker:
   # https://activemq.apache.org/failover-transport-reference
   url: null
   # -- Broker username
-  user: null
+  username: null
   # -- Broker password
   password: null
   # -- Alternatively, provide message broker connection details via an existing
@@ -144,8 +144,8 @@ messageBroker:
   existingSecret:
     name: null
     keys:
-      username: null
-      password: null
+      username: BROKER_USERNAME
+      password: BROKER_PASSWORD
 # -- Overrides .Values.global.elasticsearch
 searchIndex:
   # -- The host where service is available
