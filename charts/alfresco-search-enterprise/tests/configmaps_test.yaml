@@ -21,14 +21,14 @@ tests:
           errorMessage: Disabling in-cluster ActiveMQ requires passing (at least) messageBroker.url
         template: configmap-mq.yaml
 
-  - it: should fail rendering manifest without required Alfresco repository values
+  - it: should create a cm from messageBroker provided values
     values: *testvalues
     set:
       reindexing.enabled: false
     asserts:
       - equal:
           path: data.BROKER_URL
-          value: failover:(nio://RELEASE-NAME-activemq-broker:61616)?timeout=3000&jms.useCompression=true
+          value: failover:(tcp://localhost:61616)
         template: configmap-mq.yaml
 
   - it: should fail rendering manifest without required values
