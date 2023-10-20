@@ -10,7 +10,7 @@ templates:
 tests:
   - it: |
       Render elasticsearch Liveindexing configmap,
-      using provided values
+      using provided values and check deployment has appropriate defaults
     values: &testvalues
       - values/embedded-charts-values.yaml
     template: liveindexing-deployment.yaml
@@ -27,6 +27,38 @@ tests:
               configMapKeyRef:
                 name: RELEASE-NAME-alfresco-search-enterprise-mq
                 key: BROKER_URL
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-es
+                key: ELASTICSEARCH_USERNAME
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-es
+                key: ELASTICSEARCH_PASSWORD
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-ats
+                key: ATS_URL
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_SHAREDFILESTORE_BASEURL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-ats
+                key: SFS_URL
 
   - it: |
       Render default mainfest with embedded elasticsearch and pre-existing secret
@@ -36,6 +68,9 @@ tests:
       searchIndex:
         existingSecret:
           name: nooneknows
+          keys:
+            username: ESUSER
+            password: ESPASS
       messageBroker:
         existingConfigMap:
           name: mymqcm
@@ -65,7 +100,7 @@ tests:
             valueFrom:
               secretKeyRef:
                 name: nooneknows
-                key: ELASTICSEARCH_USERNAME
+                key: ESUSER
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -73,7 +108,7 @@ tests:
             valueFrom:
               secretKeyRef:
                 name: nooneknows
-                key: ELASTICSEARCH_PASSWORD
+                key: ESPASS
       - equal:
           path: spec.template.spec.containers[0].resources
           value:

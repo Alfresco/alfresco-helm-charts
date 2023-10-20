@@ -1,7 +1,3 @@
-{{- define "alfresco-search-enterprise.searchIndexExistingSecretName" -}}
-{{- coalesce .Values.searchIndex.existingSecret.name (printf "%s-elasticsearch-secret" (include "alfresco-search-enterprise.fullname" .)) }}
-{{- end -}}
-
 {{- define "alfresco-search-enterprise.config.spring" -}}
 {{- if not .Values.searchIndex.host }}
   {{- fail "Please provide elasticsearch connection details as .searchIndex values or using an .searchIndex.existingConfigMap." }}
@@ -10,14 +6,18 @@ SPRING_ELASTICSEARCH_REST_URIS: "{{ .Values.searchIndex.protocol }}://{{ .Values
 {{- end -}}
 
 {{- define "alfresco-search-enterprise.config.spring.envCredentials" -}}
+{{- $esCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "es")) "Chart" .Chart "Release" .Release }}
+{{- with .Values.searchIndex }}
+{{- $esSecret := coalesce .existingSecret.name (include "alfresco-search-enterprise.fullname" $esCtx) }}
 - name: SPRING_ELASTICSEARCH_REST_USERNAME
   valueFrom:
     secretKeyRef:
-      name: {{ template "alfresco-search-enterprise.searchIndexExistingSecretName" $ }}
-      key: ELASTICSEARCH_USERNAME
+      name: {{ $esSecret }}
+      key: {{ .existingSecret.keys.username }}
 - name: SPRING_ELASTICSEARCH_REST_PASSWORD
   valueFrom:
     secretKeyRef:
-      name: {{ template "alfresco-search-enterprise.searchIndexExistingSecretName" $ }}
-      key: ELASTICSEARCH_PASSWORD
+      name: {{ $esSecret }}
+      key: {{ .existingSecret.keys.password }}
+{{- end }}
 {{- end -}}
