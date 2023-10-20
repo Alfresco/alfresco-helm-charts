@@ -869,6 +869,29 @@ entries:
   alfresco-search-enterprise:
   - apiVersion: v2
     appVersion: 3.3.1
+    created: "2023-10-20T12:39:48.537584478Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.0.0-alpha.3
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.3.0
+    - condition: elasticsearch.enabled
+      name: elasticsearch
+      repository: https://helm.elastic.co
+      version: 7.17.3
+    description: A Helm chart for deploying Alfresco Elasticsearch connector
+    digest: 1b097c8972158629cccff17090d647ce540a539c07e4bd811060106273c242e6
+    name: alfresco-search-enterprise
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-search-enterprise-3.0.0-alpha.5/alfresco-search-enterprise-3.0.0-alpha.5.tgz
+    version: 3.0.0-alpha.5
+  - apiVersion: v2
+    appVersion: 3.3.1
     created: "2023-10-19T15:08:34.593422103Z"
     dependencies:
     - name: alfresco-common
@@ -1985,4 +2008,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2023-10-19T15:08:34.593711115Z"
+generated: "2023-10-20T12:39:48.538074187Z"
