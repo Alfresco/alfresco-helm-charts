@@ -1,6 +1,6 @@
 # alfresco-search-enterprise
 
-![Version: 3.0.0-alpha.4](https://img.shields.io/badge/Version-3.0.0--alpha.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
+![Version: 3.0.0-alpha.5](https://img.shields.io/badge/Version-3.0.0--alpha.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -18,7 +18,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| activemq.enabled | bool | `false` | Enable embedded broker - useful when testing this chart in standalone |
 | affinity | object | `{}` |  |
 | ats.existingConfigMap.keys.sfs_url | string | `"SFS_URL"` | Key within the configmap holding the URL of the alfresco shared filestore |
 | ats.existingConfigMap.keys.transform_url | string | `"ATS_URL"` | Key within the configmap holding the URL of the alfresco transform |
@@ -58,10 +57,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | liveIndexing.path.replicaCount | int | `1` |  |
 | messageBroker.existingConfigMap | object | `{"keys":{"url":"BROKER_URL"},"name":null}` | Alternatively, provide message broker connection details via an existing configmap |
 | messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap holding the URL of the message broker |
-| messageBroker.existingSecretName | string | `nil` | Provide connection details alternatively via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
+| messageBroker.existingSecret | object | `{"keys":{"password":"BROKER_PASSWORD","username":"BROKER_USERNAME"},"name":null}` | Provide connection details alternatively via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
 | messageBroker.password | string | `nil` | Broker password |
 | messageBroker.url | string | `nil` | Broker URL formatted as per: https://activemq.apache.org/failover-transport-reference |
-| messageBroker.user | string | `nil` | Broker username |
+| messageBroker.username | string | `nil` | Broker username |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | pathIndexingComponent.enabled | bool | `true` |  |
@@ -104,4 +103,5 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `"alfresco-search-enterprise-sa"` |  |
+| tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 | tolerations | list | `[]` |  |

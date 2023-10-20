@@ -1,5 +1,5 @@
-activemq:
-  enabled: true
+messageBroker:
+  url: tcp://localhost:61616
 ats:
   transform_url: http://transform
   sfs_url: http://sfs

@@ -129,7 +129,7 @@ messageBroker:
   # https://activemq.apache.org/failover-transport-reference
   url: null
   # -- Broker username
-  user: null
+  username: null
   # -- Broker password
   password: null
   # -- Alternatively, provide message broker connection details via an existing
@@ -141,7 +141,11 @@ messageBroker:
       url: BROKER_URL
   # -- Provide connection details alternatively via an existing secret that
   # contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
-  existingSecretName: null
+  existingSecret:
+    name: null
+    keys:
+      username: BROKER_USERNAME
+      password: BROKER_PASSWORD
 # -- Overrides .Values.global.elasticsearch
 searchIndex:
   # -- The host where service is available
@@ -174,11 +178,12 @@ global:
     # -- Alternatively, provide connection details via an existing secret that
     # contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
     existingSecretName: null
-activemq:
-  # -- Enable embedded broker - useful when testing this chart in standalone
-  enabled: false
 elasticsearch:
   # -- Enable embedded elasticsearch - useful when using this chart in standalone
   enabled: false
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+
+tags:
+  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
+  ci: false

@@ -16,6 +16,22 @@ tests:
       - contains:
           path: spec.template.spec.containers[0].env
           content:
+            name: BROKER_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-mq
+                key: BROKER_USERNAME
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-mq
+                key: BROKER_PASSWORD
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
             name: SPRING_DATASOURCE_PASSWORD
             valueFrom:
               secretKeyRef:
@@ -38,8 +54,14 @@ tests:
                 name: RELEASE-NAME-alfresco-database
                 key: DATABASE_URL
 
-  - it: should have overridden secret for spring database credentials when existingSecretName is set
+  - it: should have overridden secrets when existingSecret is set
     set:
+      messageBroker:
+        existingSecret:
+          name: mqsecret
+          keys:
+            username: MQUSER
+            password: MQPASS
       reindexing.db:
         existingSecret:
           name: my-custom-secret
@@ -51,6 +73,22 @@ tests:
           keys:
             url: CUSTOM_URL_KEY
     asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mqsecret
+                key: MQUSER
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mqsecret
+                key: MQPASS
       - contains:
           path: spec.template.spec.containers[0].env
           content:
