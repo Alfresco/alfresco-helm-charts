@@ -1,8 +1,15 @@
+{{- if not .Values.searchIndex.existingConfigMap.name }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-search-enterprise.fullname" . }}-es
+  {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "es")) "Chart" $.Chart "Release" $.Release }}
+  name: {{ template "alfresco-search-enterprise.fullname" $ctx }}
   labels:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
 data:
-  {{ template "alfresco-search-enterprise.config.spring" . }}
+  {{- $reqMsg := "Please provide elasticsearch connection details as .searchIndex values or using an .searchIndex.existingConfigMap." }}
+  {{- $esProtocol := required $reqMsg .Values.searchIndex.protocol }}
+  {{- $esHost := required $reqMsg .Values.searchIndex.host }}
+  {{- $esPort := required $reqMsg .Values.searchIndex.port }}
+  ELASTICSEARCH_URL: {{ printf "%s://%s:%v" $esProtocol $esHost $esPort }}
+{{- end }}

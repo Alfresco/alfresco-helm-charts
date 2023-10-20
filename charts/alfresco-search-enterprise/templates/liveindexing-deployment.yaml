@@ -35,14 +35,12 @@ spec :
             {{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "tag" }}"
           imagePullPolicy: {{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "pullPolicy" }}
             {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
-          envFrom:
-            - configMapRef:
-                name: {{ template "alfresco-search-enterprise.fullname" $ }}-es
           env:
             {{- include "alfresco-search-enterprise.activemq.secret.env" $ | nindent 12 }}
             {{- include "alfresco-search-enterprise.activemq.cm.env" $ | nindent 12 }}
             {{- include "alfresco-common.spring.activemq.env" . | nindent 12 }}
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
+            {{- include "alfresco-search-enterprise.config.spring.es.env" $ | nindent 12 }}
             {{- include "alfresco-search-enterprise.env" $ | nindent 12 }}
             {{- $atsCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "ats")) "Chart" $.Chart "Release" $.Release }}
             {{- $ats_cm := coalesce $.Values.ats.existingConfigMap.name (include "alfresco-search-enterprise.fullname" $atsCtx) }}

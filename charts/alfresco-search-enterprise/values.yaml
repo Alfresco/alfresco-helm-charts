@@ -163,7 +163,7 @@ searchIndex:
     name: null
     keys:
       # -- Key within the configmap holding the URL of the elasticsearch service
-      url: null
+      url: ELASTICSEARCH_URL
   existingSecret:
     # -- Alternatively, provide elasticsearch credentials via an existing secret
     name: null

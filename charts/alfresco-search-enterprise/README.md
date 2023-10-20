@@ -82,7 +82,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | resources.limits.memory | string | `"2048Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
 | resources.requests.memory | string | `"256Mi"` |  |
-| searchIndex.existingConfigMap.keys.url | string | `nil` | Key within the configmap holding the URL of the elasticsearch service |
+| searchIndex.existingConfigMap.keys.url | string | `"ELASTICSEARCH_URL"` | Key within the configmap holding the URL of the elasticsearch service |
 | searchIndex.existingConfigMap.name | string | `nil` | Alternatively, provide message broker connection details via an existing configmap |
 | searchIndex.existingSecret.keys.password | string | `"ELASTICSEARCH_PASSWORD"` | Key within the secret that holds the elasticsearch password |
 | searchIndex.existingSecret.keys.username | string | `"ELASTICSEARCH_USERNAME"` | Key within the secret that holds the elasticsearch username |

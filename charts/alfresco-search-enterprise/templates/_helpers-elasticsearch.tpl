@@ -1,10 +1,25 @@
-{{- define "alfresco-search-enterprise.config.spring" -}}
-{{- if not .Values.searchIndex.host }}
-  {{- fail "Please provide elasticsearch connection details as .searchIndex values or using an .searchIndex.existingConfigMap." }}
-{{- end -}}
-SPRING_ELASTICSEARCH_REST_URIS: "{{ .Values.searchIndex.protocol }}://{{ .Values.searchIndex.host }}:{{ .Values.searchIndex.port }}"
+{{/*
+
+Usage: include "alfresco-search-enterprise.config.spring.es.env" $
+
+*/}}
+{{- define "alfresco-search-enterprise.config.spring.es.env" -}}
+{{- $esCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "es")) "Chart" .Chart "Release" .Release }}
+{{- with .Values.searchIndex }}
+{{- $esCm := coalesce .existingConfigMap.name (include "alfresco-search-enterprise.fullname" $esCtx) }}
+- name: SPRING_ELASTICSEARCH_REST_URIS
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $esCm }}
+      key: {{ .existingConfigMap.keys.url }}
+{{- end }}
 {{- end -}}
 
+{{/*
+
+Usage: include "alfresco-search-enterprise.config.spring.envCredentials" $
+
+*/}}
 {{- define "alfresco-search-enterprise.config.spring.envCredentials" -}}
 {{- $esCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "es")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.searchIndex }}
