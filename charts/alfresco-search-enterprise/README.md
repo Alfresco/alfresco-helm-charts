@@ -82,7 +82,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | resources.limits.memory | string | `"2048Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
 | resources.requests.memory | string | `"256Mi"` |  |
-| searchIndex.existingSecretName | string | `nil` | Alternatively, provide connection details via an an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys |
+| searchIndex.existingSecret.keys.password | string | `"ELASTICSEARCH_PASSWORD"` | Key within the secret that holds the elasticsearch password |
+| searchIndex.existingSecret.keys.username | string | `"ELASTICSEARCH_USERNAME"` | Key within the secret that holds the elasticsearch username |
+| searchIndex.existingSecret.name | string | `nil` | Alternatively, provide elasticsearch credentials via an existing secret |
 | searchIndex.host | string | `nil` | The host where the elasticsearch service is available |
 | searchIndex.password | string | `nil` | The password required to access the elasticsearch service, if any |
 | searchIndex.port | string | `nil` | The port where the elasticsearch service is available |

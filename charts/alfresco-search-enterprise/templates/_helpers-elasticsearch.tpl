@@ -1,5 +1,5 @@
 {{- define "alfresco-search-enterprise.searchIndexExistingSecretName" -}}
-{{- coalesce .Values.searchIndex.existingSecretName (printf "%s-elasticsearch-secret" (include "alfresco-search-enterprise.fullname" .)) }}
+{{- coalesce .Values.searchIndex.existingSecret.name (printf "%s-elasticsearch-secret" (include "alfresco-search-enterprise.fullname" .)) }}
 {{- end -}}
 
 {{- define "alfresco-search-enterprise.config.spring" -}}

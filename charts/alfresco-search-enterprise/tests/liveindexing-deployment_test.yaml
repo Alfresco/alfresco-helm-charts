@@ -34,7 +34,8 @@ tests:
     template: liveindexing-deployment.yaml
     set:
       searchIndex:
-        existingSecretName: nooneknows
+        existingSecret:
+          name: nooneknows
       messageBroker:
         existingConfigMap:
           name: mymqcm

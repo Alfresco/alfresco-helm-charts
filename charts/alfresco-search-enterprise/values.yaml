@@ -157,9 +157,14 @@ searchIndex:
   user: null
   # -- The password required to access the elasticsearch service, if any
   password: null
-  # -- Alternatively, provide connection details via an an existing secret that
-  # contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
-  existingSecretName: null
+  existingSecret:
+    # -- Alternatively, provide elasticsearch credentials via an existing secret
+    name: null
+    keys:
+      # -- Key within the secret that holds the elasticsearch username
+      username: ELASTICSEARCH_USERNAME
+      # -- Key within the secret that holds the elasticsearch password
+      password: ELASTICSEARCH_PASSWORD
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
 
