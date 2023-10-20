@@ -82,13 +82,12 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | resources.limits.memory | string | `"2048Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
 | resources.requests.memory | string | `"256Mi"` |  |
-| searchIndex | object | `{"existingSecretName":null,"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Overrides .Values.global.elasticsearch |
 | searchIndex.existingSecretName | string | `nil` | Alternatively, provide connection details via an an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys |
-| searchIndex.host | string | `nil` | The host where service is available |
-| searchIndex.password | string | `nil` | The password required to access the service, if any |
-| searchIndex.port | string | `nil` | The port where service is available |
+| searchIndex.host | string | `nil` | The host where the elasticsearch service is available |
+| searchIndex.password | string | `nil` | The password required to access the elasticsearch service, if any |
+| searchIndex.port | string | `nil` | The port where the elasticsearch service is available |
 | searchIndex.protocol | string | `nil` | Valid values are http or https |
-| searchIndex.user | string | `nil` | The username required to access the service, if any |
+| searchIndex.user | string | `nil` | The username required to access the elasticsearch service, if any |
 | securityContext | object | `{}` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |

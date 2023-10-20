@@ -146,17 +146,16 @@ messageBroker:
     keys:
       username: BROKER_USERNAME
       password: BROKER_PASSWORD
-# -- Overrides .Values.global.elasticsearch
 searchIndex:
-  # -- The host where service is available
+  # -- The host where the elasticsearch service is available
   host: null
-  # -- The port where service is available
+  # -- The port where the elasticsearch service is available
   port: null
   # -- Valid values are http or https
   protocol: null
-  # -- The username required to access the service, if any
+  # -- The username required to access the elasticsearch service, if any
   user: null
-  # -- The password required to access the service, if any
+  # -- The password required to access the elasticsearch service, if any
   password: null
   # -- Alternatively, provide connection details via an an existing secret that
   # contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
