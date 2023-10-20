@@ -16,7 +16,7 @@ tests:
     template: liveindexing-deployment.yaml
     asserts:
       - equal:
-          path: data.SPRING_ELASTICSEARCH_REST_URIS
+          path: data.ELASTICSEARCH_URL
           value: http://elasticsearch-master:9200
         template: configmap-elasticsearch.yaml
       - contains:
@@ -27,6 +27,14 @@ tests:
               configMapKeyRef:
                 name: RELEASE-NAME-alfresco-search-enterprise-mq
                 key: BROKER_URL
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_URIS
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-es
+                key: ELASTICSEARCH_URL
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -66,6 +74,10 @@ tests:
     template: liveindexing-deployment.yaml
     set:
       searchIndex:
+        existingConfigMap:
+          name: escm
+          keys:
+            url: ESURL
         existingSecret:
           name: nooneknows
           keys:
@@ -93,6 +105,14 @@ tests:
           path: data.SFS_URL
           value: http://sfs/alfresco/api/-default-/private/sfs/versions/1/file/
         template: configmap-ats.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_URIS
+            valueFrom:
+              configMapKeyRef:
+                name: escm
+                key: ESURL
       - contains:
           path: spec.template.spec.containers[0].env
           content:
