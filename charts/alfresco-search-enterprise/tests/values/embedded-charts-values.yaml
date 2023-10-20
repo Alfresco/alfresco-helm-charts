@@ -1,5 +1,9 @@
 messageBroker:
   url: tcp://localhost:61616
+searchIndex:
+  host: elasticsearch-master
+  protocol: http
+  port: 9200
 ats:
   transform_url: http://transform
   sfs_url: http://sfs

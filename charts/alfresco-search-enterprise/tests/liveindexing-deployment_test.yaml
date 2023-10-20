@@ -10,21 +10,14 @@ templates:
 tests:
   - it: |
       Render elasticsearch Liveindexing configmap,
-      using global config to ensure it overrides default values.
+      using provided values
     values: &testvalues
       - values/embedded-charts-values.yaml
-    set:
-      global:
-        elasticsearch:
-          host: someglobally.used.host
-          user: admin
-          protocol: https
-          port: 1443
     template: liveindexing-deployment.yaml
     asserts:
       - equal:
           path: data.SPRING_ELASTICSEARCH_REST_URIS
-          value: https://someglobally.used.host:1443
+          value: http://elasticsearch-master:9200
         template: configmap-elasticsearch.yaml
       - contains:
           path: spec.template.spec.containers[0].env
@@ -40,8 +33,6 @@ tests:
     values: *testvalues
     template: liveindexing-deployment.yaml
     set:
-      elasticsearch:
-        enabled: true
       searchIndex:
         existingSecretName: nooneknows
       messageBroker:
@@ -66,10 +57,6 @@ tests:
           path: data.SFS_URL
           value: http://sfs/alfresco/api/-default-/private/sfs/versions/1/file/
         template: configmap-ats.yaml
-      - equal:
-          path: data.SPRING_ELASTICSEARCH_REST_URIS
-          value: http://elasticsearch-master:9200
-        template: configmap-elasticsearch.yaml
       - contains:
           path: spec.template.spec.containers[0].env
           content:

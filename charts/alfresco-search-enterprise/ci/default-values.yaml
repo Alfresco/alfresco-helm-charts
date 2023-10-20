@@ -18,7 +18,7 @@ resources:
 searchIndex:
   protocol: http
   host: elasticsearch-master
-  port: 80
+  port: 9200
 elasticsearch:
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
