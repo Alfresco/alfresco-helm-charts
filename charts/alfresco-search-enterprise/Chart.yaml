@@ -17,4 +17,5 @@ dependencies:
   - name: elasticsearch
     repository: https://helm.elastic.co
     version: 7.17.3
-    condition: elasticsearch.enabled
+    tags:
+      - ci
