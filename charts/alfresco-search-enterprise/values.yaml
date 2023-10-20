@@ -132,9 +132,9 @@ messageBroker:
   username: null
   # -- Broker password
   password: null
-  # -- Alternatively, provide message broker connection details via an existing
-  # configmap
   existingConfigMap:
+    # -- Alternatively, provide message broker connection details via an existing
+    # configmap
     name: null
     keys:
       # -- Key within the configmap holding the URL of the message broker
@@ -157,6 +157,13 @@ searchIndex:
   user: null
   # -- The password required to access the elasticsearch service, if any
   password: null
+  existingConfigMap:
+    # -- Alternatively, provide message broker connection details via an existing
+    # configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the elasticsearch service
+      url: null
   existingSecret:
     # -- Alternatively, provide elasticsearch credentials via an existing secret
     name: null
