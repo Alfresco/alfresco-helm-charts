@@ -31,13 +31,6 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | elasticsearch.replicas | int | `1` |  |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
-| global.elasticsearch | object | `{"existingSecretName":null,"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Shared connections details for Elasticsearch/Opensearch cluster |
-| global.elasticsearch.existingSecretName | string | `nil` | Alternatively, provide connection details via an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys |
-| global.elasticsearch.host | string | `nil` | The host where service is available |
-| global.elasticsearch.password | string | `nil` | The password required to access the service, if any |
-| global.elasticsearch.port | string | `nil` | The port where service is available |
-| global.elasticsearch.protocol | string | `nil` | Valid values are http or https |
-| global.elasticsearch.user | string | `nil` | The username required to access the service, if any |
 | imagePullSecrets | list | `[]` |  |
 | indexName | string | `"alfresco"` | Name of the existing search index, usually created by repo |
 | liveIndexing.content.image.pullPolicy | string | `"IfNotPresent"` |  |
