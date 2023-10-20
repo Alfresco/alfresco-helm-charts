@@ -15,8 +15,13 @@ resources:
   limits:
     cpu: "1"
     memory: "1Gi"
+searchIndex:
+  protocol: http
+  host: elasticsearch-master
+  port: 80
 elasticsearch:
-  enabled: true
+  replicas: 1
+  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
   esJavaOpts: "-Xmx512m -Xms512m"
   resources:
     requests:

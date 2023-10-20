@@ -163,11 +163,6 @@ searchIndex:
   existingSecretName: null
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
-elasticsearch:
-  # -- Enable embedded elasticsearch - useful when using this chart in standalone
-  enabled: false
-  replicas: 1
-  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
