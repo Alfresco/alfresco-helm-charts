@@ -18,7 +18,9 @@ tests:
       reindexing.enabled: false
     asserts:
       - failedTemplate:
-          errorMessage: Disabling in-cluster ActiveMQ requires passing (at least) messageBroker.url
+          errorMessage: >-
+            You need to provide an ActiveMQ URL using messageBroker.url or using an existingConfigMap check chart
+            README file
         template: configmap-mq.yaml
 
   - it: should create a cm from messageBroker provided values

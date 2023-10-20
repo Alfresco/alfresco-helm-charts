@@ -4,7 +4,7 @@ Usage: include "alfresco-search-enterprise.activemq.url" $
 
 */}}
 {{- define "alfresco-search-enterprise.activemq.url" -}}
-{{- required "Disabling in-cluster ActiveMQ requires passing (at least) messageBroker.url" $.Values.messageBroker.url }}
+{{- required "You need to provide an ActiveMQ URL using messageBroker.url or using an existingConfigMap check chart README file" $.Values.messageBroker.url }}
 {{- end -}}
 
 {{/*
