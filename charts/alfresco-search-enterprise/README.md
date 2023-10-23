@@ -82,16 +82,14 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | resources.limits.memory | string | `"2048Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
 | resources.requests.memory | string | `"256Mi"` |  |
-| searchIndex.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap holding the URL of the elasticsearch service |
-| searchIndex.existingConfigMap.name | string | `nil` | Alternatively, provide message broker connection details via an existing configmap |
-| searchIndex.existingSecret.keys.password | string | `"SEARCH_PASSWORD"` | Key within the secret that holds the elasticsearch password |
-| searchIndex.existingSecret.keys.username | string | `"SEARCH_USERNAME"` | Key within the secret that holds the elasticsearch username |
-| searchIndex.existingSecret.name | string | `nil` | Alternatively, provide elasticsearch credentials via an existing secret |
-| searchIndex.host | string | `nil` | The host where the elasticsearch service is available |
-| searchIndex.password | string | `nil` | The password required to access the elasticsearch service, if any |
-| searchIndex.port | string | `nil` | The port where the elasticsearch service is available |
-| searchIndex.protocol | string | `nil` | Valid values are http or https |
-| searchIndex.user | string | `nil` | The username required to access the elasticsearch service, if any |
+| search.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap holding the URL of the search/indexing service |
+| search.existingConfigMap.name | string | `nil` | Alternatively, provide search/indexing service connection details via an existing configmap |
+| search.existingSecret.keys.password | string | `"SEARCH_PASSWORD"` | Key within the secret that holds the search/indexing password |
+| search.existingSecret.keys.username | string | `"SEARCH_USERNAME"` | Key within the secret that holds the search/indexing username |
+| search.existingSecret.name | string | `nil` | Alternatively, provide search/indexing credentials via an existing secret |
+| search.password | string | `nil` | The password required to access the search/indexing service, if any |
+| search.url | string | `nil` | The URL where the search/indexing service is available |
+| search.user | string | `nil` | The username required to access the search/indexing service, if any |
 | securityContext | object | `{}` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |

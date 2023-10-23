@@ -73,7 +73,7 @@ tests:
     values: *testvalues
     template: liveindexing-deployment.yaml
     set:
-      searchIndex:
+      search:
         existingConfigMap:
           name: escm
           keys:

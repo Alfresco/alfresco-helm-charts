@@ -1,4 +1,5 @@
-{{- if not .Values.searchIndex.existingConfigMap.name }}
+{{- with .Values.search }}
+{{- if not .existingConfigMap.name }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -7,9 +8,10 @@ metadata:
   labels:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
 data:
-  {{- $reqMsg := "Please provide elasticsearch connection details as .searchIndex values or using an .searchIndex.existingConfigMap." }}
-  {{- $esProtocol := required $reqMsg .Values.searchIndex.protocol }}
-  {{- $esHost := required $reqMsg .Values.searchIndex.host }}
-  {{- $esPort := required $reqMsg .Values.searchIndex.port }}
+  {{- $reqMsg := "Please provide elasticsearch connection details as .search.url values or using an .search.existingConfigMap." }}
+  {{- $esProtocol := required $reqMsg (include "alfresco-common.url.scheme" .url) }}
+  {{- $esHost := required $reqMsg (include "alfresco-common.url.host" .url) }}
+  {{- $esPort := required $reqMsg (include "alfresco-common.url.port" .url) }}
   SEARCH_URL: {{ printf "%s://%s:%v" $esProtocol $esHost $esPort }}
+{{- end }}
 {{- end }}

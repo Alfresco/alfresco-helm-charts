@@ -146,31 +146,27 @@ messageBroker:
     keys:
       username: BROKER_USERNAME
       password: BROKER_PASSWORD
-searchIndex:
-  # -- The host where the elasticsearch service is available
-  host: null
-  # -- The port where the elasticsearch service is available
-  port: null
-  # -- Valid values are http or https
-  protocol: null
-  # -- The username required to access the elasticsearch service, if any
+search:
+  # -- The URL where the search/indexing service is available
+  url: null
+  # -- The username required to access the search/indexing service, if any
   user: null
-  # -- The password required to access the elasticsearch service, if any
+  # -- The password required to access the search/indexing service, if any
   password: null
   existingConfigMap:
-    # -- Alternatively, provide message broker connection details via an existing
-    # configmap
+    # -- Alternatively, provide search/indexing service connection details via
+    # an existing configmap
     name: null
     keys:
-      # -- Key within the configmap holding the URL of the elasticsearch service
+      # -- Key within the configmap holding the URL of the search/indexing service
       url: SEARCH_URL
   existingSecret:
-    # -- Alternatively, provide elasticsearch credentials via an existing secret
+    # -- Alternatively, provide search/indexing credentials via an existing secret
     name: null
     keys:
-      # -- Key within the secret that holds the elasticsearch username
+      # -- Key within the secret that holds the search/indexing username
       username: SEARCH_USERNAME
-      # -- Key within the secret that holds the elasticsearch password
+      # -- Key within the secret that holds the search/indexing password
       password: SEARCH_PASSWORD
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret

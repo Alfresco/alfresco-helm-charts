@@ -15,10 +15,8 @@ resources:
   limits:
     cpu: "1"
     memory: "1Gi"
-searchIndex:
-  protocol: http
-  host: elasticsearch-master
-  port: 9200
+search:
+  url: http://elasticsearch-master:9200
 elasticsearch:
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
