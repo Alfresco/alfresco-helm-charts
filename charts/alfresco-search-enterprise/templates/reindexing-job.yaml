@@ -25,9 +25,6 @@ spec:
           imagePullPolicy: {{ .Values.reindexing.image.pullPolicy }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           resources: {{- toYaml .Values.reindexing.resources | nindent 12 }}
-          envFrom:
-            - configMapRef:
-                name: {{ template "alfresco-search-enterprise.fullname" . }}-es
           env:
             {{- $dbCtx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
             {{- $dbFullName := (include "alfresco-search-enterprise.fullname" $dbCtx) }}
@@ -35,6 +32,7 @@ spec:
             {{- include "alfresco-search-enterprise.activemq.secret.env" . | nindent 12 }}
             {{- include "alfresco-search-enterprise.activemq.cm.env" . | nindent 12 }}
             {{- include "alfresco-common.spring.activemq.env" . | nindent 12 }}
+            {{- include "alfresco-search-enterprise.config.spring.es.env" $ | nindent 12 }}
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" . | nindent 12 }}
             - name: ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL
               valueFrom:

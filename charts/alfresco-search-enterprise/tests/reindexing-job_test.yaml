@@ -122,16 +122,16 @@ tests:
             name: SPRING_ELASTICSEARCH_REST_USERNAME
             valueFrom:
               secretKeyRef:
-                name: RELEASE-NAME-alfresco-search-enterprise-elasticsearch-secret
-                key: ELASTICSEARCH_USERNAME
+                name: RELEASE-NAME-alfresco-search-enterprise-es
+                key: SEARCH_USERNAME
       - contains:
           path: spec.template.spec.containers[0].env
           content:
             name: SPRING_ELASTICSEARCH_REST_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: RELEASE-NAME-alfresco-search-enterprise-elasticsearch-secret
-                key: ELASTICSEARCH_PASSWORD
+                name: RELEASE-NAME-alfresco-search-enterprise-es
+                key: SEARCH_PASSWORD
 
   - it: should not be present when disabled
     set:

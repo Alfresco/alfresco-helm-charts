@@ -15,8 +15,11 @@ resources:
   limits:
     cpu: "1"
     memory: "1Gi"
+search:
+  url: http://elasticsearch-master:9200
 elasticsearch:
-  enabled: true
+  replicas: 1
+  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
   esJavaOpts: "-Xmx512m -Xms512m"
   resources:
     requests:

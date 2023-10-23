@@ -1,6 +1,6 @@
 # alfresco-search-enterprise
 
-![Version: 3.0.0-alpha.5](https://img.shields.io/badge/Version-3.0.0--alpha.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
+![Version: 3.0.0-alpha.6](https://img.shields.io/badge/Version-3.0.0--alpha.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -26,18 +26,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | ats.transform_url | string | `nil` | URL of the alfresco transform (trouter or tengine-aio) |
 | contentMediaTypeCache.enabled | bool | `true` |  |
 | contentMediaTypeCache.refreshTime | string | `"0 0 * * * *"` |  |
-| elasticsearch.clusterHealthCheckParams | string | `"wait_for_status=yellow&timeout=1s"` |  |
-| elasticsearch.enabled | bool | `false` | Enable embedded elasticsearch - useful when using this chart in standalone |
-| elasticsearch.replicas | int | `1` |  |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
-| global.elasticsearch | object | `{"existingSecretName":null,"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Shared connections details for Elasticsearch/Opensearch cluster |
-| global.elasticsearch.existingSecretName | string | `nil` | Alternatively, provide connection details via an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys |
-| global.elasticsearch.host | string | `nil` | The host where service is available |
-| global.elasticsearch.password | string | `nil` | The password required to access the service, if any |
-| global.elasticsearch.port | string | `nil` | The port where service is available |
-| global.elasticsearch.protocol | string | `nil` | Valid values are http or https |
-| global.elasticsearch.user | string | `nil` | The username required to access the service, if any |
 | imagePullSecrets | list | `[]` |  |
 | indexName | string | `"alfresco"` | Name of the existing search index, usually created by repo |
 | liveIndexing.content.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -55,8 +45,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | liveIndexing.path.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-path"` |  |
 | liveIndexing.path.image.tag | string | `"3.3.1"` |  |
 | liveIndexing.path.replicaCount | int | `1` |  |
-| messageBroker.existingConfigMap | object | `{"keys":{"url":"BROKER_URL"},"name":null}` | Alternatively, provide message broker connection details via an existing configmap |
 | messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap holding the URL of the message broker |
+| messageBroker.existingConfigMap.name | string | `nil` | Alternatively, provide message broker connection details via an existing configmap |
 | messageBroker.existingSecret | object | `{"keys":{"password":"BROKER_PASSWORD","username":"BROKER_USERNAME"},"name":null}` | Provide connection details alternatively via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
 | messageBroker.password | string | `nil` | Broker password |
 | messageBroker.url | string | `nil` | Broker URL formatted as per: https://activemq.apache.org/failover-transport-reference |
@@ -92,13 +82,14 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | resources.limits.memory | string | `"2048Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
 | resources.requests.memory | string | `"256Mi"` |  |
-| searchIndex | object | `{"existingSecretName":null,"host":null,"password":null,"port":null,"protocol":null,"user":null}` | Overrides .Values.global.elasticsearch |
-| searchIndex.existingSecretName | string | `nil` | Alternatively, provide connection details via an an existing secret that contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys |
-| searchIndex.host | string | `nil` | The host where service is available |
-| searchIndex.password | string | `nil` | The password required to access the service, if any |
-| searchIndex.port | string | `nil` | The port where service is available |
-| searchIndex.protocol | string | `nil` | Valid values are http or https |
-| searchIndex.user | string | `nil` | The username required to access the service, if any |
+| search.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap holding the URL of the search/indexing service |
+| search.existingConfigMap.name | string | `nil` | Alternatively, provide search/indexing service connection details via an existing configmap |
+| search.existingSecret.keys.password | string | `"SEARCH_PASSWORD"` | Key within the secret that holds the search/indexing password |
+| search.existingSecret.keys.username | string | `"SEARCH_USERNAME"` | Key within the secret that holds the search/indexing username |
+| search.existingSecret.name | string | `nil` | Alternatively, provide search/indexing credentials via an existing secret |
+| search.password | string | `nil` | The password required to access the search/indexing service, if any |
+| search.url | string | `nil` | The URL where the search/indexing service is available |
+| search.user | string | `nil` | The username required to access the search/indexing service, if any |
 | securityContext | object | `{}` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |

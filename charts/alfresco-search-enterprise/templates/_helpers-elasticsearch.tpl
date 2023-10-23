@@ -1,27 +1,38 @@
-{{- define "alfresco-search-enterprise.searchIndexExistingSecretName" -}}
-{{- coalesce .Values.searchIndex.existingSecretName .Values.global.elasticsearch.existingSecretName (printf "%s-elasticsearch-secret" (include "alfresco-search-enterprise.fullname" .)) }}
+{{/*
+
+Usage: include "alfresco-search-enterprise.config.spring.es.env" $
+
+*/}}
+{{- define "alfresco-search-enterprise.config.spring.es.env" -}}
+{{- $esCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "es")) "Chart" .Chart "Release" .Release }}
+{{- with .Values.search }}
+{{- $esCm := coalesce .existingConfigMap.name (include "alfresco-search-enterprise.fullname" $esCtx) }}
+- name: SPRING_ELASTICSEARCH_REST_URIS
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $esCm }}
+      key: {{ .existingConfigMap.keys.url }}
+{{- end }}
 {{- end -}}
 
-{{- define "alfresco-search-enterprise.config.spring" -}}
-{{- if .Values.elasticsearch.enabled -}}
-  SPRING_ELASTICSEARCH_REST_URIS: "{{ .Values.elasticsearch.protocol }}://{{ .Values.elasticsearch.clusterName }}-{{ .Values.elasticsearch.nodeGroup }}:{{ .Values.elasticsearch.httpPort }}"
-{{- else }}
-  {{- if and (not .Values.global.elasticsearch.host) (not .Values.searchIndex.host) }}
-    {{- fail "Please provide external elasticsearch connection details as values under .global.elasticsearch or .searchIndex or enable the embedded elasticsearch via .elasticsearch.enabled" }}
-  {{- end -}}
-  SPRING_ELASTICSEARCH_REST_URIS: "{{ .Values.searchIndex.protocol | default .Values.global.elasticsearch.protocol }}://{{ .Values.searchIndex.host | default .Values.global.elasticsearch.host }}:{{ .Values.searchIndex.port | default .Values.global.elasticsearch.port }}"
-{{- end -}}
-{{- end -}}
+{{/*
 
+Usage: include "alfresco-search-enterprise.config.spring.envCredentials" $
+
+*/}}
 {{- define "alfresco-search-enterprise.config.spring.envCredentials" -}}
+{{- $esCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "es")) "Chart" .Chart "Release" .Release }}
+{{- with .Values.search }}
+{{- $esSecret := coalesce .existingSecret.name (include "alfresco-search-enterprise.fullname" $esCtx) }}
 - name: SPRING_ELASTICSEARCH_REST_USERNAME
   valueFrom:
     secretKeyRef:
-      name: {{ template "alfresco-search-enterprise.searchIndexExistingSecretName" $ }}
-      key: ELASTICSEARCH_USERNAME
+      name: {{ $esSecret }}
+      key: {{ .existingSecret.keys.username }}
 - name: SPRING_ELASTICSEARCH_REST_PASSWORD
   valueFrom:
     secretKeyRef:
-      name: {{ template "alfresco-search-enterprise.searchIndexExistingSecretName" $ }}
-      key: ELASTICSEARCH_PASSWORD
+      name: {{ $esSecret }}
+      key: {{ .existingSecret.keys.password }}
+{{- end }}
 {{- end -}}

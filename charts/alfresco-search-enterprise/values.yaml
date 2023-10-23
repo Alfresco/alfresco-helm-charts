@@ -132,9 +132,9 @@ messageBroker:
   username: null
   # -- Broker password
   password: null
-  # -- Alternatively, provide message broker connection details via an existing
-  # configmap
   existingConfigMap:
+    # -- Alternatively, provide message broker connection details via an existing
+    # configmap
     name: null
     keys:
       # -- Key within the configmap holding the URL of the message broker
@@ -146,43 +146,30 @@ messageBroker:
     keys:
       username: BROKER_USERNAME
       password: BROKER_PASSWORD
-# -- Overrides .Values.global.elasticsearch
-searchIndex:
-  # -- The host where service is available
-  host: null
-  # -- The port where service is available
-  port: null
-  # -- Valid values are http or https
-  protocol: null
-  # -- The username required to access the service, if any
+search:
+  # -- The URL where the search/indexing service is available
+  url: null
+  # -- The username required to access the search/indexing service, if any
   user: null
-  # -- The password required to access the service, if any
+  # -- The password required to access the search/indexing service, if any
   password: null
-  # -- Alternatively, provide connection details via an an existing secret that
-  # contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
-  existingSecretName: null
+  existingConfigMap:
+    # -- Alternatively, provide search/indexing service connection details via
+    # an existing configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the search/indexing service
+      url: SEARCH_URL
+  existingSecret:
+    # -- Alternatively, provide search/indexing credentials via an existing secret
+    name: null
+    keys:
+      # -- Key within the secret that holds the search/indexing username
+      username: SEARCH_USERNAME
+      # -- Key within the secret that holds the search/indexing password
+      password: SEARCH_PASSWORD
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
-  # -- Shared connections details for Elasticsearch/Opensearch cluster
-  elasticsearch:
-    # -- The host where service is available
-    host: null
-    # -- The port where service is available
-    port: null
-    # -- Valid values are http or https
-    protocol: null
-    # -- The username required to access the service, if any
-    user: null
-    # -- The password required to access the service, if any
-    password: null
-    # -- Alternatively, provide connection details via an existing secret that
-    # contains ELASTICSEARCH_USERNAME and ELASTICSEARCH_PASSWORD keys
-    existingSecretName: null
-elasticsearch:
-  # -- Enable embedded elasticsearch - useful when using this chart in standalone
-  enabled: false
-  replicas: 1
-  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
 
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
