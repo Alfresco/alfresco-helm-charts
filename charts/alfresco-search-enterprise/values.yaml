@@ -163,15 +163,15 @@ searchIndex:
     name: null
     keys:
       # -- Key within the configmap holding the URL of the elasticsearch service
-      url: ELASTICSEARCH_URL
+      url: SEARCH_URL
   existingSecret:
     # -- Alternatively, provide elasticsearch credentials via an existing secret
     name: null
     keys:
       # -- Key within the secret that holds the elasticsearch username
-      username: ELASTICSEARCH_USERNAME
+      username: SEARCH_USERNAME
       # -- Key within the secret that holds the elasticsearch password
-      password: ELASTICSEARCH_PASSWORD
+      password: SEARCH_PASSWORD
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
 

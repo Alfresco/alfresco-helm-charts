@@ -11,5 +11,5 @@ data:
   {{- $esProtocol := required $reqMsg .Values.searchIndex.protocol }}
   {{- $esHost := required $reqMsg .Values.searchIndex.host }}
   {{- $esPort := required $reqMsg .Values.searchIndex.port }}
-  ELASTICSEARCH_URL: {{ printf "%s://%s:%v" $esProtocol $esHost $esPort }}
+  SEARCH_URL: {{ printf "%s://%s:%v" $esProtocol $esHost $esPort }}
 {{- end }}

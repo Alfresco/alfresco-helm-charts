@@ -16,7 +16,7 @@ tests:
     template: liveindexing-deployment.yaml
     asserts:
       - equal:
-          path: data.ELASTICSEARCH_URL
+          path: data.SEARCH_URL
           value: http://elasticsearch-master:9200
         template: configmap-elasticsearch.yaml
       - contains:
@@ -34,7 +34,7 @@ tests:
             valueFrom:
               configMapKeyRef:
                 name: RELEASE-NAME-alfresco-search-enterprise-es
-                key: ELASTICSEARCH_URL
+                key: SEARCH_URL
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -42,7 +42,7 @@ tests:
             valueFrom:
               secretKeyRef:
                 name: RELEASE-NAME-alfresco-search-enterprise-es
-                key: ELASTICSEARCH_USERNAME
+                key: SEARCH_USERNAME
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -50,7 +50,7 @@ tests:
             valueFrom:
               secretKeyRef:
                 name: RELEASE-NAME-alfresco-search-enterprise-es
-                key: ELASTICSEARCH_PASSWORD
+                key: SEARCH_PASSWORD
       - contains:
           path: spec.template.spec.containers[0].env
           content:
