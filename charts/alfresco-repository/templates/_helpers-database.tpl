@@ -40,6 +40,6 @@ Usage: include "alfresco-repository.db.cm" (dict "url" "" "driver" "")
 {{- define "alfresco-repository.db.cm" -}}
   DATABASE_URL: {{ hasPrefix "jdbc:" .url | ternary .url (print "jdbc:" .url) }}
   DATABASE_HOST: {{ template "alfresco-common.db.hostname" .url }}
-  DATABASE_PORT: {{ include "alfresco-common.db.port" . | quote }}
+  DATABASE_PORT: {{ include "alfresco-common.db.port" .url | quote }}
   DATABASE_DRIVER: {{ template "alfresco-common.db.driver" . }}
 {{- end -}}
