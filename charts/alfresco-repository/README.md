@@ -1,6 +1,6 @@
 # alfresco-repository
 
-![Version: 0.1.0-alpha.19](https://img.shields.io/badge/Version-0.1.0--alpha.19-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.1.0-A21](https://img.shields.io/badge/AppVersion-23.1.0--A21-informational?style=flat-square)
+![Version: 0.1.0-alpha.20](https://img.shields.io/badge/Version-0.1.0--alpha.20-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.1.0-A21](https://img.shields.io/badge/AppVersion-23.1.0--A21-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -8,7 +8,7 @@ Alfresco content repository Helm chart
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0-alpha.3 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0-alpha.4 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
@@ -20,8 +20,6 @@ Alfresco content repository Helm chart
 | command | list | `[]` |  |
 | configuration.db.driver | string | `nil` | JDBC driver class of the driver if none is provided the it is guessed from the URL provided |
 | configuration.db.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver class to use. The configmap may leverage the alfresco-repository.db.cm named template to auto-generate it from the sole url parameter. |
-| configuration.db.existingConfigMap.keys.host | string | `"DATABASE_HOST"` | configmap key where to find the hostname part of the database URL. The configmap may leverage the alfresco-repository.db.cm named template to auto-generate it from the sole url parameter. |
-| configuration.db.existingConfigMap.keys.port | string | `"DATABASE_PORT"` | configmap key where to find the port part of the database URL. The configmap may leverage the alfresco-repository.db.cm named template to auto-generate it from the sole url parameter. |
 | configuration.db.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database |
 | configuration.db.existingConfigMap.name | string | `nil` |  |
 | configuration.db.existingSecret | object | `{"keys":{"password":"DATABASE_PASSWORD","username":"DATABASE_USERNAME"},"name":null}` | Existing secret and their keys where to find the database username & password. |

@@ -69,8 +69,8 @@ tests:
       - contains:
           path: spec.template.spec.initContainers[0].command
           content: |
-            until nc -w1 $(DATABASE_HOST):$(DATABASE_PORT)
-            do echo "waiting for database on $(DATABASE_HOST):$(DATABASE_PORT)"
+            until nc -w1 myhost1:1111
+            do echo 'waiting for mysql database on myhost1:1111'
               sleep 2
             done
         template: deployment.yaml
@@ -193,3 +193,52 @@ tests:
               configMapKeyRef:
                 name: mycm
                 key: DBURL
+
+
+  - it: should render wait-db-ready initcontainer with PostgreSQL server details
+    values: *test_values
+    set:
+      configuration:
+        db:
+          url: jdbc:postgresql://pghost/alfdb
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers[0].command
+          content: |
+            until nc -w1 pghost:5432
+            do echo 'waiting for postgresql database on pghost:5432'
+              sleep 2
+            done
+        template: deployment.yaml
+
+  - it: should render wait-db-ready initcontainer with Oracle server details
+    values: *test_values
+    set:
+      configuration:
+        db:
+          url: oracle:thin:@tcp://mydbhost:1521/mydbservice
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers[0].command
+          content: |
+            until nc -w1 mydbhost:1521
+            do echo 'waiting for oracle database on mydbhost:1521'
+              sleep 2
+            done
+        template: deployment.yaml
+
+  - it: should render wait-db-ready initcontainer with MQ SQL server details
+    values: *test_values
+    set:
+      configuration:
+        db:
+          url: sqlserver://sqlserverhost;databaseName=alfdb;lockTimeout=1000;
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers[0].command
+          content: |
+            until nc -w1 sqlserverhost:1434
+            do echo 'waiting for sqlserver database on sqlserverhost:1434'
+              sleep 2
+            done
+        template: deployment.yaml
