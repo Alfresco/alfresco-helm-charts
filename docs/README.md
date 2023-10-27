@@ -1,36 +1,66 @@
 # alfresco-helm-charts
 
-⚠️⚠️⚠️ This repo represent an ongoing effort to make the existing [Alfresco Helm Charts](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services) more independent and reusable. Please continue to refer to the parent [acs-deployment](https://github.com/Alfresco/acs-deployment) repository for [docs](https://github.com/Alfresco/acs-deployment/tree/master/docs/helm) and [issues](https://github.com/Alfresco/acs-deployment/issues).
+This repository aims at delivering independent and lightweight
+[Helm](https://helm.sh) charts for Alfresco Content Services platform that can
+be used as building blocks by devops teams to build the Content Services
+platform that match the organization needs.
+
+⚠️ The existing [Alfresco Helm
+Charts](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services)
+remains available and has been updated to leverage charts hosted in this
+repository.
+
+If you want to understand what are the principles to leverage in order to build
+on top of Alfresco components' chart please refer to the
+[getting-started-with-alfresco-charts](./getting-started-with-alfresco-charts.md)
+
+Each individual chart has its own documentation page that's available in the
+chart directory in [charts/](../charts). There are the values available for
+each of them.
 
 ## Development
 
-This repository follows the [helm/charts-repo-actions-demo](https://github.com/helm/charts-repo-actions-demo) template, that support the testing and the release of helm charts with the help of two tools:
+This repository follows the
+[helm/charts-repo-actions-demo](https://github.com/helm/charts-repo-actions-demo)
+template, that support the testing and the release of helm charts with the help
+of two tools:
 
-* https://github.com/helm/chart-testing
-* https://github.com/helm/chart-releaser
+* [Helm chart testing](https://github.com/helm/chart-testing)
+* [Helm chart releaser](https://github.com/helm/chart-releaser)
 
-In order to install all the tools required for development on MacOS via [Homebrew](https://brew.sh), run: `brew bundle install`
+In order to install all the tools required for development on MacOS via
+[Homebrew](https://brew.sh), run: `brew bundle install`
 
-To setup [pre-commit](https://github.com/pre-commit/pre-commit), run: `pre-commit install`
+To setup [pre-commit](https://github.com/pre-commit/pre-commit), run:
+
+```shell
+pre-commit install
+```
 
 To install required helm plugins:
 
 ```shell
 helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.1.12
-helm plugin install https://github.com/vbehar/helm3-unittest --version v1.0.16
+helm plugin install https://github.com/helm-unittest/helm-unittest --version v0.3.4
 ```
 
 ### PR workflow
 
-Each time a PR is raised, `ct` automatically detect which charts has been changed and run for them:
+Each time a PR is raised, `ct` automatically detects which charts has been
+changed and run for them:
 
 * linter
 * unittest
 * integration tests on KinD
 
-Once a PR that contains a chart version bump is merged, the main workflow will release each version that has not yet released. Each chart release will trigger the creation of git tag, a GitHub release with packages attached and the update of the charts registry index.
+Once a PR that contains a chart version bump is merged, the main workflow will
+release each version that has not yet released. Each chart release will trigger
+the creation of git tag, a GitHub release with packages attached and the update
+of the charts registry index.
 
 ### Update dependencies
 
-There is an initial support for bumping charts dependencies with updatecli via a manually triggered [GHA workflow](https://github.com/Alfresco/alfresco-helm-charts/actions/workflows/updatecli.yaml).
-
+There is an initial support for bumping charts dependencies with
+[Updatecli](https://www.updatecli.io/) via a manually triggered
+[GHA
+workflow](https://github.com/Alfresco/alfresco-helm-charts/actions/workflows/updatecli.yaml).
