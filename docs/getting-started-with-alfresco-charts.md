@@ -7,12 +7,10 @@ Alfresco charts depend on a common library chart called
 [named templates](https://helm.sh/docs/chart_template_guide/named_templates)
 one can use in order to build his own content platform chart.
 
-Named templates are similar to functions in a programing language expect they
-can only return strings and always take a single argument (which can be an
-object).
-For example the [URL helper](../charts/alfresco-comon/templates/_helper-url.tpl)
-file provides functions to extract vairous elements from a given URL.
-For example:
+Named templates are reusable functions that can only return strings and always
+take a single argument, which eventually can be an object. For example the [URL
+helper](../charts/alfresco-comon/templates/_helper-url.tpl) file provides
+functions to extract various elements from a given URL. For example:
 
 * `{{ template "alfresco-common.url.scheme" "https://hub.alfresco.com/" }}`
   will return "https"
@@ -87,11 +85,11 @@ dependencies:
     alias: repo
 ```
 
-> In the example above we use `repo` as an alis so any value in our chart that
-lives under the `$.repo` YAML path will actually be passed to the
-`alfresco-repository` chart. In other words, values documented for the
-`alfresco-repository` chart such as `replicaCount` will be used from your chart
-as `repo.replicaCount`.
+> In the example above we use `repo` as an alias so any value in our chart that
+> lives under the `$.repo` YAML path will actually be passed to the
+> `alfresco-repository` chart. In other words, values documented for the
+> `alfresco-repository` chart such as `replicaCount` will be used from your
+> chart as `repo.replicaCount`.
 
 #### Configuring the chart
 
