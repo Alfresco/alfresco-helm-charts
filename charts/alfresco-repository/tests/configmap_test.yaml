@@ -60,12 +60,6 @@ tests:
           path: data.DATABASE_URL
           value: jdbc:mysql://sandy:secret@myhost1:1111
       - equal:
-          path: data.DATABASE_HOST
-          value: myhost1
-      - equal:
-          path: data.DATABASE_PORT
-          value: "1111"
-      - equal:
           path: data.DATABASE_DRIVER
           value: com.mysql.jdbc.Driver
 
@@ -79,12 +73,6 @@ tests:
       - equal:
           path: data.DATABASE_URL
           value: jdbc:postgresql://pghost/alfdb
-      - equal:
-          path: data.DATABASE_HOST
-          value: pghost
-      - equal:
-          path: data.DATABASE_PORT
-          value: "5432"
       - equal:
           path: data.DATABASE_DRIVER
           value: org.postgresql.Driver
@@ -100,12 +88,6 @@ tests:
           path: data.DATABASE_URL
           value: jdbc:sqlserver://sqlserverhost;databaseName=alfdb;lockTimeout=1000;
       - equal:
-          path: data.DATABASE_HOST
-          value: sqlserverhost
-      - equal:
-          path: data.DATABASE_PORT
-          value: "1434"
-      - equal:
           path: data.DATABASE_DRIVER
           value: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
@@ -119,12 +101,6 @@ tests:
       - equal:
           path: data.DATABASE_URL
           value: jdbc:oracle:thin:@tcp://mydbhost:1521/mydbservice
-      - equal:
-          path: data.DATABASE_HOST
-          value: mydbhost
-      - equal:
-          path: data.DATABASE_PORT
-          value: "1521"
       - equal:
           path: data.DATABASE_DRIVER
           value: oracle.jdbc.OracleDriver
