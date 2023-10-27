@@ -21,15 +21,15 @@ spec:
         {{- include "alfresco-repository.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "alfresco-repository.serviceAccountName" . }}
-      {{- include "component-pod-security-context" .Values | indent 4 }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       nodeSelector:
         {{- toYaml .Values.nodeSelector | nindent 8 }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       initContainers:
         - name: wait-db-ready
           image: busybox:1.35
           imagePullPolicy: IfNotPresent
-          {{- include "component-security-context" dict | indent 8 }}
+          {{- include "alfresco-common.component-security-context" dict | indent 8 }}
           resources:
             limits:
               cpu: "0.25"
@@ -49,7 +49,7 @@ spec:
               {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          {{- include "component-security-context" .Values | indent 8 }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- $dbsecretCtx := dict }}
@@ -192,7 +192,7 @@ spec:
           {{ tpl (toYaml (list .)) $ | nindent 8 }}
         {{- end }}
       volumes:
-        {{- include "data_volume" .Values | nindent 8 }}
+        {{- include "alfresco-common.data_volume" .Values | nindent 8 }}
         {{- if .Values.configuration.repository.existingConfigMap }}
         - name: global-properties
           configMap:
