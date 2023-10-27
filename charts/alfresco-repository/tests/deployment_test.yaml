@@ -69,8 +69,8 @@ tests:
       - contains:
           path: spec.template.spec.initContainers[0].command
           content: |
-            until nc -w1 $(DATABASE_HOST):$(DATABASE_PORT)
-            do echo "waiting for database on $(DATABASE_HOST):$(DATABASE_PORT)"
+            until nc -w1 myhost1:1111
+            do echo 'waiting for mysql database on myhost1:1111'
               sleep 2
             done
         template: deployment.yaml

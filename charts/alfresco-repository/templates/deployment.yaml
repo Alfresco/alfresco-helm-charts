@@ -40,10 +40,13 @@ spec:
             - sh
             - -c
             - |
-              until nc -w1 $(DATABASE_HOST):$(DATABASE_PORT)
-              do echo "waiting for database on $(DATABASE_HOST):$(DATABASE_PORT)"
+              {{- with .Values.configuration.db }}
+              {{- $dbsocket := printf "%s:%s" (include "alfresco-common.db.hostname" .url) (include "alfresco-common.db.port" .url) }}
+              until nc -w1 {{ $dbsocket }}
+              do echo 'waiting for {{ template "alfresco-common.db.rdbms" .url }} database on {{ $dbsocket }}'
                 sleep 2
               done
+              {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           {{- include "component-security-context" .Values | indent 8 }}
