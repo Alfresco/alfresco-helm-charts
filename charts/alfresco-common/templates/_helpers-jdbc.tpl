@@ -102,15 +102,15 @@ Usage: include "alfresco-common.db.hostname" "URL"
 {{/*
 Provide database port from JDBC URL
 
-Usage: include "alfresco-common.db.port" (dict "url" "someurl")
+Usage: include "alfresco-common.db.port" "URL"
 
 */}}
 {{- define "alfresco-common.db.port" -}}
-{{- $socket := (index (include "alfresco-common.jdbc.parser" .url | fromJson) "jdbc" "host") }}
+{{- $socket := (index (include "alfresco-common.jdbc.parser" . | fromJson) "jdbc" "host") }}
 {{- if gt ($socket | splitList ":" | len) 1 }}
   {{- $socket | splitList ":" | last }}
 {{- else }}
-  {{- template "alfresco-common.db.default.port" (index (include "alfresco-common.jdbc.parser" .url | fromJson) "jdbc" "scheme") }}
+  {{- template "alfresco-common.db.default.port" (index (include "alfresco-common.jdbc.parser" . | fromJson) "jdbc" "scheme") }}
 {{- end }}
 {{- end -}}
 
