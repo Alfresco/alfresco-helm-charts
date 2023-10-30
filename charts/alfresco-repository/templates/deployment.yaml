@@ -42,7 +42,7 @@ spec:
             - |
               NCTARGET=$(echo DATABASE_URL | awk -F ';|/' '{print $3}')
               if [[ "$NCTARGET" == *":"* ]]; then
-                until nc -vw1 $
+                until nc -vw1 $NCTARGET; do
                   sleep 2
                 done
               else echo "No port in jdbc URL $DATABASE_URL. Can't guess it so skipping db status check"
