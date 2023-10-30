@@ -47,6 +47,9 @@ spec:
                 done
               else echo "No port in jdbc URL $DATABASE_URL. Can't guess it so skipping db status check"
               fi
+        {{- range .Values.extraInitContainers }}
+        {{- list . | toYaml | nindent 8 }}
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
