@@ -60,21 +60,6 @@ tests:
               memory: "8Gi"
         template: deployment.yaml
 
-  - it: should have wait-db-ready initcontainer
-    asserts:
-      - equal:
-          path: spec.template.spec.initContainers[0].name
-          value: wait-db-ready
-        template: deployment.yaml
-      - contains:
-          path: spec.template.spec.initContainers[0].command
-          content: |
-            until nc -w1 myhost1:1111
-            do echo 'waiting for mysql database on myhost1:1111'
-              sleep 2
-            done
-        template: deployment.yaml
-
   - it: should have custom extra volumes when defined
     set:
       extraVolumes:
@@ -137,6 +122,7 @@ tests:
             mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap-ad/myAzureAD
             readOnly: true
         template: deployment.yaml
+
   - it: should not have any license volume but vars instead
     set:
       configuration:
@@ -175,7 +161,7 @@ tests:
                 name: RELEASE-NAME-alfresco-database
                 key: DATABASE_URL
 
-  - it: should render configured DATABASE URL
+  - it: should render deployment using provided database cm
     set:
       configuration:
         db:
@@ -193,52 +179,30 @@ tests:
               configMapKeyRef:
                 name: mycm
                 key: DBURL
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_DRIVER
+            valueFrom:
+              configMapKeyRef:
+                name: mycm
+                key: DBDRIVER
 
-
-  - it: should render wait-db-ready initcontainer with PostgreSQL server details
+  - it: should deploy with extra containers
     values: *test_values
     set:
-      configuration:
-        db:
-          url: jdbc:postgresql://pghost/alfdb
+      extraInitContainers:
+        - name: init1
+          image: init:latest
+      extraSideContainers:
+        - name: sidecar1
+          image: sidecar:latest
     asserts:
-      - contains:
-          path: spec.template.spec.initContainers[0].command
-          content: |
-            until nc -w1 pghost:5432
-            do echo 'waiting for postgresql database on pghost:5432'
-              sleep 2
-            done
+      - lengthEqual:
+          path: spec.template.spec.initContainers
+          count: 2
         template: deployment.yaml
-
-  - it: should render wait-db-ready initcontainer with Oracle server details
-    values: *test_values
-    set:
-      configuration:
-        db:
-          url: oracle:thin:@tcp://mydbhost:1521/mydbservice
-    asserts:
-      - contains:
-          path: spec.template.spec.initContainers[0].command
-          content: |
-            until nc -w1 mydbhost:1521
-            do echo 'waiting for oracle database on mydbhost:1521'
-              sleep 2
-            done
-        template: deployment.yaml
-
-  - it: should render wait-db-ready initcontainer with MQ SQL server details
-    values: *test_values
-    set:
-      configuration:
-        db:
-          url: sqlserver://sqlserverhost;databaseName=alfdb;lockTimeout=1000;
-    asserts:
-      - contains:
-          path: spec.template.spec.initContainers[0].command
-          content: |
-            until nc -w1 sqlserverhost:1434
-            do echo 'waiting for sqlserver database on sqlserverhost:1434'
-              sleep 2
-            done
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 2
         template: deployment.yaml
