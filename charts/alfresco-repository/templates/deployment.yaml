@@ -40,13 +40,16 @@ spec:
             - sh
             - -c
             - |
-              {{- with .Values.configuration.db }}
-              {{- $dbsocket := printf "%s:%s" (include "alfresco-common.db.hostname" .url) (include "alfresco-common.db.port" .url) }}
-              until nc -w1 {{ $dbsocket }}
-              do echo 'waiting for {{ template "alfresco-common.db.rdbms" .url }} database on {{ $dbsocket }}'
-                sleep 2
-              done
-              {{- end }}
+              NCTARGET=$(echo DATABASE_URL | awk -F ';|/' '{print $3}')
+              if [[ "$NCTARGET" == *":"* ]]; then
+                until nc -vw1 $NCTARGET; do
+                  sleep 2
+                done
+              else echo "No port in jdbc URL $DATABASE_URL. Can't guess it so skipping db status check"
+              fi
+        {{- range .Values.extraInitContainers }}
+        {{- list . | toYaml | nindent 8 }}
+        {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
