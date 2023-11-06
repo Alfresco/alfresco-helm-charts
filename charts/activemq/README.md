@@ -25,7 +25,7 @@ A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate A
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` | Authenticate to image registry before pulling by providing an existing secret of type kubernetes.io/dockerconfigjson |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"alfresco/alfresco-activemq"` |  |
-| image.tag | string | `"5.17.5-jre17-rockylinux8"` |  |
+| image.tag | string | `"5.18.3-jre17-rockylinux8"` |  |
 | livenessProbe.failureThreshold | int | `6` |  |
 | livenessProbe.initialDelaySeconds | int | `60` |  |
 | livenessProbe.periodSeconds | int | `10` |  |
