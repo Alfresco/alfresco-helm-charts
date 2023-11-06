@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: quay.io/alfresco/alfresco-content-repository
   pullPolicy: IfNotPresent
-  tag: 23.1.0-A21
+  tag: 23.1.0
   port: 8080
 
 strategy:

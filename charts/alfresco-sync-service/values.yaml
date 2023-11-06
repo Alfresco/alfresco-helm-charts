@@ -7,10 +7,10 @@ global:
   messageBroker:
     # -- A failover URI formatted string, see:
     # https://activemq.apache.org/failover-transport-reference
-    url:
-    # -- Username to authenticate as.
-    user:
-    # -- Credential to use to authenticate to the broker.
+    url: null
+    # -- Username to authenticate as
+    user: null
+    # -- Credential to use to authenticate to the broker
     password: null
   alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
@@ -24,7 +24,7 @@ podSecurityContext:
   fsGroup: 1000
 image:
   repository: quay.io/alfresco/service-sync
-  tag: 3.11.0
+  tag: 4.0.0
   pullPolicy: IfNotPresent
   internalPort: 9090
 environment:
@@ -82,9 +82,9 @@ messageBroker:
   # -- A name that will be used as a base to get broker connection details
   nameOverride: activemq
   # -- Username to authenticate as.
-  user:
+  user: null
   # -- Credential to use to authenticate to the broker.
-  password:
+  password: null
   # -- An existing k8s secret with broker details (preferred over using values)
   existingSecretName: null
 # -- Defines properties required by sync service for connecting to the database

@@ -1,6 +1,6 @@
 # alfresco-sync-service
 
-![Version: 4.4.0](https://img.shields.io/badge/Version-4.4.0-informational?style=flat-square) ![AppVersion: 3.11.0](https://img.shields.io/badge/AppVersion-3.11.0-informational?style=flat-square)
+![Version: 4.5.0](https://img.shields.io/badge/Version-4.5.0-informational?style=flat-square) ![AppVersion: 4.0.0](https://img.shields.io/badge/AppVersion-4.0.0-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -33,13 +33,13 @@ Alfresco Sync Service
 | environment.EXTRA_JAVA_OPTS | string | `""` |  |
 | environment.JAVA_OPTS | string | `"-Dsync.metrics.reporter.graphite.enabled=false -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","messageBroker":{"password":null,"url":null,"user":null},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
-| global.messageBroker.password | string | `nil` | Credential to use to authenticate to the broker. |
+| global.messageBroker.password | string | `nil` | Credential to use to authenticate to the broker |
 | global.messageBroker.url | string | `nil` | A failover URI formatted string, see: https://activemq.apache.org/failover-transport-reference |
-| global.messageBroker.user | string | `nil` | Username to authenticate as. |
+| global.messageBroker.user | string | `nil` | Username to authenticate as |
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/service-sync"` |  |
-| image.tag | string | `"3.11.0"` |  |
+| image.tag | string | `"4.0.0"` |  |
 | ingress.extraAnnotations | object | `{}` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes nginx.ingress.kubernetes.io/ssl-redirect: "false" |
 | ingress.path | string | `"/syncservice"` |  |
 | ingress.tls | list | `[]` |  |
