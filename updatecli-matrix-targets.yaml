@@ -95,7 +95,7 @@ matrix:
       helm_target: charts/alfresco-share/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
-    repository:
+    acs:
       version:
       pattern:
       image:
