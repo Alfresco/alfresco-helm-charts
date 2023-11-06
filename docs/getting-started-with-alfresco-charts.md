@@ -52,13 +52,14 @@ or simply wrap the component charts into an "umbrella chart".
 Here we'll focus on the later option but the same configuration principles
 apply to other methods.
 
-In the example below we'll go through the process of creating a custom chart in
-order to deploy a simple content platform made of:
+In the example below we'll go through the process of integrating an ACS content
+platform made of:
 
 * Alfresco content repository
 * A database that hosted outside of the kubernetes cluster
-* Alfresco Enterprise search service
-* An elasticsearch cluster hosted as a kubernetes workload
+
+> Below example also present using an "unmbrella" Helm chart but most of the
+> same approach is applicable to other deployment method as explained above.
 
 #### Declaring chart as dependency
 
@@ -140,6 +141,7 @@ metadata:
   namespace: myecm
 data:
   MY_ECM_DB_URL: jdbc:postgresql://db.ecm.infra.local/alfresco
+  MY_ECM_DB_DRIVER: org.postgresql.Driver
 ```
 
 ```yaml
@@ -157,6 +159,11 @@ data:
   MY_ECM_DB_PASS: dGlnZXI=
 ```
 
+> For example, if you're creating this confgimap using a wrapping Helm chart,
+> you can reuse a templating function provided by the
+> [alfresco-repository](../charts/alfresco-repository/templates/_helpers-database.tpl)
+> chart `alfresco-repository.db.cm`
+
 Now we need to let the `alfresco-repository` chart where to find this:
 
 ```yaml
@@ -167,9 +174,15 @@ repo:
         name: ecm-database-location
       keys:
         url: MY_ECM_DB_URL
+        driver: MY_ECM_DB_DRIVER
       existingSecret:
         name: ecm-database-credentials
       keys:
         username: MY_ECM_DB_USER
         password: MY_ECM_DB_PASS
 ```
+
+> If you used the templating function mentionned above and provided by the
+> subchart the keys would be different than the ondes mentionned in the example
+> above. Actually the function  would render teh default keys so it's not needed
+> to set them.
