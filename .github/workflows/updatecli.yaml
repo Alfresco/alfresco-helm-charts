@@ -11,7 +11,7 @@ on:
         - values
 
 env:
-  UPDATE_CLI_VERSION: v0.57.0
+  UPDATE_CLI_VERSION: v0.65.1
 
 jobs:
   bump-charts-dependencies:
