@@ -4,6 +4,8 @@ name: "Helm autodiscovery using git scm"
 autodiscovery:
   crawlers:
     helm:
+      # we have an alternate pipeline for image tags bumping
+      ignorecontainer: true
       ignore:
         #  Search Service do not follow the usual image.repo & image.tag path
         - path: charts/alfresco-search-service/*
