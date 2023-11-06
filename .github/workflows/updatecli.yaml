@@ -9,6 +9,10 @@ on:
         options:
         - charts
         - values
+      alfresco-updatecli-ref:
+        description: "The version to use for alfresco/alfresco-updatecli configs (used only when `values` is selected)"
+        type: string
+        default: master
 
 env:
   UPDATE_CLI_VERSION: v0.65.1
@@ -88,7 +92,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: alfresco/alfresco-updatecli
-          ref: master
+          ref: ${{ inputs.alfresco-updatecli-ref || 'master' }}
           path: alfresco-updatecli
 
       - name: Preprocess values file appending existing keys only
