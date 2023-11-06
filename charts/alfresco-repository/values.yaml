@@ -60,14 +60,6 @@ configuration:
       keys:
         # -- configmap key where to find the URL of the database
         url: DATABASE_URL
-        # -- configmap key where to find the hostname part of the database URL.
-        # The configmap may leverage the alfresco-repository.db.cm named
-        # template to auto-generate it from the sole url parameter.
-        host: DATABASE_HOST
-        # -- configmap key where to find the port part of the database URL.
-        # The configmap may leverage the alfresco-repository.db.cm named
-        # template to auto-generate it from the sole url parameter.
-        port: DATABASE_PORT
         # -- configmap key where to find the JDBC driver class to use.
         # The configmap may leverage the alfresco-repository.db.cm named
         # template to auto-generate it from the sole url parameter.

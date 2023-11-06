@@ -16,7 +16,7 @@ data:
     -Ddb.url="$DATABASE_URL"
     -Ddb.username=${DATABASE_USERNAME}
     -Ddb.password=${DATABASE_PASSWORD}
-    -Ddb.driver="$DATABASE_DRIVER"
+    -Ddb.driver="${DATABASE_DRIVER}"
     -Dmessaging.broker.url="$BROKER_URL"
     -Dmessaging.broker.username="$BROKER_USERNAME"
     -Dmessaging.broker.password="$BROKER_PASSWORD"

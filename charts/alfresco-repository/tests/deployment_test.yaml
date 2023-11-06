@@ -60,21 +60,6 @@ tests:
               memory: "8Gi"
         template: deployment.yaml
 
-  - it: should have wait-db-ready initcontainer
-    asserts:
-      - equal:
-          path: spec.template.spec.initContainers[0].name
-          value: wait-db-ready
-        template: deployment.yaml
-      - contains:
-          path: spec.template.spec.initContainers[0].command
-          content: |
-            until nc -w1 $(DATABASE_HOST):$(DATABASE_PORT)
-            do echo "waiting for database on $(DATABASE_HOST):$(DATABASE_PORT)"
-              sleep 2
-            done
-        template: deployment.yaml
-
   - it: should have custom extra volumes when defined
     set:
       extraVolumes:
@@ -137,6 +122,7 @@ tests:
             mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap-ad/myAzureAD
             readOnly: true
         template: deployment.yaml
+
   - it: should not have any license volume but vars instead
     set:
       configuration:
@@ -175,7 +161,7 @@ tests:
                 name: RELEASE-NAME-alfresco-database
                 key: DATABASE_URL
 
-  - it: should render configured DATABASE URL
+  - it: should render deployment using provided database cm
     set:
       configuration:
         db:
@@ -193,3 +179,30 @@ tests:
               configMapKeyRef:
                 name: mycm
                 key: DBURL
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_DRIVER
+            valueFrom:
+              configMapKeyRef:
+                name: mycm
+                key: DBDRIVER
+
+  - it: should deploy with extra containers
+    values: *test_values
+    set:
+      extraInitContainers:
+        - name: init1
+          image: init:latest
+      extraSideContainers:
+        - name: sidecar1
+          image: sidecar:latest
+    asserts:
+      - lengthEqual:
+          path: spec.template.spec.initContainers
+          count: 2
+        template: deployment.yaml
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 2
+        template: deployment.yaml
