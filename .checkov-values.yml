@@ -12,13 +12,21 @@ configuration:
 global:
   tracking:
     sharedsecret: dummy
+repository:
+  sharedSecret: dummy
 
 # alfresco-search-enterprise
 elasticsearch:
   enabled: true
+messageBroker:
+  url: amqp://something
 reindexing:
   db:
-    url: something
+    url: jdbc://something
+  repository:
+    url: http://something
+search:
+  url: es://something
 ats:
   transform_url: http://transform
   sfs_url: http://sfs
