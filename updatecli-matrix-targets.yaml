@@ -2,8 +2,8 @@
 # This file is meant to be used with updatecli uber-manifest pipeline
 # https://github.com/Alfresco/alfresco-updatecli/tree/master/deployments
 matrix:
-  7.4.N:
-    id: 74n
+  23.N:
+    id:
     search:
       version:
       pattern:
@@ -95,7 +95,7 @@ matrix:
       helm_target: charts/alfresco-share/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
-    repository:
+    acs:
       version:
       pattern:
       image:
