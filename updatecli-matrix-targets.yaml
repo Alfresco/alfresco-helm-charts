@@ -2,8 +2,8 @@
 # This file is meant to be used with updatecli uber-manifest pipeline
 # https://github.com/Alfresco/alfresco-updatecli/tree/master/deployments
 matrix:
-  23.1.N:
-    id: 231n
+  23.N:
+    id:
     search:
       version:
       pattern:
