@@ -9,7 +9,7 @@ matrix:
       pattern:
       image:
       helm_target: >-
-        charts/alfresco-search-services/values.yaml
+        charts/alfresco-search-service/values.yaml
       helm_keys:
         search: $.searchServicesImage.tag
         insight: $.insightEngineImage.tag
