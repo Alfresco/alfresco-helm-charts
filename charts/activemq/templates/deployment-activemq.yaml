@@ -21,13 +21,13 @@ spec:
       labels:
         {{- include "activemq.selectorLabels" . | nindent 8 }}
     spec:
-    {{- include "component-pod-security-context" .Values | indent 4 }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+    {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       containers:
       - name: {{ .Values.service.name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        {{- include "component-security-context" .Values | indent 6 }}
+        {{- include "alfresco-common.component-security-context" .Values | indent 6 }}
         env:
         - name: ACTIVEMQ_CONFIG_MINMEMORY
           value: "{{ .Values.resources.requests.memory | replace "Mi" "" }}"
@@ -75,7 +75,7 @@ spec:
             mountPath: {{ .Values.persistence.data.mountPath }}
             subPath: {{ .Values.persistence.data.subPath }}
       volumes:
-        {{- include "data_volume" .Values | nindent 8 }}
+        {{- include "alfresco-common.data_volume" .Values | nindent 8 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
