@@ -15,8 +15,8 @@ keywords:
 name: alfresco-search-service
 sources:
   - https://github.com/Alfresco/alfresco-helm-charts
-version: 2.0.0-alpha.2
-appVersion: 2.0.8
+version: 2.0.0
+appVersion: 2.0.8.2
 dependencies:
   - name: alfresco-insight-zeppelin
     version: 2.2.0
