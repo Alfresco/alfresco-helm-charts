@@ -64,3 +64,22 @@ There is an initial support for bumping charts dependencies with
 [Updatecli](https://www.updatecli.io/) via a manually triggered
 [GHA
 workflow](https://github.com/Alfresco/alfresco-helm-charts/actions/workflows/updatecli.yaml).
+
+## Release
+
+* Ensure alfresco-common [version](../charts/alfresco-common/Chart.yaml) is not a
+  pre-release, otherwise release it.
+* Ensure
+  [supported-matrix](https://github.com/Alfresco/alfresco-updatecli/blob/master/deployments/values/supported-matrix.yaml)
+  has been manually updated for the latest acs version released and the
+  compatibility matrix is up to date.
+* Trigger the creation of an update branch by executing [Bump
+  version](../.github/workflows/updatecli.yaml) with `values` option. Optionally
+  you can test not yet merged changes from alfresco-updatecli by specifying a
+  branch other than master.
+* Check that `updatecli-bump-acs` branch has been created. Review changes made
+  by updatecli according to the supported matrix, eventually revert manually
+  unwanted changes and push again.
+* Ensure that all the charts are getting a GA release (non-alpha) at this point.
+* Once the PR has been merged and all charts released, you can head to
+  [acs-deployment](https://github.com/Alfresco/acs-deployment) to update the ACS umbrella chart.
