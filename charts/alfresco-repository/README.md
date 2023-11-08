@@ -1,6 +1,6 @@
 # alfresco-repository
 
-![Version: 0.1.0-alpha.21](https://img.shields.io/badge/Version-0.1.0--alpha.21-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.1.0-A21](https://img.shields.io/badge/AppVersion-23.1.0--A21-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.1.0](https://img.shields.io/badge/AppVersion-23.1.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -8,7 +8,7 @@ Alfresco content repository Helm chart
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0-alpha.4 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
@@ -77,7 +77,7 @@ Alfresco content repository Helm chart
 | image.port | int | `8080` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
-| image.tag | string | `"23.1.0-A21"` |  |
+| image.tag | string | `"23.1.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/affinity":"cookie","nginx.ingress.kubernetes.io/proxy-body-size":"5g","nginx.ingress.kubernetes.io/session-cookie-hash":"sha1","nginx.ingress.kubernetes.io/session-cookie-name":"alfrescoRepo"}` | provide annotations for nginx ingress (no toher ingress is supported at that point) |
 | ingress.enabled | bool | `true` | Toggle ingress |

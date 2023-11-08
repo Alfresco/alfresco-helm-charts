@@ -20,14 +20,14 @@ podSecurityContext:
   fsGroup: 33007
 searchServicesImage:
   repository: quay.io/alfresco/search-services
-  tag: 2.0.8
+  tag: 2.0.8.2
   pullPolicy: &searchDockerImagePullPolicy IfNotPresent
   # -- container's port search service is listening on
   # change if your custom image use a different port.
   internalPort: null
 insightEngineImage:
   repository: quay.io/alfresco/insight-engine
-  tag: 2.0.8
+  tag: 2.0.8.2
   pullPolicy: *searchDockerImagePullPolicy
   # -- container's port search service is listening on
   # change if your custom image use a different port.
@@ -49,10 +49,10 @@ ingress:
   # You can create your own with htpasswd utilility & encode it with base640.
   # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'`
   # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
-  basicAuth:
+  basicAuth: null
   # -- An existing secret that contains an `auth` key with a value in the same
   # format of `ingress.basicAuth`
-  existingSecretName:
+  existingSecretName: null
   # -- nginx ingress annotations (see
   # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations)
   annotations:
@@ -128,6 +128,5 @@ initContainer:
       memory: "5Mi"
     limits:
       memory: "10Mi"
-
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret

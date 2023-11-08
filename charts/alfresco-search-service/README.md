@@ -1,6 +1,6 @@
 # alfresco-search-service
 
-![Version: 2.0.0-alpha.2](https://img.shields.io/badge/Version-2.0.0--alpha.2-informational?style=flat-square) ![AppVersion: 2.0.8](https://img.shields.io/badge/AppVersion-2.0.8-informational?style=flat-square)
+![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![AppVersion: 2.0.8.2](https://img.shields.io/badge/AppVersion-2.0.8.2-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
@@ -40,7 +40,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | insightEngineImage.internalPort | string | `nil` | container's port search service is listening on change if your custom image use a different port. |
 | insightEngineImage.pullPolicy | string | `"IfNotPresent"` |  |
 | insightEngineImage.repository | string | `"quay.io/alfresco/insight-engine"` |  |
-| insightEngineImage.tag | string | `"2.0.8"` |  |
+| insightEngineImage.tag | string | `"2.0.8.2"` |  |
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
@@ -71,7 +71,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | searchServicesImage.internalPort | string | `nil` | container's port search service is listening on change if your custom image use a different port. |
 | searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
 | searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
-| searchServicesImage.tag | string | `"2.0.8"` |  |
+| searchServicesImage.tag | string | `"2.0.8.2"` |  |
 | service.name | string | `"solr"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | type | string | `"search-services"` | set alfresco-insight-zeppelin.enabled=true As the Docker Image for Insight Engine is not publicly available the alfrescoRegistryPullSecrets has to be set More information can be found on https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/registry-authentication.md |

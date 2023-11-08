@@ -1,6 +1,6 @@
 # alfresco-transform-service
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.0](https://img.shields.io/badge/AppVersion-4.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Transform Services
 
@@ -30,7 +30,7 @@ A Helm chart for deploying Alfresco Transform Services
 | filestore.image.internalPort | int | `8099` |  |
 | filestore.image.pullPolicy | string | `"IfNotPresent"` |  |
 | filestore.image.repository | string | `"quay.io/alfresco/alfresco-shared-file-store"` |  |
-| filestore.image.tag | string | `"3.0.0"` |  |
+| filestore.image.tag | string | `"4.0.0"` |  |
 | filestore.initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | filestore.initContainer.image.repository | string | `"busybox"` |  |
 | filestore.initContainer.image.tag | string | `"1.35.0"` |  |
@@ -220,7 +220,7 @@ A Helm chart for deploying Alfresco Transform Services
 | transformrouter.image.internalPort | int | `8095` |  |
 | transformrouter.image.pullPolicy | string | `"IfNotPresent"` |  |
 | transformrouter.image.repository | string | `"quay.io/alfresco/alfresco-transform-router"` |  |
-| transformrouter.image.tag | string | `"3.0.0"` |  |
+| transformrouter.image.tag | string | `"4.0.0"` |  |
 | transformrouter.livenessProbe.initialDelaySeconds | int | `20` |  |
 | transformrouter.livenessProbe.path | string | `"/actuator/health"` |  |
 | transformrouter.livenessProbe.periodSeconds | int | `30` |  |

@@ -1,6 +1,6 @@
 # alfresco-search-enterprise
 
-![Version: 3.0.0-alpha.6](https://img.shields.io/badge/Version-3.0.0--alpha.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square)
+![Version: 3.0.0](https://img.shields.io/badge/Version-3.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.0](https://img.shields.io/badge/AppVersion-4.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -32,18 +32,18 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | indexName | string | `"alfresco"` | Name of the existing search index, usually created by repo |
 | liveIndexing.content.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.content.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-content"` |  |
-| liveIndexing.content.image.tag | string | `"3.3.1"` |  |
+| liveIndexing.content.image.tag | string | `"4.0.0"` |  |
 | liveIndexing.content.replicaCount | int | `1` |  |
 | liveIndexing.mediation.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.mediation.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-mediation"` |  |
-| liveIndexing.mediation.image.tag | string | `"3.3.1"` |  |
+| liveIndexing.mediation.image.tag | string | `"4.0.0"` |  |
 | liveIndexing.metadata.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.metadata.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-metadata"` |  |
-| liveIndexing.metadata.image.tag | string | `"3.3.1"` |  |
+| liveIndexing.metadata.image.tag | string | `"4.0.0"` |  |
 | liveIndexing.metadata.replicaCount | int | `1` |  |
 | liveIndexing.path.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.path.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-path"` |  |
-| liveIndexing.path.image.tag | string | `"3.3.1"` |  |
+| liveIndexing.path.image.tag | string | `"4.0.0"` |  |
 | liveIndexing.path.replicaCount | int | `1` |  |
 | messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap holding the URL of the message broker |
 | messageBroker.existingConfigMap.name | string | `nil` | Alternatively, provide message broker connection details via an existing configmap |
@@ -67,7 +67,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | reindexing.enabled | bool | `true` | Create the one-shot job to trigger the reindexing of repo contents |
 | reindexing.image.pullPolicy | string | `"IfNotPresent"` |  |
 | reindexing.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-reindexing"` |  |
-| reindexing.image.tag | string | `"3.3.1"` |  |
+| reindexing.image.tag | string | `"4.0.0"` |  |
 | reindexing.initcontainers.waitForRepository.resources.limits.cpu | string | `"0.25"` |  |
 | reindexing.initcontainers.waitForRepository.resources.limits.memory | string | `"10Mi"` |  |
 | reindexing.pathIndexingEnabled | bool | `true` |  |
