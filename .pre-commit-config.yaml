@@ -18,8 +18,8 @@ repos:
         files: charts/.*\.yaml$
         verbose: true
         args:
-        - --quiet
-        - --compact
+          - --quiet
+          - --compact
   - repo: https://github.com/jtyr/kubeconform-helm
     rev: v0.1.15
     hooks:
@@ -40,3 +40,9 @@ repos:
         args:
           - --exclude-charts=alfresco-common,alfresco-sync-service
           - --values-dir=ci
+  - repo: local
+    hooks:
+      - id: custom-check-chart-versions
+        name: Check Chart dependencies
+        entry: ./scripts/charts.sh
+        language: script
