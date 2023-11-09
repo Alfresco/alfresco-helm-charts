@@ -1,6 +1,6 @@
 # alfresco-transform-service
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.0](https://img.shields.io/badge/AppVersion-4.0.0-informational?style=flat-square)
+![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.0](https://img.shields.io/badge/AppVersion-4.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Transform Services
 
@@ -72,7 +72,7 @@ A Helm chart for deploying Alfresco Transform Services
 | imagemagick.image.internalPort | int | `8090` |  |
 | imagemagick.image.pullPolicy | string | `"IfNotPresent"` |  |
 | imagemagick.image.repository | string | `"quay.io/alfresco/alfresco-imagemagick"` |  |
-| imagemagick.image.tag | string | `"4.0.0"` |  |
+| imagemagick.image.tag | string | `"5.0.0"` |  |
 | imagemagick.livenessProbe.initialDelaySeconds | int | `10` |  |
 | imagemagick.livenessProbe.livenessPercent | int | `150` |  |
 | imagemagick.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
@@ -101,7 +101,7 @@ A Helm chart for deploying Alfresco Transform Services
 | libreoffice.image.internalPort | int | `8090` |  |
 | libreoffice.image.pullPolicy | string | `"IfNotPresent"` |  |
 | libreoffice.image.repository | string | `"quay.io/alfresco/alfresco-libreoffice"` |  |
-| libreoffice.image.tag | string | `"4.0.0"` |  |
+| libreoffice.image.tag | string | `"5.0.0"` |  |
 | libreoffice.livenessProbe.initialDelaySeconds | int | `10` |  |
 | libreoffice.livenessProbe.livenessPercent | int | `250` |  |
 | libreoffice.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
@@ -133,7 +133,7 @@ A Helm chart for deploying Alfresco Transform Services
 | pdfrenderer.image.internalPort | int | `8090` |  |
 | pdfrenderer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | pdfrenderer.image.repository | string | `"quay.io/alfresco/alfresco-pdf-renderer"` |  |
-| pdfrenderer.image.tag | string | `"4.0.0"` |  |
+| pdfrenderer.image.tag | string | `"5.0.0"` |  |
 | pdfrenderer.livenessProbe.initialDelaySeconds | int | `10` |  |
 | pdfrenderer.livenessProbe.livenessPercent | int | `150` |  |
 | pdfrenderer.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
@@ -162,7 +162,7 @@ A Helm chart for deploying Alfresco Transform Services
 | tika.image.internalPort | int | `8090` |  |
 | tika.image.pullPolicy | string | `"IfNotPresent"` |  |
 | tika.image.repository | string | `"quay.io/alfresco/alfresco-tika"` |  |
-| tika.image.tag | string | `"4.0.0"` |  |
+| tika.image.tag | string | `"5.0.0"` |  |
 | tika.livenessProbe.initialDelaySeconds | int | `30` |  |
 | tika.livenessProbe.livenessPercent | int | `400` |  |
 | tika.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
@@ -191,7 +191,7 @@ A Helm chart for deploying Alfresco Transform Services
 | transformmisc.image.internalPort | int | `8090` |  |
 | transformmisc.image.pullPolicy | string | `"IfNotPresent"` |  |
 | transformmisc.image.repository | string | `"quay.io/alfresco/alfresco-transform-misc"` |  |
-| transformmisc.image.tag | string | `"4.0.0"` |  |
+| transformmisc.image.tag | string | `"5.0.0"` |  |
 | transformmisc.livenessProbe.initialDelaySeconds | int | `10` |  |
 | transformmisc.livenessProbe.livenessPercent | int | `400` |  |
 | transformmisc.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
