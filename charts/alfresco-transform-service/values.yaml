@@ -41,7 +41,7 @@ pdfrenderer:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-pdf-renderer
-    tag: 4.0.0
+    tag: 5.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -82,7 +82,7 @@ imagemagick:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-imagemagick
-    tag: 4.0.0
+    tag: 5.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -123,7 +123,7 @@ libreoffice:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-libreoffice
-    tag: 4.0.0
+    tag: 5.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -164,7 +164,7 @@ tika:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-tika
-    tag: 4.0.0
+    tag: 5.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -205,7 +205,7 @@ transformmisc:
   nodeSelector: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-misc
-    tag: 4.0.0
+    tag: 5.0.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
