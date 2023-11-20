@@ -1,24 +1,19 @@
 # Default values for alfresco-repository.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
 replicaCount: 1
-
 image:
   repository: quay.io/alfresco/alfresco-content-repository
   pullPolicy: IfNotPresent
-  tag: 23.1.0
+  tag: 23.1.1
   port: 8080
-
 strategy:
   type: RollingUpdate
   rollingUpdate:
     maxSurge: 1
     maxUnavailable: 0
-
 # -- How long to wait for tomcat to complete shutdown before killing it
 terminationGracePeriod: 60
-
 configuration:
   repository:
     # -- a configmap containing the "alfresco-global.properties" key populated
@@ -178,7 +173,6 @@ environment:
   # -- Set JVM options
   JAVA_OPTS: >-
     -XX:MaxRAMPercentage=80
-
 persistence:
   # -- Persist Contentsotre data
   enabled: false
@@ -193,11 +187,9 @@ persistence:
   data:
     mountPath: /usr/local/tomcat/alf_data
     subPath: alfresco-content-services/repository-data
-
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -206,22 +198,17 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: "alfresco-repo-sa"
-
 podAnnotations: {}
-
 podSecurityContext:
   runAsNonRoot: true
   runAsUser: 33000
   runAsGroup: 1000
   fsGroup: 1000
-
 securityContext: {}
-
 service:
   name: repository
   type: ClusterIP
   port: 80
-
 ingress:
   # -- Toggle ingress
   enabled: true
@@ -242,7 +229,6 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-
 resources:
   requests:
     cpu: "250m"
@@ -250,7 +236,6 @@ resources:
   limits:
     cpu: "4"
     memory: "8Gi"
-
 startupProbe:
   periodSeconds: 20
   failureThreshold: 9
@@ -270,28 +255,22 @@ livenessProbe:
   httpGet:
     path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-live-
     port: http
-
 extraVolumes: []
 extraVolumeMounts: []
 extraSideContainers: []
 extraInitContainers: []
 command: []
 args: []
-
 nodeSelector: {}
-
 tolerations: []
-
 affinity: {}
-
 global:
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
   alfrescoRegistryPullSecrets: quay-registry-secret
   # -- a fallback for .Values.known_urls that can be shared between charts
-  known_urls:
-
+  known_urls: null
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
   ci: false

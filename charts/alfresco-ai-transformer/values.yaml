@@ -8,7 +8,7 @@ replicaCount: 2
 nodeSelector: {}
 image:
   repository: quay.io/alfresco/alfresco-ai-docker-engine
-  tag: 3.0.0
+  tag: 3.0.1
   pullPolicy: IfNotPresent
   internalPort: 8090
 service:
