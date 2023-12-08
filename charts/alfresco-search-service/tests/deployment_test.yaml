@@ -16,6 +16,8 @@ tests:
   - it: should render cpu and memory limits
     values: *testvalues
     set:
+      podAnnotations: &annotated
+        kubernetes.io/description: Unit testing
       environment:
         someother: value
     template: deployment.yaml
@@ -29,6 +31,9 @@ tests:
             limits:
               cpu: "4"
               memory: "2000Mi"
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content: *annotated
       - contains:
           path: spec.template.spec.containers[0].env
           content:
