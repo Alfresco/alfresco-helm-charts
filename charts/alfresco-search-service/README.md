@@ -1,6 +1,6 @@
 # alfresco-search-service
 
-![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![AppVersion: 2.0.8.2](https://img.shields.io/badge/AppVersion-2.0.8.2-informational?style=flat-square)
+![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![AppVersion: 2.0.8.2](https://img.shields.io/badge/AppVersion-2.0.8.2-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
