@@ -1,4 +1,4 @@
-# alfresco-helm-charts
+# alfresco-helm-charts ☸️
 
 This repository aims at delivering independent and lightweight
 [Helm](https://helm.sh) charts for Alfresco Content Services platform that can
