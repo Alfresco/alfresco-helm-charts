@@ -18,6 +18,8 @@ repos:
     rev: 3.1.29
     hooks:
       - id: checkov
+        additional_dependencies:
+          - "cyclonedx-python-lib==5.2.0" # https://github.com/bridgecrewio/checkov/issues/5841
         files: charts/.*\.yaml$
         verbose: true
         args:
