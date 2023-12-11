@@ -3,7 +3,7 @@ default_language_version:
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: mixed-line-ending
         args: ["--fix=lf"]
@@ -11,20 +11,22 @@ repos:
         exclude: README.md
       - id: trailing-whitespace
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.11.0
+    rev: v1.11.3
     hooks:
       - id: helm-docs
   - repo: https://github.com/bridgecrewio/checkov.git
-    rev: 3.0.21
+    rev: 3.1.29
     hooks:
       - id: checkov
+        additional_dependencies:
+          - "cyclonedx-python-lib==5.2.0" # https://github.com/bridgecrewio/checkov/issues/5841
         files: charts/.*\.yaml$
         verbose: true
         args:
           - --quiet
           - --compact
   - repo: https://github.com/jtyr/kubeconform-helm
-    rev: v0.1.15
+    rev: v0.1.16
     hooks:
       - id: kubeconform-helm
         alias: kubeconform-helm-min
@@ -35,7 +37,7 @@ repos:
           - --exclude-charts=alfresco-common,alfresco-sync-service
           - --values-dir=ci
   - repo: https://github.com/jtyr/kubeconform-helm
-    rev: v0.1.15
+    rev: v0.1.16
     hooks:
       - id: kubeconform-helm
         name: "Kubeconform Helm - current k8s version"
