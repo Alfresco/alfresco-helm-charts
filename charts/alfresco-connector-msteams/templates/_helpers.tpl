@@ -49,3 +49,14 @@ Selector labels
 app.kubernetes.io/name: {{ include "alfresco-connector-msteams.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "alfresco-connector-msteams.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "alfresco-connector-msteams.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
