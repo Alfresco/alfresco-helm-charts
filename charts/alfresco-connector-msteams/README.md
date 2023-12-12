@@ -45,6 +45,9 @@ A Helm chart for deploying Alfresco connector msteams service
 | service.externalPort | int | `80` |  |
 | service.name | string | `"ms-teams-service"` |  |
 | service.type | string | `"ClusterIP"` |  |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `"msteams-sa"` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | strategy.rollingUpdate.maxSurge | int | `1` |  |
 | strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | teams.chat.filenameEnabled | bool | `true` |  |
