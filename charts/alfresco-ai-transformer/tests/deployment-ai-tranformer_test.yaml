@@ -3,23 +3,37 @@ templates:
 - deployment-ai-transformer.yaml
 - config-ai-transformer.yaml
 tests:
-- it: should have basic metadata in place
+- it: should have basic deployment properties by default
   values: &testvalues
   - values/test_values.yaml
   template: deployment-ai-transformer.yaml
   asserts:
-  - equal:
-      path: metadata.name
-      value: RELEASE-NAME-alfresco-ai-transformer
-  - equal:
-      path: metadata.name
-      value: RELEASE-NAME-alfresco-ai-transformer
-  - equal:
-      path: spec.template.spec.containers[0].resources
-      value:
-        requests:
-          cpu: "0.25"
-          memory: "1000Mi"
-        limits:
-          cpu: "2"
-          memory: "1000Mi"
+    - equal:
+        path: spec.template.spec.serviceAccountName
+        value: ai-transformer-sa
+    - equal:
+        path: metadata.name
+        value: RELEASE-NAME-alfresco-ai-transformer
+    - equal:
+        path: metadata.name
+        value: RELEASE-NAME-alfresco-ai-transformer
+    - equal:
+        path: spec.template.spec.containers[0].resources
+        value:
+          requests:
+            cpu: "0.25"
+            memory: "1000Mi"
+          limits:
+            cpu: "2"
+            memory: "1000Mi"
+- it: should have basic metadata in place
+  values: *testvalues
+  set:
+    serviceAccount:
+      create: false
+      name: null
+  template: deployment-ai-transformer.yaml
+  asserts:
+    - equal:
+        path: spec.template.spec.serviceAccountName
+        value: default

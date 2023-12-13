@@ -20,10 +20,11 @@ spec:
       labels:
         {{- include "alfresco-ai-transformer.selectorLabels" . | nindent 8 }}
     spec:
-    {{- include "component-pod-security-context" .Values | indent 4 }}
-    {{- if .Values.nodeSelector }}
+      serviceAccountName: {{ include "alfresco-ai-transformer.serviceAccountName" . }}
+      {{- include "component-pod-security-context" .Values | indent 4 }}
+      {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
+      {{- end }}
       {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       affinity:
         podAntiAffinity:
