@@ -27,6 +27,7 @@ spec:
       labels:
         app: {{ template "alfresco-search-service.fullname" . }}-solr
         release: {{ .Release.Name }}
+        component: search
     spec:
     {{- include "component-pod-security-context" .Values | indent 4 }}
     {{- with .Values.affinity }}
