@@ -6,15 +6,14 @@ tests:
 - it: should have basic metadata in place
   values: &testvalues
   - values/test_values.yaml
+  template: deployment-ai-transformer.yaml
   asserts:
   - equal:
       path: metadata.name
       value: RELEASE-NAME-alfresco-ai-transformer
-    template: deployment-ai-transformer.yaml
-
-- it: should render cpu and memory limits
-  values: *testvalues
-  asserts:
+  - equal:
+      path: metadata.name
+      value: RELEASE-NAME-alfresco-ai-transformer
   - equal:
       path: spec.template.spec.containers[0].resources
       value:
@@ -24,4 +23,3 @@ tests:
         limits:
           cpu: "2"
           memory: "1000Mi"
-    template: deployment-ai-transformer.yaml
