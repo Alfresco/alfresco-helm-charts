@@ -49,3 +49,14 @@ Selector labels
 app.kubernetes.io/name: {{ include "alfresco-ai-transformer.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "alfresco-ai-transformer.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "alfresco-ai-transformer.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}

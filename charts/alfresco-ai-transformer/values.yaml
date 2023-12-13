@@ -15,6 +15,14 @@ service:
   name: ai-transformer
   type: ClusterIP
   externalPort: 80
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ai-transformer-sa
 podSecurityContext:
   runAsUser: 33015
 resources:
