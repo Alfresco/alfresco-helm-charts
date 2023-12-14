@@ -5,10 +5,8 @@ metadata:
   labels:
     {{- include "alfresco-ai-transformer.labels" . | nindent 4 }}
 data:
-  {{- if .Values.environment }}
   {{- range $key, $val := .Values.environment }}
   {{ $key }}: {{ $val | quote }}
-  {{- end }}
   {{- end }}
   FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
   AWS_REGION: {{ .Values.aws.region }}

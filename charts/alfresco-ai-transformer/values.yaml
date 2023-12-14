@@ -52,9 +52,9 @@ aws:
   # -- AWS credentials are required as documented at https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration
   accessKeyId: null
   secretAccessKey: null
-  region: region-name
-  s3Bucket: s3-bucket-name
-  comprehendRoleARN: arn:aws:iam::XXXXXXXXXXXX:role/ComprehendAsyncJobs
+  region: null
+  s3Bucket: null
+  comprehendRoleARN: null
   existingSecret:
     name: null
     keys:
