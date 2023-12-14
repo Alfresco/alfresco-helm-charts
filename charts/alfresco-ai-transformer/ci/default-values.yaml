@@ -14,3 +14,6 @@ activemq:
     limits:
       cpu: "1000m"
       memory: "1Gi"
+aws:
+  accessKeyId: AAAAAAAAAAAAAAAAA
+  secretAccessKey: ZZZZZZZZZZZZZZZZZ
