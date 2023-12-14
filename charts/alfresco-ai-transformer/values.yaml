@@ -55,6 +55,12 @@ aws:
   region: null
   s3Bucket: null
   comprehendRoleARN: null
+  existingConfigMap:
+    name: null
+    keys:
+      region: AWS_REGION
+      s3Bucket: AWS_S3_BUCKET
+      comprehendRoleARN: AWS_COMPREHEND_ROLE_ARN
   existingSecret:
     name: null
     keys:
