@@ -43,7 +43,6 @@ A Helm chart for deploying Alfresco ai transformer service
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | messageBroker.existingSecret | object | `{"keys":{"password":"BROKER_PASSWORD","username":"BROKER_USERNAME"},"name":null}` | Alternatively, provide credentials via an existing secret and set the keys as they are given |
 | messageBroker.password | string | `nil` |  |
-| messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
 | messageBroker.url | string | `nil` |  |
 | messageBroker.user | string | `nil` |  |
 | nodeSelector | object | `{}` |  |
