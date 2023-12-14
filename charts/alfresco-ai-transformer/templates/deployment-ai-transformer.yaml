@@ -67,10 +67,22 @@ spec:
               name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-ai-transformer.fullname" $)) $.Values.messageBroker.existingSecret.name }}
           env:
             {{- include "activemq.env" . | nindent 12 }}
+            {{- $mqSecretCtx := dict "Values" (dict "nameOverride" "ai-mq") "Chart" $.Chart "Release" $.Release }}
+            {{- $mqSecret := coalesce .Values.messageBroker.existingSecret.name (include "alfresco-ai-transformer.fullname" $mqSecretCtx) }}
             {{- $awsSecretCtx := dict "Values" (dict "nameOverride" "aws") "Chart" $.Chart "Release" $.Release }}
             {{- $awsSecret := coalesce .Values.aws.existingSecret.name (include "alfresco-ai-transformer.fullname" $awsSecretCtx) }}
             {{- $awsCmCtx := dict "Values" (dict "nameOverride" "aws") "Chart" $.Chart "Release" $.Release }}
             {{- $awsCm := coalesce .Values.aws.existingSecret.name (include "alfresco-ai-transformer.fullname" $awsCmCtx) }}
+            - name: BROKER_USERNAME
+              valuesFrom:
+                secretKeyRef:
+                  name: {{ $mqSecret }}
+                  key: {{ .Values.messageBroker.existingSecret.keys.username }}
+            - name: BROKER_PASSWORD
+              valuesFrom:
+                secretKeyRef:
+                  name: {{ $mqSecret }}
+                  key: {{ .Values.messageBroker.existingSecret.keys.password }}
             - name: AWS_ACCESS_KEY_ID
               valuesFrom:
                 secretKeyRef:

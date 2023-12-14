@@ -6,3 +6,6 @@ global:
 aws:
   accessKeyId: AAAAAAAAAAAAAAAAA
   secretAccessKey: ZZZZZZZZZZZZZZZZZ
+messageBroker:
+  user: superbroker
+  password: verycheap
