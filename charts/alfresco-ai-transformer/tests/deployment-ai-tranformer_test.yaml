@@ -24,7 +24,10 @@ tests:
             secretKeyRef:
               name: RELEASE-NAME-aws
               key: AWS_SECRET_ACCESS_KEY
-
+    - isSubset:
+        path: metadata.labels
+        content:
+          app.kubernetes.io/component: alfresco-ai-transformer
     - equal:
         path: spec.template.spec.serviceAccountName
         value: ai-transformer-sa
