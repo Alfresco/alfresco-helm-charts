@@ -1,0 +1,13 @@
+{{- if not .Values.aws.existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  {{- $cmCtx := dict "Values" (dict "nameOverride" "aws") "Chart" .Chart "Release" .Release }}
+  name: {{ template "alfresco-ai-transformer.fullname" $cmCtx }}
+  labels:
+    {{- include "alfresco-ai-transformer.labels" . | nindent 4 }}
+data:
+  AWS_REGION: {{ .Values.aws.region }}
+  AWS_S3_BUCKET: {{ .Values.aws.s3Bucket }}
+  AWS_COMPREHEND_ROLE_ARN: {{ .Values.aws.comprehendRoleARN }}
+{{- end }}

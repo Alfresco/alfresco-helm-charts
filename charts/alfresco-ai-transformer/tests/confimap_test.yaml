@@ -1,14 +1,20 @@
 suite: test ai-transformer configmap
 templates:
 - config-ai-transformer.yaml
+- config-aws.yaml
 tests:
 - it: should have a cm rendered by default
   values: &testvalues
   - values/test_values.yaml
+  template: config-ai-transformer.yaml
   asserts:
     - equal:
         path: data.JAVA_OPTS
         value: -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+- it: should have an AWS cm rendered
+  values: *testvalues
+  template: config-aws.yaml
+  asserts:
     - equal:
         path: data.AWS_REGION
         value: null

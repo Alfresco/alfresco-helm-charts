@@ -9,9 +9,6 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
-  AWS_REGION: {{ .Values.aws.region }}
-  AWS_S3_BUCKET: {{ .Values.aws.s3Bucket }}
-  AWS_COMPREHEND_ROLE_ARN: {{ .Values.aws.comprehendRoleARN }}
   livenessPercent: "{{ .Values.livenessProbe.livenessPercent }}"
   livenessTransformPeriodSeconds: "{{ .Values.livenessProbe.livenessTransformPeriodSeconds }}"
   maxTransforms: "{{ .Values.livenessProbe.maxTransforms }}"
