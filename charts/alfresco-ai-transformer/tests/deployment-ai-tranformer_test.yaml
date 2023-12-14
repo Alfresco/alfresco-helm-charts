@@ -24,6 +24,30 @@ tests:
             secretKeyRef:
               name: RELEASE-NAME-aws
               key: AWS_SECRET_ACCESS_KEY
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_REGION
+          valuesFrom:
+            configMapKeyRef:
+              name: RELEASE-NAME-aws
+              key: AWS_REGION
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_S3_BUCKET
+          valuesFrom:
+            configMapKeyRef:
+              name: RELEASE-NAME-aws
+              key: AWS_S3_BUCKET
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_COMPREHEND_ROLE_ARN
+          valuesFrom:
+            configMapKeyRef:
+              name: RELEASE-NAME-aws
+              key: AWS_COMPREHEND_ROLE_ARN
     - isSubset:
         path: metadata.labels
         content:

@@ -24,3 +24,13 @@ tests:
     - equal:
         path: data.AWS_COMPREHEND_ROLE_ARN
         value: null
+- it: should not render an AWS cm
+  values: *testvalues
+  set:
+    aws:
+      existingConfigMap:
+        name: myaws
+  template: config-aws.yaml
+  asserts:
+    - hasDocuments:
+       count: 0

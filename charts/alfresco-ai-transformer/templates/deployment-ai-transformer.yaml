@@ -69,6 +69,8 @@ spec:
             {{- include "activemq.env" . | nindent 12 }}
             {{- $awsSecretCtx := dict "Values" (dict "nameOverride" "aws") "Chart" $.Chart "Release" $.Release }}
             {{- $awsSecret := coalesce .Values.aws.existingSecret.name (include "alfresco-ai-transformer.fullname" $awsSecretCtx) }}
+            {{- $awsCmCtx := dict "Values" (dict "nameOverride" "aws") "Chart" $.Chart "Release" $.Release }}
+            {{- $awsCm := coalesce .Values.aws.existingSecret.name (include "alfresco-ai-transformer.fullname" $awsCmCtx) }}
             - name: AWS_ACCESS_KEY_ID
               valuesFrom:
                 secretKeyRef:
@@ -79,6 +81,21 @@ spec:
                 secretKeyRef:
                   name: {{ $awsSecret }}
                   key: {{ .Values.aws.existingSecret.keys.secretAccessKey }}
+            - name: AWS_REGION
+              valuesFrom:
+                configMapKeyRef:
+                  name: {{ $awsCm }}
+                  key: {{ .Values.aws.existingConfigMap.keys.region }}
+            - name: AWS_S3_BUCKET
+              valuesFrom:
+                configMapKeyRef:
+                  name: {{ $awsCm }}
+                  key: {{ .Values.aws.existingConfigMap.keys.s3Bucket }}
+            - name: AWS_COMPREHEND_ROLE_ARN
+              valuesFrom:
+                configMapKeyRef:
+                  name: {{ $awsCm }}
+                  key: {{ .Values.aws.existingConfigMap.keys.comprehendRoleARN }}
 
           ports:
               - containerPort: {{ .Values.image.internalPort }}
