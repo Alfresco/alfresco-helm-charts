@@ -8,7 +8,7 @@ data:
   {{- range $key, $val := .Values.environment }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
-  FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
+  FILE_STORE_URL: http://{{ printf "%s-alfresco" .Release.Name  }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
   livenessPercent: "{{ .Values.livenessProbe.livenessPercent }}"
   livenessTransformPeriodSeconds: "{{ .Values.livenessProbe.livenessTransformPeriodSeconds }}"
   maxTransforms: "{{ .Values.livenessProbe.maxTransforms }}"
