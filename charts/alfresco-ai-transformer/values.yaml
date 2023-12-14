@@ -58,7 +58,7 @@ aws:
   existingSecret:
     name: null
     keys:
-      accessKey: AWS_ACCESS_KEY
+      accessKeyId: AWS_ACCESS_KEY_ID
       secretAccessKey: AWS_SECRET_ACCESS_KEY
 messageBroker:
   url: null

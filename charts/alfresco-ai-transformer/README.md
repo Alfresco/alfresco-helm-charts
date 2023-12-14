@@ -18,7 +18,7 @@ A Helm chart for deploying Alfresco ai transformer service
 | activemq.enabled | bool | `false` |  |
 | aws.accessKeyId | string | `nil` | AWS credentials are required as documented at https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration |
 | aws.comprehendRoleARN | string | `"arn:aws:iam::XXXXXXXXXXXX:role/ComprehendAsyncJobs"` |  |
-| aws.existingSecret.keys.accessKey | string | `"AWS_ACCESS_KEY"` |  |
+| aws.existingSecret.keys.accessKeyId | string | `"AWS_ACCESS_KEY_ID"` |  |
 | aws.existingSecret.keys.secretAccessKey | string | `"AWS_SECRET_ACCESS_KEY"` |  |
 | aws.existingSecret.name | string | `nil` |  |
 | aws.region | string | `"region-name"` |  |
