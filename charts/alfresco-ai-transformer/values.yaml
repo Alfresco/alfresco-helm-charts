@@ -50,11 +50,16 @@ livenessProbe:
   maxTransformSeconds: 1800
 aws:
   # -- AWS credentials are required as documented at https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration
-  accessKey: XXXXXXXXXXXXXXXXXXXXXXXX
-  secretAccessKey: XXXXXXXXXXXXXXXXXXXXXXXX
+  accessKeyId: null
+  secretAccessKey: null
   region: region-name
   s3Bucket: s3-bucket-name
   comprehendRoleARN: arn:aws:iam::XXXXXXXXXXXX:role/ComprehendAsyncJobs
+  existingSecret:
+    name: null
+    keys:
+      accessKey: AWS_ACCESS_KEY
+      secretAccessKey: AWS_SECRET_ACCESS_KEY
 messageBroker:
   url: null
   user: null

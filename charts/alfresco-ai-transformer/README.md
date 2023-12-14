@@ -16,11 +16,14 @@ A Helm chart for deploying Alfresco ai transformer service
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | activemq.enabled | bool | `false` |  |
-| aws.accessKey | string | `"XXXXXXXXXXXXXXXXXXXXXXXX"` | AWS credentials are required as documented at https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration |
+| aws.accessKeyId | string | `nil` | AWS credentials are required as documented at https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration |
 | aws.comprehendRoleARN | string | `"arn:aws:iam::XXXXXXXXXXXX:role/ComprehendAsyncJobs"` |  |
+| aws.existingSecret.keys.accessKey | string | `"AWS_ACCESS_KEY"` |  |
+| aws.existingSecret.keys.secretAccessKey | string | `"AWS_SECRET_ACCESS_KEY"` |  |
+| aws.existingSecret.name | string | `nil` |  |
 | aws.region | string | `"region-name"` |  |
 | aws.s3Bucket | string | `"s3-bucket-name"` |  |
-| aws.secretAccessKey | string | `"XXXXXXXXXXXXXXXXXXXXXXXX"` |  |
+| aws.secretAccessKey | string | `nil` |  |
 | environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `8090` |  |

@@ -11,8 +11,6 @@ data:
   {{- end }}
   {{- end }}
   FILE_STORE_URL: http://{{ template "alfresco.shortname" . }}-filestore:80/alfresco/api/-default-/private/sfs/versions/1/file
-  AWS_ACCESS_KEY: {{ .Values.aws.accessKey }}
-  AWS_SECRET_ACCESS_KEY: {{ .Values.aws.secretAccessKey }}
   AWS_REGION: {{ .Values.aws.region }}
   AWS_S3_BUCKET: {{ .Values.aws.s3Bucket }}
   AWS_COMPREHEND_ROLE_ARN: {{ .Values.aws.comprehendRoleARN }}
