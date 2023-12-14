@@ -17,3 +17,5 @@ activemq:
 aws:
   accessKeyId: AAAAAAAAAAAAAAAAA
   secretAccessKey: ZZZZZZZZZZZZZZZZZ
+messageBroker:
+  url: failover(nio://activemq:61616)

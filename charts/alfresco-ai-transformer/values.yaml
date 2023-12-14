@@ -71,6 +71,10 @@ messageBroker:
   user: null
   password: null
   # -- Alternatively, provide credentials via an existing secret and set the keys as they are given
+  existingConfigMap:
+    name: null
+    keys:
+      url: null
   existingSecret:
     name: null
     keys:

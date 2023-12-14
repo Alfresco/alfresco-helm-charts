@@ -9,7 +9,7 @@ A Helm chart for deploying Alfresco ai transformer service
 | Repository | Name | Version |
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0 |
 
 ## Values
 
@@ -41,7 +41,10 @@ A Helm chart for deploying Alfresco ai transformer service
 | livenessProbe.maxTransforms | int | `10000` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| messageBroker.existingSecret | object | `{"keys":{"password":"BROKER_PASSWORD","username":"BROKER_USERNAME"},"name":null}` | Alternatively, provide credentials via an existing secret and set the keys as they are given |
+| messageBroker.existingConfigMap | object | `{"keys":{"url":null},"name":null}` | Alternatively, provide credentials via an existing secret and set the keys as they are given |
+| messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` |  |
+| messageBroker.existingSecret.keys.username | string | `"BROKER_USERNAME"` |  |
+| messageBroker.existingSecret.name | string | `nil` |  |
 | messageBroker.password | string | `nil` |  |
 | messageBroker.url | string | `nil` |  |
 | messageBroker.user | string | `nil` |  |

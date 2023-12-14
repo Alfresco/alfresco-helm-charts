@@ -1,0 +1,11 @@
+{{- if not .Values.messageBroker.existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  {{- $mqCtx := dict "Values" (dict "nameOverride" "ai-mq") "Chart" .Chart "Release" .Release }}
+  name: {{ template "alfresco-ai-transformer.fullname" $mqCtx }}
+  labels:
+    {{- include "alfresco-ai-transformer.labels" $ | nindent 4 }}
+data:
+  {{ template "alfresco-common.activemq.cm" .Values.messageBroker.url }}
+{{- end }}
