@@ -72,7 +72,11 @@ messageBroker:
   password: null
   # -- Name of the secret managed by this chart
   secretName: acs-alfresco-cs-brokersecret
-  # -- Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
-  existingSecretName: null
+  # -- Alternatively, provide credentials via an existing secret and set the keys as they are given
+  existingSecret:
+    name: null
+    keys:
+      username: BROKER_USERNAME
+      password: BROKER_PASSWORD
 activemq:
   enabled: false
