@@ -67,6 +67,19 @@ spec:
               name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-ai-transformer.fullname" $)) $.Values.messageBroker.existingSecretName }}
           env:
             {{- include "activemq.env" . | nindent 12 }}
+            {{- $awsSecretCtx := dict "Values" (dict "nameOverride" "aws") "Chart" $.Chart "Release" $.Release }}
+            {{- $awsSecret := coalesce .Values.aws.existingSecret.name (include "alfresco-ai-transformer.fullname" $awsSecretCtx) }}
+            - name: AWS_ACCESS_KEY_ID
+              valuesFrom:
+                secretKeyRef:
+                  name: {{ $awsSecret }}
+                  key: {{ .Values.aws.existingSecret.keys.accessKeyId }}
+            - name: AWS_SECRET_ACCESS_KEY
+              valuesFrom:
+                secretKeyRef:
+                  name: {{ $awsSecret }}
+                  key: {{ .Values.aws.existingSecret.keys.secretAccessKey }}
+
           ports:
               - containerPort: {{ .Values.image.internalPort }}
           resources: {{- toYaml .Values.resources | nindent 12 }}

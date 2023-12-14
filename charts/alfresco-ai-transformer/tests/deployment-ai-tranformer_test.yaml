@@ -8,6 +8,23 @@ tests:
   - values/test_values.yaml
   template: deployment-ai-transformer.yaml
   asserts:
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_ACCESS_KEY_ID
+          valuesFrom:
+            secretKeyRef:
+              name: RELEASE-NAME-aws
+              key: AWS_ACCESS_KEY_ID
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_SECRET_ACCESS_KEY
+          valuesFrom:
+            secretKeyRef:
+              name: RELEASE-NAME-aws
+              key: AWS_SECRET_ACCESS_KEY
+
     - equal:
         path: spec.template.spec.serviceAccountName
         value: ai-transformer-sa
