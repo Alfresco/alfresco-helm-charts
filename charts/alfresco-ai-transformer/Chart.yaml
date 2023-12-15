@@ -11,6 +11,5 @@ dependencies:
   - name: activemq
     version: 3.4.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    condition: activemq.enabled
     tags:
       - ci
