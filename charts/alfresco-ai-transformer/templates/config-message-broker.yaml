@@ -7,5 +7,6 @@ metadata:
   labels:
     {{- include "alfresco-ai-transformer.labels" $ | nindent 4 }}
 data:
-  {{ template "alfresco-common.activemq.cm" .Values.messageBroker.url }}
+  {{- $reqmsg := "Please provide a valid broker URL with messageBroker.url or as a configmap key using messageBroker.existingConfigMap" }}
+  {{ template "alfresco-common.activemq.cm" (required $reqmsg .Values.messageBroker.url) }}
 {{- end }}
