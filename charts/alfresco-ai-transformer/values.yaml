@@ -80,5 +80,6 @@ messageBroker:
     keys:
       username: BROKER_USERNAME
       password: BROKER_PASSWORD
-activemq:
-  enabled: false
+tags:
+  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
+  ci: false

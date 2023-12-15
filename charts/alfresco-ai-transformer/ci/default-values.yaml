@@ -6,7 +6,6 @@ resources:
     cpu: "1"
     memory: "500Mi"
 activemq:
-  enabled: true
   resources:
     requests:
       cpu: "100m"
@@ -19,3 +18,5 @@ aws:
   secretAccessKey: ZZZZZZZZZZZZZZZZZ
 messageBroker:
   url: failover(nio://activemq:61616)
+tags:
+  ci: true
