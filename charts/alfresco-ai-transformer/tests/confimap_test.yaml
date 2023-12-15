@@ -3,18 +3,15 @@ templates:
 - config-ai-transformer.yaml
 - config-aws.yaml
 tests:
-- it: should have a cm rendered by default
+- it: should render default configmaps based on values
   values: &testvalues
-  - values/test_values.yaml
-  template: config-ai-transformer.yaml
+    - values/test_values.yaml
+  template: config-aws.yaml
   asserts:
     - equal:
         path: data.JAVA_OPTS
         value: -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
-- it: should have an AWS cm rendered
-  values: *testvalues
-  template: config-aws.yaml
-  asserts:
+      template: config-ai-transformer.yaml
     - equal:
         path: data.AWS_REGION
         value: null
@@ -24,7 +21,7 @@ tests:
     - equal:
         path: data.AWS_COMPREHEND_ROLE_ARN
         value: null
-- it: should not render an AWS cm
+- it: should not render components configmaps
   values: *testvalues
   set:
     aws:
