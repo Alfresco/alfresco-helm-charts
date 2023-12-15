@@ -9,3 +9,4 @@ aws:
 messageBroker:
   user: superbroker
   password: verycheap
+  url: nio://activemq:61616

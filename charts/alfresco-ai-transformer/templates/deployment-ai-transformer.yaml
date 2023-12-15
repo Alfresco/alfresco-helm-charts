@@ -73,6 +73,8 @@ spec:
             {{- $awsSecret := coalesce .Values.aws.existingSecret.name (include "alfresco-ai-transformer.fullname" $awsSecretCtx) }}
             {{- $awsCmCtx := dict "Values" (dict "nameOverride" "aws") "Chart" $.Chart "Release" $.Release }}
             {{- $awsCm := coalesce .Values.aws.existingSecret.name (include "alfresco-ai-transformer.fullname" $awsCmCtx) }}
+            {{- $mqCmCtx := dict "Values" (dict "nameOverride" "ai-mq") "Chart" $.Chart "Release" $.Release }}
+            {{- $mqCm := coalesce .Values.messageBroker.existingSecret.name (include "alfresco-ai-transformer.fullname" $mqCmCtx) }}
             - name: BROKER_USERNAME
               valuesFrom:
                 secretKeyRef:
@@ -83,6 +85,11 @@ spec:
                 secretKeyRef:
                   name: {{ $mqSecret }}
                   key: {{ .Values.messageBroker.existingSecret.keys.password }}
+            - name: BROKER_URL
+              valuesFrom:
+                configMapKeyRef:
+                  name: {{ $mqCm }}
+                  key: {{ .Values.messageBroker.existingConfigMap.keys.url }}
             - name: AWS_ACCESS_KEY_ID
               valuesFrom:
                 secretKeyRef:

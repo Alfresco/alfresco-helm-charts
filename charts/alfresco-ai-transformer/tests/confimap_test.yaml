@@ -1,5 +1,6 @@
 suite: test ai-transformer configmap
 templates:
+- config-message-broker.yaml
 - config-ai-transformer.yaml
 - config-aws.yaml
 tests:
@@ -12,6 +13,10 @@ tests:
         path: data.JAVA_OPTS
         value: -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
       template: config-ai-transformer.yaml
+    - equal:
+        path: data.BROKER_URL
+        value: failover:(nio://activemq:61616)
+      template: config-message-broker.yaml
     - equal:
         path: data.AWS_REGION
         value: null
