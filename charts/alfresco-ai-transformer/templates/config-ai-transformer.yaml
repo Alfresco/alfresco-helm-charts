@@ -8,10 +8,6 @@ data:
   {{- range $key, $val := .Values.environment }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
-  {{- if not .Values.sfs.existingConfigMap.name }}
-  {{- $reqmsg := "You must provide a base URL for the filestore service as sfs.url" }}
-  FILE_STORE_URL: {{ printf "%s/alfresco/api/-default-/private/sfs/versions/1/file"  (required $reqmsg .Values.sfs.url) }}
-  {{- end }}
   livenessPercent: "{{ .Values.livenessProbe.livenessPercent }}"
   livenessTransformPeriodSeconds: "{{ .Values.livenessProbe.livenessTransformPeriodSeconds }}"
   maxTransforms: "{{ .Values.livenessProbe.maxTransforms }}"

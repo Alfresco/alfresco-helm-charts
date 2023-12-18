@@ -3,9 +3,13 @@ templates:
 - config-message-broker.yaml
 - config-ai-transformer.yaml
 - config-aws.yaml
+- config-sfs.yaml
 tests:
 - it: should fail due to missing values
   template: config-message-broker.yaml
+  set:
+    sfs:
+      url: htts://some-file-store.infra.local:8080
   asserts:
     - failedTemplate:
         errorMessage: >-
@@ -17,7 +21,7 @@ tests:
   asserts:
     - failedTemplate:
         errorMessage: You must provide a base URL for the filestore service as sfs.url
-      template: config-ai-transformer.yaml
+      template: config-sfs.yaml
 - it: should render default configmaps based on values
   values: &testvalues
     - values/test_values.yaml
@@ -27,6 +31,10 @@ tests:
         path: data.JAVA_OPTS
         value: -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
       template: config-ai-transformer.yaml
+    - equal:
+        path: data.FILE_STORE_URL
+        value: http://acs-alfresco-transform-service/alfresco/api/-default-/private/sfs/versions/1/file
+      template: config-sfs.yaml
     - equal:
         path: data.BROKER_URL
         value: failover:(nio://activemq:61616)

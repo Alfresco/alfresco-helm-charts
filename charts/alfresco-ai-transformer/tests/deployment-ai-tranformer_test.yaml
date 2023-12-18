@@ -30,7 +30,7 @@ tests:
           name: FILE_STORE_URL
           valuesFrom:
             configMapKeyRef:
-              name: RELEASE-NAME-alfresco-ai-transformer
+              name: RELEASE-NAME-ai-sfs
               key: FILE_STORE_URL
     - contains:
         path: spec.template.spec.containers[0].env

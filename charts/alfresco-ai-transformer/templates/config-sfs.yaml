@@ -1,0 +1,12 @@
+{{- if not .Values.sfs.existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  {{- $cmCtx := dict "Values" (dict "nameOverride" "ai-sfs") "Chart" .Chart "Release" .Release }}
+  name: {{ template "alfresco-ai-transformer.fullname" $cmCtx }}
+  labels:
+    {{- include "alfresco-ai-transformer.labels" . | nindent 4 }}
+data:
+  {{- $reqmsg := "You must provide a base URL for the filestore service as sfs.url" }}
+  FILE_STORE_URL: {{ printf "%s/alfresco/api/-default-/private/sfs/versions/1/file"  (required $reqmsg .Values.sfs.url) }}
+{{- end }}
