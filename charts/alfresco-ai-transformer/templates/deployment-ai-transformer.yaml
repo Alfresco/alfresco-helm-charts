@@ -67,9 +67,9 @@ spec:
             {{- include "activemq.env" . | nindent 12 }}
             {{- $mqSecretCtx := dict "Values" (dict "nameOverride" "ai-mq") "Chart" $.Chart "Release" $.Release }}
             {{- $mqSecret := coalesce .Values.messageBroker.existingSecret.name (include "alfresco-ai-transformer.fullname" $mqSecretCtx) }}
-            {{- $awsSecretCtx := dict "Values" (dict "nameOverride" "aws") "Chart" $.Chart "Release" $.Release }}
+            {{- $awsSecretCtx := dict "Values" (dict "nameOverride" "aws-comprehend") "Chart" $.Chart "Release" $.Release }}
             {{- $awsSecret := coalesce .Values.aws.existingSecret.name (include "alfresco-ai-transformer.fullname" $awsSecretCtx) }}
-            {{- $awsCmCtx := dict "Values" (dict "nameOverride" "aws") "Chart" $.Chart "Release" $.Release }}
+            {{- $awsCmCtx := dict "Values" (dict "nameOverride" "aws-comprehend") "Chart" $.Chart "Release" $.Release }}
             {{- $awsCm := coalesce .Values.aws.existingConfigMap.name (include "alfresco-ai-transformer.fullname" $awsCmCtx) }}
             {{- $mqCmCtx := dict "Values" (dict "nameOverride" "ai-mq") "Chart" $.Chart "Release" $.Release }}
             {{- $mqCm := coalesce .Values.messageBroker.existingSecret.name (include "alfresco-ai-transformer.fullname" $mqCmCtx) }}
