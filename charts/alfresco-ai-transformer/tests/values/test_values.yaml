@@ -6,6 +6,8 @@ global:
 aws:
   accessKeyId: AAAAAAAAAAAAAAAAA
   secretAccessKey: ZZZZZZZZZZZZZZZZZ
+sfs :
+  url: http://acs-alfresco-transform-service
 messageBroker:
   user: superbroker
   password: verycheap
