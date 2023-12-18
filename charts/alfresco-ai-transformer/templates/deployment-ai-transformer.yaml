@@ -15,8 +15,6 @@ spec:
       {{- toYaml .Values.strategy.rollingUpdate | nindent 6 }}
   template:
     metadata:
-      annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config-ai-transformer.yaml") . | sha256sum }}
       labels:
         {{- include "alfresco-ai-transformer.selectorLabels" . | nindent 8 }}
     spec:
