@@ -63,8 +63,6 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
           {{- $msteams_details_cm := .Values.repository.existingConfigMap.name | default (print (include "alfresco-connector-msteams.fullname" .) "-configmap") }}
           env:
             - name: ALFRESCO_BASE_URL
