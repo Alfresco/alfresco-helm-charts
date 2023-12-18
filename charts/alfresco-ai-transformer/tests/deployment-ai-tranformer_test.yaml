@@ -78,14 +78,79 @@ tests:
           limits:
             cpu: "2"
             memory: "1000Mi"
-- it: should have basic metadata in place
+- it: should render deployment with existing secrets and configmaps
   values: *testvalues
   set:
     serviceAccount:
       create: false
       name: null
+    sfs:
+      existingConfigMap:
+        name: sfsurl
+        keys:
+          url: SFS_URL
+    aws:
+      existingSecret:
+        name: awscreds
+        keys:
+          accessKeyId: AWSACCESSKEYID
+          secretAccessKey: AWSSECRETACCESSKEY
+      existingConfigMap:
+        name: amazon
+        keys:
+          region: REGION
+          s3Bucket: comprehendbucket
+          comprehendRoleARN: ROLE
   template: deployment-ai-transformer.yaml
   asserts:
     - equal:
         path: spec.template.spec.serviceAccountName
         value: default
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_ACCESS_KEY_ID
+          valuesFrom:
+            secretKeyRef:
+              name: awscreds
+              key: AWSACCESSKEYID
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_SECRET_ACCESS_KEY
+          valuesFrom:
+            secretKeyRef:
+              name: awscreds
+              key: AWSSECRETACCESSKEY
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: FILE_STORE_URL
+          valuesFrom:
+            configMapKeyRef:
+              name: sfsurl
+              key: SFS_URL
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_REGION
+          valuesFrom:
+            configMapKeyRef:
+              name: amazon
+              key: REGION
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_S3_BUCKET
+          valuesFrom:
+            configMapKeyRef:
+              name: amazon
+              key: comprehendbucket
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_COMPREHEND_ROLE_ARN
+          valuesFrom:
+            configMapKeyRef:
+              name: amazon
+              key: ROLE
