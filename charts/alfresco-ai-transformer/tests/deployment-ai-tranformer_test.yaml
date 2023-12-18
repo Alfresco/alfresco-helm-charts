@@ -27,6 +27,14 @@ tests:
     - contains:
         path: spec.template.spec.containers[0].env
         content:
+          name: FILE_STORE_URL
+          valuesFrom:
+            configMapKeyRef:
+              name: RELEASE-NAME-alfresco-ai-transformer
+              key: FILE_STORE_URL
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
           name: AWS_REGION
           valuesFrom:
             configMapKeyRef:
