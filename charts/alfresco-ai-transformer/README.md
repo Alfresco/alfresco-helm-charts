@@ -63,6 +63,9 @@ A Helm chart for deploying Alfresco ai transformer service
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `"ai-transformer-sa"` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| sfs.existingConfigMap.keys.url | string | `"FILE_STORE_URL"` |  |
+| sfs.existingConfigMap.name | string | `nil` |  |
+| sfs.url | string | `nil` | Alfresco Transformation filestore (e.g. http://acs-alfresco-transform-service) |
 | strategy.rollingUpdate.maxSurge | int | `1` |  |
 | strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
