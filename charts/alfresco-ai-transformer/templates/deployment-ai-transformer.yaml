@@ -19,11 +19,11 @@ spec:
         {{- include "alfresco-ai-transformer.selectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "alfresco-ai-transformer.serviceAccountName" . }}
-      {{- include "component-pod-security-context" .Values | indent 4 }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
       {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -57,7 +57,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- include "component-security-context" .Values | indent 8 }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           envFrom:
           - configMapRef:
               name: {{ template "alfresco-ai-transformer.fullname" . }}
