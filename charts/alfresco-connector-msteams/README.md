@@ -1,6 +1,6 @@
 # alfresco-connector-msteams
 
-![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.2.0-alpha-0](https://img.shields.io/badge/Version-0.2.0--alpha--0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector msteams service
 
@@ -38,6 +38,9 @@ A Helm chart for deploying Alfresco connector msteams service
 | readinessProbe.periodSeconds | int | `60` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | replicaCount | int | `2` |  |
+| repository.existingConfigMap.keys.url | string | `"ALFRESCO_BASE_URL"` | Key within the configmap holding the full url to connect to the alfresco repository |
+| repository.existingConfigMap.name | string | `nil` | Alternatively, provide repository connection details via an existing configmap |
+| repository.url | string | `nil` | URL of the Alfresco repository |
 | resources.limits.cpu | string | `"1"` |  |
 | resources.limits.memory | string | `"1000Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |

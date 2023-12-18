@@ -1,3 +1,5 @@
+{{- if not .Values.repository.existingConfigMap.name -}}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -18,3 +20,4 @@ data:
   TEAMS_CHAT_FILENAME_ENABLED: "{{ .Values.teams.chat.filenameEnabled }}"
   TEAMS_CHAT_METADATA_ENABLED: "{{ .Values.teams.chat.metadataEnabled }}"
   TEAMS_CHAT_IMAGE_ENABLED: "{{ .Values.teams.chat.imageEnabled }}"
+{{- end -}}
