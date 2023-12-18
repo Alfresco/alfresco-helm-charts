@@ -63,8 +63,6 @@ spec:
           envFrom:
           - configMapRef:
               name: {{ template "alfresco-ai-transformer.fullname" . }}
-          - secretRef:
-              name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-ai-transformer.fullname" $)) $.Values.messageBroker.existingSecret.name }}
           env:
             {{- include "activemq.env" . | nindent 12 }}
             {{- $mqSecretCtx := dict "Values" (dict "nameOverride" "ai-mq") "Chart" $.Chart "Release" $.Release }}
