@@ -4,6 +4,20 @@ templates:
 - config-ai-transformer.yaml
 - config-aws.yaml
 tests:
+- it: should fail due to missing values
+  template: config-message-broker.yaml
+  asserts:
+    - failedTemplate:
+        errorMessage: >-
+          Please provide a valid broker URL with messageBroker.url or as a configmap key using messageBroker.existingConfigMap
+- it: should fail due to missing values
+  set:
+    messageBroker:
+      url: nio://activemq:61616
+  asserts:
+    - failedTemplate:
+        errorMessage: You must provide a base URL for the filestore service as sfs.url
+      template: config-ai-transformer.yaml
 - it: should render default configmaps based on values
   values: &testvalues
     - values/test_values.yaml
@@ -35,4 +49,4 @@ tests:
   template: config-aws.yaml
   asserts:
     - hasDocuments:
-       count: 0
+        count: 0
