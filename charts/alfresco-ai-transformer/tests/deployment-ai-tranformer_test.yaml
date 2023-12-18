@@ -12,7 +12,7 @@ tests:
         path: spec.template.spec.containers[0].env
         content:
           name: AWS_ACCESS_KEY_ID
-          valuesFrom:
+          valueFrom:
             secretKeyRef:
               name: RELEASE-NAME-aws-comprehend
               key: AWS_ACCESS_KEY_ID
@@ -20,7 +20,7 @@ tests:
         path: spec.template.spec.containers[0].env
         content:
           name: AWS_SECRET_ACCESS_KEY
-          valuesFrom:
+          valueFrom:
             secretKeyRef:
               name: RELEASE-NAME-aws-comprehend
               key: AWS_SECRET_ACCESS_KEY
@@ -28,7 +28,7 @@ tests:
         path: spec.template.spec.containers[0].env
         content:
           name: FILE_STORE_URL
-          valuesFrom:
+          valueFrom:
             configMapKeyRef:
               name: RELEASE-NAME-ai-sfs
               key: FILE_STORE_URL
@@ -36,7 +36,7 @@ tests:
         path: spec.template.spec.containers[0].env
         content:
           name: AWS_REGION
-          valuesFrom:
+          valueFrom:
             configMapKeyRef:
               name: RELEASE-NAME-aws-comprehend
               key: AWS_REGION
@@ -44,7 +44,7 @@ tests:
         path: spec.template.spec.containers[0].env
         content:
           name: AWS_S3_BUCKET
-          valuesFrom:
+          valueFrom:
             configMapKeyRef:
               name: RELEASE-NAME-aws-comprehend
               key: AWS_S3_BUCKET
@@ -52,7 +52,7 @@ tests:
         path: spec.template.spec.containers[0].env
         content:
           name: AWS_COMPREHEND_ROLE_ARN
-          valuesFrom:
+          valueFrom:
             configMapKeyRef:
               name: RELEASE-NAME-aws-comprehend
               key: AWS_COMPREHEND_ROLE_ARN
@@ -110,7 +110,7 @@ tests:
         path: spec.template.spec.containers[0].env
         content:
           name: AWS_ACCESS_KEY_ID
-          valuesFrom:
+          valueFrom:
             secretKeyRef:
               name: awscreds
               key: AWSACCESSKEYID
@@ -118,7 +118,7 @@ tests:
         path: spec.template.spec.containers[0].env
         content:
           name: AWS_SECRET_ACCESS_KEY
-          valuesFrom:
+          valueFrom:
             secretKeyRef:
               name: awscreds
               key: AWSSECRETACCESSKEY
@@ -126,7 +126,7 @@ tests:
         path: spec.template.spec.containers[0].env
         content:
           name: FILE_STORE_URL
-          valuesFrom:
+          valueFrom:
             configMapKeyRef:
               name: sfsurl
               key: SFS_URL
@@ -134,7 +134,7 @@ tests:
         path: spec.template.spec.containers[0].env
         content:
           name: AWS_REGION
-          valuesFrom:
+          valueFrom:
             configMapKeyRef:
               name: amazon
               key: REGION
@@ -142,7 +142,7 @@ tests:
         path: spec.template.spec.containers[0].env
         content:
           name: AWS_S3_BUCKET
-          valuesFrom:
+          valueFrom:
             configMapKeyRef:
               name: amazon
               key: comprehendbucket
@@ -150,7 +150,7 @@ tests:
         path: spec.template.spec.containers[0].env
         content:
           name: AWS_COMPREHEND_ROLE_ARN
-          valuesFrom:
+          valueFrom:
             configMapKeyRef:
               name: amazon
               key: ROLE

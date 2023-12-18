@@ -64,7 +64,6 @@ spec:
           - configMapRef:
               name: {{ template "alfresco-ai-transformer.fullname" . }}
           env:
-            {{- include "activemq.env" . | nindent 12 }}
             {{- $mqSecretCtx := dict "Values" (dict "nameOverride" "ai-mq") "Chart" $.Chart "Release" $.Release }}
             {{- $mqSecret := coalesce .Values.messageBroker.existingSecret.name (include "alfresco-ai-transformer.fullname" $mqSecretCtx) }}
             {{- $awsSecretCtx := dict "Values" (dict "nameOverride" "aws-comprehend") "Chart" $.Chart "Release" $.Release }}
@@ -76,47 +75,47 @@ spec:
             {{- $sfsCmCtx := dict "Values" (dict "nameOverride" "ai-sfs") "Chart" .Chart "Release" .Release }}
             {{- $sfsCm := coalesce .Values.sfs.existingConfigMap.name (include "alfresco-ai-transformer.fullname" $sfsCmCtx) }}
             - name: BROKER_USERNAME
-              valuesFrom:
+              valueFrom:
                 secretKeyRef:
                   name: {{ $mqSecret }}
                   key: {{ .Values.messageBroker.existingSecret.keys.username }}
             - name: BROKER_PASSWORD
-              valuesFrom:
+              valueFrom:
                 secretKeyRef:
                   name: {{ $mqSecret }}
                   key: {{ .Values.messageBroker.existingSecret.keys.password }}
             - name: BROKER_URL
-              valuesFrom:
+              valueFrom:
                 configMapKeyRef:
                   name: {{ $mqCm }}
                   key: {{ .Values.messageBroker.existingConfigMap.keys.url }}
             - name: FILE_STORE_URL
-              valuesFrom:
+              valueFrom:
                 configMapKeyRef:
                   name: {{ $sfsCm }}
                   key: {{ .Values.sfs.existingConfigMap.keys.url }}
             - name: AWS_ACCESS_KEY_ID
-              valuesFrom:
+              valueFrom:
                 secretKeyRef:
                   name: {{ $awsSecret }}
                   key: {{ .Values.aws.existingSecret.keys.accessKeyId }}
             - name: AWS_SECRET_ACCESS_KEY
-              valuesFrom:
+              valueFrom:
                 secretKeyRef:
                   name: {{ $awsSecret }}
                   key: {{ .Values.aws.existingSecret.keys.secretAccessKey }}
             - name: AWS_REGION
-              valuesFrom:
+              valueFrom:
                 configMapKeyRef:
                   name: {{ $awsCm }}
                   key: {{ .Values.aws.existingConfigMap.keys.region }}
             - name: AWS_S3_BUCKET
-              valuesFrom:
+              valueFrom:
                 configMapKeyRef:
                   name: {{ $awsCm }}
                   key: {{ .Values.aws.existingConfigMap.keys.s3Bucket }}
             - name: AWS_COMPREHEND_ROLE_ARN
-              valuesFrom:
+              valueFrom:
                 configMapKeyRef:
                   name: {{ $awsCm }}
                   key: {{ .Values.aws.existingConfigMap.keys.comprehendRoleARN }}

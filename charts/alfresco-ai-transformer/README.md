@@ -40,7 +40,7 @@ A Helm chart for deploying Alfresco ai transformer service
 | livenessProbe.maxTransforms | int | `10000` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| messageBroker.existingConfigMap | object | `{"keys":{"url":null},"name":null}` | Alternatively, provide credentials via an existing secret and set the keys as they are given |
+| messageBroker.existingConfigMap | object | `{"keys":{"url":"BROKER_URL"},"name":null}` | Alternatively, provide credentials via an existing secret and set the keys as they are given |
 | messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` |  |
 | messageBroker.existingSecret.keys.username | string | `"BROKER_USERNAME"` |  |
 | messageBroker.existingSecret.name | string | `nil` |  |

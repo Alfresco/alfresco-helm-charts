@@ -81,7 +81,7 @@ messageBroker:
   existingConfigMap:
     name: null
     keys:
-      url: null
+      url: BROKER_URL
   existingSecret:
     name: null
     keys:
