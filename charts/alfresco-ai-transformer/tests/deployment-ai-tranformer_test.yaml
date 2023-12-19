@@ -3,25 +3,154 @@ templates:
 - deployment-ai-transformer.yaml
 - config-ai-transformer.yaml
 tests:
-- it: should have basic metadata in place
+- it: should have basic deployment properties by default
   values: &testvalues
   - values/test_values.yaml
+  template: deployment-ai-transformer.yaml
   asserts:
-  - equal:
-      path: metadata.name
-      value: RELEASE-NAME-alfresco-ai-transformer
-    template: deployment-ai-transformer.yaml
-
-- it: should render cpu and memory limits
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: RELEASE-NAME-aws-comprehend
+              key: AWS_ACCESS_KEY_ID
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: RELEASE-NAME-aws-comprehend
+              key: AWS_SECRET_ACCESS_KEY
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: FILE_STORE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: RELEASE-NAME-ai-sfs
+              key: FILE_STORE_URL
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_REGION
+          valueFrom:
+            configMapKeyRef:
+              name: RELEASE-NAME-aws-comprehend
+              key: AWS_REGION
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_S3_BUCKET
+          valueFrom:
+            configMapKeyRef:
+              name: RELEASE-NAME-aws-comprehend
+              key: AWS_S3_BUCKET
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_COMPREHEND_ROLE_ARN
+          valueFrom:
+            configMapKeyRef:
+              name: RELEASE-NAME-aws-comprehend
+              key: AWS_COMPREHEND_ROLE_ARN
+    - isSubset:
+        path: metadata.labels
+        content:
+          app.kubernetes.io/component: alfresco-ai-transformer
+    - equal:
+        path: spec.template.spec.serviceAccountName
+        value: ai-transformer-sa
+    - equal:
+        path: metadata.name
+        value: RELEASE-NAME-alfresco-ai-transformer
+    - equal:
+        path: metadata.name
+        value: RELEASE-NAME-alfresco-ai-transformer
+    - equal:
+        path: spec.template.spec.containers[0].resources
+        value:
+          requests:
+            cpu: "0.25"
+            memory: "1000Mi"
+          limits:
+            cpu: "2"
+            memory: "1000Mi"
+- it: should render deployment with existing secrets and configmaps
   values: *testvalues
+  set:
+    serviceAccount:
+      create: false
+      name: null
+    sfs:
+      existingConfigMap:
+        name: sfsurl
+        keys:
+          url: SFS_URL
+    aws:
+      existingSecret:
+        name: awscreds
+        keys:
+          accessKeyId: AWSACCESSKEYID
+          secretAccessKey: AWSSECRETACCESSKEY
+      existingConfigMap:
+        name: amazon
+        keys:
+          region: REGION
+          s3Bucket: comprehendbucket
+          comprehendRoleARN: ROLE
+  template: deployment-ai-transformer.yaml
   asserts:
-  - equal:
-      path: spec.template.spec.containers[0].resources
-      value:
-        requests:
-          cpu: "0.25"
-          memory: "1000Mi"
-        limits:
-          cpu: "2"
-          memory: "1000Mi"
-    template: deployment-ai-transformer.yaml
+    - equal:
+        path: spec.template.spec.serviceAccountName
+        value: default
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: awscreds
+              key: AWSACCESSKEYID
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: awscreds
+              key: AWSSECRETACCESSKEY
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: FILE_STORE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: sfsurl
+              key: SFS_URL
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_REGION
+          valueFrom:
+            configMapKeyRef:
+              name: amazon
+              key: REGION
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_S3_BUCKET
+          valueFrom:
+            configMapKeyRef:
+              name: amazon
+              key: comprehendbucket
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: AWS_COMPREHEND_ROLE_ARN
+          valueFrom:
+            configMapKeyRef:
+              name: amazon
+              key: ROLE

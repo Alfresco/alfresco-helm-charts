@@ -40,6 +40,7 @@ helm.sh/chart: {{ include "alfresco-ai-transformer.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/component: {{ template "alfresco-ai-transformer.name" . }}
 {{- end }}
 
 {{/*
@@ -48,4 +49,15 @@ Selector labels
 {{- define "alfresco-ai-transformer.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "alfresco-ai-transformer.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "alfresco-ai-transformer.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "alfresco-ai-transformer.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
+{{- end }}
 {{- end }}

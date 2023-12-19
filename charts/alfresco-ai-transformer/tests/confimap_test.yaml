@@ -1,0 +1,60 @@
+suite: test ai-transformer configmap
+templates:
+- config-message-broker.yaml
+- config-ai-transformer.yaml
+- config-aws.yaml
+- config-sfs.yaml
+tests:
+- it: should fail due to missing values
+  template: config-message-broker.yaml
+  set:
+    sfs:
+      url: htts://some-file-store.infra.local:8080
+  asserts:
+    - failedTemplate:
+        errorMessage: >-
+          Please provide a valid broker URL with messageBroker.url or as a configmap key using messageBroker.existingConfigMap
+- it: should fail due to missing values
+  set:
+    messageBroker:
+      url: nio://activemq:61616
+  asserts:
+    - failedTemplate:
+        errorMessage: You must provide a base URL for the filestore service as sfs.url
+      template: config-sfs.yaml
+- it: should render default configmaps based on values
+  values: &testvalues
+    - values/test_values.yaml
+  template: config-aws.yaml
+  asserts:
+    - equal:
+        path: data.JAVA_OPTS
+        value: -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+      template: config-ai-transformer.yaml
+    - equal:
+        path: data.FILE_STORE_URL
+        value: http://acs-alfresco-transform-service/alfresco/api/-default-/private/sfs/versions/1/file
+      template: config-sfs.yaml
+    - equal:
+        path: data.BROKER_URL
+        value: failover:(nio://activemq:61616)
+      template: config-message-broker.yaml
+    - equal:
+        path: data.AWS_REGION
+        value: null
+    - equal:
+        path: data.AWS_S3_BUCKET
+        value: null
+    - equal:
+        path: data.AWS_COMPREHEND_ROLE_ARN
+        value: null
+- it: should not render components configmaps
+  values: *testvalues
+  set:
+    aws:
+      existingConfigMap:
+        name: myaws
+  template: config-aws.yaml
+  asserts:
+    - hasDocuments:
+        count: 0

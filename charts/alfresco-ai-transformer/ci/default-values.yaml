@@ -6,7 +6,7 @@ resources:
     cpu: "1"
     memory: "500Mi"
 activemq:
-  enabled: true
+  fullnameOverride: activemq
   resources:
     requests:
       cpu: "100m"
@@ -14,3 +14,19 @@ activemq:
     limits:
       cpu: "1000m"
       memory: "1Gi"
+  adminUser: &mquser
+    user: someone
+    password: something
+aws:
+  accessKeyId: AAAAAAAAAAAAAAAAA
+  secretAccessKey: ZZZZZZZZZZZZZZZZZ
+  s3Bucket: somebucket
+  region: us-east-1
+  comprehendRoleARN: arn:aws:iam::000000000000:user/comprehend
+sfs:
+  url: http://acs-alfresco-transform-service
+messageBroker:
+  <<: *mquser
+  url: failover:(nio://activemq:61616)
+tags:
+  ci: true

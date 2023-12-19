@@ -1,6 +1,6 @@
 # alfresco-ai-transformer
 
-![Version: 0.4.1](https://img.shields.io/badge/Version-0.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
+![Version: 1.0.0-alpha.1](https://img.shields.io/badge/Version-1.0.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco ai transformer service
 
@@ -8,19 +8,25 @@ A Helm chart for deploying Alfresco ai transformer service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| activemq.enabled | bool | `false` |  |
-| aws.accessKey | string | `"XXXXXXXXXXXXXXXXXXXXXXXX"` | AWS credentials are required as documented at https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration |
-| aws.comprehendRoleARN | string | `"arn:aws:iam::XXXXXXXXXXXX:role/ComprehendAsyncJobs"` |  |
-| aws.region | string | `"region-name"` |  |
-| aws.s3Bucket | string | `"s3-bucket-name"` |  |
-| aws.secretAccessKey | string | `"XXXXXXXXXXXXXXXXXXXXXXXX"` |  |
+| aws.accessKeyId | string | `nil` | AWS credentials are required as documented at https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration |
+| aws.comprehendRoleARN | string | `nil` |  |
+| aws.existingConfigMap.keys.comprehendRoleARN | string | `"AWS_COMPREHEND_ROLE_ARN"` |  |
+| aws.existingConfigMap.keys.region | string | `"AWS_REGION"` |  |
+| aws.existingConfigMap.keys.s3Bucket | string | `"AWS_S3_BUCKET"` |  |
+| aws.existingConfigMap.name | string | `nil` |  |
+| aws.existingSecret.keys.accessKeyId | string | `"AWS_ACCESS_KEY_ID"` |  |
+| aws.existingSecret.keys.secretAccessKey | string | `"AWS_SECRET_ACCESS_KEY"` |  |
+| aws.existingSecret.name | string | `nil` |  |
+| aws.region | string | `nil` |  |
+| aws.s3Bucket | string | `nil` |  |
+| aws.secretAccessKey | string | `nil` |  |
 | environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `8090` |  |
@@ -34,9 +40,11 @@ A Helm chart for deploying Alfresco ai transformer service
 | livenessProbe.maxTransforms | int | `10000` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| messageBroker.existingSecretName | string | `nil` | Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
+| messageBroker.existingConfigMap | object | `{"keys":{"url":"BROKER_URL"},"name":null}` | Alternatively, provide credentials via an existing secret and set the keys as they are given |
+| messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` |  |
+| messageBroker.existingSecret.keys.username | string | `"BROKER_USERNAME"` |  |
+| messageBroker.existingSecret.name | string | `nil` |  |
 | messageBroker.password | string | `nil` |  |
-| messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
 | messageBroker.url | string | `nil` |  |
 | messageBroker.user | string | `nil` |  |
 | nodeSelector | object | `{}` |  |
@@ -52,8 +60,15 @@ A Helm chart for deploying Alfresco ai transformer service
 | service.externalPort | int | `80` |  |
 | service.name | string | `"ai-transformer"` |  |
 | service.type | string | `"ClusterIP"` |  |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `"ai-transformer-sa"` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| sfs.existingConfigMap.keys.url | string | `"FILE_STORE_URL"` |  |
+| sfs.existingConfigMap.name | string | `nil` |  |
+| sfs.url | string | `nil` | Alfresco Transformation filestore (e.g. http://acs-alfresco-transform-service) |
 | strategy.rollingUpdate.maxSurge | int | `1` |  |
 | strategy.rollingUpdate.maxUnavailable | int | `0` |  |
+| tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

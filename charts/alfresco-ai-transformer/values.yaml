@@ -15,6 +15,14 @@ service:
   name: ai-transformer
   type: ClusterIP
   externalPort: 80
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ai-transformer-sa
 podSecurityContext:
   runAsUser: 33015
 resources:
@@ -40,20 +48,45 @@ livenessProbe:
   livenessTransformPeriodSeconds: 600
   maxTransforms: 10000
   maxTransformSeconds: 1800
+sfs:
+  # -- Alfresco Transformation filestore (e.g. http://acs-alfresco-transform-service)
+  url: null
+  existingConfigMap:
+    name: null
+    keys:
+      url: FILE_STORE_URL
 aws:
   # -- AWS credentials are required as documented at https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration
-  accessKey: XXXXXXXXXXXXXXXXXXXXXXXX
-  secretAccessKey: XXXXXXXXXXXXXXXXXXXXXXXX
-  region: region-name
-  s3Bucket: s3-bucket-name
-  comprehendRoleARN: arn:aws:iam::XXXXXXXXXXXX:role/ComprehendAsyncJobs
+  accessKeyId: null
+  secretAccessKey: null
+  region: null
+  s3Bucket: null
+  comprehendRoleARN: null
+  existingConfigMap:
+    name: null
+    keys:
+      region: AWS_REGION
+      s3Bucket: AWS_S3_BUCKET
+      comprehendRoleARN: AWS_COMPREHEND_ROLE_ARN
+  existingSecret:
+    name: null
+    keys:
+      accessKeyId: AWS_ACCESS_KEY_ID
+      secretAccessKey: AWS_SECRET_ACCESS_KEY
 messageBroker:
   url: null
   user: null
   password: null
-  # -- Name of the secret managed by this chart
-  secretName: acs-alfresco-cs-brokersecret
-  # -- Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
-  existingSecretName: null
-activemq:
-  enabled: false
+  # -- Alternatively, provide credentials via an existing secret and set the keys as they are given
+  existingConfigMap:
+    name: null
+    keys:
+      url: BROKER_URL
+  existingSecret:
+    name: null
+    keys:
+      username: BROKER_USERNAME
+      password: BROKER_PASSWORD
+tags:
+  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
+  ci: false

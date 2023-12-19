@@ -15,16 +15,15 @@ spec:
       {{- toYaml .Values.strategy.rollingUpdate | nindent 6 }}
   template:
     metadata:
-      annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config-ai-transformer.yaml") . | sha256sum }}
       labels:
         {{- include "alfresco-ai-transformer.selectorLabels" . | nindent 8 }}
     spec:
-    {{- include "component-pod-security-context" .Values | indent 4 }}
-    {{- if .Values.nodeSelector }}
+      serviceAccountName: {{ include "alfresco-ai-transformer.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
+      {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      {{- end }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -58,14 +57,67 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- include "component-security-context" .Values | indent 8 }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           envFrom:
           - configMapRef:
               name: {{ template "alfresco-ai-transformer.fullname" . }}
-          - secretRef:
-              name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-ai-transformer.fullname" $)) $.Values.messageBroker.existingSecretName }}
           env:
-            {{- include "activemq.env" . | nindent 12 }}
+            {{- $mqSecretCtx := dict "Values" (dict "nameOverride" "ai-mq") "Chart" $.Chart "Release" $.Release }}
+            {{- $mqSecret := coalesce .Values.messageBroker.existingSecret.name (include "alfresco-ai-transformer.fullname" $mqSecretCtx) }}
+            {{- $awsSecretCtx := dict "Values" (dict "nameOverride" "aws-comprehend") "Chart" $.Chart "Release" $.Release }}
+            {{- $awsSecret := coalesce .Values.aws.existingSecret.name (include "alfresco-ai-transformer.fullname" $awsSecretCtx) }}
+            {{- $awsCmCtx := dict "Values" (dict "nameOverride" "aws-comprehend") "Chart" $.Chart "Release" $.Release }}
+            {{- $awsCm := coalesce .Values.aws.existingConfigMap.name (include "alfresco-ai-transformer.fullname" $awsCmCtx) }}
+            {{- $mqCmCtx := dict "Values" (dict "nameOverride" "ai-mq") "Chart" $.Chart "Release" $.Release }}
+            {{- $mqCm := coalesce .Values.messageBroker.existingSecret.name (include "alfresco-ai-transformer.fullname" $mqCmCtx) }}
+            {{- $sfsCmCtx := dict "Values" (dict "nameOverride" "ai-sfs") "Chart" .Chart "Release" .Release }}
+            {{- $sfsCm := coalesce .Values.sfs.existingConfigMap.name (include "alfresco-ai-transformer.fullname" $sfsCmCtx) }}
+            - name: BROKER_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $mqSecret }}
+                  key: {{ .Values.messageBroker.existingSecret.keys.username }}
+            - name: BROKER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $mqSecret }}
+                  key: {{ .Values.messageBroker.existingSecret.keys.password }}
+            - name: BROKER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $mqCm }}
+                  key: {{ .Values.messageBroker.existingConfigMap.keys.url }}
+            - name: FILE_STORE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $sfsCm }}
+                  key: {{ .Values.sfs.existingConfigMap.keys.url }}
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $awsSecret }}
+                  key: {{ .Values.aws.existingSecret.keys.accessKeyId }}
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $awsSecret }}
+                  key: {{ .Values.aws.existingSecret.keys.secretAccessKey }}
+            - name: AWS_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $awsCm }}
+                  key: {{ .Values.aws.existingConfigMap.keys.region }}
+            - name: AWS_S3_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $awsCm }}
+                  key: {{ .Values.aws.existingConfigMap.keys.s3Bucket }}
+            - name: AWS_COMPREHEND_ROLE_ARN
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $awsCm }}
+                  key: {{ .Values.aws.existingConfigMap.keys.comprehendRoleARN }}
+
           ports:
               - containerPort: {{ .Values.image.internalPort }}
           resources: {{- toYaml .Values.resources | nindent 12 }}

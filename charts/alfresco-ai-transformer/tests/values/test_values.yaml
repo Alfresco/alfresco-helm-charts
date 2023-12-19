@@ -3,3 +3,12 @@ global:
   tracking:
     sharedsecret: dummy
   alfrescoRegistryPullSecrets: secretsecret
+aws:
+  accessKeyId: AAAAAAAAAAAAAAAAA
+  secretAccessKey: ZZZZZZZZZZZZZZZZZ
+sfs :
+  url: http://acs-alfresco-transform-service
+messageBroker:
+  user: superbroker
+  password: verycheap
+  url: nio://activemq:61616
