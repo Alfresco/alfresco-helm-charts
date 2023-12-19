@@ -138,3 +138,14 @@ tests:
             limits:
               cpu: "2"
               memory: "2048Mi"
+
+  - it: render nodeSelector properly
+    values: *testvalues
+    set:
+      nodeSelector:
+        node_label: node_value
+    asserts:
+      - equal:
+          path: spec.template.spec.nodeSelector.node_label
+          value: node_value
+        template: liveindexing-deployment.yaml
