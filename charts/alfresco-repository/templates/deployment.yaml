@@ -22,8 +22,6 @@ spec:
     spec:
       serviceAccountName: {{ include "alfresco-repository.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
-      nodeSelector:
-        {{- toYaml .Values.nodeSelector | nindent 8 }}
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       initContainers:
         - name: wait-db-ready
@@ -221,7 +219,7 @@ spec:
       terminationGracePeriodSeconds: {{ .Values.terminationGracePeriod }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
-        {{- toYaml . | indent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.affinity }}
       affinity:
