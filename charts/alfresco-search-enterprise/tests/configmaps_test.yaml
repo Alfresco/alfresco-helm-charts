@@ -2,6 +2,7 @@
 suite: test configmaps
 templates:
   - configmap-mq.yaml
+  - configmap-ats.yaml
   - configmap-database.yaml
   - configmap-repository.yaml
 tests:
@@ -59,18 +60,6 @@ tests:
           path: data.REPOSITORY_URL
           value: https://mycm.domain.tld/alfresco
         template: configmap-repository.yaml
-
-  - it: should have mq configmap render from values
-    set:
-      reindexing:
-          enabled: false
-      messageBroker:
-        url: ssl://some.broker.domain.tld:61617
-    asserts:
-      - equal:
-          path: data.BROKER_URL
-          value: failover:(ssl://some.broker.domain.tld:61617)
-        template: configmap-mq.yaml
 
   - it: should not render cm when existingConfigMap is set
     values: *testvalues
