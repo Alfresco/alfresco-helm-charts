@@ -1,6 +1,6 @@
 # alfresco-ai-transformer
 
-![Version: 1.0.0-alpha.1](https://img.shields.io/badge/Version-1.0.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
+![Version: 1.0.0-alpha.2](https://img.shields.io/badge/Version-1.0.0--alpha.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.1](https://img.shields.io/badge/AppVersion-3.0.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco ai transformer service
 
@@ -9,7 +9,7 @@ A Helm chart for deploying Alfresco ai transformer service
 | Repository | Name | Version |
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.0 |
 
 ## Values
 
