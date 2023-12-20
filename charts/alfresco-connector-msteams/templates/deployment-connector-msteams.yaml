@@ -69,11 +69,23 @@ spec:
           env:
             {{- $msteamsCmCtx := dict "Values" (dict "nameOverride" "repo-teams") "Chart" .Chart "Release" .Release }}
             {{- $msteamsCm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-connector-msteams.fullname" $msteamsCmCtx) }}
+            {{- $msSecretCtx := dict "Values" (dict "nameOverride" "msteams-se") "Chart" .Chart "Release" .Release }}
+            {{- $msSecret := coalesce .Values.microsoft.app.existingSecret.name (include "alfresco-connector-msteams.fullname" $msSecretCtx) }}
             - name: ALFRESCO_BASE_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{ $msteamsCm }}
                   key: {{ .Values.repository.existingConfigMap.keys.url }}
+            - name: MICROSOFT_APP_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $msSecret }}
+                  key: {{ .Values.microsoft.app.existingSecret.keys.id }}
+            - name: MICROSOFT_APP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $msSecret }}
+                  key: {{ .Values.microsoft.app.existingSecret.keys.password }}
           ports:
               - containerPort: {{ .Values.image.internalPort }}
           resources: {{- toYaml .Values.resources | nindent 12 }}

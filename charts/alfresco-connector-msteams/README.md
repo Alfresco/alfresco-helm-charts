@@ -28,9 +28,12 @@ A Helm chart for deploying Alfresco connector msteams service
 | livenessProbe.initialDelaySeconds | int | `10` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| microsoft.app.id | string | `"change_me_app_id"` |  |
+| microsoft.app.existingSecret.keys.id | string | `"change_me_app_id"` |  |
+| microsoft.app.existingSecret.keys.password | string | `"change_me_app_pwd"` |  |
+| microsoft.app.existingSecret.name | string | `nil` |  |
+| microsoft.app.id | string | `nil` |  |
 | microsoft.app.oauth.connectionName | string | `"alfresco"` |  |
-| microsoft.app.password | string | `"change_me_app_pwd"` |  |
+| microsoft.app.password | string | `nil` |  |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | podSecurityContext.runAsUser | int | `33041` |  |

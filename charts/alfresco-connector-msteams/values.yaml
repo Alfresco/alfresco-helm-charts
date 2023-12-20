@@ -44,10 +44,15 @@ alfresco:
     contextPath: /workspace/
 microsoft:
   app:
-    id: change_me_app_id
-    password: change_me_app_pwd
+    id: null
+    password: null
     oauth:
       connectionName: alfresco
+    existingSecret:
+      name: null
+      keys:
+        id: change_me_app_id
+        password: change_me_app_pwd
 teams:
   chat:
     filenameEnabled: true
