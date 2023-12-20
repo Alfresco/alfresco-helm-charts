@@ -253,6 +253,21 @@ entries:
     version: 0.1.0-alpha.0
   alfresco-common:
   - apiVersion: v2
+    created: "2023-12-20T10:15:49.015684841Z"
+    dependencies:
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 1.x.x
+    description: 'A helper subchart to avoid duplication in alfresco charts and set
+      common external dependencies '
+    digest: 08f533a29d5aff61d5f8735b924cd217de8465daddd062c3f591e429ad0d1b04
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    name: alfresco-common
+    type: library
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-common-3.1.0/alfresco-common-3.1.0.tgz
+    version: 3.1.0
+  - apiVersion: v2
     created: "2023-11-06T13:12:22.212212602Z"
     dependencies:
     - name: common
@@ -2561,4 +2576,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2023-12-19T17:13:16.125818561Z"
+generated: "2023-12-20T10:15:49.016261593Z"
