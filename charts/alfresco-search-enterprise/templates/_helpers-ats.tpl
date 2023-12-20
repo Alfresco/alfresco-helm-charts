@@ -6,7 +6,7 @@ Usage: include "alfresco-search-enterprise.transform.fullurl" "URL"
 
 */}}
 {{- define "alfresco-search-enterprise.ats.fullurl" -}}
-  ATS_URL: {{ printf "%s/transform/config" . }}
+  ATS_URL: {{ template "alfresco-common.ats.fullurl" . }}
 {{- end -}}
 
 {{/*
@@ -17,7 +17,7 @@ Usage: include "alfresco-search-enterprise.sfs.fullurl" "URL"
 
 */}}
 {{- define "alfresco-search-enterprise.sfs.fullurl" -}}
-  SFS_URL: {{ printf "%s/alfresco/api/-default-/private/sfs/versions/1/file/" . }}
+  SFS_URL: {{ template "alfresco-common.sfs.fullurl" . }}
 {{- end -}}
 
 {{/*

@@ -2,12 +2,11 @@
 suite: test configmaps
 templates:
   - configmap-mq.yaml
+  - configmap-ats.yaml
   - configmap-database.yaml
   - configmap-repository.yaml
 tests:
   - it: should fail rendering manifest without required Alfresco repository values
-    values: &testvalues
-      - values/embedded-charts-values.yaml
     asserts:
       - failedTemplate:
           errorMessage: .reindexing.repository.url is mandatory when not using existingConfigMap
@@ -24,7 +23,8 @@ tests:
         template: configmap-mq.yaml
 
   - it: should create a cm from messageBroker provided values
-    values: *testvalues
+    values: &testvalues
+      - values/embedded-charts-values.yaml
     set:
       reindexing.enabled: false
     asserts:
@@ -32,6 +32,14 @@ tests:
           path: data.BROKER_URL
           value: failover:(tcp://localhost:61616)
         template: configmap-mq.yaml
+      - equal:
+          path: data.ATS_URL
+          value: http://transform/transform/config
+        template: configmap-ats.yaml
+      - equal:
+          path: data.SFS_URL
+          value: http://sfs/alfresco/api/-default-/private/sfs/versions/1/file/
+        template: configmap-ats.yaml
 
   - it: should fail rendering manifest without required values
     values: *testvalues
@@ -59,18 +67,6 @@ tests:
           path: data.REPOSITORY_URL
           value: https://mycm.domain.tld/alfresco
         template: configmap-repository.yaml
-
-  - it: should have mq configmap render from values
-    set:
-      reindexing:
-          enabled: false
-      messageBroker:
-        url: ssl://some.broker.domain.tld:61617
-    asserts:
-      - equal:
-          path: data.BROKER_URL
-          value: failover:(ssl://some.broker.domain.tld:61617)
-        template: configmap-mq.yaml
 
   - it: should not render cm when existingConfigMap is set
     values: *testvalues

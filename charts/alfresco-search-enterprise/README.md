@@ -1,6 +1,6 @@
 # alfresco-search-enterprise
 
-![Version: 3.0.3](https://img.shields.io/badge/Version-3.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.0.1](https://img.shields.io/badge/AppVersion-4.0.0.1-informational?style=flat-square)
+![Version: 3.1.0-alpha.1](https://img.shields.io/badge/Version-3.1.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.0.1](https://img.shields.io/badge/AppVersion-4.0.0.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -11,7 +11,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | Repository | Name | Version |
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.3.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.0 |
 | https://helm.elastic.co | elasticsearch | 7.17.3 |
 
 ## Values
