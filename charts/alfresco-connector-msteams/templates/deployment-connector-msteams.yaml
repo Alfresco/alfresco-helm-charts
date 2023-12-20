@@ -63,16 +63,17 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
-          {{- $msteams_details_cm := .Values.repository.existingConfigMap.name | default (print (include "alfresco-connector-msteams.fullname" .) "-configmap") }}
-          env:
-            - name: ALFRESCO_BASE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ $msteams_details_cm }}
-                  key: {{ .Values.repository.existingConfigMap.keys.url }}
           envFrom:
             - configMapRef:
                 name: {{ template "alfresco-connector-msteams.fullname" . }}
+          env:
+            {{- $msteamsCmCtx := dict "Values" (dict "nameOverride" "repo-teams") "Chart" .Chart "Release" .Release }}
+            {{- $msteamsCm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-connector-msteams.fullname" $msteamsCmCtx) }}
+            - name: ALFRESCO_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $msteamsCm }}
+                  key: {{ .Values.repository.existingConfigMap.keys.url }}
           ports:
               - containerPort: {{ .Values.image.internalPort }}
           resources: {{- toYaml .Values.resources | nindent 12 }}

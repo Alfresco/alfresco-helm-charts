@@ -1,4 +1,3 @@
-{{- if not .Values.repository.existingConfigMap.name -}}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -12,7 +11,6 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
-  ALFRESCO_BASE_URL: "{{ .Values.alfresco.baseUrl }}"
   ALFRESCO_DIGITAL_WORKSPACE_CONTEXT_PATH: "{{ .Values.alfresco.digitalWorkspace.contextPath }}"
   MICROSOFT_APP_ID: "{{ .Values.microsoft.app.id }}"
   MICROSOFT_APP_PASSWORD: "{{ .Values.microsoft.app.password }}"
@@ -20,4 +18,3 @@ data:
   TEAMS_CHAT_FILENAME_ENABLED: "{{ .Values.teams.chat.filenameEnabled }}"
   TEAMS_CHAT_METADATA_ENABLED: "{{ .Values.teams.chat.metadataEnabled }}"
   TEAMS_CHAT_IMAGE_ENABLED: "{{ .Values.teams.chat.imageEnabled }}"
-{{- end -}}
