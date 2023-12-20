@@ -8,5 +8,5 @@ metadata:
     {{- include "alfresco-ai-transformer.labels" . | nindent 4 }}
 data:
   {{- $reqmsg := "You must provide a base URL for the filestore service as sfs.url" }}
-  FILE_STORE_URL: {{ printf "%s/alfresco/api/-default-/private/sfs/versions/1/file"  (required $reqmsg .Values.sfs.url) }}
+  FILE_STORE_URL: {{ template "alfresco-common.sfs.fullurl" (required $reqmsg .Values.sfs.url) }}
 {{- end }}
