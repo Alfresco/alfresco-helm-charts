@@ -28,8 +28,8 @@ A Helm chart for deploying Alfresco connector msteams service
 | livenessProbe.initialDelaySeconds | int | `10` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| microsoft.app.existingSecret.keys.id | string | `"change_me_app_id"` |  |
-| microsoft.app.existingSecret.keys.password | string | `"change_me_app_pwd"` |  |
+| microsoft.app.existingSecret.keys.id | string | `"MICROSOFT_APP_ID"` |  |
+| microsoft.app.existingSecret.keys.password | string | `"MICROSOFT_APP_PASSWORD"` |  |
 | microsoft.app.existingSecret.name | string | `nil` |  |
 | microsoft.app.id | string | `nil` |  |
 | microsoft.app.oauth.connectionName | string | `"alfresco"` |  |

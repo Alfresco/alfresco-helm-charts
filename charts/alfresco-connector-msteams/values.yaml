@@ -51,8 +51,8 @@ microsoft:
     existingSecret:
       name: null
       keys:
-        id: change_me_app_id
-        password: change_me_app_pwd
+        id: MICROSOFT_APP_ID
+        password: MICROSOFT_APP_PASSWORD
 teams:
   chat:
     filenameEnabled: true
