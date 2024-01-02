@@ -7,6 +7,17 @@ activemq:
     limits:
       cpu: "1000m"
       memory: "1Gi"
+  nameOverride: activemq
+  nodeSelector: {}
+  adminUser:
+    user: admin
+    password: admin
+
+messageBroker:
+  url: failover:(nio://activemq-broker:61616)?timeout=3000&jms.useCompression=true
+  user: admin
+  password: admin
+
 transformrouter:
   replicaCount: 1
 pdfrenderer:
@@ -69,3 +80,6 @@ filestore:
     limits:
       memory: "700Mi"
   replicaCount: 1
+
+tags:
+  ci: true

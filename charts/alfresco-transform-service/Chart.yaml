@@ -2,18 +2,20 @@ apiVersion: v2
 name: alfresco-transform-service
 description: A Helm chart for deploying Alfresco Transform Services
 type: application
-version: 0.3.2
+version: 1.0.0
 appVersion: 4.0.1
 dependencies:
   - name: alfresco-common
     version: 2.1.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
-  - name: activemq
-    version: 3.2.0
-    repository: https://alfresco.github.io/alfresco-helm-charts/
-    condition: activemq.enabled
   - name: alfresco-ai-transformer
     alias: ai
     version: 0.2.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: ai.enabled
+  - name: activemq
+    version: 3.2.0
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    condition: activemq.enabled
+    tags:
+      - ci

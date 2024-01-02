@@ -1,6 +1,6 @@
 # alfresco-transform-service
 
-![Version: 0.3.2](https://img.shields.io/badge/Version-0.3.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Transform Services
 
@@ -16,11 +16,6 @@ A Helm chart for deploying Alfresco Transform Services
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| activemq.adminUser.password | string | `"admin"` | Default password for the embedded broker admin user |
-| activemq.adminUser.user | string | `"admin"` | Default username for the embedded broker admin user |
-| activemq.enabled | bool | `false` |  |
-| activemq.nameOverride | string | `"activemq"` |  |
-| activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, with a key-value pair label e.g {"kubernetes.io/hostname": multinode-demo-m02} |
 | ai.enabled | bool | `false` |  |
 | ai.nameOverride | string | `"alfresco-ai"` |  |
 | filestore.enabled | bool | `true` |  |
@@ -125,9 +120,13 @@ A Helm chart for deploying Alfresco Transform Services
 | libreoffice.service.externalPort | int | `80` |  |
 | libreoffice.service.name | string | `"libreoffice"` |  |
 | libreoffice.service.type | string | `"ClusterIP"` |  |
-| messageBroker | object | `{"existingSecretName":null,"password":null,"secretName":"acs-alfresco-cs-brokersecret","url":null,"user":null}` | external activemq connection setting when activemq.enabled=false |
-| messageBroker.existingSecretName | string | `nil` | Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
-| messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
+| messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` |  |
+| messageBroker.existingSecret.keys.url | string | `"BROKER_URL"` |  |
+| messageBroker.existingSecret.keys.user | string | `"BROKER_USERNAME"` |  |
+| messageBroker.existingSecret.name | string | `nil` | Alternatively, provide credentials via an existing secret |
+| messageBroker.password | string | `nil` | External activemq password |
+| messageBroker.url | string | `nil` | External activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true) |
+| messageBroker.user | string | `nil` | External activemq username |
 | pdfrenderer.enabled | bool | `true` |  |
 | pdfrenderer.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | pdfrenderer.image.internalPort | int | `8090` |  |

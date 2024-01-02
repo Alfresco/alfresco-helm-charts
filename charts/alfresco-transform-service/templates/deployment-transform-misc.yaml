@@ -55,10 +55,8 @@ spec:
           envFrom:
           - configMapRef:
               name: {{ template "alfresco-transform-service.config-transform-misc.name" . }}
-          - secretRef:
-              name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-transform-service.fullname" $)) $.Values.messageBroker.existingSecretName }}
           env:
-            {{- include "activemq.env" . | nindent 12 }}
+            {{- include "alfresco-transform-service.messageBroker.env" . | nindent 12 }}
           ports:
             - containerPort: {{ .Values.transformmisc.image.internalPort }}
           resources: {{- toYaml .Values.transformmisc.resources | nindent 12 }}

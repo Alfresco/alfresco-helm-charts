@@ -304,26 +304,20 @@ filestore:
     data:
       mountPath: "/tmp/Alfresco"
       subPath: "alfresco-content-services/filestore-data"
-activemq:
-  nameOverride: activemq
-  enabled: false
-  # -- Possibility to choose Node for pod, with a key-value pair label
-  # e.g {"kubernetes.io/hostname": multinode-demo-m02}
-  nodeSelector: {}
-  adminUser:
-    # -- Default username for the embedded broker admin user
-    user: admin
-    # -- Default password for the embedded broker admin user
-    password: admin
-# -- external activemq connection setting when activemq.enabled=false
 messageBroker:
+  # -- External activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true)
   url: null
+  # -- External activemq username
   user: null
+  # -- External activemq password
   password: null
-  # -- Name of the secret managed by this chart
-  secretName: acs-alfresco-cs-brokersecret
-  # -- Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
-  existingSecretName: null
+  existingSecret:
+    # -- Alternatively, provide credentials via an existing secret
+    name: null
+    keys:
+      url: BROKER_URL
+      user: BROKER_USERNAME
+      password: BROKER_PASSWORD
 ai:
   enabled: false
   nameOverride: alfresco-ai

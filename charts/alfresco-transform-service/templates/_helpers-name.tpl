@@ -67,3 +67,8 @@
 {{- $scope := (dict "Values" (dict "nameOverride" "transform-router" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-transform-service.fullname" $scope }}
 {{- end }}
+
+{{- define "alfresco-transform-service.secret-messagebroker.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "messagebroker-secret" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-transform-service.fullname" $scope }}
+{{- end }}
