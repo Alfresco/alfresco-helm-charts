@@ -9,8 +9,8 @@ A Helm chart for deploying Alfresco Transform Services
 | Repository | Name | Version |
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | ai(alfresco-ai-transformer) | 0.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | ai(alfresco-ai-transformer) | 0.4.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.0 |
 
 ## Values
 

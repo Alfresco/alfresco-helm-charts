@@ -6,11 +6,11 @@ version: 1.0.0-alpha.0
 appVersion: 4.0.1
 dependencies:
   - name: alfresco-common
-    version: 2.1.0
+    version: 3.1.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: alfresco-ai-transformer
     alias: ai
-    version: 0.2.0
+    version: 0.4.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
     condition: ai.enabled
   - name: activemq
