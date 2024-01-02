@@ -1,0 +1,66 @@
+---
+suite: test common deployment features
+templates:
+  - deployment-filestore.yaml
+  - deployment-imagemagick.yaml
+  - deployment-libreoffice.yaml
+  - deployment-pdfrenderer.yaml
+  - deployment-tika.yaml
+  - deployment-transform-misc.yaml
+  - deployment-transform-router.yaml
+  - secret-messagebroker.yaml
+  - config-filestore.yaml
+  - config-imagemagick.yaml
+  - config-libreoffice.yaml
+  - config-pdfrenderer.yaml
+  - config-tika.yaml
+  - config-transform-misc.yaml
+  - config-transform-router.yaml
+
+tests:
+  - it: should render expected labels in every resource
+    values:
+      - values/test_values.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env
+          value: &messageBroker_envs
+            - name: ACTIVEMQ_URL
+              valueFrom:
+                secretKeyRef:
+                  key: BROKER_URL
+                  name: RELEASE-NAME-messagebroker-secret
+            - name: ACTIVEMQ_USER
+              valueFrom:
+                secretKeyRef:
+                  key: BROKER_USERNAME
+                  name: RELEASE-NAME-messagebroker-secret
+            - name: ACTIVEMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: BROKER_PASSWORD
+                  name: RELEASE-NAME-messagebroker-secret
+        template: deployment-imagemagick.yaml
+      - equal:
+          path: spec.template.spec.containers[0].env
+          value: *messageBroker_envs
+        template: deployment-libreoffice.yaml
+      - equal:
+          path: spec.template.spec.containers[0].env
+          value: *messageBroker_envs
+        template: deployment-pdfrenderer.yaml
+      - equal:
+          path: spec.template.spec.containers[0].env
+          value: *messageBroker_envs
+        template: deployment-tika.yaml
+      - equal:
+          path: spec.template.spec.containers[0].env
+          value: *messageBroker_envs
+        template: deployment-transform-misc.yaml
+      - equal:
+          path: spec.template.spec.containers[0].env
+          value: *messageBroker_envs
+        template: deployment-transform-router.yaml
+      - isNull:
+          path: spec.template.spec.containers[0].env
+        template: deployment-filestore.yaml
