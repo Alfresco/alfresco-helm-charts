@@ -1,5 +1,5 @@
 ---
-suite: test components deployed based on ACS flavor (enterprise vs community)
+suite: test components on community/enterprise
 templates:
   - config-libreoffice.yaml
   - deployment-libreoffice.yaml
