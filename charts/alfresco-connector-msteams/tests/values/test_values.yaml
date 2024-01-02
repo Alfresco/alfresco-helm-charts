@@ -3,3 +3,9 @@ global:
   tracking:
     sharedsecret: dummy
   alfrescoRegistryPullSecrets: secretsecret
+microsoft:
+  app:
+    id: change_me_app_id
+    password: change_me_app_pwd
+repository:
+  url: https://msteams-connectors-service

@@ -3,25 +3,98 @@ templates:
 - deployment-connector-msteams.yaml
 - config-connector-msteams.yaml
 tests:
-- it: should have basic metadata in place
+- it: should have basic deployment properties by default
   values: &testvalues
   - values/test_values.yaml
+  template: deployment-connector-msteams.yaml
   asserts:
-  - equal:
-      path: metadata.name
-      value: RELEASE-NAME-alfresco-connector-msteams
-    template: deployment-connector-msteams.yaml
-
-- it: should render cpu and memory limits
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: ALFRESCO_BASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: RELEASE-NAME-repo-teams
+              key: ALFRESCO_BASE_URL
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: MICROSOFT_APP_ID
+          valueFrom:
+            secretKeyRef:
+              name: RELEASE-NAME-msteams-se
+              key: MICROSOFT_APP_ID
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: MICROSOFT_APP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: RELEASE-NAME-msteams-se
+              key: MICROSOFT_APP_PASSWORD
+    - isSubset:
+        path: metadata.labels
+        content:
+          app.kubernetes.io/name: alfresco-connector-msteams
+    - equal:
+        path: spec.template.spec.serviceAccountName
+        value: msteams-sa
+    - equal:
+        path: metadata.name
+        value: RELEASE-NAME-alfresco-connector-msteams
+    - equal:
+        path: spec.template.spec.containers[0].resources
+        value:
+          requests:
+            cpu: "0.5"
+            memory: "1000Mi"
+          limits:
+            cpu: "1"
+            memory: "1000Mi"
+- it: should render deployment with existing secrets and configmaps
   values: *testvalues
+  set:
+    serviceAccount:
+      create: false
+      name: null
+    repository:
+      existingConfigMap:
+        name: baseurl
+        keys:
+          url: BASE_URL
+    microsoft:
+      app:
+        existingSecret:
+          name: msteamscreds
+          keys:
+            id: ABC
+            password: XYZ
+  template: deployment-connector-msteams.yaml
   asserts:
-  - equal:
-      path: spec.template.spec.containers[0].resources
-      value:
-        requests:
-          cpu: "0.5"
-          memory: "1000Mi"
-        limits:
-          cpu: "1"
-          memory: "1000Mi"
-    template: deployment-connector-msteams.yaml
+    - equal:
+        path: spec.template.spec.serviceAccountName
+        value: default
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: ALFRESCO_BASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: baseurl
+              key: BASE_URL
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: MICROSOFT_APP_ID
+          valueFrom:
+            secretKeyRef:
+              name: msteamscreds
+              key: ABC
+    - contains:
+        path: spec.template.spec.containers[0].env
+        content:
+          name: MICROSOFT_APP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: msteamscreds
+              key: XYZ

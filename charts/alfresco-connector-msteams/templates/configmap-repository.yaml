@@ -7,6 +7,6 @@ metadata:
   labels:
     {{- include "alfresco-connector-msteams.labels" . | nindent 4 }}
 data:
-  {{- $reqmsg := "You must provide a base URL in the repository.url" }}
+  {{- $reqmsg := "You must provide valid base URL" }}
   ALFRESCO_BASE_URL: {{ required $reqmsg .Values.alfresco.baseUrl | quote }}
 {{- end }}
