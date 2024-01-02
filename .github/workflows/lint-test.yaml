@@ -92,9 +92,11 @@ jobs:
           done
 
       - name: Run chart-testing (install)
-        run: |
-          ct install --config ct-install.yaml \
-            --namespace "$INSTALL_NAMESPACE" $TEST_ALL_CHARTS_ARG
+        run: >-
+          ct install --config ct-install.yaml
+          --namespace "$INSTALL_NAMESPACE"
+          $TEST_ALL_CHARTS_ARG
+          --skip-clean-up
 
       - name: Debug on failure
         if: failure()
