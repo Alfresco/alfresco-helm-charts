@@ -95,3 +95,8 @@ jobs:
         run: |
           ct install --config ct-install.yaml \
             --namespace "$INSTALL_NAMESPACE" $TEST_ALL_CHARTS_ARG
+
+      - name: Debug on failure
+        if: failure()
+        run: |
+          kubectl --namespace "$INSTALL_NAMESPACE" get svc
