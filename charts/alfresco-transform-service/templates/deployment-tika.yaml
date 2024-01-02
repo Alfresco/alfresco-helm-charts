@@ -53,10 +53,10 @@ spec:
           imagePullPolicy: {{ .Values.tika.image.pullPolicy }}
           {{- include "component-security-context" .Values.tika | indent 8 }}
           envFrom:
-          - configMapRef:
-              name: {{ template "alfresco-transform-service.config-tika.name" . }}
+            - configMapRef:
+                name: {{ template "alfresco-transform-service.config-tika.name" . }}
           env:
-            {{- include "alfresco-transform-service.messageBroker.env" . | nindent 12 }}
+            {{- include "alfresco-transform-service.messageBroker.env" $ | nindent 12 }}
           ports:
             - containerPort: {{ .Values.tika.image.internalPort }}
           resources: {{- toYaml .Values.tika.resources | nindent 12 }}

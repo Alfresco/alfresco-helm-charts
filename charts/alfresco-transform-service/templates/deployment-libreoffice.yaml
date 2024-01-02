@@ -53,10 +53,10 @@ spec:
           imagePullPolicy: {{ .Values.libreoffice.image.pullPolicy }}
           {{- include "component-security-context" .Values.libreoffice | indent 8 }}
           envFrom:
-          - configMapRef:
-              name: {{ template "alfresco-transform-service.config-libreoffice.name" . }}
+            - configMapRef:
+                name: {{ template "alfresco-transform-service.config-libreoffice.name" . }}
           env:
-            {{- include "alfresco-transform-service.messageBroker.env" . | nindent 12 }}
+            {{- include "alfresco-transform-service.messageBroker.env" $ | nindent 12 }}
           ports:
             - containerPort: {{ .Values.libreoffice.image.internalPort }}
           resources: {{- toYaml .Values.libreoffice.resources | nindent 12 }}

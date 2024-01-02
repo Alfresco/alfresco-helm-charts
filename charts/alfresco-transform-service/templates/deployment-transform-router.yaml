@@ -53,10 +53,10 @@ spec:
           imagePullPolicy: {{ .Values.transformrouter.image.pullPolicy }}
           {{- include "component-security-context" .Values.transformrouter | indent 8 }}
           envFrom:
-          - configMapRef:
-              name: {{ template "alfresco-transform-service.config-transform-router.name" . }}
+            - configMapRef:
+                name: {{ template "alfresco-transform-service.config-transform-router.name" . }}
           env:
-            {{- include "alfresco-transform-service.messageBroker.env" . | nindent 12 }}
+            {{- include "alfresco-transform-service.messageBroker.env" $ | nindent 12 }}
           ports:
             - containerPort: {{ .Values.transformrouter.image.internalPort }}
           resources: {{- toYaml .Values.transformrouter.resources | nindent 12 }}

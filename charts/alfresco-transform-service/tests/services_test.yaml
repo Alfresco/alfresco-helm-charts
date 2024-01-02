@@ -27,7 +27,7 @@ templates:
 
 tests:
   - it: should render a service with matching pods
-    values: &testvalues
+    values:
       - values/test_values.yaml
     asserts:
       - isSubset:
