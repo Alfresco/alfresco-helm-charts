@@ -89,6 +89,7 @@ messageBroker:
       password: BROKER_PASSWORD
 nodeSelector: {}
 extraVolumes: []
+extraVolumeMounts: []
 extraInitContainers: []
 command: []
 args: []

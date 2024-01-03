@@ -31,6 +31,7 @@ A Helm chart for deploying Alfresco ai transformer service
 | command | list | `[]` |  |
 | environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | extraInitContainers | list | `[]` |  |
+| extraVolumeMounts | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `8090` |  |
