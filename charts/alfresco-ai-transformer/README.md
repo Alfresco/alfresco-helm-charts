@@ -28,6 +28,7 @@ A Helm chart for deploying Alfresco ai transformer service
 | aws.region | string | `nil` |  |
 | aws.s3Bucket | string | `nil` |  |
 | aws.secretAccessKey | string | `nil` |  |
+| command | list | `[]` |  |
 | environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | extraInitContainers | list | `[]` |  |
 | extraVolumes | list | `[]` |  |
