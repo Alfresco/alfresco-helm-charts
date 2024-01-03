@@ -19,7 +19,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-filestore.yaml") . | sha256sum }}
       labels:
-        {{- include "alfresco-transform-service.filestore.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-transform-service.filestore.labels" . | nindent 8 }}
     spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}

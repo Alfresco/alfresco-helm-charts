@@ -19,7 +19,7 @@ spec:
       annotations:
         {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "transform-router") | indent 8 }}
       labels:
-        {{- include "alfresco-transform-service.transform-router.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-transform-service.transform-router.labels" . | nindent 8 }}
     spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
