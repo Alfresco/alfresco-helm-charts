@@ -14,7 +14,7 @@ Alfresco Share Helm chart for Kubernetes
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` |  |
+| affinity | string | `""` | string representation of the YAML affinity rules (can use templates) |
 | args | list | `[]` |  |
 | command | list | `[]` |  |
 | environment.CATALINA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |

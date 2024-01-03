@@ -82,7 +82,8 @@ resources:
     memory: "2000Mi"
 nodeSelector: {}
 tolerations: []
-affinity: {}
+# -- string representation of the YAML affinity rules (can use templates)
+affinity: ""
 environment:
   CATALINA_OPTS: >-
     -XX:MinRAMPercentage=50
