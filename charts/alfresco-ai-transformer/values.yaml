@@ -514,7 +514,23 @@ messageBroker:
       password: BROKER_PASSWORD
 nodeSelector: {}
 tolerations: []
-affinity: {}
+# -- string representation of the YAML affinity rules (can use templates)
+affinity: |-
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 10
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - {{ template "alfresco-ai-transformer.name" $ }}
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                  - {{ $.Release.Name }}
+          topologyKey: topology.kubernetes.io/zone
 extraVolumes: []
 extraVolumeMounts: []
 extraInitContainers: []

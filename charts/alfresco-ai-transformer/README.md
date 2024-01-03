@@ -15,7 +15,7 @@ A Helm chart for deploying Alfresco ai transformer service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` |  |
+| affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n            - key: app.kubernetes.io/name\n              operator: In\n              values:\n                - {{ template \"alfresco-ai-transformer.name\" $ }}\n            - key: app.kubernetes.io/instance\n              operator: In\n              values:\n                - {{ $.Release.Name }}\n        topologyKey: topology.kubernetes.io/zone"` | string representation of the YAML affinity rules (can use templates) |
 | args | list | `[]` |  |
 | aws.accessKeyId | string | `nil` | AWS credentials are required as documented at https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration |
 | aws.comprehendRoleARN | string | `nil` |  |

@@ -20,40 +20,7 @@ spec:
     spec:
       serviceAccountName: {{ include "alfresco-ai-transformer.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- .Values.nodeSelector | toYaml | nindent 8 }}
-      {{- end }}
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 10
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: app.kubernetes.io/name
-                      operator: In
-                      values:
-                        - {{ template "alfresco-ai-transformer.name" . }}
-                    - key: app.kubernetes.io/instance
-                      operator: In
-                      values:
-                        - {{ .Release.Name }}
-                topologyKey: failure-domain.beta.kubernetes.io/zone
-            - weight: 5
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: app.kubernetes.io/name
-                      operator: In
-                      values:
-                        - {{ template "alfresco-ai-transformer.name" . }}
-                    - key: app.kubernetes.io/instance
-                      operator: In
-                      values:
-                        - {{ .Release.Name }}
-                topologyKey: failure-domain.beta.kubernetes.io/zone
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -123,14 +90,6 @@ spec:
             - containerPort: {{ .Values.image.internalPort }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.tolerations }}
-          tolerations:
-            {{- toYaml . | nindent 8 }}
-          {{- end }}
-          {{- with $.Values.affinity }}
-          affinity:
-            {{- toYaml . | nindent 8 }}
-          {{- end }}
           volumeMounts:
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
           readinessProbe:
@@ -156,6 +115,18 @@ spec:
           args:
             {{- toYaml .Values.args | nindent 12 }}
           {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- .Values.nodeSelector | toYaml | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- tpl . $ | nindent 8 }}
+      {{- end }}
       initContainers:
         {{- toYaml .Values.extraInitContainers | nindent 8 }}
       volumes:
