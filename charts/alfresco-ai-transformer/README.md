@@ -15,6 +15,7 @@ A Helm chart for deploying Alfresco ai transformer service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| affinity | object | `{}` |  |
 | args | list | `[]` |  |
 | aws.accessKeyId | string | `nil` | AWS credentials are required as documented at https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration |
 | aws.comprehendRoleARN | string | `nil` |  |
