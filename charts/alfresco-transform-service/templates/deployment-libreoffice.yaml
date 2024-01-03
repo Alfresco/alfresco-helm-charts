@@ -64,7 +64,15 @@ spec:
           ports:
             - containerPort: {{ .Values.libreoffice.image.internalPort }}
           resources: {{- toYaml .Values.libreoffice.resources | nindent 12 }}
+          {{- with .Values.libreoffice.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{ include "alfresco-transform-service.probes" .Values.libreoffice | nindent 10 }}
+      {{- with .Values.libreoffice.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.libreoffice.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

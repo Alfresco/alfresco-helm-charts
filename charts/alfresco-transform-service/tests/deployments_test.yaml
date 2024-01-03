@@ -188,3 +188,94 @@ tests:
           content:
             testLabel: transformrouter
         template: deployment-transform-router.yaml
+
+  - it: should render expected volumeMount/volumes in every deployment
+    values:
+      - values/test_values.yaml
+    set:
+      filestore: &volumes_set
+        volumes:
+          - name: foo
+            secret:
+              secretName: mysecret
+              optional: false
+        volumeMounts:
+          - name: foo
+            mountPath: "/etc/foo"
+            readOnly: true
+      imagemagick: *volumes_set
+      libreoffice: *volumes_set
+      pdfrenderer: *volumes_set
+      tika: *volumes_set
+      transformmisc: *volumes_set
+      transformrouter: *volumes_set
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content: &volumemounts_content
+            name: foo
+            mountPath: "/etc/foo"
+            readOnly: true
+        template: deployment-filestore.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content: &volumes_content
+            name: foo
+            secret:
+              secretName: mysecret
+              optional: false
+        template: deployment-filestore.yaml
+
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content: *volumemounts_content
+        template: deployment-imagemagick.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content: *volumes_content
+        template: deployment-imagemagick.yaml
+
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content: *volumemounts_content
+        template: deployment-libreoffice.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content: *volumes_content
+        template: deployment-libreoffice.yaml
+
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content: *volumemounts_content
+        template: deployment-pdfrenderer.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content: *volumes_content
+        template: deployment-pdfrenderer.yaml
+
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content: *volumemounts_content
+        template: deployment-tika.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content: *volumes_content
+        template: deployment-tika.yaml
+
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content: *volumemounts_content
+        template: deployment-transform-misc.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content: *volumes_content
+        template: deployment-transform-misc.yaml
+
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content: *volumemounts_content
+        template: deployment-transform-router.yaml
+      - contains:
+          path: spec.template.spec.volumes
+          content: *volumes_content
+        template: deployment-transform-router.yaml

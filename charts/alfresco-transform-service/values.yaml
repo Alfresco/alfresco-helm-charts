@@ -39,6 +39,8 @@ transformrouter:
     limits:
       cpu: "1"
       memory: "1Gi"
+  volumes: []
+  volumeMounts: []
 pdfrenderer:
   enabled: true
   replicaCount: 2
@@ -84,6 +86,8 @@ pdfrenderer:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1200
+  volumes: []
+  volumeMounts: []
 imagemagick:
   enabled: true
   replicaCount: 2
@@ -129,6 +133,8 @@ imagemagick:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 900
+  volumes: []
+  volumeMounts: []
 libreoffice:
   enabled: true
   replicaCount: 2
@@ -174,6 +180,8 @@ libreoffice:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 99999
     maxTransformSeconds: 1800
+  volumes: []
+  volumeMounts: []
 tika:
   enabled: true
   replicaCount: 2
@@ -219,6 +227,8 @@ tika:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
+  volumes: []
+  volumeMounts: []
 transformmisc:
   enabled: true
   replicaCount: 2
@@ -264,6 +274,8 @@ transformmisc:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
+  volumes: []
+  volumeMounts: []
 filestore:
   enabled: true
   replicaCount: 1
@@ -332,6 +344,9 @@ filestore:
     data:
       mountPath: "/tmp/Alfresco"
       subPath: "alfresco-content-services/filestore-data"
+  volumes: []
+  volumeMounts: []
+
 messageBroker:
   # -- External activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true)
   url: null
@@ -350,9 +365,11 @@ messageBroker:
     keys:
       user: BROKER_USERNAME
       password: BROKER_PASSWORD
+
 ai:
   enabled: false
   nameOverride: alfresco-ai
+
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:

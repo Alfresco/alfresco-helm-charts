@@ -64,7 +64,15 @@ spec:
           ports:
             - containerPort: {{ .Values.pdfrenderer.image.internalPort }}
           resources: {{- toYaml .Values.pdfrenderer.resources | nindent 12 }}
+          {{- with .Values.pdfrenderer.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{ include "alfresco-transform-service.probes" .Values.pdfrenderer | nindent 10 }}
+      {{- with .Values.pdfrenderer.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.pdfrenderer.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

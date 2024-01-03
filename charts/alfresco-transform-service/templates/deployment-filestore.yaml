@@ -67,8 +67,14 @@ spec:
             - name: data
               mountPath: {{ .Values.filestore.persistence.data.mountPath }}
               subPath: {{ .Values.filestore.persistence.data.subPath }}
+            {{- with .Values.filestore.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
       volumes:
       {{- include "data_volume" .Values.filestore | nindent 8 }}
+      {{- with .Values.filestore.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.filestore.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

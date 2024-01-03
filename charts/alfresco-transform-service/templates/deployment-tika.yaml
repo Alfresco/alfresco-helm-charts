@@ -64,7 +64,15 @@ spec:
           ports:
             - containerPort: {{ .Values.tika.image.internalPort }}
           resources: {{- toYaml .Values.tika.resources | nindent 12 }}
+          {{- with .Values.tika.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{ include "alfresco-transform-service.probes" .Values.tika | nindent 10 }}
+      {{- with .Values.tika.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.tika.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

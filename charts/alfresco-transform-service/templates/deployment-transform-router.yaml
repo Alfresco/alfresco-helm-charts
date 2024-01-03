@@ -65,17 +65,23 @@ spec:
             - containerPort: {{ .Values.transformrouter.image.internalPort }}
           resources: {{- toYaml .Values.transformrouter.resources | nindent 12 }}
           {{ include "alfresco-transform-service.probes" .Values.transformrouter | nindent 10 }}
-          {{- if .Values.ai.enabled }}
           volumeMounts:
-          - name: config-volume
-            mountPath: /mnt/routes
+          {{- if .Values.ai.enabled }}
+            - name: config-volume
+              mountPath: /mnt/routes
           {{- end }}
-      {{- if .Values.ai.enabled }}
+          {{- with .Values.transformrouter.volumeMounts }}
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
       volumes:
-      - name: config-volume
-        configMap:
-          name: {{ template "alfresco.shortname" . }}-transform-routes-configmap
-      {{- end }}
+        {{- if .Values.ai.enabled }}
+        - name: config-volume
+          configMap:
+            name: {{ template "alfresco.shortname" . }}-transform-routes-configmap
+        {{- end }}
+        {{- with .Values.transformrouter.volumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       {{- with .Values.transformrouter.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

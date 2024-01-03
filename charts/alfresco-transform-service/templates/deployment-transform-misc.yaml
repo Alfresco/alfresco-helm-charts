@@ -64,7 +64,15 @@ spec:
           ports:
             - containerPort: {{ .Values.transformmisc.image.internalPort }}
           resources: {{- toYaml .Values.transformmisc.resources | nindent 12 }}
+          {{- with .Values.transformmisc.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{ include "alfresco-transform-service.probes" .Values.transformmisc | nindent 10 }}
+      {{- with .Values.transformmisc.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.transformmisc.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
