@@ -126,3 +126,65 @@ tests:
           content:
             testAnnotation: transformrouter
         template: deployment-transform-router.yaml
+
+  - it: should render expected labels in every deployment
+    values:
+      - values/test_values.yaml
+    set:
+      filestore:
+        podLabels:
+          testLabel: filestore
+      imagemagick:
+        podLabels:
+          testLabel: imagemagick
+      libreoffice:
+        podLabels:
+          testLabel: libreoffice
+      pdfrenderer:
+        podLabels:
+          testLabel: pdfrenderer
+      tika:
+        podLabels:
+          testLabel: tika
+      transformmisc:
+        podLabels:
+          testLabel: transformmisc
+      transformrouter:
+        podLabels:
+          testLabel: transformrouter
+    asserts:
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            testLabel: filestore
+        template: deployment-filestore.yaml
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            testLabel: imagemagick
+        template: deployment-imagemagick.yaml
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            testLabel: libreoffice
+        template: deployment-libreoffice.yaml
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            testLabel: pdfrenderer
+        template: deployment-pdfrenderer.yaml
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            testLabel: tika
+        template: deployment-tika.yaml
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            testLabel: transformmisc
+        template: deployment-transform-misc.yaml
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            testLabel: transformrouter
+        template: deployment-transform-router.yaml

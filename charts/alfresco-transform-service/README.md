@@ -46,6 +46,7 @@ A Helm chart for deploying Alfresco Transform Services
 | filestore.persistence.existingClaim | string | `nil` | Use pre-provisioned pv through its claim (e.g. static provisionning) |
 | filestore.persistence.storageClass | string | `nil` | Bind PVC based on storageClass (e.g. dynamic provisionning) |
 | filestore.podAnnotations | object | `{}` |  |
+| filestore.podLabels | object | `{}` |  |
 | filestore.podSecurityContext.fsGroup | int | `1000` |  |
 | filestore.podSecurityContext.runAsGroup | int | `1000` |  |
 | filestore.podSecurityContext.runAsUser | int | `33030` |  |
@@ -82,6 +83,7 @@ A Helm chart for deploying Alfresco Transform Services
 | imagemagick.livenessProbe.timeoutSeconds | int | `10` |  |
 | imagemagick.nodeSelector | object | `{}` |  |
 | imagemagick.podAnnotations | object | `{}` |  |
+| imagemagick.podLabels | object | `{}` |  |
 | imagemagick.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | imagemagick.podSecurityContext.runAsUser | int | `33002` |  |
 | imagemagick.readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -114,6 +116,7 @@ A Helm chart for deploying Alfresco Transform Services
 | libreoffice.livenessProbe.timeoutSeconds | int | `10` |  |
 | libreoffice.nodeSelector | object | `{}` |  |
 | libreoffice.podAnnotations | object | `{}` |  |
+| libreoffice.podLabels | object | `{}` |  |
 | libreoffice.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | libreoffice.podSecurityContext.runAsUser | int | `33003` |  |
 | libreoffice.readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -153,6 +156,7 @@ A Helm chart for deploying Alfresco Transform Services
 | pdfrenderer.livenessProbe.timeoutSeconds | int | `10` |  |
 | pdfrenderer.nodeSelector | object | `{}` |  |
 | pdfrenderer.podAnnotations | object | `{}` |  |
+| pdfrenderer.podLabels | object | `{}` |  |
 | pdfrenderer.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | pdfrenderer.podSecurityContext.runAsUser | int | `33001` |  |
 | pdfrenderer.readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -189,6 +193,7 @@ A Helm chart for deploying Alfresco Transform Services
 | tika.livenessProbe.timeoutSeconds | int | `10` |  |
 | tika.nodeSelector | object | `{}` |  |
 | tika.podAnnotations | object | `{}` |  |
+| tika.podLabels | object | `{}` |  |
 | tika.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | tika.podSecurityContext.runAsUser | int | `33004` |  |
 | tika.readinessProbe.initialDelaySeconds | int | `30` |  |
@@ -221,6 +226,7 @@ A Helm chart for deploying Alfresco Transform Services
 | transformmisc.livenessProbe.timeoutSeconds | int | `10` |  |
 | transformmisc.nodeSelector | object | `{}` |  |
 | transformmisc.podAnnotations | object | `{}` |  |
+| transformmisc.podLabels | object | `{}` |  |
 | transformmisc.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | transformmisc.podSecurityContext.runAsUser | int | `33006` |  |
 | transformmisc.readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -249,6 +255,7 @@ A Helm chart for deploying Alfresco Transform Services
 | transformrouter.livenessProbe.timeoutSeconds | int | `10` |  |
 | transformrouter.nodeSelector | object | `{}` |  |
 | transformrouter.podAnnotations | object | `{}` |  |
+| transformrouter.podLabels | object | `{}` |  |
 | transformrouter.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | transformrouter.podSecurityContext.runAsUser | int | `33016` |  |
 | transformrouter.readinessProbe.initialDelaySeconds | int | `20` |  |

@@ -23,6 +23,9 @@ spec:
         {{- end }}
       labels:
         {{- include "alfresco-transform-service.libreoffice.labels" . | nindent 8 }}
+        {{- with .Values.libreoffice.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
