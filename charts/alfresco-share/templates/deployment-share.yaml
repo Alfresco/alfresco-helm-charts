@@ -27,7 +27,7 @@ spec:
     spec:
       serviceAccountName: {{ include "alfresco-share.serviceAccountName" . }}
       {{- include "component-pod-security-context" .Values | indent 4 }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -44,7 +44,7 @@ spec:
         - name: alfresco-share
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- include "component-security-context" .Values | indent 8 }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           {{- if .Values.command }}
           command:
             {{- toYaml .Values.command | nindent 12 }}
