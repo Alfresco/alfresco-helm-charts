@@ -123,6 +123,10 @@ spec:
             - containerPort: {{ .Values.image.internalPort }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 8 }}
+          {{- end }}
           volumeMounts:
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
           readinessProbe:
