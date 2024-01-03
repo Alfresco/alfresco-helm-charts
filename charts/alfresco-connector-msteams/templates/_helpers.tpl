@@ -60,3 +60,19 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the secret to use
+*/}}
+{{- define "alfresco-connector-msteams.secret.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "msteams-se") "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-connector-msteams.fullname" $scope }}
+{{- end }}
+
+{{/*
+Create the name of the configmap to use
+*/}}
+{{- define "alfresco-connector-msteams.repo-configmap.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "repo-teams") "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-connector-msteams.fullname" $scope }}
+{{- end }}

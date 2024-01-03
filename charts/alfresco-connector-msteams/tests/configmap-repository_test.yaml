@@ -1,10 +1,8 @@
 suite: test msteams-connector configmap
 templates:
-- config-connector-msteams.yaml
 - configmap-repository.yaml
 tests:
 - it: should test the random baseurl
-  template: configmap-repository.yaml
   set:
     alfresco:
       baseUrl: htts://test-url:8800
@@ -15,19 +13,16 @@ tests:
 - it: should render default configmaps based on values
   values: &testvalues
     - values/test_values.yaml
-  template: configmap-repository.yaml
   asserts:
     - equal:
         path: data.ALFRESCO_BASE_URL
         value: change_me_alf_base_url
-      template: configmap-repository.yaml
 - it: should not render components configmaps
   values: *testvalues
   set:
     repository:
       existingConfigMap:
         name: repotest
-  template: configmap-repository.yaml
   asserts:
     - hasDocuments:
         count: 0

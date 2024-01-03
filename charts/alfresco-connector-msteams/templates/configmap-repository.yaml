@@ -2,8 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  {{- $ctx := dict "Values" (dict "nameOverride" "repo-teams") "Chart" .Chart "Release" .Release }}
-  name: {{ template "alfresco-connector-msteams.fullname" $ctx }}
+  name: {{ template "alfresco-connector-msteams.repo-configmap.name" . }}
   labels:
     {{- include "alfresco-connector-msteams.labels" . | nindent 4 }}
 data:
