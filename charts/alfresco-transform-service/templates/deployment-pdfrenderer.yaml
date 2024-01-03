@@ -21,11 +21,11 @@ spec:
       labels:
         {{- include "alfresco-transform-service.pdfrenderer.selectorLabels" . | nindent 8 }}
     spec:
-    {{- include "component-pod-security-context" .Values.pdfrenderer | indent 4 }}
+    {{- include "alfresco-common.component-pod-security-context" .Values.pdfrenderer | indent 4 }}
     {{- if .Values.pdfrenderer.nodeSelector }}
       nodeSelector: {{- .Values.pdfrenderer.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:

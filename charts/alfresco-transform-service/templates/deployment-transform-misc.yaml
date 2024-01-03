@@ -21,11 +21,11 @@ spec:
       labels:
         {{- include "alfresco-transform-service.transform-misc.selectorLabels" . | nindent 8 }}
     spec:
-    {{- include "component-pod-security-context" .Values.transformmisc | indent 4 }}
+    {{- include "alfresco-common.component-pod-security-context" .Values.transformmisc | indent 4 }}
     {{- if .Values.transformmisc.nodeSelector }}
       nodeSelector: {{- .Values.transformmisc.nodeSelector | toYaml | nindent 8 }}
     {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
