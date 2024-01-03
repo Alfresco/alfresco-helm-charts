@@ -2,12 +2,13 @@
 Set environment variables necessary for message broker configuration
 */}}
 {{- define "alfresco-transform-service.messageBroker.env" -}}
+{{- $mqConfigMap := coalesce .Values.messageBroker.existingConfigMap.name (include "alfresco-transform-service.config-messagebroker.name" .) -}}
 {{- $mqSecret := coalesce .Values.messageBroker.existingSecret.name (include "alfresco-transform-service.secret-messagebroker.name" .) -}}
 - name: ACTIVEMQ_URL
   valueFrom:
-    secretKeyRef:
-      name: {{ $mqSecret }}
-      key: {{ .Values.messageBroker.existingSecret.keys.url }}
+    configMapKeyRef:
+      name: {{ $mqConfigMap }}
+      key: {{ .Values.messageBroker.existingConfigMap.keys.url }}
 - name: ACTIVEMQ_USER
   valueFrom:
     secretKeyRef:

@@ -339,11 +339,15 @@ messageBroker:
   user: null
   # -- External activemq password
   password: null
-  existingSecret:
-    # -- Alternatively, provide credentials via an existing secret
+  existingConfigMap:
+    # -- Alternatively, provide message broker URL via an existing ConfigMap
     name: null
     keys:
       url: BROKER_URL
+  existingSecret:
+    # -- Alternatively, provide message broker credentials via an existing Secret
+    name: null
+    keys:
       user: BROKER_USERNAME
       password: BROKER_PASSWORD
 ai:

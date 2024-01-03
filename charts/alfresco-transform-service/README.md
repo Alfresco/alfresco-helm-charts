@@ -132,10 +132,11 @@ A Helm chart for deploying Alfresco Transform Services
 | libreoffice.service.name | string | `"libreoffice"` |  |
 | libreoffice.service.type | string | `"ClusterIP"` |  |
 | libreoffice.tolerations | list | `[]` |  |
+| messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` |  |
+| messageBroker.existingConfigMap.name | string | `nil` | Alternatively, provide message broker URL via an existing ConfigMap |
 | messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` |  |
-| messageBroker.existingSecret.keys.url | string | `"BROKER_URL"` |  |
 | messageBroker.existingSecret.keys.user | string | `"BROKER_USERNAME"` |  |
-| messageBroker.existingSecret.name | string | `nil` | Alternatively, provide credentials via an existing secret |
+| messageBroker.existingSecret.name | string | `nil` | Alternatively, provide message broker credentials via an existing Secret |
 | messageBroker.password | string | `nil` | External activemq password |
 | messageBroker.url | string | `nil` | External activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true) |
 | messageBroker.user | string | `nil` | External activemq username |

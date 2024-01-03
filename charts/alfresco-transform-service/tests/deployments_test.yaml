@@ -27,9 +27,9 @@ tests:
           value: &messageBroker_envs
             - name: ACTIVEMQ_URL
               valueFrom:
-                secretKeyRef:
+                configMapKeyRef:
                   key: BROKER_URL
-                  name: RELEASE-NAME-messagebroker-secret
+                  name: RELEASE-NAME-messagebroker-configmap
             - name: ACTIVEMQ_USER
               valueFrom:
                 secretKeyRef:
