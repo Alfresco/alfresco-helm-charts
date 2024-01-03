@@ -21,11 +21,9 @@ spec:
       labels:
         {{- include "alfresco-transform-service.tika.selectorLabels" . | nindent 8 }}
     spec:
-    {{- include "alfresco-common.component-pod-security-context" .Values.tika | indent 4 }}
-    {{- if .Values.tika.nodeSelector }}
-      nodeSelector: {{- .Values.tika.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values.tika | indent 4 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -61,4 +59,16 @@ spec:
             - containerPort: {{ .Values.tika.image.internalPort }}
           resources: {{- toYaml .Values.tika.resources | nindent 12 }}
           {{ include "alfresco-transform-service.probes" .Values.tika | nindent 10 }}
+      {{- with .Values.tika.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tika.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tika.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end }}

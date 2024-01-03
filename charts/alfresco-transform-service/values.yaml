@@ -2,6 +2,8 @@ transformrouter:
   enabled: true
   replicaCount: 2
   nodeSelector: {}
+  tolerations: []
+  affinity: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-router
     tag: 4.0.1
@@ -39,6 +41,8 @@ pdfrenderer:
   enabled: true
   replicaCount: 2
   nodeSelector: {}
+  tolerations: []
+  affinity: {}
   image:
     repository: quay.io/alfresco/alfresco-pdf-renderer
     tag: 5.0.1
@@ -80,6 +84,8 @@ imagemagick:
   enabled: true
   replicaCount: 2
   nodeSelector: {}
+  tolerations: []
+  affinity: {}
   image:
     repository: quay.io/alfresco/alfresco-imagemagick
     tag: 5.0.1
@@ -121,6 +127,8 @@ libreoffice:
   enabled: true
   replicaCount: 2
   nodeSelector: {}
+  tolerations: []
+  affinity: {}
   image:
     repository: quay.io/alfresco/alfresco-libreoffice
     tag: 5.0.1
@@ -162,6 +170,8 @@ tika:
   enabled: true
   replicaCount: 2
   nodeSelector: {}
+  tolerations: []
+  affinity: {}
   image:
     repository: quay.io/alfresco/alfresco-tika
     tag: 5.0.1
@@ -203,6 +213,8 @@ transformmisc:
   enabled: true
   replicaCount: 2
   nodeSelector: {}
+  tolerations: []
+  affinity: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-misc
     tag: 5.0.1
@@ -244,6 +256,8 @@ filestore:
   enabled: true
   replicaCount: 1
   nodeSelector: {}
+  tolerations: []
+  affinity: {}
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
     tag: 4.0.1
@@ -327,3 +341,14 @@ global:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""

@@ -21,11 +21,9 @@ spec:
       labels:
         {{- include "alfresco-transform-service.imagemagick.selectorLabels" . | nindent 8 }}
     spec:
-    {{- include "alfresco-common.component-pod-security-context" .Values.imagemagick| indent 4 }}
-    {{- if .Values.imagemagick.nodeSelector }}
-      nodeSelector: {{- .Values.imagemagick.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values.imagemagick| indent 4 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -61,4 +59,16 @@ spec:
             - containerPort: {{ .Values.imagemagick.image.internalPort }}
           resources: {{- toYaml .Values.imagemagick.resources | nindent 12 }}
           {{ include "alfresco-transform-service.probes" .Values.imagemagick | nindent 10 }}
+      {{- with .Values.imagemagick.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.imagemagick.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.imagemagick.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end }}

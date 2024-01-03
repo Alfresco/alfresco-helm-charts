@@ -21,11 +21,9 @@ spec:
       labels:
         {{- include "alfresco-transform-service.transform-misc.selectorLabels" . | nindent 8 }}
     spec:
-    {{- include "alfresco-common.component-pod-security-context" .Values.transformmisc | indent 4 }}
-    {{- if .Values.transformmisc.nodeSelector }}
-      nodeSelector: {{- .Values.transformmisc.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values.transformmisc | indent 4 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -61,4 +59,16 @@ spec:
             - containerPort: {{ .Values.transformmisc.image.internalPort }}
           resources: {{- toYaml .Values.transformmisc.resources | nindent 12 }}
           {{ include "alfresco-transform-service.probes" .Values.transformmisc | nindent 10 }}
+      {{- with .Values.transformmisc.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.transformmisc.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.transformmisc.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end }}

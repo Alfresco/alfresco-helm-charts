@@ -21,11 +21,9 @@ spec:
       labels:
         {{- include "alfresco-transform-service.filestore.selectorLabels" . | nindent 8 }}
     spec:
-    {{- include "alfresco-common.component-pod-security-context" .Values.filestore | indent 4 }}
-    {{- if .Values.filestore.nodeSelector }}
-      nodeSelector: {{- .Values.filestore.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values.filestore | indent 4 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -65,4 +63,16 @@ spec:
               subPath: {{ .Values.filestore.persistence.data.subPath }}
       volumes:
       {{- include "data_volume" .Values.filestore | nindent 8 }}
+      {{- with .Values.filestore.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.filestore.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.filestore.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end }}

@@ -21,11 +21,9 @@ spec:
       labels:
         {{- include "alfresco-transform-service.libreoffice.selectorLabels" . | nindent 8 }}
     spec:
-    {{- include "alfresco-common.component-pod-security-context" .Values.libreoffice | indent 4 }}
-    {{- if .Values.libreoffice.nodeSelector }}
-      nodeSelector: {{- .Values.libreoffice.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values.libreoffice | indent 4 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -61,4 +59,16 @@ spec:
             - containerPort: {{ .Values.libreoffice.image.internalPort }}
           resources: {{- toYaml .Values.libreoffice.resources | nindent 12 }}
           {{ include "alfresco-transform-service.probes" .Values.libreoffice | nindent 10 }}
+      {{- with .Values.libreoffice.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.libreoffice.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.libreoffice.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end }}
