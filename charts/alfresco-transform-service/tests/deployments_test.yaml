@@ -18,7 +18,7 @@ templates:
   - config-transform-router.yaml
 
 tests:
-  - it: should render expected labels in every resource
+  - it: should render expected envs in every resource
     values:
       - values/test_values.yaml
     asserts:
@@ -64,3 +64,65 @@ tests:
       - isNull:
           path: spec.template.spec.containers[0].env
         template: deployment-filestore.yaml
+
+  - it: should render expected annotations in every deployment
+    values:
+      - values/test_values.yaml
+    set:
+      filestore:
+        podAnnotations:
+          testAnnotation: filestore
+      imagemagick:
+        podAnnotations:
+          testAnnotation: imagemagick
+      libreoffice:
+        podAnnotations:
+          testAnnotation: libreoffice
+      pdfrenderer:
+        podAnnotations:
+          testAnnotation: pdfrenderer
+      tika:
+        podAnnotations:
+          testAnnotation: tika
+      transformmisc:
+        podAnnotations:
+          testAnnotation: transformmisc
+      transformrouter:
+        podAnnotations:
+          testAnnotation: transformrouter
+    asserts:
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            testAnnotation: filestore
+        template: deployment-filestore.yaml
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            testAnnotation: imagemagick
+        template: deployment-imagemagick.yaml
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            testAnnotation: libreoffice
+        template: deployment-libreoffice.yaml
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            testAnnotation: pdfrenderer
+        template: deployment-pdfrenderer.yaml
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            testAnnotation: tika
+        template: deployment-tika.yaml
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            testAnnotation: transformmisc
+        template: deployment-transform-misc.yaml
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            testAnnotation: transformrouter
+        template: deployment-transform-router.yaml

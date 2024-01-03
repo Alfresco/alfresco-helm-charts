@@ -4,6 +4,7 @@ transformrouter:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  podAnnotations: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-router
     tag: 4.0.1
@@ -43,6 +44,7 @@ pdfrenderer:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  podAnnotations: {}
   image:
     repository: quay.io/alfresco/alfresco-pdf-renderer
     tag: 5.0.1
@@ -86,6 +88,7 @@ imagemagick:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  podAnnotations: {}
   image:
     repository: quay.io/alfresco/alfresco-imagemagick
     tag: 5.0.1
@@ -129,6 +132,7 @@ libreoffice:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  podAnnotations: {}
   image:
     repository: quay.io/alfresco/alfresco-libreoffice
     tag: 5.0.1
@@ -172,6 +176,7 @@ tika:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  podAnnotations: {}
   image:
     repository: quay.io/alfresco/alfresco-tika
     tag: 5.0.1
@@ -215,6 +220,7 @@ transformmisc:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  podAnnotations: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-misc
     tag: 5.0.1
@@ -258,6 +264,7 @@ filestore:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  podAnnotations: {}
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
     tag: 4.0.1

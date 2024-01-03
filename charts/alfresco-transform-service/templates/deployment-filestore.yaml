@@ -18,6 +18,9 @@ spec:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-filestore.yaml") . | sha256sum }}
+        {{- with .Values.filestore.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
         {{- include "alfresco-transform-service.filestore.labels" . | nindent 8 }}
     spec:

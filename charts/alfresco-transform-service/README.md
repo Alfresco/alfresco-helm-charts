@@ -18,6 +18,7 @@ A Helm chart for deploying Alfresco Transform Services
 |-----|------|---------|-------------|
 | ai.enabled | bool | `false` |  |
 | ai.nameOverride | string | `"alfresco-ai"` |  |
+| filestore.affinity | object | `{}` |  |
 | filestore.enabled | bool | `true` |  |
 | filestore.environment."scheduler.cleanup.interval" | string | `"86400000"` |  |
 | filestore.environment."scheduler.content.age.millis" | string | `"86400000"` |  |
@@ -44,6 +45,7 @@ A Helm chart for deploying Alfresco Transform Services
 | filestore.persistence.enabled | bool | `false` | Persist filestore data |
 | filestore.persistence.existingClaim | string | `nil` | Use pre-provisioned pv through its claim (e.g. static provisionning) |
 | filestore.persistence.storageClass | string | `nil` | Bind PVC based on storageClass (e.g. dynamic provisionning) |
+| filestore.podAnnotations | object | `{}` |  |
 | filestore.podSecurityContext.fsGroup | int | `1000` |  |
 | filestore.podSecurityContext.runAsGroup | int | `1000` |  |
 | filestore.podSecurityContext.runAsUser | int | `33030` |  |
@@ -59,9 +61,11 @@ A Helm chart for deploying Alfresco Transform Services
 | filestore.service.externalPort | int | `80` |  |
 | filestore.service.name | string | `"filestore"` |  |
 | filestore.service.type | string | `"ClusterIP"` |  |
+| filestore.tolerations | list | `[]` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
+| imagemagick.affinity | object | `{}` |  |
 | imagemagick.enabled | bool | `true` |  |
 | imagemagick.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | imagemagick.image.internalPort | int | `8090` |  |
@@ -77,6 +81,7 @@ A Helm chart for deploying Alfresco Transform Services
 | imagemagick.livenessProbe.periodSeconds | int | `20` |  |
 | imagemagick.livenessProbe.timeoutSeconds | int | `10` |  |
 | imagemagick.nodeSelector | object | `{}` |  |
+| imagemagick.podAnnotations | object | `{}` |  |
 | imagemagick.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | imagemagick.podSecurityContext.runAsUser | int | `33002` |  |
 | imagemagick.readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -91,6 +96,8 @@ A Helm chart for deploying Alfresco Transform Services
 | imagemagick.service.externalPort | int | `80` |  |
 | imagemagick.service.name | string | `"imagemagick"` |  |
 | imagemagick.service.type | string | `"ClusterIP"` |  |
+| imagemagick.tolerations | list | `[]` |  |
+| libreoffice.affinity | object | `{}` |  |
 | libreoffice.enabled | bool | `true` |  |
 | libreoffice.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | libreoffice.image.internalPort | int | `8090` |  |
@@ -106,6 +113,7 @@ A Helm chart for deploying Alfresco Transform Services
 | libreoffice.livenessProbe.periodSeconds | int | `20` |  |
 | libreoffice.livenessProbe.timeoutSeconds | int | `10` |  |
 | libreoffice.nodeSelector | object | `{}` |  |
+| libreoffice.podAnnotations | object | `{}` |  |
 | libreoffice.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | libreoffice.podSecurityContext.runAsUser | int | `33003` |  |
 | libreoffice.readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -120,6 +128,7 @@ A Helm chart for deploying Alfresco Transform Services
 | libreoffice.service.externalPort | int | `80` |  |
 | libreoffice.service.name | string | `"libreoffice"` |  |
 | libreoffice.service.type | string | `"ClusterIP"` |  |
+| libreoffice.tolerations | list | `[]` |  |
 | messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` |  |
 | messageBroker.existingSecret.keys.url | string | `"BROKER_URL"` |  |
 | messageBroker.existingSecret.keys.user | string | `"BROKER_USERNAME"` |  |
@@ -127,6 +136,7 @@ A Helm chart for deploying Alfresco Transform Services
 | messageBroker.password | string | `nil` | External activemq password |
 | messageBroker.url | string | `nil` | External activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true) |
 | messageBroker.user | string | `nil` | External activemq username |
+| pdfrenderer.affinity | object | `{}` |  |
 | pdfrenderer.enabled | bool | `true` |  |
 | pdfrenderer.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | pdfrenderer.image.internalPort | int | `8090` |  |
@@ -142,6 +152,7 @@ A Helm chart for deploying Alfresco Transform Services
 | pdfrenderer.livenessProbe.periodSeconds | int | `20` |  |
 | pdfrenderer.livenessProbe.timeoutSeconds | int | `10` |  |
 | pdfrenderer.nodeSelector | object | `{}` |  |
+| pdfrenderer.podAnnotations | object | `{}` |  |
 | pdfrenderer.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | pdfrenderer.podSecurityContext.runAsUser | int | `33001` |  |
 | pdfrenderer.readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -156,6 +167,12 @@ A Helm chart for deploying Alfresco Transform Services
 | pdfrenderer.service.externalPort | int | `80` |  |
 | pdfrenderer.service.name | string | `"pdfrenderer"` |  |
 | pdfrenderer.service.type | string | `"ClusterIP"` |  |
+| pdfrenderer.tolerations | list | `[]` |  |
+| serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.automount | bool | `true` |  |
+| serviceAccount.create | bool | `true` |  |
+| serviceAccount.name | string | `""` |  |
+| tika.affinity | object | `{}` |  |
 | tika.enabled | bool | `true` |  |
 | tika.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | tika.image.internalPort | int | `8090` |  |
@@ -171,6 +188,7 @@ A Helm chart for deploying Alfresco Transform Services
 | tika.livenessProbe.periodSeconds | int | `20` |  |
 | tika.livenessProbe.timeoutSeconds | int | `10` |  |
 | tika.nodeSelector | object | `{}` |  |
+| tika.podAnnotations | object | `{}` |  |
 | tika.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | tika.podSecurityContext.runAsUser | int | `33004` |  |
 | tika.readinessProbe.initialDelaySeconds | int | `30` |  |
@@ -185,6 +203,8 @@ A Helm chart for deploying Alfresco Transform Services
 | tika.service.externalPort | int | `80` |  |
 | tika.service.name | string | `"tika"` |  |
 | tika.service.type | string | `"ClusterIP"` |  |
+| tika.tolerations | list | `[]` |  |
+| transformmisc.affinity | object | `{}` |  |
 | transformmisc.enabled | bool | `true` |  |
 | transformmisc.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | transformmisc.image.internalPort | int | `8090` |  |
@@ -200,6 +220,7 @@ A Helm chart for deploying Alfresco Transform Services
 | transformmisc.livenessProbe.periodSeconds | int | `20` |  |
 | transformmisc.livenessProbe.timeoutSeconds | int | `10` |  |
 | transformmisc.nodeSelector | object | `{}` |  |
+| transformmisc.podAnnotations | object | `{}` |  |
 | transformmisc.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | transformmisc.podSecurityContext.runAsUser | int | `33006` |  |
 | transformmisc.readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -214,6 +235,8 @@ A Helm chart for deploying Alfresco Transform Services
 | transformmisc.service.externalPort | int | `80` |  |
 | transformmisc.service.name | string | `"transformmisc"` |  |
 | transformmisc.service.type | string | `"ClusterIP"` |  |
+| transformmisc.tolerations | list | `[]` |  |
+| transformrouter.affinity | object | `{}` |  |
 | transformrouter.enabled | bool | `true` |  |
 | transformrouter.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | transformrouter.image.internalPort | int | `8095` |  |
@@ -225,6 +248,7 @@ A Helm chart for deploying Alfresco Transform Services
 | transformrouter.livenessProbe.periodSeconds | int | `30` |  |
 | transformrouter.livenessProbe.timeoutSeconds | int | `10` |  |
 | transformrouter.nodeSelector | object | `{}` |  |
+| transformrouter.podAnnotations | object | `{}` |  |
 | transformrouter.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | transformrouter.podSecurityContext.runAsUser | int | `33016` |  |
 | transformrouter.readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -239,6 +263,7 @@ A Helm chart for deploying Alfresco Transform Services
 | transformrouter.service.externalPort | int | `80` |  |
 | transformrouter.service.name | string | `"transform-router"` |  |
 | transformrouter.service.type | string | `"ClusterIP"` |  |
+| transformrouter.tolerations | list | `[]` |  |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

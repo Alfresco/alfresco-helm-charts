@@ -18,6 +18,9 @@ spec:
     metadata:
       annotations:
         {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "transform-misc") | indent 8 }}
+        {{- with .Values.transformmisc.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
         {{- include "alfresco-transform-service.transform-misc.labels" . | nindent 8 }}
     spec:

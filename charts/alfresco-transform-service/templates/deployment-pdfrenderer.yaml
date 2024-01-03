@@ -18,6 +18,9 @@ spec:
     metadata:
       annotations:
         {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "pdfrenderer") | indent 8 }}
+        {{- with .Values.pdfrenderer.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
         {{- include "alfresco-transform-service.pdfrenderer.labels" . | nindent 8 }}
     spec:

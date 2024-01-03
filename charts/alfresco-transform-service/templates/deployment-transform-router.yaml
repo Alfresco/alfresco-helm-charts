@@ -18,6 +18,9 @@ spec:
     metadata:
       annotations:
         {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "transform-router") | indent 8 }}
+        {{- with .Values.transformrouter.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
         {{- include "alfresco-transform-service.transform-router.labels" . | nindent 8 }}
     spec:
