@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  {{- $cmCtx := dict "Values" (dict "nameOverride" "ai-pipelines") "Chart" .Chart "Release" .Release }}
+  name: {{ template "alfresco-ai-transformer.fullname" $cmCtx }}
+  labels:
+    {{- include "alfresco-ai-transformer.labels" . | nindent 4 }}
+data:
+  ai-pipeline-routes.json: >-
+    {{- dict "transformers" .Values.trouter.pipelines | toJson | nindent 4 }}
