@@ -88,6 +88,8 @@ messageBroker:
       username: BROKER_USERNAME
       password: BROKER_PASSWORD
 nodeSelector: {}
+extraVolumes: []
+extraInitContainers: []
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
   ci: false

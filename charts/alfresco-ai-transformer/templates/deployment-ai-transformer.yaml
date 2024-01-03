@@ -137,3 +137,7 @@ spec:
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             failureThreshold: 1
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+      initContainers:
+        {{- toYaml .Values.extraInitContainers | nindent 8 }}
+      volumes:
+        {{- toYaml .Values.extraVolumes | nindent 8 }}

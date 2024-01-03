@@ -28,6 +28,8 @@ A Helm chart for deploying Alfresco ai transformer service
 | aws.s3Bucket | string | `nil` |  |
 | aws.secretAccessKey | string | `nil` |  |
 | environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
+| extraInitContainers | list | `[]` |  |
+| extraVolumes | list | `[]` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `8090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
