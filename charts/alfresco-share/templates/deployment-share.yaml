@@ -28,8 +28,18 @@ spec:
       serviceAccountName: {{ include "alfresco-share.serviceAccountName" . }}
       {{- include "component-pod-security-context" .Values | indent 4 }}
       {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
-        {{- toYaml .Values.nodeSelector | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: alfresco-share
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

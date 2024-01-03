@@ -5,11 +5,60 @@ templates:
   - config-share.yaml
 tests:
   - it: should have basic metadata in place in deployment
+    template: deployment-share.yaml
     asserts:
       - equal:
           path: metadata.name
           value: RELEASE-NAME-alfresco-share
-        template: deployment-share.yaml
+      - isNull:
+          path: spec.template.spec.nodeSelector
+      - isNull:
+          path: spec.template.spec.affinity
+      - isNull:
+          path: spec.template.spec.tolerations
+
+  - it: should have customized metadata in place in deployment
+    set:
+      nameOverride: share-ui
+      nodeSelector:
+        disktype: ssd
+      tolerations:
+        - key: "skipme"
+          operator: "Exists"
+          effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux
+    template: deployment-share.yaml
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-share-ui
+      - contains:
+          path: >-
+            spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms
+          content:
+            matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                  - linux
+      - contains:
+          path: spec.template.spec.tolerations
+          content:
+            key: "skipme"
+            operator: "Exists"
+            effect: "NoSchedule"
+      - isSubset:
+          path: spec.template.spec.nodeSelector
+          content:
+            disktype: ssd
 
   - it: should leverage provided existing configmap
     set:
