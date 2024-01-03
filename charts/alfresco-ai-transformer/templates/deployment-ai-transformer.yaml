@@ -20,8 +20,9 @@ spec:
     spec:
       serviceAccountName: {{ include "alfresco-ai-transformer.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
-      {{- if .Values.nodeSelector }}
-      nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- .Values.nodeSelector | toYaml | nindent 8 }}
       {{- end }}
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       affinity:
