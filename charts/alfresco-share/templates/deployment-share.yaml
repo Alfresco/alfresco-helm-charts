@@ -60,7 +60,7 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- $repo_details_cm := .Values.repository.existingConfigMap.name | default (print (include "alfresco-share.fullname" .) "-configmap") }}
+            {{- $repo_details_cm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-share.fullname" .) }}
           env:
             - name: CSRF_FILTER_REFERER
               value: {{ include "alfresco-common.csrf.referer" . }}

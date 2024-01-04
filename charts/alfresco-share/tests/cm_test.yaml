@@ -1,7 +1,7 @@
 ---
 suite: test Alfresco Share ingress
 templates:
-  - config-share.yaml
+  - configmap.yaml
 tests:
   - it: should not render a configmap
     set:
@@ -11,7 +11,6 @@ tests:
     asserts:
       - hasDocuments:
           count: 0
-        template: config-share.yaml
 
   - it: |
       should render custom repo & CSRF config.
@@ -25,8 +24,6 @@ tests:
       - equal:
           path: data.REPO_HOST
           value: release-service.cluster.local
-        template: config-share.yaml
       - equal:
           path: data.REPO_PORT
           value: "80"
-        template: config-share.yaml
