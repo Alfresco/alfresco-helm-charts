@@ -22,10 +22,11 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/config-syncservice.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret-database.yaml") . | sha256sum }}
     spec:
-    {{- include "component-pod-security-context" .Values | indent 4 }}
-    {{- if .Values.nodeSelector }}
+      {{- include "component-pod-security-context" .Values | indent 4 }}
+      serviceAccountName: {{ include "alfresco-sync-service.serviceAccountName" . }}
+      {{- if .Values.nodeSelector }}
       nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
+      {{- end }}
       {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
       terminationGracePeriodSeconds: 60
       containers:

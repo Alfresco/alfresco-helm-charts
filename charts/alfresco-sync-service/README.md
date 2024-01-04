@@ -75,3 +75,6 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | service.externalPort | int | `80` |  |
 | service.name | string | `"syncservice"` |  |
 | service.type | string | `"NodePort"` |  |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `"alfresco-sync"` |  |

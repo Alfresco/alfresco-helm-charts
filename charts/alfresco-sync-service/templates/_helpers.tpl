@@ -50,6 +50,17 @@ app.kubernetes.io/name: {{ include "alfresco-sync-service.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "alfresco-sync-service.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "alfresco-sync-service.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
 {{- define "alfresco-sync-service.repository" -}}
 {{- if .Values.repository.nameOverride }}
 {{- printf "%s-%s" .Release.Name .Values.repository.nameOverride | trunc 63 | trimSuffix "-" }}
