@@ -26,11 +26,52 @@ tests:
             limits:
               cpu: "2"
               memory: "2000Mi"
-  - it: should render deployment without a service account
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-sync-database
+                key: DATABASE_URL
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_DRIVER
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-sync-database
+                key: DATABASE_DRIVER
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-sync-database
+                key: DATABASE_USERNAME
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-sync-database
+                key: DATABASE_PASSWORD
+  - it: should render deployment with pre-exisiting resources and without a service account
     values: *testvalues
     set:
       database:
-        url: jdbc:postgresql://postgresql:5432/alfresco-sync
+        existingConfigMap:
+          name: mydb
+          keys:
+            url: DBURL
+            driver: DBDRIVER
+        existingSecret:
+          name: mydbcreds
+          keys:
+            username: DBUSER
+            password: DBPASS
       serviceAccount:
         create: false
         name: null
@@ -42,3 +83,35 @@ tests:
       - hasDocuments:
           count: 0
         template: serviceaccount.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: mydb
+                key: DBURL
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_DRIVER
+            valueFrom:
+              configMapKeyRef:
+                name: mydb
+                key: DBDRIVER
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mydbcreds
+                key: DBUSER
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mydbcreds
+                key: DBPASS
