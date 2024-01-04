@@ -25,7 +25,6 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | activemq.adminUser.password | string | `"admin"` | Password to use to set as the connection user for ActiveMQ |
 | activemq.adminUser.user | string | `"admin"` | User to use to set as the connection user for ActiveMQ |
 | activemq.enabled | bool | `false` | Toggle ActiveMQ chart dependency see [Alfresco ActiveMQ chart documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/activemq)) |
-| activemq.nameOverride | string | `"activemq"` |  |
 | activemq.services.broker.ports.external.openwire | int | `61616` |  |
 | database.driver | string | `"org.postgresql.Driver"` | The JDBC Driver to connect to the DB. If different from the default make sure your container image ships it. |
 | database.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver class to use. The configmap may leverage the alfresco-repository.db.cm named template to auto-generate it from the sole url parameter. |
@@ -39,10 +38,7 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | database.username | string | `nil` | JDBC username to use to connect to the DB |
 | environment.EXTRA_JAVA_OPTS | string | `""` |  |
 | environment.JAVA_OPTS | string | `"-Dsync.metrics.reporter.graphite.enabled=false -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
-| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","messageBroker":{"password":null,"url":null,"user":null},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
-| global.messageBroker.password | string | `nil` | Credential to use to authenticate to the broker |
-| global.messageBroker.url | string | `nil` | A failover URI formatted string, see: https://activemq.apache.org/failover-transport-reference |
-| global.messageBroker.user | string | `nil` | Username to authenticate as |
+| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/service-sync"` |  |

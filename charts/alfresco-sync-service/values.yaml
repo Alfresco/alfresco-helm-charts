@@ -4,14 +4,6 @@ nodeSelector: {}
 # -- Global definition of Docker registry pull secret which can be overridden
 # from parent ACS Helm chart(s)
 global:
-  messageBroker:
-    # -- A failover URI formatted string, see:
-    # https://activemq.apache.org/failover-transport-reference
-    url: null
-    # -- Username to authenticate as
-    user: null
-    # -- Credential to use to authenticate to the broker
-    password: null
   alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
     rollingUpdate:
@@ -72,7 +64,6 @@ activemq:
   # see [Alfresco ActiveMQ chart
   # documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/activemq))
   enabled: false
-  nameOverride: activemq
   adminUser:
     # -- User to use to set as the connection user for ActiveMQ
     user: admin
