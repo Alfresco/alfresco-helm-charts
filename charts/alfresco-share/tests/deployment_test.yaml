@@ -33,6 +33,8 @@ tests:
                     operator: In
                     values:
                       - linux
+      podLabels:
+        env: qa
       podAnnotations:
         some.annotations.for.stuff: something
         some.annotations.for.otherstuff: somethingelse
@@ -55,6 +57,10 @@ tests:
             key: "skipme"
             operator: "Exists"
             effect: "NoSchedule"
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            env: qa
       - isSubset:
           path: spec.template.metadata.annotations
           content:

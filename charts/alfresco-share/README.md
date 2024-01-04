@@ -49,6 +49,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | nameOverride | string | `""` | Define a partially static name |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
+| podLabels | object | `{}` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | readinessProbe.initialDelaySeconds | int | `15` |  |
 | readinessProbe.periodSeconds | int | `30` |  |
