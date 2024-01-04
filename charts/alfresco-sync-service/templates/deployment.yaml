@@ -50,12 +50,12 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: {{ $dbSecret }}
-                key: .existingSecret.keys.username }}
+                key: {{ .existingSecret.keys.username }}
           - name: DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: {{ $dbSecret }}
-                key: .existingSecret.keys.password }}
+                key: {{ .existingSecret.keys.password }}
           - name: DATABASE_URL
             valueFrom:
               configMapKeyRef:
