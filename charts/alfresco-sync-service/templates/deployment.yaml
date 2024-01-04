@@ -35,12 +35,8 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         {{- include "alfresco-common.component-security-context" .Values | indent 6 }}
         envFrom:
-        - secretRef:
-            name: {{ template "alfresco-sync-service.fullname" . }}-dbsecret
         - configMapRef:
             name: {{ template "alfresco-sync-service.fullname" . }}-configmap
-        - secretRef:
-            name: {{ template "alfresco-sync-service.brokerSecret" . }}
         env:
           {{- with .Values.database }}
           {{- $dbCtx := dict "Values" (dict "nameOverride" "alfresco-sync-database") "Chart" $.Chart "Release" $.Release }}
