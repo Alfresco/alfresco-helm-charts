@@ -1,13 +1,13 @@
 ---
 suite: test deployment
 templates:
-  - deployment-syncservice.yaml
+  - deployment.yaml
   - config-syncservice.yaml
   - secret-database.yaml
   - serviceaccount.yaml
 tests:
   - it: should render deployment with some defaults
-    template: deployment-syncservice.yaml
+    template: deployment.yaml
     values: &testvalues
       - values/test_values.yaml
     set: &values
@@ -34,7 +34,7 @@ tests:
       serviceAccount:
         create: false
         name: null
-    template: deployment-syncservice.yaml
+    template: deployment.yaml
     asserts:
       - equal:
           path: spec.template.spec.serviceAccountName
