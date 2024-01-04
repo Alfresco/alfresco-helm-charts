@@ -4,6 +4,8 @@
 
 Alfresco Sync Service
 
+Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for an example of how to leverage this chart from an umbrella chart.
+
 ## Source Code
 
 * <https://github.com/Alfresco/acs-deployment>
@@ -73,5 +75,3 @@ Alfresco Sync Service
 | service.externalPort | int | `80` |  |
 | service.name | string | `"syncservice"` |  |
 | service.type | string | `"NodePort"` |  |
-
-Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for information on the Helm charts and deployment instructions.
