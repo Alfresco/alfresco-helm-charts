@@ -93,6 +93,12 @@ messageBroker:
   username: null
   # -- Credential to use to authenticate to the broker.
   password: null
+  existingConfigMap:
+    # -- Name of a pre-existing configmap containing message broker details
+    name: null
+    keys:
+      # -- configmap key where to find the URL of the message broker
+      url: BROKER_URL
   existingSecret:
     # -- Name of a pre-existing secret containing message broker credentials
     name: null

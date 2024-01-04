@@ -1,0 +1,14 @@
+{{- if not .Values.messageBroker.existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: >-
+    {{- $ctx := dict "Values" (dict "nameOverride" "alfresco-sync-mq") "Chart" .Chart "Release" .Release }}
+    {{ template "alfresco-sync-service.fullname" $ctx }}
+  labels:
+    {{- include "alfresco-sync-service.labels" . | nindent 4 }}
+data:
+  {{- with .Values.messageBroker }}
+  {{ template "alfresco-common.activemq.cm" .url }}
+  {{- end }}
+{{- end }}

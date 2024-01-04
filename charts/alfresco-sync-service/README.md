@@ -53,6 +53,8 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | livenessProbe.initialDelaySeconds | int | `30` |  |
 | livenessProbe.periodSeconds | int | `30` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
+| messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | configmap key where to find the URL of the message broker |
+| messageBroker.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing message broker details |
 | messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` | Key within the secret holding the message broker password |
 | messageBroker.existingSecret.keys.username | string | `"BROKER_USERNAME"` | Key within the secret holding the message broker username |
 | messageBroker.existingSecret.name | string | `nil` | Name of a pre-existing secret containing message broker credentials |
