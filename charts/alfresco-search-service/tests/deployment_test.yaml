@@ -10,7 +10,7 @@ tests:
     asserts:
       - equal:
           path: metadata.name
-          value: RELEASE-NAME-alfresco-search-service-solr
+          value: RELEASE-NAME-solr
         template: deployment.yaml
 
   - it: should render cpu and memory limits
@@ -31,6 +31,16 @@ tests:
             limits:
               cpu: "4"
               memory: "2000Mi"
+
+  - it: should render annotations and environments
+    values: *testvalues
+    set:
+      podAnnotations: &annotated
+        kubernetes.io/description: Unit testing
+      environment:
+        someother: value
+    template: deployment.yaml
+    asserts:
       - isSubset:
           path: spec.template.metadata.annotations
           content: *annotated
@@ -38,7 +48,7 @@ tests:
           path: spec.template.spec.containers[0].env
           content:
             name: SOLR_SOLR_HOST
-            value: RELEASE-NAME-alfresco-search-service-solr
+            value: RELEASE-NAME-solr
       - contains:
           path: spec.template.spec.containers[0].env
           content:

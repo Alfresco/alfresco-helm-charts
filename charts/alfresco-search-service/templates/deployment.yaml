@@ -2,21 +2,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-search-service.fullname" . }}-solr
+  name: {{ template "alfresco-search-service.deployment.name" . }}
   labels:
-    app: {{ template "alfresco-search-service.fullname" . }}-solr
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: search
+    {{- include "alfresco-search-service.labels" . | nindent 4 }}
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: {{ template "alfresco-search-service.fullname" . }}-solr
-      release: {{ .Release.Name }}
+      {{- include "alfresco-search-service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -25,22 +20,14 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        app: {{ template "alfresco-search-service.fullname" . }}-solr
-        release: {{ .Release.Name }}
+        {{- include "alfresco-search-service.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
-    {{- include "component-pod-security-context" .Values | indent 4 }}
-    {{- with .Values.affinity }}
-      affinity:
-{{ tpl . $ | indent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
-      tolerations:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- if .Values.nodeSelector }}
-      nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
       {{- include "alfresco-content-services.imagePullSecrets" . | nindent 6 }}
+      serviceAccountName: {{ include "alfresco-search-service.serviceAccountName" . }}
+      {{- include "component-pod-security-context" .Values | indent 4 }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ template "alfresco-search.dockerImage" . }}
@@ -75,7 +62,7 @@ spec:
                   key: {{ .existingConfigMap.keys.securecomms }}
             {{- end }}
             - name: SOLR_SOLR_HOST
-              value: {{ template "alfresco-search-service.fullname" . }}-solr
+              value: {{ template "alfresco-search-service.deployment.name" . }}
             - name: SOLR_SOLR_PORT
               value: {{ include "alfresco-search.svcPort" . | quote }}
             - name: SOLR_SOLR_BASEURL
@@ -95,6 +82,9 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.search.data.mountPath }}
             subPath: {{ .Values.persistence.search.data.subPath }}
+          {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           readinessProbe:
             exec:
               command:
@@ -127,7 +117,19 @@ spec:
             failureThreshold: 1
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
       volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: |-
-            {{ .Values.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfresco-search-service.fullname" .)) }}
+        {{- include "alfresco-common.data_volume" .Values | nindent 8 }}
+        {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
