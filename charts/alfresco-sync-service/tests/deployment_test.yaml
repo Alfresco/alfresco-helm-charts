@@ -61,6 +61,14 @@ tests:
       - contains:
           path: spec.template.spec.containers[0].env
           content:
+            name: BROKER_URL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-sync-mq
+                key: BROKER_URL
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
             name: BROKER_USERNAME
             valueFrom:
               secretKeyRef:
@@ -89,6 +97,10 @@ tests:
             username: DBUSER
             password: DBPASS
       messageBroker:
+        existingConfigMap:
+          name: mymq
+          keys:
+            url: MQURL
         existingSecret:
           name: mymqcreds
           keys:
@@ -137,6 +149,14 @@ tests:
               secretKeyRef:
                 name: mydbcreds
                 key: DBPASS
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_URL
+            valueFrom:
+              configMapKeyRef:
+                name: mymq
+                key: MQURL
       - contains:
           path: spec.template.spec.containers[0].env
           content:

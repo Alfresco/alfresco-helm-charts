@@ -66,6 +66,7 @@ spec:
           {{- with .Values.messageBroker }}
           {{- $mqCtx := dict "Values" (dict "nameOverride" "alfresco-sync-mq") "Chart" $.Chart "Release" $.Release }}
           {{- $mqSecret := coalesce .existingSecret.name (include "alfresco-sync-service.fullname" $mqCtx) }}
+          {{- $mqCm := coalesce .existingConfigMap.name (include "alfresco-sync-service.fullname" $mqCtx) }}
           - name: BROKER_USERNAME
             valueFrom:
               secretKeyRef:
@@ -76,6 +77,11 @@ spec:
               secretKeyRef:
                 name: {{ $mqSecret }}
                 key: {{ .existingSecret.keys.password }}
+          - name: BROKER_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $mqCm }}
+                key: {{ .existingConfigMap.keys.url }}
           {{- end }}
         ports:
         - name: serviceport

@@ -2,18 +2,20 @@
 suite: test MQ config
 templates:
   - secret-message-broker.yaml
+  - configmap-mq.yaml
 tests:
   - it: should render default ActiveMQ crdentials
     values: &testvalues
       - values/test_values.yaml
+    template: secret-message-broker.yaml
     asserts:
       - equal:
           path: metadata.name
           value: RELEASE-NAME-alfresco-sync-mq
       - equal:
           path: data.BROKER_URL
-          value: >-
-            ZmFpbG92ZXI6KG5pbzovL2FjdGl2ZW1xOjYxNjE2KQ==
+          value: failover:(nio://activemq:61616)
+        template: configmap-mq.yaml
       - equal:
           path: data.BROKER_USERNAME
           value: YWRtaW4=
@@ -29,11 +31,13 @@ tests:
           failover:(ssl://somemoresecuremq-1:61617,ssl://somemoresecuremq-2:61617)
         username: scott
         password: tiger
+    template: secret-message-broker.yaml
     asserts:
       - equal:
           path: data.BROKER_URL
           value: >-
-            ZmFpbG92ZXI6KHNzbDovL3NvbWVtb3Jlc2VjdXJlbXEtMTo2MTYxNyxzc2w6Ly9zb21lbW9yZXNlY3VyZW1xLTI6NjE2MTcp
+            failover:(ssl://somemoresecuremq-1:61617,ssl://somemoresecuremq-2:61617)
+        template: configmap-mq.yaml
       - equal:
           path: data.BROKER_USERNAME
           value: c2NvdHQ=
@@ -41,10 +45,12 @@ tests:
           path: data.BROKER_PASSWORD
           value: dGlnZXI=
   - it: should not render an MQ secrets
+    values: *testvalues
     set:
       messageBroker:
         existingSecret:
           name: mqcreds
+    template: secret-message-broker.yaml
     asserts:
       - hasDocuments:
           count: 0
