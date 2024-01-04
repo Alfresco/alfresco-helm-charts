@@ -58,6 +58,22 @@ tests:
               secretKeyRef:
                 name: RELEASE-NAME-alfresco-sync-database
                 key: DATABASE_PASSWORD
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-sync-mq
+                key: BROKER_USERNAME
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-sync-mq
+                key: BROKER_PASSWORD
   - it: should render deployment with pre-exisiting resources and without a service account
     values: *testvalues
     set:
@@ -72,6 +88,12 @@ tests:
           keys:
             username: DBUSER
             password: DBPASS
+      messageBroker:
+        existingSecret:
+          name: mymqcreds
+          keys:
+            username: MQUSER
+            password: MQPASS
       serviceAccount:
         create: false
         name: null
@@ -115,3 +137,19 @@ tests:
               secretKeyRef:
                 name: mydbcreds
                 key: DBPASS
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mymqcreds
+                key: MQUSER
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mymqcreds
+                key: MQPASS

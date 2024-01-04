@@ -53,11 +53,13 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | livenessProbe.initialDelaySeconds | int | `30` |  |
 | livenessProbe.periodSeconds | int | `30` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| messageBroker.existingSecretName | string | `nil` | An existing k8s secret with broker details (preferred over using values) |
+| messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` | Key within the secret holding the message broker password |
+| messageBroker.existingSecret.keys.username | string | `"BROKER_USERNAME"` | Key within the secret holding the message broker username |
+| messageBroker.existingSecret.name | string | `nil` | Name of a pre-existing secret containing message broker credentials |
 | messageBroker.nameOverride | string | `"activemq"` | A name that will be used as a base to get broker connection details |
 | messageBroker.password | string | `nil` | Credential to use to authenticate to the broker. |
 | messageBroker.url | string | `nil` | A failover URI formatted string, see: https://activemq.apache.org/failover-transport-reference |
-| messageBroker.user | string | `nil` | Username to authenticate as. |
+| messageBroker.username | string | `nil` | Username to authenticate as. |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
 | podSecurityContext.runAsGroup | int | `1000` |  |

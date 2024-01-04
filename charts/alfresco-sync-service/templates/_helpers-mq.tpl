@@ -13,28 +13,6 @@ Get ActiveMQ URL
 {{- end -}}
 
 {{/*
-Get ActiveMQ Username
-*/}}
-{{- define "alfresco-sync-service.brokerUser" -}}
-{{- if .Values.activemq.enabled }}
-{{- .Values.activemq.adminUser.user -}}
-{{- else }}
-{{- coalesce .Values.messageBroker.user .Values.global.messageBroker.user "alfresco" -}}
-{{- end }}
-{{- end -}}
-
-{{/*
-Get ActiveMQ Password
-*/}}
-{{- define "alfresco-sync-service.brokerPass" -}}
-{{- if .Values.activemq.enabled }}
-{{- .Values.activemq.adminUser.password -}}
-{{- else }}
-{{- coalesce .Values.messageBroker.password .Values.global.messageBroker.password "admin" -}}
-{{- end }}
-{{- end -}}
-
-{{/*
 Get ActiveMQ secret
 */}}
 {{- define "alfresco-sync-service.brokerSecret" -}}

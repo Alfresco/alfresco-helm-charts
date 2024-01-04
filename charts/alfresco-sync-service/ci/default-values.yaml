@@ -4,7 +4,9 @@ repository:
 activemq:
   enabled: true
 messageBroker:
-  nameOverride: mqsync
+  url: failover:(nio://mqsync:61616)
+  username: admin
+  password: admin
 postgresql:
   fullnameOverride: pgsync
   auth:

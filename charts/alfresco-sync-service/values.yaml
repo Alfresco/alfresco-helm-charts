@@ -90,11 +90,17 @@ messageBroker:
   # -- A name that will be used as a base to get broker connection details
   nameOverride: activemq
   # -- Username to authenticate as.
-  user: null
+  username: null
   # -- Credential to use to authenticate to the broker.
   password: null
-  # -- An existing k8s secret with broker details (preferred over using values)
-  existingSecretName: null
+  existingSecret:
+    # -- Name of a pre-existing secret containing message broker credentials
+    name: null
+    keys:
+      # -- Key within the secret holding the message broker username
+      username: BROKER_USERNAME
+      # -- Key within the secret holding the message broker password
+      password: BROKER_PASSWORD
 database:
   # -- The JDBC Driver to connect to the DB.
   # If different from the default make sure your container image ships it.

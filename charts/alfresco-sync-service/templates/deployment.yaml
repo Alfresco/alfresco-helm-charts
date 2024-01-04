@@ -67,6 +67,20 @@ spec:
                 name: {{ $dbCm }}
                 key: {{ .existingConfigMap.keys.driver }}
           {{- end }}
+          {{- with .Values.messageBroker }}
+          {{- $mqCtx := dict "Values" (dict "nameOverride" "alfresco-sync-mq") "Chart" $.Chart "Release" $.Release }}
+          {{- $mqSecret := coalesce .existingSecret.name (include "alfresco-sync-service.fullname" $mqCtx) }}
+          - name: BROKER_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ $mqSecret }}
+                key: {{ .existingSecret.keys.username }}
+          - name: BROKER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ $mqSecret }}
+                key: {{ .existingSecret.keys.password }}
+          {{- end }}
         ports:
         - name: serviceport
           containerPort: 9090
