@@ -1,6 +1,6 @@
 # alfresco-connector-msteams
 
-![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.3.0-alpha.0](https://img.shields.io/badge/Version-0.3.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector msteams service
 
@@ -8,7 +8,7 @@ A Helm chart for deploying Alfresco connector msteams service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.0.0 |
 
 ## Values
 
@@ -28,9 +28,12 @@ A Helm chart for deploying Alfresco connector msteams service
 | livenessProbe.initialDelaySeconds | int | `10` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| microsoft.app.id | string | `"change_me_app_id"` |  |
+| microsoft.app.existingSecret.keys.id | string | `"MICROSOFT_APP_ID"` |  |
+| microsoft.app.existingSecret.keys.password | string | `"MICROSOFT_APP_PASSWORD"` |  |
+| microsoft.app.existingSecret.name | string | `nil` |  |
+| microsoft.app.id | string | `nil` |  |
 | microsoft.app.oauth.connectionName | string | `"alfresco"` |  |
-| microsoft.app.password | string | `"change_me_app_pwd"` |  |
+| microsoft.app.password | string | `nil` |  |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | podSecurityContext.runAsUser | int | `33041` |  |
@@ -38,6 +41,9 @@ A Helm chart for deploying Alfresco connector msteams service
 | readinessProbe.periodSeconds | int | `60` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | replicaCount | int | `2` |  |
+| repository.existingConfigMap.keys.url | string | `"ALFRESCO_BASE_URL"` | Key within the configmap holding the full url to connect to the alfresco repository |
+| repository.existingConfigMap.name | string | `nil` | Alternatively, provide repository connection details via an existing configmap |
+| repository.url | string | `nil` | URL of the Alfresco repository |
 | resources.limits.cpu | string | `"1"` |  |
 | resources.limits.memory | string | `"1000Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
@@ -45,6 +51,9 @@ A Helm chart for deploying Alfresco connector msteams service
 | service.externalPort | int | `80` |  |
 | service.name | string | `"ms-teams-service"` |  |
 | service.type | string | `"ClusterIP"` |  |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `"msteams-sa"` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | strategy.rollingUpdate.maxSurge | int | `1` |  |
 | strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | teams.chat.filenameEnabled | bool | `true` |  |

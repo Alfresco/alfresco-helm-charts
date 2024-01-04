@@ -49,3 +49,30 @@ Selector labels
 app.kubernetes.io/name: {{ include "alfresco-connector-msteams.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "alfresco-connector-msteams.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create }}
+{{- default (include "alfresco-connector-msteams.fullname" .) .Values.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
+
+{{/*
+Create the name of the secret to use
+*/}}
+{{- define "alfresco-connector-msteams.secret.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "msteams-se") "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-connector-msteams.fullname" $scope }}
+{{- end }}
+
+{{/*
+Create the name of the configmap to use
+*/}}
+{{- define "alfresco-connector-msteams.repo-configmap.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "repo-teams") "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-connector-msteams.fullname" $scope }}
+{{- end }}

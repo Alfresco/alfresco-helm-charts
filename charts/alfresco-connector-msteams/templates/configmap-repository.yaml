@@ -1,0 +1,11 @@
+{{- if not .Values.repository.existingConfigMap.name -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco-connector-msteams.repo-configmap.name" . }}
+  labels:
+    {{- include "alfresco-connector-msteams.labels" . | nindent 4 }}
+data:
+  {{- $reqmsg := "You must provide valid base URL" }}
+  ALFRESCO_BASE_URL: {{ required $reqmsg .Values.alfresco.baseUrl | quote }}
+{{- end }}

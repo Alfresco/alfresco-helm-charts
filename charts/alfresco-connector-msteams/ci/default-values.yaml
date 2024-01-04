@@ -6,3 +6,7 @@ resources:
   limits:
     cpu: "1"
     memory: "500Mi"
+microsoft:
+  app:
+    id: change_me_app_id
+    password: change_me_app_pwd

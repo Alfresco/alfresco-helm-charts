@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,10 +11,7 @@ data:
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}
-  ALFRESCO_BASE_URL: "{{ .Values.alfresco.baseUrl }}"
   ALFRESCO_DIGITAL_WORKSPACE_CONTEXT_PATH: "{{ .Values.alfresco.digitalWorkspace.contextPath }}"
-  MICROSOFT_APP_ID: "{{ .Values.microsoft.app.id }}"
-  MICROSOFT_APP_PASSWORD: "{{ .Values.microsoft.app.password }}"
   MICROSOFT_APP_OAUTH_CONNECTION_NAME: "{{ .Values.microsoft.app.oauth.connectionName }}"
   TEAMS_CHAT_FILENAME_ENABLED: "{{ .Values.teams.chat.filenameEnabled }}"
   TEAMS_CHAT_METADATA_ENABLED: "{{ .Values.teams.chat.metadataEnabled }}"

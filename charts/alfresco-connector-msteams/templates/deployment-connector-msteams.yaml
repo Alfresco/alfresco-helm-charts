@@ -21,11 +21,12 @@ spec:
       labels:
         {{- include "alfresco-connector-msteams.selectorLabels" . | nindent 8 }}
     spec:
-    {{- include "component-pod-security-context" .Values | indent 4 }}
-    {{- if .Values.nodeSelector }}
-      nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      serviceAccountName: {{ include "alfresco-connector-msteams.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
+      {{- if .Values.nodeSelector }}
+        nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
+      {{- end }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -59,10 +60,13 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- include "component-security-context" .Values.msTeams | indent 8 }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           envFrom:
             - configMapRef:
                 name: {{ template "alfresco-connector-msteams.fullname" . }}
+          env:
+            {{- include "alfresco-connector-msteams.repo-msteams.env" $ | nindent 12 }}
+            {{- include "alfresco-connector-msteams.secret-msteams.env" $ | nindent 12 }}
           ports:
               - containerPort: {{ .Values.image.internalPort }}
           resources: {{- toYaml .Values.resources | nindent 12 }}

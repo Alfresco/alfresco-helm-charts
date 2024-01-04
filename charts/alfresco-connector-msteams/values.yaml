@@ -44,12 +44,36 @@ alfresco:
     contextPath: /workspace/
 microsoft:
   app:
-    id: change_me_app_id
-    password: change_me_app_pwd
+    id: null
+    password: null
     oauth:
       connectionName: alfresco
+    existingSecret:
+      name: null
+      keys:
+        id: MICROSOFT_APP_ID
+        password: MICROSOFT_APP_PASSWORD
 teams:
   chat:
     filenameEnabled: true
     metadataEnabled: true
     imageEnabled: true
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: msteams-sa
+repository:
+  # -- URL of the Alfresco repository
+  url: null
+  existingConfigMap:
+    # -- Alternatively, provide repository connection details via an existing
+    # configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the full url to connect to the
+      # alfresco repository
+      url: ALFRESCO_BASE_URL
