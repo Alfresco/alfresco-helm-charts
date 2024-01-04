@@ -7,3 +7,8 @@
 {{- $scope := (dict "Values" (dict "nameOverride" "solr-claim" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-search-service.fullname" $scope }}
 {{- end }}
+
+{{- define "alfresco-search-service.repository-config.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "repository-config" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-search-service.fullname" $scope }}
+{{- end }}

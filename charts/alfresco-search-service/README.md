@@ -63,7 +63,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository.existingConfigMap.keys.host | string | `"SOLR_ALFRESCO_HOST"` | Key within the configmap holding the repository hostname |
 | repository.existingConfigMap.keys.port | string | `"SOLR_ALFRESCO_PORT"` | Key within the configmap holding the repository port |
 | repository.existingConfigMap.keys.securecomms | string | `"SOLR_ALFRESCO_SECURE_COMMS"` | Key within the configmap holding the repository security level |
-| repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing Alfresco repository URL. In addition to the keys mentioned below. the configMap can contain solr properties converted to env variable notation (e.g SOLR_ALFRESCO_BASEURL). |
+| repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing Alfresco repository URL |
 | repository.existingSecret.keys.sharedSecret | string | `"SOLR_ALFRESCO_SECURECOMMS_SECRET"` | Key within the secret holding the repository shared secret |
 | repository.existingSecret.name | string | `nil` | Alternatively, provide a pre-existing secret containing the shared secret used with repository when `securecomms` is `secret` |
 | repository.securecomms | string | `"secret"` | repository security level to use when tracking the repo ('none' or 'secret') |

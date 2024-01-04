@@ -72,9 +72,7 @@ repository:
       # -- Key within the secret holding the repository shared secret
       sharedSecret: SOLR_ALFRESCO_SECURECOMMS_SECRET
   existingConfigMap:
-    # -- Name of a pre-existing configmap containing Alfresco repository URL. In
-    # addition to the keys mentioned below. the configMap can contain solr
-    # properties converted to env variable notation (e.g SOLR_ALFRESCO_BASEURL).
+    # -- Name of a pre-existing configmap containing Alfresco repository URL
     name: null
     keys:
       # -- Key within the configmap holding the repository hostname

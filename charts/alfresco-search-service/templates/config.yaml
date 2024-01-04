@@ -2,8 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-repository" $.Chart.Name )) "Chart" $.Chart "Release" $.Release }}
-  name: {{ template "alfresco-search-service.fullname" $ctx }}
+  name: {{ template "alfresco-search-service.repository-config.name" . }}
   labels:
     {{- include "alfresco-search-service.labels" . | nindent 4 }}
 data:

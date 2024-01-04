@@ -33,32 +33,29 @@ spec:
           image: {{ template "alfresco-search.dockerImage" . }}
           imagePullPolicy: {{ template "alfresco-search.pullPolicy" . }}
           {{- include "component-security-context" .Values | indent 8 }}
-          {{- $repoCtx := dict "Values" (dict "nameOverride" (printf "%s-repository" $.Chart.Name )) "Chart" $.Chart "Release" $.Release }}
-          {{- $cm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-search-service.fullname" $repoCtx) }}
-          {{- $secret := coalesce .Values.repository.existingSecret.name (include "alfresco-search-service.fullname" $repoCtx) }}
           env:
             {{- with .Values.repository }}
               {{- if eq .securecomms "secret" }}
             - name: SOLR_ALFRESCO_SECURECOMMS_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ $secret }}
+                  name: {{ template "alfresco-search-service.repository-config.name" $ }}
                   key: {{ index .existingSecret.keys "sharedSecret" }}
               {{- end }}
             - name: SOLR_ALFRESCO_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: {{ $cm }}
+                  name: {{ template "alfresco-search-service.repository-config.name" $ }}
                   key: {{ .existingConfigMap.keys.host }}
             - name: SOLR_ALFRESCO_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: {{ $cm }}
+                  name: {{ template "alfresco-search-service.repository-config.name" $ }}
                   key: {{ .existingConfigMap.keys.port }}
             - name: SOLR_ALFRESCO_SECURECOMMS
               valueFrom:
                 configMapKeyRef:
-                  name: {{ $cm }}
+                  name: {{ template "alfresco-search-service.repository-config.name" $ }}
                   key: {{ .existingConfigMap.keys.securecomms }}
             {{- end }}
             - name: SOLR_SOLR_HOST
@@ -72,9 +69,6 @@ spec:
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end }}
-          envFrom:
-          - configMapRef:
-              name: {{ $cm }}
           ports:
             - containerPort: {{ template "alfresco-search.containerPort" . }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
