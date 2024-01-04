@@ -28,10 +28,13 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | activemq.nameOverride | string | `"activemq"` |  |
 | activemq.services.broker.ports.external.openwire | int | `61616` |  |
 | database.driver | string | `"org.postgresql.Driver"` | The JDBC Driver to connect to the DB. If different from the default make sure your container image ships it. |
-| database.existingSecretName | string | `nil` | An existing kubernetes secret with DB info (prefered over using values) |
-| database.password | string | `"admin"` | JDBC password to use to connect to the DB |
+| database.existingSecret | object | `{"keys":{"password":"DATABASE_PASSWORD","username":"DATABASE_USERNAME"},"name":null}` | An existing kubernetes secret with DB info (prefered over using values) |
+| database.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password |
+| database.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username |
+| database.existingSecret.name | string | `nil` | Name of a pre-existing secret containing database credentials |
+| database.password | string | `nil` | JDBC password to use to connect to the DB |
 | database.url | string | `nil` | JDBC url to connect to the external DB |
-| database.user | string | `"alfresco"` | JDBC username to use to connect to the DB |
+| database.username | string | `nil` | JDBC username to use to connect to the DB |
 | environment.EXTRA_JAVA_OPTS | string | `""` |  |
 | environment.JAVA_OPTS | string | `"-Dsync.metrics.reporter.graphite.enabled=false -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","messageBroker":{"password":null,"url":null,"user":null},"strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |

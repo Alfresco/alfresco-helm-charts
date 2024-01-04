@@ -130,11 +130,18 @@ database:
   # -- JDBC url to connect to the external DB
   url: null
   # -- JDBC username to use to connect to the DB
-  user: alfresco
+  username: null
   # -- JDBC password to use to connect to the DB
-  password: admin
+  password: null
   # -- An existing kubernetes secret with DB info (prefered over using values)
-  existingSecretName: null
+  existingSecret:
+    # -- Name of a pre-existing secret containing database credentials
+    name: null
+    keys:
+      # -- Key within the secret holding the database username
+      username: DATABASE_USERNAME
+      # -- Key within the secret holding the database password
+      password: DATABASE_PASSWORD
 ingress:
   # -- useful when running Sync service without SSL termination done by a load
   # balancer, e.g. when ran on Minikube for testing purposes

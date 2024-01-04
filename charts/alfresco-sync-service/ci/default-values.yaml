@@ -1,6 +1,9 @@
 ---
 repository:
   host: dummy-repo
+database:
+  username: alfresco
+  password: alfresco
 activemq:
   enabled: true
 messageBroker:

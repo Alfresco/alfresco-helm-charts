@@ -5,6 +5,8 @@ templates:
   - secret-database.yaml
 tests:
   - it: should render default JDBC values
+    values: &testvalues
+      - values/test_values.yaml
     set:
       postgresql:
         enabled: true
@@ -31,7 +33,7 @@ tests:
     set:
       database:
         url: jdbc:mysql://mysqldb:1234/somedb
-        user: scott
+        username: scott
         password: tiger
         driver: com.mysql.cj.jdbc.Driver
     asserts:

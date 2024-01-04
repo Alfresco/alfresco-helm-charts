@@ -1,28 +1,4 @@
 {{/*
-Get Database Username
-*/}}
-{{- define "alfresco-sync-service.dbUser" -}}
-{{- $defaultUser := "alfresco" }}
-{{- if .Values.postgresql.enabled }}
-{{- coalesce .Values.postgresql.auth.username $defaultUser }}
-{{- else }}
-{{- coalesce .Values.database.user $defaultUser }}
-{{- end }}
-{{- end -}}
-
-{{/*
-Get Database Password
-*/}}
-{{- define "alfresco-sync-service.dbPass" -}}
-{{- $defaultPass := "admin" }}
-{{- if .Values.postgresql.enabled }}
-{{- coalesce .Values.postgresql.auth.password $defaultPass }}
-{{- else }}
-{{- coalesce .Values.database.password $defaultPass }}
-{{- end }}
-{{- end -}}
-
-{{/*
 Get Database Driver
 */}}
 {{- define "alfresco-sync-service.dbDriver" -}}

@@ -8,6 +8,8 @@ templates:
 tests:
   - it: should render deployment with some defaults
     template: deployment-syncservice.yaml
+    values: &testvalues
+      - values/test_values.yaml
     set: &values
       postgresql:
         enabled: true
@@ -25,6 +27,7 @@ tests:
               cpu: "2"
               memory: "2000Mi"
   - it: should render deployment without a service account
+    values: *testvalues
     set:
       database:
         url: jdbc:postgresql://postgresql:5432/alfresco-sync

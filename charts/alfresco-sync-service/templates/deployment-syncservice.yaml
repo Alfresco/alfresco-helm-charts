@@ -41,6 +41,19 @@ spec:
             name: {{ template "alfresco-sync-service.fullname" . }}-configmap
         - secretRef:
             name: {{ template "alfresco-sync-service.brokerSecret" . }}
+        {{- $dbSecretCtx := dict "Values" (dict "nameOverride" "alfresco-sync-database") "Chart" .Chart "Release" .Release }}
+        {{- $dbSecret := coalesce .Values.database.existingSecret.name (include "alfresco-sync-service.fullname" $dbSecretCtx) }}
+        env:
+          - name: DATABASE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ $dbSecret }}
+                key: .Values.database.existingSecret.keys.username }}
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ $dbSecret }}
+                key: .Values.database.existingSecret.keys.password }}
         ports:
         - name: serviceport
           containerPort: 9090
