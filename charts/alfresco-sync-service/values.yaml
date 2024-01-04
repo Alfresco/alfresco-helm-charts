@@ -60,15 +60,6 @@ repository:
   # -- A nameOverride use to compute an ACS repository service name
   nameOverride: null
 activemq:
-  # -- Toggle ActiveMQ chart dependency
-  # see [Alfresco ActiveMQ chart
-  # documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/activemq))
-  enabled: false
-  adminUser:
-    # -- User to use to set as the connection user for ActiveMQ
-    user: admin
-    # -- Password to use to set as the connection user for ActiveMQ
-    password: admin
   services:
     broker:
       ports:

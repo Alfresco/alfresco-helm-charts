@@ -2,11 +2,13 @@
 repository:
   host: dummy-repo
 activemq:
-  enabled: true
+  adminUser:
+    user: &mquser admin
+    password: &mqpass admin
 messageBroker:
   url: failover:(nio://mqsync:61616)
-  username: admin
-  password: admin
+  username: *mquser
+  password: *mqpass
 postgresql:
   fullnameOverride: pgsync
   auth:

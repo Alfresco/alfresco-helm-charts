@@ -22,9 +22,6 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| activemq.adminUser.password | string | `"admin"` | Password to use to set as the connection user for ActiveMQ |
-| activemq.adminUser.user | string | `"admin"` | User to use to set as the connection user for ActiveMQ |
-| activemq.enabled | bool | `false` | Toggle ActiveMQ chart dependency see [Alfresco ActiveMQ chart documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/activemq)) |
 | activemq.services.broker.ports.external.openwire | int | `61616` |  |
 | database.driver | string | `"org.postgresql.Driver"` | The JDBC Driver to connect to the DB. If different from the default make sure your container image ships it. |
 | database.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver class to use. The configmap may leverage the alfresco-repository.db.cm named template to auto-generate it from the sole url parameter. |
