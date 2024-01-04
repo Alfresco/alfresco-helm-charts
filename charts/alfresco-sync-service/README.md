@@ -28,7 +28,9 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | activemq.nameOverride | string | `"activemq"` |  |
 | activemq.services.broker.ports.external.openwire | int | `61616` |  |
 | database.driver | string | `"org.postgresql.Driver"` | The JDBC Driver to connect to the DB. If different from the default make sure your container image ships it. |
-| database.existingSecret | object | `{"keys":{"password":"DATABASE_PASSWORD","username":"DATABASE_USERNAME"},"name":null}` | An existing kubernetes secret with DB info (prefered over using values) |
+| database.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver class to use. The configmap may leverage the alfresco-repository.db.cm named template to auto-generate it from the sole url parameter. |
+| database.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database |
+| database.existingConfigMap.name | string | `nil` |  |
 | database.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password |
 | database.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username |
 | database.existingSecret.name | string | `nil` | Name of a pre-existing secret containing database credentials |

@@ -133,7 +133,15 @@ database:
   username: null
   # -- JDBC password to use to connect to the DB
   password: null
-  # -- An existing kubernetes secret with DB info (prefered over using values)
+  existingConfigMap:
+    name: null
+    keys:
+      # -- configmap key where to find the URL of the database
+      url: DATABASE_URL
+      # -- configmap key where to find the JDBC driver class to use.
+      # The configmap may leverage the alfresco-repository.db.cm named
+      # template to auto-generate it from the sole url parameter.
+      driver: DATABASE_DRIVER
   existingSecret:
     # -- Name of a pre-existing secret containing database credentials
     name: null

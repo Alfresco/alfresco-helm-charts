@@ -41,19 +41,32 @@ spec:
             name: {{ template "alfresco-sync-service.fullname" . }}-configmap
         - secretRef:
             name: {{ template "alfresco-sync-service.brokerSecret" . }}
-        {{- $dbSecretCtx := dict "Values" (dict "nameOverride" "alfresco-sync-database") "Chart" .Chart "Release" .Release }}
-        {{- $dbSecret := coalesce .Values.database.existingSecret.name (include "alfresco-sync-service.fullname" $dbSecretCtx) }}
         env:
+          {{- with .Values.database }}
+          {{- $dbCtx := dict "Values" (dict "nameOverride" "alfresco-sync-database") "Chart" $.Chart "Release" $.Release }}
+          {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-sync-service.fullname" $dbCtx) }}
+          {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-sync-service.fullname" $dbCtx) }}
           - name: DATABASE_USERNAME
             valueFrom:
               secretKeyRef:
                 name: {{ $dbSecret }}
-                key: .Values.database.existingSecret.keys.username }}
+                key: .existingSecret.keys.username }}
           - name: DATABASE_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: {{ $dbSecret }}
-                key: .Values.database.existingSecret.keys.password }}
+                key: .existingSecret.keys.password }}
+          - name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $dbCm }}
+                key: {{ .existingConfigMap.keys.url }}
+          - name: DATABASE_DRIVER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $dbCm }}
+                key: {{ .existingConfigMap.keys.driver }}
+          {{- end }}
         ports:
         - name: serviceport
           containerPort: 9090
