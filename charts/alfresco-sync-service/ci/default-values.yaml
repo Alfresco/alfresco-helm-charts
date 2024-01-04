@@ -1,13 +1,33 @@
 ---
 repository:
   host: dummy-repo
-database:
-  username: alfresco
-  password: alfresco
 activemq:
   enabled: true
 messageBroker:
   nameOverride: mqsync
 postgresql:
-  enabled: true
-  nameOverride: pgsync
+  fullnameOverride: pgsync
+  auth:
+    enablePostgresUser: false
+    username: &dbuser alfresco
+    password: &dbpass admin
+    database: alfresco-sync
+  primary:
+    extendedConfiguration: |
+      shared_buffers = 256MB
+      max_connections = 100
+      wal_level = minimal
+      max_wal_senders = 0
+      max_replication_slots = 0
+      effective_cache_size = 1024GB
+      log_min_messages = LOG
+  resources:
+    limits:
+      cpu: "2"
+      memory: "2Gi"
+database:
+  url: jdbc:postgresql://pgsync/alfresco-sync
+  username: *dbuser
+  password: *dbpass
+tags:
+  ci: true
