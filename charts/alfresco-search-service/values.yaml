@@ -134,10 +134,10 @@ initContainer:
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
 
-
 nodeSelector: {}
 tolerations: []
-affinity: {}
+# -- Pod affinity, passed thru tpl function
+affinity: |-
 
 serviceAccount:
   # -- Specifies whether a service account should be created

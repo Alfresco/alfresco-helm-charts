@@ -10,7 +10,7 @@ tests:
     asserts:
       - equal:
           path: metadata.name
-          value: RELEASE-NAME-alfresco-search-service-solr
+          value: RELEASE-NAME-solr
         template: ingress.yaml
       - equal:
           path: metadata.annotations['nginx.ingress.kubernetes.io/auth-secret']
