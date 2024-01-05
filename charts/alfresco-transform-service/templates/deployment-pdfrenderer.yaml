@@ -30,27 +30,6 @@ spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values.pdfrenderer | indent 4 }}
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 10
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ template "alfresco-transform-service.pdfrenderer.name" . }}
-              topologyKey: failure-domain.beta.kubernetes.io/zone
-          - weight: 5
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ template "alfresco-transform-service.pdfrenderer.name" . }}
-              topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.pdfrenderer.image.repository }}:{{ .Values.pdfrenderer.image.tag }}"
@@ -79,7 +58,7 @@ spec:
       {{- end }}
       {{- with .Values.pdfrenderer.affinity }}
       affinity:
-        {{- toYaml . | nindent 8 }}
+        {{- tpl . $ | nindent 8 }}
       {{- end }}
       {{- with .Values.pdfrenderer.tolerations }}
       tolerations:

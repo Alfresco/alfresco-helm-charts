@@ -15,7 +15,7 @@ A Helm chart for deploying Alfresco Transform Services
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| filestore.affinity | object | `{}` |  |
+| filestore.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n  - weight: 10\n    podAffinityTerm:\n      labelSelector:\n        matchExpressions:\n        - key: app\n          operator: In\n          values:\n          - {{ template \"alfresco-transform-service.filestore.name\" . }}\n      topologyKey: topology.kubernetes.io/zone\n  - weight: 5\n    podAffinityTerm:\n      labelSelector:\n        matchExpressions:\n        - key: app\n          operator: In\n          values:\n          - {{ template \"alfresco-transform-service.filestore.name\" . }}\n      topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | filestore.enabled | bool | `true` |  |
 | filestore.environment."scheduler.cleanup.interval" | string | `"86400000"` |  |
 | filestore.environment."scheduler.content.age.millis" | string | `"86400000"` |  |
@@ -65,7 +65,7 @@ A Helm chart for deploying Alfresco Transform Services
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
-| imagemagick.affinity | object | `{}` |  |
+| imagemagick.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.imagemagick.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.imagemagick.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | imagemagick.enabled | bool | `true` |  |
 | imagemagick.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | imagemagick.image.internalPort | int | `8090` |  |
@@ -100,7 +100,7 @@ A Helm chart for deploying Alfresco Transform Services
 | imagemagick.tolerations | list | `[]` |  |
 | imagemagick.volumeMounts | list | `[]` |  |
 | imagemagick.volumes | list | `[]` |  |
-| libreoffice.affinity | object | `{}` |  |
+| libreoffice.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.libreoffice.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.libreoffice.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | libreoffice.enabled | bool | `true` |  |
 | libreoffice.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | libreoffice.image.internalPort | int | `8090` |  |
@@ -143,7 +143,7 @@ A Helm chart for deploying Alfresco Transform Services
 | messageBroker.password | string | `nil` | Activemq password |
 | messageBroker.url | string | `nil` | Activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true) |
 | messageBroker.user | string | `nil` | Activemq username |
-| pdfrenderer.affinity | object | `{}` |  |
+| pdfrenderer.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.pdfrenderer.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.pdfrenderer.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | pdfrenderer.enabled | bool | `true` |  |
 | pdfrenderer.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | pdfrenderer.image.internalPort | int | `8090` |  |
@@ -182,7 +182,7 @@ A Helm chart for deploying Alfresco Transform Services
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
-| tika.affinity | object | `{}` |  |
+| tika.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.tika.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.tika.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | tika.enabled | bool | `true` |  |
 | tika.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | tika.image.internalPort | int | `8090` |  |
@@ -217,7 +217,7 @@ A Helm chart for deploying Alfresco Transform Services
 | tika.tolerations | list | `[]` |  |
 | tika.volumeMounts | list | `[]` |  |
 | tika.volumes | list | `[]` |  |
-| transformmisc.affinity | object | `{}` |  |
+| transformmisc.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-misc.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-misc.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | transformmisc.enabled | bool | `true` |  |
 | transformmisc.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | transformmisc.image.internalPort | int | `8090` |  |
@@ -252,7 +252,7 @@ A Helm chart for deploying Alfresco Transform Services
 | transformmisc.tolerations | list | `[]` |  |
 | transformmisc.volumeMounts | list | `[]` |  |
 | transformmisc.volumes | list | `[]` |  |
-| transformrouter.affinity | object | `{}` |  |
+| transformrouter.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-router.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-router.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | transformrouter.enabled | bool | `true` |  |
 | transformrouter.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | transformrouter.image.internalPort | int | `8095` |  |

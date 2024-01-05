@@ -279,3 +279,29 @@ tests:
           path: spec.template.spec.volumes
           content: *volumes_content
         template: deployment-transform-router.yaml
+
+  - it: should render default affinity in every deployment
+    values:
+      - values/test_values.yaml
+    asserts:
+      - exists:
+          path: spec.template.spec.affinity.podAntiAffinity
+        template: deployment-filestore.yaml
+      - exists:
+          path: spec.template.spec.affinity.podAntiAffinity
+        template: deployment-imagemagick.yaml
+      - exists:
+          path: spec.template.spec.affinity.podAntiAffinity
+        template: deployment-libreoffice.yaml
+      - exists:
+          path: spec.template.spec.affinity.podAntiAffinity
+        template: deployment-pdfrenderer.yaml
+      - exists:
+          path: spec.template.spec.affinity.podAntiAffinity
+        template: deployment-tika.yaml
+      - exists:
+          path: spec.template.spec.affinity.podAntiAffinity
+        template: deployment-transform-misc.yaml
+      - exists:
+          path: spec.template.spec.affinity.podAntiAffinity
+        template: deployment-transform-router.yaml

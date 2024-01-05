@@ -3,7 +3,28 @@ transformrouter:
   replicaCount: 2
   nodeSelector: {}
   tolerations: []
-  affinity: {}
+  # -- Pod affinity, passed thru tpl function
+  affinity: |-
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.transform-router.name" . }}
+            topologyKey: topology.kubernetes.io/zone
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.transform-router.name" . }}
+            topologyKey: app.kubernetes.io/name
   podAnnotations: {}
   podLabels: {}
   image:
@@ -46,7 +67,28 @@ pdfrenderer:
   replicaCount: 2
   nodeSelector: {}
   tolerations: []
-  affinity: {}
+  # -- Pod affinity, passed thru tpl function
+  affinity: |-
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.pdfrenderer.name" . }}
+            topologyKey: topology.kubernetes.io/zone
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.pdfrenderer.name" . }}
+            topologyKey: app.kubernetes.io/name
   podAnnotations: {}
   podLabels: {}
   image:
@@ -93,7 +135,28 @@ imagemagick:
   replicaCount: 2
   nodeSelector: {}
   tolerations: []
-  affinity: {}
+  # -- Pod affinity, passed thru tpl function
+  affinity: |-
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.imagemagick.name" . }}
+            topologyKey: topology.kubernetes.io/zone
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.imagemagick.name" . }}
+            topologyKey: app.kubernetes.io/name
   podAnnotations: {}
   podLabels: {}
   image:
@@ -140,7 +203,28 @@ libreoffice:
   replicaCount: 2
   nodeSelector: {}
   tolerations: []
-  affinity: {}
+  # -- Pod affinity, passed thru tpl function
+  affinity: |-
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.libreoffice.name" . }}
+            topologyKey: topology.kubernetes.io/zone
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.libreoffice.name" . }}
+            topologyKey: app.kubernetes.io/name
   podAnnotations: {}
   podLabels: {}
   image:
@@ -187,7 +271,28 @@ tika:
   replicaCount: 2
   nodeSelector: {}
   tolerations: []
-  affinity: {}
+  # -- Pod affinity, passed thru tpl function
+  affinity: |-
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.tika.name" . }}
+            topologyKey: topology.kubernetes.io/zone
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.tika.name" . }}
+            topologyKey: app.kubernetes.io/name
   podAnnotations: {}
   podLabels: {}
   image:
@@ -234,7 +339,28 @@ transformmisc:
   replicaCount: 2
   nodeSelector: {}
   tolerations: []
-  affinity: {}
+  # -- Pod affinity, passed thru tpl function
+  affinity: |-
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.transform-misc.name" . }}
+            topologyKey: topology.kubernetes.io/zone
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.transform-misc.name" . }}
+            topologyKey: app.kubernetes.io/name
   podAnnotations: {}
   podLabels: {}
   image:
@@ -281,7 +407,28 @@ filestore:
   replicaCount: 1
   nodeSelector: {}
   tolerations: []
-  affinity: {}
+  # -- Pod affinity, passed thru tpl function
+  affinity: |-
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 10
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - {{ template "alfresco-transform-service.filestore.name" . }}
+          topologyKey: topology.kubernetes.io/zone
+      - weight: 5
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - {{ template "alfresco-transform-service.filestore.name" . }}
+          topologyKey: app.kubernetes.io/name
   podAnnotations: {}
   podLabels: {}
   image:
