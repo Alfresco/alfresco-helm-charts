@@ -19,22 +19,23 @@ spec:
   template:
     metadata:
       annotations:
-        {{- if not .Values.repository.existingConfigMap }}
-        checksum/config: {{ include (print $.Template.BasePath "/config-share.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        {{- include "alfresco-share.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-share.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       serviceAccountName: {{ include "alfresco-share.serviceAccountName" . }}
       {{- include "component-pod-security-context" .Values | indent 4 }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
-      nodeSelector:
-        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       containers:
         - name: alfresco-share
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- include "component-security-context" .Values | indent 8 }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           {{- if .Values.command }}
           command:
             {{- toYaml .Values.command | nindent 12 }}
@@ -50,7 +51,7 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- $repo_details_cm := .Values.repository.existingConfigMap.name | default (print (include "alfresco-share.fullname" .) "-configmap") }}
+          {{- $repo_details_cm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-share.fullname" .) }}
           env:
             - name: CSRF_FILTER_REFERER
               value: {{ include "alfresco-common.csrf.referer" . }}
@@ -98,3 +99,15 @@ spec:
         {{- toYaml .Values.extraInitContainers | nindent 8 }}
       volumes:
         {{- toYaml .Values.extraVolumes | nindent 8 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- tpl . $ | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

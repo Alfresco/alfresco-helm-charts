@@ -44,6 +44,7 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: share-sa
 podAnnotations: {}
+podLabels: {}
 podSecurityContext:
   runAsNonRoot: true
 securityContext:
@@ -82,7 +83,8 @@ resources:
     memory: "2000Mi"
 nodeSelector: {}
 tolerations: []
-affinity: {}
+# -- string representation of the YAML affinity rules (can use templates)
+affinity: ""
 environment:
   CATALINA_OPTS: >-
     -XX:MinRAMPercentage=50

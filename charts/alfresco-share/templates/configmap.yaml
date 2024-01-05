@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-share.fullname" . }}-configmap
+  name: {{ template "alfresco-share.fullname" . }}
   labels:
     {{- include "alfresco-share.labels" . | nindent 4 }}
 data:

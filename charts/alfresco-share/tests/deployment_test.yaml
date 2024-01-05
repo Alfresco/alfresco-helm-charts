@@ -1,15 +1,75 @@
 ---
 suite: test Alfresco Share deployment
 templates:
-  - deployment-share.yaml
-  - config-share.yaml
+  - deployment.yaml
 tests:
   - it: should have basic metadata in place in deployment
     asserts:
       - equal:
           path: metadata.name
           value: RELEASE-NAME-alfresco-share
-        template: deployment-share.yaml
+      - isNull:
+          path: spec.template.spec.nodeSelector
+      - isNull:
+          path: spec.template.spec.affinity
+      - isNull:
+          path: spec.template.spec.tolerations
+
+  - it: should have customized metadata in place in deployment
+    set:
+      nameOverride: share-ui
+      nodeSelector:
+        disktype: ssd
+      tolerations:
+        - key: "skipme"
+          operator: "Exists"
+          effect: "NoSchedule"
+      affinity: |-
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux
+      podLabels:
+        env: qa
+      podAnnotations:
+        some.annotations.for.stuff: something
+        some.annotations.for.otherstuff: somethingelse
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-share-ui
+      - contains:
+          path: >-
+            spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms
+          content:
+            matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                  - linux
+      - contains:
+          path: spec.template.spec.tolerations
+          content:
+            key: "skipme"
+            operator: "Exists"
+            effect: "NoSchedule"
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            env: qa
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            some.annotations.for.stuff: something
+            some.annotations.for.otherstuff: somethingelse
+      - isSubset:
+          path: spec.template.spec.nodeSelector
+          content:
+            disktype: ssd
 
   - it: should leverage provided existing configmap
     set:
@@ -20,7 +80,6 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].env[5].valueFrom.configMapKeyRef.name
           value: myns/mycm
-        template: deployment-share.yaml
 
   - it: Fail due to broken input
     set:
@@ -30,7 +89,6 @@ tests:
       - failedTemplate:
           errorMessage: >-
             provided known_urls MUST start with a scheme (http :// or https://)
-        template: deployment-share.yaml
   - it: |
       should render custom CSRF config.
       referers MUST be a regex with pipes escaped (due to the way vars are substitued in Share pods
@@ -45,30 +103,24 @@ tests:
           path: spec.template.spec.containers[0].env[0].value
           value: >-
             https://ecm.domain.tld/myapp/callback/.*\|https://ecm.domain.tld/alfresco/.*\|http://app.domain.local:8000/.*
-        template: deployment-share.yaml
       - equal:
           path: spec.template.spec.containers[0].env[1].value
           value: https://ecm.domain.tld,https://ecm.domain.tld,http://app.domain.local:8000
-        template: deployment-share.yaml
       - equal:
           path: spec.template.spec.containers[0].env[2].value
           value: https://ecm.domain.tld
-        template: deployment-share.yaml
 
   - it: should render a default Xorigin restriction config
     asserts:
       - equal:
           path: spec.template.spec.containers[0].env[0].value
           value: http://localhost/.*\|https://localhost/.*
-        template: deployment-share.yaml
       - equal:
           path: spec.template.spec.containers[0].env[1].value
           value: http://localhost,https://localhost
-        template: deployment-share.yaml
       - equal:
           path: spec.template.spec.containers[0].env[2].value
           value: http://localhost
-        template: deployment-share.yaml
 
   - it: should render extra configs
     set:
@@ -88,18 +140,15 @@ tests:
             name: share-config
             configMap:
               name: anotherns/morecm
-        template: deployment-share.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             mountPath: >-
               /usr/local/tomcat/shared/classes/Alfresco/web-extension/share-config-custom.xml
             name: share-config
-        template: deployment-share.yaml
       - lengthEqual:
           path: spec.template.spec.containers
           count: 2
-        template: deployment-share.yaml
 
   - it: should render cpu and memory limits
     asserts:
@@ -112,4 +161,3 @@ tests:
             limits:
               cpu: "4"
               memory: "2000Mi"
-        template: deployment-share.yaml
