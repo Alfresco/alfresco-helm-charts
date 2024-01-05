@@ -59,12 +59,6 @@ repository:
   port: 80
   # -- A nameOverride use to compute an ACS repository service name
   nameOverride: null
-activemq:
-  services:
-    broker:
-      ports:
-        external:
-          openwire: 61616
 messageBroker:
   # -- A failover URI formatted string, see:
   # https://activemq.apache.org/failover-transport-reference

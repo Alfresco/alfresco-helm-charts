@@ -22,7 +22,6 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| activemq.services.broker.ports.external.openwire | int | `61616` |  |
 | database.driver | string | `"org.postgresql.Driver"` | The JDBC Driver to connect to the DB. If different from the default make sure your container image ships it. |
 | database.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver class to use. The configmap may leverage the alfresco-repository.db.cm named template to auto-generate it from the sole url parameter. |
 | database.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database |
