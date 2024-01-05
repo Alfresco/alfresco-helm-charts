@@ -32,7 +32,8 @@ tests:
       - equal:
           path: data.SOLR_ALFRESCO_SECURE_COMMS
           value: secret
-  - it: should not render configmap
+
+  - it: should not render when existingConfigMap is set
     values: *testvalues
     set:
       repository:

@@ -23,7 +23,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` |  |
+| affinity | string | `""` | Pod affinity, passed thru tpl function |
 | alfresco-insight-zeppelin.enabled | bool | `false` |  |
 | environment.SOLR_CREATE_ALFRESCO_DEFAULTS | string | `"alfresco,archive"` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
