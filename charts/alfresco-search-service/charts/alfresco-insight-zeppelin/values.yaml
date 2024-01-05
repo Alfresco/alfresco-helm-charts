@@ -1,6 +1,5 @@
 ---
 replicaCount: 1
-nodeSelector: {}
 image:
   repository: quay.io/alfresco/insight-zeppelin
   tag: 2.0.8
@@ -15,9 +14,19 @@ service:
   externalPort: 80
 ingress:
   path: /zeppelin
-# -- The parent chart will set the values for "repository.host" and
-# "repository.port"
-repository: {}
+
+repository:
+  # -- Alfresco repository URL
+  url: http://alfresco-search-service
+  existingConfigMap:
+    # -- Name of a pre-existing configmap containing Alfresco repository URL
+    name: null
+    keys:
+      # -- Key within the configmap holding the repository hostname
+      host: REPO_HOST
+      # -- Key within the configmap holding the repository port
+      port: REPO_PORT
+
 resources:
   requests:
     cpu: "0.5"
@@ -44,3 +53,19 @@ global:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
+
+nodeSelector: {}
+tolerations: []
+# -- Pod affinity, passed thru tpl function
+affinity: |-
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use. If not set and create is true, a
+  # name is generated using the fullname template
+  name: ""

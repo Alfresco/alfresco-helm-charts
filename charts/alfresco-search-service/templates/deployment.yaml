@@ -17,7 +17,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
-          {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
         {{- include "alfresco-search-service.labels" . | nindent 8 }}
@@ -27,12 +27,12 @@ spec:
     spec:
       {{- include "alfresco-content-services.imagePullSecrets" . | nindent 6 }}
       serviceAccountName: {{ include "alfresco-search-service.serviceAccountName" . }}
-      {{- include "component-pod-security-context" .Values | indent 4 }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ template "alfresco-search.dockerImage" . }}
           imagePullPolicy: {{ template "alfresco-search.pullPolicy" . }}
-          {{- include "component-security-context" .Values | indent 8 }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           env:
             {{- with .Values.repository }}
               {{- if eq .securecomms "secret" }}
