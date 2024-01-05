@@ -1,5 +1,4 @@
 activemq:
-  enabled: true
   fullnameOverride: activemq
   resources:
     requests:
@@ -8,6 +7,9 @@ activemq:
     limits:
       cpu: "1000m"
       memory: "1Gi"
+  adminUser:
+    user: admin
+    password: admin
 
 messageBroker:
   url: failover:(nio://activemq-broker:61616)?timeout=3000&jms.useCompression=true

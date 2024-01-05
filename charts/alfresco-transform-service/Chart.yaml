@@ -8,14 +8,8 @@ dependencies:
   - name: alfresco-common
     version: 3.1.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
-  - name: alfresco-ai-transformer
-    alias: ai
-    version: 0.4.1
-    repository: https://alfresco.github.io/alfresco-helm-charts/
-    condition: ai.enabled
   - name: activemq
     version: 3.4.1
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    condition: activemq.enabled
     tags:
       - ci

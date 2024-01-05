@@ -9,15 +9,12 @@ A Helm chart for deploying Alfresco Transform Services
 | Repository | Name | Version |
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | ai(alfresco-ai-transformer) | 0.4.1 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| ai.enabled | bool | `false` |  |
-| ai.nameOverride | string | `"alfresco-ai"` |  |
 | filestore.affinity | object | `{}` |  |
 | filestore.enabled | bool | `true` |  |
 | filestore.environment."scheduler.cleanup.interval" | string | `"86400000"` |  |
@@ -143,9 +140,9 @@ A Helm chart for deploying Alfresco Transform Services
 | messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` |  |
 | messageBroker.existingSecret.keys.user | string | `"BROKER_USERNAME"` |  |
 | messageBroker.existingSecret.name | string | `nil` | Alternatively, provide message broker credentials via an existing Secret |
-| messageBroker.password | string | `nil` | External activemq password |
-| messageBroker.url | string | `nil` | External activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true) |
-| messageBroker.user | string | `nil` | External activemq username |
+| messageBroker.password | string | `nil` | Activemq password |
+| messageBroker.url | string | `nil` | Activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true) |
+| messageBroker.user | string | `nil` | Activemq username |
 | pdfrenderer.affinity | object | `{}` |  |
 | pdfrenderer.enabled | bool | `true` |  |
 | pdfrenderer.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |

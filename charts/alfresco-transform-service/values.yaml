@@ -348,11 +348,11 @@ filestore:
   volumeMounts: []
 
 messageBroker:
-  # -- External activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true)
+  # -- Activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true)
   url: null
-  # -- External activemq username
+  # -- Activemq username
   user: null
-  # -- External activemq password
+  # -- Activemq password
   password: null
   existingConfigMap:
     # -- Alternatively, provide message broker URL via an existing ConfigMap
@@ -365,10 +365,6 @@ messageBroker:
     keys:
       user: BROKER_USERNAME
       password: BROKER_PASSWORD
-
-ai:
-  enabled: false
-  nameOverride: alfresco-ai
 
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
