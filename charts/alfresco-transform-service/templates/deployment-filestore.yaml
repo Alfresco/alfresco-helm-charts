@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.deployment-filestore.name" . }}
+  name: {{ template "alfresco-transform-service.filestore.name" . }}
   labels:
     {{- include "alfresco-transform-service.filestore.labels" . | nindent 4 }}
 spec:
@@ -40,7 +40,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - {{ template "alfresco-transform-service.deployment-filestore.name" . }}
+                  - {{ template "alfresco-transform-service.filestore.name" . }}
               topologyKey: failure-domain.beta.kubernetes.io/zone
           - weight: 5
             podAffinityTerm:
@@ -49,7 +49,7 @@ spec:
                 - key: app
                   operator: In
                   values:
-                  - {{ template "alfresco-transform-service.deployment-filestore.name" . }}
+                  - {{ template "alfresco-transform-service.filestore.name" . }}
               topologyKey: kubernetes.io/hostname
       containers:
         - name: {{ .Chart.Name }}
@@ -58,7 +58,7 @@ spec:
           {{- include "component-security-context" .Values.filestore | indent 8 }}
           envFrom:
           - configMapRef:
-              name: {{ template "alfresco-transform-service.config-filestore.name" . }}
+              name: {{ template "alfresco-transform-service.filestore.name" . }}
           ports:
             - containerPort: {{ .Values.filestore.image.internalPort }}
           resources: {{- toYaml .Values.filestore.resources | nindent 12 }}

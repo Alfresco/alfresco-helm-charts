@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-transform-service.config-messagebroker.name" . }}
+  name: {{ template "alfresco-transform-service.messagebroker.name" . }}
   labels:
     {{- include "alfresco-transform-service.labels" $ | nindent 4 }}
 data:

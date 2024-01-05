@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-transform-service.config-transform-misc.name" . }}
+  name: {{ template "alfresco-transform-service.transform-misc.name" . }}
   labels:
     {{- include "alfresco-transform-service.transform-misc.labels" . | nindent 4 }}
 data:

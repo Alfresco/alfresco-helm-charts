@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "alfresco-transform-service.deployment-transform-router.name" . }}
+  name: {{ template "alfresco-transform-service.transform-router.name" . }}
   labels:
     {{- include "alfresco-transform-service.transform-router.labels" . | nindent 4 }}
 spec:

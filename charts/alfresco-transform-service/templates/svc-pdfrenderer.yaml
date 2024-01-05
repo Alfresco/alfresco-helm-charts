@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "alfresco-transform-service.deployment-pdfrenderer.name" . }}
+  name: {{ template "alfresco-transform-service.pdfrenderer.name" . }}
   labels:
     {{- include "alfresco-transform-service.pdfrenderer.labels" . | nindent 4 }}
 spec:
