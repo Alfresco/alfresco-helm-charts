@@ -3,11 +3,12 @@ repository:
   host: dummy-repo
   port: 80
 activemq:
+  fullnameOverride: mqsync
   adminUser:
     user: &mquser admin
     password: &mqpass admin
 messageBroker:
-  url: failover:(nio://mqsync:61616)
+  url: failover:(nio://mqsync-broker:61616)
   username: *mquser
   password: *mqpass
 postgresql:
