@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-sync-service.fullname" . }}-configmap
+  name: {{ template "alfresco-sync-service.fullname" . }}
   labels:
     {{- include "alfresco-sync-service.labels" . | nindent 4 }}
 data:

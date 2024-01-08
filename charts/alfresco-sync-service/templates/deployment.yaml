@@ -37,7 +37,7 @@ spec:
         {{- include "alfresco-common.component-security-context" .Values | indent 6 }}
         envFrom:
         - configMapRef:
-            name: {{ template "alfresco-sync-service.fullname" . }}-configmap
+            name: {{ template "alfresco-sync-service.fullname" . }}
         env:
           {{- with .Values.database }}
           {{- $dbCtx := dict "Values" (dict "nameOverride" "alfresco-sync-database") "Chart" $.Chart "Release" $.Release }}
