@@ -67,7 +67,7 @@ repository:
     keys:
       # -- configmap key where to find the URL of the message broker
       host: REPO_HOST
-      port: REPOPORT
+      port: REPO_PORT
       scheme: REPO_SCHEME
 messageBroker:
   # -- A failover URI formatted string, see:

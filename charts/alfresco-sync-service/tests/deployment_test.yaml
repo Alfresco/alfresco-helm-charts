@@ -29,6 +29,31 @@ tests:
       - contains:
           path: spec.template.spec.containers[0].env
           content:
+            name: REPO_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-sync-repo
+                key: REPO_HOST
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REPO_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-sync-repo
+                key: REPO_PORT
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REPO_SCHEME
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-sync-repo
+                key: REPO_SCHEME
+                optional: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
             name: DATABASE_URL
             valueFrom:
               configMapKeyRef:
@@ -85,6 +110,13 @@ tests:
   - it: should render deployment with pre-exisiting resources and without a service account
     values: *testvalues
     set:
+      repository:
+        existingConfigMap:
+          name: myrepo
+          keys:
+            host: ACS_HOST
+            port: ACS_PORT
+            scheme: ACS_PROTO
       database:
         existingConfigMap:
           name: mydb
@@ -117,6 +149,31 @@ tests:
       - hasDocuments:
           count: 0
         template: serviceaccount.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REPO_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: myrepo
+                key: ACS_HOST
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REPO_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: myrepo
+                key: ACS_PORT
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REPO_SCHEME
+            valueFrom:
+              configMapKeyRef:
+                name: myrepo
+                key: ACS_PROTO
+                optional: true
       - contains:
           path: spec.template.spec.containers[0].env
           content:
