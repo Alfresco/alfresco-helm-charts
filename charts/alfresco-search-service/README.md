@@ -4,7 +4,7 @@
 
 A Helm chart for deploying Alfresco Search Service
 
-Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for information on the Helm charts and deployment instructions.
+Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for an example of how to leverage this chart from an umbrella chart.
 
 **Homepage:** <https://www.alfresco.com>
 
