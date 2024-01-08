@@ -1,14 +1,9 @@
----
-# Defines the service for the Alfresco Insight Zeppelin App
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "alfresco-insight-zeppelin.fullname" . }}
+  name: {{ template "alfresco-insight-zeppelin.deployment.name" . }}
   labels:
-    app: {{ template "alfresco-insight-zeppelin.fullname" . }}-app
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "alfresco-insight-zeppelin.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -16,5 +11,4 @@ spec:
       targetPort: {{ .Values.image.internalPort }}
       name: {{ .Values.service.name }}
   selector:
-    app: {{ template "alfresco-insight-zeppelin.fullname" . }}
-    release: {{ .Release.Name }}
+    {{- include "alfresco-insight-zeppelin.selectorLabels" . | nindent 4 }}

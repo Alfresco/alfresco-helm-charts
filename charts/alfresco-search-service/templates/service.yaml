@@ -1,4 +1,3 @@
-# Defines the service for the Alfresco Search (Solr) App
 apiVersion: v1
 kind: Service
 metadata:
