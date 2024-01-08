@@ -4,9 +4,10 @@ apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
   name: {{ template "alfresco-insight-zeppelin.fullname" . }}
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
+  labels:
+    {{- include "alfresco-insight-zeppelin.labels" . | nindent 4 }}
 spec:
+  ingressClassName: nginx
   rules:
   - http:
       paths:
