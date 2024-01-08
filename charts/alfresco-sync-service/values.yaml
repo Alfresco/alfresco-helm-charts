@@ -54,11 +54,11 @@ readinessProbe:
   timeoutSeconds: 10
 repository:
   # -- ACS repository host
-  host: alfresco-cs-repository
+  host: null
   # -- ACS repository port
-  port: 80
+  port: null
   # -- ACS repository port
-  scheme: http
+  scheme: null
   # -- A nameOverride use to compute an ACS repository service name
   nameOverride: null
   existingConfigMap:

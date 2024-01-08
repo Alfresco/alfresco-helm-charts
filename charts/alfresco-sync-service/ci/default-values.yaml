@@ -1,6 +1,7 @@
 ---
 repository:
   host: dummy-repo
+  port: 80
 activemq:
   adminUser:
     user: &mquser admin

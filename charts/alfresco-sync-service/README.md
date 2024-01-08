@@ -68,10 +68,10 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | repository.existingConfigMap.keys.port | string | `"REPOPORT"` |  |
 | repository.existingConfigMap.keys.scheme | string | `"REPO_SCHEME"` |  |
 | repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing message broker details |
-| repository.host | string | `"alfresco-cs-repository"` | ACS repository host |
+| repository.host | string | `nil` | ACS repository host |
 | repository.nameOverride | string | `nil` | A nameOverride use to compute an ACS repository service name |
-| repository.port | int | `80` | ACS repository port |
-| repository.scheme | string | `"http"` | ACS repository port |
+| repository.port | string | `nil` | ACS repository port |
+| repository.scheme | string | `nil` | ACS repository port |
 | resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2000Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |

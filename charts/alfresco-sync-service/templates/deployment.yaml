@@ -102,6 +102,7 @@ spec:
                 name: {{ $repoCm }}
                 key: {{ .existingConfigMap.keys.scheme }}
                 optional: true
+          {{- end }}
         ports:
         - name: serviceport
           containerPort: 9090
