@@ -83,6 +83,25 @@ spec:
                 name: {{ $mqCm }}
                 key: {{ .existingConfigMap.keys.url }}
           {{- end }}
+          {{- with .Values.repository }}
+          {{- $repoCtx := dict "Values" (dict "nameOverride" "alfresco-sync-repo") "Chart" $.Chart "Release" $.Release }}
+          {{- $repoCm := coalesce .existingConfigMap.name (include "alfresco-sync-service.fullname" $repoCtx) }}
+          - name: REPO_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $repoCm }}
+                key: {{ .existingConfigMap.keys.host }}
+          - name: REPO_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $repoCm }}
+                key: {{ .existingConfigMap.keys.port }}
+          - name: REPO_SCHEME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $repoCm }}
+                key: {{ .existingConfigMap.keys.scheme }}
+                optional: true
         ports:
         - name: serviceport
           containerPort: 9090

@@ -57,8 +57,18 @@ repository:
   host: alfresco-cs-repository
   # -- ACS repository port
   port: 80
+  # -- ACS repository port
+  scheme: http
   # -- A nameOverride use to compute an ACS repository service name
   nameOverride: null
+  existingConfigMap:
+    # -- Name of a pre-existing configmap containing message broker details
+    name: null
+    keys:
+      # -- configmap key where to find the URL of the message broker
+      host: REPO_HOST
+      port: REPOPORT
+      scheme: REPO_SCHEME
 messageBroker:
   # -- A failover URI formatted string, see:
   # https://activemq.apache.org/failover-transport-reference

@@ -1,0 +1,17 @@
+{{- if not .Values.repository.existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: >-
+    {{- $ctx := dict "Values" (dict "nameOverride" "alfresco-sync-repo") "Chart" .Chart "Release" .Release }}
+    {{ template "alfresco-sync-service.fullname" $ctx }}
+  labels:
+    {{- include "alfresco-sync-service.labels" . | nindent 4 }}
+data:
+  {{- with .Values.repository }}
+  {{- $reqmsg := "You must provide repository details throught values or using an existing configmap" }}
+  REPO_HOST: {{ required $reqmsg .host }}
+  REPO_HOST: {{ required $reqmsg .port }}
+  REPO_SCHEME: {{ required $reqmsg .scheme }}
+  {{- end }}
+{{- end }}

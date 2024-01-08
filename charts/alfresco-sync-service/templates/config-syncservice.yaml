@@ -11,8 +11,9 @@ data:
     -Dsql.db.driver=$DATABASE_DRIVER
     -Dsql.db.username=$DATABASE_USERNAME
     -Dsql.db.password=$DATABASE_PASSWORD
-    -Drepo.hostname={{ template "alfresco-sync-service.repository" . }}
-    -Drepo.port={{ .Values.repository.port }}
+    -Drepo.hostname=$REPO_HOST
+    -Drepo.port=$REPO_PORT
+    -Drepo.scheme=${REPO_SCHEME:-http}
     -Ddw.server.applicationConnectors[0].type=http
     -Dmessaging.broker.url=$BROKER_URL
     -Dmessaging.username=$BROKER_USERNAME
