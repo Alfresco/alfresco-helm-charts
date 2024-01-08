@@ -1,6 +1,6 @@
 # alfresco-connector-ms365
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
+![Version: 0.5.0-alpha.0](https://img.shields.io/badge/Version-0.5.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.0](https://img.shields.io/badge/AppVersion-2.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector ms365 service
 
@@ -45,6 +45,9 @@ A Helm chart for deploying Alfresco connector ms365 service
 | service.externalPort | int | `80` |  |
 | service.name | string | `"ms365-service"` |  |
 | service.type | string | `"ClusterIP"` |  |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `"ms365-sa"` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | strategy.rollingUpdate.maxSurge | int | `1` |  |
 | strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 
