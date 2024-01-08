@@ -19,4 +19,3 @@ data:
     -Dmessaging.username=$BROKER_USERNAME
     -Dmessaging.password=$BROKER_PASSWORD
     {{ .Values.environment.JAVA_OPTS }}
-    {{ .Values.environment.EXTRA_JAVA_OPTS }}

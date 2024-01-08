@@ -24,7 +24,6 @@ environment:
   JAVA_OPTS: >-
     -Dsync.metrics.reporter.graphite.enabled=false
     -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
-  EXTRA_JAVA_OPTS: ""
 service:
   name: syncservice
   type: NodePort
