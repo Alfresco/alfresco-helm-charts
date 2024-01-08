@@ -252,6 +252,11 @@ tests:
                     operator: In
                     values:
                       - linux
+      podLabels:
+        env: qa
+      podAnnotations:
+        some.annotations.for.stuff: something
+        some.annotations.for.otherstuff: somethingelse
     asserts:
       - equal:
           path: metadata.name
@@ -271,6 +276,15 @@ tests:
             key: "skipme"
             operator: "Exists"
             effect: "NoSchedule"
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            env: qa
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            some.annotations.for.stuff: something
+            some.annotations.for.otherstuff: somethingelse
       - isSubset:
           path: spec.template.spec.nodeSelector
           content:

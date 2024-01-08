@@ -57,6 +57,8 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | messageBroker.username | string | `nil` | Username to authenticate as. |
 | nodeSelector | object | `{}` |  |
 | nodeSelector | object | `{}` |  |
+| podAnnotations | object | `{}` |  |
+| podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
 | podSecurityContext.runAsGroup | int | `1000` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
