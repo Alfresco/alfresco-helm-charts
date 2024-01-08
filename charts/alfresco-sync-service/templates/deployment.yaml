@@ -29,7 +29,7 @@ spec:
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       serviceAccountName: {{ include "alfresco-sync-service.serviceAccountName" . }}
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
-      terminationGracePeriodSeconds: 60
+      terminationGracePeriodSeconds: {{ .terminationGracePeriodSeconds }}
       containers:
       - name: syncservice
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
