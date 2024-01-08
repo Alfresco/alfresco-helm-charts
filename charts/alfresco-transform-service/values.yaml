@@ -2,6 +2,31 @@ transformrouter:
   enabled: true
   replicaCount: 2
   nodeSelector: {}
+  tolerations: []
+  # -- Pod affinity, passed thru tpl function
+  affinity: |-
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.transform-router.name" . }}
+            topologyKey: topology.kubernetes.io/zone
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.transform-router.name" . }}
+            topologyKey: app.kubernetes.io/name
+  podAnnotations: {}
+  podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-router
     tag: 4.0.1
@@ -35,10 +60,37 @@ transformrouter:
     limits:
       cpu: "1"
       memory: "1Gi"
+  volumes: []
+  volumeMounts: []
 pdfrenderer:
   enabled: true
   replicaCount: 2
   nodeSelector: {}
+  tolerations: []
+  # -- Pod affinity, passed thru tpl function
+  affinity: |-
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.pdfrenderer.name" . }}
+            topologyKey: topology.kubernetes.io/zone
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.pdfrenderer.name" . }}
+            topologyKey: app.kubernetes.io/name
+  podAnnotations: {}
+  podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-pdf-renderer
     tag: 5.0.1
@@ -76,10 +128,37 @@ pdfrenderer:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1200
+  volumes: []
+  volumeMounts: []
 imagemagick:
   enabled: true
   replicaCount: 2
   nodeSelector: {}
+  tolerations: []
+  # -- Pod affinity, passed thru tpl function
+  affinity: |-
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.imagemagick.name" . }}
+            topologyKey: topology.kubernetes.io/zone
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.imagemagick.name" . }}
+            topologyKey: app.kubernetes.io/name
+  podAnnotations: {}
+  podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-imagemagick
     tag: 5.0.1
@@ -117,10 +196,37 @@ imagemagick:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 900
+  volumes: []
+  volumeMounts: []
 libreoffice:
   enabled: true
   replicaCount: 2
   nodeSelector: {}
+  tolerations: []
+  # -- Pod affinity, passed thru tpl function
+  affinity: |-
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.libreoffice.name" . }}
+            topologyKey: topology.kubernetes.io/zone
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.libreoffice.name" . }}
+            topologyKey: app.kubernetes.io/name
+  podAnnotations: {}
+  podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-libreoffice
     tag: 5.0.1
@@ -158,10 +264,37 @@ libreoffice:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 99999
     maxTransformSeconds: 1800
+  volumes: []
+  volumeMounts: []
 tika:
   enabled: true
   replicaCount: 2
   nodeSelector: {}
+  tolerations: []
+  # -- Pod affinity, passed thru tpl function
+  affinity: |-
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.tika.name" . }}
+            topologyKey: topology.kubernetes.io/zone
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.tika.name" . }}
+            topologyKey: app.kubernetes.io/name
+  podAnnotations: {}
+  podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-tika
     tag: 5.0.1
@@ -199,10 +332,37 @@ tika:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
+  volumes: []
+  volumeMounts: []
 transformmisc:
   enabled: true
   replicaCount: 2
   nodeSelector: {}
+  tolerations: []
+  # -- Pod affinity, passed thru tpl function
+  affinity: |-
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.transform-misc.name" . }}
+            topologyKey: topology.kubernetes.io/zone
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ template "alfresco-transform-service.transform-misc.name" . }}
+            topologyKey: app.kubernetes.io/name
+  podAnnotations: {}
+  podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-misc
     tag: 5.0.1
@@ -240,10 +400,37 @@ transformmisc:
     livenessTransformPeriodSeconds: 600
     maxTransforms: 10000
     maxTransformSeconds: 1800
+  volumes: []
+  volumeMounts: []
 filestore:
   enabled: true
   replicaCount: 1
   nodeSelector: {}
+  tolerations: []
+  # -- Pod affinity, passed thru tpl function
+  affinity: |-
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 10
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - {{ template "alfresco-transform-service.filestore.name" . }}
+          topologyKey: topology.kubernetes.io/zone
+      - weight: 5
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - {{ template "alfresco-transform-service.filestore.name" . }}
+          topologyKey: app.kubernetes.io/name
+  podAnnotations: {}
+  podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
     tag: 4.0.1
@@ -304,32 +491,42 @@ filestore:
     data:
       mountPath: "/tmp/Alfresco"
       subPath: "alfresco-content-services/filestore-data"
-activemq:
-  nameOverride: activemq
-  enabled: false
-  # -- Possibility to choose Node for pod, with a key-value pair label
-  # e.g {"kubernetes.io/hostname": multinode-demo-m02}
-  nodeSelector: {}
-  adminUser:
-    # -- Default username for the embedded broker admin user
-    user: admin
-    # -- Default password for the embedded broker admin user
-    password: admin
-# -- external activemq connection setting when activemq.enabled=false
+  volumes: []
+  volumeMounts: []
+
 messageBroker:
+  # -- Activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true)
   url: null
+  # -- Activemq username
   user: null
+  # -- Activemq password
   password: null
-  # -- Name of the secret managed by this chart
-  secretName: acs-alfresco-cs-brokersecret
-  # -- Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
-  existingSecretName: null
-ai:
-  enabled: false
-  nameOverride: alfresco-ai
+  existingConfigMap:
+    # -- Alternatively, provide message broker URL via an existing ConfigMap
+    name: null
+    keys:
+      url: BROKER_URL
+  existingSecret:
+    # -- Alternatively, provide message broker credentials via an existing Secret
+    name: null
+    keys:
+      user: BROKER_USERNAME
+      password: BROKER_PASSWORD
+
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""

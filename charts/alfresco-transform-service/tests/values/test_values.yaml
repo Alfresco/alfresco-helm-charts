@@ -4,3 +4,7 @@ activemq:
   adminUser:
     user: alfresco
     password: somesecret
+messageBroker:
+  url: failover:(nio://activemq-broker:61616)?timeout=3000&jms.useCompression=true
+  user: alfresco
+  password: somesecret

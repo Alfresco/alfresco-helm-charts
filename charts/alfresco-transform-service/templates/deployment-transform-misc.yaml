@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.deployment-transform-misc.name" . }}
+  name: {{ template "alfresco-transform-service.transform-misc.name" . }}
   labels:
     {{- include "alfresco-transform-service.transform-misc.labels" . | nindent 4 }}
 spec:
@@ -18,49 +18,50 @@ spec:
     metadata:
       annotations:
         {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "transform-misc") | indent 8 }}
+        {{- with .Values.transformmisc.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
-        {{- include "alfresco-transform-service.transform-misc.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-transform-service.transform-misc.labels" . | nindent 8 }}
+        {{- with .Values.transformmisc.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
-    {{- include "component-pod-security-context" .Values.transformmisc | indent 4 }}
-    {{- if .Values.transformmisc.nodeSelector }}
-      nodeSelector: {{- .Values.transformmisc.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 10
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ template "alfresco-transform-service.deployment-transform-misc.name" . }}
-              topologyKey: failure-domain.beta.kubernetes.io/zone
-          - weight: 5
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ template "alfresco-transform-service.deployment-transform-misc.name" . }}
-              topologyKey: kubernetes.io/hostname
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values.transformmisc | indent 4 }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.transformmisc.image.repository }}:{{ .Values.transformmisc.image.tag }}"
           imagePullPolicy: {{ .Values.transformmisc.image.pullPolicy }}
           {{- include "component-security-context" .Values.transformmisc | indent 8 }}
           envFrom:
-          - configMapRef:
-              name: {{ template "alfresco-transform-service.config-transform-misc.name" . }}
-          - secretRef:
-              name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-transform-service.fullname" $)) $.Values.messageBroker.existingSecretName }}
+            - configMapRef:
+                name: {{ template "alfresco-transform-service.transform-misc.name" . }}
           env:
-            {{- include "activemq.env" . | nindent 12 }}
+            {{- include "alfresco-transform-service.messageBroker.env" $ | nindent 12 }}
           ports:
             - containerPort: {{ .Values.transformmisc.image.internalPort }}
           resources: {{- toYaml .Values.transformmisc.resources | nindent 12 }}
+          {{- with .Values.transformmisc.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{ include "alfresco-transform-service.probes" .Values.transformmisc | nindent 10 }}
+      {{- with .Values.transformmisc.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.transformmisc.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.transformmisc.affinity }}
+      affinity:
+        {{- tpl . $ | nindent 8 }}
+      {{- end }}
+      {{- with .Values.transformmisc.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end }}

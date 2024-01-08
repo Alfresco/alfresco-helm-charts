@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.deployment-filestore.name" . }}
+  name: {{ template "alfresco-transform-service.filestore.name" . }}
   labels:
     {{- include "alfresco-transform-service.filestore.labels" . | nindent 4 }}
 spec:
@@ -18,35 +18,18 @@ spec:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-filestore.yaml") . | sha256sum }}
+        {{- with .Values.filestore.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
-        {{- include "alfresco-transform-service.filestore.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-transform-service.filestore.labels" . | nindent 8 }}
+        {{- with .Values.filestore.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
-    {{- include "component-pod-security-context" .Values.filestore | indent 4 }}
-    {{- if .Values.filestore.nodeSelector }}
-      nodeSelector: {{- .Values.filestore.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 10
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ template "alfresco-transform-service.deployment-filestore.name" . }}
-              topologyKey: failure-domain.beta.kubernetes.io/zone
-          - weight: 5
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ template "alfresco-transform-service.deployment-filestore.name" . }}
-              topologyKey: kubernetes.io/hostname
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values.filestore | indent 4 }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.filestore.image.repository }}:{{ .Values.filestore.image.tag }}"
@@ -54,7 +37,7 @@ spec:
           {{- include "component-security-context" .Values.filestore | indent 8 }}
           envFrom:
           - configMapRef:
-              name: {{ template "alfresco-transform-service.config-filestore.name" . }}
+              name: {{ template "alfresco-transform-service.filestore.name" . }}
           ports:
             - containerPort: {{ .Values.filestore.image.internalPort }}
           resources: {{- toYaml .Values.filestore.resources | nindent 12 }}
@@ -63,6 +46,24 @@ spec:
             - name: data
               mountPath: {{ .Values.filestore.persistence.data.mountPath }}
               subPath: {{ .Values.filestore.persistence.data.subPath }}
+            {{- with .Values.filestore.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
       volumes:
       {{- include "data_volume" .Values.filestore | nindent 8 }}
+      {{- with .Values.filestore.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.filestore.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.filestore.affinity }}
+      affinity:
+        {{- tpl . $ | nindent 8 }}
+      {{- end }}
+      {{- with .Values.filestore.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end }}

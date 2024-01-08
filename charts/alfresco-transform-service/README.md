@@ -1,6 +1,6 @@
 # alfresco-transform-service
 
-![Version: 0.3.2](https://img.shields.io/badge/Version-0.3.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
+![Version: 1.0.0-alpha.0](https://img.shields.io/badge/Version-1.0.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Transform Services
 
@@ -8,21 +8,14 @@ A Helm chart for deploying Alfresco Transform Services
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | ai(alfresco-ai-transformer) | 0.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.1 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| activemq.adminUser.password | string | `"admin"` | Default password for the embedded broker admin user |
-| activemq.adminUser.user | string | `"admin"` | Default username for the embedded broker admin user |
-| activemq.enabled | bool | `false` |  |
-| activemq.nameOverride | string | `"activemq"` |  |
-| activemq.nodeSelector | object | `{}` | Possibility to choose Node for pod, with a key-value pair label e.g {"kubernetes.io/hostname": multinode-demo-m02} |
-| ai.enabled | bool | `false` |  |
-| ai.nameOverride | string | `"alfresco-ai"` |  |
+| filestore.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n  - weight: 10\n    podAffinityTerm:\n      labelSelector:\n        matchExpressions:\n        - key: app\n          operator: In\n          values:\n          - {{ template \"alfresco-transform-service.filestore.name\" . }}\n      topologyKey: topology.kubernetes.io/zone\n  - weight: 5\n    podAffinityTerm:\n      labelSelector:\n        matchExpressions:\n        - key: app\n          operator: In\n          values:\n          - {{ template \"alfresco-transform-service.filestore.name\" . }}\n      topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | filestore.enabled | bool | `true` |  |
 | filestore.environment."scheduler.cleanup.interval" | string | `"86400000"` |  |
 | filestore.environment."scheduler.content.age.millis" | string | `"86400000"` |  |
@@ -49,6 +42,8 @@ A Helm chart for deploying Alfresco Transform Services
 | filestore.persistence.enabled | bool | `false` | Persist filestore data |
 | filestore.persistence.existingClaim | string | `nil` | Use pre-provisioned pv through its claim (e.g. static provisionning) |
 | filestore.persistence.storageClass | string | `nil` | Bind PVC based on storageClass (e.g. dynamic provisionning) |
+| filestore.podAnnotations | object | `{}` |  |
+| filestore.podLabels | object | `{}` |  |
 | filestore.podSecurityContext.fsGroup | int | `1000` |  |
 | filestore.podSecurityContext.runAsGroup | int | `1000` |  |
 | filestore.podSecurityContext.runAsUser | int | `33030` |  |
@@ -64,9 +59,13 @@ A Helm chart for deploying Alfresco Transform Services
 | filestore.service.externalPort | int | `80` |  |
 | filestore.service.name | string | `"filestore"` |  |
 | filestore.service.type | string | `"ClusterIP"` |  |
+| filestore.tolerations | list | `[]` |  |
+| filestore.volumeMounts | list | `[]` |  |
+| filestore.volumes | list | `[]` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
+| imagemagick.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.imagemagick.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.imagemagick.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | imagemagick.enabled | bool | `true` |  |
 | imagemagick.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | imagemagick.image.internalPort | int | `8090` |  |
@@ -82,6 +81,8 @@ A Helm chart for deploying Alfresco Transform Services
 | imagemagick.livenessProbe.periodSeconds | int | `20` |  |
 | imagemagick.livenessProbe.timeoutSeconds | int | `10` |  |
 | imagemagick.nodeSelector | object | `{}` |  |
+| imagemagick.podAnnotations | object | `{}` |  |
+| imagemagick.podLabels | object | `{}` |  |
 | imagemagick.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | imagemagick.podSecurityContext.runAsUser | int | `33002` |  |
 | imagemagick.readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -96,6 +97,10 @@ A Helm chart for deploying Alfresco Transform Services
 | imagemagick.service.externalPort | int | `80` |  |
 | imagemagick.service.name | string | `"imagemagick"` |  |
 | imagemagick.service.type | string | `"ClusterIP"` |  |
+| imagemagick.tolerations | list | `[]` |  |
+| imagemagick.volumeMounts | list | `[]` |  |
+| imagemagick.volumes | list | `[]` |  |
+| libreoffice.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.libreoffice.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.libreoffice.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | libreoffice.enabled | bool | `true` |  |
 | libreoffice.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | libreoffice.image.internalPort | int | `8090` |  |
@@ -111,6 +116,8 @@ A Helm chart for deploying Alfresco Transform Services
 | libreoffice.livenessProbe.periodSeconds | int | `20` |  |
 | libreoffice.livenessProbe.timeoutSeconds | int | `10` |  |
 | libreoffice.nodeSelector | object | `{}` |  |
+| libreoffice.podAnnotations | object | `{}` |  |
+| libreoffice.podLabels | object | `{}` |  |
 | libreoffice.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | libreoffice.podSecurityContext.runAsUser | int | `33003` |  |
 | libreoffice.readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -125,9 +132,18 @@ A Helm chart for deploying Alfresco Transform Services
 | libreoffice.service.externalPort | int | `80` |  |
 | libreoffice.service.name | string | `"libreoffice"` |  |
 | libreoffice.service.type | string | `"ClusterIP"` |  |
-| messageBroker | object | `{"existingSecretName":null,"password":null,"secretName":"acs-alfresco-cs-brokersecret","url":null,"user":null}` | external activemq connection setting when activemq.enabled=false |
-| messageBroker.existingSecretName | string | `nil` | Alternatively, provide credentials via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
-| messageBroker.secretName | string | `"acs-alfresco-cs-brokersecret"` | Name of the secret managed by this chart |
+| libreoffice.tolerations | list | `[]` |  |
+| libreoffice.volumeMounts | list | `[]` |  |
+| libreoffice.volumes | list | `[]` |  |
+| messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` |  |
+| messageBroker.existingConfigMap.name | string | `nil` | Alternatively, provide message broker URL via an existing ConfigMap |
+| messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` |  |
+| messageBroker.existingSecret.keys.user | string | `"BROKER_USERNAME"` |  |
+| messageBroker.existingSecret.name | string | `nil` | Alternatively, provide message broker credentials via an existing Secret |
+| messageBroker.password | string | `nil` | Activemq password |
+| messageBroker.url | string | `nil` | Activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true) |
+| messageBroker.user | string | `nil` | Activemq username |
+| pdfrenderer.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.pdfrenderer.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.pdfrenderer.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | pdfrenderer.enabled | bool | `true` |  |
 | pdfrenderer.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | pdfrenderer.image.internalPort | int | `8090` |  |
@@ -143,6 +159,8 @@ A Helm chart for deploying Alfresco Transform Services
 | pdfrenderer.livenessProbe.periodSeconds | int | `20` |  |
 | pdfrenderer.livenessProbe.timeoutSeconds | int | `10` |  |
 | pdfrenderer.nodeSelector | object | `{}` |  |
+| pdfrenderer.podAnnotations | object | `{}` |  |
+| pdfrenderer.podLabels | object | `{}` |  |
 | pdfrenderer.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | pdfrenderer.podSecurityContext.runAsUser | int | `33001` |  |
 | pdfrenderer.readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -157,6 +175,14 @@ A Helm chart for deploying Alfresco Transform Services
 | pdfrenderer.service.externalPort | int | `80` |  |
 | pdfrenderer.service.name | string | `"pdfrenderer"` |  |
 | pdfrenderer.service.type | string | `"ClusterIP"` |  |
+| pdfrenderer.tolerations | list | `[]` |  |
+| pdfrenderer.volumeMounts | list | `[]` |  |
+| pdfrenderer.volumes | list | `[]` |  |
+| serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.automount | bool | `true` |  |
+| serviceAccount.create | bool | `true` |  |
+| serviceAccount.name | string | `""` |  |
+| tika.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.tika.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.tika.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | tika.enabled | bool | `true` |  |
 | tika.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | tika.image.internalPort | int | `8090` |  |
@@ -172,6 +198,8 @@ A Helm chart for deploying Alfresco Transform Services
 | tika.livenessProbe.periodSeconds | int | `20` |  |
 | tika.livenessProbe.timeoutSeconds | int | `10` |  |
 | tika.nodeSelector | object | `{}` |  |
+| tika.podAnnotations | object | `{}` |  |
+| tika.podLabels | object | `{}` |  |
 | tika.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | tika.podSecurityContext.runAsUser | int | `33004` |  |
 | tika.readinessProbe.initialDelaySeconds | int | `30` |  |
@@ -186,6 +214,10 @@ A Helm chart for deploying Alfresco Transform Services
 | tika.service.externalPort | int | `80` |  |
 | tika.service.name | string | `"tika"` |  |
 | tika.service.type | string | `"ClusterIP"` |  |
+| tika.tolerations | list | `[]` |  |
+| tika.volumeMounts | list | `[]` |  |
+| tika.volumes | list | `[]` |  |
+| transformmisc.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-misc.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-misc.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | transformmisc.enabled | bool | `true` |  |
 | transformmisc.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | transformmisc.image.internalPort | int | `8090` |  |
@@ -201,6 +233,8 @@ A Helm chart for deploying Alfresco Transform Services
 | transformmisc.livenessProbe.periodSeconds | int | `20` |  |
 | transformmisc.livenessProbe.timeoutSeconds | int | `10` |  |
 | transformmisc.nodeSelector | object | `{}` |  |
+| transformmisc.podAnnotations | object | `{}` |  |
+| transformmisc.podLabels | object | `{}` |  |
 | transformmisc.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | transformmisc.podSecurityContext.runAsUser | int | `33006` |  |
 | transformmisc.readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -215,6 +249,10 @@ A Helm chart for deploying Alfresco Transform Services
 | transformmisc.service.externalPort | int | `80` |  |
 | transformmisc.service.name | string | `"transformmisc"` |  |
 | transformmisc.service.type | string | `"ClusterIP"` |  |
+| transformmisc.tolerations | list | `[]` |  |
+| transformmisc.volumeMounts | list | `[]` |  |
+| transformmisc.volumes | list | `[]` |  |
+| transformrouter.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-router.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-router.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | transformrouter.enabled | bool | `true` |  |
 | transformrouter.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | transformrouter.image.internalPort | int | `8095` |  |
@@ -226,6 +264,8 @@ A Helm chart for deploying Alfresco Transform Services
 | transformrouter.livenessProbe.periodSeconds | int | `30` |  |
 | transformrouter.livenessProbe.timeoutSeconds | int | `10` |  |
 | transformrouter.nodeSelector | object | `{}` |  |
+| transformrouter.podAnnotations | object | `{}` |  |
+| transformrouter.podLabels | object | `{}` |  |
 | transformrouter.podSecurityContext.runAsNonRoot | bool | `true` |  |
 | transformrouter.podSecurityContext.runAsUser | int | `33016` |  |
 | transformrouter.readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -240,6 +280,9 @@ A Helm chart for deploying Alfresco Transform Services
 | transformrouter.service.externalPort | int | `80` |  |
 | transformrouter.service.name | string | `"transform-router"` |  |
 | transformrouter.service.type | string | `"ClusterIP"` |  |
+| transformrouter.tolerations | list | `[]` |  |
+| transformrouter.volumeMounts | list | `[]` |  |
+| transformrouter.volumes | list | `[]` |  |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)

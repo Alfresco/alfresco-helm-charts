@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.deployment-libreoffice.name" . }}
+  name: {{ template "alfresco-transform-service.libreoffice.name" . }}
   labels:
     {{- include "alfresco-transform-service.libreoffice.labels" . | nindent 4 }}
 spec:
@@ -18,49 +18,50 @@ spec:
     metadata:
       annotations:
         {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "libreoffice") | indent 8 }}
+        {{- with .Values.libreoffice.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
-        {{- include "alfresco-transform-service.libreoffice.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-transform-service.libreoffice.labels" . | nindent 8 }}
+        {{- with .Values.libreoffice.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
-    {{- include "component-pod-security-context" .Values.libreoffice | indent 4 }}
-    {{- if .Values.libreoffice.nodeSelector }}
-      nodeSelector: {{- .Values.libreoffice.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 10
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ template "alfresco-transform-service.deployment-libreoffice.name" . }}
-              topologyKey: failure-domain.beta.kubernetes.io/zone
-          - weight: 5
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ template "alfresco-transform-service.deployment-libreoffice.name" . }}
-              topologyKey: kubernetes.io/hostname
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values.libreoffice | indent 4 }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.libreoffice.image.repository }}:{{ .Values.libreoffice.image.tag }}"
           imagePullPolicy: {{ .Values.libreoffice.image.pullPolicy }}
           {{- include "component-security-context" .Values.libreoffice | indent 8 }}
           envFrom:
-          - configMapRef:
-              name: {{ template "alfresco-transform-service.config-libreoffice.name" . }}
-          - secretRef:
-              name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-transform-service.fullname" $)) $.Values.messageBroker.existingSecretName }}
+            - configMapRef:
+                name: {{ template "alfresco-transform-service.libreoffice.name" . }}
           env:
-            {{- include "activemq.env" . | nindent 12 }}
+            {{- include "alfresco-transform-service.messageBroker.env" $ | nindent 12 }}
           ports:
             - containerPort: {{ .Values.libreoffice.image.internalPort }}
           resources: {{- toYaml .Values.libreoffice.resources | nindent 12 }}
+          {{- with .Values.libreoffice.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{ include "alfresco-transform-service.probes" .Values.libreoffice | nindent 10 }}
+      {{- with .Values.libreoffice.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.libreoffice.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.libreoffice.affinity }}
+      affinity:
+        {{- tpl . $ | nindent 8 }}
+      {{- end }}
+      {{- with .Values.libreoffice.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end }}

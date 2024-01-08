@@ -1,0 +1,10 @@
+{{- if not .Values.messageBroker.existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco-transform-service.messagebroker.name" . }}
+  labels:
+    {{- include "alfresco-transform-service.labels" $ | nindent 4 }}
+data:
+  {{ .Values.messageBroker.existingConfigMap.keys.url }}: {{ required "Disabling in-cluster ActiveMQ requires passing (at least) messageBroker.url" .Values.messageBroker.url | quote }}
+{{- end }}

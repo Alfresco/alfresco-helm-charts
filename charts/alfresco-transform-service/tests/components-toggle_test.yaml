@@ -1,5 +1,5 @@
 ---
-suite: test components deployed based on ACS flavor (enterprise vs community)
+suite: test components on community/enterprise
 templates:
   - config-libreoffice.yaml
   - deployment-libreoffice.yaml
@@ -51,8 +51,7 @@ tests:
           apiVersion: apps/v1
         template: deployment-pdfrenderer.yaml
   - it: should not render any component by evaluaating false expression
-    values: &testvalues
-      - values/test_values.yaml
+    values: *testvalues
     set:
       filestore:
         enabled: false
@@ -70,23 +69,23 @@ tests:
         enabled: false
     asserts:
       - hasDocuments:
-        count: 0
+          count: 0
         template: deployment-filestore.yaml
       - hasDocuments:
-        count: 0
+          count: 0
         template: deployment-transform-router.yaml
       - hasDocuments:
-        count: 0
+          count: 0
         template: deployment-imagemagick.yaml
       - hasDocuments:
-        count: 0
+          count: 0
         template: deployment-libreoffice.yaml
       - hasDocuments:
-        count: 0
+          count: 0
         template: deployment-tika.yaml
       - hasDocuments:
-        count: 0
+          count: 0
         template: deployment-transform-misc.yaml
       - hasDocuments:
-        count: 0
+          count: 0
         template: deployment-pdfrenderer.yaml

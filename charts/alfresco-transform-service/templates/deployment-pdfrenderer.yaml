@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.deployment-pdfrenderer.name" . }}
+  name: {{ template "alfresco-transform-service.pdfrenderer.name" . }}
   labels:
     {{- include "alfresco-transform-service.pdfrenderer.labels" . | nindent 4 }}
 spec:
@@ -18,49 +18,50 @@ spec:
     metadata:
       annotations:
         {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "pdfrenderer") | indent 8 }}
+        {{- with .Values.pdfrenderer.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
-        {{- include "alfresco-transform-service.pdfrenderer.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-transform-service.pdfrenderer.labels" . | nindent 8 }}
+        {{- with .Values.pdfrenderer.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
-    {{- include "component-pod-security-context" .Values.pdfrenderer | indent 4 }}
-    {{- if .Values.pdfrenderer.nodeSelector }}
-      nodeSelector: {{- .Values.pdfrenderer.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 10
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ template "alfresco-transform-service.deployment-pdfrenderer.name" . }}
-              topologyKey: failure-domain.beta.kubernetes.io/zone
-          - weight: 5
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ template "alfresco-transform-service.deployment-pdfrenderer.name" . }}
-              topologyKey: kubernetes.io/hostname
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values.pdfrenderer | indent 4 }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.pdfrenderer.image.repository }}:{{ .Values.pdfrenderer.image.tag }}"
           imagePullPolicy: {{ .Values.pdfrenderer.image.pullPolicy }}
           {{- include "component-security-context" .Values.pdfrenderer | indent 8 }}
           envFrom:
-          - configMapRef:
-              name: {{ template "alfresco-transform-service.config-pdfrenderer.name" . }}
-          - secretRef:
-              name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-transform-service.fullname" $)) $.Values.messageBroker.existingSecretName }}
+            - configMapRef:
+                name: {{ template "alfresco-transform-service.pdfrenderer.name" . }}
           env:
-            {{- include "activemq.env" . | nindent 12 }}
+            {{- include "alfresco-transform-service.messageBroker.env" $ | nindent 12 }}
           ports:
             - containerPort: {{ .Values.pdfrenderer.image.internalPort }}
           resources: {{- toYaml .Values.pdfrenderer.resources | nindent 12 }}
+          {{- with .Values.pdfrenderer.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{ include "alfresco-transform-service.probes" .Values.pdfrenderer | nindent 10 }}
+      {{- with .Values.pdfrenderer.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.pdfrenderer.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.pdfrenderer.affinity }}
+      affinity:
+        {{- tpl . $ | nindent 8 }}
+      {{- end }}
+      {{- with .Values.pdfrenderer.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end }}

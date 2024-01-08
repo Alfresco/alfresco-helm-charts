@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.deployment-tika.name" . }}
+  name: {{ template "alfresco-transform-service.tika.name" . }}
   labels:
     {{- include "alfresco-transform-service.tika.labels" . | nindent 4 }}
 spec:
@@ -18,49 +18,50 @@ spec:
     metadata:
       annotations:
         {{- include "alfresco-transform-service.configsums" (dict "Context" $ "Component" "tika") | indent 8 }}
+        {{- with .Values.tika.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
-        {{- include "alfresco-transform-service.tika.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-transform-service.tika.labels" . | nindent 8 }}
+        {{- with .Values.tika.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
-    {{- include "component-pod-security-context" .Values.tika | indent 4 }}
-    {{- if .Values.tika.nodeSelector }}
-      nodeSelector: {{- .Values.tika.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
-      {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 10
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ template "alfresco-transform-service.deployment-tika.name" . }}
-              topologyKey: failure-domain.beta.kubernetes.io/zone
-          - weight: 5
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{ template "alfresco-transform-service.deployment-tika.name" . }}
-              topologyKey: kubernetes.io/hostname
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values.tika | indent 4 }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.tika.image.repository }}:{{ .Values.tika.image.tag }}"
           imagePullPolicy: {{ .Values.tika.image.pullPolicy }}
           {{- include "component-security-context" .Values.tika | indent 8 }}
           envFrom:
-          - configMapRef:
-              name: {{ template "alfresco-transform-service.config-tika.name" . }}
-          - secretRef:
-              name: {{ default (printf "%s-messagebroker-secret" (include "alfresco-transform-service.fullname" $)) $.Values.messageBroker.existingSecretName }}
+            - configMapRef:
+                name: {{ template "alfresco-transform-service.tika.name" . }}
           env:
-            {{- include "activemq.env" . | nindent 12 }}
+            {{- include "alfresco-transform-service.messageBroker.env" $ | nindent 12 }}
           ports:
             - containerPort: {{ .Values.tika.image.internalPort }}
           resources: {{- toYaml .Values.tika.resources | nindent 12 }}
+          {{- with .Values.tika.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{ include "alfresco-transform-service.probes" .Values.tika | nindent 10 }}
+      {{- with .Values.tika.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tika.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tika.affinity }}
+      affinity:
+        {{- tpl . $ | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tika.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end }}

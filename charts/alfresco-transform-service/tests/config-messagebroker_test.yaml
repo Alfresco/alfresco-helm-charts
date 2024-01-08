@@ -1,0 +1,35 @@
+---
+suite: test message broker configmap
+templates:
+  - config-messagebroker.yaml
+
+tests:
+  - it: should render a configmap with provided url
+    values: &testvalues
+      - values/test_values.yaml
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-ats-messagebroker
+      - equal:
+          path: data.BROKER_URL
+          value: failover:(nio://activemq-broker:61616)?timeout=3000&jms.useCompression=true
+
+  - it: should fail without url
+    values: *testvalues
+    set:
+      messageBroker:
+        url: null
+    asserts:
+      - failedTemplate:
+          errorMessage: Disabling in-cluster ActiveMQ requires passing (at least) messageBroker.url
+
+  - it: should not render a configMap when existing configMap is provided
+    values: *testvalues
+    set:
+      messageBroker:
+        existingConfigMap:
+          name: mycustomcm
+    asserts:
+      - hasDocuments:
+          count: 0

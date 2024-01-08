@@ -1,5 +1,5 @@
 ---
-suite: ATS kubernetes service tests
+suite: test labels
 templates:
   - deployment-filestore.yaml
   - deployment-imagemagick.yaml
@@ -24,10 +24,9 @@ templates:
   - config-transform-router.yaml
   - secret-messagebroker.yaml
 
-
 tests:
-  - it: should render a service with matching pods
-    values: &testvalues
+  - it: should render expected labels in every resource
+    values:
       - values/test_values.yaml
     asserts:
       - isSubset:

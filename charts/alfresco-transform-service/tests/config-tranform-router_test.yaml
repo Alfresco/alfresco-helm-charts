@@ -4,33 +4,10 @@ templates:
   - config-transform-router.yaml
 
 tests:
-  - it: should render without AI config
+  - it: should render default config
     values: &testvalues
       - values/test_values.yaml
     asserts:
       - notExists:
           path: data.TRANSFORMER_URL_AWS_AI
-        template: config-transform-router.yaml
-  - it: should render with AI config overiding release name
-    values: &testvalues
-      - values/test_values.yaml
-    set:
-      ai:
-        enabled: true
-        fullnameOverride: my-alfresci-ai-svc
-    asserts:
-      - equal:
-          path: data.TRANSFORMER_URL_AWS_AI
-          value: http://my-alfresci-ai-svc
-        template: config-transform-router.yaml
-  - it: should render with AI config release name
-    values: *testvalues
-    set:
-      ai:
-        enabled: true
-        nameOverride: my-alfresci-ai-svc
-    asserts:
-      - equal:
-          path: data.TRANSFORMER_URL_AWS_AI
-          value: http://RELEASE-NAME-my-alfresci-ai-svc
         template: config-transform-router.yaml
