@@ -56,7 +56,6 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | messageBroker.url | string | `nil` | A failover URI formatted string, see: https://activemq.apache.org/failover-transport-reference |
 | messageBroker.username | string | `nil` | Username to authenticate as. |
 | nodeSelector | object | `{}` |  |
-| nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
