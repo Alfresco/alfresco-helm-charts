@@ -22,7 +22,7 @@ tests:
   - it: should contains values overrides
     values:
       - values/test_values.yaml
-      - values/ingress.yaml
+      - values/ingress_enabled.yaml
     asserts:
       - equal:
           path: metadata.annotations['nginx.ingress.kubernetes.io/auth-secret']
