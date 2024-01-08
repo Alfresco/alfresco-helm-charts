@@ -22,6 +22,7 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| affinity | string | `""` |  |
 | database.driver | string | `"org.postgresql.Driver"` | The JDBC Driver to connect to the DB. If different from the default make sure your container image ships it. |
 | database.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver class to use. The configmap may leverage the alfresco-repository.db.cm named template to auto-generate it from the sole url parameter. |
 | database.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database |
@@ -55,6 +56,7 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | messageBroker.url | string | `nil` | A failover URI formatted string, see: https://activemq.apache.org/failover-transport-reference |
 | messageBroker.username | string | `nil` | Username to authenticate as. |
 | nodeSelector | object | `{}` |  |
+| nodeSelector | object | `{}` |  |
 | podSecurityContext.fsGroup | int | `1000` |  |
 | podSecurityContext.runAsGroup | int | `1000` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
@@ -82,3 +84,4 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `"alfresco-sync"` |  |
+| tolerations | list | `[]` |  |

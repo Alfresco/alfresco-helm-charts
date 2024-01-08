@@ -24,9 +24,6 @@ spec:
     spec:
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       serviceAccountName: {{ include "alfresco-sync-service.serviceAccountName" . }}
-      {{- if .Values.nodeSelector }}
-      nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
-      {{- end }}
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       terminationGracePeriodSeconds: 60
       containers:
@@ -124,3 +121,15 @@ spec:
           preStop:
             exec:
               command: ["/opt/alfresco-sync-service/sync_service_entrypoint.sh", "stop"]
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- tpl . $ | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

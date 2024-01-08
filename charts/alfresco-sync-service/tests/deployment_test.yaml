@@ -10,13 +10,16 @@ tests:
     template: deployment.yaml
     values: &testvalues
       - values/test_values.yaml
-    set: &values
-      postgresql:
-        enabled: true
     asserts:
       - equal:
           path: metadata.name
           value: RELEASE-NAME-alfresco-sync-service
+      - isNull:
+          path: spec.template.spec.nodeSelector
+      - isNull:
+          path: spec.template.spec.affinity
+      - isNull:
+          path: spec.template.spec.tolerations
       - equal:
           path: spec.template.spec.containers[0].resources
           value:
@@ -108,7 +111,6 @@ tests:
                 name: RELEASE-NAME-alfresco-sync-mq
                 key: BROKER_PASSWORD
   - it: should render deployment with pre-exisiting resources and without a service account
-    values: *testvalues
     set:
       repository:
         existingConfigMap:
@@ -230,3 +232,46 @@ tests:
               secretKeyRef:
                 name: mymqcreds
                 key: MQPASS
+  - it: should have customized metadata in place in deployment
+    template: deployment.yaml
+    values: *testvalues
+    set:
+      nameOverride: dsync
+      nodeSelector:
+        disktype: ssd
+      tolerations:
+        - key: "skipme"
+          operator: "Exists"
+          effect: "NoSchedule"
+      affinity: |-
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-dsync
+      - contains:
+          path: >-
+            spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms
+          content:
+            matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                  - linux
+      - contains:
+          path: spec.template.spec.tolerations
+          content:
+            key: "skipme"
+            operator: "Exists"
+            effect: "NoSchedule"
+      - isSubset:
+          path: spec.template.spec.nodeSelector
+          content:
+            disktype: ssd

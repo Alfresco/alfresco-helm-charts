@@ -127,3 +127,7 @@ ingress:
   extraAnnotations: {}
   tls: []
   path: /syncservice
+
+nodeSelector: {}
+tolerations: []
+affinity: ""
