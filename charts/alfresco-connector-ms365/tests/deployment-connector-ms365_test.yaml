@@ -10,6 +10,9 @@ tests:
       - equal:
           path: metadata.name
           value: RELEASE-NAME-alfresco-connector-ms365
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: ms365-sa
         template: deployment-connector-ms365.yaml
 
   - it: should render cpu and memory limits
