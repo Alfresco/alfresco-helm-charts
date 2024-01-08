@@ -10,7 +10,7 @@ tests:
     asserts:
       - equal:
           path: metadata.name
-          value: RELEASE-NAME-messagebroker
+          value: RELEASE-NAME-ats-messagebroker
       - equal:
           path: data.BROKER_URL
           value: failover:(nio://activemq-broker:61616)?timeout=3000&jms.useCompression=true

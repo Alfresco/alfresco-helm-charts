@@ -29,17 +29,17 @@ tests:
               valueFrom:
                 configMapKeyRef:
                   key: BROKER_URL
-                  name: RELEASE-NAME-messagebroker
+                  name: RELEASE-NAME-ats-messagebroker
             - name: ACTIVEMQ_USER
               valueFrom:
                 secretKeyRef:
                   key: BROKER_USERNAME
-                  name: RELEASE-NAME-messagebroker-creds
+                  name: RELEASE-NAME-ats-messagebroker-creds
             - name: ACTIVEMQ_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: BROKER_PASSWORD
-                  name: RELEASE-NAME-messagebroker-creds
+                  name: RELEASE-NAME-ats-messagebroker-creds
         template: deployment-imagemagick.yaml
       - equal:
           path: spec.template.spec.containers[0].env

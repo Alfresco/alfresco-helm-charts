@@ -1,5 +1,5 @@
 {{- define "alfresco-transform-service.messagebroker.name" -}}
-{{- $scope := (dict "Values" (dict "nameOverride" "messagebroker" ) "Chart" .Chart "Release" .Release) }}
+{{- $scope := (dict "Values" (dict "nameOverride" "ats-messagebroker" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-transform-service.fullname" $scope }}
 {{- end }}
 
@@ -39,6 +39,6 @@
 {{- end }}
 
 {{- define "alfresco-transform-service.secret-messagebroker.name" -}}
-{{- $scope := (dict "Values" (dict "nameOverride" "messagebroker-creds" ) "Chart" .Chart "Release" .Release) }}
+{{- $scope := (dict "Values" (dict "nameOverride" "ats-messagebroker-creds" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-transform-service.fullname" $scope }}
 {{- end }}
