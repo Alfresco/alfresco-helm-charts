@@ -40,9 +40,8 @@ spec:
             name: {{ template "alfresco-sync-service.fullname" . }}
         env:
           {{- with .Values.database }}
-          {{- $dbCtx := dict "Values" (dict "nameOverride" "alfresco-sync-database") "Chart" $.Chart "Release" $.Release }}
-          {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-sync-service.fullname" $dbCtx) }}
-          {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-sync-service.fullname" $dbCtx) }}
+          {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-sync-service.database" $) }}
+          {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-sync-service.database" $) }}
           - name: DATABASE_USERNAME
             valueFrom:
               secretKeyRef:

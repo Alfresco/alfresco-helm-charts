@@ -3,8 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: >-
-    {{- $ctx := dict "Values" (dict "nameOverride" "alfresco-sync-database") "Chart" .Chart "Release" .Release }}
-    {{ template "alfresco-sync-service.fullname" $ctx }}
+    {{ template "alfresco-sync-service.database" . }}
   labels:
     {{- include "alfresco-sync-service.labels" . | nindent 4 }}
 data:
