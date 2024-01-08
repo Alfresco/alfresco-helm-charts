@@ -1,5 +1,5 @@
 ---
-suite: test deployment
+suite: test zeppelin deployment
 templates:
   - deployment.yaml
   - config.yaml

@@ -1,5 +1,5 @@
 ---
-suite: test configmaps
+suite: test zeppelin configmap
 templates:
   - config.yaml
 tests:
