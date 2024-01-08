@@ -11,7 +11,7 @@ data:
   {{- with .Values.repository }}
   {{- $reqmsg := "You must provide repository details throught values or using an existing configmap" }}
   REPO_HOST: {{ required $reqmsg .host }}
-  REPO_PORT: {{ required $reqmsg .port }}
+  REPO_PORT: {{ required $reqmsg .port | quote }}
   {{- with .scheme }}
   REPO_SCHEME: {{ . }}
   {{- end }}
