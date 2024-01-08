@@ -21,3 +21,15 @@ Usage "alfresco-sync-service.message-broker" $
 {{- $ctx := dict "Values" (dict "nameOverride" "alfresco-sync-mq") "Chart" .Chart "Release" .Release }}
 {{- template "alfresco-sync-service.fullname" $ctx }}
 {{- end -}}
+
+{{/*
+Compute repository related resources name
+
+Usage "alfresco-sync-service.repository" $
+
+*/}}
+
+{{- define "alfresco-sync-service.repository" -}}
+{{- $ctx := dict "Values" (dict "nameOverride" "alfresco-sync-repo") "Chart" .Chart "Release" .Release }}
+{{- template "alfresco-sync-service.fullname" $ctx }}
+{{- end -}}

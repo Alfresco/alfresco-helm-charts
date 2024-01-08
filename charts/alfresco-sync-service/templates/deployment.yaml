@@ -83,8 +83,7 @@ spec:
                 key: {{ .existingConfigMap.keys.url }}
           {{- end }}
           {{- with .Values.repository }}
-          {{- $repoCtx := dict "Values" (dict "nameOverride" "alfresco-sync-repo") "Chart" $.Chart "Release" $.Release }}
-          {{- $repoCm := coalesce .existingConfigMap.name (include "alfresco-sync-service.fullname" $repoCtx) }}
+          {{- $repoCm := coalesce .existingConfigMap.name (include "alfresco-sync-service.repository" $) }}
           - name: REPO_HOST
             valueFrom:
               configMapKeyRef:
