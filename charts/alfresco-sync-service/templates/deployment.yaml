@@ -64,9 +64,8 @@ spec:
                 key: {{ .existingConfigMap.keys.driver }}
           {{- end }}
           {{- with .Values.messageBroker }}
-          {{- $mqCtx := dict "Values" (dict "nameOverride" "alfresco-sync-mq") "Chart" $.Chart "Release" $.Release }}
-          {{- $mqSecret := coalesce .existingSecret.name (include "alfresco-sync-service.fullname" $mqCtx) }}
-          {{- $mqCm := coalesce .existingConfigMap.name (include "alfresco-sync-service.fullname" $mqCtx) }}
+          {{- $mqSecret := coalesce .existingSecret.name (include "alfresco-sync-service.message-broker" $) }}
+          {{- $mqCm := coalesce .existingConfigMap.name (include "alfresco-sync-service.message-broker" $) }}
           - name: BROKER_USERNAME
             valueFrom:
               secretKeyRef:
