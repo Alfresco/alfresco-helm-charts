@@ -1,7 +1,6 @@
 ---
 suite: test database secret
 templates:
-  - config-syncservice.yaml
   - configmap-database.yaml
   - secret-database.yaml
 tests:

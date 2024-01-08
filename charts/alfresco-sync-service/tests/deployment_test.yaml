@@ -2,8 +2,6 @@
 suite: test deployment
 templates:
   - deployment.yaml
-  - config-syncservice.yaml
-  - secret-database.yaml
   - serviceaccount.yaml
 tests:
   - it: should render deployment with some defaults
