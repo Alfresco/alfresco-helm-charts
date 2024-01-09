@@ -16,6 +16,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n            - key: app.kubernetes.io/name\n              operator: In\n              values:\n                - {{ template \"alfresco-connector-ms365.name\" . }}\n            - key: app.kubernetes.io/instance\n              operator: In\n              values:\n                - {{ .Release.Name }}\n        topologyKey: failure-domain.beta.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n            - key: app.kubernetes.io/name\n              operator: In\n              values:\n                - {{ template \"alfresco-connector-ms365.name\" . }}\n            - key: app.kubernetes.io/instance\n              operator: In\n              values:\n                - {{ .Release.Name }}\n        topologyKey: kubernetes.io/hostname"` | Pod affinity, passed thru tpl function |
 | environment | object | `{}` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `9095` |  |
@@ -29,6 +30,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | nodeSelector | object | `{}` |  |
+| podAnnotations | object | `{}` |  |
+| podLabels | object | `{}` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | podSecurityContext.runAsUser | int | `33006` |  |
 | readinessProbe.initialDelaySeconds | int | `20` |  |
@@ -52,3 +55,4 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | serviceAccount.name | string | `"ms365-sa"` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
 | strategy.rollingUpdate.maxSurge | int | `1` |  |
 | strategy.rollingUpdate.maxUnavailable | int | `0` |  |
+| tolerations | list | `[]` |  |
