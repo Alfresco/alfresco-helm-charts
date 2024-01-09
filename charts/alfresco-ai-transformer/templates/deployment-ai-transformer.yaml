@@ -30,16 +30,7 @@ spec:
           - configMapRef:
               name: {{ template "alfresco-ai-transformer.fullname" . }}
           env:
-            {{- $mqSecretCtx := dict "Values" (dict "nameOverride" "ai-mq") "Chart" $.Chart "Release" $.Release }}
-            {{- $mqSecret := coalesce .Values.messageBroker.existingSecret.name (include "alfresco-ai-transformer.fullname" $mqSecretCtx) }}
-            {{- $awsSecretCtx := dict "Values" (dict "nameOverride" "aws-comprehend") "Chart" $.Chart "Release" $.Release }}
-            {{- $awsSecret := coalesce .Values.aws.existingSecret.name (include "alfresco-ai-transformer.fullname" $awsSecretCtx) }}
-            {{- $awsCmCtx := dict "Values" (dict "nameOverride" "aws-comprehend") "Chart" $.Chart "Release" $.Release }}
-            {{- $awsCm := coalesce .Values.aws.existingConfigMap.name (include "alfresco-ai-transformer.fullname" $awsCmCtx) }}
-            {{- $mqCmCtx := dict "Values" (dict "nameOverride" "ai-mq") "Chart" $.Chart "Release" $.Release }}
-            {{- $mqCm := coalesce .Values.messageBroker.existingSecret.name (include "alfresco-ai-transformer.fullname" $mqCmCtx) }}
-            {{- $sfsCmCtx := dict "Values" (dict "nameOverride" "ai-sfs") "Chart" .Chart "Release" .Release }}
-            {{- $sfsCm := coalesce .Values.sfs.existingConfigMap.name (include "alfresco-ai-transformer.fullname" $sfsCmCtx) }}
+            {{- $mqSecret := coalesce .Values.messageBroker.existingSecret.name (include "alfresco-ai-transformer.secret-ai-mq.name" .) }}
             - name: BROKER_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -53,13 +44,14 @@ spec:
             - name: BROKER_URL
               valueFrom:
                 configMapKeyRef:
-                  name: {{ $mqCm }}
+                  name: {{ coalesce .Values.messageBroker.existingConfigMap.name (include "alfresco-ai-transformer.config-ai-mq.name" .) }}
                   key: {{ .Values.messageBroker.existingConfigMap.keys.url }}
             - name: FILE_STORE_URL
               valueFrom:
                 configMapKeyRef:
-                  name: {{ $sfsCm }}
+                  name: {{ coalesce .Values.sfs.existingConfigMap.name (include "alfresco-ai-transformer.config-ai-sfs.name" .) }}
                   key: {{ .Values.sfs.existingConfigMap.keys.url }}
+            {{- $awsSecret := coalesce .Values.aws.existingSecret.name (include "alfresco-ai-transformer.secret-ai-aws.name" .) }}
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
@@ -70,6 +62,7 @@ spec:
                 secretKeyRef:
                   name: {{ $awsSecret }}
                   key: {{ .Values.aws.existingSecret.keys.secretAccessKey }}
+            {{- $awsCm := coalesce .Values.aws.existingConfigMap.name (include "alfresco-ai-transformer.config-ai-aws.name" .) }}
             - name: AWS_REGION
               valueFrom:
                 configMapKeyRef:
