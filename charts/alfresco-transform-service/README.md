@@ -1,6 +1,6 @@
 # alfresco-transform-service
 
-![Version: 1.0.0-alpha.1](https://img.shields.io/badge/Version-1.0.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
+![Version: 1.0.0-alpha.2](https://img.shields.io/badge/Version-1.0.0--alpha.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Transform Services
 
@@ -184,6 +184,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
+| tags.ci | bool | `false` | Enable dependencies required for CI. Do not enable. |
 | tika.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.tika.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.tika.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | tika.enabled | bool | `true` |  |
 | tika.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
