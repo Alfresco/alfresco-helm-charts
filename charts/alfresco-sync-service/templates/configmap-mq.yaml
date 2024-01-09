@@ -1,0 +1,13 @@
+{{- if not .Values.messageBroker.existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: >-
+    {{ template "alfresco-sync-service.message-broker" $ }}
+  labels:
+    {{- include "alfresco-sync-service.labels" . | nindent 4 }}
+data:
+  {{- with .Values.messageBroker }}
+  {{ template "alfresco-common.activemq.cm" .url }}
+  {{- end }}
+{{- end }}

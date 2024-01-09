@@ -1,0 +1,136 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco-sync-service.fullname" . }}
+  labels:
+    {{- include "alfresco-sync-service.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "alfresco-sync-service.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "alfresco-sync-service.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      annotations:
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
+      serviceAccountName: {{ include "alfresco-sync-service.serviceAccountName" . }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      terminationGracePeriodSeconds: {{ .terminationGracePeriodSeconds }}
+      containers:
+      - name: syncservice
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- include "alfresco-common.component-security-context" .Values | indent 6 }}
+        envFrom:
+        - configMapRef:
+            name: {{ template "alfresco-sync-service.fullname" . }}
+        env:
+          {{- with .Values.database }}
+          {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-sync-service.database" $) }}
+          {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-sync-service.database" $) }}
+          - name: DATABASE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ $dbSecret }}
+                key: {{ .existingSecret.keys.username }}
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ $dbSecret }}
+                key: {{ .existingSecret.keys.password }}
+          - name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $dbCm }}
+                key: {{ .existingConfigMap.keys.url }}
+          - name: DATABASE_DRIVER
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $dbCm }}
+                key: {{ .existingConfigMap.keys.driver }}
+          {{- end }}
+          {{- with .Values.messageBroker }}
+          {{- $mqSecret := coalesce .existingSecret.name (include "alfresco-sync-service.message-broker" $) }}
+          {{- $mqCm := coalesce .existingConfigMap.name (include "alfresco-sync-service.message-broker" $) }}
+          - name: BROKER_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: {{ $mqSecret }}
+                key: {{ .existingSecret.keys.username }}
+          - name: BROKER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ $mqSecret }}
+                key: {{ .existingSecret.keys.password }}
+          - name: BROKER_URL
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $mqCm }}
+                key: {{ .existingConfigMap.keys.url }}
+          {{- end }}
+          {{- with .Values.repository }}
+          {{- $repoCm := coalesce .existingConfigMap.name (include "alfresco-sync-service.repository" $) }}
+          - name: REPO_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $repoCm }}
+                key: {{ .existingConfigMap.keys.host }}
+          - name: REPO_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $repoCm }}
+                key: {{ .existingConfigMap.keys.port }}
+          - name: REPO_SCHEME
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $repoCm }}
+                key: {{ .existingConfigMap.keys.scheme }}
+                optional: true
+          {{- end }}
+        ports:
+        - name: serviceport
+          containerPort: 9090
+        resources: {{- toYaml .Values.resources | nindent 12 }}
+        readinessProbe:
+          httpGet:
+            path: /alfresco/healthcheck
+            port: serviceport
+          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+        livenessProbe:
+          httpGet:
+            path: /alfresco/healthcheck
+            port: serviceport
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/opt/alfresco-sync-service/sync_service_entrypoint.sh", "stop"]
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- tpl . $ | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -1,0 +1,14 @@
+{{- if not .Values.database.existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: >-
+    {{ template "alfresco-sync-service.database" . }}
+  labels:
+    {{- include "alfresco-sync-service.labels" . | nindent 4 }}
+data:
+  {{- with .Values.database }}
+  DATABASE_URL: {{ hasPrefix "jdbc:" .url | ternary .url (print "jdbc:" .url) }}
+  DATABASE_DRIVER: {{ template "alfresco-common.db.driver" . }}
+  {{- end }}
+{{- end }}

@@ -2,79 +2,55 @@
 suite: test MQ config
 templates:
   - secret-message-broker.yaml
+  - configmap-mq.yaml
 tests:
-  - it: should render default ActiveMQ details
-    set:
-      activemq:
-        enabled: true
+  - it: should render default ActiveMQ crdentials
+    values: &testvalues
+      - values/test_values.yaml
+    template: secret-message-broker.yaml
     asserts:
       - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-sync-mq
+      - equal:
           path: data.BROKER_URL
-          value: >-
-            ZmFpbG92ZXI6KG5pbzovL1JFTEVBU0UtTkFNRS1hY3RpdmVtcS1icm9rZXI6NjE2MTYpP3RpbWVvdXQ9MzAwMCZqbXMudXNlQ29tcHJlc3Npb249dHJ1ZQ==
-        template: secret-message-broker.yaml
+          value: failover:(nio://activemq:61616)
+        template: configmap-mq.yaml
       - equal:
           path: data.BROKER_USERNAME
           value: YWRtaW4=
-        template: secret-message-broker.yaml
       - equal:
           path: data.BROKER_PASSWORD
           value: YWRtaW4=
-        template: secret-message-broker.yaml
-  - it: should render broker URL based on sole nameOverride
-    set:
-      messageBroker:
-        url:
-        nameOverride: aKnownBrokerName
-    asserts:
-      - equal:
-          path: data.BROKER_URL
-          value: >-
-            ZmFpbG92ZXI6KG5pbzovL1JFTEVBU0UtTkFNRS1hS25vd25Ccm9rZXJOYW1lLWJyb2tlcjo2MTYxNik/dGltZW91dD0zMDAwJmptcy51c2VDb21wcmVzc2lvbj10cnVl
-        template: secret-message-broker.yaml
   - it: should render custom MQ config from dedicated Values context
+    values: *testvalues
     set:
-      global:
-        messageBroker:
-          url: failover:(ssl://globalmq-1:61617)
-          user: globaluser
-          password: globalpass
+      nameOverride: sync
       messageBroker:
         url: >-
           failover:(ssl://somemoresecuremq-1:61617,ssl://somemoresecuremq-2:61617)
-        user: scott
+        username: scott
         password: tiger
+    template: secret-message-broker.yaml
     asserts:
       - equal:
           path: data.BROKER_URL
           value: >-
-            ZmFpbG92ZXI6KHNzbDovL3NvbWVtb3Jlc2VjdXJlbXEtMTo2MTYxNyxzc2w6Ly9zb21lbW9yZXNlY3VyZW1xLTI6NjE2MTcp
-        template: secret-message-broker.yaml
+            failover:(ssl://somemoresecuremq-1:61617,ssl://somemoresecuremq-2:61617)
+        template: configmap-mq.yaml
       - equal:
           path: data.BROKER_USERNAME
           value: c2NvdHQ=
-        template: secret-message-broker.yaml
       - equal:
           path: data.BROKER_PASSWORD
           value: dGlnZXI=
-        template: secret-message-broker.yaml
-  - it: should render custom MQ config from global context
+  - it: should not render an MQ secrets
+    values: *testvalues
     set:
-      global:
-        messageBroker:
-          url: failover:(ssl://globalmq-1:61617)
-          user: globaluser
-          password: globalpass
+      messageBroker:
+        existingSecret:
+          name: mqcreds
+    template: secret-message-broker.yaml
     asserts:
-      - equal:
-          path: data.BROKER_URL
-          value: ZmFpbG92ZXI6KHNzbDovL2dsb2JhbG1xLTE6NjE2MTcp
-        template: secret-message-broker.yaml
-      - equal:
-          path: data.BROKER_USERNAME
-          value: Z2xvYmFsdXNlcg==
-        template: secret-message-broker.yaml
-      - equal:
-          path: data.BROKER_PASSWORD
-          value: Z2xvYmFscGFzcw==
-        template: secret-message-broker.yaml
+      - hasDocuments:
+          count: 0

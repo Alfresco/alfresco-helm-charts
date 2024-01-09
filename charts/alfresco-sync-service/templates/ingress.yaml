@@ -1,11 +1,10 @@
 {{- $serviceName :=  (include "alfresco-sync-service.fullname" .) -}}
 {{- $servicePort := .Values.service.externalPort -}}
-apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ template "alfresco-sync-service.fullname" . }}-ingress
+  name: {{ template "alfresco-sync-service.fullname" . }}
   annotations:
-    kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/rewrite-target: /alfresco/$2
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/session-cookie-name: "sync_affinity_route"
@@ -15,6 +14,7 @@ metadata:
 {{- end }}
 
 spec:
+  ingressClassName: nginx
   {{- if .Values.ingress.tls }}
   tls:
     {{- range .Values.ingress.tls }}
@@ -34,7 +34,5 @@ spec:
   {{- end }}
       paths:
       - path: {{ .Values.ingress.path }}(/|$)(.*)
-        {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
         pathType: Prefix
-        {{- end }}
         backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}

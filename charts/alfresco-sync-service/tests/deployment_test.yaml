@@ -1,0 +1,289 @@
+---
+suite: test deployment
+templates:
+  - deployment.yaml
+  - serviceaccount.yaml
+tests:
+  - it: should render deployment with some defaults
+    template: deployment.yaml
+    values: &testvalues
+      - values/test_values.yaml
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-sync-service
+      - isNull:
+          path: spec.template.spec.nodeSelector
+      - isNull:
+          path: spec.template.spec.affinity
+      - isNull:
+          path: spec.template.spec.tolerations
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "0.5"
+              memory: "800Mi"
+            limits:
+              cpu: "2"
+              memory: "2000Mi"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REPO_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-sync-repo
+                key: REPO_HOST
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REPO_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-sync-repo
+                key: REPO_PORT
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REPO_SCHEME
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-sync-repo
+                key: REPO_SCHEME
+                optional: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-sync-database
+                key: DATABASE_URL
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_DRIVER
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-sync-database
+                key: DATABASE_DRIVER
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-sync-database
+                key: DATABASE_USERNAME
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-sync-database
+                key: DATABASE_PASSWORD
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_URL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-sync-mq
+                key: BROKER_URL
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-sync-mq
+                key: BROKER_USERNAME
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-sync-mq
+                key: BROKER_PASSWORD
+  - it: should render deployment with pre-exisiting resources and without a service account
+    set:
+      repository:
+        existingConfigMap:
+          name: myrepo
+          keys:
+            host: ACS_HOST
+            port: ACS_PORT
+            scheme: ACS_PROTO
+      database:
+        existingConfigMap:
+          name: mydb
+          keys:
+            url: DBURL
+            driver: DBDRIVER
+        existingSecret:
+          name: mydbcreds
+          keys:
+            username: DBUSER
+            password: DBPASS
+      messageBroker:
+        existingConfigMap:
+          name: mymq
+          keys:
+            url: MQURL
+        existingSecret:
+          name: mymqcreds
+          keys:
+            username: MQUSER
+            password: MQPASS
+      serviceAccount:
+        create: false
+        name: null
+    template: deployment.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.serviceAccountName
+          value: default
+      - hasDocuments:
+          count: 0
+        template: serviceaccount.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REPO_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: myrepo
+                key: ACS_HOST
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REPO_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: myrepo
+                key: ACS_PORT
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: REPO_SCHEME
+            valueFrom:
+              configMapKeyRef:
+                name: myrepo
+                key: ACS_PROTO
+                optional: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: mydb
+                key: DBURL
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_DRIVER
+            valueFrom:
+              configMapKeyRef:
+                name: mydb
+                key: DBDRIVER
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mydbcreds
+                key: DBUSER
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mydbcreds
+                key: DBPASS
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_URL
+            valueFrom:
+              configMapKeyRef:
+                name: mymq
+                key: MQURL
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: mymqcreds
+                key: MQUSER
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mymqcreds
+                key: MQPASS
+  - it: should have customized metadata in place in deployment
+    template: deployment.yaml
+    values: *testvalues
+    set:
+      nameOverride: dsync
+      nodeSelector:
+        disktype: ssd
+      tolerations:
+        - key: "skipme"
+          operator: "Exists"
+          effect: "NoSchedule"
+      affinity: |-
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux
+      podLabels:
+        env: qa
+      podAnnotations:
+        some.annotations.for.stuff: something
+        some.annotations.for.otherstuff: somethingelse
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-dsync
+      - contains:
+          path: >-
+            spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms
+          content:
+            matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                  - linux
+      - contains:
+          path: spec.template.spec.tolerations
+          content:
+            key: "skipme"
+            operator: "Exists"
+            effect: "NoSchedule"
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            env: qa
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            some.annotations.for.stuff: something
+            some.annotations.for.otherstuff: somethingelse
+      - isSubset:
+          path: spec.template.spec.nodeSelector
+          content:
+            disktype: ssd

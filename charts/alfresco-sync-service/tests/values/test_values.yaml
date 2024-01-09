@@ -1,0 +1,8 @@
+database:
+  url: postgresql://postgresql-syncservice/alfresco-sync
+  username: alfresco
+  password: admin
+messageBroker:
+  url: failover:(nio://activemq:61616)
+  username: admin
+  password: admin

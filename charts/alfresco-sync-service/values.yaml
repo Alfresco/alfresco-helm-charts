@@ -1,22 +1,15 @@
 ---
 replicaCount: 1
-nodeSelector: {}
 # -- Global definition of Docker registry pull secret which can be overridden
 # from parent ACS Helm chart(s)
 global:
-  messageBroker:
-    # -- A failover URI formatted string, see:
-    # https://activemq.apache.org/failover-transport-reference
-    url: null
-    # -- Username to authenticate as
-    user: null
-    # -- Credential to use to authenticate to the broker
-    password: null
   alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
+podAnnotations: {}
+podLabels: {}
 podSecurityContext:
   runAsUser: 33020
   runAsGroup: 1000
@@ -31,11 +24,18 @@ environment:
   JAVA_OPTS: >-
     -Dsync.metrics.reporter.graphite.enabled=false
     -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
-  EXTRA_JAVA_OPTS: ""
 service:
   name: syncservice
   type: NodePort
   externalPort: 80
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "alfresco-sync"
 resources:
   requests:
     cpu: "0.5"
@@ -54,27 +54,19 @@ readinessProbe:
   timeoutSeconds: 10
 repository:
   # -- ACS repository host
-  host: alfresco-cs-repository
+  host: null
   # -- ACS repository port
-  port: 80
-  # -- A nameOverride use to compute an ACS repository service name
-  nameOverride: null
-activemq:
-  # -- Toggle ActiveMQ chart dependency
-  # see [Alfresco ActiveMQ chart
-  # documentation](https://github.com/Alfresco/alfresco-helm-charts/tree/main/charts/activemq))
-  enabled: false
-  nameOverride: activemq
-  adminUser:
-    # -- User to use to set as the connection user for ActiveMQ
-    user: admin
-    # -- Password to use to set as the connection user for ActiveMQ
-    password: admin
-  services:
-    broker:
-      ports:
-        external:
-          openwire: 61616
+  port: null
+  # -- ACS repository port
+  scheme: null
+  existingConfigMap:
+    # -- Name of a pre-existing configmap containing message broker details
+    name: null
+    keys:
+      # -- configmap key where to find the URL of the message broker
+      host: REPO_HOST
+      port: REPO_PORT
+      scheme: REPO_SCHEME
 messageBroker:
   # -- A failover URI formatted string, see:
   # https://activemq.apache.org/failover-transport-reference
@@ -82,39 +74,23 @@ messageBroker:
   # -- A name that will be used as a base to get broker connection details
   nameOverride: activemq
   # -- Username to authenticate as.
-  user: null
+  username: null
   # -- Credential to use to authenticate to the broker.
   password: null
-  # -- An existing k8s secret with broker details (preferred over using values)
-  existingSecretName: null
-# -- Defines properties required by sync service for connecting to the database
-# If you set database.external to true you will have to setup the JDBC driver,
-# user, password and JdbcUrl as `driver`, `user`, `password` & `url` subelements
-# of `database`. Also make sure that the container has the db driver
-postgresql:
-  # -- Toggle PostgreSQL chart dependency
-  # see [PostgreSQL Bitnami charts
-  # documentation](https://github.com/bitnami/charts/tree/main/bitnami/postgresql))
-  enabled: false
-  nameOverride: postgresql-syncservice
-  auth:
-    enablePostgresUser: false
-    username: alfresco
-    password: admin
-    database: alfrescosync
-  primary:
-    extendedConfiguration: |
-      shared_buffers = 256MB
-      max_connections = 100
-      wal_level = minimal
-      max_wal_senders = 0
-      max_replication_slots = 0
-      effective_cache_size = 1024GB
-      log_min_messages = LOG
-  resources:
-    limits:
-      cpu: "2"
-      memory: "2Gi"
+  existingConfigMap:
+    # -- Name of a pre-existing configmap containing message broker details
+    name: null
+    keys:
+      # -- configmap key where to find the URL of the message broker
+      url: BROKER_URL
+  existingSecret:
+    # -- Name of a pre-existing secret containing message broker credentials
+    name: null
+    keys:
+      # -- Key within the secret holding the message broker username
+      username: BROKER_USERNAME
+      # -- Key within the secret holding the message broker password
+      password: BROKER_PASSWORD
 database:
   # -- The JDBC Driver to connect to the DB.
   # If different from the default make sure your container image ships it.
@@ -122,11 +98,26 @@ database:
   # -- JDBC url to connect to the external DB
   url: null
   # -- JDBC username to use to connect to the DB
-  user: alfresco
+  username: null
   # -- JDBC password to use to connect to the DB
-  password: admin
-  # -- An existing kubernetes secret with DB info (prefered over using values)
-  existingSecretName: null
+  password: null
+  existingConfigMap:
+    name: null
+    keys:
+      # -- configmap key where to find the URL of the database
+      url: DATABASE_URL
+      # -- configmap key where to find the JDBC driver class to use.
+      # The configmap may leverage the alfresco-repository.db.cm named
+      # template to auto-generate it from the sole url parameter.
+      driver: DATABASE_DRIVER
+  existingSecret:
+    # -- Name of a pre-existing secret containing database credentials
+    name: null
+    keys:
+      # -- Key within the secret holding the database username
+      username: DATABASE_USERNAME
+      # -- Key within the secret holding the database password
+      password: DATABASE_PASSWORD
 ingress:
   # -- useful when running Sync service without SSL termination done by a load
   # balancer, e.g. when ran on Minikube for testing purposes
@@ -134,3 +125,8 @@ ingress:
   extraAnnotations: {}
   tls: []
   path: /syncservice
+
+nodeSelector: {}
+tolerations: []
+affinity: ""
+terminationGracePeriodSeconds: 60
