@@ -2,10 +2,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  {{- $mqCtx := dict "Values" (dict "nameOverride" "ai-mq") "Chart" .Chart "Release" .Release }}
-  name: {{ template "alfresco-ai-transformer.fullname" $mqCtx }}
+  name: {{ template "alfresco-ai-transformer.config-ai-mq.name" . }}
   labels:
-    {{- include "alfresco-ai-transformer.labels" $ | nindent 4 }}
+    {{- include "alfresco-ai-transformer.labels" . | nindent 4 }}
 data:
   {{- $reqmsg := "Please provide a valid broker URL with messageBroker.url or as a configmap key using messageBroker.existingConfigMap" }}
   {{ template "alfresco-common.activemq.cm" (required $reqmsg .Values.messageBroker.url) }}

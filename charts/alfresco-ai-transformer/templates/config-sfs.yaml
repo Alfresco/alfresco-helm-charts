@@ -2,8 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  {{- $cmCtx := dict "Values" (dict "nameOverride" "ai-sfs") "Chart" .Chart "Release" .Release }}
-  name: {{ template "alfresco-ai-transformer.fullname" $cmCtx }}
+  name: {{ template "alfresco-ai-transformer.config-ai-sfs.name" . }}
   labels:
     {{- include "alfresco-ai-transformer.labels" . | nindent 4 }}
 data:
