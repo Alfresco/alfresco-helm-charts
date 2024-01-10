@@ -83,5 +83,6 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `"alfresco-sync"` |  |
+| tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 | terminationGracePeriodSeconds | int | `60` |  |
 | tolerations | list | `[]` |  |
