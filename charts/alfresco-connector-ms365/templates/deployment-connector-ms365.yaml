@@ -32,7 +32,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           env:
-            {{- include "alfresco-connector-ms365.repo-ms365.env" $ | indent 12 }}
+            {{- include "alfresco-connector-ms365.env" $ | indent 12 }}
           ports:
               - containerPort: {{ .Values.image.internalPort }}
           resources: {{- toYaml .Values.resources | nindent 12 }}

@@ -1,7 +1,7 @@
 {{/*
 Set environment variables necessary for configmap
 */}}
-{{- define "alfresco-connector-ms365.repo-ms365.env" -}}
+{{- define "alfresco-connector-ms365.env" -}}
 {{- $repo_details_cm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-connector-ms365.fullname" .) -}}
 {{- $repo_url := printf "-Dalfresco.base-url=http://%s:%s" "$(REPO_HOST)" "$(REPO_PORT)" }}
 - name: REPO_HOST
