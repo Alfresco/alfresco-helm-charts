@@ -7,11 +7,8 @@ metadata:
     {{- include "alfresco-search-service.labels" . | nindent 4 }}
 data:
   {{- with .Values.repository }}
-  SOLR_ALFRESCO_HOST: >-
-    {{ template "alfresco-common.url.host" .url }}
-  SOLR_ALFRESCO_PORT: >-
-    {{ template "alfresco-common.url.port" .url }}
+  {{ .existingConfigMap.keys.host }}: {{ .host | quote }}
+  {{ .existingConfigMap.keys.port }}: {{ .port | quote }}
+  {{ .existingConfigMap.keys.securecomms }}: {{ .securecomms | quote }}
   {{- end }}
-  SOLR_ALFRESCO_SECURE_COMMS: >-
-    {{ .Values.repository.securecomms }}
 {{- end }}

@@ -59,9 +59,11 @@ ingress:
     nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
 # Below values must be set by parent chart
 repository:
-  # -- Alfresco repository URL
-  url: http://alfresco-search-service
-  # -- repository security level to use when tracking the repo ('none' or 'secret')
+  # -- Alfresco repository hostname
+  host: null
+  # -- Alfresco repository port
+  port: null
+  # -- Alfresco repository security level to use when tracking the repo ('none' or 'secret')
   securecomms: secret
   # -- Shared secret used with repository when `securecomms` is `secret`
   sharedSecret: null

@@ -35,27 +35,25 @@ spec:
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           env:
             {{- with .Values.repository }}
-              {{- if eq .securecomms "secret" }}
             - name: SOLR_ALFRESCO_SECURECOMMS_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "alfresco-search-service.repository-config.name" $ }}
-                  key: {{ index .existingSecret.keys "sharedSecret" }}
-              {{- end }}
+                  name: {{ .existingSecret.name | default (include "alfresco-search-service.repository-config.name" $) }}
+                  key: {{ .existingSecret.keys.sharedSecret }}
             - name: SOLR_ALFRESCO_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: {{ template "alfresco-search-service.repository-config.name" $ }}
+                  name: {{ .existingConfigMap.name | default (include "alfresco-search-service.repository-config.name" $) }}
                   key: {{ .existingConfigMap.keys.host }}
             - name: SOLR_ALFRESCO_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: {{ template "alfresco-search-service.repository-config.name" $ }}
+                  name: {{ .existingConfigMap.name | default (include "alfresco-search-service.repository-config.name" $) }}
                   key: {{ .existingConfigMap.keys.port }}
             - name: SOLR_ALFRESCO_SECURECOMMS
               valueFrom:
                 configMapKeyRef:
-                  name: {{ template "alfresco-search-service.repository-config.name" $ }}
+                  name: {{ .existingConfigMap.name | default (include "alfresco-search-service.repository-config.name" $) }}
                   key: {{ .existingConfigMap.keys.securecomms }}
             {{- end }}
             - name: SOLR_SOLR_HOST

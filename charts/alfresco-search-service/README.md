@@ -66,9 +66,10 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing Alfresco repository URL |
 | repository.existingSecret.keys.sharedSecret | string | `"SOLR_ALFRESCO_SECURECOMMS_SECRET"` | Key within the secret holding the repository shared secret |
 | repository.existingSecret.name | string | `nil` | Alternatively, provide a pre-existing secret containing the shared secret used with repository when `securecomms` is `secret` |
-| repository.securecomms | string | `"secret"` | repository security level to use when tracking the repo ('none' or 'secret') |
+| repository.host | string | `nil` | Alfresco repository hostname |
+| repository.port | string | `nil` | Alfresco repository port |
+| repository.securecomms | string | `"secret"` | Alfresco repository security level to use when tracking the repo ('none' or 'secret') |
 | repository.sharedSecret | string | `nil` | Shared secret used with repository when `securecomms` is `secret` |
-| repository.url | string | `"http://alfresco-search-service"` | Alfresco repository URL |
 | resources.limits.cpu | string | `"4"` |  |
 | resources.limits.memory | string | `"2000Mi"` |  |
 | resources.requests.cpu | string | `"0.50"` |  |

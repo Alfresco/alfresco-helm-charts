@@ -1,3 +1,5 @@
 ---
 repository:
+  host: alfresco-search-service
+  port: 80
   sharedSecret: dummy

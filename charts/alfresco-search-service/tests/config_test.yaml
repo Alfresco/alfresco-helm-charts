@@ -21,7 +21,8 @@ tests:
     values: *testvalues
     set:
       repository:
-        url: http://somehost:8888
+        host: somehost
+        port: 8888
     asserts:
       - equal:
           path: data.SOLR_ALFRESCO_HOST
