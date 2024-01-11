@@ -1,6 +1,6 @@
 # alfresco-sync-service
 
-![Version: 5.0.0-alpha.0](https://img.shields.io/badge/Version-5.0.0--alpha.0-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
+![Version: 5.0.0-alpha.1](https://img.shields.io/badge/Version-5.0.0--alpha.1-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -83,5 +83,6 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `"alfresco-sync"` |  |
+| tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 | terminationGracePeriodSeconds | int | `60` |  |
 | tolerations | list | `[]` |  |
