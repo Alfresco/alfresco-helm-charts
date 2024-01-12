@@ -22,6 +22,8 @@ image:
   internalPort: 9090
 environment:
   JAVA_OPTS: >-
+    -Dsql.db.pool.initial=25
+    -Dsql.db.pool.max=75
     -Dsync.metrics.reporter.graphite.enabled=false
     -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
 service:
