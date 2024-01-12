@@ -1,6 +1,6 @@
 # alfresco-sync-service
 
-![Version: 5.0.0-alpha.1](https://img.shields.io/badge/Version-5.0.0--alpha.1-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
+![Version: 5.0.0-alpha.2](https://img.shields.io/badge/Version-5.0.0--alpha.2-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -33,7 +33,7 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | database.password | string | `nil` | JDBC password to use to connect to the DB |
 | database.url | string | `nil` | JDBC url to connect to the external DB |
 | database.username | string | `nil` | JDBC username to use to connect to the DB |
-| environment.JAVA_OPTS | string | `"-Dsync.metrics.reporter.graphite.enabled=false -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
+| environment.JAVA_OPTS | string | `"-Dsql.db.pool.initial=25 -Dsql.db.pool.max=75 -Dsync.metrics.reporter.graphite.enabled=false -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
