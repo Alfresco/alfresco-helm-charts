@@ -1,10 +1,10 @@
 # alfresco-search-service
 
-![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![AppVersion: 2.0.8.2](https://img.shields.io/badge/AppVersion-2.0.8.2-informational?style=flat-square)
+![Version: 3.0.0-alpha.0](https://img.shields.io/badge/Version-3.0.0--alpha.0-informational?style=flat-square) ![AppVersion: 2.0.8.2](https://img.shields.io/badge/AppVersion-2.0.8.2-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
-Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for information on the Helm charts and deployment instructions.
+Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for an example of how to leverage this chart from an umbrella chart.
 
 **Homepage:** <https://www.alfresco.com>
 
@@ -16,13 +16,14 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | alfresco-insight-zeppelin | 2.2.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0 |
+|  | alfresco-insight-zeppelin | 3.0.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| affinity | string | `""` | Pod affinity, passed thru tpl function |
 | alfresco-insight-zeppelin.enabled | bool | `false` |  |
 | environment.SOLR_CREATE_ALFRESCO_DEFAULTS | string | `"alfresco,archive"` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
@@ -44,10 +45,14 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
-| nodeSelector | object | `{}` | Define the alfresco-search properties to use in the k8s cluster This is the search provider used by alfresco-content-repository |
-| persistence | object | `{"EbsPvConfiguration":{"fsType":"ext4"},"VolumeSizeRequest":"10Gi","enabled":true,"search":{"data":{"mountPath":"/opt/alfresco-search-services/data","subPath":"alfresco-content-services/solr-data"}}}` | Defines the persistence |
-| persistence.VolumeSizeRequest | string | `"10Gi"` | Only define if you have a specific claim already created existingClaim: "search-master-claim" |
-| persistence.enabled | bool | `true` | If set to false data will be lost with pods |
+| nodeSelector | object | `{}` |  |
+| persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
+| persistence.baseSize | string | `"10Gi"` | Capacity of the PVC for persistency |
+| persistence.enabled | bool | `true` | When disabled, data is lost when pod is terminated/rescheduled |
+| persistence.existingClaim | string | `nil` | Provide a pre-existing PVC for persistency |
+| persistence.search.data.mountPath | string | `"/opt/alfresco-search-services/data"` |  |
+| persistence.search.data.subPath | string | `"alfresco-content-services/solr-data"` |  |
+| persistence.storageClass | string | `nil` | Bind PVC based on storageClass (e.g. dynamic provisioning) |
 | podSecurityContext.fsGroup | int | `33007` |  |
 | podSecurityContext.runAsGroup | int | `33007` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
@@ -58,12 +63,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | repository.existingConfigMap.keys.host | string | `"SOLR_ALFRESCO_HOST"` | Key within the configmap holding the repository hostname |
 | repository.existingConfigMap.keys.port | string | `"SOLR_ALFRESCO_PORT"` | Key within the configmap holding the repository port |
 | repository.existingConfigMap.keys.securecomms | string | `"SOLR_ALFRESCO_SECURE_COMMS"` | Key within the configmap holding the repository security level |
-| repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing Alfresco repository URL In addition to tjhe keys mentionned bellow the configMap may contain any solr property translated as an env variable (e.g SOLR_ALFRESCO_BASEURL). |
+| repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing Alfresco repository URL |
 | repository.existingSecret.keys.sharedSecret | string | `"SOLR_ALFRESCO_SECURECOMMS_SECRET"` | Key within the secret holding the repository shared secret |
-| repository.existingSecret.name | string | `nil` | Name of a pre-existing secret containing message broker credentials |
-| repository.securecomms | string | `"secret"` | repository security level to use when tracking the repo ('none' or 'secret') |
-| repository.sharedSecret | string | `nil` | Secret shared with the repository when securecomms is set to 'secret' |
-| repository.url | string | `"http://alfresco-search-service/solr"` | Alfresco repository URL |
+| repository.existingSecret.name | string | `nil` | Alternatively, provide a pre-existing secret containing the shared secret used with repository when `securecomms` is `secret` |
+| repository.host | string | `nil` | Alfresco repository hostname |
+| repository.port | string | `nil` | Alfresco repository port |
+| repository.securecomms | string | `"secret"` | Alfresco repository security level to use when tracking the repo ('none' or 'secret') |
+| repository.sharedSecret | string | `nil` | Shared secret used with repository when `securecomms` is `secret` |
 | resources.limits.cpu | string | `"4"` |  |
 | resources.limits.memory | string | `"2000Mi"` |  |
 | resources.requests.cpu | string | `"0.50"` |  |
@@ -74,4 +80,9 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | searchServicesImage.tag | string | `"2.0.8.2"` |  |
 | service.name | string | `"solr"` |  |
 | service.type | string | `"ClusterIP"` |  |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.automount | bool | `true` | Automatically mount a ServiceAccount's API credentials? |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| tolerations | list | `[]` |  |
 | type | string | `"search-services"` | set alfresco-insight-zeppelin.enabled=true As the Docker Image for Insight Engine is not publicly available the alfrescoRegistryPullSecrets has to be set More information can be found on https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/registry-authentication.md |

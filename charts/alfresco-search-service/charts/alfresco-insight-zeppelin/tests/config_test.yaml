@@ -1,5 +1,5 @@
 ---
-suite: test configmaps
+suite: test zeppelin configmap
 templates:
   - config.yaml
 tests:
@@ -7,7 +7,7 @@ tests:
     asserts:
       - equal:
           path: data.REPO_HOST
-          value: RELEASE-NAME-alfresco-cs-repository
+          value: alfresco-search-service
         template: config.yaml
       - equal:
           path: data.REPO_PORT
@@ -17,8 +17,7 @@ tests:
   - it: should have provided host and port
     set:
       repository:
-        host: somacshost
-        port: 888
+        url: https://somacshost:888
     asserts:
       - equal:
           path: data.REPO_HOST

@@ -1,10 +1,10 @@
 # alfresco-insight-zeppelin
 
-![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square) ![AppVersion: 2.0.8](https://img.shields.io/badge/AppVersion-2.0.8-informational?style=flat-square)
+![Version: 3.0.0-alpha.0](https://img.shields.io/badge/Version-3.0.0--alpha.0-informational?style=flat-square) ![AppVersion: 2.0.8](https://img.shields.io/badge/AppVersion-2.0.8-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Insight Zeppelin
 
-Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for information on the Helm charts and deployment instructions.
+Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for an example of how to leverage this chart from an umbrella chart.
 
 **Homepage:** <https://www.alfresco.com>
 
@@ -16,12 +16,13 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 2.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| affinity | string | `""` | Pod affinity, passed thru tpl function |
 | environment.ZEPPELIN_INTP_MEM | string | `"-Xms512m -Xmx1g"` |  |
 | environment.ZEPPELIN_MEM | string | `"-Xms512m -Xmx1g"` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
@@ -42,7 +43,10 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | readinessProbe.periodSeconds | int | `20` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | replicaCount | int | `1` |  |
-| repository | object | `{}` | The parent chart will set the values for "repository.host" and "repository.port" |
+| repository.existingConfigMap.keys.host | string | `"REPO_HOST"` | Key within the configmap holding the repository hostname |
+| repository.existingConfigMap.keys.port | string | `"REPO_PORT"` | Key within the configmap holding the repository port |
+| repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing Alfresco repository URL |
+| repository.url | string | `"http://alfresco-search-service"` | Alfresco repository URL |
 | resources.limits.cpu | string | `"1"` |  |
 | resources.limits.memory | string | `"1024Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
@@ -50,3 +54,8 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | service.externalPort | int | `80` |  |
 | service.name | string | `"zeppelin"` |  |
 | service.type | string | `"ClusterIP"` |  |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.automount | bool | `true` | Automatically mount a ServiceAccount's API credentials? |
+| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
+| serviceAccount.name | string | `""` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
+| tolerations | list | `[]` |  |

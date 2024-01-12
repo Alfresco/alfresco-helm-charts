@@ -3,44 +3,55 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-insight-zeppelin.fullName" . }}
+  name: {{ template "alfresco-insight-zeppelin.deployment.name" . }}
   labels:
-    app: {{ template "alfresco-insight-zeppelin.fullName" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: zeppelin
+    {{- include "alfresco-insight-zeppelin.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "alfresco-insight-zeppelin.fullName" . }}
-      release: {{ .Release.Name }}
+      {{- include "alfresco-insight-zeppelin.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate: {{- toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
       labels:
-        app: {{ template "alfresco-insight-zeppelin.fullName" . }}
-        release: {{ .Release.Name }}
+        {{- include "alfresco-insight-zeppelin.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
-    {{- include "component-pod-security-context" .Values | indent 4 }}
-    {{- if .Values.nodeSelector }}
-      nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
       {{- include "alfresco-content-services.imagePullSecrets" . | indent 6 }}
+      serviceAccountName: {{ include "alfresco-insight-zeppelin.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          resources: {{- toYaml .Values.resources | nindent 12 }}
-          {{- include "component-security-context" .Values | indent 8 }}
-          envFrom:
-          - configMapRef:
-              name: {{ template "alfresco-insight-zeppelin.fullName" . }}-configmap
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
+          env:
+            {{- with .Values.repository }}
+            - name: REPO_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "alfresco-insight-zeppelin.deployment.name" $ }}
+                  key: {{ .existingConfigMap.keys.host }}
+            - name: REPO_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "alfresco-insight-zeppelin.deployment.name" $ }}
+                  key: {{ .existingConfigMap.keys.port }}
+            {{- end }}
+            {{- $environment := .Values.environment | default dict }}
+            {{- range $key, $val := $environment }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end }}
           ports:
             - containerPort: {{ .Values.image.internalPort }}
           readinessProbe:
@@ -56,3 +67,24 @@ spec:
               port: {{ .Values.image.internalPort }}
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- tpl . $ | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

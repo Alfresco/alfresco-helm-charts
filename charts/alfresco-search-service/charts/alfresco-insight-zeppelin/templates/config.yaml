@@ -1,17 +1,15 @@
----
-# Defines the config for the Alfresco Insight Zeppelin App
+{{- if not .Values.repository.existingConfigMap.name }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-insight-zeppelin.fullName" . }}-configmap
+  name: {{ template "alfresco-insight-zeppelin.deployment.name" . }}
   labels:
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    component: zeppelin
+    {{- include "alfresco-insight-zeppelin.labels" . | nindent 4 }}
 data:
-  REPO_HOST: "{{ template "alfresco-repo-host" . }}"
-  REPO_PORT: "{{ template "alfresco-repo-port" . }}"
-  {{- range $key, $value := .Values.environment }}
-  {{ $key }}: {{ $value }}
+  {{- with .Values.repository }}
+  REPO_HOST: >-
+    {{ template "alfresco-common.url.host" .url }}
+  REPO_PORT: >-
+    {{ template "alfresco-common.url.port" .url }}
   {{- end }}
+{{- end }}

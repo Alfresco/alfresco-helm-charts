@@ -4,3 +4,4 @@ alfresco-insight-zeppelin:
   enabled: true
 repository:
   sharedSecret: dummy
+  url: http://alfresco-search-service/solr

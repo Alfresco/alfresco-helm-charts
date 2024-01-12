@@ -7,11 +7,11 @@ tests:
   - it: should have basic metadata in place
     values: &testvalues
       - values/test_values.yaml
+    template: deployment.yaml
     asserts:
       - equal:
           path: metadata.name
-          value: RELEASE-NAME-alfresco-search-service-solr
-        template: deployment.yaml
+          value: RELEASE-NAME-solr
 
   - it: should render cpu and memory limits
     values: *testvalues
@@ -31,14 +31,29 @@ tests:
             limits:
               cpu: "4"
               memory: "2000Mi"
+
+  - it: should render annotations and environments
+    values: *testvalues
+    set:
+      podAnnotations: *annotated
+      podLabels:
+        a_label: true
+      environment:
+        someother: value
+    template: deployment.yaml
+    asserts:
       - isSubset:
           path: spec.template.metadata.annotations
           content: *annotated
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            a_label: true
       - contains:
           path: spec.template.spec.containers[0].env
           content:
             name: SOLR_SOLR_HOST
-            value: RELEASE-NAME-alfresco-search-service-solr
+            value: RELEASE-NAME-solr
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -54,3 +69,41 @@ tests:
           content:
             name: someother
             value: value
+
+  - it: should render default pvc volumes
+    values: *testvalues
+    template: deployment.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].volumeMounts
+          value:
+            - name: data
+              mountPath: /opt/alfresco-search-services/data
+              subPath: alfresco-content-services/solr-data
+      - equal:
+          path: spec.template.spec.volumes
+          value:
+            - name: data
+              persistentVolumeClaim:
+                claimName: solr-default-pvc
+
+  - it: should render cpu and memory limits
+    set:
+      resources:
+        requests:
+          cpu: "1"
+          memory: "1500Mi"
+        limits:
+          cpu: "4"
+          memory: "3000Mi"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "1"
+              memory: "1500Mi"
+            limits:
+              cpu: "4"
+              memory: "3000Mi"
+        template: deployment.yaml

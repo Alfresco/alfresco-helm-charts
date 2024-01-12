@@ -2,80 +2,61 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-search-service.fullname" . }}-solr
+  name: {{ template "alfresco-search-service.deployment.name" . }}
   labels:
-    app: {{ template "alfresco-search-service.fullname" . }}-solr
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: search
+    {{- include "alfresco-search-service.labels" . | nindent 4 }}
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: {{ template "alfresco-search-service.fullname" . }}-solr
-      release: {{ .Release.Name }}
+      {{- include "alfresco-search-service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
         {{- with .Values.podAnnotations }}
-          {{- toYaml . | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        app: {{ template "alfresco-search-service.fullname" . }}-solr
-        release: {{ .Release.Name }}
+        {{- include "alfresco-search-service.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
-    {{- include "component-pod-security-context" .Values | indent 4 }}
-    {{- with .Values.affinity }}
-      affinity:
-{{ tpl . $ | indent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
-      tolerations:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- if .Values.nodeSelector }}
-      nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
-    {{- end }}
       {{- include "alfresco-content-services.imagePullSecrets" . | nindent 6 }}
+      serviceAccountName: {{ include "alfresco-search-service.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ template "alfresco-search.dockerImage" . }}
           imagePullPolicy: {{ template "alfresco-search.pullPolicy" . }}
-          {{- include "component-security-context" .Values | indent 8 }}
-          {{- $repoCtx := dict "Values" (dict "nameOverride" (printf "%s-repository" $.Chart.Name )) "Chart" $.Chart "Release" $.Release }}
-          {{- $cm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-search-service.fullname" $repoCtx) }}
-          {{- $secret := coalesce .Values.repository.existingSecret.name (include "alfresco-search-service.fullname" $repoCtx) }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           env:
             {{- with .Values.repository }}
-              {{- if eq .securecomms "secret" }}
             - name: SOLR_ALFRESCO_SECURECOMMS_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ $secret }}
-                  key: {{ index .existingSecret.keys "sharedSecret" }}
-              {{- end }}
+                  name: {{ .existingSecret.name | default (include "alfresco-search-service.repository-config.name" $) }}
+                  key: {{ .existingSecret.keys.sharedSecret }}
             - name: SOLR_ALFRESCO_HOST
               valueFrom:
                 configMapKeyRef:
-                  name: {{ $cm }}
+                  name: {{ .existingConfigMap.name | default (include "alfresco-search-service.repository-config.name" $) }}
                   key: {{ .existingConfigMap.keys.host }}
             - name: SOLR_ALFRESCO_PORT
               valueFrom:
                 configMapKeyRef:
-                  name: {{ $cm }}
+                  name: {{ .existingConfigMap.name | default (include "alfresco-search-service.repository-config.name" $) }}
                   key: {{ .existingConfigMap.keys.port }}
             - name: SOLR_ALFRESCO_SECURECOMMS
               valueFrom:
                 configMapKeyRef:
-                  name: {{ $cm }}
+                  name: {{ .existingConfigMap.name | default (include "alfresco-search-service.repository-config.name" $) }}
                   key: {{ .existingConfigMap.keys.securecomms }}
             {{- end }}
             - name: SOLR_SOLR_HOST
-              value: {{ template "alfresco-search-service.fullname" . }}-solr
+              value: {{ template "alfresco-search-service.deployment.name" . }}
             - name: SOLR_SOLR_PORT
               value: {{ include "alfresco-search.svcPort" . | quote }}
             - name: SOLR_SOLR_BASEURL
@@ -85,9 +66,6 @@ spec:
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end }}
-          envFrom:
-          - configMapRef:
-              name: {{ $cm }}
           ports:
             - containerPort: {{ template "alfresco-search.containerPort" . }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
@@ -95,6 +73,9 @@ spec:
           - name: data
             mountPath: {{ .Values.persistence.search.data.mountPath }}
             subPath: {{ .Values.persistence.search.data.subPath }}
+          {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           readinessProbe:
             exec:
               command:
@@ -127,7 +108,19 @@ spec:
             failureThreshold: 1
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
       volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: |-
-            {{ .Values.persistence.existingClaim | default (printf "%s-solr-claim" (include "alfresco-search-service.fullname" .)) }}
+        {{- include "alfresco-common.data_volume" .Values | nindent 8 }}
+        {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- tpl . $ | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

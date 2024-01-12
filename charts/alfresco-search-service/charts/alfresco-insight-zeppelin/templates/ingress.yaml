@@ -1,12 +1,13 @@
-{{- $serviceName :=  (include "alfresco-insight-zeppelin.fullName" .) -}}
+{{- $serviceName :=  (include "alfresco-insight-zeppelin.fullname" .) -}}
 {{- $servicePort := .Values.service.externalPort -}}
-apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ template "alfresco-insight-zeppelin.fullName" . }}
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
+  name: {{ template "alfresco-insight-zeppelin.fullname" . }}
+  labels:
+    {{- include "alfresco-insight-zeppelin.labels" . | nindent 4 }}
 spec:
+  ingressClassName: nginx
   rules:
   - http:
       paths:
