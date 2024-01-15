@@ -1,6 +1,6 @@
 # alfresco-transform-service
 
-![Version: 1.0.0-alpha.2](https://img.shields.io/badge/Version-1.0.0--alpha.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
+![Version: 1.0.0-alpha.3](https://img.shields.io/badge/Version-1.0.0--alpha.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Transform Services
 
@@ -257,7 +257,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | transformmisc.volumes | list | `[]` |  |
 | transformrouter.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-router.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-router.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | transformrouter.enabled | bool | `true` |  |
-| transformrouter.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
+| transformrouter.environment | string | `"JAVA_OPTS: -XX:MaxRAMPercentage=80"` | Additionnal trouter env vars, passed thru tpl function |
 | transformrouter.image.internalPort | int | `8095` |  |
 | transformrouter.image.pullPolicy | string | `"IfNotPresent"` |  |
 | transformrouter.image.repository | string | `"quay.io/alfresco/alfresco-transform-router"` |  |
