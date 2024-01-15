@@ -257,7 +257,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | transformmisc.volumes | list | `[]` |  |
 | transformrouter.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-router.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-router.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
 | transformrouter.enabled | bool | `true` |  |
-| transformrouter.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
+| transformrouter.environment | string | `"JAVA_OPTS: -XX:MaxRAMPercentage=80"` | Additionnal trouter env vars, passed thru tpl function |
 | transformrouter.image.internalPort | int | `8095` |  |
 | transformrouter.image.pullPolicy | string | `"IfNotPresent"` |  |
 | transformrouter.image.repository | string | `"quay.io/alfresco/alfresco-transform-router"` |  |

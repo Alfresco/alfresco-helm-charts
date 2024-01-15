@@ -15,7 +15,7 @@ data:
   {{- if .Values.transformmisc.enabled }}
   MISC_URL: http://{{ template "alfresco-transform-service.transform-misc.name" . }}:80
   {{- end }}
-  {{- toYaml .Values.transformrouter.environment | nindent 2 }}
+  {{- tpl .Values.transformrouter.environment $ | nindent 2 }}
   {{- range $key, $val := .Values.transformrouter.livenessProbe }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
