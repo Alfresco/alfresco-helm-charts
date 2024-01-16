@@ -39,6 +39,7 @@ spec:
                 secretKeyRef:
                   name: {{ .existingSecret.name | default (include "alfresco-search-service.repository-config.name" $) }}
                   key: {{ .existingSecret.keys.sharedSecret }}
+                  optional: true
             - name: SOLR_ALFRESCO_HOST
               valueFrom:
                 configMapKeyRef:
