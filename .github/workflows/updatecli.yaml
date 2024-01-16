@@ -1,5 +1,7 @@
 ---
 name: Bump versions
+run-name: Bump ${{ inputs.update-type }} using alfresco-updatecli/${{ inputs.alfresco-updatecli-ref }}
+
 on:
   workflow_dispatch:
     inputs:
