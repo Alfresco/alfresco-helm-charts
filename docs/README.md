@@ -18,6 +18,19 @@ Each individual chart has its own documentation page that's available in the
 chart directory in [charts/](../charts). There are the values available for
 each of them.
 
+## Testing
+
+Each chart is tested against a default configuration on
+[KinD](https://kind.sigs.k8s.io/). You can check the currently K8s version
+tested by looking at the `KIND_NODE_IMAGE` value in the main [lint-test
+workflow](../.github/workflows/lint-test.yaml).
+
+We are ensuring backward compatibility with older K8s versions with
+[kubeconform](https://github.com/yannh/kubeconform). You can check the oldest
+ K8s version tested by looking at `kubernetes-version` inside the
+ `kubeconform-helm-min` hook in [pre-commit
+ configuration](../.pre-commit-config.yaml).
+
 ## Development
 
 This repository follows the
