@@ -3,7 +3,7 @@ name: alfresco-connector-ms365
 description: A Helm chart for deploying Alfresco connector ms365 service
 type: application
 version: 0.5.0
-appVersion: "2.0.0"
+appVersion: 2.0.0
 dependencies:
   - name: alfresco-common
     version: 3.1.0
