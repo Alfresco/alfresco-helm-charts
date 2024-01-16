@@ -17,14 +17,14 @@ podSecurityContext:
   fsGroup: 33007
 searchServicesImage:
   repository: quay.io/alfresco/search-services
-  tag: 2.0.8.2
+  tag: 2.0.9
   pullPolicy: &searchDockerImagePullPolicy IfNotPresent
   # -- container's port search service is listening on
   # change if your custom image use a different port.
   internalPort: null
 insightEngineImage:
   repository: quay.io/alfresco/insight-engine
-  tag: 2.0.8.2
+  tag: 2.0.9
   pullPolicy: *searchDockerImagePullPolicy
   # -- container's port search service is listening on
   # change if your custom image use a different port.
@@ -85,7 +85,6 @@ repository:
       securecomms: SOLR_ALFRESCO_SECURE_COMMS
 environment:
   SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
-
 resources:
   requests:
     cpu: "0.50"
@@ -93,7 +92,6 @@ resources:
   limits:
     cpu: "4"
     memory: "2000Mi"
-
 persistence:
   # -- When disabled, data is lost when pod is terminated/rescheduled
   enabled: true
@@ -109,10 +107,8 @@ persistence:
     data:
       mountPath: "/opt/alfresco-search-services/data"
       subPath: "alfresco-content-services/solr-data"
-
 alfresco-insight-zeppelin:
   enabled: false
-
 readinessProbe:
   initialDelaySeconds: 60
   periodSeconds: 20
@@ -121,7 +117,6 @@ livenessProbe:
   initialDelaySeconds: 130
   periodSeconds: 20
   timeoutSeconds: 10
-
 initContainer:
   image:
     repository: busybox
@@ -132,15 +127,12 @@ initContainer:
       memory: "5Mi"
     limits:
       memory: "10Mi"
-
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
-
 nodeSelector: {}
 tolerations: []
 # -- Pod affinity, passed thru tpl function
 affinity: ""
-
 serviceAccount:
   # -- Specifies whether a service account should be created
   create: true
