@@ -139,7 +139,7 @@ global:
 nodeSelector: {}
 tolerations: []
 # -- Pod affinity, passed thru tpl function
-affinity: |-
+affinity: null
 
 serviceAccount:
   # -- Specifies whether a service account should be created
