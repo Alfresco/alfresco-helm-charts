@@ -15,7 +15,7 @@ on:
         default: master
 
 env:
-  UPDATE_CLI_VERSION: v0.65.1
+  UPDATE_CLI_VERSION: v0.71.0
 
 jobs:
   bump-charts-dependencies:
@@ -42,7 +42,7 @@ jobs:
         with:
           version: ${{ env.UPDATE_CLI_VERSION }}
 
-      - run: updatecli apply --experimental
+      - run: updatecli apply
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 

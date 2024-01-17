@@ -1,14 +1,11 @@
 ---
-name: "Helm autodiscovery using git scm"
+name: "Helm autodiscovery for charts dependencies"
 
 autodiscovery:
   crawlers:
     helm:
       # we have an alternate pipeline for image tags bumping
       ignorecontainer: true
-      # disable automatic bump given that sometimes bump too much
+      # Disable automatic chart version bump given that sometimes bump too much
       # and we have chart testing checking against missed increments
       versionincrement: none
-      ignore:
-        #  Search Service do not follow the usual image.repo & image.tag path
-        - path: charts/alfresco-search-service/*
