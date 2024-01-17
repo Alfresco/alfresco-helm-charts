@@ -697,6 +697,20 @@ entries:
   alfresco-connector-msteams:
   - apiVersion: v2
     appVersion: 2.0.0
+    created: "2024-01-17T08:27:00.570627681Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.0
+    description: A Helm chart for deploying Alfresco connector msteams service
+    digest: e302f41b32a4b9f4a92b08eff04432136d679588cde194b6a40f750925c01998
+    name: alfresco-connector-msteams
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-msteams-0.3.0/alfresco-connector-msteams-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: 2.0.0
     created: "2024-01-04T08:49:42.332834292Z"
     dependencies:
     - name: alfresco-common
@@ -2963,4 +2977,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-01-17T08:02:30.73859913Z"
+generated: "2024-01-17T08:27:00.571020704Z"
