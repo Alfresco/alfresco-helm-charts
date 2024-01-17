@@ -8,10 +8,10 @@ keywords:
   - alfresco zeppelin
   - alfresco insight zeppelin
 name: alfresco-insight-zeppelin
-version: 3.0.0-alpha.0
+version: 3.0.0
 sources:
   - https://github.com/Alfresco/alfresco-helm-charts
-appVersion: 2.0.8
+appVersion: 2.0.9
 dependencies:
   - name: alfresco-common
     version: 3.1.0
