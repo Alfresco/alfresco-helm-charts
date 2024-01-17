@@ -21,8 +21,8 @@ each of them.
 ## Testing
 
 Each chart is tested against a default configuration on
-[KinD](https://kind.sigs.k8s.io/). You can check the currently K8s version
-tested by looking at the `KIND_NODE_IMAGE` value in the main [lint-test
+[KinD](https://kind.sigs.k8s.io/). You can check the currently tested K8s version
+by looking at the `KIND_NODE_IMAGE` value in the main [lint-test
 workflow](../.github/workflows/lint-test.yaml).
 
 We are ensuring backward compatibility with older K8s versions with
