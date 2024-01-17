@@ -556,6 +556,20 @@ entries:
   alfresco-connector-ms365:
   - apiVersion: v2
     appVersion: 2.0.0
+    created: "2024-01-17T08:02:30.738269495Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.0
+    description: A Helm chart for deploying Alfresco connector ms365 service
+    digest: e8ddccedf5a59e5d00993b55005ddcdbdcc85f2a3d0a2946fd1548b2caebf47b
+    name: alfresco-connector-ms365
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-ms365-0.5.0/alfresco-connector-ms365-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v2
+    appVersion: 2.0.0
     created: "2024-01-11T09:18:42.607650531Z"
     dependencies:
     - name: alfresco-common
@@ -2949,4 +2963,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-01-16T11:38:02.455769923Z"
+generated: "2024-01-17T08:02:30.73859913Z"
