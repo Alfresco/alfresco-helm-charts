@@ -13,29 +13,11 @@ tests:
           path: metadata.name
           value: RELEASE-NAME-solr
 
-  - it: should render cpu and memory limits
+  - it: should render annotations and environments
     values: *testvalues
     set:
       podAnnotations: &annotated
         kubernetes.io/description: Unit testing
-      environment:
-        someother: value
-    template: deployment.yaml
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[0].resources
-          value:
-            requests:
-              cpu: "0.50"
-              memory: "1200Mi"
-            limits:
-              cpu: "4"
-              memory: "2000Mi"
-
-  - it: should render annotations and environments
-    values: *testvalues
-    set:
-      podAnnotations: *annotated
       podLabels:
         a_label: true
       environment:
@@ -49,6 +31,15 @@ tests:
           path: spec.template.metadata.labels
           content:
             a_label: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SOLR_ALFRESCO_SECURECOMMS_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: SOLR_ALFRESCO_SECURECOMMS_SECRET
+                name: RELEASE-NAME-solr-repository-config
+                optional: true
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -87,7 +78,21 @@ tests:
               persistentVolumeClaim:
                 claimName: solr-default-pvc
 
-  - it: should render cpu and memory limits
+  - it: should render default cpu and memory limits
+    values: *testvalues
+    template: deployment.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "0.50"
+              memory: "1200Mi"
+            limits:
+              cpu: "4"
+              memory: "2000Mi"
+
+  - it: should render custom cpu and memory limits
     set:
       resources:
         requests:
@@ -96,6 +101,7 @@ tests:
         limits:
           cpu: "4"
           memory: "3000Mi"
+    template: deployment.yaml
     asserts:
       - equal:
           path: spec.template.spec.containers[0].resources
@@ -106,4 +112,3 @@ tests:
             limits:
               cpu: "4"
               memory: "3000Mi"
-        template: deployment.yaml
