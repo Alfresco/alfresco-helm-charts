@@ -31,17 +31,17 @@ spec:
               name: {{ template "alfresco-ai-transformer.fullname" . }}
           env:
             {{- $mqSecret := coalesce .Values.messageBroker.existingSecret.name (include "alfresco-ai-transformer.secret-ai-mq.name" .) }}
-            - name: BROKER_USERNAME
+            - name: ACTIVEMQ_USER
               valueFrom:
                 secretKeyRef:
                   name: {{ $mqSecret }}
                   key: {{ .Values.messageBroker.existingSecret.keys.username }}
-            - name: BROKER_PASSWORD
+            - name: ACTIVEMQ_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ $mqSecret }}
                   key: {{ .Values.messageBroker.existingSecret.keys.password }}
-            - name: BROKER_URL
+            - name: ACTIVEMQ_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{ coalesce .Values.messageBroker.existingConfigMap.name (include "alfresco-ai-transformer.config-ai-mq.name" .) }}
