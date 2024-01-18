@@ -1,0 +1,18 @@
+---
+name: "Helm autodiscovery for charts dependencies"
+
+autodiscovery:
+  crawlers:
+    helm:
+      # we have an alternate pipeline for image tags bumping
+      ignorecontainer: true
+      # Disable automatic chart version bump given that sometimes bump too much
+      # and we have chart testing checking against missed increments
+      versionincrement: none
+      ignore:
+        - dependencies:
+            # https://github.com/updatecli/updatecli/issues/1876
+            alfresco-insight-zeppelin: ""
+            common: ""
+            postgresql: ""
+            elasticsearch: ""
