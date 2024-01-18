@@ -163,7 +163,7 @@ tests:
       - contains:
           path: spec.template.spec.containers[0].env
           content:
-            name: BROKER_USERNAME
+            name: ACTIVEMQ_USER
             valueFrom:
               secretKeyRef:
                 name: broker-credentials
@@ -171,7 +171,7 @@ tests:
       - contains:
           path: spec.template.spec.containers[0].env
           content:
-            name: BROKER_URL
+            name: ACTIVEMQ_URL
             valueFrom:
               configMapKeyRef:
                 name: broker-configmap
