@@ -21,5 +21,5 @@ Usage: include "alfresco-common.sfs.fullurl" "URL"
 {{- define "alfresco-common.sfs.fullurl" -}}
 {{- $scheme := include "alfresco-common.url.scheme" . }}
 {{- $host := include "alfresco-common.url.host" . }}
-{{- printf "%s://%s/alfresco/api/-default-/private/sfs/versions/1/file/" $scheme $host }}
+{{- printf "%s://%s/alfresco/api/-default-/private/sfs/versions/1/file" $scheme $host }}
 {{- end -}}
