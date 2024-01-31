@@ -39,6 +39,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-max-age" | string | `"604800"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-name" | string | `"alfrescoShare"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-path" | string | `"/share"` |  |
+| ingress.className | string | `"nginx"` |  |
 | ingress.enabled | bool | `true` |  |
 | ingress.hosts[0].paths[0].path | string | `"/share"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |

@@ -10,7 +10,7 @@ metadata:
     {{- include "alfresco-common.nginx.annotations" .Values }}
     {{- include "alfresco-common.nginx.secure.annotations" .Values }}
 spec:
-  ingressClassName: nginx
+  ingressClassName: {{ .Values.ingress.className }}
   {{- with .Values.ingress.tls }}
   tls:
     {{- range . }}
