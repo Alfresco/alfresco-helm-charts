@@ -25,6 +25,7 @@ image:
   # -- Internal port where the pod is listening. Should only be changed is you
   # use a custom image which uses a different port.
   port: 8080
+replicaCount: 1
 strategy:
   type: RollingUpdate
   rollingUpdate:

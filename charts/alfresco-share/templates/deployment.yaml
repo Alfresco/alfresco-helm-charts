@@ -10,7 +10,7 @@ metadata:
     checkov.io/skip2: CKV_K8S_23=Requires APPS-1832
     checkov.io/skip3: CKV_K8S_40=Requires APPS-1832
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "alfresco-share.selectorLabels" . | nindent 6 }}
@@ -77,6 +77,11 @@ spec:
               value: {{ $value }}
             {{- end }}
           volumeMounts:
+            {{- if gt .Values.replicaCount 1 }}
+            - name: custom-application-context-volume
+              mountPath: /usr/local/tomcat/shared/classes/alfresco/web-extension/custom-slingshot-application-context.xml
+              subPath: custom-slingshot-application-context.xml
+            {{- end }}
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
           readinessProbe:
             httpGet:
@@ -98,6 +103,11 @@ spec:
       initContainers:
         {{- toYaml .Values.extraInitContainers | nindent 8 }}
       volumes:
+        {{- if gt .Values.replicaCount 1 }}
+        - name: custom-application-context-volume
+          configMap:
+            name: {{ template "alfresco-share.custom-application-context.name" . }}
+        {{- end }}
         {{- toYaml .Values.extraVolumes | nindent 8 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
