@@ -1,4 +1,4 @@
-{{- if gt .Values.replicaCount 1 -}}
+{{- if gt (int .Values.replicaCount) 1 -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -14,21 +14,16 @@ data:
           xsi:schemaLocation="http://www.springframework.org/schema/beans
                     http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
                     http://www.hazelcast.com/schema/spring
-                    http://www.hazelcast.com/schema/spring/hazelcast-spring-2.4.xsd">
+                    http://www.hazelcast.com/schema/spring/hazelcast-spring.xsd">
       <hz:topic id="topic" instance-ref="webframework.cluster.slingshot" name="slingshot-topic"/>
       <hz:hazelcast id="webframework.cluster.slingshot">
           <hz:config>
-            <hz:group name="slingshot" password="alfresco"/>
-            <hz:network port="5801" port-auto-increment="true">
+            <hz:network port="{{ .Values.hazelcast.port }}" port-auto-increment="false">
                 <hz:join>
-                  <hz:kubernetes enabled="false">
-                    <namespace>{{ .Release.Namespace }}</namespace>
-                    <service-name>{{ template "alfresco-share.service-hz.name" . }}</service-name>
-                  </hz:kubernetes>
-                  <hz:tcp-ip enabled="false" />
+                  <hz:kubernetes enabled="true" namespace="{{ .Release.Namespace }}" service-name="{{ template "alfresco-share.service-hz.name" . }}" />
                 </hz:join>
                 <hz:interfaces enabled="false">
-                  <hz:interface>192.168.1.*</hz:interface>
+                  <hz:interface>110.42.0.*</hz:interface>
                 </hz:interfaces>
             </hz:network>
           </hz:config>

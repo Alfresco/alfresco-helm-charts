@@ -49,6 +49,11 @@ spec:
             - name: http
               containerPort: {{ .Values.image.port }}
               protocol: TCP
+            {{- if gt (int .Values.replicaCount) 1 }}
+            - name: hz
+              containerPort: {{ .Values.hazelcast.port }}
+              protocol: TCP
+            {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- $repo_details_cm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-share.fullname" .) }}
@@ -77,12 +82,14 @@ spec:
               value: {{ $value }}
             {{- end }}
           volumeMounts:
-            {{- if gt .Values.replicaCount 1 }}
+            {{- if gt (int .Values.replicaCount) 1 }}
             - name: custom-application-context-volume
               mountPath: /usr/local/tomcat/shared/classes/alfresco/web-extension/custom-slingshot-application-context.xml
               subPath: custom-slingshot-application-context.xml
             {{- end }}
-            {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+            {{- with .Values.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           readinessProbe:
             httpGet:
               path: /share
@@ -103,12 +110,14 @@ spec:
       initContainers:
         {{- toYaml .Values.extraInitContainers | nindent 8 }}
       volumes:
-        {{- if gt .Values.replicaCount 1 }}
+        {{- if gt (int .Values.replicaCount) 1 }}
         - name: custom-application-context-volume
           configMap:
             name: {{ template "alfresco-share.custom-application-context.name" . }}
         {{- end }}
+        {{- if .Values.extraVolumes }}
         {{- toYaml .Values.extraVolumes | nindent 8 }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
