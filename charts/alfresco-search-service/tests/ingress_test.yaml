@@ -15,6 +15,9 @@ tests:
           value: RELEASE-NAME-solr
         template: ingress.yaml
       - equal:
+          path: spec.ingressClassName
+          value: nginx
+      - equal:
           path: metadata.annotations['nginx.ingress.kubernetes.io/auth-secret']
           value: RELEASE-NAME-solr-ingress-credentials
         template: ingress.yaml
