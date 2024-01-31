@@ -6,9 +6,11 @@ kind: Ingress
 metadata:
   name: {{ template "alfresco-search-service.deployment.name" . }}
   annotations:
+    {{- if eq "nginx" .Values.ingress.className }}
     nginx.ingress.kubernetes.io/auth-secret: {{ $.Values.ingress.existingSecretName | default (include "alfresco-search-service.ingress-secret.name" .) }}
-    {{- if .Values.ingress.annotations -}}
-    {{- toYaml .Values.ingress.annotations | nindent 4 }}
+    {{- end }}
+    {{- with .Values.ingress.annotations -}}
+    {{- toYaml . | nindent 4 }}
     {{- end }}
   labels:
     {{- include "alfresco-search-service.labels" . | nindent 4 }}

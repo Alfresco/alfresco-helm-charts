@@ -3,9 +3,7 @@ suite: test ingress
 templates:
   - ingress.yaml
 tests:
-  - it: should reference the existing secret
-    values:
-      - values/test_values.yaml
+  - it: should reference the existing secret when ingress is nginx
     set:
       ingress:
         enabled: true
@@ -13,29 +11,32 @@ tests:
       - equal:
           path: metadata.name
           value: RELEASE-NAME-solr
-        template: ingress.yaml
       - equal:
           path: spec.ingressClassName
           value: nginx
       - equal:
           path: metadata.annotations['nginx.ingress.kubernetes.io/auth-secret']
           value: RELEASE-NAME-solr-ingress-credentials
-        template: ingress.yaml
 
   - it: should contains values overrides
     values:
-      - values/test_values.yaml
       - values/ingress_enabled.yaml
     asserts:
       - equal:
           path: metadata.annotations['nginx.ingress.kubernetes.io/auth-secret']
           value: staging/solradmin
-        template: ingress.yaml
       - equal:
           path: metadata.annotations['nginx.ingress.kubernetes.io/enable-cors']
           value: true
-        template: ingress.yaml
       - equal:
           path: metadata.annotations['nginx.ingress.kubernetes.io/auth-type']
           value: basic
-        template: ingress.yaml
+
+  - it: should not contains the nginx secret annotation when ingress class is not nginx
+    set:
+      ingress:
+        enabled: true
+        className: traefik
+    asserts:
+      - isNull:
+          path: metadata.annotations['nginx.ingress.kubernetes.io/auth-secret']
