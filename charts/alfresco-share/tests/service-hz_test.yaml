@@ -1,0 +1,17 @@
+---
+suite: test share hazelcast service
+templates:
+  - service-hz.yaml
+tests:
+  - it: should use the default service name
+    set:
+      replicaCount: 2
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-share-hz
+      - equal:
+          path: spec.selector
+          value:
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/name: alfresco-share
