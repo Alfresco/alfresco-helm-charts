@@ -32,6 +32,5 @@ data:
           <property name="hazelcastInstance" ref="webframework.cluster.slingshot" />
           <property name="hazelcastTopicName"><value>slingshot-topic</value></property>
       </bean>
-
     </beans>
 {{- end -}}
