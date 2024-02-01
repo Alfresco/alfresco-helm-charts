@@ -19,9 +19,6 @@ tests:
         template: ingress.yaml
 
   - it: should sanitize ingress
-    capabilities:
-      majorVersion: 1
-      minorVersion: 19
     set:
       ingress:
         annotations:

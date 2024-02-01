@@ -214,6 +214,7 @@ ingress:
   enabled: true
   # -- provide annotations for nginx ingress (no toher ingress is supported at
   # that point)
+  className: nginx
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 5g
     nginx.ingress.kubernetes.io/affinity: "cookie"
