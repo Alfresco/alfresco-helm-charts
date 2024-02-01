@@ -2,20 +2,9 @@
 {{- $fullName := include "alfresco-repository.fullname" . -}}
 {{- $svcPort := .Values.service.port -}}
 {{/*
-We only support nginx ingress for now: https://alfresco.atlassian.net/browse/OPSEXP-131
-so forcibly set the ingress.class annotation to nginx for pre 1.18 k8s
+We only support latest apiVersion which is stable now.
 */}}
-{{- if not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
-  {{- $_ := unset .Values.ingress.annotations "kubernetes.io/ingress.class" }}
-  {{- $_ = set .Values.ingress.annotations "kubernetes.io/ingress.class" "nginx" }}
-{{- end }}
-{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1
-{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
 kind: Ingress
 metadata:
   name: {{ $fullName }}
@@ -26,16 +15,7 @@ metadata:
     {{- include "alfresco-common.nginx.annotations" .Values }}
     {{- include "alfresco-common.nginx.secure.annotations" .Values }}
 spec:
-  {{- if and .Values.ingress.className (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
-  ingressClassName: {{ .Values.ingress.className }}
-  {{- end }}
-{{/*
-We only support nginx ingress for now: https://alfresco.atlassian.net/browse/OPSEXP-131
-so forcibly set the ingressClassName to nginx for post 1.18 k8s
-*/}}
-  {{- if (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
-  ingressClassName: nginx
-  {{- end }}
+  ingressClassName: {{ .Values.ingress.className | default "nginx" }}
   {{- if .Values.ingress.tls }}
   tls:
     {{- range .Values.ingress.tls }}
@@ -53,19 +33,14 @@ so forcibly set the ingressClassName to nginx for post 1.18 k8s
         paths:
           {{- range .paths }}
           - path: {{ .path }}
-            {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
+            {{- if .pathType }}
             pathType: {{ .pathType }}
             {{- end }}
             backend:
-              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
                 name: {{ $fullName }}
                 port:
                   number: {{ $svcPort }}
-              {{- else }}
-              serviceName: {{ $fullName }}
-              servicePort: {{ $svcPort }}
-              {{- end }}
           {{- end }}
     {{- end }}
 {{- end }}
