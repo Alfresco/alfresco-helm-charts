@@ -31,10 +31,10 @@ tests:
 
   - it: should render default rules section
     asserts:
-      - equal: 
+      - equal:
           path: spec.rules
           value:
-            - host: 
+            - host:
               http:
                 paths:
                   - path: /
@@ -50,7 +50,7 @@ tests:
                       service:
                         name: RELEASE-NAME-alfresco-repository
                         port:
-                          number: 80         
+                          number: 80
 
   - it: should render tls section with specified values
     set:

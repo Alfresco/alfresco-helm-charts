@@ -81,11 +81,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
 | image.tag | string | `"23.1.1"` |  |
 | imagePullSecrets | list | `[]` |  |
-| ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
-| ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
-| ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-hash" | string | `"sha1"` |  |
-| ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-name" | string | `"alfrescoRepo"` |  |
-| ingress.className | string | `"nginx"` | provide annotations for nginx ingress (no toher ingress is supported at that point) |
+| ingress.annotations | object | `{"nginx.ingress.kubernetes.io/affinity":"cookie","nginx.ingress.kubernetes.io/proxy-body-size":"5g","nginx.ingress.kubernetes.io/session-cookie-hash":"sha1","nginx.ingress.kubernetes.io/session-cookie-name":"alfrescoRepo"}` | provide annotations for nginx ingress (no toher ingress is supported at that point) |
+| ingress.className | string | `"nginx"` | supported ingress class |
 | ingress.enabled | bool | `true` | Toggle ingress |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
