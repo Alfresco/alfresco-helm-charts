@@ -25,6 +25,7 @@ image:
   # -- Internal port where the pod is listening. Should only be changed is you
   # use a custom image which uses a different port.
   port: 8080
+# -- Define the number of replicas to run. Multiple replicas are only supported on Share 23.1.1 and later
 replicaCount: 1
 strategy:
   type: RollingUpdate
@@ -113,8 +114,10 @@ global:
   # -- a fallback for .Values.known_urls that can be shared between charts
   known_urls: null
 hazelcast:
-  # -- Port used to expose the Hazelcast service
+  # -- Port used to expose the Hazelcast service when replicaCount > 1
   port: 5701
 managedApplicationContext:
-  # -- Automatically inject a custom application context file which for now only enables hazelcast clustering when more than one replica is configured
+  # -- Automatically inject a custom application context file which for now only
+  # enables hazelcast clustering when more than one replica is configured.
+  # Should be disabled when providing a custom application context file.
   enabled: true
