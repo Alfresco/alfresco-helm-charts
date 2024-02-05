@@ -113,4 +113,8 @@ global:
   # -- a fallback for .Values.known_urls that can be shared between charts
   known_urls: null
 hazelcast:
+  # -- Port used to expose the Hazelcast service
   port: 5701
+managedApplicationContext:
+  # -- Automatically inject a custom application context file which for now only enables hazelcast clustering when more than one replica is configured
+  enabled: true

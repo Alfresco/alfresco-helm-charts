@@ -82,7 +82,7 @@ spec:
               value: {{ $value }}
             {{- end }}
           volumeMounts:
-            {{- if gt (int .Values.replicaCount) 1 }}
+            {{- if and (gt (int .Values.replicaCount) 1) .Values.managedApplicationContext.enabled }}
             - name: custom-application-context-volume
               mountPath: /usr/local/tomcat/shared/classes/alfresco/web-extension/custom-slingshot-application-context.xml
               subPath: custom-slingshot-application-context.xml
@@ -110,7 +110,7 @@ spec:
       initContainers:
         {{- toYaml .Values.extraInitContainers | nindent 8 }}
       volumes:
-        {{- if gt (int .Values.replicaCount) 1 }}
+        {{- if and (gt (int .Values.replicaCount) 1) .Values.managedApplicationContext.enabled }}
         - name: custom-application-context-volume
           configMap:
             name: {{ template "alfresco-share.custom-application-context.name" . }}

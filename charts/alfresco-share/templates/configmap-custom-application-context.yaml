@@ -1,4 +1,4 @@
-{{- if gt (int .Values.replicaCount) 1 -}}
+{{- if and (gt (int .Values.replicaCount) 1) .Values.managedApplicationContext.enabled -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
