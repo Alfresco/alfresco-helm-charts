@@ -22,9 +22,6 @@ data:
                 <hz:join>
                   <hz:kubernetes enabled="true" namespace="{{ .Release.Namespace }}" service-name="{{ template "alfresco-share.service-hz.name" . }}" />
                 </hz:join>
-                <hz:interfaces enabled="false">
-                  <hz:interface>110.42.0.*</hz:interface>
-                </hz:interfaces>
             </hz:network>
           </hz:config>
       </hz:hazelcast>
