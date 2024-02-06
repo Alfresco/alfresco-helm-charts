@@ -3,7 +3,7 @@ kind: Service
 metadata:
   {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "mediation-headless")) "Chart" .Chart "Release" .Release }}
   name: {{ template "alfresco-search-enterprise.name" $ctx }}
-  labels: # empty commit
+  labels:
     {{- include "alfresco-search-enterprise.labels" . | nindent 4 }}
     app.kubernetes.io/component: search-enterprise-mediation
 spec:
