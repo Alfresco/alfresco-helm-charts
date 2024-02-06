@@ -1,5 +1,5 @@
 ---
-suite: test Alfresco Share ingress
+suite: test share configmap
 templates:
   - configmap.yaml
 tests:

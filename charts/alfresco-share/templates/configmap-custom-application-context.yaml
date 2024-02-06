@@ -1,0 +1,33 @@
+{{- if and (gt (int .Values.replicaCount) 1) .Values.managedApplicationContext.enabled -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco-share.custom-application-context.name" . }}
+  labels:
+    {{- include "alfresco-share.labels" . | nindent 4 }}
+data:
+  custom-slingshot-application-context.xml: |-
+    <?xml version='1.0' encoding='UTF-8'?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:hz="http://www.hazelcast.com/schema/spring"
+          xsi:schemaLocation="http://www.springframework.org/schema/beans
+                    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                    http://www.hazelcast.com/schema/spring
+                    http://www.hazelcast.com/schema/spring/hazelcast-spring.xsd">
+      <hz:topic id="topic" instance-ref="webframework.cluster.slingshot" name="slingshot-topic"/>
+      <hz:hazelcast id="webframework.cluster.slingshot">
+          <hz:config>
+            <hz:network port="{{ .Values.hazelcast.port }}" port-auto-increment="false">
+                <hz:join>
+                  <hz:kubernetes enabled="true" namespace="{{ .Release.Namespace }}" service-name="{{ template "alfresco-share.service-hz.name" . }}" />
+                </hz:join>
+            </hz:network>
+          </hz:config>
+      </hz:hazelcast>
+      <bean id="webframework.cluster.clusterservice" class="org.alfresco.web.site.ClusterTopicService" init-method="init">
+          <property name="hazelcastInstance" ref="webframework.cluster.slingshot" />
+          <property name="hazelcastTopicName"><value>slingshot-topic</value></property>
+      </bean>
+    </beans>
+{{- end -}}

@@ -1,6 +1,6 @@
 # alfresco-share
 
-![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.1.1](https://img.shields.io/badge/AppVersion-23.1.1-informational?style=flat-square)
+![Version: 0.4.1](https://img.shields.io/badge/Version-0.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.1.1](https://img.shields.io/badge/AppVersion-23.1.1-informational?style=flat-square)
 
 Alfresco Share Helm chart for Kubernetes
 
@@ -27,6 +27,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | fullnameOverride | string | `""` | Define a fully static name |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
 | global.known_urls | string | `nil` | a fallback for .Values.known_urls that can be shared between charts |
+| hazelcast.port | int | `5701` | Port used to expose the Hazelcast service when replicaCount > 1 |
 | image.port | int | `8080` | Internal port where the pod is listening. Should only be changed is you use a custom image which uses a different port. |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
@@ -38,6 +39,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-max-age" | string | `"604800"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-name" | string | `"alfrescoShare"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-path" | string | `"/share"` |  |
+| ingress.className | string | `"nginx"` |  |
 | ingress.enabled | bool | `true` |  |
 | ingress.hosts[0].paths[0].path | string | `"/share"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
@@ -46,6 +48,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | livenessProbe.initialDelaySeconds | int | `15` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `5` |  |
+| managedApplicationContext.enabled | bool | `true` | Automatically inject a custom application context file which for now only enables hazelcast clustering when more than one replica is configured. Should be disabled when providing a custom application context file. |
 | nameOverride | string | `""` | Define a partially static name |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
@@ -54,6 +57,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | readinessProbe.initialDelaySeconds | int | `15` |  |
 | readinessProbe.periodSeconds | int | `30` |  |
 | readinessProbe.timeoutSeconds | int | `5` |  |
+| replicaCount | int | `1` | Define the number of replicas to run. Multiple replicas are only supported on Share 23.1.1 and later |
 | repository.existingConfigMap.keys.host | string | `"REPO_HOST"` | name of the key in the configMap where to find the repository service host |
 | repository.existingConfigMap.keys.port | string | `"REPO_PORT"` | name of the key in the configMap where to find the repository service port |
 | repository.existingConfigMap.name | string | `nil` | a pre-existing configmap which provides expected configuration for Share |

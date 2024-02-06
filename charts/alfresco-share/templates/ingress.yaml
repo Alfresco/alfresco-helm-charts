@@ -1,23 +1,8 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "alfresco-share.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
-{{/*
-We only support nginx ingress for now: https://alfresco.atlassian.net/browse/OPSEXP-131
-*/}}
-{{- if not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
-  {{- $_ := unset .Values.ingress.annotations "kubernetes.io/ingress.class" }}
-  {{- $_ = set .Values.ingress.annotations "kubernetes.io/ingress.class" "nginx" }}
-{{- end }}
-{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1
-{{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ template "alfresco-share.fullname" . }}
   labels:
     {{- include "alfresco-share.labels" . | nindent 4 }}
   annotations:
@@ -25,15 +10,10 @@ metadata:
     {{- include "alfresco-common.nginx.annotations" .Values }}
     {{- include "alfresco-common.nginx.secure.annotations" .Values }}
 spec:
-{{/*
-We only support nginx ingress for now: https://alfresco.atlassian.net/browse/OPSEXP-131
-*/}}
-  {{- if (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion) }}
-  ingressClassName: nginx
-  {{- end }}
-  {{- if .Values.ingress.tls }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- with .Values.ingress.tls }}
   tls:
-    {{- range .Values.ingress.tls }}
+    {{- range . }}
     - hosts:
         {{- range .hosts }}
         - {{ . | quote }}
@@ -48,19 +28,12 @@ We only support nginx ingress for now: https://alfresco.atlassian.net/browse/OPS
         paths:
           {{- range .paths }}
           - path: {{ .path }}
-            {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
             pathType: {{ .pathType }}
-            {{- end }}
             backend:
-              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: {{ $fullName }}
+                name: {{ template "alfresco-share.fullname" $ }}
                 port:
-                  number: {{ $svcPort }}
-              {{- else }}
-              serviceName: {{ $fullName }}
-              servicePort: {{ $svcPort }}
-              {{- end }}
+                  number: {{ $.Values.service.port }}
           {{- end }}
     {{- end }}
 {{- end }}

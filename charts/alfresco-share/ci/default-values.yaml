@@ -1,0 +1,4 @@
+tags:
+  ci: true
+
+replicaCount: 2
