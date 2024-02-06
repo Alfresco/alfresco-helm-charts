@@ -40,6 +40,7 @@ helm.sh/chart: {{ include "alfresco-connector-ms365.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/component: {{ template "alfresco-connector-ms365.name" . }}
 {{- end }}
 
 {{/*
@@ -48,7 +49,6 @@ Selector labels
 {{- define "alfresco-connector-ms365.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "alfresco-connector-ms365.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/component: {{ template "alfresco-connector-ms365.name" . }}
 {{- end }}
 
 {{/*

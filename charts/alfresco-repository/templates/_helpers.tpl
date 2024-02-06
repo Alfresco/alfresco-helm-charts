@@ -40,6 +40,7 @@ helm.sh/chart: {{ include "alfresco-repository.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/component: {{ template "alfresco-repository.name" . }}
 {{- end }}
 
 {{/*
@@ -48,7 +49,6 @@ Selector labels
 {{- define "alfresco-repository.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "alfresco-repository.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/component: {{ template "alfresco-repository.name" . }}
 {{- end }}
 
 {{/*

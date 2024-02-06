@@ -40,6 +40,7 @@ helm.sh/chart: {{ include "alfresco-search-service.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/component: {{ template "alfresco-search-service.name" . }}
 {{- end }}
 
 {{/*
@@ -48,7 +49,6 @@ Selector labels
 {{- define "alfresco-search-service.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "alfresco-search-service.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
-app.kubernetes.io/component: {{ template "alfresco-search-service.name" . }}
 {{- end }}
 
 {{/*
