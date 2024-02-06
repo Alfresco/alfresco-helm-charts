@@ -5,7 +5,7 @@ metadata:
   name: {{ template "alfresco-search-enterprise.name" $ctx }}
   labels:
     {{- include "alfresco-search-enterprise.labels" . | nindent 4 }}
-    app.kubernetes.io/component: indexing-mediation
+    app.kubernetes.io/component: search-enterprise-mediation
 spec:
   ports:
   - port: 8080
@@ -13,4 +13,4 @@ spec:
   clusterIP: None
   selector:
     {{- include "alfresco-search-enterprise.selectorLabels" . | nindent 4 }}
-    app.kubernetes.io/component: indexing-mediation
+    app.kubernetes.io/component: search-enterprise-mediation

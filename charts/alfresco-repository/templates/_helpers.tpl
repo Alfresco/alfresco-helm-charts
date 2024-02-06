@@ -48,6 +48,7 @@ Selector labels
 {{- define "alfresco-repository.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "alfresco-repository.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: {{ template "alfresco-repository.name" . }}
 {{- end }}
 
 {{/*

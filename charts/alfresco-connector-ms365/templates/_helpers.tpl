@@ -48,6 +48,7 @@ Selector labels
 {{- define "alfresco-connector-ms365.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "alfresco-connector-ms365.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: {{ template "alfresco-connector-ms365.name" . }}
 {{- end }}
 
 {{/*

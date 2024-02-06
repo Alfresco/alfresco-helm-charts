@@ -48,6 +48,7 @@ Selector labels
 {{- define "alfresco-sync-service.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "alfresco-sync-service.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: {{ template "alfresco-sync-service.name" . }}
 {{- end }}
 
 {{/*

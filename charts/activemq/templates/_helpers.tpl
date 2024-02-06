@@ -48,6 +48,7 @@ Selector labels
 {{- define "activemq.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "activemq.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: {{ template "activemq.name" . }}
 {{- end }}
 
 {{/*

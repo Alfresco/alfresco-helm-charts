@@ -9,12 +9,12 @@ spec:
   selector:
     matchLabels:
       {{- include "alfresco-search-enterprise.selectorLabels" . | nindent 6 }}
-      app.kubernetes.io/component: indexing-mediation
+      app.kubernetes.io/component: search-enterprise-mediation
   template:
     metadata:
       labels:
         {{- include "alfresco-search-enterprise.labels" . | nindent 8 }}
-        app.kubernetes.io/component: indexing-mediation
+        app.kubernetes.io/component: search-enterprise--mediation
     spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}

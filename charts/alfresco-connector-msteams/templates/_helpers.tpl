@@ -48,6 +48,7 @@ Selector labels
 {{- define "alfresco-connector-msteams.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "alfresco-connector-msteams.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: {{ template "alfresco-connector-msteams.name" . }}
 {{- end }}
 
 {{/*

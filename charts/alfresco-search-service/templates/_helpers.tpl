@@ -48,6 +48,7 @@ Selector labels
 {{- define "alfresco-search-service.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "alfresco-search-service.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: {{ template "alfresco-search-service.name" . }}
 {{- end }}
 
 {{/*

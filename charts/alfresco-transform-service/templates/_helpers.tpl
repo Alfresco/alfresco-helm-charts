@@ -48,6 +48,7 @@ Selector labels
 {{- define "alfresco-transform-service.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "alfresco-transform-service.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/component: {{ template "alfresco-transform-service.name" . }}
 {{- end }}
 
 {{/*
