@@ -2288,6 +2288,20 @@ entries:
   alfresco-share:
   - apiVersion: v2
     appVersion: 23.1.1
+    created: "2024-02-06T08:07:07.915424921Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts
+      version: 3.1.0
+    description: Alfresco Share Helm chart for Kubernetes
+    digest: 95c0c487338eb8cdec68ab8d071bba2523cedee099df7f7680e7eb44dcfdee48
+    name: alfresco-share
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-share-0.4.0/alfresco-share-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 23.1.1
     created: "2024-01-05T08:57:38.719961789Z"
     dependencies:
     - name: alfresco-common
@@ -3201,4 +3215,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-02-05T09:30:32.782494238Z"
+generated: "2024-02-06T08:07:07.915777611Z"
