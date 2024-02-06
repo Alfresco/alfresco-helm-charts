@@ -6,7 +6,7 @@ metadata:
   name: {{ template "alfresco-search-enterprise.fullname" $ctx }}
   labels:
     {{- include "alfresco-search-enterprise.labels" . | nindent 4 }}
-    app.kubernetes.io/component: {{ template "alfresco-search-enterprise.name" . }}
+    app.kubernetes.io/component: {{ include "alfresco-search-enterprise.name" . }}
 data:
   {{ template "alfresco-search-enterprise.ats.fullurl" (required "You need to provide the ATS URL using either ats.transform_url value or a configmap" .Values.ats.transform_url) }}
   {{ template "alfresco-search-enterprise.sfs.fullurl" (required "You need to provide the SFS URL using either ats.sfs_url value or a configmap" .Values.ats.sfs_url) }}

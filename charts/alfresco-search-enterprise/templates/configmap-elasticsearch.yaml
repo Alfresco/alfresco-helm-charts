@@ -7,7 +7,7 @@ metadata:
   name: {{ template "alfresco-search-enterprise.fullname" $ctx }}
   labels:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
-    app.kubernetes.io/component: {{ template "alfresco-search-enterprise.name" . }}
+    app.kubernetes.io/component: {{ include "alfresco-search-enterprise.name" $ }}
 data:
   {{- $reqMsg := "Please provide elasticsearch connection details as .search.url values or using an .search.existingConfigMap." }}
   {{- $esProtocol := required $reqMsg (include "alfresco-common.url.scheme" .url) }}

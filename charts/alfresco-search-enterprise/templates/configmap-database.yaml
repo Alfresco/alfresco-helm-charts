@@ -7,7 +7,7 @@ metadata:
     {{ template "alfresco-search-enterprise.fullname" $ctx }}
   labels:
     {{- include "alfresco-search-enterprise.labels" . | nindent 4 }}
-    app.kubernetes.io/component: {{ template "alfresco-search-enterprise.name" . }}
+    app.kubernetes.io/component: {{ include "alfresco-search-enterprise.name" . }}
 data:
   {{ .Values.reindexing.db.existingConfigMap.keys.url }}: {{ required ".reindexing.db.url is mandatory when not using existingConfigMap" .Values.reindexing.db.url }}
 {{- end }}

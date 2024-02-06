@@ -5,7 +5,7 @@ metadata:
   name: {{ include "alfresco-search-enterprise.fullname" . }}-reindexing
   labels:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
-    app.kubernetes.io/component: {{ template "alfresco-search-enterprise.name" . }}
+    app.kubernetes.io/component: {{ include "alfresco-search-enterprise.name" . }}
 spec:
   template:
     metadata:
@@ -15,7 +15,7 @@ spec:
       {{- end }}
       labels:
         {{- include "alfresco-search-enterprise.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/component: {{ template "alfresco-search-enterprise.name" . }}
+        app.kubernetes.io/component: {{ include "alfresco-search-enterprise.name" . }}
     spec:
       serviceAccountName: {{ include "alfresco-search-enterprise.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
