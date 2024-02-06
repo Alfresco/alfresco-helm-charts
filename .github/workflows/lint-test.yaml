@@ -4,6 +4,11 @@ on:
   pull_request:
     branches:
       - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - labeled
 
 jobs:
   lint-test:
@@ -16,17 +21,17 @@ jobs:
       TEST_ALL_CHARTS_ARG: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && '--all' || '' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0
 
       - name: Set up Helm
-        uses: azure/setup-helm@v3
+        uses: azure/setup-helm@5119fcb9089d432beecbf79bb2c7915207344b78 # v3.5
         with:
           version: v3.10.2
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
         with:
           python-version: 3.7
 
@@ -37,7 +42,7 @@ jobs:
           helm plugin install https://github.com/helm-unittest/helm-unittest --version $HELM_UNITTEST_VERSION
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.6.1
+        uses: helm/chart-testing-action@e6669bcd63d7cb57cb4380c33043eebe5d111992 # v2.6.1
         with:
           version: v3.8.0
 
@@ -54,13 +59,13 @@ jobs:
         run: ct lint --config ct-lint.yaml $TEST_ALL_CHARTS_ARG
 
       - name: Create kind cluster
-        uses: helm/kind-action@v1.8.0
+        uses: helm/kind-action@dda0770415bac9fc20092cacbc54aa298604d140 # v1.8.0
         with:
           node_image: ${{ env.KIND_NODE_IMAGE }}
         if: steps.list-changed.outputs.changed == 'true'
 
       - name: Login to Quay.io
-        uses: docker/login-action@v3
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         if: steps.list-changed.outputs.changed == 'true'
         with:
           registry: quay.io
@@ -96,8 +101,3 @@ jobs:
           ct install --config ct-install.yaml
           --namespace "$INSTALL_NAMESPACE"
           $TEST_ALL_CHARTS_ARG
-
-      - name: Debug on failure
-        if: failure()
-        run: |
-          kubectl --namespace "$INSTALL_NAMESPACE" get svc
