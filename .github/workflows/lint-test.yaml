@@ -4,6 +4,11 @@ on:
   pull_request:
     branches:
       - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - labeled
 
 jobs:
   lint-test:
@@ -96,9 +101,3 @@ jobs:
           ct install --config ct-install.yaml
           --namespace "$INSTALL_NAMESPACE"
           $TEST_ALL_CHARTS_ARG
-          --skip-clean-up
-
-      - name: Debug on failure
-        if: failure()
-        run: |
-          kubectl --namespace "$INSTALL_NAMESPACE" get svc
