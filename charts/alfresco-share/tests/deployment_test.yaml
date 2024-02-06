@@ -1,5 +1,5 @@
 ---
-suite: test Alfresco Share deployment
+suite: test share deployment
 templates:
   - deployment.yaml
 tests:
@@ -14,6 +14,8 @@ tests:
           path: spec.template.spec.affinity
       - isNull:
           path: spec.template.spec.tolerations
+      - isEmpty:
+          path: spec.template.spec.volumes
 
   - it: should have customized metadata in place in deployment
     set:
@@ -161,3 +163,29 @@ tests:
             limits:
               cpu: "4"
               memory: "2000Mi"
+
+  - it: should render volumes when replicaCount more than 1
+    set:
+      replicaCount: 2
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 2
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: custom-application-context-volume
+            configMap:
+              name: RELEASE-NAME-share-custom-application-context
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /usr/local/tomcat/shared/classes/alfresco/web-extension/custom-slingshot-application-context.xml
+            subPath: custom-slingshot-application-context.xml
+            name: custom-application-context-volume
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            containerPort: 5701
+            name: hz
+            protocol: TCP

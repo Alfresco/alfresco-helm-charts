@@ -1,0 +1,15 @@
+{{- if gt (int .Values.replicaCount) 1 }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-share.service-hz.name" . }}
+  labels:
+    {{- include "alfresco-share.selectorLabels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: hazelcast
+      port: {{ .Values.hazelcast.port }}
+  selector:
+    {{- include "alfresco-share.selectorLabels" . | nindent 4 }}
+{{- end -}}
