@@ -16,10 +16,20 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v5.12.0
+      - name: Ensure SHA pinned actions
+        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@ba37328d4ea95eaf8b3bd6c6cef308f709a5f2ec # v3.0.3
+        with:
+          allowlist: |
+            Alfresco/alfresco-build-tools/
+
+      - name: Setup helm docs
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@bdb06e257241e89e25a0e88653095fdb5a1fc4b6 # v5.12.0
+
       - name: Install kubeconform helm plugin
         run: |
           helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.1.12
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v5.12.0
+
+      - name: Run pre-commit
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@bdb06e257241e89e25a0e88653095fdb5a1fc4b6 # v5.12.0
         with:
           auto-commit: "true"
