@@ -9,14 +9,29 @@ tests:
       - equal:
           path: spec.selector
           value:
-            app.kubernetes.io/component: activemq
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/name: activemq
         template: svc-activemq-broker.yaml
       - equal:
           path: spec.selector
           value:
-            app.kubernetes.io/component: activemq
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/name: activemq
+        template: svc-activemq-web-console.yaml
+
+  - it: should render labels
+    asserts:
+      - contains:
+          path: metadata.labels
+          value:
+            app.kubernetes.io/name: activemq
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/component: activemq
+        template: svc-activemq-broker.yaml
+      - contains:
+          path: metadata.labels
+          value:
+            app.kubernetes.io/name: activemq
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/component: activemq
         template: svc-activemq-web-console.yaml

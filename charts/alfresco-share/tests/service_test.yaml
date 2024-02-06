@@ -11,6 +11,5 @@ tests:
       - equal:
           path: spec.selector
           value:
-            app.kubernetes.io/component: alfresco-share
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/name: alfresco-share
