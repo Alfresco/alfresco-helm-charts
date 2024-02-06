@@ -56,10 +56,6 @@ tests:
               configMapKeyRef:
                 name: RELEASE-NAME-aws-comprehend
                 key: AWS_COMPREHEND_ROLE_ARN
-      - isSubset:
-          path: metadata.labels
-          content:
-            app.kubernetes.io/component: alfresco-ai-transformer
       - equal:
           path: spec.template.spec.serviceAccountName
           value: ai-transformer-sa
@@ -78,6 +74,23 @@ tests:
             limits:
               cpu: "2"
               memory: "1000Mi"
+
+  - it: should render labels for deployment
+    values: *testvalues
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-ai-transformer
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: alfresco-ai-transformer
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-ai-transformer-1.0.0
+        template: deployment-ai-transformer.yaml
 
   - it: should render deployment with existing secrets and configmaps
     values: *testvalues

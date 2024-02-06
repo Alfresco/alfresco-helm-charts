@@ -19,7 +19,7 @@ tests:
             app.kubernetes.io/name: activemq
         template: svc-activemq-web-console.yaml
 
-  - it: should render labels
+  - it: should render labels for services
     chart:
       version: 1.0.0
       appVersion: 2.0.0
@@ -33,14 +33,3 @@ tests:
             app.kubernetes.io/name: activemq
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: activemq-1.0.0
-        template: svc-activemq-broker.yaml
-      - equal:
-          path: metadata.labels
-          value:
-            app.kubernetes.io/component: activemq
-            app.kubernetes.io/instance: RELEASE-NAME
-            app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: activemq
-            app.kubernetes.io/version: 2.0.0
-            helm.sh/chart: activemq-1.0.0
-        template: svc-activemq-web-console.yaml
