@@ -40,3 +40,21 @@ tests:
     asserts:
       - isNull:
           path: metadata.annotations['nginx.ingress.kubernetes.io/auth-secret']
+
+  - it: should render labels for ingress
+    set:
+      ingress:
+        enabled: true
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-search-service
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: alfresco-search-service
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-search-service-1.0.0
