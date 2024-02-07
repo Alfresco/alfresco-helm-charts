@@ -32,10 +32,6 @@ tests:
             secretKeyRef:
               name: RELEASE-NAME-msteams-se
               key: MICROSOFT_APP_PASSWORD
-    - isSubset:
-        path: metadata.labels
-        content:
-          app.kubernetes.io/name: alfresco-connector-msteams
     - equal:
         path: spec.template.spec.serviceAccountName
         value: msteams-sa
@@ -98,3 +94,20 @@ tests:
             secretKeyRef:
               name: msteamscreds
               key: XYZ
+
+- it: should render labels for deployment
+  values: *testvalues
+  chart:
+    version: 1.0.0
+    appVersion: 2.0.0
+  asserts:
+    - isSubset:
+        path: metadata.labels
+        content:
+          app.kubernetes.io/component: alfresco-connector-msteams
+          app.kubernetes.io/instance: RELEASE-NAME
+          app.kubernetes.io/managed-by: Helm
+          app.kubernetes.io/name: alfresco-connector-msteams
+          app.kubernetes.io/version: 2.0.0
+          helm.sh/chart: alfresco-connector-msteams-1.0.0
+  template: deployment-connector-msteams.yaml

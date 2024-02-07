@@ -137,3 +137,18 @@ tests:
       - hasDocuments:
           count: 0
         template: configmap-mq.yaml
+
+  - it: should render labels for configmaps
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-repository
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: alfresco-repository
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-repository-1.0.0

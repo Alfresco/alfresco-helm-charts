@@ -11,7 +11,6 @@ tests:
     asserts:
       - hasDocuments:
           count: 0
-        template: config-connector-ms365.yaml
 
   - it: should render custom repo configuration
     set:
@@ -22,8 +21,21 @@ tests:
       - equal:
           path: data.REPO_HOST
           value: release-service.cluster.local
-        template: config-connector-ms365.yaml
       - equal:
           path: data.REPO_PORT
           value: "80"
-        template: config-connector-ms365.yaml
+
+  - it: should render labels for configmaps
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-connector-ms365
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: alfresco-connector-ms365
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-connector-ms365-1.0.0
