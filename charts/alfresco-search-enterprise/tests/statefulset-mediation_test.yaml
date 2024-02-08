@@ -22,7 +22,7 @@ tests:
       - isSubset:
           path: metadata.labels
           content:
-            app.kubernetes.io/component: mediation
+            app.kubernetes.io/component: alfresco-search-enterprise
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: mediation
@@ -30,7 +30,7 @@ tests:
             helm.sh/chart: alfresco-search-enterprise-1.0.0
         template: service-headless-mediation.yaml
 
-  - it: should render labels for secret
+  - it: should render labels for statefulset
     chart:
       version: 1.0.0
       appVersion: 2.0.0
@@ -38,7 +38,7 @@ tests:
       - isSubset:
           path: spec.template.metadata.labels
           content:
-            app.kubernetes.io/component: mediation
+            app.kubernetes.io/component: alfresco-search-enterprise
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: mediation

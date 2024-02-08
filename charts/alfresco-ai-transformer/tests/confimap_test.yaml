@@ -67,6 +67,8 @@ tests:
     chart:
       version: 1.0.0
       appVersion: 2.0.0
+    set:
+      nameOverride: testName
     asserts:
       - isSubset:
           path: metadata.labels
@@ -74,6 +76,6 @@ tests:
             app.kubernetes.io/component: alfresco-ai-transformer
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: alfresco-ai-transformer
+            app.kubernetes.io/name: testName
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-ai-transformer-1.0.0

@@ -19,6 +19,7 @@ tests:
   - it: should render labels for configmap
     set:
       replicaCount: 2
+      nameOverride: testName
     chart:
       version: 1.0.0
       appVersion: 2.0.0
@@ -29,6 +30,6 @@ tests:
             app.kubernetes.io/component: alfresco-share
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: alfresco-share
+            app.kubernetes.io/name: testName
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-share-1.0.0

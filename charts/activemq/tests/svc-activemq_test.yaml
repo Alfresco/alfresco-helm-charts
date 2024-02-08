@@ -23,13 +23,15 @@ tests:
     chart:
       version: 1.0.0
       appVersion: 2.0.0
+    set:
+      nameOverride: testComponent
     asserts:
-      - equal:
+      - isSubset:
           path: metadata.labels
-          value:
+          content:
             app.kubernetes.io/component: activemq
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: activemq
+            app.kubernetes.io/name: testComponent
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: activemq-1.0.0

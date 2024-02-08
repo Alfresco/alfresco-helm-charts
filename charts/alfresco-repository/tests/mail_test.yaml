@@ -83,6 +83,7 @@ tests:
 
   - it: should render labels for imap
     set:
+      nameOverride: testName
       configuration:
         imap:
           enabled: true
@@ -97,16 +98,17 @@ tests:
       - isSubset:
           path: metadata.labels
           content:
-            app.kubernetes.io/component: alfresco-repository-imaps
+            app.kubernetes.io/component: alfresco-repository
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: alfresco-repository-imaps
+            app.kubernetes.io/name: testName-imaps
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-repository-1.0.0
         template: service-imap.yaml
 
   - it: should render labels for smtp
     set:
+      nameOverride: testName
       configuration:
         smtp:
           enabled: true
@@ -120,10 +122,10 @@ tests:
       - isSubset:
           path: metadata.labels
           content:
-            app.kubernetes.io/component: alfresco-repository-smtp
+            app.kubernetes.io/component: alfresco-repository
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: alfresco-repository-smtp
+            app.kubernetes.io/name: testName-smtp
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-repository-1.0.0
         template: service-smtp.yaml

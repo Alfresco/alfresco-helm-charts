@@ -40,7 +40,7 @@ helm.sh/chart: {{ include "alfresco-sync-service.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/component: {{ template "alfresco-sync-service.name" . }}
+app.kubernetes.io/component: {{ .Chart.Name }}
 {{- end }}
 
 {{/*
