@@ -15,7 +15,6 @@ spec:
       {{- end }}
       labels:
         {{- include "alfresco-search-enterprise.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/component: {{ include "alfresco-search-enterprise.name" . }}
     spec:
       serviceAccountName: {{ include "alfresco-search-enterprise.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
