@@ -8,7 +8,7 @@ spec:
   serviceName: {{ template "alfresco-search-enterprise.name" $ctx }}
   selector:
     matchLabels:
-      {{- include "alfresco-search-enterprise.mediation.selectorLabels" . | nindent 6 }}
+      {{- include "alfresco-search-enterprise.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:

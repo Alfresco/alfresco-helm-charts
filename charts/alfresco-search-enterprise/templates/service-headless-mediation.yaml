@@ -11,4 +11,4 @@ spec:
     name: http
   clusterIP: None
   selector:
-    {{- include "alfresco-search-enterprise.mediation.selectorLabels" . | nindent 4 }}
+    {{- include "alfresco-search-enterprise.selectorLabels" . | nindent 4 }}
