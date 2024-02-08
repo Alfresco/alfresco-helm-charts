@@ -40,6 +40,7 @@ helm.sh/chart: {{ include "alfresco-search-enterprise.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/component: {{ include "alfresco-search-enterprise.name" . }}
 {{- end }}
 
 {{/*

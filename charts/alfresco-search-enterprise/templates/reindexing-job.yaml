@@ -5,7 +5,6 @@ metadata:
   name: {{ include "alfresco-search-enterprise.fullname" . }}-reindexing
   labels:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
-    app.kubernetes.io/component: {{ include "alfresco-search-enterprise.name" . }}
 spec:
   template:
     metadata:

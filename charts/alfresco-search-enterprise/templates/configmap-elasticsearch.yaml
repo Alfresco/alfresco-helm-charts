@@ -6,7 +6,7 @@ metadata:
   {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "es")) "Chart" $.Chart "Release" $.Release }}
   name: {{ template "alfresco-search-enterprise.fullname" $ctx }}
   labels:
-    {{- include "alfresco-search-enterprise.default.labels" $ | nindent 4 }}
+    {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
 data:
   {{- $reqMsg := "Please provide elasticsearch connection details as .search.url values or using an .search.existingConfigMap." }}
   {{- $esProtocol := required $reqMsg (include "alfresco-common.url.scheme" .url) }}

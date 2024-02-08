@@ -161,10 +161,10 @@ tests:
       - isSubset:
           path: metadata.labels
           content:
-            app.kubernetes.io/component: content-indexing
+            app.kubernetes.io/component: content
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: alfresco-search-enterprise
+            app.kubernetes.io/name: content
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-search-enterprise-1.0.0
 
@@ -179,10 +179,10 @@ tests:
       - isSubset:
           path: metadata.labels
           content:
-            app.kubernetes.io/component: metadata-indexing
+            app.kubernetes.io/component: metadata
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: alfresco-search-enterprise
+            app.kubernetes.io/name: metadata
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-search-enterprise-1.0.0
 
@@ -197,9 +197,9 @@ tests:
       - isSubset:
           path: metadata.labels
           content:
-            app.kubernetes.io/component: path-indexing
+            app.kubernetes.io/component: path
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: alfresco-search-enterprise
+            app.kubernetes.io/name: path
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-search-enterprise-1.0.0
