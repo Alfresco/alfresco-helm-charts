@@ -5,14 +5,12 @@ kind: Deployment
 metadata:
   name: {{ include "alfresco-search-enterprise.fullname" $ }}-{{ $serviceName }}
   labels:
-    {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
-    app.kubernetes.io/component: {{ printf "%s-indexing" $serviceName }}
+    {{- include (printf "alfresco-search-enterprise.%s.labels" $serviceName) $ | nindent 4 }}
 spec :
   replicas: {{ $service.replicaCount | default 1 }}
   selector:
     matchLabels:
-      {{- include "alfresco-search-enterprise.selectorLabels" $ | nindent 6 }}
-      app.kubernetes.io/component: {{ printf "%s-indexing" $serviceName }}
+      {{- include (printf "alfresco-search-enterprise.%s.selectorLabels" $serviceName) $ | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -23,8 +21,7 @@ spec :
         {{- toYaml $ | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "alfresco-search-enterprise.selectorLabels" $ | nindent 8 }}
-        app.kubernetes.io/component: {{ printf "%s-indexing" $serviceName }}
+        {{- include (printf "alfresco-search-enterprise.%s.labels" $serviceName) $ | nindent 8 }}
     spec:
       serviceAccountName: {{ include "alfresco-search-enterprise.serviceAccountName" $ }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}

@@ -8,11 +8,9 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].env[3].name
           value: ACTIVEMQ_ADMIN_LOGIN
-        template: deployment-activemq.yaml
       - equal:
           path: spec.template.spec.containers[0].env[3].valueFrom.secretKeyRef.name
           value: RELEASE-NAME-activemq-brokersecret
-        template: deployment-activemq.yaml
 
   - it: should reference overridden secret when setting existingSecretName
     set:
@@ -21,7 +19,6 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].env[3].valueFrom.secretKeyRef.name
           value: existing-secret
-        template: deployment-activemq.yaml
 
   - it: should render cpu and memory limits
     asserts:
@@ -34,7 +31,6 @@ tests:
             limits:
               cpu: "2"
               memory: "2048Mi"
-        template: deployment-activemq.yaml
 
   - it: should render default image pull secrets
     asserts:
@@ -42,7 +38,6 @@ tests:
           path: spec.template.spec.imagePullSecrets
           content:
             name: quay-registry-secret
-        template: deployment-activemq.yaml
 
   - it: should render custom image pull secrets
     set:
@@ -52,4 +47,20 @@ tests:
           path: spec.template.spec.imagePullSecrets
           content:
             name: regcred
-        template: deployment-activemq.yaml
+
+  - it: should render labels
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    set:
+      nameOverride: testComponent
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: activemq
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: testComponent
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: activemq-1.0.0

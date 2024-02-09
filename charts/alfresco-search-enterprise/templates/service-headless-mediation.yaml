@@ -4,13 +4,11 @@ metadata:
   {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "mediation-headless")) "Chart" .Chart "Release" .Release }}
   name: {{ template "alfresco-search-enterprise.name" $ctx }}
   labels:
-    {{- include "alfresco-search-enterprise.labels" . | nindent 4 }}
-    app.kubernetes.io/component: indexing-mediation
+    {{- include "alfresco-search-enterprise.mediation.labels" . | nindent 4 }}
 spec:
   ports:
   - port: 8080
     name: http
   clusterIP: None
   selector:
-    {{- include "alfresco-search-enterprise.selectorLabels" . | nindent 4 }}
-    app.kubernetes.io/component: indexing-mediation
+    {{- include "alfresco-search-enterprise.mediation.selectorLabels" . | nindent 4 }}

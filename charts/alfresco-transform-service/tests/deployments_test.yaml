@@ -305,3 +305,81 @@ tests:
       - exists:
           path: spec.template.spec.affinity.podAntiAffinity
         template: deployment-transform-router.yaml
+
+  - it: should render labels for every deployment
+    values:
+      - values/test_values.yaml
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-transform-service
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: filestore
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-transform-service-1.0.0
+        template: deployment-filestore.yaml
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-transform-service
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: imagemagick
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-transform-service-1.0.0
+        template: deployment-imagemagick.yaml
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-transform-service
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: libreoffice
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-transform-service-1.0.0
+        template: deployment-libreoffice.yaml
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-transform-service
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: pdfrenderer
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-transform-service-1.0.0
+        template: deployment-pdfrenderer.yaml
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-transform-service
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: tika
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-transform-service-1.0.0
+        template: deployment-tika.yaml
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-transform-service
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: transform-misc
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-transform-service-1.0.0
+        template: deployment-transform-misc.yaml
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-transform-service
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: transform-router
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-transform-service-1.0.0
+        template: deployment-transform-router.yaml

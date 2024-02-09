@@ -17,3 +17,20 @@ tests:
           path: spec.ingressClassName
           value: nginx
         template: ingress.yaml
+
+  - it: should render labels for ingress
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    set:
+      nameOverride: testName
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-share
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: testName
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-share-1.0.0

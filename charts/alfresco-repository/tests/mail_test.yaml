@@ -80,3 +80,52 @@ tests:
             containerPort: 1587
             protocol: TCP
         template: deployment.yaml
+
+  - it: should render labels for imap
+    set:
+      nameOverride: testName
+      configuration:
+        imap:
+          enabled: true
+          protocol: imaps
+          port: 1993
+          annotations:
+            a8r.io/description: *testAnnontaion
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-repository
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: testName-imaps
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-repository-1.0.0
+        template: service-imap.yaml
+
+  - it: should render labels for smtp
+    set:
+      nameOverride: testName
+      configuration:
+        smtp:
+          enabled: true
+          port: 1587
+          annotations:
+            a8r.io/description:  *testAnnontaion
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-repository
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: testName-smtp
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-repository-1.0.0
+        template: service-smtp.yaml

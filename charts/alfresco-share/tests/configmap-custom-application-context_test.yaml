@@ -16,3 +16,20 @@ tests:
           value: RELEASE-NAME-share-custom-application-context
       - isNotNullOrEmpty:
           path: data["custom-slingshot-application-context.xml"]
+  - it: should render labels for configmap
+    set:
+      replicaCount: 2
+      nameOverride: testName
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-share
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: testName
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-share-1.0.0
