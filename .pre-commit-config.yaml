@@ -47,8 +47,14 @@ repos:
           - --strict
   - repo: local
     hooks:
-      - id: custom-check-chart-versions
-        name: Check Chart dependencies
-        entry: ./scripts/charts.sh
+      - id: custom-check-versions-consistency
+        name: Check charts versions consistency
+        entry: ./scripts/versions-consistency.sh
         language: script
         pass_filenames: false
+      - id: custom-helm-template-checkov
+        name: Check charts renders successfully with checkov values
+        entry: ./scripts/helm-template-checkov.sh
+        language: script
+        pass_filenames: false
+        files: ^charts/[^/]+/.*\.(ya?ml|json|tpl)$
