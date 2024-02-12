@@ -14,6 +14,10 @@ repos:
     rev: v1.12.0
     hooks:
       - id: helm-docs
+  - repo: https://github.com/Alfresco/alfresco-build-tools
+    rev: v5.14.3
+    hooks:
+      - id: helm-deps-build
   - repo: https://github.com/bridgecrewio/checkov.git
     rev: 3.2.20
     hooks:
