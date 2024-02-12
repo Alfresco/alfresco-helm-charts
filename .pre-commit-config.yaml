@@ -10,14 +10,23 @@ repos:
       - id: end-of-file-fixer
         exclude: README.md
       - id: trailing-whitespace
+  - repo: local
+    hooks:
+      - id: custom-check-versions-consistency
+        name: Check charts versions consistency
+        entry: ./scripts/versions-consistency.sh
+        language: script
+        pass_filenames: false
+      - id: custom-helm-template-checkov
+        name: Check charts renders successfully with checkov values
+        entry: ./scripts/helm-template-checkov.sh
+        language: script
+        pass_filenames: false
+        files: ^charts/[^/]+/.*\.(ya?ml|json|tpl)$
   - repo: https://github.com/norwoodj/helm-docs
     rev: v1.12.0
     hooks:
       - id: helm-docs
-  - repo: https://github.com/Alfresco/alfresco-build-tools
-    rev: v5.14.3
-    hooks:
-      - id: helm-deps-build
   - repo: https://github.com/bridgecrewio/checkov.git
     rev: 3.2.20
     hooks:
@@ -49,16 +58,3 @@ repos:
           - --exclude-charts=alfresco-common
           - --values-dir=ci
           - --strict
-  - repo: local
-    hooks:
-      - id: custom-check-versions-consistency
-        name: Check charts versions consistency
-        entry: ./scripts/versions-consistency.sh
-        language: script
-        pass_filenames: false
-      - id: custom-helm-template-checkov
-        name: Check charts renders successfully with checkov values
-        entry: ./scripts/helm-template-checkov.sh
-        language: script
-        pass_filenames: false
-        files: ^charts/[^/]+/.*\.(ya?ml|json|tpl)$
