@@ -14,19 +14,43 @@ global:
     sharedsecret: dummy
 repository:
   sharedSecret: dummy
+  host: dummy
+  port: 8080
 
-# alfresco-search-enterprise
+
 elasticsearch:
   enabled: true
 messageBroker:
   url: amqp://something
+  user: admin
+  username: admin
+  password: dummy
+database:
+  username: postgres
+  password: dummy
+  url: jdbc:postgresql://hostname:5432/database
+
 reindexing:
   db:
     url: jdbc://something
   repository:
     url: http://something
+
 search:
   url: es://something
+
 ats:
   transform_url: http://transform
   sfs_url: http://sfs
+
+sfs:
+  url: http://sfs
+
+aws:
+  accessKeyId: dummy
+  secretAccessKey: dummy
+
+microsoft:
+  app:
+    id: dummy
+    password: dummy
