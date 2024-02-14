@@ -6,7 +6,7 @@ metadata:
   name: {{ include "alfresco-search-enterprise.fullname" $ }}-{{ $serviceName }}
   labels:
     {{- include (printf "alfresco-search-enterprise.%s.labels" $serviceName) $ | nindent 4 }}
-spec :
+spec:
   replicas: {{ $service.replicaCount | default 1 }}
   selector:
     matchLabels:

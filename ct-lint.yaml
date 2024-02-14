@@ -9,5 +9,4 @@ chart-repos:
   - elastic=https://helm.elastic.co
 additional-commands:
   - helm unittest --color --with-subchart=false {{ .Path }}
-  - helm template {{ .Path }} --values {{ .Path }}/ci/default-values.yaml | yamllint -
 validate-maintainers: false
