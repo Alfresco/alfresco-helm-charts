@@ -7,5 +7,7 @@ chart-repos:
   - self=https://alfresco.github.io/alfresco-helm-charts/
   - bitnami=https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
   - elastic=https://helm.elastic.co
-additional-commands: helm unittest --color --with-subchart=false {{ .Path }}
+additional-commands:
+  - helm unittest --color --with-subchart=false {{ .Path }}
+  - helm template {{ .Path }} --values {{ .Path }}/ci/default-values.yaml | yamllint -
 validate-maintainers: false
