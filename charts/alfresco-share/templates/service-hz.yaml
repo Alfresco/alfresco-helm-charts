@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: {{ template "alfresco-share.service-hz.name" . }}
   labels:
-    {{- include "alfresco-share.selectorLabels" . | nindent 4 }}
+    {{- include "alfresco-share.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:

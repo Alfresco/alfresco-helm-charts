@@ -19,7 +19,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-connector-msteams.yaml") . | sha256sum }}
       labels:
-        {{- include "alfresco-connector-msteams.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-connector-msteams.labels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "alfresco-connector-msteams.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
