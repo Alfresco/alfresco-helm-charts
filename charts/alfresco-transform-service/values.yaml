@@ -476,8 +476,6 @@ filestore:
     initialDelaySeconds: 10
     periodSeconds: 20
     timeoutSeconds: 10
-    livenessPercent: 150
-    livenessSavePeriodSeconds: 600
   persistence:
     # -- Persist filestore data
     enabled: false

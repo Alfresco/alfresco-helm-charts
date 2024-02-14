@@ -19,7 +19,7 @@ templates:
 
 tests:
   - it: should render expected envs in every resource
-    values:
+    values: &testvalues
       - values/test_values.yaml
     asserts:
       - equal:
@@ -383,3 +383,25 @@ tests:
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-transform-service-1.0.0
         template: deployment-transform-router.yaml
+
+  - it: should render expected liveness probe configs in cm
+    values: *testvalues
+    asserts:
+      - isNull:
+          path: data.path
+        template: config-filestore.yaml
+      - isNull:
+          path: data.path
+        template: config-imagemagick.yaml
+      - isNull:
+          path: data.path
+        template: config-libreoffice.yaml
+      - isNull:
+          path: data.path
+        template: config-pdfrenderer.yaml
+      - isNull:
+          path: data.path
+        template: config-tika.yaml
+      - isNull:
+          path: data.path
+        template: config-transform-misc.yaml
