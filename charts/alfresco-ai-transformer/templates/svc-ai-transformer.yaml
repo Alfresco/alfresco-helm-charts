@@ -4,8 +4,6 @@ metadata:
   name: {{ template "alfresco-ai-transformer.fullname" . }}
   labels:
     {{- include "alfresco-ai-transformer.labels" . | nindent 4 }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    heritage: {{ .Release.Service }}
 spec:
   type: {{ .Values.service.type }}
   ports:
