@@ -7,7 +7,4 @@ metadata:
     {{- include "alfresco-transform-service.filestore.labels" . | nindent 4 }}
 data:
   {{- toYaml .Values.filestore.environment | nindent 2 }}
-  {{- range $key, $val := omit .Values.filestore.livenessProbe "path" }}
-  {{ $key }}: {{ $val | quote }}
-  {{- end }}
 {{- end }}

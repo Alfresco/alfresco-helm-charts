@@ -1,6 +1,6 @@
 # alfresco-transform-service
 
-![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
+![Version: 1.1.2](https://img.shields.io/badge/Version-1.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Transform Services
 
@@ -32,8 +32,6 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | filestore.initContainer.resources.limits.cpu | string | `"0.50"` |  |
 | filestore.initContainer.resources.limits.memory | string | `"10Mi"` |  |
 | filestore.livenessProbe.initialDelaySeconds | int | `10` |  |
-| filestore.livenessProbe.livenessPercent | int | `150` |  |
-| filestore.livenessProbe.livenessSavePeriodSeconds | int | `600` |  |
 | filestore.livenessProbe.path | string | `"/live"` |  |
 | filestore.livenessProbe.periodSeconds | int | `20` |  |
 | filestore.livenessProbe.timeoutSeconds | int | `10` |  |
