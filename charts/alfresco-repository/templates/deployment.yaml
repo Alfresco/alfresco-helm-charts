@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "alfresco-repository.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-repository.labels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "alfresco-repository.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}

@@ -19,7 +19,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "activemq.selectorLabels" . | nindent 8 }}
+        {{- include "activemq.labels" . | nindent 8 }}
     spec:
     {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}

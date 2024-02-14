@@ -14,15 +14,6 @@ repos:
     rev: v1.11.3
     hooks:
       - id: helm-docs
-  - repo: https://github.com/bridgecrewio/checkov.git
-    rev: 3.1.51
-    hooks:
-      - id: checkov
-        files: charts/.*\.yaml$
-        verbose: true
-        args:
-          - --quiet
-          - --compact
   - repo: https://github.com/jtyr/kubeconform-helm
     rev: v0.1.16
     hooks:

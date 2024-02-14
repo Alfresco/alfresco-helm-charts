@@ -16,7 +16,7 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "alfresco-ai-transformer.selectorLabels" . | nindent 8 }}
+        {{- include "alfresco-ai-transformer.labels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "alfresco-ai-transformer.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
