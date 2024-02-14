@@ -3265,6 +3265,25 @@ entries:
   alfresco-transform-service:
   - apiVersion: v2
     appVersion: 4.0.1
+    created: "2024-02-14T14:53:14.960318772Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.0
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.4.1
+    description: A Helm chart for deploying Alfresco Transform Services
+    digest: 136d1e1845098d7a91c11c95d9f0a7ca8a76373745ac2f46525d3f5efb9082b9
+    name: alfresco-transform-service
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-1.1.1/alfresco-transform-service-1.1.1.tgz
+    version: 1.1.1
+  - apiVersion: v2
+    appVersion: 4.0.1
     created: "2024-02-09T08:49:52.625951198Z"
     dependencies:
     - name: alfresco-common
@@ -3542,4 +3561,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-02-14T14:01:39.283244115Z"
+generated: "2024-02-14T14:53:14.960663805Z"
