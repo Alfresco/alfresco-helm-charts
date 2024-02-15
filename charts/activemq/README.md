@@ -1,6 +1,6 @@
 # activemq
 
-![Version: 3.5.1](https://img.shields.io/badge/Version-3.5.1-informational?style=flat-square) ![AppVersion: 5.18.3](https://img.shields.io/badge/AppVersion-5.18.3-informational?style=flat-square)
+![Version: 3.5.2](https://img.shields.io/badge/Version-3.5.2-informational?style=flat-square) ![AppVersion: 5.18.3](https://img.shields.io/badge/AppVersion-5.18.3-informational?style=flat-square)
 
 A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (not meant to be used in production).
 
