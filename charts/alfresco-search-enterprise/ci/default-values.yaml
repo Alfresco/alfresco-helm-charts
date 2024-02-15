@@ -2,7 +2,7 @@
 nameOverride: aesc
 reindexing:
   # requires postgres database at startup
-  enabled: false
+  enabled: true
 ats:
   transform_url: http://alfresco-transform-services-router
   sfs_url: http://alfresco-transform-services-sfs

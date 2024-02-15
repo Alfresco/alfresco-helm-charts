@@ -83,7 +83,7 @@ spec:
                 configMapKeyRef:
                   name: {{ $repoCm }}
                   key: {{ .Values.reindexing.repository.existingConfigMap.keys.url }}
-          command: [ "/bin/sh","-c" ]
+          command: ["/bin/sh", "-c"]
           # Delay running the reindexing to give Alfresco Repository a chance to initialise its database
           args:
             - |
