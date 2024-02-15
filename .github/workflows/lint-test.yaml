@@ -30,11 +30,6 @@ jobs:
         with:
           version: v3.10.2
 
-      - name: Set up Python
-        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
-        with:
-          python-version: 3.7
-
       - name: Set up Unit Test plugin for Helm
         env:
           HELM_UNITTEST_VERSION: v0.4.1
