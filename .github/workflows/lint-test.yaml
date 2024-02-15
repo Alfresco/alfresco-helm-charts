@@ -37,7 +37,7 @@ jobs:
 
       - name: Set up Unit Test plugin for Helm
         env:
-          HELM_UNITTEST_VERSION: v0.4.0
+          HELM_UNITTEST_VERSION: v0.4.1
         run: |
           helm plugin install https://github.com/helm-unittest/helm-unittest --version $HELM_UNITTEST_VERSION
 
