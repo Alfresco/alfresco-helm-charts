@@ -2,9 +2,15 @@
 
 ![Version: 0.1.0-alpha.0](https://img.shields.io/badge/Version-0.1.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
-A Helm chart for Kubernetes
+A generic Alfresco Development Framework Helm chart for Kubernetes
 
 Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for an example of how to leverage this chart from an umbrella chart.
+
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.0 |
 
 ## Values
 
