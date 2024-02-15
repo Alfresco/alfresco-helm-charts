@@ -41,11 +41,11 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: 8080
+              port: {{ .Values.service.targetPort }}
           readinessProbe:
             httpGet:
               path: /
-              port: 8080
+              port: {{ .Values.service.targetPort }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}
