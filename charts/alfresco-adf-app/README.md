@@ -19,6 +19,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | affinity | object | `{}` |  |
 | env | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
+| global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `""` |  |
 | image.tag | string | `""` |  |
