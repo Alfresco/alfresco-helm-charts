@@ -6,3 +6,4 @@
 # Github workflows related
 merged.yaml
 alfresco-updatecli
+charts/*/render

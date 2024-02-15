@@ -30,33 +30,28 @@ jobs:
         with:
           version: v3.10.2
 
-      - name: Set up Python
-        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5.0.0
-        with:
-          python-version: 3.7
-
       - name: Set up Unit Test plugin for Helm
         env:
-          HELM_UNITTEST_VERSION: v0.4.0
+          HELM_UNITTEST_VERSION: v0.4.1
         run: |
           helm plugin install https://github.com/helm-unittest/helm-unittest --version $HELM_UNITTEST_VERSION
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@e6669bcd63d7cb57cb4380c33043eebe5d111992 # v2.6.1
         with:
-          version: v3.8.0
+          version: v3.10.1
 
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
-          changed=$(ct list-changed --config ct-lint.yaml)
+          changed=$(ct list-changed --config ct.yaml)
           if [[ -n "$changed" || "$TEST_ALL_CHARTS" == "true" ]]; then
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Run chart-testing (lint)
         if: steps.list-changed.outputs.changed == 'true'
-        run: ct lint --config ct-lint.yaml $TEST_ALL_CHARTS_ARG
+        run: ct lint --config ct.yaml $TEST_ALL_CHARTS_ARG
 
       - name: Create kind cluster
         uses: helm/kind-action@99576bfa6ddf9a8e612d83b513da5a75875caced # v1.9.0
@@ -82,7 +77,7 @@ jobs:
       - name: Prepare charts mocks for testing
         if: steps.list-changed.outputs.changed == 'true'
         run: |
-          ITER_CMD="ct lsc --config ct-lint.yaml"
+          ITER_CMD="ct lsc --config ct.yaml"
           if [[ "$TEST_ALL_CHARTS" == "true" ]]; then
             ITER_CMD="ls -1 charts | awk -v prefix='charts/' '{print prefix \$0}'"
           fi
@@ -98,6 +93,6 @@ jobs:
 
       - name: Run chart-testing (install)
         run: >-
-          ct install --config ct-install.yaml
+          ct install --config ct.yaml
           --namespace "$INSTALL_NAMESPACE"
           $TEST_ALL_CHARTS_ARG

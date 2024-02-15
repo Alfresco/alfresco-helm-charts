@@ -1,13 +1,24 @@
 # See https://github.com/helm/chart-testing#configuration
 remote: origin
 target-branch: main
+
 chart-dirs:
   - charts
+
+# Skip library charts which can't be really tested
 excluded-charts:
   - alfresco-common
+
 chart-repos:
   - self=https://alfresco.github.io/alfresco-helm-charts/
   - bitnami=https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
   - elastic=https://helm.elastic.co
+
 helm-extra-args: --timeout 600s
+
 validate-maintainers: false
+
+additional-commands:
+  - helm unittest --color --with-subchart=false {{ .Path }}
+  - helm template {{ .Path }} --output-dir {{ .Path }}/render -f {{ .Path }}/ci/default-values.yaml
+  - yamllint -c .yamllint.yml {{ .Path }}/render
