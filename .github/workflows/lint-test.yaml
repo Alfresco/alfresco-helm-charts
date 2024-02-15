@@ -49,8 +49,8 @@ jobs:
       - name: Run chart-testing (list-changed)
         id: list-changed
         run: |
-          ct list-changed
-          changed=$(ct list-changed)
+          ct list-changed --config ct.yaml
+          changed=$(ct list-changed --config ct.yaml)
           if [[ -n "$changed" || "$TEST_ALL_CHARTS" == "true" ]]; then
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
