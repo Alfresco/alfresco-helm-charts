@@ -201,6 +201,20 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/activemq-3.0.0/activemq-3.0.0.tgz
     version: 3.0.0
+  alfresco-adf-app:
+  - apiVersion: v2
+    created: "2024-02-19T10:25:55.339719756Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.0
+    description: A generic Alfresco Development Framework Helm chart for Kubernetes
+    digest: bf5391d62da1aac2ddd8db56be45ae1baa3b580ef4ed17464ee085aa7514141e
+    name: alfresco-adf-app
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-adf-app-0.1.0-alpha.0/alfresco-adf-app-0.1.0-alpha.0.tgz
+    version: 0.1.0-alpha.0
   alfresco-ai-transformer:
   - apiVersion: v2
     appVersion: 3.0.1
@@ -3629,4 +3643,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-02-15T14:54:18.726034229Z"
+generated: "2024-02-19T10:25:55.340096517Z"
