@@ -12,34 +12,22 @@ data:
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://www.hazelcast.com/schema/config
               http://www.hazelcast.com/schema/config/hazelcast-config-5.3.xsd">
-
         <cluster-name>Sync Service</cluster-name>
-        <management-center data-access-enabled="${sync.hazelcast.mancenter.enabled}">
-            <trusted-interfaces>
-                <interface>${sync.hazelcast.mancenter.url}</interface>
-            </trusted-interfaces>
-        </management-center>
-
         <network>
-            <port auto-increment="${sync.hazelcast.autoinc.port}">${sync.hazelcast.port}</port>
+            <port {{ .Values.hazelcast.port }}" port-auto-increment="false" </port>
             <join>
-                <multicast enabled="false">
-                </multicast>
-                <tcp-ip enabled="true">
-                </tcp-ip>
+                <kubernetes enabled="true">
+                    <service-name>{{ template "alfresco-sync-service.service-hz.name" . }}</service-name>
+                </kubernetes>
             </join>
-            <interfaces enabled="${sync.cluster.specify.interface}">
-                <interface>${sync.cluster.interface}</interface>
-            </interfaces>
         </network>
-
         <properties>
             <property name="hazelcast.logging.type">log4j2</property>
             <property name="hazelcast.rest.enabled">false</property>
             <property name="hazelcast.memcache.enabled">false</property>
             <property name="hazelcast.max.operation.timeout">20000</property>
             <property name="hazelcast.max.no.heartbeat.seconds">15</property>
-            <property name="hazelcast.socket.bind.any">${sync.hazelcast.bind.any}</property>
+            <property name="hazelcast.socket.bind.any">false</property>
         </properties>
     </hazelcast>
 {{- end -}}
