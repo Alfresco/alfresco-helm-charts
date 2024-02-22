@@ -1,6 +1,6 @@
 # alfresco-search-service
 
-![Version: 3.2.0](https://img.shields.io/badge/Version-3.2.0-informational?style=flat-square) ![AppVersion: 2.0.9](https://img.shields.io/badge/AppVersion-2.0.9-informational?style=flat-square)
+![Version: 3.2.0](https://img.shields.io/badge/Version-3.2.0-informational?style=flat-square) ![AppVersion: 2.0.9.1](https://img.shields.io/badge/AppVersion-2.0.9.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
@@ -42,7 +42,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | insightEngineImage.internalPort | string | `nil` | container's port search service is listening on change if your custom image use a different port. |
 | insightEngineImage.pullPolicy | string | `"IfNotPresent"` |  |
 | insightEngineImage.repository | string | `"quay.io/alfresco/insight-engine"` |  |
-| insightEngineImage.tag | string | `"2.0.9"` |  |
+| insightEngineImage.tag | string | `"2.0.9.1"` |  |
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
@@ -78,7 +78,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | searchServicesImage.internalPort | string | `nil` | container's port search service is listening on change if your custom image use a different port. |
 | searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
 | searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
-| searchServicesImage.tag | string | `"2.0.9"` |  |
+| searchServicesImage.tag | string | `"2.0.9.1"` |  |
 | service.name | string | `"solr"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
