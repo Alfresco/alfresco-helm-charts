@@ -1,0 +1,18 @@
+---
+suite: test share rbac resources
+templates:
+  - rbac.yaml
+tests:
+  - it: should render expected manifests
+    set:
+      replicaCount: 2
+    asserts:
+      - hasDocuments:
+          count: 2
+
+  - it: should render no manifests with replicaCount 1
+    set:
+      replicaCount: 1
+    asserts:
+      - hasDocuments:
+          count: 0

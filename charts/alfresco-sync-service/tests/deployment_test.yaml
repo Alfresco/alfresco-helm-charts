@@ -304,3 +304,31 @@ tests:
             app.kubernetes.io/name: testName
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-sync-service-1.0.0
+
+  - it: should render volumes when replicaCount more than 1
+    template: deployment.yaml
+    values: *testvalues
+    set:
+      replicaCount: 2
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 2
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: hazelcast-tcp
+            configMap:
+              name: RELEASE-NAME-sync-hazelcast-tcp
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /opt/alfresco-sync-service/hazelcast-tcp.xml
+            subPath: hazelcast-tcp.xml
+            name: hazelcast-tcp
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            containerPort: 5701
+            name: hazelcast
+            protocol: TCP
