@@ -135,3 +135,8 @@ terminationGracePeriodSeconds: 60
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
   ci: false
+
+hazelcast:
+  service:
+    port: 5701
+    type: ClusterIP

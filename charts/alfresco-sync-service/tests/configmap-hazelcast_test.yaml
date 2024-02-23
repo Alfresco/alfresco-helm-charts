@@ -1,0 +1,35 @@
+---
+suite: test hazelcast configmap
+templates:
+  - configmap-hazelcast.yaml
+tests:
+  - it: should not render the configmap when replicaCount is 1
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should render default contents when replicaCount is 2
+    set:
+      replicaCount: 2
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-sync-hazelcast-tcp
+      - isNotNullOrEmpty:
+          path: data["hazelcast-tcp.xml"]
+  - it: should render labels for configmap
+    set:
+      replicaCount: 2
+      nameOverride: testName
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-sync-service
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: testName
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-sync-service-1.0.0

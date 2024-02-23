@@ -33,3 +33,23 @@ Usage "alfresco-sync-service.repository" $
 {{- $ctx := dict "Values" (dict "nameOverride" "alfresco-sync-repo") "Chart" .Chart "Release" .Release }}
 {{- template "alfresco-sync-service.fullname" $ctx }}
 {{- end -}}
+
+{{- define "alfresco-sync-service.hazelcast-tcp.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "sync-hazelcast-tcp" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-sync-service.fullname" $scope }}
+{{- end }}
+
+{{- define "alfresco-sync-service.service-hz.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "sync-hazelcast" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-sync-service.fullname" $scope }}
+{{- end }}
+
+{{- define "alfresco-sync-service.cluster-role-hz.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "sync-hazelcast-cluster-role" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-sync-service.fullname" $scope }}
+{{- end }}
+
+{{- define "alfresco-sync-service.cluster-role-binding-hz.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "share-hazelcast-cluster-role-binding" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-sync-service.fullname" $scope }}
+{{- end }}

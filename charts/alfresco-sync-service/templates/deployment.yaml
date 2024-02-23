@@ -101,9 +101,20 @@ spec:
                 key: {{ .existingConfigMap.keys.scheme }}
                 optional: true
           {{- end }}
+        volumeMounts:
+          {{- if gt (int .Values.replicaCount) 1 }}
+          - name: hazelcast-tcp
+            mountPath: /opt/alfresco-sync-service/hazelcast-tcp.xml
+            subPath: hazelcast-tcp.xml
+          {{- end }}
         ports:
         - name: serviceport
           containerPort: 9090
+        {{- if gt (int .Values.replicaCount) 1 }}
+        - name: hazelcast
+          containerPort: {{ .Values.hazelcast.service.port }}
+          protocol: TCP
+        {{- end }}
         resources: {{- toYaml .Values.resources | nindent 12 }}
         readinessProbe:
           httpGet:
@@ -122,6 +133,12 @@ spec:
           preStop:
             exec:
               command: ["/opt/alfresco-sync-service/sync_service_entrypoint.sh", "stop"]
+      volumes:
+        {{- if gt (int .Values.replicaCount) 1 }}
+        - name: hazelcast-tcp
+          configMap:
+            name: {{ template "alfresco-sync-service.hazelcast-tcp.name" . }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
