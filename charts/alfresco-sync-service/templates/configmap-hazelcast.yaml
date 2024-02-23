@@ -14,6 +14,7 @@ data:
               http://www.hazelcast.com/schema/config/hazelcast-config-5.3.xsd">
         <cluster-name>Sync Service</cluster-name>
         <network>
+            <port auto-increment=false>{{ .Values.hazelcast.service.port }} </port>
             <join>
                 <kubernetes enabled="true">
                     <service-name>{{ template "alfresco-sync-service.service-hz.name" . }}</service-name>

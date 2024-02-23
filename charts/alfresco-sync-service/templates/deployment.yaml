@@ -111,7 +111,7 @@ spec:
         - name: serviceport
           containerPort: 9090
         {{- if gt (int .Values.replicaCount) 1 }}
-        - name: hz
+        - name: hazelcast
           containerPort: {{ .Values.hazelcast.service.port }}
           protocol: TCP
         {{- end }}

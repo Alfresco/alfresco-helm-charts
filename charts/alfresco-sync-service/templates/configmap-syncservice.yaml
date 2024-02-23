@@ -19,7 +19,7 @@ data:
     -Dmessaging.username=$BROKER_USERNAME
     -Dmessaging.password=$BROKER_PASSWORD
     {{- if gt (int .Values.replicaCount) 1 }}
-    -Dsync.hazelcast.configLocation=hazelcastconfig/hazelcast-tcp.xml
+    -Dsync.hazelcast.configLocation=/hazelcastconfig/hazelcast-tcp.xml
     {{- end }}
     {{- with .Values.environment }}
     {{ .JAVA_OPTS }}
