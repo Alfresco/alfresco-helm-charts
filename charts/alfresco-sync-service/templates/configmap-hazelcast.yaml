@@ -1,4 +1,4 @@
-{{- if and (gt (int .Values.replicaCount) 1) .Values.managedApplicationContext.enabled -}}
+{{- if gt (int .Values.replicaCount) 1 -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -14,7 +14,6 @@ data:
               http://www.hazelcast.com/schema/config/hazelcast-config-5.3.xsd">
         <cluster-name>Sync Service</cluster-name>
         <network>
-            <port {{ .Values.hazelcast.port }}" port-auto-increment="false" </port>
             <join>
                 <kubernetes enabled="true">
                     <service-name>{{ template "alfresco-sync-service.service-hz.name" . }}</service-name>

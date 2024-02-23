@@ -18,7 +18,7 @@ data:
     -Dmessaging.broker.url=$BROKER_URL
     -Dmessaging.username=$BROKER_USERNAME
     -Dmessaging.password=$BROKER_PASSWORD
-    -sync.hazelcast.configLocation=hazelcastconfig/hazelcast-tcp.xml
+    -Dsync.hazelcast.configLocation=hazelcastconfig/hazelcast-tcp.xml
     {{- with .Values.environment }}
     {{ .JAVA_OPTS }}
     {{- end }}

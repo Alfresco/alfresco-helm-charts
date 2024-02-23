@@ -102,7 +102,7 @@ spec:
                 optional: true
           {{- end }}
         volumeMounts:
-          {{- if and (gt (int .Values.replicaCount) 1) .Values.managedApplicationContext.enabled }}
+          {{- if gt (int .Values.replicaCount) 1 }}
           - name: hazelcast-tcp
             mountPath: hazelcastconfig/hazelcast-tcp.xml
             subPath: hazelcast-tcp.xml
@@ -112,7 +112,7 @@ spec:
           containerPort: 9090
         {{- if gt (int .Values.replicaCount) 1 }}
         - name: hz
-          containerPort: {{ .Values.hazelcast.port }}
+          containerPort: {{ .Values.hazelcast.service.port }}
           protocol: TCP
         {{- end }}
         resources: {{- toYaml .Values.resources | nindent 12 }}
@@ -134,10 +134,10 @@ spec:
             exec:
               command: ["/opt/alfresco-sync-service/sync_service_entrypoint.sh", "stop"]
       volumes:
-        {{- if and (gt (int .Values.replicaCount) 1) .Values.managedApplicationContext.enabled }}
+        {{- if gt (int .Values.replicaCount) 1 }}
         - name: hazelcast-tcp
           configMap:
-            name: {{ template "alfresco-share.custom-application-context.name" . }}
+            name: {{ template "alfresco-sync-service.hazelcast-tcp.name" . }}
         {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
