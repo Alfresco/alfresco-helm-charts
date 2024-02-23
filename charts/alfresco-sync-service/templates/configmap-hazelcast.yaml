@@ -26,8 +26,8 @@ data:
             <property name="hazelcast.rest.enabled">false</property>
             <property name="hazelcast.memcache.enabled">false</property>
             <property name="hazelcast.max.operation.timeout">20000</property>
-            <property name="hazelcast.max.no.heartbeat.seconds">15</property>
-            <property name="hazelcast.socket.bind.any">false</property>
+            <property name="hazelcast.max.no.heartbeat.seconds">60</property>
+            <property name="hazelcast.socket.bind.any">true</property>
         </properties>
     </hazelcast>
 {{- end -}}

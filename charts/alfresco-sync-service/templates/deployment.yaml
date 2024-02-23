@@ -104,7 +104,7 @@ spec:
         volumeMounts:
           {{- if gt (int .Values.replicaCount) 1 }}
           - name: hazelcast-tcp
-            mountPath: hazelcastconfig/hazelcast-tcp.xml
+            mountPath: /opt/alfresco-sync-service/hazelcast-tcp.xml
             subPath: hazelcast-tcp.xml
           {{- end }}
         ports:
