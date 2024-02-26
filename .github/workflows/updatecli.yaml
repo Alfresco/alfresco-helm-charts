@@ -30,7 +30,7 @@ jobs:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v5.14.3
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v5.16.0
 
       - name: Login to quay.io
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
@@ -48,9 +48,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@d50e824f3a7c795b6e72ccc5a04471bc58902bf0 # v5.14.3
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@4a622625f9863bb73651cab161bb01d30aaa1b52 # v5.16.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@d50e824f3a7c795b6e72ccc5a04471bc58902bf0 # v5.14.3
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@4a622625f9863bb73651cab161bb01d30aaa1b52 # v5.16.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
@@ -76,7 +76,7 @@ jobs:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v5.14.3
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v5.16.0
 
       - name: Login to quay.io
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
@@ -108,9 +108,9 @@ jobs:
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@d50e824f3a7c795b6e72ccc5a04471bc58902bf0 # v5.14.3
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@4a622625f9863bb73651cab161bb01d30aaa1b52 # v5.16.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@d50e824f3a7c795b6e72ccc5a04471bc58902bf0 # v5.14.3
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@4a622625f9863bb73651cab161bb01d30aaa1b52 # v5.16.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
