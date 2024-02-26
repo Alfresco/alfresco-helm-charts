@@ -50,6 +50,6 @@ Usage "alfresco-sync-service.repository" $
 {{- end }}
 
 {{- define "alfresco-sync-service.cluster-role-binding-hz.name" -}}
-{{- $scope := (dict "Values" (dict "nameOverride" "share-hazelcast-cluster-role-binding" ) "Chart" .Chart "Release" .Release) }}
+{{- $scope := (dict "Values" (dict "nameOverride" "sync-hazelcast-cluster-role-binding" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-sync-service.fullname" $scope }}
 {{- end }}
