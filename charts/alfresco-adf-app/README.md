@@ -1,6 +1,6 @@
 # alfresco-adf-app
 
-![Version: 0.1.0-alpha.0](https://img.shields.io/badge/Version-0.1.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.1.0-alpha.1](https://img.shields.io/badge/Version-0.1.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic Alfresco Development Framework Helm chart for Kubernetes
 
@@ -35,7 +35,11 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
-| podSecurityContext | object | `{}` |  |
+| podSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
+| podSecurityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
+| podSecurityContext.capabilities.drop[1] | string | `"ALL"` |  |
+| podSecurityContext.runAsNonRoot | bool | `true` |  |
+| podSecurityContext.runAsUser | int | `101` |  |
 | replicaCount | int | `1` |  |
 | resources.limits.cpu | string | `"100m"` |  |
 | resources.limits.memory | string | `"128Mi"` |  |
