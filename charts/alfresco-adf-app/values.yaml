@@ -26,13 +26,13 @@ podLabels: {}
 podSecurityContext:
   runAsUser: 101
   runAsNonRoot: true
+
+securityContext:
   allowPrivilegeEscalation: false
   capabilities:
     drop:
       - NET_RAW
       - ALL
-
-securityContext: {}
 
 service:
   type: ClusterIP
