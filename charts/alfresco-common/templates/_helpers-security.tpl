@@ -25,7 +25,6 @@ Usage: include "alfresco-common.default-security-context" ""
     allowPrivilegeEscalation: false
     capabilities:
       drop:
-        - NET_RAW
         - ALL
 {{- end }}
 
