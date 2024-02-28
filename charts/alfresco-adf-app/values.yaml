@@ -23,7 +23,10 @@ serviceAccount:
 podAnnotations: {}
 podLabels: {}
 
-podSecurityContext: {}
+podSecurityContext:
+  # -- Retrocompat with Activiti Common chart
+  runAsUser: 101
+  runAsNonRoot: true
 
 securityContext: {}
 
