@@ -36,7 +36,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
-| podSecurityContext.runAsUser | int | `101` |  |
+| podSecurityContext.runAsUser | int | `101` | Retrocompat with Activiti Common chart |
 | replicaCount | int | `1` |  |
 | resources.limits.cpu | string | `"100m"` |  |
 | resources.limits.memory | string | `"128Mi"` |  |
