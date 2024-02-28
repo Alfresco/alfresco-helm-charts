@@ -203,6 +203,19 @@ entries:
     version: 3.0.0
   alfresco-adf-app:
   - apiVersion: v2
+    created: "2024-02-28T09:46:36.172760088Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.2
+    description: A generic Alfresco Development Framework Helm chart for Kubernetes
+    digest: c07afaacb271ba5f5384f0b1a98cfb11e4d973cca5bf2bc1364e6df6e3276117
+    name: alfresco-adf-app
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-adf-app-0.1.0-alpha.1/alfresco-adf-app-0.1.0-alpha.1.tgz
+    version: 0.1.0-alpha.1
+  - apiVersion: v2
     created: "2024-02-19T10:25:55.339719756Z"
     dependencies:
     - name: alfresco-common
@@ -3718,4 +3731,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-02-28T08:58:58.764601928Z"
+generated: "2024-02-28T09:46:36.173199895Z"
