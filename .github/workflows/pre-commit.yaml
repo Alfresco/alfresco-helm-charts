@@ -23,13 +23,13 @@ jobs:
             Alfresco/alfresco-build-tools/
 
       - name: Setup helm docs
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@d50e824f3a7c795b6e72ccc5a04471bc58902bf0 # v5.14.3
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@4a622625f9863bb73651cab161bb01d30aaa1b52 # v5.16.0
 
       - name: Install kubeconform helm plugin
         run: |
           helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.1.12
 
       - name: Run pre-commit
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@d50e824f3a7c795b6e72ccc5a04471bc58902bf0 # v5.14.3
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@4a622625f9863bb73651cab161bb01d30aaa1b52 # v5.16.0
         with:
           auto-commit: "true"
