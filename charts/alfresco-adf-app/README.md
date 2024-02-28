@@ -10,7 +10,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.2 |
 
 ## Values
 
@@ -42,8 +42,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | resources.limits.memory | string | `"128Mi"` |  |
 | resources.requests.cpu | string | `"100m"` |  |
 | resources.requests.memory | string | `"128Mi"` |  |
-| securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| securityContext | object | `{}` |  |
 | service.port | int | `80` |  |
 | service.targetPort | int | `8080` |  |
 | service.type | string | `"ClusterIP"` |  |

@@ -27,11 +27,7 @@ podSecurityContext:
   runAsUser: 101
   runAsNonRoot: true
 
-securityContext:
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop:
-      - ALL
+securityContext: {}
 
 service:
   type: ClusterIP
