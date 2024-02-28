@@ -31,7 +31,6 @@ securityContext:
   allowPrivilegeEscalation: false
   capabilities:
     drop:
-      - NET_RAW
       - ALL
 
 service:
