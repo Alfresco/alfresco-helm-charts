@@ -29,7 +29,7 @@ transformrouter:
   podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: 4.0.1
+    tag: 4.1.0
     pullPolicy: IfNotPresent
     internalPort: 8095
   service:
@@ -93,7 +93,7 @@ pdfrenderer:
   podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-pdf-renderer
-    tag: 5.0.1
+    tag: 5.1.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -161,7 +161,7 @@ imagemagick:
   podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-imagemagick
-    tag: 5.0.1
+    tag: 5.1.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -229,7 +229,7 @@ libreoffice:
   podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-libreoffice
-    tag: 5.0.1
+    tag: 5.1.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -297,7 +297,7 @@ tika:
   podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-tika
-    tag: 5.0.1
+    tag: 5.1.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -365,7 +365,7 @@ transformmisc:
   podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-misc
-    tag: 5.0.1
+    tag: 5.1.0
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -433,7 +433,7 @@ filestore:
   podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
-    tag: 4.0.1
+    tag: 4.1.0
     pullPolicy: IfNotPresent
     internalPort: 8099
   initContainer:
@@ -491,7 +491,6 @@ filestore:
       subPath: "alfresco-content-services/filestore-data"
   volumes: []
   volumeMounts: []
-
 messageBroker:
   # -- Activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true)
   url: null
@@ -510,14 +509,12 @@ messageBroker:
     keys:
       user: BROKER_USERNAME
       password: BROKER_PASSWORD
-
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
   strategy:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -528,7 +525,6 @@ serviceAccount:
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
-
 tags:
   # -- Enable dependencies required for CI. Do not enable.
   ci: false
