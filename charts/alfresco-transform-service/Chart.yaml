@@ -2,8 +2,8 @@ apiVersion: v2
 name: alfresco-transform-service
 description: A Helm chart for deploying Alfresco Transform Services
 type: application
-version: 1.1.1
-appVersion: 4.0.1
+version: 1.2.0
+appVersion: 4.1.0
 dependencies:
   - name: alfresco-common
     version: 3.1.0
