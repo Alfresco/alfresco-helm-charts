@@ -39,7 +39,7 @@ spec:
             - -c
             - |
               NCTARGET=$(echo "$DATABASE_URL" | awk -F ';|/' '{print $3}')
-              echo -n "Chacking database socket: "
+              echo -n "Checking database socket: "
               if [[ "$NCTARGET" == *":"* ]]; then
                 until nc -vw1 $NCTARGET; do
                   sleep 2
