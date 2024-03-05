@@ -1,6 +1,6 @@
 configuration:
   db:
-    url: postgresql://pg-postgresql-acs/alfresco
+    url: postgresql://pg-postgresql-acs:5432/alfresco
     username: &pguser pguser
     password: &pgpass pgpass
   messageBroker:
