@@ -5,8 +5,9 @@ metadata:
   name: {{ include "alfresco-search-enterprise.fullname" . }}-reindexing
   labels:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
-    "helm.sh/hook": {{ .Values.reindexing.policy.run }}
-    "helm.sh/hook-delete-policy": {{ .Values.reindexing.policy.delete }}
+    {{- with $.Values.reindexing.hook.name }}
+    helm.sh/hook: {{ . }}
+    {{- end }}
 spec:
   template:
     metadata:
