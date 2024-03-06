@@ -65,6 +65,12 @@ reindexing:
         # -- Key within the configmap holding the full url to connect to the
         # alfresco repository
         url: REPOSITORY_URL
+  # -- Helm hooks definition
+  policy:
+    # -- When the job will be executed
+    run: post-install
+    # -- When the resources associated with job will be deleted. By default resources will be kept until a new installation.
+    delete: before-hook-creation
   db:
     # -- Provide the full JDBC url to connect to database service e.g.:
     # `jdbc:postgresql://hostname:5432/database`

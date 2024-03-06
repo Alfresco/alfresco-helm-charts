@@ -1,6 +1,6 @@
 # alfresco-search-enterprise
 
-![Version: 3.2.3](https://img.shields.io/badge/Version-3.2.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.0.1](https://img.shields.io/badge/AppVersion-4.0.0.1-informational?style=flat-square)
+![Version: 3.2.4](https://img.shields.io/badge/Version-3.2.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.0.0.1](https://img.shields.io/badge/AppVersion-4.0.0.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -71,6 +71,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | reindexing.initcontainers.waitForRepository.resources.limits.cpu | string | `"0.25"` |  |
 | reindexing.initcontainers.waitForRepository.resources.limits.memory | string | `"10Mi"` |  |
 | reindexing.pathIndexingEnabled | bool | `true` |  |
+| reindexing.policy | object | `{"delete":"before-hook-creation","run":"post-install"}` | Helm hooks definition |
+| reindexing.policy.delete | string | `"before-hook-creation"` | When the resources associated with job will be deleted. By default resources will be kept until a new installation. |
+| reindexing.policy.run | string | `"post-install"` | When the job will be executed |
 | reindexing.repository.existingConfigMap.keys.url | string | `"REPOSITORY_URL"` | Key within the configmap holding the full url to connect to the alfresco repository |
 | reindexing.repository.existingConfigMap.name | string | `nil` | Alternatively, provide repository connection details via an existing configmap |
 | reindexing.repository.url | string | `nil` | URL of the Alfresco repository |
