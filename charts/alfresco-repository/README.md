@@ -1,6 +1,6 @@
 # alfresco-repository
 
-![Version: 0.4.1](https://img.shields.io/badge/Version-0.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.2.1](https://img.shields.io/badge/AppVersion-23.2.1-informational?style=flat-square)
+![Version: 0.5.0-alpha.0](https://img.shields.io/badge/Version-0.5.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.2.1](https://img.shields.io/badge/AppVersion-23.2.1-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -19,6 +19,13 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | args | list | `[]` |  |
+| autoscaling.behavior.scaleDown.policies | list | `[{"periodSeconds":60,"type":"Pods","value":1}]` | list of available policies for scaling down scale down either by one pod or by destroying 25% of the pods (whichever is smaller) |
+| autoscaling.behavior.scaleUp.policies | list | `[{"periodSeconds":60,"type":"Percent","value":50},{"periodSeconds":60,"type":"Pods","value":2}]` | list of available policies for scaling up scale up either by one pod or by adding 50% more pods (whichever is bigger) |
+| autoscaling.behavior.scaleUp.stabilizationWindowSeconds | int | `30` |  |
+| autoscaling.enabled | bool | `false` | Toggle repository autoscaling |
+| autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicatset |
+| autoscaling.metrics | list | `[{"resource":{"name":"cpu","target":{"averageUtilization":75,"type":"Utilization"}},"type":"Resource"}]` | a list of resource the HPA controller should monitor For more details check https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-resource-metrics |
+| autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicatset |
 | command | list | `[]` |  |
 | configuration.db.driver | string | `nil` | JDBC driver class of the driver if none is provided the it is guessed from the URL provided |
 | configuration.db.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver class to use. The configmap may leverage the alfresco-repository.db.cm named template to auto-generate it from the sole url parameter. |
@@ -114,7 +121,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | replicaCount | int | `1` |  |
 | resources.limits.cpu | string | `"4"` |  |
 | resources.limits.memory | string | `"8Gi"` |  |
-| resources.requests.cpu | string | `"250m"` |  |
+| resources.requests.cpu | string | `"2"` |  |
 | resources.requests.memory | string | `"2Gi"` |  |
 | securityContext | object | `{}` |  |
 | service.name | string | `"repository"` |  |
