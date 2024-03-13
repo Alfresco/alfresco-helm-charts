@@ -1,0 +1,90 @@
+---
+suite: test repository Horizontal Pod Autoscaler
+templates:
+  - hpa.yaml
+values:
+  - values/test_values.yaml
+set:
+  autoscaling: &autoscale
+    enabled: true
+tests:
+  - it: should render default HPA
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-repository
+      - contains:
+          path: spec.behavior.scaleDown.policies
+          content:
+            periodSeconds: 60
+            type: Pods
+            value: 1
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+            periodSeconds: 60
+            type: Percent
+            value: 50
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+             periodSeconds: 60
+             type: Pods
+             value: 2
+      - equal:
+          path: spec.behavior.scaleUp.stabilizationWindowSeconds
+          value: 30
+  - it: should render custom HPA
+    set:
+      autoscaling:
+        <<: *autoscale
+        minReplicas: 2
+        maxReplicas: 4
+        behavior:
+          scaleDown:
+            policies:
+              - periodSeconds: 600
+                type: Pods
+                value: 4
+            stabilizationWindowSeconds: 180
+          scaleUp:
+            policies:
+              - periodSeconds: 600
+                type: Percent
+                value: 400
+            stabilizationWindowSeconds: 300
+        metrics:
+          - resource:
+              name: cpu
+              target:
+                averageUtilization: 50
+                type: Utilization
+            type: Resource
+    asserts:
+      - contains:
+          path: spec.behavior.scaleDown.policies
+          content:
+            periodSeconds: 600
+            type: Pods
+            value: 4
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+            periodSeconds: 600
+            type: Percent
+            value: 400
+      - contains:
+          path: spec.metrics
+          content:
+            type: Resource
+            resource:
+              name: cpu
+              target:
+                averageUtilization: 50
+                type: Utilization
+      - equal:
+          path: spec.behavior.scaleDown.stabilizationWindowSeconds
+          value: 180
+      - equal:
+          path: spec.behavior.scaleUp.stabilizationWindowSeconds
+          value: 300

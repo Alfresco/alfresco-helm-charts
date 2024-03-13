@@ -12,6 +12,31 @@ tests:
           value: RELEASE-NAME-alfresco-repository
         template: deployment.yaml
 
+  - it: should have one replica by default
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 1
+        template: deployment.yaml
+
+  - it: should have number of replica set rom values
+    set:
+      replicaCount: 4
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 4
+        template: deployment.yaml
+
+  - it: should not have replicas set with autoscaling
+    set:
+      autoscaling:
+        enabled: true
+    asserts:
+      - isNull:
+          path: spec.replicas
+        template: deployment.yaml
+
   - it: should have default configmap in env
     asserts:
       - contains:
@@ -53,7 +78,7 @@ tests:
           path: spec.template.spec.containers[0].resources
           value:
             requests:
-              cpu: "250m"
+              cpu: "2"
               memory: "2Gi"
             limits:
               cpu: "4"

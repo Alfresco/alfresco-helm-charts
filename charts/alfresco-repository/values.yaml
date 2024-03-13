@@ -233,7 +233,7 @@ ingress:
   #      - chart-example.local
 resources:
   requests:
-    cpu: "250m"
+    cpu: "2"
     memory: "2Gi"
   limits:
     cpu: "4"
@@ -257,6 +257,42 @@ livenessProbe:
   httpGet:
     path: /alfresco/api/-default-/public/alfresco/versions/1/probes/-live-
     port: http
+autoscaling:
+  # -- Toggle repository autoscaling
+  enabled: false
+  # -- minimum number of replicas to spin up within the replicatset
+  minReplicas: 1
+  # -- maximum number of replicas to spin up within the replicatset
+  maxReplicas: 3
+  behavior:
+    scaleDown:
+      # -- list of available policies for scaling down
+      # scale down either by one pod or by destroying 25% of the pods (whichever is smaller)
+      policies:
+        - periodSeconds: 60
+          type: Pods
+          value: 1
+    scaleUp:
+      # -- list of available policies for scaling up
+      # scale up either by one pod or by adding 50% more pods (whichever is bigger)
+      policies:
+        - periodSeconds: 60
+          type: Percent
+          value: 50
+        - periodSeconds: 60
+          type: Pods
+          value: 2
+      stabilizationWindowSeconds: 30
+  # -- a list of resource the HPA controller should monitor
+  # For more details check
+  # https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-resource-metrics
+  metrics:
+    - resource:
+        name: cpu
+        target:
+          averageUtilization: 75
+          type: Utilization
+      type: Resource
 extraVolumes: []
 extraVolumeMounts: []
 extraSideContainers: []
