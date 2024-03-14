@@ -1,0 +1,18 @@
+suite: test ms365-connector ingress
+templates:
+- ingress-conector-ms365.yaml
+tests:
+- it: should render extra annotations
+  values: &testvalues
+    - values/test_values.yaml
+  set:
+    ingress:
+      extraAnnotations:
+        annotationTest1: test1
+        annotationTest2: test2
+  asserts:
+    - isSubset:
+        path: metadata.annotations
+        content:
+          annotationTest1: test1
+          annotationTest2: test2
