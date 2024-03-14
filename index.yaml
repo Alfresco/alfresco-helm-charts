@@ -781,6 +781,20 @@ entries:
   alfresco-connector-ms365:
   - apiVersion: v2
     appVersion: 2.0.0
+    created: "2024-03-14T13:42:46.515474975Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.0
+    description: A Helm chart for deploying Alfresco connector ms365 service
+    digest: ae4d6ee2f51f9fad546440aa4d5190d17c47bea196e077846689a8a732dd7087
+    name: alfresco-connector-ms365
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-ms365-0.7.0/alfresco-connector-ms365-0.7.0.tgz
+    version: 0.7.0
+  - apiVersion: v2
+    appVersion: 2.0.0
     created: "2024-02-14T14:01:38.696966477Z"
     dependencies:
     - name: alfresco-common
@@ -948,6 +962,20 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-ms365-0.1.0-alpha.0/alfresco-connector-ms365-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-connector-msteams:
+  - apiVersion: v2
+    appVersion: 2.0.0
+    created: "2024-03-14T13:42:46.694359645Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.0
+    description: A Helm chart for deploying Alfresco connector msteams service
+    digest: 9813be7d03d99fdae518dbc2b915b22afb4fb34dae205c11515628d60ae85ba1
+    name: alfresco-connector-msteams
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-msteams-0.5.0/alfresco-connector-msteams-0.5.0.tgz
+    version: 0.5.0
   - apiVersion: v2
     appVersion: 2.0.0
     created: "2024-02-14T14:01:38.833649143Z"
@@ -3907,4 +3935,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-03-14T08:02:41.37212301Z"
+generated: "2024-03-14T13:42:46.694874989Z"
