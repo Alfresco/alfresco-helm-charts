@@ -1,6 +1,6 @@
 {{- $serviceName := (include "alfresco-connector-msteams.fullname" .) -}}
 {{- $servicePort := .Values.service.externalPort -}}
-apiVersion: {{ template "common.capabilities.ingress.apiVersion" . }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ $serviceName }}
