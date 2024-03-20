@@ -56,7 +56,7 @@ processEngine:
     ACTIVITI_CORS_ENABLED: "true"
     # -- Cross Origin Resource Sharing configuration allowed origins
     # (list of strings)
-    #ACTIVITI_CORS_ALLOWED_ORIGINS: "*"
+    # ACTIVITI_CORS_ALLOWED_ORIGINS: "*"
     # -- Cross Origin Resource Sharing configuration allowed origins
     # (list of glob-like patterns)
     ACTIVITI_CORS_ALLOWED_ORIGIN_PATTERNS: "*"
