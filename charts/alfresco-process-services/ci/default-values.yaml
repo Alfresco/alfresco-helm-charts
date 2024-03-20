@@ -10,5 +10,11 @@ postgresql:
     username: *dbuser
     password: *dbpass
     database: activiti-admin
+license:
+  secretName: aps-license
+processEngine:
+  environment:
+    ACTIVITI_CORS_ALLOWED_ORIGINS: "http://localhost"
+    JAVA_OPTS: "-Dapp.review-workflows.enabled=true"
 tags:
   ci: true
