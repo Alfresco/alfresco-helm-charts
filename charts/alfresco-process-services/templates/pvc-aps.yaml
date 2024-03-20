@@ -1,0 +1,3 @@
+{{- if and .Values.processEngine.persistence.enabled (not .Values.processEngine.persistence.existingClaim) }}
+{{ include "alfresco-common.component_pvc" .Values.processEngine }}
+{{- end }}

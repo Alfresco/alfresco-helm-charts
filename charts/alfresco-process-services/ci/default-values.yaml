@@ -1,0 +1,14 @@
+database:
+  url: postgresql://pg-postgresql-aps:5432/activiti-admin
+  username: &dbuser alfresco
+  password: &dbpass alfresco-pass
+postgresql:
+  fullnameOverride: pg-postgresql-aps
+  image:
+    tag: 14.9.0
+  auth:
+    username: *dbuser
+    password: *dbpass
+    database: activiti-admin
+tags:
+  ci: true

@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco-process-services.fullname" . }}-admin
+  labels:
+    app: {{ template "alfresco-process-services.fullname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: admin
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "alfresco-process-services.fullname" . }}-admin
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/config-admin.yaml") . | sha256sum }}
+      labels:
+        app: {{ template "alfresco-process-services.fullname" . }}-admin
+        release: {{ .Release.Name }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.registryPullSecrets }}
+      containers:
+        - name: {{ template "alfresco-process-services.fullname" . }}-admin
+          image: {{ .Values.adminApp.image.repository }}:{{ .Values.adminApp.image.tag }}
+          imagePullPolicy: {{ .Values.adminApp.image.pullPolicy }}
+          env:
+            {{- with .Values.database }}
+            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-process-services.database" $) }}
+            {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-process-services.database" $) }}
+            - name: ACTIVITI_ADMIN_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $dbSecret }}
+                  key: {{ .existingSecret.keys.username }}
+            - name: ACTIVITI_ADMIN_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $dbSecret }}
+                  key: {{ .existingSecret.keys.password }}
+            - name: ACTIVITI_ADMIN_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $dbCm }}
+                  key: {{ .existingConfigMap.keys.url }}
+            {{- end }}
+          envFrom:
+          - configMapRef:
+              # config map to use, defined in config-repository.yaml
+              name: {{ template "alfresco-process-services.fullname" . }}-admin-configmap
+          ports:
+            - containerPort: {{ .Values.adminApp.image.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.adminApp.livenessProbe.path }}
+              port: {{ .Values.adminApp.image.internalPort }}
+            initialDelaySeconds: {{ .Values.adminApp.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.adminApp.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.adminApp.livenessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.adminApp.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.adminApp.readinessProbe.path }}
+              port: {{ .Values.adminApp.image.internalPort }}
+            initialDelaySeconds: {{ .Values.adminApp.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.adminApp.readinessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.adminApp.readinessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.adminApp.readinessProbe.timeoutSeconds }}
+          resources:
+{{ toYaml .Values.adminApp.resources | indent 12 }}
+    {{- if .Values.adminApp.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.adminApp.nodeSelector | indent 8 }}
+    {{- end }}
