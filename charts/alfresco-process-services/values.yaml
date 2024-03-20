@@ -149,7 +149,9 @@ adminApp:
 
 database:
   # -- JDBC url to connect to the external DB
-  url: null
+  url:
+    aps: null
+    admin: null
   # -- JDBC username to use to connect to the DB
   username: null
   # -- JDBC password to use to connect to the DB

@@ -1,0 +1,16 @@
+{{- if not .Values.database.existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: >-
+    {{ template "alfresco-process-services.database-admin" . }}
+  labels:
+    app: {{ template "alfresco-process-services.fullname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  {{- with .Values.database }}
+  DATABASE_URL: {{ hasPrefix "jdbc:" .url.admin | ternary .url.admin (print "jdbc:" .url.admin) }}
+  {{- end }}
+{{- end }}

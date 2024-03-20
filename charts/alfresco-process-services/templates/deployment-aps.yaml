@@ -33,7 +33,7 @@ spec:
           imagePullPolicy: {{ .Values.processEngine.image.pullPolicy }}
           env:
             {{- with .Values.database }}
-            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-process-services.database" $) }}
+            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-process-services.database-aps" $) }}
             {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-process-services.database" $) }}
             - name: ACTIVITI_DATASOURCE_PASSWORD
               valueFrom:

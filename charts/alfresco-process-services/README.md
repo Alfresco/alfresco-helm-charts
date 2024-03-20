@@ -1,6 +1,6 @@
 # alfresco-process-services
 
-![Version: 0.10.0](https://img.shields.io/badge/Version-0.10.0-informational?style=flat-square) ![AppVersion: 24.1.0](https://img.shields.io/badge/AppVersion-24.1.0-informational?style=flat-square)
+![Version: 0.11.0](https://img.shields.io/badge/Version-0.11.0-informational?style=flat-square) ![AppVersion: 24.1.0](https://img.shields.io/badge/AppVersion-24.1.0-informational?style=flat-square)
 
 A Helm chart for Alfresco Process Services
 
@@ -54,7 +54,7 @@ A Helm chart for Alfresco Process Services
 | database.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username |
 | database.existingSecret.name | string | `nil` | Name of a pre-existing secret containing database credentials |
 | database.password | string | `nil` | JDBC password to use to connect to the DB |
-| database.url | string | `nil` | JDBC url to connect to the external DB |
+| database.url | object | `{"admin":null,"aps":null}` | JDBC url to connect to the external DB |
 | database.username | string | `nil` | JDBC username to use to connect to the DB |
 | ingress.enabled | bool | `true` |  |
 | ingress.hostName | string | `""` |  |

@@ -1,5 +1,7 @@
 database:
-  url: postgresql://pg-postgresql-aps:5432/activiti-admin
+  url:
+    aps: postgresql://pg-postgresql-aps:5432/postgres
+    admin: postgresql://pg-postgresql-aps:5432/activiti-admin
   username: &dbuser alfresco
   password: &dbpass alfresco-pass
 postgresql:

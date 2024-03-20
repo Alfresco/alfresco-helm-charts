@@ -31,7 +31,7 @@ spec:
           env:
             {{- with .Values.database }}
             {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-process-services.database" $) }}
-            {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-process-services.database" $) }}
+            {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-process-services.database-admin" $) }}
             - name: ACTIVITI_ADMIN_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
