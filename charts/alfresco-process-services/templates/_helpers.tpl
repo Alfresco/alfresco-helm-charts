@@ -39,7 +39,7 @@ Usage "alfresco-process-services.database-aps" $
 */}}
 
 {{- define "alfresco-process-services.database-aps" -}}
-{{- $ctx := dict "Values" (dict "nameOverride" "alfresco-process-services-database-aps") "Chart" .Chart "Release" .Release }}
+{{- $ctx := dict "Values" (dict "nameOverride" "database-aps") "Chart" .Chart "Release" .Release }}
 {{- template "alfresco-process-services.fullname" $ctx }}
 {{- end -}}
 
@@ -51,7 +51,7 @@ Usage "alfresco-process-services.database-admin" $
 */}}
 
 {{- define "alfresco-process-services.database-admin" -}}
-{{- $ctx := dict "Values" (dict "nameOverride" "alfresco-process-services-database-admin") "Chart" .Chart "Release" .Release }}
+{{- $ctx := dict "Values" (dict "nameOverride" "database-admin") "Chart" .Chart "Release" .Release }}
 {{- template "alfresco-process-services.fullname" $ctx }}
 {{- end -}}
 
@@ -63,6 +63,6 @@ Usage "alfresco-process-services.database" $
 */}}
 
 {{- define "alfresco-process-services.database" -}}
-{{- $ctx := dict "Values" (dict "nameOverride" "alfresco-process-services-database") "Chart" .Chart "Release" .Release }}
+{{- $ctx := dict "Values" (dict "nameOverride" "database") "Chart" .Chart "Release" .Release }}
 {{- template "alfresco-process-services.fullname" $ctx }}
 {{- end -}}
