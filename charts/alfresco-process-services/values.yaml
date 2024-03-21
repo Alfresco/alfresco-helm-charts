@@ -3,7 +3,8 @@
 # Declare variables to be passed into your templates.
 ---
 replicaCount: 1
-registryPullSecrets: quay-registry-secret
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
 
 ingress:
   enabled: true
@@ -12,6 +13,10 @@ ingress:
 
 processEngine:
   replicacount: 1
+  podSecurityContext:
+    runAsUser: 33007
+    runAsGroup: 33007
+    fsGroup: 33007
   image:
     repository: quay.io/alfresco/alfresco-process-services
     tag: 24.1.0
@@ -114,6 +119,7 @@ license:
 
 adminApp:
   replicacount: 1
+  podSecurityContext: {}
   image:
     repository: quay.io/alfresco/alfresco-process-services-admin
     tag: 24.1.0

@@ -3,17 +3,12 @@ kind: Deployment
 metadata:
   name: {{ template "alfresco-process-services.fullname" . }}-admin
   labels:
-    app: {{ template "alfresco-process-services.fullname" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-    component: admin
+    {{- include "alfresco-process-services.admin.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "alfresco-process-services.fullname" . }}-admin
-      release: {{ .Release.Name }}
+      {{- include "alfresco-process-services.admin.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -22,16 +17,16 @@ spec:
         app: {{ template "alfresco-process-services.fullname" . }}-admin
         release: {{ .Release.Name }}
     spec:
-      imagePullSecrets:
-        - name: {{ .Values.registryPullSecrets }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-common.component-pod-security-context" .Values.adminApp | indent 4 }}
       containers:
         - name: {{ template "alfresco-process-services.fullname" . }}-admin
           image: {{ .Values.adminApp.image.repository }}:{{ .Values.adminApp.image.tag }}
           imagePullPolicy: {{ .Values.adminApp.image.pullPolicy }}
           env:
             {{- with .Values.database }}
-            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-process-services.database" $) }}
-            {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-process-services.database-admin" $) }}
+            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-process-services.database-secret.name" $) }}
+            {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-process-services.database-config-admin.name" $) }}
             - name: ACTIVITI_ADMIN_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -51,7 +46,7 @@ spec:
           envFrom:
           - configMapRef:
               # config map to use, defined in config-repository.yaml
-              name: {{ template "alfresco-process-services.fullname" . }}-admin-configmap
+              name: {{ template "alfresco-process-services.config-admin.name" . }}
           ports:
             - containerPort: {{ .Values.adminApp.image.internalPort }}
           livenessProbe:
@@ -71,8 +66,8 @@ spec:
             failureThreshold: {{ .Values.adminApp.readinessProbe.failureThreshold }}
             timeoutSeconds: {{ .Values.adminApp.readinessProbe.timeoutSeconds }}
           resources:
-{{ toYaml .Values.adminApp.resources | indent 12 }}
-    {{- if .Values.adminApp.nodeSelector }}
+            {{- toYaml .Values.adminApp.resources | nindent 12 }}
+      {{- if .Values.adminApp.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.adminApp.nodeSelector | indent 8 }}
-    {{- end }}
+        {{- toYaml .Values.adminApp.nodeSelector | nindent 8 }}
+      {{- end }}

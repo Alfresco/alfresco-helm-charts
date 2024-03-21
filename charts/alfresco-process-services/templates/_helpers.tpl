@@ -32,37 +32,29 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{/*
-Compute database related resources name
-
-Usage "alfresco-process-services.database-aps" $
-
+Create chart name and version as used by the chart label.
 */}}
-
-{{- define "alfresco-process-services.database-aps" -}}
-{{- $ctx := dict "Values" (dict "nameOverride" "database-aps") "Chart" .Chart "Release" .Release }}
-{{- template "alfresco-process-services.fullname" $ctx }}
-{{- end -}}
+{{- define "alfresco-process-services.chart" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
 
 {{/*
-Compute database related resources name
-
-Usage "alfresco-process-services.database-admin" $
-
+Common labels
 */}}
-
-{{- define "alfresco-process-services.database-admin" -}}
-{{- $ctx := dict "Values" (dict "nameOverride" "database-admin") "Chart" .Chart "Release" .Release }}
-{{- template "alfresco-process-services.fullname" $ctx }}
-{{- end -}}
+{{- define "alfresco-process-services.labels" -}}
+helm.sh/chart: {{ include "alfresco-process-services.chart" . }}
+{{ include "alfresco-process-services.selectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/component: {{ .Chart.Name }}
+{{- end }}
 
 {{/*
-Compute database related resources name
-
-Usage "alfresco-process-services.database" $
-
+Selector labels
 */}}
-
-{{- define "alfresco-process-services.database" -}}
-{{- $ctx := dict "Values" (dict "nameOverride" "database") "Chart" .Chart "Release" .Release }}
-{{- template "alfresco-process-services.fullname" $ctx }}
-{{- end -}}
+{{- define "alfresco-process-services.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "alfresco-process-services.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}

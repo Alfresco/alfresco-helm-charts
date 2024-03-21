@@ -81,7 +81,7 @@ jobs:
           kubectl create ns "$INSTALL_NAMESPACE"
           kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson="${HOME}"/.docker/config.json --type=kubernetes.io/dockerconfigjson -n "$INSTALL_NAMESPACE"
           kubectl create secret generic broker-secret --from-literal=BROKER_URL="failover:(nio://activemq:61616)?timeout=3000" --from-literal=BROKER_USERNAME=admin --from-literal=BROKER_PASSWORD=admin -n "$INSTALL_NAMESPACE"
-          kubectl create secret generic --from-file=activiti.lic=/tmp/activiti.lic aps-license -n "$INSTALL_NAMESPACE"
+          kubectl create secret generic aps-license --from-file=activiti.lic=/tmp/activiti.lic -n "$INSTALL_NAMESPACE"
 
       - name: Prepare charts mocks for testing
         if: steps.list-changed.outputs.changed == 'true'

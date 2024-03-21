@@ -3,16 +3,12 @@ kind: Deployment
 metadata:
   name: {{ template "alfresco-process-services.fullname" . }}-aps
   labels:
-    app: {{ template "alfresco-process-services.fullname" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- include "alfresco-process-services.aps.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "alfresco-process-services.fullname" . }}-aps
-      release: {{ .Release.Name }}
+      {{- include "alfresco-process-services.aps.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -21,20 +17,16 @@ spec:
         app: {{ template "alfresco-process-services.fullname" . }}-aps
         release: {{ .Release.Name }}
     spec:
-      imagePullSecrets:
-        - name: {{ .Values.registryPullSecrets }}
-      securityContext:
-        runAsUser: 33007
-        runAsGroup: 33007
-        fsGroup: 33007
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-common.component-pod-security-context" .Values.processEngine | indent 4 }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ .Values.processEngine.image.repository }}:{{ .Values.processEngine.image.tag }}
           imagePullPolicy: {{ .Values.processEngine.image.pullPolicy }}
           env:
             {{- with .Values.database }}
-            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-process-services.database" $) }}
-            {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-process-services.database-aps" $) }}
+            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-process-services.database-secret.name" $) }}
+            {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-process-services.database-config-aps.name" $) }}
             - name: ACTIVITI_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -54,7 +46,7 @@ spec:
           envFrom:
             - configMapRef:
                 # config map to use, defined in config-repository.yaml
-                name: {{ template "alfresco-process-services.fullname" . }}-aps-configmap
+                name: {{ template "alfresco-process-services.config-aps.name" . }}
           ports:
             - containerPort: {{ .Values.processEngine.image.internalPort }}
           volumeMounts:
@@ -86,11 +78,11 @@ spec:
             failureThreshold: {{ .Values.processEngine.readinessProbe.failureThreshold }}
             timeoutSeconds: {{ .Values.processEngine.readinessProbe.timeoutSeconds }}
           resources:
-{{ toYaml .Values.processEngine.resources | indent 12 }}
-    {{- if .Values.processEngine.nodeSelector }}
+            {{- toYaml .Values.processEngine.resources | nindent 12 }}
+      {{- if .Values.processEngine.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.processEngine.nodeSelector | indent 8 }}
-    {{- end }}
+        {{- toYaml .Values.processEngine.nodeSelector | nindent 8 }}
+      {{- end }}
       volumes:
         {{- if .Values.processEngine.persistence.enabled }}
         {{- include "data_volume" .Values.processEngine | nindent 8 }}
