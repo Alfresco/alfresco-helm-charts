@@ -14,8 +14,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-aps.yaml") . | sha256sum }}
       labels:
-        app: {{ template "alfresco-process-services.fullname" . }}-aps
-        release: {{ .Release.Name }}
+        {{- include "alfresco-process-services.aps.labels" . | nindent 8 }}
     spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       {{- include "alfresco-common.component-pod-security-context" .Values.processEngine | indent 4 }}

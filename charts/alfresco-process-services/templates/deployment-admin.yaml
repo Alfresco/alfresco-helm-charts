@@ -14,8 +14,7 @@ spec:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/config-admin.yaml") . | sha256sum }}
       labels:
-        app: {{ template "alfresco-process-services.fullname" . }}-admin
-        release: {{ .Release.Name }}
+        {{- include "alfresco-process-services.admin.labels" . | nindent 8 }}
     spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       {{- include "alfresco-common.component-pod-security-context" .Values.adminApp | indent 4 }}
