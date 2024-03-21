@@ -48,6 +48,8 @@ A Helm chart for Alfresco Process Services
 | adminApp.service.externalPort | int | `80` |  |
 | adminApp.service.name | string | `"aps-admin"` |  |
 | adminApp.service.type | string | `"ClusterIP"` |  |
+| adminApp.volumeMounts | list | `[]` |  |
+| adminApp.volumes | list | `[]` |  |
 | database.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver class to use. The configmap may leverage the alfresco-repository.db.cm named template to auto-generate it from the sole url parameter. |
 | database.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database |
 | database.existingConfigMap.name | string | `nil` |  |
@@ -111,4 +113,6 @@ A Helm chart for Alfresco Process Services
 | processEngine.service.externalPort | int | `80` |  |
 | processEngine.service.name | string | `"aps"` |  |
 | processEngine.service.type | string | `"ClusterIP"` |  |
+| processEngine.volumeMounts | list | `[]` |  |
+| processEngine.volumes | list | `[]` |  |
 | replicaCount | int | `1` |  |

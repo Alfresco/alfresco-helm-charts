@@ -113,6 +113,8 @@ processEngine:
     IDENTITY_SERVICE_USE_BROWSER_BASED_LOGOUT: "true"
     # -- Alfresco Identity Service application secret
     IDENTITY_CREDENTIALS_SECRET: ""
+  volumes: []
+  volumeMounts: []
 
 license:
   secretName:
@@ -152,6 +154,8 @@ adminApp:
     ACTIVITI_ADMIN_REST_APP_USERNAME: "admin@app.activiti.com"
     # -- activiti-app password
     ACTIVITI_ADMIN_REST_APP_PASSWORD: "admin"
+  volumes: []
+  volumeMounts: []
 
 database:
   # -- JDBC url to connect to the external DB

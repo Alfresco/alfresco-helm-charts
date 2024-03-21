@@ -60,6 +60,9 @@ spec:
               subPath: activiti.lic
               readOnly: true
             {{- end }}
+          {{- with .Values.processEngine.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           livenessProbe:
             httpGet:
               path: {{ .Values.processEngine.livenessProbe.path }}
@@ -83,12 +86,15 @@ spec:
         {{- toYaml .Values.processEngine.nodeSelector | nindent 8 }}
       {{- end }}
       volumes:
-        {{- if .Values.processEngine.persistence.enabled }}
+      {{- if .Values.processEngine.persistence.enabled }}
         {{- include "data_volume" .Values.processEngine | nindent 8 }}
-        {{- end }}
-        {{- if .Values.license.secretName }}
+      {{- end }}
+      {{- if .Values.license.secretName }}
         - name: license
           secret:
             defaultMode: 0400
             secretName: {{ .Values.license.secretName }}
-        {{- end }}
+      {{- end }}
+      {{- with .Values.processEngine.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

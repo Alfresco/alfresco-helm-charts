@@ -66,7 +66,15 @@ spec:
             timeoutSeconds: {{ .Values.adminApp.readinessProbe.timeoutSeconds }}
           resources:
             {{- toYaml .Values.adminApp.resources | nindent 12 }}
+          {{- with .Values.adminApp.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       {{- if .Values.adminApp.nodeSelector }}
       nodeSelector:
         {{- toYaml .Values.adminApp.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- with .Values.adminApp.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
       {{- end }}
