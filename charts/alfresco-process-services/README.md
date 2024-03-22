@@ -104,7 +104,7 @@ A Helm chart for Alfresco Process Services
 | processEngine.readinessProbe.path | string | `"/activiti-app/app/rest/locale"` |  |
 | processEngine.readinessProbe.periodSeconds | int | `10` |  |
 | processEngine.readinessProbe.timeoutSeconds | int | `5` |  |
-| processEngine.replicacount | int | `1` |  |
+| processEngine.replicaCount | int | `1` |  |
 | processEngine.service.externalPort | int | `80` |  |
 | processEngine.service.name | string | `"aps"` |  |
 | processEngine.service.type | string | `"ClusterIP"` |  |

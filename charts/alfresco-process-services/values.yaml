@@ -11,7 +11,7 @@ ingress:
   hostName: ''
 
 processEngine:
-  replicacount: 1
+  replicaCount: 1
   podSecurityContext:
     runAsUser: 33007
     runAsGroup: 33007
