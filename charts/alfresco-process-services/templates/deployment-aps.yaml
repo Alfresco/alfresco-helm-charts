@@ -11,8 +11,15 @@ spec:
       {{- include "alfresco-process-services.aps.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- with .Values.processEngine.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       labels:
         {{- include "alfresco-process-services.aps.labels" . | nindent 8 }}
+        {{- with .Values.processEngine.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       {{- include "alfresco-common.component-pod-security-context" .Values.processEngine | indent 4 }}
@@ -94,5 +101,13 @@ spec:
             secretName: {{ .Values.license.secretName }}
       {{- end }}
       {{- with .Values.processEngine.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.processEngine.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.processEngine.tolerations }}
+      tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

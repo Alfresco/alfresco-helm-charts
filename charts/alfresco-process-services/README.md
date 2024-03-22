@@ -15,6 +15,7 @@ A Helm chart for Alfresco Process Services
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| adminApp.affinity | object | `{}` |  |
 | adminApp.environment.ACTIVITI_ADMIN_DATASOURCE_DRIVER | string | `"org.postgresql.Driver"` | Set the JDBC driver Class |
 | adminApp.environment.ACTIVITI_ADMIN_HIBERNATE_DIALECT | string | `"org.hibernate.dialect.PostgreSQLDialect"` | Hibernate dialect (must match the driver) |
 | adminApp.environment.ACTIVITI_ADMIN_REST_APP_HOST | string | `"http://localhost"` | activiti-app address |
@@ -33,6 +34,9 @@ A Helm chart for Alfresco Process Services
 | adminApp.livenessProbe.path | string | `"/activiti-admin/"` |  |
 | adminApp.livenessProbe.periodSeconds | int | `10` |  |
 | adminApp.livenessProbe.timeoutSeconds | int | `5` |  |
+| adminApp.nodeSelector | object | `{}` |  |
+| adminApp.podAnnotations | object | `{}` |  |
+| adminApp.podLabels | object | `{}` |  |
 | adminApp.podSecurityContext | object | `{}` |  |
 | adminApp.readinessProbe.failureThreshold | int | `5` |  |
 | adminApp.readinessProbe.initialDelaySeconds | int | `25` |  |
@@ -43,6 +47,7 @@ A Helm chart for Alfresco Process Services
 | adminApp.service.externalPort | int | `80` |  |
 | adminApp.service.name | string | `"aps-admin"` |  |
 | adminApp.service.type | string | `"ClusterIP"` |  |
+| adminApp.tolerations | list | `[]` |  |
 | adminApp.volumeMounts | list | `[]` |  |
 | adminApp.volumes | list | `[]` |  |
 | database.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database |
@@ -58,6 +63,7 @@ A Helm chart for Alfresco Process Services
 | ingress.hostName | string | `""` |  |
 | ingress.protocol | string | `"http"` |  |
 | license.secretName | string | `nil` |  |
+| processEngine.affinity | object | `{}` |  |
 | processEngine.environment.ACTIVITI_CORS_ALLOWED_HEADERS | string | `"Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token"` | Cross Origin Resource Sharing configuration allowed http headers |
 | processEngine.environment.ACTIVITI_CORS_ALLOWED_METHODS | string | `"GET,POST,HEAD,OPTIONS,PUT,DELETE"` | Cross Origin Resource Sharing configuration allowed http methods |
 | processEngine.environment.ACTIVITI_CORS_ALLOWED_ORIGIN_PATTERNS | string | `"*"` | Cross Origin Resource Sharing configuration allowed origins (list of glob-like patterns) |
@@ -90,12 +96,15 @@ A Helm chart for Alfresco Process Services
 | processEngine.livenessProbe.path | string | `"/activiti-app/app/rest/locale"` |  |
 | processEngine.livenessProbe.periodSeconds | int | `10` |  |
 | processEngine.livenessProbe.timeoutSeconds | int | `5` |  |
+| processEngine.nodeSelector | object | `{}` |  |
 | processEngine.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | processEngine.persistence.baseSize | string | `"20Gi"` | Initial default size of dynamically provisioned storage |
 | processEngine.persistence.data | object | `{"mountPath":"/usr/local/data","subPath":"alfresco-process-services/process-data"}` | Where to mount data into the container |
 | processEngine.persistence.enabled | bool | `false` | Persist processEngine data |
 | processEngine.persistence.existingClaim | string | `nil` | Define if you want to reuse an already existing PVC |
 | processEngine.persistence.storageClass | string | `nil` | Define if you already have a custom storage class defined for dynamically provisioned storage |
+| processEngine.podAnnotations | object | `{}` |  |
+| processEngine.podLabels | object | `{}` |  |
 | processEngine.podSecurityContext.fsGroup | int | `33007` |  |
 | processEngine.podSecurityContext.runAsGroup | int | `33007` |  |
 | processEngine.podSecurityContext.runAsUser | int | `33007` |  |
@@ -108,5 +117,6 @@ A Helm chart for Alfresco Process Services
 | processEngine.service.externalPort | int | `80` |  |
 | processEngine.service.name | string | `"aps"` |  |
 | processEngine.service.type | string | `"ClusterIP"` |  |
+| processEngine.tolerations | list | `[]` |  |
 | processEngine.volumeMounts | list | `[]` |  |
 | processEngine.volumes | list | `[]` |  |

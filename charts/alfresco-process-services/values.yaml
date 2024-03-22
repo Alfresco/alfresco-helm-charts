@@ -12,6 +12,8 @@ ingress:
 
 processEngine:
   replicaCount: 1
+  podLabels: {}
+  podAnnotations: {}
   podSecurityContext:
     runAsUser: 33007
     runAsGroup: 33007
@@ -115,12 +117,17 @@ processEngine:
     IDENTITY_CREDENTIALS_SECRET: ""
   volumes: []
   volumeMounts: []
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
 
 license:
   secretName:
 
 adminApp:
   replicacount: 1
+  podAnnotations: {}
+  podLabels: {}
   podSecurityContext: {}
   image:
     repository: quay.io/alfresco/alfresco-process-services-admin
@@ -157,6 +164,9 @@ adminApp:
     ACTIVITI_ADMIN_REST_APP_PASSWORD: "admin"
   volumes: []
   volumeMounts: []
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
 
 database:
   # -- JDBC url to connect to the external DB

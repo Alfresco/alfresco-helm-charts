@@ -11,8 +11,15 @@ spec:
       {{- include "alfresco-process-services.admin.selectorLabels" . | nindent 6 }}
   template:
     metadata:
+      {{- with .Values.adminApp.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       labels:
         {{- include "alfresco-process-services.admin.labels" . | nindent 8 }}
+        {{- with .Values.adminApp.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       {{- include "alfresco-common.component-pod-security-context" .Values.adminApp | indent 4 }}
@@ -73,5 +80,13 @@ spec:
       {{- end }}
       {{- with .Values.adminApp.volumes }}
       volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.adminApp.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.adminApp.tolerations }}
+      tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
