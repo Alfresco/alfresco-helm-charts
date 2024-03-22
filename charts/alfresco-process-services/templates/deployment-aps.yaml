@@ -86,10 +86,6 @@ spec:
             timeoutSeconds: {{ .Values.processEngine.readinessProbe.timeoutSeconds }}
           resources:
             {{- toYaml .Values.processEngine.resources | nindent 12 }}
-      {{- if .Values.processEngine.nodeSelector }}
-      nodeSelector:
-        {{- toYaml .Values.processEngine.nodeSelector | nindent 8 }}
-      {{- end }}
       volumes:
       {{- if .Values.processEngine.persistence.enabled }}
         {{- include "data_volume" .Values.processEngine | nindent 8 }}
@@ -101,6 +97,10 @@ spec:
             secretName: {{ .Values.license.secretName }}
       {{- end }}
       {{- with .Values.processEngine.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.processEngine.nodeSelector }}
+      nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.processEngine.affinity }}
