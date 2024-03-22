@@ -12,6 +12,8 @@ tests:
           value: RELEASE-NAME-alfresco-process-services-aps
         template: deployment-aps.yaml
   - it: should have a default volume claim when not specifying an existing one
+    set:
+        processEngine.persistence.enabled: true
     asserts:
       - equal:
           path: spec.template.spec.containers[0].volumeMounts[0].name
@@ -38,6 +40,7 @@ tests:
         template: pvc-aps.yaml
   - it: should set a specific storage class when set
     set:
+      processEngine.persistence.enabled: true
       processEngine.persistence.storageClass: my-own-storage-class
     asserts:
       - equal:
@@ -46,6 +49,7 @@ tests:
         template: pvc-aps.yaml
   - it: should override default volume claim when existing claim is provided
     set:
+      processEngine.persistence.enabled: true
       processEngine.persistence.existingClaim: my-own-custom-pvc
     asserts:
       - isNotEmpty:
@@ -59,8 +63,6 @@ tests:
           count: 0
         template: pvc-aps.yaml
   - it: should not set license by default
-    set:
-        processEngine.persistence.enabled: false
     asserts:
       - isEmpty:
           path: spec.template.spec.volumes
@@ -70,7 +72,6 @@ tests:
         template: deployment-aps.yaml
   - it: should mount license secret when set
     set:
-        processEngine.persistence.enabled: false
         license.secretName: my-own-custom-license
     asserts:
       - equal:
