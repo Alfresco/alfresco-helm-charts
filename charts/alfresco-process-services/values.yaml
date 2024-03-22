@@ -2,7 +2,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 ---
-replicaCount: 1
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
 
@@ -27,11 +26,12 @@ processEngine:
     type: ClusterIP
     externalPort: 80
   ingress:
+    className: "nginx"
     path: /activiti-app
     maxUploadSize: "5G"
   persistence:
     # -- Persist processEngine data
-    enabled: true
+    enabled: false
     # -- Initial default size of dynamically provisioned storage
     baseSize: 20Gi
     # -- Define if you already have a custom storage class defined for
@@ -139,6 +139,7 @@ adminApp:
     timeoutSeconds: 5
   readinessProbe: *adminProbe
   ingress:
+    className: "nginx"
     path: /activiti-admin
     maxUploadSize: "5G"
   environment:
@@ -171,10 +172,6 @@ database:
     keys:
       # -- configmap key where to find the URL of the database
       url: DATABASE_URL
-      # -- configmap key where to find the JDBC driver class to use.
-      # The configmap may leverage the alfresco-repository.db.cm named
-      # template to auto-generate it from the sole url parameter.
-      driver: DATABASE_DRIVER
   existingSecret:
     # -- Name of a pre-existing secret containing database credentials
     name: null

@@ -11,8 +11,6 @@ spec:
       {{- include "alfresco-process-services.aps.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config-aps.yaml") . | sha256sum }}
       labels:
         {{- include "alfresco-process-services.aps.labels" . | nindent 8 }}
     spec:

@@ -4,12 +4,6 @@
 
 A Helm chart for Alfresco Process Services
 
-## Maintainers
-
-| Name | Email | Url |
-| ---- | ------ | --- |
-| Alfresco |  |  |
-
 ## Requirements
 
 | Repository | Name | Version |
@@ -31,6 +25,7 @@ A Helm chart for Alfresco Process Services
 | adminApp.image.pullPolicy | string | `"IfNotPresent"` |  |
 | adminApp.image.repository | string | `"quay.io/alfresco/alfresco-process-services-admin"` |  |
 | adminApp.image.tag | string | `"24.1.0"` |  |
+| adminApp.ingress.className | string | `"nginx"` |  |
 | adminApp.ingress.maxUploadSize | string | `"5G"` |  |
 | adminApp.ingress.path | string | `"/activiti-admin"` |  |
 | adminApp.livenessProbe.failureThreshold | int | `5` |  |
@@ -50,7 +45,6 @@ A Helm chart for Alfresco Process Services
 | adminApp.service.type | string | `"ClusterIP"` |  |
 | adminApp.volumeMounts | list | `[]` |  |
 | adminApp.volumes | list | `[]` |  |
-| database.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver class to use. The configmap may leverage the alfresco-repository.db.cm named template to auto-generate it from the sole url parameter. |
 | database.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database |
 | database.existingConfigMap.name | string | `nil` |  |
 | database.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password |
@@ -88,6 +82,7 @@ A Helm chart for Alfresco Process Services
 | processEngine.image.pullPolicy | string | `"IfNotPresent"` |  |
 | processEngine.image.repository | string | `"quay.io/alfresco/alfresco-process-services"` |  |
 | processEngine.image.tag | string | `"24.1.0"` |  |
+| processEngine.ingress.className | string | `"nginx"` |  |
 | processEngine.ingress.maxUploadSize | string | `"5G"` |  |
 | processEngine.ingress.path | string | `"/activiti-app"` |  |
 | processEngine.livenessProbe.failureThreshold | int | `5` |  |
@@ -98,7 +93,7 @@ A Helm chart for Alfresco Process Services
 | processEngine.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | processEngine.persistence.baseSize | string | `"20Gi"` | Initial default size of dynamically provisioned storage |
 | processEngine.persistence.data | object | `{"mountPath":"/usr/local/data","subPath":"alfresco-process-services/process-data"}` | Where to mount data into the container |
-| processEngine.persistence.enabled | bool | `true` | Persist processEngine data |
+| processEngine.persistence.enabled | bool | `false` | Persist processEngine data |
 | processEngine.persistence.existingClaim | string | `nil` | Define if you want to reuse an already existing PVC |
 | processEngine.persistence.storageClass | string | `nil` | Define if you already have a custom storage class defined for dynamically provisioned storage |
 | processEngine.podSecurityContext.fsGroup | int | `33007` |  |
@@ -115,4 +110,3 @@ A Helm chart for Alfresco Process Services
 | processEngine.service.type | string | `"ClusterIP"` |  |
 | processEngine.volumeMounts | list | `[]` |  |
 | processEngine.volumes | list | `[]` |  |
-| replicaCount | int | `1` |  |

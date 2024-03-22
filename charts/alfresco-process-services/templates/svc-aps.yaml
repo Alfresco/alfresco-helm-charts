@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ template "alfresco-process-services.service-aps.name" . }}
   labels:
-    {{- include "alfresco-process-services.labels" . | nindent 4 }}
+    {{- include "alfresco-process-services.aps.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.processEngine.service.type }}
   ports:

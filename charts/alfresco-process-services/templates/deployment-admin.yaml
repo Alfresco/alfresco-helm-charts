@@ -5,14 +5,12 @@ metadata:
   labels:
     {{- include "alfresco-process-services.admin.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.adminApp.replicaCount }}
   selector:
     matchLabels:
       {{- include "alfresco-process-services.admin.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config-admin.yaml") . | sha256sum }}
       labels:
         {{- include "alfresco-process-services.admin.labels" . | nindent 8 }}
     spec:
@@ -44,7 +42,6 @@ spec:
             {{- end }}
           envFrom:
           - configMapRef:
-              # config map to use, defined in config-repository.yaml
               name: {{ template "alfresco-process-services.config-admin.name" . }}
           ports:
             - containerPort: {{ .Values.adminApp.image.internalPort }}

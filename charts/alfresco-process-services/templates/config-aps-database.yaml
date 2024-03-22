@@ -5,7 +5,7 @@ metadata:
   name: >-
     {{ template "alfresco-process-services.database-config-aps.name" . }}
   labels:
-    {{- include "alfresco-process-services.labels" . | nindent 4 }}
+    {{- include "alfresco-process-services.aps.labels" . | nindent 4 }}
 data:
   {{- with .Values.database }}
   DATABASE_URL: {{ hasPrefix "jdbc:" .url.aps | ternary .url.aps (print "jdbc:" .url.aps) }}

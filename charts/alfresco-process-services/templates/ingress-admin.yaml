@@ -6,14 +6,14 @@ kind: Ingress
 metadata:
   name: {{ template "alfresco-process-services.ingress-admin.name" . }}
   labels:
-    {{- include "alfresco-process-services.labels" . | nindent 4 }}
+    {{- include "alfresco-process-services.admin.labels" . | nindent 4 }}
   annotations:
     ingress.kubernetes.io/ssl-redirect: "false"
     {{- with .Values.adminApp.ingress.maxUploadSize }}
     nginx.ingress.kubernetes.io/proxy-body-size: {{ . }}
     {{- end }}
 spec:
-  ingressClassName: "nginx"
+  ingressClassName: {{ .Values.adminApp.ingress.className }}
   rules:
     {{- if .Values.adminApp.ingress.hostName }}
     - host: {{ tpl .Values.adminApp.ingress.hostName $ }}
