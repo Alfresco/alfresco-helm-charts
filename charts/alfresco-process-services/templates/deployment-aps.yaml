@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-process-services.fullname" . }}-aps
+  name: {{ template "alfresco-process-services.deployment-aps.name" . }}
   labels:
     {{- include "alfresco-process-services.aps.labels" . | nindent 4 }}
 spec:
@@ -24,7 +24,7 @@ spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       {{- include "alfresco-common.component-pod-security-context" .Values.processEngine | indent 4 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ template "alfresco-process-services.deployment-aps.name" . }}
           image: {{ .Values.processEngine.image.repository }}:{{ .Values.processEngine.image.tag }}
           imagePullPolicy: {{ .Values.processEngine.image.pullPolicy }}
           env:
@@ -49,7 +49,6 @@ spec:
             {{- end }}
           envFrom:
             - configMapRef:
-                # config map to use, defined in config-repository.yaml
                 name: {{ template "alfresco-process-services.config-aps.name" . }}
           ports:
             - containerPort: {{ .Values.processEngine.image.internalPort }}

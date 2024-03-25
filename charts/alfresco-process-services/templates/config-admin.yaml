@@ -1,12 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  # the name of the config map
   name: {{ template "alfresco-process-services.config-admin.name" . }}
   labels:
     {{- include "alfresco-process-services.admin.labels" . | nindent 4 }}
 data:
-  # The JAVA_OPTS defined in the values.yaml file for the "repository" are set here using proper quotes
   {{- if .Values.adminApp.environment }}
   {{- range $key, $val := .Values.adminApp.environment }}
   {{ $key }}: {{ tpl $val $ | quote }}

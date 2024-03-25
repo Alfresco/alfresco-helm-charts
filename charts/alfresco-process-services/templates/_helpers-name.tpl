@@ -1,3 +1,13 @@
+{{- define "alfresco-process-services.deployment-aps.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "aps" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-process-services.fullname" $scope }}
+{{- end }}
+
+{{- define "alfresco-process-services.deployment-admin.name" -}}
+{{- $scope := (dict "Values" (dict "nameOverride" "admin" ) "Chart" .Chart "Release" .Release) }}
+{{- include "alfresco-process-services.fullname" $scope }}
+{{- end }}
+
 {{- define "alfresco-process-services.ingress-aps.name" -}}
 {{- $scope := (dict "Values" (dict "nameOverride" "ingress-aps" ) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-process-services.fullname" $scope }}
