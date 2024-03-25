@@ -9,7 +9,7 @@ tests:
     asserts:
       - equal:
           path: metadata.name
-          value: RELEASE-NAME-alfresco-process-services-aps
+          value: RELEASE-NAME-aps
         template: deployment-aps.yaml
   - it: should have a default volume claim when not specifying an existing one
     set:
