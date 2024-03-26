@@ -26,9 +26,10 @@ A Helm chart for Alfresco Process Services
 | adminApp.image.pullPolicy | string | `"IfNotPresent"` |  |
 | adminApp.image.repository | string | `"quay.io/alfresco/alfresco-process-services-admin"` |  |
 | adminApp.image.tag | string | `"24.1.0"` |  |
-| adminApp.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/affinity":"cookie","nginx.ingress.kubernetes.io/proxy-body-size":"5g"}` | provide annotations for nginx ingress (no toher ingress is supported at that point) |
+| adminApp.ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
+| adminApp.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | adminApp.ingress.className | string | `"nginx"` | supported ingress class |
-| adminApp.ingress.enabled | bool | `true` | Toggle ingress for APS application |
+| adminApp.ingress.enabled | bool | `true` | Toggle ingress for APS admin |
 | adminApp.ingress.hosts[0].paths[0].path | string | `"/activiti-admin"` |  |
 | adminApp.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | adminApp.ingress.tls | list | `[]` |  |
@@ -88,7 +89,8 @@ A Helm chart for Alfresco Process Services
 | processEngine.image.pullPolicy | string | `"IfNotPresent"` |  |
 | processEngine.image.repository | string | `"quay.io/alfresco/alfresco-process-services"` |  |
 | processEngine.image.tag | string | `"24.1.0"` |  |
-| processEngine.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/affinity":"cookie","nginx.ingress.kubernetes.io/proxy-body-size":"5g"}` | provide annotations for nginx ingress (no toher ingress is supported at that point) |
+| processEngine.ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
+| processEngine.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | processEngine.ingress.className | string | `"nginx"` | supported ingress class |
 | processEngine.ingress.enabled | bool | `true` | Toggle ingress for APS application |
 | processEngine.ingress.hosts[0].paths[0].path | string | `"/activiti-app"` |  |
