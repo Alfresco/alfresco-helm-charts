@@ -156,10 +156,23 @@ adminApp:
     timeoutSeconds: 5
   readinessProbe: *adminProbe
   ingress:
+    # -- Toggle ingress for APS application
     enabled: true
-    className: "nginx"
-    path: /activiti-admin
-    maxUploadSize: "5G"
+    # -- provide annotations for nginx ingress (no toher ingress is supported at
+    # that point)
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 5g
+      nginx.ingress.kubernetes.io/affinity: "cookie"
+    # -- supported ingress class
+    className: nginx
+    hosts:
+      - paths:
+          - path: /activiti-admin
+            pathType: Prefix
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
   environment:
     # -- Set the JDBC driver Class
     ACTIVITI_ADMIN_DATASOURCE_DRIVER: "org.postgresql.Driver"

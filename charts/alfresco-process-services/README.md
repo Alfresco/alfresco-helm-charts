@@ -26,10 +26,12 @@ A Helm chart for Alfresco Process Services
 | adminApp.image.pullPolicy | string | `"IfNotPresent"` |  |
 | adminApp.image.repository | string | `"quay.io/alfresco/alfresco-process-services-admin"` |  |
 | adminApp.image.tag | string | `"24.1.0"` |  |
-| adminApp.ingress.className | string | `"nginx"` |  |
-| adminApp.ingress.enabled | bool | `true` |  |
-| adminApp.ingress.maxUploadSize | string | `"5G"` |  |
-| adminApp.ingress.path | string | `"/activiti-admin"` |  |
+| adminApp.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/affinity":"cookie","nginx.ingress.kubernetes.io/proxy-body-size":"5g"}` | provide annotations for nginx ingress (no toher ingress is supported at that point) |
+| adminApp.ingress.className | string | `"nginx"` | supported ingress class |
+| adminApp.ingress.enabled | bool | `true` | Toggle ingress for APS application |
+| adminApp.ingress.hosts[0].paths[0].path | string | `"/activiti-admin"` |  |
+| adminApp.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| adminApp.ingress.tls | list | `[]` |  |
 | adminApp.livenessProbe.failureThreshold | int | `5` |  |
 | adminApp.livenessProbe.initialDelaySeconds | int | `25` |  |
 | adminApp.livenessProbe.path | string | `"/activiti-admin/"` |  |
