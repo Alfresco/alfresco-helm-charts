@@ -27,6 +27,7 @@ A Helm chart for Alfresco Process Services
 | adminApp.image.repository | string | `"quay.io/alfresco/alfresco-process-services-admin"` |  |
 | adminApp.image.tag | string | `"24.1.0"` |  |
 | adminApp.ingress.className | string | `"nginx"` |  |
+| adminApp.ingress.enabled | bool | `true` |  |
 | adminApp.ingress.maxUploadSize | string | `"5G"` |  |
 | adminApp.ingress.path | string | `"/activiti-admin"` |  |
 | adminApp.livenessProbe.failureThreshold | int | `5` |  |
@@ -59,9 +60,6 @@ A Helm chart for Alfresco Process Services
 | database.url | object | `{"admin":null,"aps":null}` | JDBC url to connect to the external DB |
 | database.username | string | `nil` | JDBC username to use to connect to the DB |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
-| ingress.enabled | bool | `true` |  |
-| ingress.hostName | string | `""` |  |
-| ingress.protocol | string | `"http"` |  |
 | license.secretName | string | `nil` |  |
 | processEngine.affinity | object | `{}` |  |
 | processEngine.environment.ACTIVITI_CORS_ALLOWED_HEADERS | string | `"Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token"` | Cross Origin Resource Sharing configuration allowed http headers |
@@ -89,6 +87,7 @@ A Helm chart for Alfresco Process Services
 | processEngine.image.repository | string | `"quay.io/alfresco/alfresco-process-services"` |  |
 | processEngine.image.tag | string | `"24.1.0"` |  |
 | processEngine.ingress.className | string | `"nginx"` |  |
+| processEngine.ingress.enabled | bool | `true` |  |
 | processEngine.ingress.maxUploadSize | string | `"5G"` |  |
 | processEngine.ingress.path | string | `"/activiti-app"` |  |
 | processEngine.livenessProbe.failureThreshold | int | `5` |  |

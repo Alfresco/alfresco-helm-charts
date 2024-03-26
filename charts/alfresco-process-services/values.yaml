@@ -5,11 +5,6 @@
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
 
-ingress:
-  enabled: true
-  protocol: http
-  hostName: ''
-
 processEngine:
   replicaCount: 1
   podLabels: {}
@@ -28,6 +23,7 @@ processEngine:
     type: ClusterIP
     externalPort: 80
   ingress:
+    enabled: true
     className: "nginx"
     path: /activiti-app
     maxUploadSize: "5G"
@@ -146,6 +142,7 @@ adminApp:
     timeoutSeconds: 5
   readinessProbe: *adminProbe
   ingress:
+    enabled: true
     className: "nginx"
     path: /activiti-admin
     maxUploadSize: "5G"
