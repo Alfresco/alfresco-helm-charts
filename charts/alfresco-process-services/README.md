@@ -88,13 +88,9 @@ A Helm chart for Alfresco Process Services
 | processEngine.image.tag | string | `"24.1.0"` |  |
 | processEngine.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/affinity":"cookie","nginx.ingress.kubernetes.io/proxy-body-size":"5g"}` | provide annotations for nginx ingress (no toher ingress is supported at that point) |
 | processEngine.ingress.className | string | `"nginx"` | supported ingress class |
-| processEngine.ingress.className | string | `"nginx"` |  |
-| processEngine.ingress.enabled | bool | `true` |  |
 | processEngine.ingress.enabled | bool | `true` | Toggle ingress for APS application |
 | processEngine.ingress.hosts[0].paths[0].path | string | `"/activiti-app"` |  |
 | processEngine.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
-| processEngine.ingress.maxUploadSize | string | `"5G"` |  |
-| processEngine.ingress.path | string | `"/activiti-app"` |  |
 | processEngine.ingress.tls | list | `[]` |  |
 | processEngine.livenessProbe.failureThreshold | int | `5` |  |
 | processEngine.livenessProbe.initialDelaySeconds | int | `25` |  |

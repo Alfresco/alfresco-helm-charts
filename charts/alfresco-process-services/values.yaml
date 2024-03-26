@@ -41,10 +41,6 @@ processEngine:
     #    hosts:
     #      - chart-example.local
 
-    enabled: true
-    className: "nginx"
-    path: /activiti-app
-    maxUploadSize: "5G"
   persistence:
     # -- Persist processEngine data
     enabled: false
