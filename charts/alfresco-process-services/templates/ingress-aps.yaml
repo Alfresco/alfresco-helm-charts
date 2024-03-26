@@ -1,29 +1,46 @@
 {{- if .Values.processEngine.ingress.enabled }}
-{{- $serviceName :=  printf "%s-%s" (include "alfresco-process-services.fullname" .) "aps" -}}
+{{- $serviceName := include "alfresco-process-services.service-aps.name" . }}
 {{- $servicePort := .Values.processEngine.service.externalPort -}}
+{{/*
+We only support latest apiVersion which is stable now.
+*/}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ template "alfresco-process-services.ingress-aps.name" . }}
   labels:
     {{- include "alfresco-process-services.aps.labels" . | nindent 4 }}
+  {{- with .Values.processEngine.ingress.annotations }}
   annotations:
-    {{- with .Values.processEngine.ingress.maxUploadSize }}
-    nginx.ingress.kubernetes.io/proxy-body-size: {{ . }}
-    {{- end }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   ingressClassName: {{ .Values.processEngine.ingress.className }}
-  rules:
-    {{- if .Values.processEngine.ingress.hostName }}
-    - host: {{ tpl .Values.processEngine.ingress.hostName $ }}
-      http:
-    {{- else }}
-    - http:
+  {{- if .Values.processEngine.ingress.tls }}
+  tls:
+    {{- range .Values.processEngine.ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
     {{- end }}
+  {{- end }}
+  rules:
+    {{- range .Values.processEngine.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
         paths:
-          - path: {{ tpl .Values.processEngine.ingress.path . }}
-            {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
-            pathType: Prefix
+          {{- range .paths }}
+          - path: {{ .path }}
+            {{- if .pathType }}
+            pathType: {{ .pathType }}
             {{- end }}
-            backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 14 }}
+            backend:
+              service:
+                name: {{ $serviceName }}
+                port:
+                  number: {{ $servicePort }}
+          {{- end }}
+    {{- end }}
 {{- end }}

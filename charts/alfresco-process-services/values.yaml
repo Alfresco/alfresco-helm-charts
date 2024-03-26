@@ -23,6 +23,24 @@ processEngine:
     type: ClusterIP
     externalPort: 80
   ingress:
+    # -- Toggle ingress for APS application
+    enabled: true
+    # -- provide annotations for nginx ingress (no toher ingress is supported at
+    # that point)
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 5g
+      nginx.ingress.kubernetes.io/affinity: "cookie"
+    # -- supported ingress class
+    className: nginx
+    hosts:
+      - paths:
+          - path: /activiti-app
+            pathType: Prefix
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
     enabled: true
     className: "nginx"
     path: /activiti-app
