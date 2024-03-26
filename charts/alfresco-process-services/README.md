@@ -65,14 +65,14 @@ A Helm chart for Alfresco Process Services
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | license.secretName | string | `nil` |  |
 | processEngine.affinity | object | `{}` |  |
-| processEngine.database.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database for admin app |
+| processEngine.database.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database for aps app |
 | processEngine.database.existingConfigMap.name | string | `nil` |  |
-| processEngine.database.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password for admin app |
-| processEngine.database.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username for admin app |
-| processEngine.database.existingSecret.name | string | `nil` | Name of a pre-existing secret containing database credentials for admin app |
-| processEngine.database.password | string | `nil` | JDBC password to use to connect to the DB for admin app |
-| processEngine.database.url | string | `nil` | JDBC url to connect to the external DB for admin app |
-| processEngine.database.username | string | `nil` | JDBC username to use to connect to the DB for admin app |
+| processEngine.database.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password for aps app |
+| processEngine.database.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username for aps app |
+| processEngine.database.existingSecret.name | string | `nil` | Name of a pre-existing secret containing database credentials for aps app |
+| processEngine.database.password | string | `nil` | JDBC password to use to connect to the DB for aps app |
+| processEngine.database.url | string | `nil` | JDBC url to connect to the external DB for aps app |
+| processEngine.database.username | string | `nil` | JDBC username to use to connect to the DB for aps app |
 | processEngine.environment.ACTIVITI_CORS_ALLOWED_HEADERS | string | `"Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token"` | Cross Origin Resource Sharing configuration allowed http headers |
 | processEngine.environment.ACTIVITI_CORS_ALLOWED_METHODS | string | `"GET,POST,HEAD,OPTIONS,PUT,DELETE"` | Cross Origin Resource Sharing configuration allowed http methods |
 | processEngine.environment.ACTIVITI_CORS_ALLOWED_ORIGIN_PATTERNS | string | `"*"` | Cross Origin Resource Sharing configuration allowed origins (list of glob-like patterns) |

@@ -129,24 +129,24 @@ processEngine:
   tolerations: []
   affinity: {}
   database:
-    # -- JDBC url to connect to the external DB for admin app
+    # -- JDBC url to connect to the external DB for aps app
     url: null
-    # -- JDBC username to use to connect to the DB for admin app
+    # -- JDBC username to use to connect to the DB for aps app
     username: null
-    # -- JDBC password to use to connect to the DB for admin app
+    # -- JDBC password to use to connect to the DB for aps app
     password: null
     existingConfigMap:
       name: null
       keys:
-        # -- configmap key where to find the URL of the database for admin app
+        # -- configmap key where to find the URL of the database for aps app
         url: DATABASE_URL
     existingSecret:
-      # -- Name of a pre-existing secret containing database credentials for admin app
+      # -- Name of a pre-existing secret containing database credentials for aps app
       name: null
       keys:
-        # -- Key within the secret holding the database username for admin app
+        # -- Key within the secret holding the database username for aps app
         username: DATABASE_USERNAME
-        # -- Key within the secret holding the database password for admin app
+        # -- Key within the secret holding the database password for aps app
         password: DATABASE_PASSWORD
 
 license:
