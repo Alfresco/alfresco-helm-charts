@@ -28,8 +28,8 @@ spec:
           image: {{ .Values.adminApp.image.repository }}:{{ .Values.adminApp.image.tag }}
           imagePullPolicy: {{ .Values.adminApp.image.pullPolicy }}
           env:
-            {{- with .Values.database }}
-            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-process-services.database-secret.name" $) }}
+            {{- with .Values.adminApp.database }}
+            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-process-services.database-secret-admin.name" $) }}
             {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-process-services.database-config-admin.name" $) }}
             - name: ACTIVITI_ADMIN_DATASOURCE_USERNAME
               valueFrom:
