@@ -1,6 +1,6 @@
 # alfresco-process-services
 
-![Version: 1.0.0-alpha.0](https://img.shields.io/badge/Version-1.0.0--alpha.0-informational?style=flat-square) ![AppVersion: 24.1.0](https://img.shields.io/badge/AppVersion-24.1.0-informational?style=flat-square)
+![Version: 1.0.0-alpha.1](https://img.shields.io/badge/Version-1.0.0--alpha.1-informational?style=flat-square) ![AppVersion: 24.1.0](https://img.shields.io/badge/AppVersion-24.1.0-informational?style=flat-square)
 
 A Helm chart for Alfresco Process Services
 
