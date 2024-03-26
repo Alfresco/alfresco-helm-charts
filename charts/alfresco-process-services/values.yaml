@@ -128,6 +128,26 @@ processEngine:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  database:
+    # -- JDBC url to connect to the external DB for admin app
+    url: null
+    # -- JDBC username to use to connect to the DB for admin app
+    username: null
+    # -- JDBC password to use to connect to the DB for admin app
+    password: null
+    existingConfigMap:
+      name: null
+      keys:
+        # -- configmap key where to find the URL of the database for admin app
+        url: DATABASE_URL
+    existingSecret:
+      # -- Name of a pre-existing secret containing database credentials for admin app
+      name: null
+      keys:
+        # -- Key within the secret holding the database username for admin app
+        username: DATABASE_USERNAME
+        # -- Key within the secret holding the database password for admin app
+        password: DATABASE_PASSWORD
 
 license:
   secretName:
@@ -187,26 +207,23 @@ adminApp:
   nodeSelector: {}
   tolerations: []
   affinity: {}
-
-database:
-  # -- JDBC url to connect to the external DB
-  url:
-    aps: null
-    admin: null
-  # -- JDBC username to use to connect to the DB
-  username: null
-  # -- JDBC password to use to connect to the DB
-  password: null
-  existingConfigMap:
-    name: null
-    keys:
-      # -- configmap key where to find the URL of the database
-      url: DATABASE_URL
-  existingSecret:
-    # -- Name of a pre-existing secret containing database credentials
-    name: null
-    keys:
-      # -- Key within the secret holding the database username
-      username: DATABASE_USERNAME
-      # -- Key within the secret holding the database password
-      password: DATABASE_PASSWORD
+  database:
+    # -- JDBC url to connect to the external DB for admin app
+    url: null
+    # -- JDBC username to use to connect to the DB for admin app
+    username: null
+    # -- JDBC password to use to connect to the DB for admin app
+    password: null
+    existingConfigMap:
+      name: null
+      keys:
+        # -- configmap key where to find the URL of the database for admin app
+        url: DATABASE_URL
+    existingSecret:
+      # -- Name of a pre-existing secret containing database credentials for admin app
+      name: null
+      keys:
+        # -- Key within the secret holding the database username for admin app
+        username: DATABASE_USERNAME
+        # -- Key within the secret holding the database password for admin app
+        password: DATABASE_PASSWORD
