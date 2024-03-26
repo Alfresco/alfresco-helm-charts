@@ -67,12 +67,21 @@ jobs:
           username: ${{ secrets.quay_username }}
           password: ${{ secrets.quay_password }}
 
+      - name: Get Activiti License from S3
+        if: steps.list-changed.outputs.changed == 'true'
+        env:
+          AWS_REGION: us-east-1
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACSLICENSE_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_ACSLICENSE_SECRET_ACCESS_KEY }}
+        run: aws s3 cp s3://aps-licenses/single-tenant/activiti.lic /tmp/activiti.lic
+
       - name: Prepare namespace for install
         if: steps.list-changed.outputs.changed == 'true'
         run: |
           kubectl create ns "$INSTALL_NAMESPACE"
           kubectl create secret generic quay-registry-secret --from-file=.dockerconfigjson="${HOME}"/.docker/config.json --type=kubernetes.io/dockerconfigjson -n "$INSTALL_NAMESPACE"
           kubectl create secret generic broker-secret --from-literal=BROKER_URL="failover:(nio://activemq:61616)?timeout=3000" --from-literal=BROKER_USERNAME=admin --from-literal=BROKER_PASSWORD=admin -n "$INSTALL_NAMESPACE"
+          kubectl create secret generic aps-license --from-file=activiti.lic=/tmp/activiti.lic -n "$INSTALL_NAMESPACE"
 
       - name: Prepare charts mocks for testing
         if: steps.list-changed.outputs.changed == 'true'

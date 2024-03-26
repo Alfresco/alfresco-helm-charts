@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco-process-services.deployment-admin.name" . }}
+  labels:
+    {{- include "alfresco-process-services.admin.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.adminApp.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "alfresco-process-services.admin.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.adminApp.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "alfresco-process-services.admin.labels" . | nindent 8 }}
+        {{- with .Values.adminApp.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-common.component-pod-security-context" .Values.adminApp | indent 4 }}
+      containers:
+        - name: {{ template "alfresco-process-services.deployment-admin.name" . }}
+          image: {{ .Values.adminApp.image.repository }}:{{ .Values.adminApp.image.tag }}
+          imagePullPolicy: {{ .Values.adminApp.image.pullPolicy }}
+          env:
+            {{- with .Values.database }}
+            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-process-services.database-secret.name" $) }}
+            {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-process-services.database-config-admin.name" $) }}
+            - name: ACTIVITI_ADMIN_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $dbSecret }}
+                  key: {{ .existingSecret.keys.username }}
+            - name: ACTIVITI_ADMIN_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $dbSecret }}
+                  key: {{ .existingSecret.keys.password }}
+            - name: ACTIVITI_ADMIN_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $dbCm }}
+                  key: {{ .existingConfigMap.keys.url }}
+            {{- end }}
+          envFrom:
+          - configMapRef:
+              name: {{ template "alfresco-process-services.config-admin.name" . }}
+          ports:
+            - containerPort: {{ .Values.adminApp.image.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.adminApp.livenessProbe.path }}
+              port: {{ .Values.adminApp.image.internalPort }}
+            initialDelaySeconds: {{ .Values.adminApp.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.adminApp.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.adminApp.livenessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.adminApp.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.adminApp.readinessProbe.path }}
+              port: {{ .Values.adminApp.image.internalPort }}
+            initialDelaySeconds: {{ .Values.adminApp.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.adminApp.readinessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.adminApp.readinessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.adminApp.readinessProbe.timeoutSeconds }}
+          resources:
+            {{- toYaml .Values.adminApp.resources | nindent 12 }}
+          {{- with .Values.adminApp.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.adminApp.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.adminApp.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.adminApp.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.adminApp.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

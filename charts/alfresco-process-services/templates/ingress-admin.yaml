@@ -1,0 +1,30 @@
+{{- if .Values.ingress.enabled }}
+{{- $serviceName :=  printf "%s-%s" (include "alfresco-process-services.fullname" .) "admin" -}}
+{{- $servicePort := .Values.adminApp.service.externalPort -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ template "alfresco-process-services.ingress-admin.name" . }}
+  labels:
+    {{- include "alfresco-process-services.admin.labels" . | nindent 4 }}
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+    {{- with .Values.adminApp.ingress.maxUploadSize }}
+    nginx.ingress.kubernetes.io/proxy-body-size: {{ . }}
+    {{- end }}
+spec:
+  ingressClassName: {{ .Values.adminApp.ingress.className }}
+  rules:
+    {{- if .Values.adminApp.ingress.hostName }}
+    - host: {{ tpl .Values.adminApp.ingress.hostName $ }}
+      http:
+    {{- else }}
+    - http:
+    {{- end }}
+        paths:
+          - path: {{ tpl .Values.adminApp.ingress.path . }}
+            {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
+            pathType: Prefix
+            {{- end }}
+            backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 14 }}
+{{- end }}
