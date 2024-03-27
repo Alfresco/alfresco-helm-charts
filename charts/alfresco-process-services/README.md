@@ -26,8 +26,6 @@ A Helm chart for Alfresco Process Services
 | adminApp.database.password | string | `nil` | JDBC password to use to connect to the DB for admin app |
 | adminApp.database.url | string | `nil` | JDBC url to connect to the external DB for admin app |
 | adminApp.database.username | string | `nil` | JDBC username to use to connect to the DB for admin app |
-| adminApp.environment.ACTIVITI_ADMIN_DATASOURCE_DRIVER | string | `"org.postgresql.Driver"` | Set the JDBC driver Class |
-| adminApp.environment.ACTIVITI_ADMIN_HIBERNATE_DIALECT | string | `"org.hibernate.dialect.PostgreSQLDialect"` | Hibernate dialect (must match the driver) |
 | adminApp.environment.ACTIVITI_ADMIN_REST_APP_HOST | string | `"http://localhost"` | activiti-app address |
 | adminApp.environment.ACTIVITI_ADMIN_REST_APP_PASSWORD | string | `"admin"` | activiti-app password |
 | adminApp.environment.ACTIVITI_ADMIN_REST_APP_PORT | string | `"80"` | activiti-app port |
@@ -82,8 +80,6 @@ A Helm chart for Alfresco Process Services
 | processEngine.environment.ACTIVITI_CORS_ALLOWED_ORIGIN_PATTERNS | string | `"*"` | Cross Origin Resource Sharing configuration allowed origins (list of glob-like patterns) |
 | processEngine.environment.ACTIVITI_CORS_ENABLED | string | `"true"` | Cross Origin Resource Sharing configuration toggle |
 | processEngine.environment.ACTIVITI_CSRF_DISABLED | string | `"true"` | Cross Site Resource Forgery configuration toggle |
-| processEngine.environment.ACTIVITI_DATASOURCE_DRIVER | string | `"org.postgresql.Driver"` | Set the JDBC driver Class |
-| processEngine.environment.ACTIVITI_HIBERNATE_DIALECT | string | `"org.hibernate.dialect.PostgreSQLDialect"` | Hibernate dialect (must match the driver) |
 | processEngine.environment.IDENTITY_CREDENTIALS_SECRET | string | `""` | Alfresco Identity Service application secret |
 | processEngine.environment.IDENTITY_SERVICE_ALWAYS_REFRESH_TOKEN | string | `"true"` | Alfresco Identity Service refresh service token |
 | processEngine.environment.IDENTITY_SERVICE_AUTH | string | `"http://localhost:8080/auth"` | Alfresco Identity Service address |

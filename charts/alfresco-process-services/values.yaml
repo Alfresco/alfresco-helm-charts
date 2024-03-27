@@ -63,10 +63,6 @@ processEngine:
     timeoutSeconds: 5
   livenessProbe: *apsProbe
   environment:
-    # -- Set the JDBC driver Class
-    ACTIVITI_DATASOURCE_DRIVER: "org.postgresql.Driver"
-    # -- Hibernate dialect (must match the driver)
-    ACTIVITI_HIBERNATE_DIALECT: "org.hibernate.dialect.PostgreSQLDialect"
     # -- Cross Origin Resource Sharing configuration toggle
     ACTIVITI_CORS_ENABLED: "true"
     # -- Cross Origin Resource Sharing configuration allowed origins
@@ -194,10 +190,6 @@ adminApp:
     #    hosts:
     #      - chart-example.local
   environment:
-    # -- Set the JDBC driver Class
-    ACTIVITI_ADMIN_DATASOURCE_DRIVER: "org.postgresql.Driver"
-    # -- Hibernate dialect (must match the driver)
-    ACTIVITI_ADMIN_HIBERNATE_DIALECT: "org.hibernate.dialect.PostgreSQLDialect"
     # -- activiti-app address
     ACTIVITI_ADMIN_REST_APP_HOST: "http://localhost"
     # -- activiti-app port
