@@ -46,6 +46,11 @@ spec:
                 configMapKeyRef:
                   name: {{ $dbCm }}
                   key: {{ .existingConfigMap.keys.url }}
+            - name: ACTIVITI_DATASOURCE_DRIVER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $dbCm }}
+                  key: {{ .existingConfigMap.keys.driver }}
             {{- end }}
           envFrom:
             - configMapRef:
