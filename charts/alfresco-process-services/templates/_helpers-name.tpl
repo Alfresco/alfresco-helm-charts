@@ -39,7 +39,7 @@
 {{- end -}}
 
 {{- define "alfresco-process-services.database-secret-aps.name" -}}
-{{- $ctx := dict "Values" (dict "nameOverride" "dabase-secret-aps") "Chart" .Chart "Release" .Release }}
+{{- $ctx := dict "Values" (dict "nameOverride" "database-secret-aps") "Chart" .Chart "Release" .Release }}
 {{- template "alfresco-process-services.fullname" $ctx }}
 {{- end -}}
 
