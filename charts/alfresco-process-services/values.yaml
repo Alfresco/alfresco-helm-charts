@@ -63,10 +63,6 @@ processEngine:
     timeoutSeconds: 5
   livenessProbe: *apsProbe
   environment:
-    # -- Set the JDBC driver Class
-    ACTIVITI_DATASOURCE_DRIVER: "org.postgresql.Driver"
-    # -- Hibernate dialect (must match the driver)
-    ACTIVITI_HIBERNATE_DIALECT: "org.hibernate.dialect.PostgreSQLDialect"
     # -- Cross Origin Resource Sharing configuration toggle
     ACTIVITI_CORS_ENABLED: "true"
     # -- Cross Origin Resource Sharing configuration allowed origins
@@ -128,6 +124,30 @@ processEngine:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+  database:
+    # -- JDBC url to connect to the external DB for aps app
+    url: null
+    # -- JDBC driver Class
+    driver: null
+    # -- JDBC username to use to connect to the DB for aps app
+    username: null
+    # -- JDBC password to use to connect to the DB for aps app
+    password: null
+    existingConfigMap:
+      name: null
+      keys:
+        # -- configmap key where to find the URL of the database for aps app
+        url: DATABASE_URL
+        # -- configmap key where to find the JDBC driver Class for aps app
+        driver: DATABASE_DRIVER
+    existingSecret:
+      # -- Name of a pre-existing secret containing database credentials for aps app
+      name: null
+      keys:
+        # -- Key within the secret holding the database username for aps app
+        username: DATABASE_USERNAME
+        # -- Key within the secret holding the database password for aps app
+        password: DATABASE_PASSWORD
 
 license:
   secretName:
@@ -170,10 +190,6 @@ adminApp:
     #    hosts:
     #      - chart-example.local
   environment:
-    # -- Set the JDBC driver Class
-    ACTIVITI_ADMIN_DATASOURCE_DRIVER: "org.postgresql.Driver"
-    # -- Hibernate dialect (must match the driver)
-    ACTIVITI_ADMIN_HIBERNATE_DIALECT: "org.hibernate.dialect.PostgreSQLDialect"
     # -- activiti-app address
     ACTIVITI_ADMIN_REST_APP_HOST: "http://localhost"
     # -- activiti-app port
@@ -187,26 +203,27 @@ adminApp:
   nodeSelector: {}
   tolerations: []
   affinity: {}
-
-database:
-  # -- JDBC url to connect to the external DB
-  url:
-    aps: null
-    admin: null
-  # -- JDBC username to use to connect to the DB
-  username: null
-  # -- JDBC password to use to connect to the DB
-  password: null
-  existingConfigMap:
-    name: null
-    keys:
-      # -- configmap key where to find the URL of the database
-      url: DATABASE_URL
-  existingSecret:
-    # -- Name of a pre-existing secret containing database credentials
-    name: null
-    keys:
-      # -- Key within the secret holding the database username
-      username: DATABASE_USERNAME
-      # -- Key within the secret holding the database password
-      password: DATABASE_PASSWORD
+  database:
+    # -- JDBC url to connect to the external DB for admin app
+    url: null
+    # -- JDBC driver Class
+    driver: null
+    # -- JDBC username to use to connect to the DB for admin app
+    username: null
+    # -- JDBC password to use to connect to the DB for admin app
+    password: null
+    existingConfigMap:
+      name: null
+      keys:
+        # -- configmap key where to find the URL of the database for admin app
+        url: DATABASE_URL
+        # -- configmap key where to find the JDBC driver Class for admin app
+        driver: DATABASE_DRIVER
+    existingSecret:
+      # -- Name of a pre-existing secret containing database credentials for admin app
+      name: null
+      keys:
+        # -- Key within the secret holding the database username for admin app
+        username: DATABASE_USERNAME
+        # -- Key within the secret holding the database password for admin app
+        password: DATABASE_PASSWORD

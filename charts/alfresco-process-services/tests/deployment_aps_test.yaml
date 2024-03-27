@@ -5,11 +5,61 @@ templates:
   - config-aps.yaml
   - pvc-aps.yaml
 tests:
-  - it: should have basic metadata in place in deployment
+  - it: should have basic metadata in place in deployment & default config
     asserts:
       - equal:
           path: metadata.name
           value: RELEASE-NAME-aps
+        template: deployment-aps.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_DATASOURCE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-database-aps
+                key: DATABASE_URL
+        template: deployment-aps.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_DATASOURCE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-database-secret-aps
+                key: DATABASE_USERNAME
+        template: deployment-aps.yaml
+  - it: should have basic metadata in place in deployment & default config
+    set:
+      processEngine:
+        database:
+          existingConfigMap:
+            name: my-own-custom-config
+            keys:
+              url: my-own-custom-url
+          existingSecret:
+            name: my-own-custom-secret
+            keys:
+              username: my-own-custom-username
+              password: my-own-custom-password
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_DATASOURCE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: my-own-custom-config
+                key: my-own-custom-url
+        template: deployment-aps.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_DATASOURCE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: my-own-custom-secret
+                key: my-own-custom-username
         template: deployment-aps.yaml
   - it: should have a default volume claim when not specifying an existing one
     set:
