@@ -8,6 +8,8 @@ metadata:
   labels:
     {{- include "alfresco-process-services.aps.labels" $ | nindent 4 }}
 data:
-  DATABASE_URL: {{ hasPrefix "jdbc:" .url | ternary .url (print "jdbc:" .url) }}
+  {{- $reqmsg := "Either provide database url as values, or provide a cm that contains it." }}
+  {{- $url := .url | required $reqmsg }}
+  DATABASE_URL: {{ hasPrefix "jdbc:" $url | ternary $url (print "jdbc:" $url) }}
 {{- end }}
 {{- end }}
