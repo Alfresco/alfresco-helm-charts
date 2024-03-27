@@ -131,6 +131,8 @@ processEngine:
   database:
     # -- JDBC url to connect to the external DB for aps app
     url: null
+    # -- JDBC driver Class
+    driver: null
     # -- JDBC username to use to connect to the DB for aps app
     username: null
     # -- JDBC password to use to connect to the DB for aps app
@@ -210,6 +212,8 @@ adminApp:
   database:
     # -- JDBC url to connect to the external DB for admin app
     url: null
+    # -- JDBC driver Class
+    driver: null
     # -- JDBC username to use to connect to the DB for admin app
     username: null
     # -- JDBC password to use to connect to the DB for admin app
