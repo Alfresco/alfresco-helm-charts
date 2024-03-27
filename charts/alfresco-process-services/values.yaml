@@ -5,11 +5,6 @@
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
 
-ingress:
-  enabled: true
-  protocol: http
-  hostName: ''
-
 processEngine:
   replicaCount: 1
   podLabels: {}
@@ -28,9 +23,22 @@ processEngine:
     type: ClusterIP
     externalPort: 80
   ingress:
-    className: "nginx"
-    path: /activiti-app
-    maxUploadSize: "5G"
+    # -- Toggle ingress for APS application
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 5g
+      nginx.ingress.kubernetes.io/affinity: "cookie"
+    # -- supported ingress class
+    className: nginx
+    hosts:
+      - paths:
+          - path: /activiti-app
+            pathType: Prefix
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
   persistence:
     # -- Persist processEngine data
     enabled: false
@@ -146,9 +154,21 @@ adminApp:
     timeoutSeconds: 5
   readinessProbe: *adminProbe
   ingress:
-    className: "nginx"
-    path: /activiti-admin
-    maxUploadSize: "5G"
+    # -- Toggle ingress for APS admin
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: 5g
+      nginx.ingress.kubernetes.io/affinity: "cookie"
+    # -- supported ingress class
+    className: nginx
+    hosts:
+      - paths:
+          - path: /activiti-admin
+            pathType: Prefix
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
   environment:
     # -- Set the JDBC driver Class
     ACTIVITI_ADMIN_DATASOURCE_DRIVER: "org.postgresql.Driver"

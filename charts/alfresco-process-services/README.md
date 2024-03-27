@@ -1,6 +1,6 @@
 # alfresco-process-services
 
-![Version: 1.0.0-alpha.0](https://img.shields.io/badge/Version-1.0.0--alpha.0-informational?style=flat-square) ![AppVersion: 24.1.0](https://img.shields.io/badge/AppVersion-24.1.0-informational?style=flat-square)
+![Version: 1.0.0-alpha.1](https://img.shields.io/badge/Version-1.0.0--alpha.1-informational?style=flat-square) ![AppVersion: 24.1.0](https://img.shields.io/badge/AppVersion-24.1.0-informational?style=flat-square)
 
 A Helm chart for Alfresco Process Services
 
@@ -26,9 +26,13 @@ A Helm chart for Alfresco Process Services
 | adminApp.image.pullPolicy | string | `"IfNotPresent"` |  |
 | adminApp.image.repository | string | `"quay.io/alfresco/alfresco-process-services-admin"` |  |
 | adminApp.image.tag | string | `"24.1.0"` |  |
-| adminApp.ingress.className | string | `"nginx"` |  |
-| adminApp.ingress.maxUploadSize | string | `"5G"` |  |
-| adminApp.ingress.path | string | `"/activiti-admin"` |  |
+| adminApp.ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
+| adminApp.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
+| adminApp.ingress.className | string | `"nginx"` | supported ingress class |
+| adminApp.ingress.enabled | bool | `true` | Toggle ingress for APS admin |
+| adminApp.ingress.hosts[0].paths[0].path | string | `"/activiti-admin"` |  |
+| adminApp.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| adminApp.ingress.tls | list | `[]` |  |
 | adminApp.livenessProbe.failureThreshold | int | `5` |  |
 | adminApp.livenessProbe.initialDelaySeconds | int | `25` |  |
 | adminApp.livenessProbe.path | string | `"/activiti-admin/"` |  |
@@ -59,9 +63,6 @@ A Helm chart for Alfresco Process Services
 | database.url | object | `{"admin":null,"aps":null}` | JDBC url to connect to the external DB |
 | database.username | string | `nil` | JDBC username to use to connect to the DB |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
-| ingress.enabled | bool | `true` |  |
-| ingress.hostName | string | `""` |  |
-| ingress.protocol | string | `"http"` |  |
 | license.secretName | string | `nil` |  |
 | processEngine.affinity | object | `{}` |  |
 | processEngine.environment.ACTIVITI_CORS_ALLOWED_HEADERS | string | `"Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token"` | Cross Origin Resource Sharing configuration allowed http headers |
@@ -88,9 +89,13 @@ A Helm chart for Alfresco Process Services
 | processEngine.image.pullPolicy | string | `"IfNotPresent"` |  |
 | processEngine.image.repository | string | `"quay.io/alfresco/alfresco-process-services"` |  |
 | processEngine.image.tag | string | `"24.1.0"` |  |
-| processEngine.ingress.className | string | `"nginx"` |  |
-| processEngine.ingress.maxUploadSize | string | `"5G"` |  |
-| processEngine.ingress.path | string | `"/activiti-app"` |  |
+| processEngine.ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
+| processEngine.ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
+| processEngine.ingress.className | string | `"nginx"` | supported ingress class |
+| processEngine.ingress.enabled | bool | `true` | Toggle ingress for APS application |
+| processEngine.ingress.hosts[0].paths[0].path | string | `"/activiti-app"` |  |
+| processEngine.ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| processEngine.ingress.tls | list | `[]` |  |
 | processEngine.livenessProbe.failureThreshold | int | `5` |  |
 | processEngine.livenessProbe.initialDelaySeconds | int | `25` |  |
 | processEngine.livenessProbe.path | string | `"/activiti-app/app/rest/locale"` |  |
