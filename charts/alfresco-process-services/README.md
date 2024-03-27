@@ -17,6 +17,7 @@ A Helm chart for Alfresco Process Services
 |-----|------|---------|-------------|
 | adminApp.affinity | object | `{}` |  |
 | adminApp.database.driver | string | `nil` | JDBC driver Class |
+| adminApp.database.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver Class for admin app |
 | adminApp.database.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database for admin app |
 | adminApp.database.existingConfigMap.name | string | `nil` |  |
 | adminApp.database.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password for admin app |
@@ -67,6 +68,7 @@ A Helm chart for Alfresco Process Services
 | license.secretName | string | `nil` |  |
 | processEngine.affinity | object | `{}` |  |
 | processEngine.database.driver | string | `nil` | JDBC driver Class |
+| processEngine.database.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver Class for aps app |
 | processEngine.database.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database for aps app |
 | processEngine.database.existingConfigMap.name | string | `nil` |  |
 | processEngine.database.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password for aps app |

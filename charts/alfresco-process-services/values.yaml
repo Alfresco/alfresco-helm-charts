@@ -142,6 +142,8 @@ processEngine:
       keys:
         # -- configmap key where to find the URL of the database for aps app
         url: DATABASE_URL
+        # -- configmap key where to find the JDBC driver Class for aps app
+        driver: DATABASE_DRIVER
     existingSecret:
       # -- Name of a pre-existing secret containing database credentials for aps app
       name: null
@@ -223,6 +225,8 @@ adminApp:
       keys:
         # -- configmap key where to find the URL of the database for admin app
         url: DATABASE_URL
+        # -- configmap key where to find the JDBC driver Class for admin app
+        driver: DATABASE_DRIVER
     existingSecret:
       # -- Name of a pre-existing secret containing database credentials for admin app
       name: null
