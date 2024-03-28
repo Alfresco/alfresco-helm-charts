@@ -1,6 +1,6 @@
 # alfresco-process-services
 
-![Version: 1.0.0-alpha.1](https://img.shields.io/badge/Version-1.0.0--alpha.1-informational?style=flat-square) ![AppVersion: 24.1.0](https://img.shields.io/badge/AppVersion-24.1.0-informational?style=flat-square)
+![Version: 1.0.0-alpha.2](https://img.shields.io/badge/Version-1.0.0--alpha.2-informational?style=flat-square) ![AppVersion: 24.1.0](https://img.shields.io/badge/AppVersion-24.1.0-informational?style=flat-square)
 
 A Helm chart for Alfresco Process Services
 
@@ -16,8 +16,16 @@ A Helm chart for Alfresco Process Services
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | adminApp.affinity | object | `{}` |  |
-| adminApp.environment.ACTIVITI_ADMIN_DATASOURCE_DRIVER | string | `"org.postgresql.Driver"` | Set the JDBC driver Class |
-| adminApp.environment.ACTIVITI_ADMIN_HIBERNATE_DIALECT | string | `"org.hibernate.dialect.PostgreSQLDialect"` | Hibernate dialect (must match the driver) |
+| adminApp.database.driver | string | `nil` | JDBC driver Class |
+| adminApp.database.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver Class for admin app |
+| adminApp.database.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database for admin app |
+| adminApp.database.existingConfigMap.name | string | `nil` |  |
+| adminApp.database.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password for admin app |
+| adminApp.database.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username for admin app |
+| adminApp.database.existingSecret.name | string | `nil` | Name of a pre-existing secret containing database credentials for admin app |
+| adminApp.database.password | string | `nil` | JDBC password to use to connect to the DB for admin app |
+| adminApp.database.url | string | `nil` | JDBC url to connect to the external DB for admin app |
+| adminApp.database.username | string | `nil` | JDBC username to use to connect to the DB for admin app |
 | adminApp.environment.ACTIVITI_ADMIN_REST_APP_HOST | string | `"http://localhost"` | activiti-app address |
 | adminApp.environment.ACTIVITI_ADMIN_REST_APP_PASSWORD | string | `"admin"` | activiti-app password |
 | adminApp.environment.ACTIVITI_ADMIN_REST_APP_PORT | string | `"80"` | activiti-app port |
@@ -54,24 +62,24 @@ A Helm chart for Alfresco Process Services
 | adminApp.tolerations | list | `[]` |  |
 | adminApp.volumeMounts | list | `[]` |  |
 | adminApp.volumes | list | `[]` |  |
-| database.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database |
-| database.existingConfigMap.name | string | `nil` |  |
-| database.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password |
-| database.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username |
-| database.existingSecret.name | string | `nil` | Name of a pre-existing secret containing database credentials |
-| database.password | string | `nil` | JDBC password to use to connect to the DB |
-| database.url | object | `{"admin":null,"aps":null}` | JDBC url to connect to the external DB |
-| database.username | string | `nil` | JDBC username to use to connect to the DB |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | license.secretName | string | `nil` |  |
 | processEngine.affinity | object | `{}` |  |
+| processEngine.database.driver | string | `nil` | JDBC driver Class |
+| processEngine.database.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver Class for aps app |
+| processEngine.database.existingConfigMap.keys.url | string | `"DATABASE_URL"` | configmap key where to find the URL of the database for aps app |
+| processEngine.database.existingConfigMap.name | string | `nil` |  |
+| processEngine.database.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password for aps app |
+| processEngine.database.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username for aps app |
+| processEngine.database.existingSecret.name | string | `nil` | Name of a pre-existing secret containing database credentials for aps app |
+| processEngine.database.password | string | `nil` | JDBC password to use to connect to the DB for aps app |
+| processEngine.database.url | string | `nil` | JDBC url to connect to the external DB for aps app |
+| processEngine.database.username | string | `nil` | JDBC username to use to connect to the DB for aps app |
 | processEngine.environment.ACTIVITI_CORS_ALLOWED_HEADERS | string | `"Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token"` | Cross Origin Resource Sharing configuration allowed http headers |
 | processEngine.environment.ACTIVITI_CORS_ALLOWED_METHODS | string | `"GET,POST,HEAD,OPTIONS,PUT,DELETE"` | Cross Origin Resource Sharing configuration allowed http methods |
 | processEngine.environment.ACTIVITI_CORS_ALLOWED_ORIGIN_PATTERNS | string | `"*"` | Cross Origin Resource Sharing configuration allowed origins (list of glob-like patterns) |
 | processEngine.environment.ACTIVITI_CORS_ENABLED | string | `"true"` | Cross Origin Resource Sharing configuration toggle |
 | processEngine.environment.ACTIVITI_CSRF_DISABLED | string | `"true"` | Cross Site Resource Forgery configuration toggle |
-| processEngine.environment.ACTIVITI_DATASOURCE_DRIVER | string | `"org.postgresql.Driver"` | Set the JDBC driver Class |
-| processEngine.environment.ACTIVITI_HIBERNATE_DIALECT | string | `"org.hibernate.dialect.PostgreSQLDialect"` | Hibernate dialect (must match the driver) |
 | processEngine.environment.IDENTITY_CREDENTIALS_SECRET | string | `""` | Alfresco Identity Service application secret |
 | processEngine.environment.IDENTITY_SERVICE_ALWAYS_REFRESH_TOKEN | string | `"true"` | Alfresco Identity Service refresh service token |
 | processEngine.environment.IDENTITY_SERVICE_AUTH | string | `"http://localhost:8080/auth"` | Alfresco Identity Service address |
