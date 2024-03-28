@@ -6,11 +6,11 @@ information on how to configure the search index in Alfresco Process Services.
 ## Elasticsearch configuration
 
 It is quite common to tie Alfresco Process Services to an Elasticsearch index
-which lives outside of the Kubernetes cluster. For example Your index might be
+which lives outside of the Kubernetes cluster. For example your index might be
 provided by a managed Elasticsearch service such as AWS OpenSearch.
 
 > APS for now only support ElasticSearch 7.x
-.
+
 In order to connect to an external Elasticsearch index, you need to configure
 the following properties in the `values.yaml` file:
 

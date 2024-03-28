@@ -3,8 +3,8 @@
 Alfresco Process Service uses a relational database to store data. An additional
 database is required in order to deploy the APS admin application.
 
-> It is not possible to use the same database for both for bot databases may be
-> hosted on the same database server.
+> It is not possible to use the same database for both applications. Though,
+> both databases can be hosted on the same database server.
 
 ## Configuring the APS database
 
@@ -56,7 +56,7 @@ data:
   {{ template "alfresco-process-services.db.cm" .Values.apsdb }}
 ```
 
-If you chose to not use the "alfresco-process-services.db.cm" elper template,
+If you chose to not use the "alfresco-process-services.db.cm" helper template,
 you need to make sure you also provide the `DATABASE_DRIVER` key in the
 configmap. The helper will try autodetect which class to use based on the URL
 provided.
@@ -64,7 +64,8 @@ provided.
 > If you want to use a custom driver class, you can provide it in the
 > `apsdb.driver` value.
 
-For the secret there is no helper and youneed to provide one seret which contains 2 data keys:
+For the secret there is no helper and you need to provide one secret which
+contains 2 data keys:
 
 * DATABASE_USERNAME
 * DATABASE_PASSWORD
