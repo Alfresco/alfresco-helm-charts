@@ -1077,6 +1077,25 @@ entries:
   alfresco-process-services:
   - apiVersion: v2
     appVersion: 24.1.0
+    created: "2024-03-28T12:51:04.698232918Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.2
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.8.5
+    description: A Helm chart for Alfresco Process Services
+    digest: ff49e5a47189a8953142e766b1abffd1b1778444f0cb1928a528b13fb7035a04
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    name: alfresco-process-services
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-process-services-1.0.0-alpha.3/alfresco-process-services-1.0.0-alpha.3.tgz
+    version: 1.0.0-alpha.3
+  - apiVersion: v2
+    appVersion: 24.1.0
     created: "2024-03-28T08:48:38.583852458Z"
     dependencies:
     - name: alfresco-common
@@ -3993,4 +4012,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-03-28T08:48:38.584232838Z"
+generated: "2024-03-28T12:51:04.69855625Z"
