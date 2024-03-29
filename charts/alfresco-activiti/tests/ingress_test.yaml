@@ -1,20 +1,19 @@
 ---
 suite: test repository manifest
 templates:
-  - ingress-aps.yaml
+  - ingress.yaml
 tests:
   - it: should render default ingress
     asserts:
       - equal:
           path: metadata.name
-          value: RELEASE-NAME-ingress-aps
-        template: ingress-aps.yaml
+          value: RELEASE-NAME-alfresco-activiti
       - contains:
           path: spec.rules[0].http.paths
           content:
             backend:
               service:
-                name: RELEASE-NAME-service-aps
+                name: RELEASE-NAME-alfresco-activiti
                 port:
                   number: 80
             path: /activiti-app
@@ -24,7 +23,7 @@ tests:
           content:
             backend:
               service:
-                name: RELEASE-NAME-service-aps
+                name: RELEASE-NAME-alfresco-activiti
                 port:
                   number: 80
             path: /activiti-app
