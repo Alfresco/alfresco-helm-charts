@@ -1,7 +1,6 @@
 # Alfresco Process Service database configuration
 
-Alfresco Process Service uses a relational database to store data. An additional
-database is required in order to deploy the APS admin application.
+Alfresco Process Service uses a relational database to store data.
 
 > It is not possible to use the same database for both applications. Though,
 > both databases can be hosted on the same database server.
@@ -18,11 +17,10 @@ The most straightforward way to configure the APS database is to use the Helm
 values file. The following example shows how to configure the APS database:
 
 ```yaml
-processEngine:
-  database:
-    url: jdbc:postgresql://postgresql:5432/activiti
-    username: alfresco
-    password: alfresco
+database:
+  url: jdbc:postgresql://postgresql:5432/activiti
+  username: alfresco
+  password: alfresco
 ```
 
 ### Using a ConfigMap & Secret
@@ -31,18 +29,17 @@ Another and more production-ready way to configure the APS database is to use
 configmaps and secrets from an umbrella chart. This chart depends on the
 `alfresco-common` library chart, which provides a named template to ease
 creation of the database configuration. Below is an example which assumes the
-alfresco-process-services chart is set as a dependency in the umbrella chart
+alfresco-activiti chart is set as a dependency in the umbrella chart
 and values are configured as follows:
 
 ```yaml
 # apsdb could be anything else, it is just a name
 apsdb:
   url: jdbc:mysql://mysql:3306/activiti
-alfresco-process-services:
-  processEngine:
-    database:
-      existingConfigMap:
-        name: my-database-config
+alfresco-activiti:
+  database:
+    existingConfigMap:
+      name: my-database-config
 ```
 
 Then create a ConfigMap template with the following content:
@@ -53,10 +50,10 @@ kind: ConfigMap
 metadata:
   name: my-database-config
 data:
-  {{ template "alfresco-process-services.db.cm" .Values.apsdb }}
+  {{ template "alfresco-activiti.db.cm" .Values.apsdb }}
 ```
 
-If you chose to not use the "alfresco-process-services.db.cm" helper template,
+If you chose to not use the "alfresco-activiti.db.cm" helper template,
 you need to make sure you also provide the `DATABASE_DRIVER` key in the
 configmap. The helper will try autodetect which class to use based on the URL
 provided.
@@ -83,18 +80,14 @@ data:
 
 You may want to reuse a secret which is already created in your cluster but has
 different keys. In this case you would need to configure the
-alfresco-process-services chart as follows:
+alfresco-activiti chart as follows:
 
 ```yaml
-alfresco-process-services:
-  processEngine:
-    database:
-      existingSecret:
-        name: my-database-secret
-        keys:
-          username: MY_DATABASE_USERNAME
-          password: MY_DATABASE_PASSWORD
+alfresco-activiti:
+  database:
+    existingSecret:
+      name: my-database-secret
+      keys:
+        username: MY_DATABASE_USERNAME
+        password: MY_DATABASE_PASSWORD
 ```
-
-The exact same approach can be used to configure the APS admin application, in
-which case the `adminApp` key should be used instead of `processEngine`.
