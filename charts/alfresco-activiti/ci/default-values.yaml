@@ -8,18 +8,12 @@ postgresql:
     database: activiti-admin
 license:
   secretName: aps-license
-processEngine:
-  database:
-    url: postgresql://pg-postgresql-aps:5432/postgres
-    username: *dbuser
-    password: *dbpass
-  environment:
-    ACTIVITI_CORS_ALLOWED_ORIGINS: "http://localhost"
-    JAVA_OPTS: "-Dapp.review-workflows.enabled=true"
-adminApp:
-  database:
-    url: postgresql://pg-postgresql-aps:5432/activiti-admin
-    username: *dbuser
-    password: *dbpass
+database:
+  url: postgresql://pg-postgresql-aps:5432/postgres
+  username: *dbuser
+  password: *dbpass
+environment:
+  ACTIVITI_CORS_ALLOWED_ORIGINS: "http://localhost"
+  JAVA_OPTS: "-Dapp.review-workflows.enabled=true"
 tags:
   ci: true
