@@ -31,17 +31,16 @@ tests:
         template: deployment-aps.yaml
   - it: should have basic metadata in place in deployment & default config
     set:
-      processEngine:
-        database:
-          existingConfigMap:
-            name: my-own-custom-config
-            keys:
-              url: my-own-custom-url
-          existingSecret:
-            name: my-own-custom-secret
-            keys:
-              username: my-own-custom-username
-              password: my-own-custom-password
+      database:
+        existingConfigMap:
+          name: my-own-custom-config
+          keys:
+            url: my-own-custom-url
+        existingSecret:
+          name: my-own-custom-secret
+          keys:
+            username: my-own-custom-username
+            password: my-own-custom-password
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
@@ -63,7 +62,7 @@ tests:
         template: deployment-aps.yaml
   - it: should have a default volume claim when not specifying an existing one
     set:
-        processEngine.persistence.enabled: true
+        persistence.enabled: true
     asserts:
       - equal:
           path: spec.template.spec.containers[0].volumeMounts[0].name
@@ -90,8 +89,8 @@ tests:
         template: pvc-aps.yaml
   - it: should set a specific storage class when set
     set:
-      processEngine.persistence.enabled: true
-      processEngine.persistence.storageClass: my-own-storage-class
+      persistence.enabled: true
+      persistence.storageClass: my-own-storage-class
     asserts:
       - equal:
           path: spec.storageClassName
@@ -99,8 +98,8 @@ tests:
         template: pvc-aps.yaml
   - it: should override default volume claim when existing claim is provided
     set:
-      processEngine.persistence.enabled: true
-      processEngine.persistence.existingClaim: my-own-custom-pvc
+      persistence.enabled: true
+      persistence.existingClaim: my-own-custom-pvc
     asserts:
       - isNotEmpty:
           path: spec.template.spec.containers[0].volumeMounts

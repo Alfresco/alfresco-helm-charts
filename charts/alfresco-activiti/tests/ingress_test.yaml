@@ -2,7 +2,6 @@
 suite: test repository manifest
 templates:
   - ingress-aps.yaml
-  - ingress-admin.yaml
 tests:
   - it: should render default ingress
     asserts:
@@ -20,47 +19,30 @@ tests:
                   number: 80
             path: /activiti-app
             pathType: Prefix
-        template: ingress-aps.yaml
       - contains:
           path: spec.rules[0].http.paths
           content:
             backend:
               service:
-                name: RELEASE-NAME-service-admin
+                name: RELEASE-NAME-service-aps
                 port:
                   number: 80
-            path: /activiti-admin
+            path: /activiti-app
             pathType: Prefix
-        template: ingress-admin.yaml
   - it: should not render any ingress
     set:
-      processEngine:
-        ingress:
-         enabled: false
-      adminApp:
-        ingress:
-         enabled: false
+      ingress:
+       enabled: false
     asserts:
       - hasDocuments:
           count: 0
-        template: ingress-aps.yaml
-      - hasDocuments:
-          count: 0
-        template: ingress-admin.yaml
   - it: should render TLS ingresses
     set:
-      processEngine:
-        ingress:
-          tls:
-            - secretName: my-tls-secret
-              hosts:
-                - app.activiti.com
-      adminApp:
-        ingress:
-          tls:
-            - secretName: my-tls-secret
-              hosts:
-                - app.activiti.com
+      ingress:
+        tls:
+          - secretName: my-tls-secret
+            hosts:
+              - app.activiti.com
     asserts:
       - contains:
           path: spec.tls
@@ -68,11 +50,3 @@ tests:
             secretName: my-tls-secret
             hosts:
               - app.activiti.com
-        template: ingress-aps.yaml
-      - contains:
-          path: spec.tls
-          content:
-            secretName: my-tls-secret
-            hosts:
-              - app.activiti.com
-        template: ingress-admin.yaml

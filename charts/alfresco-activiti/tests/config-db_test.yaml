@@ -10,7 +10,7 @@ tests:
         template: config-aps-database.yaml
   - it: should have basic metadata in place and render based on values
     set:
-      processEngine.database.url: jdbc:postgresql://database-aps:5432/activiti
+      database.url: jdbc:postgresql://database-aps:5432/activiti
     asserts:
       - equal:
           path: metadata.name
@@ -22,7 +22,7 @@ tests:
         template: config-aps-database.yaml
   - it: should not render a configmap
     set:
-      processEngine.database.existingConfigMap.name: activiti-db-config
+      database.existingConfigMap.name: activiti-db-config
     asserts:
       - hasDocuments:
           count: 0
