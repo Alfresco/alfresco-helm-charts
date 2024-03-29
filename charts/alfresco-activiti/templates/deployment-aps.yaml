@@ -5,30 +5,30 @@ metadata:
   labels:
     {{- include "alfresco-process-services.aps.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.processEngine.replicaCount }}
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "alfresco-process-services.aps.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.processEngine.podAnnotations }}
+      {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- include "alfresco-process-services.aps.labels" . | nindent 8 }}
-        {{- with .Values.processEngine.podLabels }}
+        {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
-      {{- include "alfresco-common.component-pod-security-context" .Values.processEngine | indent 4 }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       containers:
         - name: {{ template "alfresco-process-services.deployment-aps.name" . }}
-          image: {{ .Values.processEngine.image.repository }}:{{ .Values.processEngine.image.tag }}
-          imagePullPolicy: {{ .Values.processEngine.image.pullPolicy }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            {{- with .Values.processEngine.database }}
+            {{- with .Values.database }}
             {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-process-services.database-secret-aps.name" $) }}
             {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-process-services.database-config-aps.name" $) }}
             - name: ACTIVITI_DATASOURCE_PASSWORD
@@ -56,12 +56,12 @@ spec:
             - configMapRef:
                 name: {{ template "alfresco-process-services.config-aps.name" . }}
           ports:
-            - containerPort: {{ .Values.processEngine.image.internalPort }}
+            - containerPort: {{ .Values.image.internalPort }}
           volumeMounts:
-            {{- if .Values.processEngine.persistence.enabled }}
+            {{- if .Values.persistence.enabled }}
             - name: data
-              mountPath: {{ .Values.processEngine.persistence.data.mountPath }}
-              subPath: {{ .Values.processEngine.persistence.data.subPath }}
+              mountPath: {{ .Values.persistence.data.mountPath }}
+              subPath: {{ .Values.persistence.data.subPath }}
             {{- end }}
             {{- if .Values.license.secretName }}
             - name: license
@@ -69,30 +69,30 @@ spec:
               subPath: activiti.lic
               readOnly: true
             {{- end }}
-          {{- with .Values.processEngine.volumeMounts }}
+          {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
           livenessProbe:
             httpGet:
-              path: {{ .Values.processEngine.livenessProbe.path }}
-              port: {{ .Values.processEngine.image.internalPort }}
-            initialDelaySeconds: {{ .Values.processEngine.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.processEngine.livenessProbe.periodSeconds }}
-            failureThreshold: {{ .Values.processEngine.livenessProbe.failureThreshold }}
-            timeoutSeconds: {{ .Values.processEngine.livenessProbe.timeoutSeconds }}
+              path: {{ .Values.livenessProbe.path }}
+              port: {{ .Values.image.internalPort }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
           readinessProbe:
             httpGet:
-              path: {{ .Values.processEngine.readinessProbe.path }}
-              port: {{ .Values.processEngine.image.internalPort }}
-            initialDelaySeconds: {{ .Values.processEngine.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.processEngine.readinessProbe.periodSeconds }}
-            failureThreshold: {{ .Values.processEngine.readinessProbe.failureThreshold }}
-            timeoutSeconds: {{ .Values.processEngine.readinessProbe.timeoutSeconds }}
+              path: {{ .Values.readinessProbe.path }}
+              port: {{ .Values.image.internalPort }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
           resources:
-            {{- toYaml .Values.processEngine.resources | nindent 12 }}
+            {{- toYaml .Values.resources | nindent 12 }}
       volumes:
-      {{- if .Values.processEngine.persistence.enabled }}
-        {{- include "data_volume" .Values.processEngine | nindent 8 }}
+      {{- if .Values.persistence.enabled }}
+        {{- include "data_volume" .Values | nindent 8 }}
       {{- end }}
       {{- if .Values.license.secretName }}
         - name: license
@@ -100,18 +100,18 @@ spec:
             defaultMode: 0400
             secretName: {{ .Values.license.secretName }}
       {{- end }}
-      {{- with .Values.processEngine.volumes }}
+      {{- with .Values.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.processEngine.nodeSelector }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.processEngine.affinity }}
+      {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.processEngine.tolerations }}
+      {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

@@ -1,4 +1,4 @@
-{{- with .Values.processEngine.database }}
+{{- with .Values.database }}
 {{- if not .existingConfigMap.name }}
 apiVersion: v1
 kind: ConfigMap

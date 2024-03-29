@@ -5,8 +5,8 @@ metadata:
   labels:
     {{- include "alfresco-process-services.aps.labels" . | nindent 4 }}
 data:
-  {{- if .Values.processEngine.environment }}
-  {{- range $key, $val := .Values.processEngine.environment }}
+  {{- if .Values.environment }}
+  {{- range $key, $val := .Values.environment }}
   {{ $key }}: {{ tpl $val $ | quote }}
   {{- end }}
   {{- end }}

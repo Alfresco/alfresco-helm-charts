@@ -1,6 +1,6 @@
-{{- if .Values.processEngine.ingress.enabled }}
+{{- if .Values.ingress.enabled }}
 {{- $serviceName := include "alfresco-process-services.service-aps.name" . }}
-{{- $servicePort := .Values.processEngine.service.externalPort -}}
+{{- $servicePort := .Values.service.externalPort -}}
 {{/*
 We only support latest apiVersion which is stable now.
 */}}
@@ -10,15 +10,15 @@ metadata:
   name: {{ template "alfresco-process-services.ingress-aps.name" . }}
   labels:
     {{- include "alfresco-process-services.aps.labels" . | nindent 4 }}
-  {{- with .Values.processEngine.ingress.annotations }}
+  {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  ingressClassName: {{ .Values.processEngine.ingress.className }}
-  {{- if .Values.processEngine.ingress.tls }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- if .Values.ingress.tls }}
   tls:
-    {{- range .Values.processEngine.ingress.tls }}
+    {{- range .Values.ingress.tls }}
     - hosts:
         {{- range .hosts }}
         - {{ . | quote }}
@@ -27,7 +27,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-    {{- range .Values.processEngine.ingress.hosts }}
+    {{- range .Values.ingress.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
