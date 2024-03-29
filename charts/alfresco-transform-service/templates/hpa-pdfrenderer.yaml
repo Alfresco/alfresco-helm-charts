@@ -1,0 +1,16 @@
+{{ if and .Values.pdfrenderer.enabled .Values.pdfrenderer.autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "alfresco-transform-service.pdfrenderer.name" . }}
+  labels: {{- include "alfresco-transform-service.pdfrenderer.labels" . | nindent 4 }}
+spec:
+  minReplicas: {{ .Values.pdfrenderer.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.pdfrenderer.autoscaling.maxReplicas }}
+  behavior: {{ toYaml .Values.pdfrenderer.autoscaling.behavior | nindent 4 }}
+  metrics: {{ toYaml .Values.pdfrenderer.autoscaling.metrics | nindent 4 }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "alfresco-transform-service.pdfrenderer.name" . }}
+{{ end }}

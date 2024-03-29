@@ -6,7 +6,9 @@ metadata:
   labels:
     {{- include "alfresco-transform-service.transform-misc.labels" . | nindent 4 }}
 spec:
+  {{- if not .Values.transformmisc.autoscaling.enabled }}
   replicas: {{ .Values.transformmisc.replicaCount }}
+  {{ end }}
   selector:
     matchLabels:
       {{- include "alfresco-transform-service.transform-misc.selectorLabels" . | nindent 6 }}

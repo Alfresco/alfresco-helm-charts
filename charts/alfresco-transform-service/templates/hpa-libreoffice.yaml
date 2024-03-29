@@ -1,0 +1,16 @@
+{{ if and .Values.libreoffice.enabled .Values.libreoffice.autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "alfresco-transform-service.libreoffice.name" . }}
+  labels: {{- include "alfresco-transform-service.libreoffice.labels" . | nindent 4 }}
+spec:
+  minReplicas: {{ .Values.libreoffice.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.libreoffice.autoscaling.maxReplicas }}
+  behavior: {{ toYaml .Values.libreoffice.autoscaling.behavior | nindent 4 }}
+  metrics: {{ toYaml .Values.libreoffice.autoscaling.metrics | nindent 4 }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "alfresco-transform-service.libreoffice.name" . }}
+{{ end }}
