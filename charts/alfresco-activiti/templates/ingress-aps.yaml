@@ -1,13 +1,11 @@
 {{- if .Values.ingress.enabled }}
-{{- $serviceName := include "alfresco-activiti.service.name" . }}
-{{- $servicePort := .Values.service.externalPort -}}
 {{/*
 We only support latest apiVersion which is stable now.
 */}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ template "alfresco-activiti.ingress.name" . }}
+  name: {{ template "alfresco-activiti.fullname" . }}
   labels:
     {{- include "alfresco-activiti.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
@@ -38,9 +36,9 @@ spec:
             {{- end }}
             backend:
               service:
-                name: {{ $serviceName }}
+                name: {{ template "alfresco-activiti.fullname" $ }}
                 port:
-                  number: {{ $servicePort }}
+                  number: {{ $.Values.service.externalPort }}
           {{- end }}
     {{- end }}
 {{- end }}

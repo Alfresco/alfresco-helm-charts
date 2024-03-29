@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-activiti.config.name" . }}
+  name: {{ template "alfresco-activiti.fullname" . }}
   labels:
     {{- include "alfresco-activiti.labels" . | nindent 4 }}
 data:

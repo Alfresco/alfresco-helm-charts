@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-activiti.deployment.name" . }}
+  name: {{ template "alfresco-activiti.fullname" . }}
   labels:
     {{- include "alfresco-activiti.labels" . | nindent 4 }}
 spec:
@@ -24,7 +24,7 @@ spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       containers:
-        - name: {{ template "alfresco-activiti.deployment.name" . }}
+        - name: {{ template "alfresco-activiti.chart" . }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
@@ -54,7 +54,7 @@ spec:
             {{- end }}
           envFrom:
             - configMapRef:
-                name: {{ template "alfresco-activiti.config.name" . }}
+                name: {{ template "alfresco-activiti.fullname" . }}
           ports:
             - containerPort: {{ .Values.image.internalPort }}
           volumeMounts:
