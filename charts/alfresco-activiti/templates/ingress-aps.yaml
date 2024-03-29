@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled }}
-{{- $serviceName := include "alfresco-process-services.service-aps.name" . }}
+{{- $serviceName := include "alfresco-activiti.service.name" . }}
 {{- $servicePort := .Values.service.externalPort -}}
 {{/*
 We only support latest apiVersion which is stable now.
@@ -7,9 +7,9 @@ We only support latest apiVersion which is stable now.
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ template "alfresco-process-services.ingress-aps.name" . }}
+  name: {{ template "alfresco-activiti.ingress.name" . }}
   labels:
-    {{- include "alfresco-process-services.aps.labels" . | nindent 4 }}
+    {{- include "alfresco-activiti.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}

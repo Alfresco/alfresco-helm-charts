@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-process-services.deployment-aps.name" . }}
+  name: {{ template "alfresco-activiti.deployment.name" . }}
   labels:
-    {{- include "alfresco-process-services.aps.labels" . | nindent 4 }}
+    {{- include "alfresco-activiti.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "alfresco-process-services.aps.selectorLabels" . | nindent 6 }}
+      {{- include "alfresco-activiti.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -16,7 +16,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "alfresco-process-services.aps.labels" . | nindent 8 }}
+        {{- include "alfresco-activiti.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -24,13 +24,13 @@ spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       containers:
-        - name: {{ template "alfresco-process-services.deployment-aps.name" . }}
+        - name: {{ template "alfresco-activiti.deployment.name" . }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             {{- with .Values.database }}
-            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-process-services.database-secret-aps.name" $) }}
-            {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-process-services.database-config-aps.name" $) }}
+            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-activiti.database-secret.name" $) }}
+            {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-activiti.database-config.name" $) }}
             - name: ACTIVITI_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -54,7 +54,7 @@ spec:
             {{- end }}
           envFrom:
             - configMapRef:
-                name: {{ template "alfresco-process-services.config-aps.name" . }}
+                name: {{ template "alfresco-activiti.config.name" . }}
           ports:
             - containerPort: {{ .Values.image.internalPort }}
           volumeMounts:

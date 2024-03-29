@@ -4,10 +4,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: >-
-    {{ template "alfresco-process-services.database-config-aps.name" $ }}
+    {{ template "alfresco-activiti.database-config.name" $ }}
   labels:
-    {{- include "alfresco-process-services.aps.labels" $ | nindent 4 }}
+    {{- include "alfresco-activiti.labels" $ | nindent 4 }}
 data:
-  {{ template "alfresco-process-services.db.cm" . }}
+  {{ template "alfresco-activiti.db.cm" . }}
 {{- end }}
 {{- end }}

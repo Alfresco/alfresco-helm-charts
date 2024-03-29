@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "alfresco-process-services.name" -}}
+{{- define "alfresco-activiti.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "alfresco-process-services.fullname" -}}
+{{- define "alfresco-activiti.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -24,26 +24,18 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
-Create a default fully qualified name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-*/}}
-{{- define "aps.fullname" -}}
-{{- template "alfresco-process-services.fullname" . }}
-{{- end -}}
-
-{{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "alfresco-process-services.chart" -}}
+{{- define "alfresco-activiti.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "alfresco-process-services.labels" -}}
-helm.sh/chart: {{ include "alfresco-process-services.chart" . }}
-{{ include "alfresco-process-services.selectorLabels" . }}
+{{- define "alfresco-activiti.labels" -}}
+helm.sh/chart: {{ include "alfresco-activiti.chart" . }}
+{{ include "alfresco-activiti.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -54,7 +46,7 @@ app.kubernetes.io/component: {{ .Chart.Name }}
 {{/*
 Selector labels
 */}}
-{{- define "alfresco-process-services.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "alfresco-process-services.name" . }}
+{{- define "alfresco-activiti.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "alfresco-activiti.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
