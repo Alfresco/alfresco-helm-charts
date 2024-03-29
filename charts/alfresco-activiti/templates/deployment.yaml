@@ -29,8 +29,8 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             {{- with .Values.database }}
-            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-activiti.database-secret.name" $) }}
-            {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-activiti.database-config.name" $) }}
+            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-activiti.database.name" $) }}
+            {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-activiti.database.name" $) }}
             - name: ACTIVITI_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
