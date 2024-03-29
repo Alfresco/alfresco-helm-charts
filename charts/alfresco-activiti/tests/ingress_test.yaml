@@ -18,16 +18,6 @@ tests:
                   number: 80
             path: /activiti-app
             pathType: Prefix
-      - contains:
-          path: spec.rules[0].http.paths
-          content:
-            backend:
-              service:
-                name: RELEASE-NAME-alfresco-activiti
-                port:
-                  number: 80
-            path: /activiti-app
-            pathType: Prefix
   - it: should not render any ingress
     set:
       ingress:
