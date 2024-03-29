@@ -1,0 +1,16 @@
+postgresql:
+  fullnameOverride: activiti-postgresql
+  image:
+    tag: 14.9.0
+  auth:
+    username: &dbuser alfresco
+    password: &dbpass alfresco-pass
+    database: activiti-admin
+license:
+  secretName: aps-license
+database:
+  url: postgresql://activiti-postgresql:5432/activiti-admin
+  username: *dbuser
+  password: *dbpass
+tags:
+  ci: true
