@@ -1,0 +1,80 @@
+# Default values for Alfresco Process Services.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+---
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
+
+podAnnotations: {}
+podLabels: {}
+podSecurityContext: {}
+image:
+  repository: quay.io/alfresco/alfresco-process-services-admin
+  tag: 24.1.0
+  pullPolicy: IfNotPresent
+  internalPort: 8080
+service:
+  name: activiti-admin
+  type: ClusterIP
+  externalPort: 80
+livenessProbe: &adminProbe
+  path: /activiti-admin/
+  initialDelaySeconds: 25
+  periodSeconds: 10
+  failureThreshold: 5
+  timeoutSeconds: 5
+readinessProbe: *adminProbe
+ingress:
+  # -- Toggle ingress for APS admin
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 5g
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+  # -- supported ingress class
+  className: nginx
+  hosts:
+    - paths:
+        - path: /activiti-admin
+          pathType: Prefix
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+environment:
+  # -- activiti-app address
+  ACTIVITI_ADMIN_REST_APP_HOST: "http://localhost"
+  # -- activiti-app port
+  ACTIVITI_ADMIN_REST_APP_PORT: "80"
+  # -- activiti-app username
+  ACTIVITI_ADMIN_REST_APP_USERNAME: "admin@app.activiti.com"
+  # -- activiti-app password
+  ACTIVITI_ADMIN_REST_APP_PASSWORD: "admin"
+volumes: []
+volumeMounts: []
+nodeSelector: {}
+tolerations: []
+affinity: {}
+database:
+  # -- JDBC url to connect to the external DB for admin app
+  url: null
+  # -- JDBC driver Class
+  driver: null
+  # -- JDBC username to use to connect to the DB for admin app
+  username: null
+  # -- JDBC password to use to connect to the DB for admin app
+  password: null
+  existingConfigMap:
+    name: null
+    keys:
+      # -- configmap key where to find the URL of the database for admin app
+      url: DATABASE_URL
+      # -- configmap key where to find the JDBC driver Class for admin app
+      driver: DATABASE_DRIVER
+  existingSecret:
+    # -- Name of a pre-existing secret containing database credentials for admin app
+    name: null
+    keys:
+      # -- Key within the secret holding the database username for admin app
+      username: DATABASE_USERNAME
+      # -- Key within the secret holding the database password for admin app
+      password: DATABASE_PASSWORD
