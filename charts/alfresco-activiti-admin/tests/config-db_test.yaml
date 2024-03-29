@@ -1,0 +1,25 @@
+---
+suite: test repository manifest
+templates:
+  - configmap-database.yaml
+tests:
+  - it: should fail for missing DB URL
+    asserts:
+      - failedTemplate:
+          errorMessage: Either provide database url as values, or provide a cm that contains it.
+  - it: should have basic metadata in place and render based on values
+    set:
+      database.url: jdbc:postgresql://database-aps:5432/activiti-admin
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-activiti-admin-database
+      - equal:
+          path: data.DATABASE_URL
+          value: jdbc:postgresql://database-aps:5432/activiti-admin
+  - it: should not render a configmap
+    set:
+      database.existingConfigMap.name: activiti-db-config
+    asserts:
+      - hasDocuments:
+          count: 0
