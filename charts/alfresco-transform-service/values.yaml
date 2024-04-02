@@ -131,7 +131,7 @@ pdfrenderer:
   volumes: []
   volumeMounts: []
   autoscaling:
-    # -- Toggle repository autoscaling
+    # -- Toggle pdfrenderer autoscaling
     enabled: false
     # -- minimum number of replicas to spin up within the replicatset
     minReplicas: 1
@@ -145,6 +145,7 @@ pdfrenderer:
           - periodSeconds: 60
             type: Pods
             value: 1
+        stabilizationWindowSeconds: 100
       scaleUp:
         # -- list of available policies for scaling up
         # scale up either by one pod or by adding 50% more pods (whichever is bigger)
@@ -235,7 +236,7 @@ imagemagick:
   volumes: []
   volumeMounts: []
   autoscaling:
-    # -- Toggle repository autoscaling
+    # -- Toggle imagemagick autoscaling
     enabled: false
     # -- minimum number of replicas to spin up within the replicatset
     minReplicas: 1
@@ -249,6 +250,7 @@ imagemagick:
           - periodSeconds: 60
             type: Pods
             value: 1
+        stabilizationWindowSeconds: 100
       scaleUp:
         # -- list of available policies for scaling up
         # scale up either by one pod or by adding 50% more pods (whichever is bigger)
@@ -339,7 +341,7 @@ libreoffice:
   volumes: []
   volumeMounts: []
   autoscaling:
-    # -- Toggle repository autoscaling
+    # -- Toggle libreoffice autoscaling
     enabled: false
     # -- minimum number of replicas to spin up within the replicatset
     minReplicas: 1
@@ -353,6 +355,7 @@ libreoffice:
           - periodSeconds: 60
             type: Pods
             value: 1
+        stabilizationWindowSeconds: 100
       scaleUp:
         # -- list of available policies for scaling up
         # scale up either by one pod or by adding 50% more pods (whichever is bigger)
@@ -443,7 +446,7 @@ tika:
   volumes: []
   volumeMounts: []
   autoscaling:
-    # -- Toggle repository autoscaling
+    # -- Toggle tika autoscaling
     enabled: false
     # -- minimum number of replicas to spin up within the replicatset
     minReplicas: 1
@@ -457,6 +460,7 @@ tika:
           - periodSeconds: 60
             type: Pods
             value: 1
+        stabilizationWindowSeconds: 100
       scaleUp:
         # -- list of available policies for scaling up
         # scale up either by one pod or by adding 50% more pods (whichever is bigger)
@@ -547,7 +551,7 @@ transformmisc:
   volumes: []
   volumeMounts: []
   autoscaling:
-    # -- Toggle repository autoscaling
+    # -- Toggle transformmisc autoscaling
     enabled: false
     # -- minimum number of replicas to spin up within the replicatset
     minReplicas: 1
@@ -561,6 +565,7 @@ transformmisc:
           - periodSeconds: 60
             type: Pods
             value: 1
+        stabilizationWindowSeconds: 100
       scaleUp:
         # -- list of available policies for scaling up
         # scale up either by one pod or by adding 50% more pods (whichever is bigger)
