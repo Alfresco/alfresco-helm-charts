@@ -6,6 +6,9 @@ postgresql:
     username: &dbuser alfresco
     password: &dbpass alfresco-pass
     database: activiti
+  primary:
+    persistence:
+      enabled: false
 license:
   secretName: aps-license
 database:
