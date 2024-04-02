@@ -59,6 +59,7 @@ A Helm chart for Alfresco Activiti
 | service.externalPort | int | `80` |  |
 | service.name | string | `"activiti-admin"` |  |
 | service.type | string | `"ClusterIP"` |  |
+| tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 | tolerations | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |

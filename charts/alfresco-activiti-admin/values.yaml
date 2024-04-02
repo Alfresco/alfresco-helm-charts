@@ -78,3 +78,7 @@ database:
       username: DATABASE_USERNAME
       # -- Key within the secret holding the database password for admin app
       password: DATABASE_PASSWORD
+
+tags:
+  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
+  ci: false
