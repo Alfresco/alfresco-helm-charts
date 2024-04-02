@@ -117,7 +117,7 @@ pdfrenderer:
   readinessProbe:
     path: /ready
     initialDelaySeconds: 20
-    periodSeconds: 60
+    periodSeconds: 30
     timeoutSeconds: 10
   livenessProbe:
     path: /live
@@ -145,7 +145,7 @@ pdfrenderer:
           - periodSeconds: 60
             type: Pods
             value: 1
-        stabilizationWindowSeconds: 100
+        stabilizationWindowSeconds: 60
       scaleUp:
         # -- list of available policies for scaling up
         # scale up either by one pod or by adding 50% more pods (whichever is bigger)
@@ -222,7 +222,7 @@ imagemagick:
   readinessProbe:
     path: /ready
     initialDelaySeconds: 20
-    periodSeconds: 60
+    periodSeconds: 30
     timeoutSeconds: 10
   livenessProbe:
     path: /live
@@ -250,7 +250,7 @@ imagemagick:
           - periodSeconds: 60
             type: Pods
             value: 1
-        stabilizationWindowSeconds: 100
+        stabilizationWindowSeconds: 60
       scaleUp:
         # -- list of available policies for scaling up
         # scale up either by one pod or by adding 50% more pods (whichever is bigger)
@@ -327,7 +327,7 @@ libreoffice:
   readinessProbe:
     path: /ready
     initialDelaySeconds: 20
-    periodSeconds: 60
+    periodSeconds: 30
     timeoutSeconds: 10
   livenessProbe:
     path: /live
@@ -355,7 +355,7 @@ libreoffice:
           - periodSeconds: 60
             type: Pods
             value: 1
-        stabilizationWindowSeconds: 100
+        stabilizationWindowSeconds: 60
       scaleUp:
         # -- list of available policies for scaling up
         # scale up either by one pod or by adding 50% more pods (whichever is bigger)
@@ -432,7 +432,7 @@ tika:
   readinessProbe:
     path: /ready
     initialDelaySeconds: 30
-    periodSeconds: 60
+    periodSeconds: 30
     timeoutSeconds: 10
   livenessProbe:
     path: /live
@@ -460,7 +460,7 @@ tika:
           - periodSeconds: 60
             type: Pods
             value: 1
-        stabilizationWindowSeconds: 100
+        stabilizationWindowSeconds: 60
       scaleUp:
         # -- list of available policies for scaling up
         # scale up either by one pod or by adding 50% more pods (whichever is bigger)
@@ -537,7 +537,7 @@ transformmisc:
   readinessProbe:
     path: /ready
     initialDelaySeconds: 20
-    periodSeconds: 60
+    periodSeconds: 30
     timeoutSeconds: 10
   livenessProbe:
     path: /live
@@ -565,7 +565,7 @@ transformmisc:
           - periodSeconds: 60
             type: Pods
             value: 1
-        stabilizationWindowSeconds: 100
+        stabilizationWindowSeconds: 60
       scaleUp:
         # -- list of available policies for scaling up
         # scale up either by one pod or by adding 50% more pods (whichever is bigger)
