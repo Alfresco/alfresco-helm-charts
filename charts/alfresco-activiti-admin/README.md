@@ -50,7 +50,7 @@ A Helm chart for Alfresco Activiti
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
-| podSecurityContext | object | `{}` |  |
+| podSecurityContext.runAsUser | int | `33007` |  |
 | readinessProbe.failureThreshold | int | `5` |  |
 | readinessProbe.initialDelaySeconds | int | `25` |  |
 | readinessProbe.path | string | `"/activiti-admin/"` |  |
