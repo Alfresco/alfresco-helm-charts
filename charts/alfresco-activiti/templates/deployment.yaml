@@ -55,7 +55,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ template "alfresco-activiti.fullname" . }}
-            {{- with .Values.existingConfigMap }}
+            {{- with .Values.envFromExistingConfigMap }}
             - configMapRef:
                 name: {{ . }}
             {{- end }}

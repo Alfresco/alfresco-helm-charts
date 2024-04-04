@@ -26,6 +26,7 @@ A Helm chart for Alfresco Activiti
 | database.password | string | `nil` | JDBC password to use to connect to the DB for aps app |
 | database.url | string | `nil` | JDBC url to connect to the external DB for aps app |
 | database.username | string | `nil` | JDBC username to use to connect to the DB for aps app |
+| envFromExistingConfigMap | string | `nil` | Name of a pre-existing configmap to load env vars from (overrides .envinronment values) |
 | environment.ACTIVITI_CORS_ALLOWED_HEADERS | string | `"Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token"` | Cross Origin Resource Sharing configuration allowed http headers |
 | environment.ACTIVITI_CORS_ALLOWED_METHODS | string | `"GET,POST,HEAD,OPTIONS,PUT,DELETE"` | Cross Origin Resource Sharing configuration allowed http methods |
 | environment.ACTIVITI_CORS_ALLOWED_ORIGIN_PATTERNS | string | `"*"` | Cross Origin Resource Sharing configuration allowed origins (list of glob-like patterns) |
@@ -44,7 +45,6 @@ A Helm chart for Alfresco Activiti
 | environment.IDENTITY_SERVICE_SSL_REQUIRED | string | `"none"` | Alfresco Identity Service force using SSL |
 | environment.IDENTITY_SERVICE_TOKEN_STORE | string | `"session"` | Alfresco Identity Service token storage configuration |
 | environment.IDENTITY_SERVICE_USE_BROWSER_BASED_LOGOUT | string | `"true"` | Alfresco Identity Service browser initiated logout toggle |
-| existingConfigMap | string | `nil` | Name of a pre-existing configmap to load env vars from (overrides .envinronment values) |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `8080` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
