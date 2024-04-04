@@ -31,6 +31,7 @@ tests:
         template: deployment.yaml
   - it: should have basic metadata in place in deployment & default config
     set:
+      envFromExistingConfigMap: apscfg
       database:
         existingConfigMap:
           name: my-own-custom-config
@@ -42,6 +43,18 @@ tests:
             username: my-own-custom-username
             password: my-own-custom-password
     asserts:
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            configMapRef:
+              name: apscfg
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            configMapRef:
+              name: RELEASE-NAME-alfresco-activiti
+        template: deployment.yaml
       - contains:
           path: spec.template.spec.containers[0].env
           content:

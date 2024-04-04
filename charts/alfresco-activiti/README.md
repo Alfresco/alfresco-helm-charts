@@ -1,6 +1,6 @@
 # alfresco-activiti
 
-![Version: 0.1.0-alpha.0](https://img.shields.io/badge/Version-0.1.0--alpha.0-informational?style=flat-square) ![AppVersion: 24.1.0](https://img.shields.io/badge/AppVersion-24.1.0-informational?style=flat-square)
+![Version: 0.1.0-alpha.1](https://img.shields.io/badge/Version-0.1.0--alpha.1-informational?style=flat-square) ![AppVersion: 24.1.0](https://img.shields.io/badge/AppVersion-24.1.0-informational?style=flat-square)
 
 A Helm chart for Alfresco Activiti
 
@@ -26,6 +26,7 @@ A Helm chart for Alfresco Activiti
 | database.password | string | `nil` | JDBC password to use to connect to the DB for aps app |
 | database.url | string | `nil` | JDBC url to connect to the external DB for aps app |
 | database.username | string | `nil` | JDBC username to use to connect to the DB for aps app |
+| envFromExistingConfigMap | string | `nil` | Name of a pre-existing configmap to load env vars from (overrides .environment values) |
 | environment.ACTIVITI_CORS_ALLOWED_HEADERS | string | `"Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token"` | Cross Origin Resource Sharing configuration allowed http headers |
 | environment.ACTIVITI_CORS_ALLOWED_METHODS | string | `"GET,POST,HEAD,OPTIONS,PUT,DELETE"` | Cross Origin Resource Sharing configuration allowed http methods |
 | environment.ACTIVITI_CORS_ALLOWED_ORIGIN_PATTERNS | string | `"*"` | Cross Origin Resource Sharing configuration allowed origins (list of glob-like patterns) |
