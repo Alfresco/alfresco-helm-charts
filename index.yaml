@@ -204,6 +204,25 @@ entries:
   alfresco-activiti:
   - apiVersion: v2
     appVersion: 24.1.0
+    created: "2024-04-04T16:19:19.497613101Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.2
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.8.5
+    description: A Helm chart for Alfresco Activiti
+    digest: df130bf3d6eb64dfd7c4ec4f140f34fce073f6a22310c9d22b34943290d52de6
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    name: alfresco-activiti
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-activiti-0.1.0-alpha.1/alfresco-activiti-0.1.0-alpha.1.tgz
+    version: 0.1.0-alpha.1
+  - apiVersion: v2
+    appVersion: 24.1.0
     created: "2024-04-04T12:10:24.263181714Z"
     dependencies:
     - name: alfresco-common
@@ -222,6 +241,25 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-activiti-0.1.0-alpha.0/alfresco-activiti-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-activiti-admin:
+  - apiVersion: v2
+    appVersion: 24.1.0
+    created: "2024-04-04T16:19:19.677823449Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.2
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.8.5
+    description: A Helm chart for Alfresco Activiti
+    digest: 83d9edf4867a445fafdf057f839d5f84e0458275bfc4ae485475aaf1bbf9595f
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    name: alfresco-activiti-admin
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-activiti-admin-0.1.0-alpha.1/alfresco-activiti-admin-0.1.0-alpha.1.tgz
+    version: 0.1.0-alpha.1
   - apiVersion: v2
     appVersion: 24.1.0
     created: "2024-04-04T12:10:24.391555048Z"
@@ -4052,4 +4090,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-04-04T12:10:24.391902244Z"
+generated: "2024-04-04T16:19:19.678216643Z"
