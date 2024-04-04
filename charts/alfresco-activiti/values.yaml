@@ -61,6 +61,8 @@ readinessProbe: &apsProbe
   failureThreshold: 5
   timeoutSeconds: 5
 livenessProbe: *apsProbe
+# -- Name of a pre-existing configmap to load env vars from (overrides .envinronment values)
+existingConfigMap: null
 environment:
   # -- Cross Origin Resource Sharing configuration toggle
   ACTIVITI_CORS_ENABLED: "true"

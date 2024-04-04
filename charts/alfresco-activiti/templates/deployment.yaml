@@ -55,6 +55,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ template "alfresco-activiti.fullname" . }}
+            {{- with .Values.existingConfigMap }}
+            - configMapRef:
+                name: {{ . }}
+            {{- end }}
           ports:
             - containerPort: {{ .Values.image.internalPort }}
           volumeMounts:
