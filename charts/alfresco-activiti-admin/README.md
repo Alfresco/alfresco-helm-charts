@@ -30,6 +30,7 @@ A Helm chart for Alfresco Activiti
 | environment.ACTIVITI_ADMIN_REST_APP_PASSWORD | string | `"admin"` | activiti-app password |
 | environment.ACTIVITI_ADMIN_REST_APP_PORT | string | `"80"` | activiti-app port |
 | environment.ACTIVITI_ADMIN_REST_APP_USERNAME | string | `"admin@app.activiti.com"` | activiti-app username |
+| existingConfigMap | string | `nil` | Name of a pre-existing configmap to load env vars from (overrides .envinronment values) |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `8080` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
