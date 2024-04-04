@@ -201,6 +201,46 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/activemq-3.0.0/activemq-3.0.0.tgz
     version: 3.0.0
+  alfresco-activiti:
+  - apiVersion: v2
+    appVersion: 24.1.0
+    created: "2024-04-04T12:10:24.263181714Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.2
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.8.5
+    description: A Helm chart for Alfresco Activiti
+    digest: 3ea69284d049d931848a2b65d15ab76f497e2a5ff0166705914d692fea4ecc6d
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    name: alfresco-activiti
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-activiti-0.1.0-alpha.0/alfresco-activiti-0.1.0-alpha.0.tgz
+    version: 0.1.0-alpha.0
+  alfresco-activiti-admin:
+  - apiVersion: v2
+    appVersion: 24.1.0
+    created: "2024-04-04T12:10:24.391555048Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.2
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.8.5
+    description: A Helm chart for Alfresco Activiti
+    digest: da99723f8518ac3389f5b12fb4ec5ea8369b51c4c7bd2653597ff7087f8e0c0e
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    name: alfresco-activiti-admin
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-activiti-admin-0.1.0-alpha.0/alfresco-activiti-admin-0.1.0-alpha.0.tgz
+    version: 0.1.0-alpha.0
   alfresco-adf-app:
   - apiVersion: v2
     created: "2024-03-04T13:37:06.224636689Z"
@@ -4012,4 +4052,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-03-28T12:51:04.69855625Z"
+generated: "2024-04-04T12:10:24.391902244Z"
