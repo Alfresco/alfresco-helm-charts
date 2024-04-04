@@ -31,7 +31,7 @@ tests:
         template: deployment.yaml
   - it: should have basic metadata in place in deployment & default config
     set:
-      existingConfigMap: apscfg
+      envFromExistingConfigMap: apscfg
       database:
         existingConfigMap:
           name: my-own-custom-config
