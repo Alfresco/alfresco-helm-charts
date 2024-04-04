@@ -26,6 +26,7 @@ tests:
                 key: DATABASE_USERNAME
   - it: should have basic metadata in place in deployment & default config
     set:
+      existingConfigMap: admincfg
       database:
         existingConfigMap:
           name: my-own-custom-config
@@ -53,3 +54,15 @@ tests:
               secretKeyRef:
                 name: my-own-custom-secret
                 key: my-own-custom-username
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            configMapRef:
+              name: admincfg
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            configMapRef:
+              name: RELEASE-NAME-alfresco-activiti-admin
+        template: deployment.yaml
