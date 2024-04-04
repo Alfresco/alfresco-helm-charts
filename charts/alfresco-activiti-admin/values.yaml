@@ -42,7 +42,7 @@ ingress:
   #    hosts:
   #      - chart-example.local
 # -- Name of a pre-existing configmap to load env vars from (overrides .envinronment values)
-existingConfigMap: null
+envFromExistingConfigMap: null
 environment:
   # -- activiti-app address
   ACTIVITI_ADMIN_REST_APP_HOST: "http://localhost"
