@@ -1,0 +1,13 @@
+{{- with .Values.database }}
+{{- if not .existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: >-
+    {{ template "alfresco-activiti.database.name" $ }}
+  labels:
+    {{- include "alfresco-activiti.labels" $ | nindent 4 }}
+data:
+  {{ template "alfresco-activiti.db.cm" . }}
+{{- end }}
+{{- end }}

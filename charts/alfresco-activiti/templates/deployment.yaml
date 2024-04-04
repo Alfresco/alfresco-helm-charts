@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco-activiti.fullname" . }}
+  labels:
+    {{- include "alfresco-activiti.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "alfresco-activiti.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "alfresco-activiti.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
+      containers:
+        - name: {{ template "alfresco-activiti.name" . }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- with .Values.database }}
+            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-activiti.database.name" $) }}
+            {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-activiti.database.name" $) }}
+            - name: ACTIVITI_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $dbSecret }}
+                  key: {{ .existingSecret.keys.password }}
+            - name: ACTIVITI_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $dbSecret }}
+                  key: {{ .existingSecret.keys.username }}
+            - name: ACTIVITI_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $dbCm }}
+                  key: {{ .existingConfigMap.keys.url }}
+            - name: ACTIVITI_DATASOURCE_DRIVER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $dbCm }}
+                  key: {{ .existingConfigMap.keys.driver }}
+            {{- end }}
+          envFrom:
+            - configMapRef:
+                name: {{ template "alfresco-activiti.fullname" . }}
+          ports:
+            - containerPort: {{ .Values.image.internalPort }}
+          volumeMounts:
+            {{- if .Values.persistence.enabled }}
+            - name: data
+              mountPath: {{ .Values.persistence.data.mountPath }}
+              subPath: {{ .Values.persistence.data.subPath }}
+            {{- end }}
+            {{- if .Values.license.secretName }}
+            - name: license
+              mountPath: "/usr/local/tomcat/lib/activiti.lic"
+              subPath: activiti.lic
+              readOnly: true
+            {{- end }}
+          {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.path }}
+              port: {{ .Values.image.internalPort }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessProbe.path }}
+              port: {{ .Values.image.internalPort }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+      {{- if .Values.persistence.enabled }}
+        {{- include "data_volume" .Values | nindent 8 }}
+      {{- end }}
+      {{- if .Values.license.secretName }}
+        - name: license
+          secret:
+            defaultMode: 0400
+            secretName: {{ .Values.license.secretName }}
+      {{- end }}
+      {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
