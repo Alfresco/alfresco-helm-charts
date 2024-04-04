@@ -26,7 +26,7 @@ A Helm chart for Alfresco Activiti
 | database.password | string | `nil` | JDBC password to use to connect to the DB for admin app |
 | database.url | string | `nil` | JDBC url to connect to the external DB for admin app |
 | database.username | string | `nil` | JDBC username to use to connect to the DB for admin app |
-| envFromExistingConfigMap | string | `nil` | Name of a pre-existing configmap to load env vars from (overrides .envinronment values) |
+| envFromExistingConfigMap | string | `nil` | Name of a pre-existing configmap to load env vars from (overrides .environment values) |
 | environment.ACTIVITI_ADMIN_REST_APP_HOST | string | `"http://localhost"` | activiti-app address |
 | environment.ACTIVITI_ADMIN_REST_APP_PASSWORD | string | `"admin"` | activiti-app password |
 | environment.ACTIVITI_ADMIN_REST_APP_PORT | string | `"80"` | activiti-app port |
