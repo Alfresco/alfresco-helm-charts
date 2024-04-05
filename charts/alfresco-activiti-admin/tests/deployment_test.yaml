@@ -1,0 +1,68 @@
+---
+suite: test repository manifest
+templates:
+  - deployment.yaml
+tests:
+  - it: should have basic metadata in place in deployment & default config
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-activiti-admin
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_ADMIN_DATASOURCE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-activiti-admin-database
+                key: DATABASE_URL
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_ADMIN_DATASOURCE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-activiti-admin-database
+                key: DATABASE_USERNAME
+  - it: should have basic metadata in place in deployment & default config
+    set:
+      envFromExistingConfigMap: admincfg
+      database:
+        existingConfigMap:
+          name: my-own-custom-config
+          keys:
+            url: my-own-custom-url
+        existingSecret:
+          name: my-own-custom-secret
+          keys:
+            username: my-own-custom-username
+            password: my-own-custom-password
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_ADMIN_DATASOURCE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: my-own-custom-config
+                key: my-own-custom-url
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ACTIVITI_ADMIN_DATASOURCE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: my-own-custom-secret
+                key: my-own-custom-username
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            configMapRef:
+              name: admincfg
+        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            configMapRef:
+              name: RELEASE-NAME-alfresco-activiti-admin
+        template: deployment.yaml

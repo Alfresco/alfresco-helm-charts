@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco-activiti-admin.fullname" . }}
+  labels:
+    {{- include "alfresco-activiti-admin.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "alfresco-activiti-admin.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "alfresco-activiti-admin.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
+      containers:
+        - name: {{ template "alfresco-activiti-admin.name" . }}
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- with .Values.database }}
+            {{- $dbSecret := coalesce .existingSecret.name (include "alfresco-activiti-admin.database.name" $) }}
+            {{- $dbCm := coalesce .existingConfigMap.name (include "alfresco-activiti-admin.database.name" $) }}
+            - name: ACTIVITI_ADMIN_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $dbSecret }}
+                  key: {{ .existingSecret.keys.username }}
+            - name: ACTIVITI_ADMIN_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $dbSecret }}
+                  key: {{ .existingSecret.keys.password }}
+            - name: ACTIVITI_ADMIN_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $dbCm }}
+                  key: {{ .existingConfigMap.keys.url }}
+            - name: ACTIVITI_ADMIN_DATASOURCE_DRIVER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $dbCm }}
+                  key: {{ .existingConfigMap.keys.driver }}
+            {{- end }}
+          envFrom:
+          - configMapRef:
+              name: {{ template "alfresco-activiti-admin.fullname" . }}
+          {{- with .Values.envFromExistingConfigMap }}
+          - configMapRef:
+              name: {{ . }}
+          {{- end }}
+          ports:
+            - containerPort: {{ .Values.image.internalPort }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.path }}
+              port: {{ .Values.image.internalPort }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessProbe.path }}
+              port: {{ .Values.image.internalPort }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
