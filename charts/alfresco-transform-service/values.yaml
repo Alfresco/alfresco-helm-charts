@@ -133,9 +133,9 @@ pdfrenderer:
   autoscaling:
     # -- Toggle pdfrenderer autoscaling
     enabled: false
-    # -- minimum number of replicas to spin up within the replicatset
+    # -- minimum number of replicas to spin up within the replicaset
     minReplicas: 1
-    # -- maximum number of replicas to spin up within the replicatset
+    # -- maximum number of replicas to spin up within the replicaset
     maxReplicas: 3
     behavior:
       scaleDown:
@@ -238,9 +238,9 @@ imagemagick:
   autoscaling:
     # -- Toggle imagemagick autoscaling
     enabled: false
-    # -- minimum number of replicas to spin up within the replicatset
+    # -- minimum number of replicas to spin up within the replicaset
     minReplicas: 1
-    # -- maximum number of replicas to spin up within the replicatset
+    # -- maximum number of replicas to spin up within the replicaset
     maxReplicas: 3
     behavior:
       scaleDown:
@@ -343,9 +343,9 @@ libreoffice:
   autoscaling:
     # -- Toggle libreoffice autoscaling
     enabled: false
-    # -- minimum number of replicas to spin up within the replicatset
+    # -- minimum number of replicas to spin up within the replicaset
     minReplicas: 1
-    # -- maximum number of replicas to spin up within the replicatset
+    # -- maximum number of replicas to spin up within the replicaset
     maxReplicas: 3
     behavior:
       scaleDown:
@@ -448,9 +448,9 @@ tika:
   autoscaling:
     # -- Toggle tika autoscaling
     enabled: false
-    # -- minimum number of replicas to spin up within the replicatset
+    # -- minimum number of replicas to spin up within the replicaset
     minReplicas: 1
-    # -- maximum number of replicas to spin up within the replicatset
+    # -- maximum number of replicas to spin up within the replicaset
     maxReplicas: 3
     behavior:
       scaleDown:
@@ -553,9 +553,9 @@ transformmisc:
   autoscaling:
     # -- Toggle transformmisc autoscaling
     enabled: false
-    # -- minimum number of replicas to spin up within the replicatset
+    # -- minimum number of replicas to spin up within the replicaset
     minReplicas: 1
-    # -- maximum number of replicas to spin up within the replicatset
+    # -- maximum number of replicas to spin up within the replicaset
     maxReplicas: 3
     behavior:
       scaleDown:

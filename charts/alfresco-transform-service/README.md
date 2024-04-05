@@ -71,9 +71,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | imagemagick.autoscaling.behavior.scaleUp.policies | list | `[{"periodSeconds":60,"type":"Percent","value":50},{"periodSeconds":60,"type":"Pods","value":2}]` | list of available policies for scaling up scale up either by one pod or by adding 50% more pods (whichever is bigger) |
 | imagemagick.autoscaling.behavior.scaleUp.stabilizationWindowSeconds | int | `30` |  |
 | imagemagick.autoscaling.enabled | bool | `false` | Toggle imagemagick autoscaling |
-| imagemagick.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicatset |
+| imagemagick.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicaset |
 | imagemagick.autoscaling.metrics | list | `[{"resource":{"name":"cpu","target":{"averageUtilization":75,"type":"Utilization"}},"type":"Resource"}]` | a list of resource the HPA controller should monitor For more details check https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-resource-metrics |
-| imagemagick.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicatset |
+| imagemagick.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicaset |
 | imagemagick.enabled | bool | `true` |  |
 | imagemagick.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | imagemagick.image.internalPort | int | `8090` |  |
@@ -114,9 +114,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | libreoffice.autoscaling.behavior.scaleUp.policies | list | `[{"periodSeconds":60,"type":"Percent","value":50},{"periodSeconds":60,"type":"Pods","value":2}]` | list of available policies for scaling up scale up either by one pod or by adding 50% more pods (whichever is bigger) |
 | libreoffice.autoscaling.behavior.scaleUp.stabilizationWindowSeconds | int | `30` |  |
 | libreoffice.autoscaling.enabled | bool | `false` | Toggle libreoffice autoscaling |
-| libreoffice.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicatset |
+| libreoffice.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicaset |
 | libreoffice.autoscaling.metrics | list | `[{"resource":{"name":"cpu","target":{"averageUtilization":75,"type":"Utilization"}},"type":"Resource"}]` | a list of resource the HPA controller should monitor For more details check https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-resource-metrics |
-| libreoffice.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicatset |
+| libreoffice.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicaset |
 | libreoffice.enabled | bool | `true` |  |
 | libreoffice.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | libreoffice.image.internalPort | int | `8090` |  |
@@ -165,9 +165,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | pdfrenderer.autoscaling.behavior.scaleUp.policies | list | `[{"periodSeconds":60,"type":"Percent","value":50},{"periodSeconds":60,"type":"Pods","value":2}]` | list of available policies for scaling up scale up either by one pod or by adding 50% more pods (whichever is bigger) |
 | pdfrenderer.autoscaling.behavior.scaleUp.stabilizationWindowSeconds | int | `30` |  |
 | pdfrenderer.autoscaling.enabled | bool | `false` | Toggle pdfrenderer autoscaling |
-| pdfrenderer.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicatset |
+| pdfrenderer.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicaset |
 | pdfrenderer.autoscaling.metrics | list | `[{"resource":{"name":"cpu","target":{"averageUtilization":75,"type":"Utilization"}},"type":"Resource"}]` | a list of resource the HPA controller should monitor For more details check https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-resource-metrics |
-| pdfrenderer.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicatset |
+| pdfrenderer.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicaset |
 | pdfrenderer.enabled | bool | `true` |  |
 | pdfrenderer.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | pdfrenderer.image.internalPort | int | `8090` |  |
@@ -213,9 +213,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | tika.autoscaling.behavior.scaleUp.policies | list | `[{"periodSeconds":60,"type":"Percent","value":50},{"periodSeconds":60,"type":"Pods","value":2}]` | list of available policies for scaling up scale up either by one pod or by adding 50% more pods (whichever is bigger) |
 | tika.autoscaling.behavior.scaleUp.stabilizationWindowSeconds | int | `30` |  |
 | tika.autoscaling.enabled | bool | `false` | Toggle tika autoscaling |
-| tika.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicatset |
+| tika.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicaset |
 | tika.autoscaling.metrics | list | `[{"resource":{"name":"cpu","target":{"averageUtilization":75,"type":"Utilization"}},"type":"Resource"}]` | a list of resource the HPA controller should monitor For more details check https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-resource-metrics |
-| tika.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicatset |
+| tika.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicaset |
 | tika.enabled | bool | `true` |  |
 | tika.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | tika.image.internalPort | int | `8090` |  |
@@ -256,9 +256,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | transformmisc.autoscaling.behavior.scaleUp.policies | list | `[{"periodSeconds":60,"type":"Percent","value":50},{"periodSeconds":60,"type":"Pods","value":2}]` | list of available policies for scaling up scale up either by one pod or by adding 50% more pods (whichever is bigger) |
 | transformmisc.autoscaling.behavior.scaleUp.stabilizationWindowSeconds | int | `30` |  |
 | transformmisc.autoscaling.enabled | bool | `false` | Toggle transformmisc autoscaling |
-| transformmisc.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicatset |
+| transformmisc.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicaset |
 | transformmisc.autoscaling.metrics | list | `[{"resource":{"name":"cpu","target":{"averageUtilization":75,"type":"Utilization"}},"type":"Resource"}]` | a list of resource the HPA controller should monitor For more details check https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-resource-metrics |
-| transformmisc.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicatset |
+| transformmisc.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicaset |
 | transformmisc.enabled | bool | `true` |  |
 | transformmisc.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | transformmisc.image.internalPort | int | `8090` |  |
