@@ -6,7 +6,9 @@ metadata:
   labels:
     {{- include "alfresco-transform-service.pdfrenderer.labels" . | nindent 4 }}
 spec:
+  {{- if not .Values.pdfrenderer.autoscaling.enabled }}
   replicas: {{ .Values.pdfrenderer.replicaCount }}
+  {{ end }}
   selector:
     matchLabels:
       {{- include "alfresco-transform-service.pdfrenderer.selectorLabels" . | nindent 6 }}

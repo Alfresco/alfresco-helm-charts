@@ -1,6 +1,6 @@
 # alfresco-transform-service
 
-![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
+![Version: 1.3.0-alpha.0](https://img.shields.io/badge/Version-1.3.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Transform Services
 
@@ -66,6 +66,14 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | imagemagick.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.imagemagick.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.imagemagick.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
+| imagemagick.autoscaling.behavior.scaleDown.policies | list | `[{"periodSeconds":60,"type":"Pods","value":1}]` | list of available policies for scaling down scale down either by one pod or by destroying 25% of the pods (whichever is smaller) |
+| imagemagick.autoscaling.behavior.scaleDown.stabilizationWindowSeconds | int | `60` |  |
+| imagemagick.autoscaling.behavior.scaleUp.policies | list | `[{"periodSeconds":60,"type":"Percent","value":50},{"periodSeconds":60,"type":"Pods","value":2}]` | list of available policies for scaling up scale up either by one pod or by adding 50% more pods (whichever is bigger) |
+| imagemagick.autoscaling.behavior.scaleUp.stabilizationWindowSeconds | int | `30` |  |
+| imagemagick.autoscaling.enabled | bool | `false` | Toggle imagemagick autoscaling |
+| imagemagick.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicaset |
+| imagemagick.autoscaling.metrics | list | `[{"resource":{"name":"cpu","target":{"averageUtilization":75,"type":"Utilization"}},"type":"Resource"}]` | a list of resource the HPA controller should monitor For more details check https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-resource-metrics |
+| imagemagick.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicaset |
 | imagemagick.enabled | bool | `true` |  |
 | imagemagick.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | imagemagick.image.internalPort | int | `8090` |  |
@@ -87,7 +95,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | imagemagick.podSecurityContext.runAsUser | int | `33002` |  |
 | imagemagick.readinessProbe.initialDelaySeconds | int | `20` |  |
 | imagemagick.readinessProbe.path | string | `"/ready"` |  |
-| imagemagick.readinessProbe.periodSeconds | int | `60` |  |
+| imagemagick.readinessProbe.periodSeconds | int | `30` |  |
 | imagemagick.readinessProbe.timeoutSeconds | int | `10` |  |
 | imagemagick.replicaCount | int | `2` |  |
 | imagemagick.resources.limits.cpu | string | `"4"` |  |
@@ -101,6 +109,14 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | imagemagick.volumeMounts | list | `[]` |  |
 | imagemagick.volumes | list | `[]` |  |
 | libreoffice.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.libreoffice.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.libreoffice.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
+| libreoffice.autoscaling.behavior.scaleDown.policies | list | `[{"periodSeconds":60,"type":"Pods","value":1}]` | list of available policies for scaling down scale down either by one pod or by destroying 25% of the pods (whichever is smaller) |
+| libreoffice.autoscaling.behavior.scaleDown.stabilizationWindowSeconds | int | `60` |  |
+| libreoffice.autoscaling.behavior.scaleUp.policies | list | `[{"periodSeconds":60,"type":"Percent","value":50},{"periodSeconds":60,"type":"Pods","value":2}]` | list of available policies for scaling up scale up either by one pod or by adding 50% more pods (whichever is bigger) |
+| libreoffice.autoscaling.behavior.scaleUp.stabilizationWindowSeconds | int | `30` |  |
+| libreoffice.autoscaling.enabled | bool | `false` | Toggle libreoffice autoscaling |
+| libreoffice.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicaset |
+| libreoffice.autoscaling.metrics | list | `[{"resource":{"name":"cpu","target":{"averageUtilization":75,"type":"Utilization"}},"type":"Resource"}]` | a list of resource the HPA controller should monitor For more details check https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-resource-metrics |
+| libreoffice.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicaset |
 | libreoffice.enabled | bool | `true` |  |
 | libreoffice.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | libreoffice.image.internalPort | int | `8090` |  |
@@ -122,7 +138,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | libreoffice.podSecurityContext.runAsUser | int | `33003` |  |
 | libreoffice.readinessProbe.initialDelaySeconds | int | `20` |  |
 | libreoffice.readinessProbe.path | string | `"/ready"` |  |
-| libreoffice.readinessProbe.periodSeconds | int | `60` |  |
+| libreoffice.readinessProbe.periodSeconds | int | `30` |  |
 | libreoffice.readinessProbe.timeoutSeconds | int | `10` |  |
 | libreoffice.replicaCount | int | `2` |  |
 | libreoffice.resources.limits.cpu | string | `"4"` |  |
@@ -144,6 +160,14 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | messageBroker.url | string | `nil` | Activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true) |
 | messageBroker.user | string | `nil` | Activemq username |
 | pdfrenderer.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.pdfrenderer.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.pdfrenderer.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
+| pdfrenderer.autoscaling.behavior.scaleDown.policies | list | `[{"periodSeconds":60,"type":"Pods","value":1}]` | list of available policies for scaling down scale down either by one pod or by destroying 25% of the pods (whichever is smaller) |
+| pdfrenderer.autoscaling.behavior.scaleDown.stabilizationWindowSeconds | int | `60` |  |
+| pdfrenderer.autoscaling.behavior.scaleUp.policies | list | `[{"periodSeconds":60,"type":"Percent","value":50},{"periodSeconds":60,"type":"Pods","value":2}]` | list of available policies for scaling up scale up either by one pod or by adding 50% more pods (whichever is bigger) |
+| pdfrenderer.autoscaling.behavior.scaleUp.stabilizationWindowSeconds | int | `30` |  |
+| pdfrenderer.autoscaling.enabled | bool | `false` | Toggle pdfrenderer autoscaling |
+| pdfrenderer.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicaset |
+| pdfrenderer.autoscaling.metrics | list | `[{"resource":{"name":"cpu","target":{"averageUtilization":75,"type":"Utilization"}},"type":"Resource"}]` | a list of resource the HPA controller should monitor For more details check https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-resource-metrics |
+| pdfrenderer.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicaset |
 | pdfrenderer.enabled | bool | `true` |  |
 | pdfrenderer.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | pdfrenderer.image.internalPort | int | `8090` |  |
@@ -165,7 +189,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | pdfrenderer.podSecurityContext.runAsUser | int | `33001` |  |
 | pdfrenderer.readinessProbe.initialDelaySeconds | int | `20` |  |
 | pdfrenderer.readinessProbe.path | string | `"/ready"` |  |
-| pdfrenderer.readinessProbe.periodSeconds | int | `60` |  |
+| pdfrenderer.readinessProbe.periodSeconds | int | `30` |  |
 | pdfrenderer.readinessProbe.timeoutSeconds | int | `10` |  |
 | pdfrenderer.replicaCount | int | `2` |  |
 | pdfrenderer.resources.limits.cpu | string | `"2"` |  |
@@ -184,6 +208,14 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | serviceAccount.name | string | `""` |  |
 | tags.ci | bool | `false` | Enable dependencies required for CI. Do not enable. |
 | tika.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.tika.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.tika.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
+| tika.autoscaling.behavior.scaleDown.policies | list | `[{"periodSeconds":60,"type":"Pods","value":1}]` | list of available policies for scaling down scale down either by one pod or by destroying 25% of the pods (whichever is smaller) |
+| tika.autoscaling.behavior.scaleDown.stabilizationWindowSeconds | int | `60` |  |
+| tika.autoscaling.behavior.scaleUp.policies | list | `[{"periodSeconds":60,"type":"Percent","value":50},{"periodSeconds":60,"type":"Pods","value":2}]` | list of available policies for scaling up scale up either by one pod or by adding 50% more pods (whichever is bigger) |
+| tika.autoscaling.behavior.scaleUp.stabilizationWindowSeconds | int | `30` |  |
+| tika.autoscaling.enabled | bool | `false` | Toggle tika autoscaling |
+| tika.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicaset |
+| tika.autoscaling.metrics | list | `[{"resource":{"name":"cpu","target":{"averageUtilization":75,"type":"Utilization"}},"type":"Resource"}]` | a list of resource the HPA controller should monitor For more details check https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-resource-metrics |
+| tika.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicaset |
 | tika.enabled | bool | `true` |  |
 | tika.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | tika.image.internalPort | int | `8090` |  |
@@ -205,7 +237,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | tika.podSecurityContext.runAsUser | int | `33004` |  |
 | tika.readinessProbe.initialDelaySeconds | int | `30` |  |
 | tika.readinessProbe.path | string | `"/ready"` |  |
-| tika.readinessProbe.periodSeconds | int | `60` |  |
+| tika.readinessProbe.periodSeconds | int | `30` |  |
 | tika.readinessProbe.timeoutSeconds | int | `10` |  |
 | tika.replicaCount | int | `2` |  |
 | tika.resources.limits.cpu | string | `"4"` |  |
@@ -219,6 +251,14 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | tika.volumeMounts | list | `[]` |  |
 | tika.volumes | list | `[]` |  |
 | transformmisc.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-misc.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-misc.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
+| transformmisc.autoscaling.behavior.scaleDown.policies | list | `[{"periodSeconds":60,"type":"Pods","value":1}]` | list of available policies for scaling down scale down either by one pod or by destroying 25% of the pods (whichever is smaller) |
+| transformmisc.autoscaling.behavior.scaleDown.stabilizationWindowSeconds | int | `60` |  |
+| transformmisc.autoscaling.behavior.scaleUp.policies | list | `[{"periodSeconds":60,"type":"Percent","value":50},{"periodSeconds":60,"type":"Pods","value":2}]` | list of available policies for scaling up scale up either by one pod or by adding 50% more pods (whichever is bigger) |
+| transformmisc.autoscaling.behavior.scaleUp.stabilizationWindowSeconds | int | `30` |  |
+| transformmisc.autoscaling.enabled | bool | `false` | Toggle transformmisc autoscaling |
+| transformmisc.autoscaling.maxReplicas | int | `3` | maximum number of replicas to spin up within the replicaset |
+| transformmisc.autoscaling.metrics | list | `[{"resource":{"name":"cpu","target":{"averageUtilization":75,"type":"Utilization"}},"type":"Resource"}]` | a list of resource the HPA controller should monitor For more details check https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#support-for-resource-metrics |
+| transformmisc.autoscaling.minReplicas | int | `1` | minimum number of replicas to spin up within the replicaset |
 | transformmisc.enabled | bool | `true` |  |
 | transformmisc.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | transformmisc.image.internalPort | int | `8090` |  |
@@ -240,7 +280,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | transformmisc.podSecurityContext.runAsUser | int | `33006` |  |
 | transformmisc.readinessProbe.initialDelaySeconds | int | `20` |  |
 | transformmisc.readinessProbe.path | string | `"/ready"` |  |
-| transformmisc.readinessProbe.periodSeconds | int | `60` |  |
+| transformmisc.readinessProbe.periodSeconds | int | `30` |  |
 | transformmisc.readinessProbe.timeoutSeconds | int | `10` |  |
 | transformmisc.replicaCount | int | `2` |  |
 | transformmisc.resources.limits.cpu | string | `"2"` |  |

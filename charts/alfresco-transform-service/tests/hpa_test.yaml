@@ -1,0 +1,470 @@
+---
+suite: test ats Horizontal Pod Autoscalers
+templates:
+  - hpa-imagemagick.yaml
+  - hpa-libreoffice.yaml
+  - hpa-pdfrenderer.yaml
+  - hpa-tika.yaml
+  - hpa-transform-misc.yaml
+values:
+  - values/test_values.yaml
+tests:
+  - it: should render default HPA for imagemagick
+    set:
+      imagemagick:
+        autoscaling:
+          enabled: true
+    template: hpa-imagemagick.yaml
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-imagemagick
+      - contains:
+          path: spec.behavior.scaleDown.policies
+          content:
+            periodSeconds: 60
+            type: Pods
+            value: 1
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+            periodSeconds: 60
+            type: Percent
+            value: 50
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+             periodSeconds: 60
+             type: Pods
+             value: 2
+      - equal:
+          path: spec.behavior.scaleUp.stabilizationWindowSeconds
+          value: 30
+      - equal:
+          path: spec.behavior.scaleDown.stabilizationWindowSeconds
+          value: 60
+
+  - it: should render default HPA for libreoffice
+    set:
+      libreoffice:
+        autoscaling:
+          enabled: true
+    template: hpa-libreoffice.yaml
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-libreoffice
+      - contains:
+          path: spec.behavior.scaleDown.policies
+          content:
+            periodSeconds: 60
+            type: Pods
+            value: 1
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+            periodSeconds: 60
+            type: Percent
+            value: 50
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+             periodSeconds: 60
+             type: Pods
+             value: 2
+      - equal:
+          path: spec.behavior.scaleUp.stabilizationWindowSeconds
+          value: 30
+      - equal:
+          path: spec.behavior.scaleDown.stabilizationWindowSeconds
+          value: 60
+
+  - it: should render default HPA for pdfrenderer
+    set:
+      pdfrenderer:
+        autoscaling:
+          enabled: true
+    template: hpa-pdfrenderer.yaml
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-pdfrenderer
+      - contains:
+          path: spec.behavior.scaleDown.policies
+          content:
+            periodSeconds: 60
+            type: Pods
+            value: 1
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+            periodSeconds: 60
+            type: Percent
+            value: 50
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+             periodSeconds: 60
+             type: Pods
+             value: 2
+      - equal:
+          path: spec.behavior.scaleUp.stabilizationWindowSeconds
+          value: 30
+      - equal:
+          path: spec.behavior.scaleDown.stabilizationWindowSeconds
+          value: 60
+
+  - it: should render default HPA for tika
+    set:
+      tika:
+        autoscaling:
+          enabled: true
+    template: hpa-tika.yaml
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-tika
+      - contains:
+          path: spec.behavior.scaleDown.policies
+          content:
+            periodSeconds: 60
+            type: Pods
+            value: 1
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+            periodSeconds: 60
+            type: Percent
+            value: 50
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+             periodSeconds: 60
+             type: Pods
+             value: 2
+      - equal:
+          path: spec.behavior.scaleUp.stabilizationWindowSeconds
+          value: 30
+      - equal:
+          path: spec.behavior.scaleDown.stabilizationWindowSeconds
+          value: 60
+
+  - it: should render default HPA for transformmisc
+    set:
+      transformmisc:
+        autoscaling:
+          enabled: true
+    template: hpa-transform-misc.yaml
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-transform-misc
+      - contains:
+          path: spec.behavior.scaleDown.policies
+          content:
+            periodSeconds: 60
+            type: Pods
+            value: 1
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+            periodSeconds: 60
+            type: Percent
+            value: 50
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+             periodSeconds: 60
+             type: Pods
+             value: 2
+      - equal:
+          path: spec.behavior.scaleUp.stabilizationWindowSeconds
+          value: 30
+      - equal:
+          path: spec.behavior.scaleDown.stabilizationWindowSeconds
+          value: 60
+
+  - it: should render custom HPA for transformmisc
+    template: hpa-transform-misc.yaml
+    set:
+      transformmisc:
+        autoscaling:
+          enabled: true
+          minReplicas: 2
+          maxReplicas: 4
+          behavior:
+            scaleDown:
+              policies:
+                - periodSeconds: 600
+                  type: Pods
+                  value: 4
+              stabilizationWindowSeconds: 180
+            scaleUp:
+              policies:
+                - periodSeconds: 600
+                  type: Percent
+                  value: 400
+              stabilizationWindowSeconds: 300
+          metrics:
+            - resource:
+                name: cpu
+                target:
+                  averageUtilization: 50
+                  type: Utilization
+              type: Resource
+    asserts:
+      - contains:
+          path: spec.behavior.scaleDown.policies
+          content:
+            periodSeconds: 600
+            type: Pods
+            value: 4
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+            periodSeconds: 600
+            type: Percent
+            value: 400
+      - contains:
+          path: spec.metrics
+          content:
+            type: Resource
+            resource:
+              name: cpu
+              target:
+                averageUtilization: 50
+                type: Utilization
+      - equal:
+          path: spec.behavior.scaleDown.stabilizationWindowSeconds
+          value: 180
+      - equal:
+          path: spec.behavior.scaleUp.stabilizationWindowSeconds
+          value: 300
+
+  - it: should render custom HPA for tika
+    template: hpa-tika.yaml
+    set:
+      tika:
+        autoscaling:
+          enabled: true
+          minReplicas: 2
+          maxReplicas: 4
+          behavior:
+            scaleDown:
+              policies:
+                - periodSeconds: 600
+                  type: Pods
+                  value: 4
+              stabilizationWindowSeconds: 180
+            scaleUp:
+              policies:
+                - periodSeconds: 600
+                  type: Percent
+                  value: 400
+              stabilizationWindowSeconds: 300
+          metrics:
+            - resource:
+                name: cpu
+                target:
+                  averageUtilization: 50
+                  type: Utilization
+              type: Resource
+    asserts:
+      - contains:
+          path: spec.behavior.scaleDown.policies
+          content:
+            periodSeconds: 600
+            type: Pods
+            value: 4
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+            periodSeconds: 600
+            type: Percent
+            value: 400
+      - contains:
+          path: spec.metrics
+          content:
+            type: Resource
+            resource:
+              name: cpu
+              target:
+                averageUtilization: 50
+                type: Utilization
+      - equal:
+          path: spec.behavior.scaleDown.stabilizationWindowSeconds
+          value: 180
+      - equal:
+          path: spec.behavior.scaleUp.stabilizationWindowSeconds
+          value: 300
+
+  - it: should render custom HPA for pdfrenderer
+    template: hpa-pdfrenderer.yaml
+    set:
+      pdfrenderer:
+        autoscaling:
+          enabled: true
+          minReplicas: 2
+          maxReplicas: 4
+          behavior:
+            scaleDown:
+              policies:
+                - periodSeconds: 600
+                  type: Pods
+                  value: 4
+              stabilizationWindowSeconds: 180
+            scaleUp:
+              policies:
+                - periodSeconds: 600
+                  type: Percent
+                  value: 400
+              stabilizationWindowSeconds: 300
+          metrics:
+            - resource:
+                name: cpu
+                target:
+                  averageUtilization: 50
+                  type: Utilization
+              type: Resource
+    asserts:
+      - contains:
+          path: spec.behavior.scaleDown.policies
+          content:
+            periodSeconds: 600
+            type: Pods
+            value: 4
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+            periodSeconds: 600
+            type: Percent
+            value: 400
+      - contains:
+          path: spec.metrics
+          content:
+            type: Resource
+            resource:
+              name: cpu
+              target:
+                averageUtilization: 50
+                type: Utilization
+      - equal:
+          path: spec.behavior.scaleDown.stabilizationWindowSeconds
+          value: 180
+      - equal:
+          path: spec.behavior.scaleUp.stabilizationWindowSeconds
+          value: 300
+
+  - it: should render custom HPA for libreoffice
+    template: hpa-libreoffice.yaml
+    set:
+      libreoffice:
+        autoscaling:
+          enabled: true
+          minReplicas: 2
+          maxReplicas: 4
+          behavior:
+            scaleDown:
+              policies:
+                - periodSeconds: 600
+                  type: Pods
+                  value: 4
+              stabilizationWindowSeconds: 180
+            scaleUp:
+              policies:
+                - periodSeconds: 600
+                  type: Percent
+                  value: 400
+              stabilizationWindowSeconds: 300
+          metrics:
+            - resource:
+                name: cpu
+                target:
+                  averageUtilization: 50
+                  type: Utilization
+              type: Resource
+    asserts:
+      - contains:
+          path: spec.behavior.scaleDown.policies
+          content:
+            periodSeconds: 600
+            type: Pods
+            value: 4
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+            periodSeconds: 600
+            type: Percent
+            value: 400
+      - contains:
+          path: spec.metrics
+          content:
+            type: Resource
+            resource:
+              name: cpu
+              target:
+                averageUtilization: 50
+                type: Utilization
+      - equal:
+          path: spec.behavior.scaleDown.stabilizationWindowSeconds
+          value: 180
+      - equal:
+          path: spec.behavior.scaleUp.stabilizationWindowSeconds
+          value: 300
+
+  - it: should render custom HPA for imagemagick
+    template: hpa-imagemagick.yaml
+    set:
+      imagemagick:
+        autoscaling:
+          enabled: true
+          minReplicas: 2
+          maxReplicas: 4
+          behavior:
+            scaleDown:
+              policies:
+                - periodSeconds: 600
+                  type: Pods
+                  value: 4
+              stabilizationWindowSeconds: 180
+            scaleUp:
+              policies:
+                - periodSeconds: 600
+                  type: Percent
+                  value: 400
+              stabilizationWindowSeconds: 300
+          metrics:
+            - resource:
+                name: cpu
+                target:
+                  averageUtilization: 50
+                  type: Utilization
+              type: Resource
+    asserts:
+      - contains:
+          path: spec.behavior.scaleDown.policies
+          content:
+            periodSeconds: 600
+            type: Pods
+            value: 4
+      - contains:
+          path: spec.behavior.scaleUp.policies
+          content:
+            periodSeconds: 600
+            type: Percent
+            value: 400
+      - contains:
+          path: spec.metrics
+          content:
+            type: Resource
+            resource:
+              name: cpu
+              target:
+                averageUtilization: 50
+                type: Utilization
+      - equal:
+          path: spec.behavior.scaleDown.stabilizationWindowSeconds
+          value: 180
+      - equal:
+          path: spec.behavior.scaleUp.stabilizationWindowSeconds
+          value: 300

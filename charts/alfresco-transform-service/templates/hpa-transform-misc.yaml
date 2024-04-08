@@ -1,0 +1,16 @@
+{{ if and .Values.transformmisc.enabled .Values.transformmisc.autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "alfresco-transform-service.transform-misc.name" . }}
+  labels: {{- include "alfresco-transform-service.transform-misc.labels" . | nindent 4 }}
+spec:
+  minReplicas: {{ .Values.transformmisc.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.transformmisc.autoscaling.maxReplicas }}
+  behavior: {{ toYaml .Values.transformmisc.autoscaling.behavior | nindent 4 }}
+  metrics: {{ toYaml .Values.transformmisc.autoscaling.metrics | nindent 4 }}
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "alfresco-transform-service.transform-misc.name" . }}
+{{ end }}

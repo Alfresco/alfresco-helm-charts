@@ -6,7 +6,9 @@ metadata:
   labels:
     {{- include "alfresco-transform-service.tika.labels" . | nindent 4 }}
 spec:
+  {{- if not .Values.tika.autoscaling.enabled }}
   replicas: {{ .Values.tika.replicaCount }}
+  {{ end }}
   selector:
     matchLabels:
       {{- include "alfresco-transform-service.tika.selectorLabels" . | nindent 6 }}

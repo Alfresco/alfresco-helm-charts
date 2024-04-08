@@ -6,7 +6,9 @@ metadata:
   labels:
     {{- include "alfresco-transform-service.imagemagick.labels" . | nindent 4 }}
 spec:
+  {{- if not .Values.imagemagick.autoscaling.enabled }}
   replicas: {{ .Values.imagemagick.replicaCount }}
+  {{ end }}
   selector:
     matchLabels:
       {{- include "alfresco-transform-service.imagemagick.selectorLabels" . | nindent 6 }}

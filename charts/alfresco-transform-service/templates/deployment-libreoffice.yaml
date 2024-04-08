@@ -6,7 +6,9 @@ metadata:
   labels:
     {{- include "alfresco-transform-service.libreoffice.labels" . | nindent 4 }}
 spec:
+  {{- if not .Values.libreoffice.autoscaling.enabled }}
   replicas: {{ .Values.libreoffice.replicaCount }}
+  {{ end }}
   selector:
     matchLabels:
       {{- include "alfresco-transform-service.libreoffice.selectorLabels" . | nindent 6 }}
