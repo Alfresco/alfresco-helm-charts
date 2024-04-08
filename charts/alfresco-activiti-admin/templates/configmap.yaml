@@ -6,7 +6,11 @@ metadata:
     {{- include "alfresco-activiti-admin.labels" . | nindent 4 }}
 data:
   {{- if .Values.environment }}
-  {{- range $key, $val := .Values.environment }}
-  {{ $key }}: {{ tpl $val $ | quote }}
-  {{- end }}
+    {{- range $key, $val := .Values.environment }}
+      {{- if eq $key "ACTIVITI_ADMIN_REST_APP_HOST" }}
+        {{- $key | nindent 4 }}: {{ template "alfresco-activiti-admin.rest.baseUrl" $ }}
+      {{- else }}
+        {{- $key | nindent 4 }}: {{ tpl $val $ | quote }}
+      {{- end }}
+    {{- end }}
   {{- end }}
