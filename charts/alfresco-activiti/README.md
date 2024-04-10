@@ -88,4 +88,4 @@ A Helm chart for Alfresco Activiti
 | tolerations | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |
-| workarounds.ACTIVITI-5113 | bool | `true` | Workaround for [ACTIVITI-5113]https://hyland.atlassian.net/browse/ACTIVITI-5113) |
+| workaround.ACTIVITI-5113 | bool | `true` | Workaround for [ACTIVITI-5113]https://hyland.atlassian.net/browse/ACTIVITI-5113) |

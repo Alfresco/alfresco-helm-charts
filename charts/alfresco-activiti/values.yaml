@@ -153,7 +153,7 @@ database:
 license:
   secretName:
 
-workarounds:
+workaround:
   # -- Workaround for
   # [ACTIVITI-5113]https://hyland.atlassian.net/browse/ACTIVITI-5113)
   ACTIVITI-5113: true
