@@ -153,6 +153,11 @@ database:
 license:
   secretName:
 
+workarounds:
+  # -- Workaround for
+  # [ACTIVITI-5113]https://hyland.atlassian.net/browse/ACTIVITI-5113)
+  ACTIVITI-5113: true
+
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
   ci: false
