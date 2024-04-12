@@ -1,6 +1,6 @@
 # alfresco-activiti
 
-![Version: 0.1.0-alpha.2](https://img.shields.io/badge/Version-0.1.0--alpha.2-informational?style=flat-square) ![AppVersion: 24.1.0](https://img.shields.io/badge/AppVersion-24.1.0-informational?style=flat-square)
+![Version: 0.1.0-alpha.3](https://img.shields.io/badge/Version-0.1.0--alpha.3-informational?style=flat-square) ![AppVersion: 24.1.0](https://img.shields.io/badge/AppVersion-24.1.0-informational?style=flat-square)
 
 A Helm chart for Alfresco Activiti
 
@@ -81,6 +81,10 @@ A Helm chart for Alfresco Activiti
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.timeoutSeconds | int | `5` |  |
 | replicaCount | int | `1` |  |
+| resources.limits.cpu | string | `"4000m"` |  |
+| resources.limits.memory | string | `"8Gi"` |  |
+| resources.requests.cpu | string | `"500m"` |  |
+| resources.requests.memory | string | `"1Gi"` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"aps"` |  |
 | service.type | string | `"ClusterIP"` |  |

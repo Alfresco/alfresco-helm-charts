@@ -1,6 +1,6 @@
 # alfresco-activiti-admin
 
-![Version: 0.1.0-alpha.3](https://img.shields.io/badge/Version-0.1.0--alpha.3-informational?style=flat-square) ![AppVersion: 24.1.0](https://img.shields.io/badge/AppVersion-24.1.0-informational?style=flat-square)
+![Version: 0.1.0-alpha.4](https://img.shields.io/badge/Version-0.1.0--alpha.4-informational?style=flat-square) ![AppVersion: 24.1.0](https://img.shields.io/badge/AppVersion-24.1.0-informational?style=flat-square)
 
 A Helm chart for Alfresco Activiti
 
@@ -57,6 +57,10 @@ A Helm chart for Alfresco Activiti
 | readinessProbe.path | string | `"/activiti-admin/"` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.timeoutSeconds | int | `5` |  |
+| resources.limits.cpu | string | `"1000m"` |  |
+| resources.limits.memory | string | `"2Gi"` |  |
+| resources.requests.cpu | string | `"250m"` |  |
+| resources.requests.memory | string | `"512Mi"` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"activiti-admin"` |  |
 | service.type | string | `"ClusterIP"` |  |
