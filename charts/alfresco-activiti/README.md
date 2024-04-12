@@ -81,6 +81,10 @@ A Helm chart for Alfresco Activiti
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.timeoutSeconds | int | `5` |  |
 | replicaCount | int | `1` |  |
+| resources.limits.cpu | string | `"4000m"` |  |
+| resources.limits.memory | string | `"8Gi"` |  |
+| resources.requests.cpu | string | `"500m"` |  |
+| resources.requests.memory | string | `"1Gi"` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"aps"` |  |
 | service.type | string | `"ClusterIP"` |  |

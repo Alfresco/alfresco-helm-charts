@@ -41,6 +41,13 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
+resources:
+  limits:
+    cpu: 2000m
+    memory: 2Gi
+  requests:
+    cpu: 250m
+    memory: 512Mi
 # -- Name of a pre-existing configmap to load env vars from (overrides .environment values)
 envFromExistingConfigMap: null
 environment:

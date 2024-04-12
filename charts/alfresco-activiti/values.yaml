@@ -37,7 +37,13 @@ ingress:
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
-
+resources:
+  limits:
+    cpu: 4000m
+    memory: 8Gi
+  requests:
+    cpu: 500m
+    memory: 1Gi
 persistence:
   # -- Persist Alfresco Process data
   enabled: false
