@@ -57,7 +57,7 @@ A Helm chart for Alfresco Activiti
 | readinessProbe.path | string | `"/activiti-admin/"` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.timeoutSeconds | int | `5` |  |
-| resources.limits.cpu | string | `"2000m"` |  |
+| resources.limits.cpu | string | `"1000m"` |  |
 | resources.limits.memory | string | `"2Gi"` |  |
 | resources.requests.cpu | string | `"250m"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
