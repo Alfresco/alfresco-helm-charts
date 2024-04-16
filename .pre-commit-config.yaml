@@ -3,7 +3,7 @@ default_language_version:
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v4.6.0
     hooks:
       - id: mixed-line-ending
         args: ["--fix=lf"]
@@ -11,23 +11,23 @@ repos:
         exclude: README.md
       - id: trailing-whitespace
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.11.3
+    rev: v1.13.1
     hooks:
       - id: helm-docs
   - repo: https://github.com/jtyr/kubeconform-helm
-    rev: v0.1.16
+    rev: v0.1.17
     hooks:
       - id: kubeconform-helm
         alias: kubeconform-helm-min
         name: "Kubeconform Helm - min k8s version"
         files: ^charts/[^/]+/(\.kubeconform|\.helmignore|templates/NOTES.txt|.*\.(ya?ml|json|tpl))$
         args:
-          - --kubernetes-version=1.25.0
+          - --kubernetes-version=1.27.0
           - --exclude-charts=alfresco-common
           - --values-dir=ci
           - --strict
   - repo: https://github.com/jtyr/kubeconform-helm
-    rev: v0.1.16
+    rev: v0.1.17
     hooks:
       - id: kubeconform-helm
         name: "Kubeconform Helm - current k8s version"
