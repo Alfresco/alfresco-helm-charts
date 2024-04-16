@@ -29,7 +29,7 @@ transformrouter:
   podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-router
-    tag: 4.1.0
+    tag: 4.1.1
     pullPolicy: IfNotPresent
     internalPort: 8095
   service:
@@ -93,7 +93,7 @@ pdfrenderer:
   podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-pdf-renderer
-    tag: 5.1.0
+    tag: 5.1.1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -198,7 +198,7 @@ imagemagick:
   podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-imagemagick
-    tag: 5.1.0
+    tag: 5.1.1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -303,7 +303,7 @@ libreoffice:
   podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-libreoffice
-    tag: 5.1.0
+    tag: 5.1.1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -408,7 +408,7 @@ tika:
   podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-tika
-    tag: 5.1.0
+    tag: 5.1.1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -513,7 +513,7 @@ transformmisc:
   podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-transform-misc
-    tag: 5.1.0
+    tag: 5.1.1
     pullPolicy: IfNotPresent
     internalPort: 8090
   service:
@@ -618,7 +618,7 @@ filestore:
   podLabels: {}
   image:
     repository: quay.io/alfresco/alfresco-shared-file-store
-    tag: 4.1.0
+    tag: 4.1.1
     pullPolicy: IfNotPresent
     internalPort: 8099
   initContainer:

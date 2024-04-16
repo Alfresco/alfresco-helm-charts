@@ -41,7 +41,7 @@ podAnnotations: {}
 podLabels: {}
 image:
   repository: quay.io/alfresco/alfresco-ooi-service
-  tag: 2.0.0
+  tag: 2.0.1
   pullPolicy: IfNotPresent
   internalPort: 9095
 service:
@@ -78,7 +78,7 @@ repository:
   port: 80
   existingConfigMap:
     # -- a pre-existing configmap which provides expected configuration for ms365
-    name:
+    name: null
     keys:
       # -- name of the key in the configMap where to find the repository service host
       host: REPO_HOST
