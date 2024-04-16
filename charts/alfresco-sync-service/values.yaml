@@ -17,7 +17,7 @@ podSecurityContext:
   fsGroup: 1000
 image:
   repository: quay.io/alfresco/service-sync
-  tag: 4.0.1
+  tag: 5.0.0
   pullPolicy: IfNotPresent
   internalPort: 9090
 environment:
@@ -127,7 +127,6 @@ ingress:
   extraAnnotations: {}
   tls: []
   path: /syncservice
-
 nodeSelector: {}
 tolerations: []
 affinity: ""
@@ -135,7 +134,6 @@ terminationGracePeriodSeconds: 60
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
   ci: false
-
 hazelcast:
   service:
     port: 5701
