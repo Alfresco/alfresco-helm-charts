@@ -1,9 +1,9 @@
 dependencies:
 - name: alfresco-common
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.1.0
+  version: 3.1.2
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 12.5.6
-digest: sha256:dad11cc05c0b861fc03655b919623ccff2ed4ee9a15a4c9488cc5c09e6e86487
-generated: "2024-01-17T09:36:09.557462+01:00"
+digest: sha256:d6abde783a426f86f6dcdd50d0ae4632c387633d814efad6b0b582ec1ab3167e
+generated: "2024-04-16T10:35:09.593527947Z"

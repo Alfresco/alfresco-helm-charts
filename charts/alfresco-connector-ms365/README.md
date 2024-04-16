@@ -10,7 +10,7 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.2 |
 
 ## Values
 

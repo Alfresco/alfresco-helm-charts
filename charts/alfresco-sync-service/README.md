@@ -14,8 +14,8 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.5.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.2 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
