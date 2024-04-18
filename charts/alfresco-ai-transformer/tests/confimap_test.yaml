@@ -35,7 +35,7 @@ tests:
         template: config-ai-transformer.yaml
       - equal:
           path: data.FILE_STORE_URL
-          value: http://acs-alfresco-transform-service/alfresco/api/-default-/private/sfs/versions/1/file/
+          value: http://acs-alfresco-transform-service/alfresco/api/-default-/private/sfs/versions/1/file
         template: config-sfs.yaml
       - equal:
           path: data.BROKER_URL

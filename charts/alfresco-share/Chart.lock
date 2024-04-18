@@ -1,6 +1,6 @@
 dependencies:
 - name: alfresco-common
   repository: https://alfresco.github.io/alfresco-helm-charts
-  version: 3.1.0
-digest: sha256:39e5517de068e0f04c3f34ed2bf61b2dcc815872fab46313ca3faad23607ecc3
-generated: "2024-01-03T18:25:21.23216+01:00"
+  version: 3.1.2
+digest: sha256:1960e2118e80bd2d3a8e79682f9506c184b4b34a0bec7b9e458000cccfad3c75
+generated: "2024-04-16T10:35:11.083925001Z"

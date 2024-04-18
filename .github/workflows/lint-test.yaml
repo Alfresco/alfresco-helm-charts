@@ -16,7 +16,8 @@ jobs:
     env:
       INSTALL_NAMESPACE: alfresco
       # See https://github.com/kubernetes-sigs/kind/releases for the latest available images
-      KIND_NODE_IMAGE: kindest/node:v1.27.3@sha256:3966ac761ae0136263ffdb6cfd4db23ef8a83cba8a463690e98317add2c9ba72
+      KIND_VERSION: v0.22.0
+      KIND_NODE_IMAGE: kindest/node:v1.29.2@sha256:51a1434a5397193442f0be2a297b488b6c919ce8a3931be0ce822606ea5ca245
       TEST_ALL_CHARTS: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && 'true' || 'false' }}
       TEST_ALL_CHARTS_ARG: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && '--all' || '' }}
     steps:
@@ -56,6 +57,7 @@ jobs:
       - name: Create kind cluster
         uses: helm/kind-action@99576bfa6ddf9a8e612d83b513da5a75875caced # v1.9.0
         with:
+          version: ${{ env.KIND_VERSION}}
           node_image: ${{ env.KIND_NODE_IMAGE }}
         if: steps.list-changed.outputs.changed == 'true'
 

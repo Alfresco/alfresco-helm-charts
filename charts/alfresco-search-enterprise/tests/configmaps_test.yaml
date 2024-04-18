@@ -38,7 +38,7 @@ tests:
         template: configmap-ats.yaml
       - equal:
           path: data.SFS_URL
-          value: http://sfs/alfresco/api/-default-/private/sfs/versions/1/file/
+          value: http://sfs/alfresco/api/-default-/private/sfs/versions/1/file
         template: configmap-ats.yaml
 
   - it: should fail rendering manifest without required values

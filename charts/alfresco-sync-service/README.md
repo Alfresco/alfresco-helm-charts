@@ -1,6 +1,6 @@
 # alfresco-sync-service
 
-![Version: 5.2.1](https://img.shields.io/badge/Version-5.2.1-informational?style=flat-square) ![AppVersion: 4.0.1](https://img.shields.io/badge/AppVersion-4.0.1-informational?style=flat-square)
+![Version: 5.2.2](https://img.shields.io/badge/Version-5.2.2-informational?style=flat-square) ![AppVersion: 5.0.0](https://img.shields.io/badge/AppVersion-5.0.0-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -14,8 +14,8 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.4.1 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.5.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.2 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
@@ -40,7 +40,7 @@ Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-d
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/service-sync"` |  |
-| image.tag | string | `"4.0.1"` |  |
+| image.tag | string | `"5.0.0"` |  |
 | ingress.extraAnnotations | object | `{}` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes nginx.ingress.kubernetes.io/ssl-redirect: "false" |
 | ingress.path | string | `"/syncservice"` |  |
 | ingress.tls | list | `[]` |  |
