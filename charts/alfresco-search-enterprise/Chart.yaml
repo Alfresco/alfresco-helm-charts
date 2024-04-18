@@ -3,14 +3,14 @@ apiVersion: v2
 name: alfresco-search-enterprise
 description: A Helm chart for deploying Alfresco Elasticsearch connector
 type: application
-version: 3.2.5
+version: 3.2.6
 appVersion: 4.0.1
 dependencies:
   - name: alfresco-common
     version: 3.1.2
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: activemq
-    version: 3.5.2
+    version: 3.5.3
     repository: https://alfresco.github.io/alfresco-helm-charts/
     tags:
       - ci
