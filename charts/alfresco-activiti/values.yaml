@@ -160,8 +160,7 @@ license:
   secretName:
 
 workaround:
-  # -- Workaround for
-  # [ACTIVITI-5113]https://hyland.atlassian.net/browse/ACTIVITI-5113)
+  ## -- Enable workaround for [ACTIVITI-5113](https://hyland.atlassian.net/browse/ACTIVITI-5113) required for versions before 24.2.0
   ACTIVITI-5113: false
 
 tags:

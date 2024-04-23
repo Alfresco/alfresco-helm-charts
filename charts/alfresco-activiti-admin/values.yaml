@@ -90,9 +90,7 @@ database:
       password: DATABASE_PASSWORD
 
 workaround:
-  # -- Enable workaround for https://hyland.atlassian.net/browse/ACTIVITI-5113
-  # Set to `true` to enable the workaround
-  # Set to `false` to disable the workaround
+  # -- Enable workaround for [ACTIVITI-5113](https://hyland.atlassian.net/browse/ACTIVITI-5113) required for versions before 24.2.0
   ACTIVITI-5113: false
 
 tags:
