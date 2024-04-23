@@ -1,6 +1,6 @@
 # alfresco-activiti
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![AppVersion: 24.2.0](https://img.shields.io/badge/AppVersion-24.2.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: 24.2.0](https://img.shields.io/badge/AppVersion-24.2.0-informational?style=flat-square)
 
 A Helm chart for Alfresco Activiti
 
@@ -92,4 +92,4 @@ A Helm chart for Alfresco Activiti
 | tolerations | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |
-| workaround.ACTIVITI-5113 | bool | `true` | Workaround for [ACTIVITI-5113]https://hyland.atlassian.net/browse/ACTIVITI-5113) |
+| workaround.ACTIVITI-5113 | bool | `false` | Workaround for [ACTIVITI-5113]https://hyland.atlassian.net/browse/ACTIVITI-5113) |
