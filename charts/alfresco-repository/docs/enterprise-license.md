@@ -1,3 +1,8 @@
+---
+title: Enterprise license
+parent: Guides
+---
+
 # Deploy Alfresco repository with enterprise license
 
 Alfresco content repository Docker images come with an embedded license which

@@ -1,9 +1,13 @@
+---
+title: Build your own charts
+---
+
 # Building your Content platform architecture with Alfresco charts
 
 ## The alfresco-common library chart
 
 Alfresco charts depend on a common library chart called
-[alfresco-common](../charts/alfresco-common). This chart provides a set of
+[alfresco-common](../charts/alfresco-common/README.md). This chart provides a set of
 [named templates](https://helm.sh/docs/chart_template_guide/named_templates)
 one can use in order to build his own content platform chart.
 

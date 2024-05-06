@@ -1,3 +1,8 @@
+---
+title: Autoscaling
+parent: Guides
+---
+
 # Alfresco repository auto scaling
 
 This document describes auto scaling principles implemented in this Helm chart.

@@ -1,3 +1,8 @@
+---
+title: Keystores
+parent: Guides
+---
+
 # Using custom keystore
 
 Alfresco uses a set of keystores for different purposes. Among others thing

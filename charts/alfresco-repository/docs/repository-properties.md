@@ -1,3 +1,8 @@
+---
+title: Global properties
+parent: Guides
+---
+
 # Configuring Alfresco repository
 
 Alfresco repository can be configured using properties files. The most common

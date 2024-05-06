@@ -1,0 +1,34 @@
+name: Publish docs
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - .github/workflows/docs.yml
+      - _config.yml
+      - Gemfile*
+      - charts/**/README.md
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - .github/workflows/docs.yml
+      - _config.yml
+      - Gemfile*
+      - charts/**/README.md
+
+jobs:
+  publish:
+    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@OPSEXP-2620-gh-pages
+    with:
+      working-directory: .
+      publish: ${{ github.event_name == 'push' && github.ref_name == 'main'}}
+      publish-branch: gh-pages

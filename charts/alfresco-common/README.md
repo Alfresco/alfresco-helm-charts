@@ -1,3 +1,8 @@
+---
+title: alfresco-common
+parent: Charts Reference
+---
+
 # alfresco-common
 
 ![Version: 3.1.3](https://img.shields.io/badge/Version-3.1.3-informational?style=flat-square) ![Type: library](https://img.shields.io/badge/Type-library-informational?style=flat-square)
@@ -12,4 +17,3 @@ Please refer to the [documentation](https://github.com/Alfresco/acs-deployment/b
 | Repository | Name | Version |
 |------------|------|---------|
 | oci://registry-1.docker.io/bitnamicharts | common | 1.x.x |
-

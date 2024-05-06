@@ -1,3 +1,8 @@
+---
+title: Email features
+parent: Guides
+---
+
 # Configuring Email related features
 
 Alfresco repository can interact with users through emails in different ways.

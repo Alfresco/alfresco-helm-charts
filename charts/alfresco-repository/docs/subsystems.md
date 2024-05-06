@@ -1,3 +1,8 @@
+---
+title: Subsystems
+parent: Guides
+---
+
 # Configuring Alfresco subsystems
 
 This chart offers a rather simple mechanism to configure Alfresco Subsystems.
