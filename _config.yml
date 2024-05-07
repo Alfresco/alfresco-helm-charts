@@ -27,6 +27,7 @@ defaults:
       path: "*"
     values:
       layout: "default"
+      render_with_liquid: false
 
 exclude:
   - Brewfile
