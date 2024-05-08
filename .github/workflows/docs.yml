@@ -25,5 +25,5 @@ jobs:
     if: github.event_name == 'pull_request' || github.event.workflow_run.conclusion == 'success'
     with:
       working-directory: .
-      publish: true
+      publish: ${{ github.event_name == 'push' && github.ref_name == 'main'}}
       publish-branch: gh-pages
