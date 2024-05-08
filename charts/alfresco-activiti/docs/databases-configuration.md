@@ -1,3 +1,9 @@
+---
+title: Database configuration
+parent: Process Services
+grand_parent: Guides
+---
+
 # Alfresco Process Service database configuration
 
 Alfresco Process Service uses a relational database to store data.
@@ -9,7 +15,7 @@ Alfresco Process Service uses a relational database to store data.
 
 This charts uses generic configuration means reused in all our charts. You
 should start reading the
-[getting-started](../../docs/getting-started-with-alfresco-charts.md) guide.
+[getting-started](../../../docs/build-your-own-charts.md) guide.
 
 ### Using values
 

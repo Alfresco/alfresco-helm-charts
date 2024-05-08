@@ -1,6 +1,7 @@
 ---
 title: Autoscaling
-parent: Guides
+parent: Repository
+grand_parent: Guides
 ---
 
 # Alfresco repository auto scaling

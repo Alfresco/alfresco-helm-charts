@@ -1,6 +1,7 @@
 ---
 title: Subsystems
-parent: Guides
+parent: Repository
+grand_parent: Guides
 ---
 
 # Configuring Alfresco subsystems

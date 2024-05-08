@@ -1,3 +1,9 @@
+---
+title: Index configuration
+parent: Process Services
+grand_parent: Guides
+---
+
 # Alfresco Process Services search index configuration
 
 Alfresco Process Services can use an Elasticsearch index. This document provides

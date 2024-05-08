@@ -1,6 +1,7 @@
 ---
 title: Global properties
-parent: Guides
+parent: Repository
+grand_parent: Guides
 ---
 
 # Configuring Alfresco repository

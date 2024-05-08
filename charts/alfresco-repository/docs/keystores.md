@@ -1,6 +1,7 @@
 ---
-title: Keystores
-parent: Guides
+title: Custom keystores
+parent: Repository
+grand_parent: Guides
 ---
 
 # Using custom keystore

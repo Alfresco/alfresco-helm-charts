@@ -1,6 +1,7 @@
 ---
 title: Enterprise license
-parent: Guides
+parent: Repository
+grand_parent: Guides
 ---
 
 # Deploy Alfresco repository with enterprise license
