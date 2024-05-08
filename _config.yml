@@ -43,3 +43,6 @@ exclude:
   - README.md
   - CODE_OF_CONDUCT.md
   - LICENSE
+
+plugins:
+  - jekyll-relative-links
