@@ -6,15 +6,6 @@ permissions:
   id-token: write
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'docs/**'
-      - .github/workflows/docs.yml
-      - _config.yml
-      - Gemfile*
-      - charts/**/README.md
   pull_request:
     branches:
       - main
@@ -24,10 +15,14 @@ on:
       - _config.yml
       - Gemfile*
       - charts/**/README.md
+  workflow_run:
+    workflows: [Release Charts]
+    types: [completed]
 
 jobs:
   publish:
     uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@OPSEXP-2620-gh-pages
+    if: github.event_name == 'pull_request' || github.event.workflow_run.conclusion == 'success'
     with:
       working-directory: .
       publish: ${{ github.event_name == 'push' && github.ref_name == 'main'}}
