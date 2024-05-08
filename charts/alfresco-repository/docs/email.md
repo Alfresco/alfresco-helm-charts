@@ -101,7 +101,7 @@ If you need to negotiate TLS/SSL session with the mail relay and your mail
 relay uses a certificate that's not from a known CA, you will need to import a
 truststore containing either the server certificate itself or its issuing CA.
 
-Checkout the [keystore doc for more details](./keystores.md) import a
+Checkout the [keystore doc for more details](keystores.md) import a
 truststore or a keystore works the same way.
 
 ## Accepting incoming email
@@ -139,7 +139,7 @@ This is suitable in most cases as - as said earlier - your SMTP server should
 never be exposed directly on internet and have an SMTP proxy in front of it.
 
 In case you really need to terminate the SSL session on the Alfresco repo see
-the [keystore doc](./keystores.md)
+the [keystore doc](keystores.md)
 
 ## Enabling IMAP
 
@@ -165,5 +165,5 @@ environment:
     -Dimap.server.attachments.extraction.enabled=false
 ```
 
-As usual, in order to configure IMAPs or IMAP/TLS refer to the [keystore
-doc](./keystores.md)
+As usual, in order to configure IMAPs or IMAP/TLS refer to the
+[keystore](keystores.md) documentation.
