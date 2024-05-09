@@ -18,10 +18,10 @@ configuration:
   repository:
     # -- a configmap containing the "alfresco-global.properties" key populated
     # with actual Alfresco repository properties see
-    # [details](./doc/repositoryproperties.md#repository-configuration-using-alfresco-global.properties)
+    # [details](./docs/repository-properties.md)
     existingConfigMap: null
     # -- A list of secrets to make available to the repository as env vars.
-    # This list can contain special secrets marked with predifined `purpose`:
+    # This list can contain special secrets marked with predefined `purpose`:
     # `acs-license` to pass license as a secret or subsystems:*:* to configure
     # an Alfresco subsystem. See [Configuring Alfresco
     # Subsystem](./docs/subsystems.md) for more details.
@@ -75,7 +75,7 @@ configuration:
         # -- Key within the secret holding the message broker password
         password: BROKER_PASSWORD
     existingConfigMap:
-      # -- Name of a pre-existing configmap containing the meesage broker URL
+      # -- Name of a pre-existing configmap containing the message broker URL
       name: null
       keys:
         # -- Key within the configmap  holding the message broker URL. It MUST
@@ -135,7 +135,7 @@ configuration:
   # -- Basic SMTP capabilities config (limited to enabling/disabling). In order
   # to pass more SMTP properties and configure the subsystem more deeply,
   # please use value `environment.CATALINA_OPTS` or
-  # `configuration.repository.existingConfiMap` and check the [available
+  # `configuration.repository.existingConfigMap` and check the [available
   # properties for this
   # subsystem](https://github.com/Alfresco/alfresco-community-repo/blob/master/repository/src/main/resources/alfresco/subsystems/email/InboundSMTP/inboundSMTP.properties)
   # @default -- see below

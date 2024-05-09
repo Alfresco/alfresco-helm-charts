@@ -1,6 +1,6 @@
 # alfresco-repository
 
-![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.2.1](https://img.shields.io/badge/AppVersion-23.2.1-informational?style=flat-square)
+![Version: 0.5.1](https://img.shields.io/badge/Version-0.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.2.1](https://img.shields.io/badge/AppVersion-23.2.1-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -45,15 +45,15 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | configuration.imap.protocol | string | `"imap"` | Protocol to use to talk to IMAP clients (imap or imaps) |
 | configuration.imap.service.annotations | string | `nil` | Use annations to get custom behavior of the loadbalancer exposing the service |
 | configuration.messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap  holding the message broker URL. It MUST be a failover URL as per the spec below: https://activemq.apache.org/failover-transport-reference.html |
-| configuration.messageBroker.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing the meesage broker URL |
+| configuration.messageBroker.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing the message broker URL |
 | configuration.messageBroker.existingSecret.keys.password | string | `"BROKER_PASSWORD"` | Key within the secret holding the message broker password |
 | configuration.messageBroker.existingSecret.keys.username | string | `"BROKER_USERNAME"` | Key within the secret holding the message broker username |
 | configuration.messageBroker.existingSecret.name | string | `nil` | Name of a pre-existing secret containing message broker credentials |
 | configuration.messageBroker.password | string | `nil` | Password to authenticate to the message broker |
 | configuration.messageBroker.url | string | `nil` | Message Broker URL |
 | configuration.messageBroker.username | string | `nil` | Username to authenticate to the message broker |
-| configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties see [details](./doc/repositoryproperties.md#repository-configuration-using-alfresco-global.properties) |
-| configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repository as env vars. This list can contain special secrets marked with predifined `purpose`: `acs-license` to pass license as a secret or subsystems:*:* to configure an Alfresco subsystem. See [Configuring Alfresco Subsystem](./docs/subsystems.md) for more details. |
+| configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties see [details](./docs/repository-properties.md) |
+| configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repository as env vars. This list can contain special secrets marked with predefined `purpose`: `acs-license` to pass license as a secret or subsystems:*:* to configure an Alfresco subsystem. See [Configuring Alfresco Subsystem](./docs/subsystems.md) for more details. |
 | configuration.search.existingConfigMap.keys.flavor | string | `"SEARCH_FLAVOR"` | configmap key where to find the search engine used |
 | configuration.search.existingConfigMap.keys.host | string | `"SEARCH_HOST"` | configmap key where to find the hostname part of the search URL. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. |
 | configuration.search.existingConfigMap.keys.port | string | `"SEARCH_PORT"` | configmap key where to find the port part of the search URL. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. |
@@ -70,7 +70,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | configuration.search.solr-secret | string | `nil` | Solr inter process shared secret |
 | configuration.search.url | string | `nil` | URL where the search service can be found |
 | configuration.search.username | string | `nil` | Username to authenticate to the search service |
-| configuration.smtp | object | see below | Basic SMTP capabilities config (limited to enabling/disabling). In order to pass more SMTP properties and configure the subsystem more deeply, please use value `environment.CATALINA_OPTS` or `configuration.repository.existingConfiMap` and check the [available properties for this subsystem](https://github.com/Alfresco/alfresco-community-repo/blob/master/repository/src/main/resources/alfresco/subsystems/email/InboundSMTP/inboundSMTP.properties) |
+| configuration.smtp | object | see below | Basic SMTP capabilities config (limited to enabling/disabling). In order to pass more SMTP properties and configure the subsystem more deeply, please use value `environment.CATALINA_OPTS` or `configuration.repository.existingConfigMap` and check the [available properties for this subsystem](https://github.com/Alfresco/alfresco-community-repo/blob/master/repository/src/main/resources/alfresco/subsystems/email/InboundSMTP/inboundSMTP.properties) |
 | configuration.smtp.enabled | bool | `false` | Enable/Disable Alfresco repository SMTP capabilities |
 | configuration.smtp.port | int | `1025` | port to use to listen for SMTP clients |
 | configuration.smtp.service.annotations | string | `nil` | Use annations to get custom behavior of the loadbalancer exposing the service |
