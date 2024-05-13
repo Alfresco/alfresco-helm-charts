@@ -29,4 +29,4 @@ jobs:
       publish-branch: gh-pages
       validate-html: true
       validate-html-args: >-
-        --typhoeus='{"hydra":{"max_concurrency": 1 }}'
+        --hydra='{"max_concurrency": 1}'
