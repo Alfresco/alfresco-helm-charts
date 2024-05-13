@@ -21,9 +21,10 @@ on:
 
 jobs:
   publish:
-    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@4a682d36e45971f30e235c28f7b8a0898574b1b7
+    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@f6f1df9a2144fb76132602180732c456ddc13f3e
     if: github.event_name == 'pull_request' || github.event.workflow_run.conclusion == 'success'
     with:
       working-directory: .
       publish: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch == 'main' }}
       publish-branch: gh-pages
+      validate-html: true

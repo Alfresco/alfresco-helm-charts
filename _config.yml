@@ -3,7 +3,7 @@ description: User documentation for the Alfresco component Helm Charts
 theme: just-the-docs
 color_scheme: alfresco
 
-url: https://alfresco.github.io/alfresco-helm-charts
+url: https://alfresco.github.io
 
 aux_links:
   Docs: https://docs.alfresco.com/
@@ -19,7 +19,7 @@ gh_edit_source: .
 gh_edit_view_mode: edit
 
 logo: "docs/images/hyland-alfresco-logos.png"
-favicon_ico: "/docs/images/favicon.ico"
+favicon_ico: "docs/images/favicon.ico"
 
 defaults:
   # apply the default layout to all markdown pages
