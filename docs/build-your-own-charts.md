@@ -1,16 +1,20 @@
+---
+title: Build your own charts
+---
+
 # Building your Content platform architecture with Alfresco charts
 
 ## The alfresco-common library chart
 
 Alfresco charts depend on a common library chart called
-[alfresco-common](../charts/alfresco-common). This chart provides a set of
+[alfresco-common](../charts/alfresco-common/README.md). This chart provides a set of
 [named templates](https://helm.sh/docs/chart_template_guide/named_templates)
 one can use in order to build his own content platform chart.
 
 Named templates are reusable functions that can only return strings and always
-take a single argument, which eventually can be an object. For example the [URL
-helper](../charts/alfresco-comon/templates/_helper-url.tpl) file provides
-functions to extract various elements from a given URL. For example:
+take a single argument, which eventually can be an object. For example the
+[URL helper](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-common/templates/_helpers-url.tpl)
+file provides functions to extract various elements from a given URL. For example:
 
 * `{{ template "alfresco-common.url.scheme" "https://hub.alfresco.com/" }}`
   will return "https"
@@ -58,7 +62,7 @@ platform made of:
 * Alfresco content repository
 * A database that hosted outside of the kubernetes cluster
 
-> Below example also present using an "unmbrella" Helm chart but most of the
+> Below example also present using an "umbrella" Helm chart but most of the
 > same approach is applicable to other deployment method as explained above.
 
 #### Declaring chart as dependency
@@ -68,7 +72,7 @@ dependencies](https://helm.sh/docs/helm/helm_dependency/) and re-use existing
 charts.
 
 We'll start by initializing a chart and declare the dependency to the
-[alfresco-repository](../charts/alfresco-repository) chart.
+`alfresco-repository` chart.
 
 ```sh
 helm create myecmplatform && cd $_
@@ -103,10 +107,9 @@ platform, the Alfresco component charts lets you do that in 2 different ways:
 
 #### Configuring database using values
 
-First thing to do is to check the chart's [values
-documentation](../charts/alfresco-repository/README.md). There, we can see the
-database configuration can be done using the `configuration.db` element in our
-`values.yaml` file as shown below:
+First thing to do is to check the chart [values documentation](../charts/alfresco-repository/README.md).
+There, we can see the database configuration can be done using the
+`configuration.db` element in our `values.yaml` file as shown below:
 
 ```yaml
 repo:
@@ -159,9 +162,9 @@ data:
   MY_ECM_DB_PASS: dGlnZXI=
 ```
 
-> For example, if you're creating this confgimap using a wrapping Helm chart,
+> For example, if you're creating this ConfigMap using a wrapping Helm chart,
 > you can reuse a templating function provided by the
-> [alfresco-repository](../charts/alfresco-repository/templates/_helpers-database.tpl)
+> [alfresco-repository](https://github.com/Alfresco/alfresco-helm-charts/blob/main/charts/alfresco-repository/templates/_helpers-database.tpl)
 > chart `alfresco-repository.db.cm`
 
 Now we need to let the `alfresco-repository` chart where to find this:
@@ -182,7 +185,7 @@ repo:
         password: MY_ECM_DB_PASS
 ```
 
-> If you used the templating function mentionned above and provided by the
-> subchart the keys would be different than the ondes mentionned in the example
+> If you used the templating function mentioned above and provided by the
+> subchart the keys would be different than the ones mentioned in the example
 > above. Actually the function  would render teh default keys so it's not needed
 > to set them.

@@ -1,3 +1,8 @@
+---
+title: activemq
+parent: Charts Reference
+---
+
 # activemq
 
 ![Version: 3.5.3](https://img.shields.io/badge/Version-3.5.3-informational?style=flat-square) ![AppVersion: 5.18.4](https://img.shields.io/badge/AppVersion-5.18.4-informational?style=flat-square)

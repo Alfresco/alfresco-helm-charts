@@ -1,37 +1,11 @@
 # alfresco-helm-charts
 
-This repository aims at delivering independent and lightweight
-[Helm](https://helm.sh) charts for Alfresco Content Services platform that can
-be used as building blocks by devops teams to build the Content Services
-platform that match the organization needs.
-
-⚠️ The existing [Alfresco Helm
-Charts](https://github.com/Alfresco/acs-deployment/tree/master/helm/alfresco-content-services)
-remains available and has been updated to leverage charts hosted in this
-repository.
-
-If you want to understand what are the principles to leverage in order to build
-on top of Alfresco components' chart please refer to the
-[getting-started-with-alfresco-charts](./getting-started-with-alfresco-charts.md)
-
-Each individual chart has its own documentation page that's available in the
-chart directory in [charts/](../charts). There are the values available for
-each of them.
-
-## Testing
-
-Each chart is tested against a default configuration on
-[KinD](https://kind.sigs.k8s.io/). You can check the currently tested K8s version
-by looking at the `KIND_NODE_IMAGE` value in the main [lint-test
-workflow](../.github/workflows/lint-test.yaml).
-
-We are ensuring backward compatibility with older K8s versions with
-[kubeconform](https://github.com/yannh/kubeconform). You can check the oldest
- K8s version tested by looking at `kubernetes-version` inside the
- `kubeconform-helm-min` hook in [pre-commit
- configuration](../.pre-commit-config.yaml).
+User docs available at: [https://alfresco.github.io/alfresco-helm-charts/](https://alfresco.github.io/alfresco-helm-charts/)
 
 ## Development
+
+Each individual chart is available in the chart directory in
+[charts/](./charts).
 
 This repository follows the
 [helm/charts-repo-actions-demo](https://github.com/helm/charts-repo-actions-demo)
@@ -77,6 +51,19 @@ There is an initial support for bumping charts dependencies with
 [Updatecli](https://www.updatecli.io/) via a manually triggered
 [GHA
 workflow](https://github.com/Alfresco/alfresco-helm-charts/actions/workflows/updatecli.yaml).
+
+## Testing
+
+Each chart is tested against a default configuration on
+[KinD](https://kind.sigs.k8s.io/). You can check the currently tested K8s version
+by looking at the `KIND_NODE_IMAGE` value in the main [lint-test
+workflow](../.github/workflows/lint-test.yaml).
+
+We are ensuring backward compatibility with older K8s versions with
+[kubeconform](https://github.com/yannh/kubeconform). You can check the oldest
+ K8s version tested by looking at `kubernetes-version` inside the
+ `kubeconform-helm-min` hook in [pre-commit
+ configuration](../.pre-commit-config.yaml).
 
 ## Release
 

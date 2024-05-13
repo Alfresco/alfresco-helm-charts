@@ -9,6 +9,11 @@ on:
       - reopened
       - synchronize
       - labeled
+    paths:
+      - 'charts/**'
+      - '!charts/**/README.md'
+      - '!charts/**/README.md.gotmpl'
+      - '!charts/**/docs/**'
 
 jobs:
   lint-test:

@@ -1,3 +1,8 @@
+---
+title: alfresco-repository
+parent: Charts Reference
+---
+
 # alfresco-repository
 
 ![Version: 0.5.1](https://img.shields.io/badge/Version-0.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.2.1](https://img.shields.io/badge/AppVersion-23.2.1-informational?style=flat-square)

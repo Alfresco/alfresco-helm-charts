@@ -1,10 +1,15 @@
+---
+title: alfresco-sync-service
+parent: Charts Reference
+---
+
 # alfresco-sync-service
 
 ![Version: 5.2.3](https://img.shields.io/badge/Version-5.2.3-informational?style=flat-square) ![AppVersion: 5.0.0](https://img.shields.io/badge/AppVersion-5.0.0-informational?style=flat-square)
 
 Alfresco Sync Service
 
-Checkout [alfresco-content-services chart doc](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for an example of how to leverage this chart from an umbrella chart.
+Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for an example of how to leverage this chart from an umbrella chart.
 
 ## Source Code
 

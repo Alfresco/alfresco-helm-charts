@@ -1,3 +1,8 @@
+---
+title: alfresco-activiti
+parent: Charts Reference
+---
+
 # alfresco-activiti
 
 ![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: 24.2.0](https://img.shields.io/badge/AppVersion-24.2.0-informational?style=flat-square)

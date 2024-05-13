@@ -7,3 +7,5 @@
 merged.yaml
 alfresco-updatecli
 charts/*/render
+
+_site
