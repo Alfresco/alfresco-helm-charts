@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-transform-service
 
-![Version: 1.3.1](https://img.shields.io/badge/Version-1.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.1](https://img.shields.io/badge/AppVersion-4.1.1-informational?style=flat-square)
+![Version: 1.3.1](https://img.shields.io/badge/Version-1.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.2](https://img.shields.io/badge/AppVersion-4.1.2-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Transform Services
 
@@ -30,7 +30,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | filestore.image.internalPort | int | `8099` |  |
 | filestore.image.pullPolicy | string | `"IfNotPresent"` |  |
 | filestore.image.repository | string | `"quay.io/alfresco/alfresco-shared-file-store"` |  |
-| filestore.image.tag | string | `"4.1.1"` |  |
+| filestore.image.tag | string | `"4.1.2"` |  |
 | filestore.initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | filestore.initContainer.image.repository | string | `"busybox"` |  |
 | filestore.initContainer.image.tag | string | `"1.35.0"` |  |
@@ -84,7 +84,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | imagemagick.image.internalPort | int | `8090` |  |
 | imagemagick.image.pullPolicy | string | `"IfNotPresent"` |  |
 | imagemagick.image.repository | string | `"quay.io/alfresco/alfresco-imagemagick"` |  |
-| imagemagick.image.tag | string | `"5.1.1"` |  |
+| imagemagick.image.tag | string | `"5.1.2"` |  |
 | imagemagick.livenessProbe.initialDelaySeconds | int | `10` |  |
 | imagemagick.livenessProbe.livenessPercent | int | `150` |  |
 | imagemagick.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
@@ -127,7 +127,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | libreoffice.image.internalPort | int | `8090` |  |
 | libreoffice.image.pullPolicy | string | `"IfNotPresent"` |  |
 | libreoffice.image.repository | string | `"quay.io/alfresco/alfresco-libreoffice"` |  |
-| libreoffice.image.tag | string | `"5.1.1"` |  |
+| libreoffice.image.tag | string | `"5.1.2"` |  |
 | libreoffice.livenessProbe.initialDelaySeconds | int | `10` |  |
 | libreoffice.livenessProbe.livenessPercent | int | `250` |  |
 | libreoffice.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
@@ -178,7 +178,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | pdfrenderer.image.internalPort | int | `8090` |  |
 | pdfrenderer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | pdfrenderer.image.repository | string | `"quay.io/alfresco/alfresco-pdf-renderer"` |  |
-| pdfrenderer.image.tag | string | `"5.1.1"` |  |
+| pdfrenderer.image.tag | string | `"5.1.2"` |  |
 | pdfrenderer.livenessProbe.initialDelaySeconds | int | `10` |  |
 | pdfrenderer.livenessProbe.livenessPercent | int | `150` |  |
 | pdfrenderer.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
@@ -226,7 +226,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | tika.image.internalPort | int | `8090` |  |
 | tika.image.pullPolicy | string | `"IfNotPresent"` |  |
 | tika.image.repository | string | `"quay.io/alfresco/alfresco-tika"` |  |
-| tika.image.tag | string | `"5.1.1"` |  |
+| tika.image.tag | string | `"5.1.2"` |  |
 | tika.livenessProbe.initialDelaySeconds | int | `30` |  |
 | tika.livenessProbe.livenessPercent | int | `400` |  |
 | tika.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
@@ -269,7 +269,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | transformmisc.image.internalPort | int | `8090` |  |
 | transformmisc.image.pullPolicy | string | `"IfNotPresent"` |  |
 | transformmisc.image.repository | string | `"quay.io/alfresco/alfresco-transform-misc"` |  |
-| transformmisc.image.tag | string | `"5.1.1"` |  |
+| transformmisc.image.tag | string | `"5.1.2"` |  |
 | transformmisc.livenessProbe.initialDelaySeconds | int | `10` |  |
 | transformmisc.livenessProbe.livenessPercent | int | `400` |  |
 | transformmisc.livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
@@ -304,7 +304,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | transformrouter.image.internalPort | int | `8095` |  |
 | transformrouter.image.pullPolicy | string | `"IfNotPresent"` |  |
 | transformrouter.image.repository | string | `"quay.io/alfresco/alfresco-transform-router"` |  |
-| transformrouter.image.tag | string | `"4.1.1"` |  |
+| transformrouter.image.tag | string | `"4.1.2"` |  |
 | transformrouter.livenessProbe.initialDelaySeconds | int | `20` |  |
 | transformrouter.livenessProbe.path | string | `"/actuator/health"` |  |
 | transformrouter.livenessProbe.periodSeconds | int | `30` |  |
