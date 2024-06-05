@@ -15,6 +15,7 @@ on:
       - _config.yml
       - Gemfile*
       - charts/**/README.md
+      - charts/**/docs/**.md
   workflow_run:
     workflows: [Release Charts]
     types: [completed]
