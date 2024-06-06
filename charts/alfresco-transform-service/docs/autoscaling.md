@@ -1,6 +1,6 @@
 ---
-title: ATS Autoscaling
-parent: alfresco-transform-service
+title: Autoscaling
+parent: Alfresco Transform Service
 grand_parent: Guides
 ---
 
@@ -34,7 +34,7 @@ with peak load or spare resources on low level of utilization while also
 minimizing the number of scaling events because changing the cluster topology
 means additional computation.
 
-### Default behaviour:
+### Default behaviour
 
 Without any further configuration scaling would happen as follow:
 
@@ -59,7 +59,7 @@ Alfresco on Kubernetes.
 
 Below are ways to tweak the auto scaling behaviour for your own setup.
 
-#### Settings the CPU resources correctly.
+#### Settings the CPU resources correctly
 
 CPU Resources request is the basis of calculation for the cluster to trigger
 scaling events. It is then very important to make sure it is set appropriately

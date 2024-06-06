@@ -15,13 +15,14 @@ on:
       - _config.yml
       - Gemfile*
       - charts/**/README.md
+      - charts/**/docs/**.md
   workflow_run:
     workflows: [Release Charts]
     types: [completed]
 
 jobs:
   publish:
-    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@f6f1df9a2144fb76132602180732c456ddc13f3e
+    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@5ee00079dbc774857cafa61054385d98a6f52374
     if: github.event_name == 'pull_request' || github.event.workflow_run.conclusion == 'success'
     with:
       working-directory: .
