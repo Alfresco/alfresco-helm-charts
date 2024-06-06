@@ -21,48 +21,11 @@ on:
     types: [completed]
 
 jobs:
-  check_new_files:
-    name: Check for new Markdown files
-    runs-on: ubuntu-latest
-    outputs:
-       htmlProoferSkipUrls: ${{ steps.check_new_files.outputs.HTML_PROOFER_SKIP_URLS }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29
-        with:
-          fetch-depth: 0
-
-      - name: Check for newly introduced Markdown files
-        id: check_new_files
-        env:
-          SED_PATTERN: s|(.*)\.md$|https://alfresco.github.io/alfresco-helm-charts/\1.html|g
-        run: |
-          echo "Checking for new Markdown files"
-          if [ ${GITHUB_HEAD_REF:-$GITHUB_REF} == ${{ github.event.repository.default_branch }} ]; then
-            echo "Checking previous commit"
-            OLD_REF=HEAD^^
-          else
-            echo "Checking against base branch (${{ github.event.pull_request.base.ref }})"
-            OLD_REF=${{ github.event.pull_request.base.ref }}
-          fi
-          NEW_JEKYLL_FILES=$(git diff --name-only --diff-filter=A origin/$OLD_REF -- docs/ charts/*/README.md charts/*/docs/)
-          NEW_JEKYLL_LIST=$(echo $NEW_JEKYLL_FILES | sed -r $SED_PATTERN | jq -rRsc 'split("\n")[:-1] | join(",")')
-          if [ -n "$NEW_JEKYLL_FILES" ]; then
-            echo "HTMLProofer will ignore the following files: $NEW_JEKYLL_FILES"
-            echo "HTML_PROOFER_SKIP_URLS=--ignore_urls='${NEW_JEKYLL_LIST}'" >> $GITHUB_OUTPUT
-          else
-            echo "No new Jekyll files found"
-            echo "HTML_PROOFER_SKIP_URLS=''" >> $GITHUB_OUTPUT
-          fi
-
   publish:
-    needs:
-      - check_new_files
-    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@f6f1df9a2144fb76132602180732c456ddc13f3e
+    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@feat-rewrite-absolute-urls
     if: github.event_name == 'pull_request' || github.event.workflow_run.conclusion == 'success'
     with:
       working-directory: .
       publish: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_branch == 'main' }}
       publish-branch: gh-pages
       validate-html: true
-      validate-html-args: ${{ needs.check_new_files.outputs.htmlProoferSkipUrls }}
