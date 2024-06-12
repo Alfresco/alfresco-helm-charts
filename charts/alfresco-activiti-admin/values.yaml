@@ -1,6 +1,10 @@
+# Default values for Alfresco Process Services.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
 ---
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
+
 podSecurityContext:
   runAsUser: 33007
 podAnnotations: {}
@@ -84,9 +88,11 @@ database:
       username: DATABASE_USERNAME
       # -- Key within the secret holding the database password for admin app
       password: DATABASE_PASSWORD
+
 workaround:
   # -- Enable workaround for [ACTIVITI-5113](https://hyland.atlassian.net/browse/ACTIVITI-5113) required for versions before 24.2.0
   ACTIVITI-5113: false
+
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
   ci: false

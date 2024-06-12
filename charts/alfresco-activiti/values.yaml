@@ -1,6 +1,10 @@
+# Default values for Alfresco Process Services.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
 ---
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
+
 replicaCount: 1
 podLabels: {}
 podAnnotations: {}
@@ -47,11 +51,12 @@ persistence:
   baseSize: 20Gi
   # -- Define if you already have a custom storage class defined for
   # dynamically provisioned storage
-  storageClass: null
+  storageClass:
   accessModes:
     - ReadWriteOnce
   # -- Define if you want to reuse an already existing PVC
-  existingClaim: null # -- Where to mount data into the container
+  existingClaim:
+  # -- Where to mount data into the container
   data:
     mountPath: "/usr/local/data"
     subPath: "alfresco-process-services/process-data"
@@ -78,6 +83,7 @@ environment:
   # -- Cross Origin Resource Sharing configuration allowed http headers
   ACTIVITI_CORS_ALLOWED_HEADERS: >-
     Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token
+  # -- Cross Site Resource Forgery configuration toggle
   ACTIVITI_CSRF_DISABLED: "true"
   # -- ElasticSearch configuration
   # ACTIVITI_ES_SERVER_TYPE: "rest"
@@ -149,11 +155,14 @@ database:
       username: DATABASE_USERNAME
       # -- Key within the secret holding the database password for aps app
       password: DATABASE_PASSWORD
+
 license:
-  secretName: null
+  secretName:
+
 workaround:
   ## -- Enable workaround for [ACTIVITI-5113](https://hyland.atlassian.net/browse/ACTIVITI-5113) required for versions before 24.2.0
   ACTIVITI-5113: false
+
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
   ci: false
