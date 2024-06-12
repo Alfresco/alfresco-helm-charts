@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-activiti
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: 24.2.0](https://img.shields.io/badge/AppVersion-24.2.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: 2.4.2.11](https://img.shields.io/badge/AppVersion-2.4.2.11-informational?style=flat-square)
 
 A Helm chart for Alfresco Activiti
 
@@ -36,7 +36,7 @@ A Helm chart for Alfresco Activiti
 | environment.ACTIVITI_CORS_ALLOWED_METHODS | string | `"GET,POST,HEAD,OPTIONS,PUT,DELETE"` | Cross Origin Resource Sharing configuration allowed http methods |
 | environment.ACTIVITI_CORS_ALLOWED_ORIGIN_PATTERNS | string | `"*"` | Cross Origin Resource Sharing configuration allowed origins (list of glob-like patterns) |
 | environment.ACTIVITI_CORS_ENABLED | string | `"true"` | Cross Origin Resource Sharing configuration toggle |
-| environment.ACTIVITI_CSRF_DISABLED | string | `"true"` | Cross Site Resource Forgery configuration toggle |
+| environment.ACTIVITI_CSRF_DISABLED | string | `"true"` |  |
 | environment.IDENTITY_CREDENTIALS_SECRET | string | `""` | Alfresco Identity Service application secret |
 | environment.IDENTITY_SERVICE_ALWAYS_REFRESH_TOKEN | string | `"true"` | Alfresco Identity Service refresh service token |
 | environment.IDENTITY_SERVICE_AUTH | string | `"http://localhost:8080/auth"` | Alfresco Identity Service address |
@@ -54,7 +54,7 @@ A Helm chart for Alfresco Activiti
 | image.internalPort | int | `8080` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-process-services"` |  |
-| image.tag | string | `"24.2.0"` |  |
+| image.tag | string | `"2.4.2.11"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | ingress.className | string | `"nginx"` | supported ingress class |
@@ -71,7 +71,8 @@ A Helm chart for Alfresco Activiti
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | persistence.baseSize | string | `"20Gi"` | Initial default size of dynamically provisioned storage |
-| persistence.data | object | `{"mountPath":"/usr/local/data","subPath":"alfresco-process-services/process-data"}` | Where to mount data into the container |
+| persistence.data.mountPath | string | `"/usr/local/data"` |  |
+| persistence.data.subPath | string | `"alfresco-process-services/process-data"` |  |
 | persistence.enabled | bool | `false` | Persist Alfresco Process data |
 | persistence.existingClaim | string | `nil` | Define if you want to reuse an already existing PVC |
 | persistence.storageClass | string | `nil` | Define if you already have a custom storage class defined for dynamically provisioned storage |
