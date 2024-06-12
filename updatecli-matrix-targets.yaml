@@ -116,3 +116,17 @@ matrix:
       helm_target: charts/activemq/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
+    activiti:
+      version:
+      pattern:
+      image:
+      helm_target: charts/alfresco-activiti/values.yaml
+      helm_key: $.image.tag
+      helm_update_appVersion: true
+    activiti-admin:
+      version:
+      pattern:
+      image:
+      helm_target: charts/alfresco-activiti-admin/values.yaml
+      helm_key: $.image.tag
+      helm_update_appVersion: true
