@@ -2,7 +2,7 @@ apiVersion: v2
 description: A Helm chart for Alfresco Activiti
 name: alfresco-activiti
 version: 0.1.1
-appVersion: 2.4.2.11
+appVersion: 24.2.0
 dependencies:
   - name: alfresco-common
     version: 3.1.2
