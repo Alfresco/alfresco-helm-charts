@@ -2,7 +2,7 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ template "alfresco-transform-service.imagemagick.name" . }}
+  name: {{ template "alfresco-transform-service.imagemagick.fullname" . }}
   labels: {{- include "alfresco-transform-service.imagemagick.labels" . | nindent 4 }}
 spec:
   minReplicas: {{ .Values.imagemagick.autoscaling.minReplicas }}
@@ -12,5 +12,5 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ template "alfresco-transform-service.imagemagick.name" . }}
+    name: {{ template "alfresco-transform-service.imagemagick.fullname" . }}
 {{ end }}
