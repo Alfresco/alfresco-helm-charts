@@ -1,31 +1,41 @@
 ---
 transformrouter:
   enabled: true
-  replicaCount: 2
+  replicaCount: 1
   nodeSelector: {}
   tolerations: []
   # -- Pod affinity, passed thru tpl function
-  affinity: |-
+  affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
         - weight: 10
           podAffinityTerm:
             labelSelector:
               matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - {{ template "alfresco-transform-service.transform-router.name" . }}
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                   - >-
+                     {{ template "alfresco-transform-service.transform-router.name" . }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - "{{ .Release.Name }}"
             topologyKey: topology.kubernetes.io/zone
         - weight: 5
           podAffinityTerm:
             labelSelector:
               matchExpressions:
-              - key: app
-                operator: In
-                values:
-                - {{ template "alfresco-transform-service.transform-router.name" . }}
-            topologyKey: app.kubernetes.io/name
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - >-
+                      {{ template "alfresco-transform-service.transform-router.name" . }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - "{{ .Release.Name }}"
+            topologyKey: kubernetes.io/hostname
   podAnnotations: {}
   podLabels: {}
   image:

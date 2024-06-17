@@ -298,7 +298,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | transformmisc.tolerations | list | `[]` |  |
 | transformmisc.volumeMounts | list | `[]` |  |
 | transformmisc.volumes | list | `[]` |  |
-| transformrouter.affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-router.name\" . }}\n        topologyKey: topology.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n          - key: app\n            operator: In\n            values:\n            - {{ template \"alfresco-transform-service.transform-router.name\" . }}\n        topologyKey: app.kubernetes.io/name"` | Pod affinity, passed thru tpl function |
+| transformrouter.affinity | object | `{"podAntiAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-transform-service.transform-router.name\" . }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ .Release.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10},{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-transform-service.transform-router.name\" . }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ .Release.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}]}}` | Pod affinity, passed thru tpl function |
 | transformrouter.enabled | bool | `true` |  |
 | transformrouter.environment.JAVA_OPTS | string | `"-XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | transformrouter.image.internalPort | int | `8095` |  |
@@ -318,7 +318,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | transformrouter.readinessProbe.path | string | `"/actuator/health"` |  |
 | transformrouter.readinessProbe.periodSeconds | int | `60` |  |
 | transformrouter.readinessProbe.timeoutSeconds | int | `10` |  |
-| transformrouter.replicaCount | int | `2` |  |
+| transformrouter.replicaCount | int | `1` |  |
 | transformrouter.resources.limits.cpu | string | `"1"` |  |
 | transformrouter.resources.limits.memory | string | `"1Gi"` |  |
 | transformrouter.resources.requests.cpu | string | `"100m"` |  |

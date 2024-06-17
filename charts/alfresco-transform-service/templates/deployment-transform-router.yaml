@@ -58,7 +58,7 @@ spec:
       {{- end }}
       {{- with .Values.transformrouter.affinity }}
       affinity:
-        {{- tpl . $ | nindent 8 }}
+        {{- tpl (toYaml .) $ | nindent 8 }}
       {{- end }}
       {{- with .Values.transformrouter.tolerations }}
       tolerations:
