@@ -301,7 +301,6 @@ command: []
 args: []
 nodeSelector: {}
 tolerations: []
-affinity: {}
 global:
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
@@ -312,3 +311,36 @@ global:
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
   ci: false
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      # -- Prefer scheduling pods in different zones
+      - weight: 10
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - >-
+                    {{ template "alfresco-repository.name" $ }}
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                  - "{{ $.Release.Name }}"
+          topologyKey: topology.kubernetes.io/zone
+      # -- Prefer scheduling pods on different nodes
+      - weight: 5
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - >-
+                    {{ template "alfresco-repository.name" $ }}
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                  - "{{ $.Release.Name }}"
+          topologyKey: kubernetes.io/hostname
