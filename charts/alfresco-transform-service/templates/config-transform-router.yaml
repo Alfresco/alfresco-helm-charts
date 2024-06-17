@@ -9,7 +9,7 @@ metadata:
 data:
   {{- include "alfresco-transform-service.sfs.url" . | nindent 2 }}
   IMAGEMAGICK_URL: http://{{ template "alfresco-transform-service.imagemagick.fullname" . }}
-  PDF_RENDERER_URL: http://{{ template "alfresco-transform-service.pdfrenderer.name" . }}:80
+  PDF_RENDERER_URL: http://{{ template "alfresco-transform-service.pdfrenderer.fullname" . }}
   LIBREOFFICE_URL: http://{{ template "alfresco-transform-service.libreoffice.fullname" . }}
   TIKA_URL: http://{{ template "alfresco-transform-service.tika.name" . }}:80
   {{- if .Values.transformmisc.enabled }}

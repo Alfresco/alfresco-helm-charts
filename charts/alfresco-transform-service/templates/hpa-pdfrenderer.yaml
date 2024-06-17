@@ -2,7 +2,7 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ template "alfresco-transform-service.pdfrenderer.name" . }}
+  name: {{ template "alfresco-transform-service.pdfrenderer.fullname" . }}
   labels: {{- include "alfresco-transform-service.pdfrenderer.labels" . | nindent 4 }}
 spec:
   minReplicas: {{ .Values.pdfrenderer.autoscaling.minReplicas }}
@@ -12,5 +12,5 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ template "alfresco-transform-service.pdfrenderer.name" . }}
+    name: {{ template "alfresco-transform-service.pdfrenderer.fullname" . }}
 {{ end }}
