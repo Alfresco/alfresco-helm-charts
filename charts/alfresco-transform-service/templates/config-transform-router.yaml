@@ -13,7 +13,7 @@ data:
   LIBREOFFICE_URL: http://{{ template "alfresco-transform-service.libreoffice.fullname" . }}
   TIKA_URL: http://{{ template "alfresco-transform-service.tika.fullname" . }}
   {{- if .Values.transformmisc.enabled }}
-  MISC_URL: http://{{ template "alfresco-transform-service.transform-misc.name" . }}:80
+  MISC_URL: http://{{ template "alfresco-transform-service.transform-misc.fullname" . }}
   {{- end }}
   {{- toYaml .Values.transformrouter.environment | nindent 2 }}
 {{- end }}

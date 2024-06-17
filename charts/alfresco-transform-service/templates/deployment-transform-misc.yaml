@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.transform-misc.name" . }}
+  name: {{ template "alfresco-transform-service.transform-misc.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.transform-misc.labels" . | nindent 4 }}
 spec:
@@ -39,7 +39,7 @@ spec:
           {{- include "component-security-context" .Values.transformmisc | indent 8 }}
           envFrom:
             - configMapRef:
-                name: {{ template "alfresco-transform-service.transform-misc.name" . }}
+                name: {{ template "alfresco-transform-service.transform-misc.fullname" . }}
           env:
             {{- include "alfresco-transform-service.messageBroker.env" $ | nindent 12 }}
           ports:
