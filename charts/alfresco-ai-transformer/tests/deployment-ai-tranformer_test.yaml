@@ -71,6 +71,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-ai-transformer
               topologyKey: topology.kubernetes.io/zone
       - contains:
           path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
@@ -87,6 +91,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-ai-transformer
               topologyKey: kubernetes.io/hostname
 
       - equal:
