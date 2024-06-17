@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-activiti
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![AppVersion: 24.2.0](https://img.shields.io/badge/AppVersion-24.2.0-informational?style=flat-square)
+![Version: 0.2.0-alpha.0](https://img.shields.io/badge/Version-0.2.0--alpha.0-informational?style=flat-square) ![AppVersion: 24.2.0](https://img.shields.io/badge/AppVersion-24.2.0-informational?style=flat-square)
 
 A Helm chart for Alfresco Activiti
 
@@ -13,7 +13,7 @@ A Helm chart for Alfresco Activiti
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.3 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
 ## Values
