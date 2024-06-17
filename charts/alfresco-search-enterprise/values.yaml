@@ -6,7 +6,6 @@ podSecurityContext: {}
 securityContext: {}
 nodeSelector: {}
 tolerations: []
-affinity: {}
 resources:
   requests:
     cpu: "0.5"
@@ -34,18 +33,117 @@ liveIndexing:
       tag: 4.0.1
       pullPolicy: IfNotPresent
     replicaCount: 1
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          # -- Prefer to schedule the content pod on a different zone
+          - weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - >-
+                        {{ template "alfresco-search-enterprise.content.name" $ }}
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - "{{ $.Release.Name }}"
+              topologyKey: topology.kubernetes.io/zone
+          # -- Prefer to schedule the content pod on a different node
+          - weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - >-
+                        {{ template "alfresco-search-enterprise.content.name" $ }}
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - "{{ $.Release.Name }}"
+              topologyKey: kubernetes.io/hostname
   metadata:
     image:
       repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-metadata
       tag: 4.0.1
       pullPolicy: IfNotPresent
     replicaCount: 1
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          # -- Prefer to schedule the content pod on a different zone
+          - weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - >-
+                        {{ template "alfresco-search-enterprise.metadata.name" $ }}
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - "{{ $.Release.Name }}"
+              topologyKey: topology.kubernetes.io/zone
+          # -- Prefer to schedule the content pod on a different node
+          - weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - >-
+                        {{ template "alfresco-search-enterprise.metadata.name" $ }}
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - "{{ $.Release.Name }}"
+              topologyKey: kubernetes.io/hostname
   path:
     image:
       repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-path
       tag: 4.0.1
       pullPolicy: IfNotPresent
     replicaCount: 1
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          # -- Prefer to schedule the content pod on a different zone
+          - weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - >-
+                        {{ template "alfresco-search-enterprise.path.name" $ }}
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - "{{ $.Release.Name }}"
+              topologyKey: topology.kubernetes.io/zone
+          # -- Prefer to schedule the content pod on a different node
+          - weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - >-
+                        {{ template "alfresco-search-enterprise.path.name" $ }}
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - "{{ $.Release.Name }}"
+              topologyKey: kubernetes.io/hostname
 reindexing:
   # -- Create the one-shot job to trigger the reindexing of repo contents
   enabled: true
