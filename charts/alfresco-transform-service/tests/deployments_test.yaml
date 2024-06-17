@@ -234,6 +234,40 @@ tests:
                       - RELEASE-NAME
               topologyKey: topology.kubernetes.io/zone
         template: deployment-transform-router.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - filestore
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+              topologyKey: kubernetes.io/hostname
+        template: deployment-filestore.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - filestore
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+              topologyKey: topology.kubernetes.io/zone
+        template: deployment-filestore.yaml
 
   - it: should render expected annotations in every deployment
     values:
