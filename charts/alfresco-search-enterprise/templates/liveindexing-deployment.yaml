@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "alfresco-search-enterprise.fullname" $ }}-{{ $serviceName }}
+  name: {{ include (printf "alfresco-search-enterprise.%s.fullname" $serviceName) $ }}
   labels:
     {{- include (printf "alfresco-search-enterprise.%s.labels" $serviceName) $ | nindent 4 }}
 spec:
@@ -27,7 +27,7 @@ spec:
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       {{- include "alfresco-common.imagePullSecrets" $ | indent 6 }}
       containers:
-        - name: {{ $.Chart.Name }}-{{ $serviceName }}
+        - name: {{ include (printf "alfresco-search-enterprise.%s.name" $serviceName) $ }}
           image: "{{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "repository" }}:\
             {{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "tag" }}"
           imagePullPolicy: {{ index $.Values "liveIndexing" (printf "%s" $serviceName)  "image" "pullPolicy" }}
