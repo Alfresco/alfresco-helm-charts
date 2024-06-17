@@ -1,3 +1,4 @@
+---
 transformrouter:
   enabled: true
   replicaCount: 2
@@ -173,7 +174,7 @@ imagemagick:
   nodeSelector: {}
   tolerations: []
   # -- Pod affinity, passed thru tpl function
-  affinity: |-
+  affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
         - weight: 10
@@ -183,11 +184,12 @@ imagemagick:
               - key: app.kubernetes.io/name
                 operator: In
                 values:
-                - {{ template "alfresco-transform-service.imagemagick.name" . }}
+                - >-
+                  {{ template "alfresco-transform-service.imagemagick.name" . }}
               - key: app.kubernetes.io/instance
                 operator: In
                 values:
-                - {{ .Release.Name }}
+                - "{{ .Release.Name }}"
             topologyKey: topology.kubernetes.io/zone
         - weight: 5
           podAffinityTerm:
@@ -196,11 +198,12 @@ imagemagick:
               - key: app.kubernetes.io/name
                 operator: In
                 values:
-                - {{ template "alfresco-transform-service.imagemagick.name" . }}
+                - >-
+                  {{ template "alfresco-transform-service.imagemagick.name" . }}
               - key: app.kubernetes.io/instance
                 operator: In
                 values:
-                - {{ .Release.Name }}
+                - "{{ .Release.Name }}"
             topologyKey: app.kubernetes.io/name
   podAnnotations: {}
   podLabels: {}

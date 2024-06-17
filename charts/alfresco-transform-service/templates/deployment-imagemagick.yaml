@@ -60,7 +60,7 @@ spec:
       {{- end }}
       {{- with .Values.imagemagick.affinity }}
       affinity:
-        {{- tpl . $ | nindent 8 }}
+        {{- tpl (toYaml .) $ | nindent 8 }}
       {{- end }}
       {{- with .Values.imagemagick.tolerations }}
       tolerations:
