@@ -154,6 +154,10 @@ affinity:
                 operator: In
                 values:
                   - "{{ $.Release.Name }}"
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - "{{ $.Chart.Name }}"
           topologyKey: topology.kubernetes.io/zone
       # -- Prefer to schedule pods on nodes with different nodes
       - weight: 5
@@ -169,4 +173,8 @@ affinity:
                 operator: In
                 values:
                   - "{{ $.Release.Name }}"
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - "{{ $.Chart.Name }}"
           topologyKey: kubernetes.io/hostname
