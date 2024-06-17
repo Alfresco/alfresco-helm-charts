@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.filestore.name" . }}
+  name: {{ template "alfresco-transform-service.filestore.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.filestore.labels" . | nindent 4 }}
 spec:
@@ -37,7 +37,7 @@ spec:
           {{- include "component-security-context" .Values.filestore | indent 8 }}
           envFrom:
           - configMapRef:
-              name: {{ template "alfresco-transform-service.filestore.name" . }}
+              name: {{ template "alfresco-transform-service.filestore.fullname" . }}
           ports:
             - containerPort: {{ .Values.filestore.image.internalPort }}
           resources: {{- toYaml .Values.filestore.resources | nindent 12 }}
