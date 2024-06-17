@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.libreoffice.name" . }}
+  name: {{ template "alfresco-transform-service.libreoffice.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.libreoffice.labels" . | nindent 4 }}
 spec:
@@ -39,7 +39,7 @@ spec:
           {{- include "component-security-context" .Values.libreoffice | indent 8 }}
           envFrom:
             - configMapRef:
-                name: {{ template "alfresco-transform-service.libreoffice.name" . }}
+                name: {{ template "alfresco-transform-service.libreoffice.fullname" . }}
           env:
             {{- include "alfresco-transform-service.messageBroker.env" $ | nindent 12 }}
           ports:
