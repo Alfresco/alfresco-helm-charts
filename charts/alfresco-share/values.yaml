@@ -86,8 +86,6 @@ resources:
     memory: "2000Mi"
 nodeSelector: {}
 tolerations: []
-# -- string representation of the YAML affinity rules (can use templates)
-affinity: ""
 environment:
   CATALINA_OPTS: >-
     -XX:MinRAMPercentage=50
@@ -121,3 +119,36 @@ managedApplicationContext:
   # enables hazelcast clustering when more than one replica is configured.
   # Should be disabled when providing a custom application context file.
   enabled: true
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      # -- Prefer to schedule pods in different zones
+      - weight: 10
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - >-
+                    {{ template "alfresco-share.name" $ }}
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                  - "{{ $.Release.Name }}"
+          topologyKey: topology.kubernetes.io/zone
+      # -- Prefer to schedule pods on different nodes
+      - weight: 5
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - >-
+                    {{ template "alfresco-share.name" $ }}
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                  - "{{ $.Release.Name }}"
+          topologyKey: kubernetes.io/hostname
