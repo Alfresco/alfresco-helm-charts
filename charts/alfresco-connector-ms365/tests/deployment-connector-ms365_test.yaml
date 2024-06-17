@@ -41,6 +41,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-connector-ms365
               topologyKey: topology.kubernetes.io/zone
 
   - it: should leverage provided existing configmap

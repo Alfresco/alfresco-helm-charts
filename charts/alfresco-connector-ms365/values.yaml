@@ -25,6 +25,10 @@ affinity:
                 operator: In
                 values:
                   - "{{ .Release.Name }}"
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - "{{ $.Chart.Name }}"
           topologyKey: topology.kubernetes.io/zone
       - weight: 5
         podAffinityTerm:
