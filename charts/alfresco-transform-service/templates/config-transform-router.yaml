@@ -11,7 +11,7 @@ data:
   IMAGEMAGICK_URL: http://{{ template "alfresco-transform-service.imagemagick.fullname" . }}
   PDF_RENDERER_URL: http://{{ template "alfresco-transform-service.pdfrenderer.fullname" . }}
   LIBREOFFICE_URL: http://{{ template "alfresco-transform-service.libreoffice.fullname" . }}
-  TIKA_URL: http://{{ template "alfresco-transform-service.tika.name" . }}:80
+  TIKA_URL: http://{{ template "alfresco-transform-service.tika.fullname" . }}
   {{- if .Values.transformmisc.enabled }}
   MISC_URL: http://{{ template "alfresco-transform-service.transform-misc.name" . }}:80
   {{- end }}

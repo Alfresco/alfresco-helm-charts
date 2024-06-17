@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.tika.name" . }}
+  name: {{ template "alfresco-transform-service.tika.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.tika.labels" . | nindent 4 }}
 spec:
@@ -39,7 +39,7 @@ spec:
           {{- include "component-security-context" .Values.tika | indent 8 }}
           envFrom:
             - configMapRef:
-                name: {{ template "alfresco-transform-service.tika.name" . }}
+                name: {{ template "alfresco-transform-service.tika.fullname" . }}
           env:
             {{- include "alfresco-transform-service.messageBroker.env" $ | nindent 12 }}
           ports:
