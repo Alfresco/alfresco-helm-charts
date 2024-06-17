@@ -72,6 +72,22 @@ tests:
                     values:
                       - RELEASE-NAME
               topologyKey: topology.kubernetes.io/zone
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - alfresco-ai-transformer
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+              topologyKey: kubernetes.io/hostname
 
       - equal:
           path: spec.template.spec.serviceAccountName

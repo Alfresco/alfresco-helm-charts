@@ -532,6 +532,20 @@ affinity:
                 values:
                   - "{{ $.Release.Name }}"
           topologyKey: topology.kubernetes.io/zone
+      - weight: 5
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - >-
+                    {{ template "alfresco-ai-transformer.name" $ }}
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                  - "{{ $.Release.Name }}"
+          topologyKey: kubernetes.io/hostname
 extraVolumes: []
 extraVolumeMounts: []
 extraInitContainers: []
