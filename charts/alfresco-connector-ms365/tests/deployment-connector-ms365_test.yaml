@@ -13,7 +13,6 @@ tests:
       - equal:
           path: spec.template.spec.serviceAccountName
           value: ms365-sa
-        template: deployment-connector-ms365.yaml
 
   - it: should render cpu and memory limits
     values: *testvalues
@@ -27,7 +26,22 @@ tests:
             limits:
               cpu: "2"
               memory: "1000Mi"
-        template: deployment-connector-ms365.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - alfresco-connector-ms365
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+              topologyKey: topology.kubernetes.io/zone
 
   - it: should leverage provided existing configmap
     set:
@@ -38,7 +52,6 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].env[0].valueFrom.configMapKeyRef.name
           value: myns/mycm
-        template: deployment-connector-ms365.yaml
 
   - it: should set an environment variable correctly with quotes
     set:
@@ -50,7 +63,6 @@ tests:
           value:
             name: test_data
             value: "80"
-        template: deployment-connector-ms365.yaml
 
   - it: should set JAVA_OPTS in environment correctly with quotes
     set:
@@ -62,7 +74,6 @@ tests:
           value:
             name: JAVA_OPTS
             value: "-Xmx 2GB -Dalfresco.base-url=http://$(REPO_HOST):$(REPO_PORT)"
-        template: deployment-connector-ms365.yaml
 
   - it: should render labels for deployment
     values: *testvalues
