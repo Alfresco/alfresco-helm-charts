@@ -50,6 +50,10 @@ liveIndexing:
                     operator: In
                     values:
                       - "{{ $.Release.Name }}"
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - "{{ $.Chart.Name }}"
               topologyKey: topology.kubernetes.io/zone
           # -- Prefer to schedule the content pod on a different node
           - weight: 5
@@ -65,6 +69,10 @@ liveIndexing:
                     operator: In
                     values:
                       - "{{ $.Release.Name }}"
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - "{{ $.Chart.Name }}"
               topologyKey: kubernetes.io/hostname
   metadata:
     image:
@@ -89,6 +97,10 @@ liveIndexing:
                     operator: In
                     values:
                       - "{{ $.Release.Name }}"
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - "{{ $.Chart.Name }}"
               topologyKey: topology.kubernetes.io/zone
           # -- Prefer to schedule the content pod on a different node
           - weight: 5
@@ -104,6 +116,10 @@ liveIndexing:
                     operator: In
                     values:
                       - "{{ $.Release.Name }}"
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - "{{ $.Chart.Name }}"
               topologyKey: kubernetes.io/hostname
   path:
     image:
@@ -128,6 +144,10 @@ liveIndexing:
                     operator: In
                     values:
                       - "{{ $.Release.Name }}"
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - "{{ $.Chart.Name }}"
               topologyKey: topology.kubernetes.io/zone
           # -- Prefer to schedule the content pod on a different node
           - weight: 5
@@ -143,6 +163,10 @@ liveIndexing:
                     operator: In
                     values:
                       - "{{ $.Release.Name }}"
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - "{{ $.Chart.Name }}"
               topologyKey: kubernetes.io/hostname
 reindexing:
   # -- Create the one-shot job to trigger the reindexing of repo contents
