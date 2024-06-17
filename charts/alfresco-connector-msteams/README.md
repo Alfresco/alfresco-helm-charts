@@ -15,12 +15,13 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.3 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| affinity | object | `{"podAntiAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-msteams.name\" . }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ .Release.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10},{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-msteams.name\" . }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ .Release.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}]}}` | Affinity settings for pod assignment (can contain templates if passed as string) |
 | alfresco.baseUrl | string | `"change_me_alf_base_url"` |  |
 | alfresco.digitalWorkspace.contextPath | string | `"/workspace/"` |  |
 | environment | string | `nil` |  |
