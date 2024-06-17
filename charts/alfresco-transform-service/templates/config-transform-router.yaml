@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-transform-service.transform-router.name" . }}
+  name: {{ template "alfresco-transform-service.transform-router.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.transform-router.labels" . | nindent 4 }}
 data:
