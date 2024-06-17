@@ -15,8 +15,6 @@ tests:
       - isNull:
           path: spec.template.spec.nodeSelector
       - isNull:
-          path: spec.template.spec.affinity
-      - isNull:
           path: spec.template.spec.tolerations
       - equal:
           path: spec.template.spec.containers[0].resources
@@ -108,6 +106,38 @@ tests:
               secretKeyRef:
                 name: RELEASE-NAME-alfresco-sync-mq
                 key: BROKER_PASSWORD
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - alfresco-sync-service
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+              topologyKey: topology.kubernetes.io/zone
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - alfresco-sync-service
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+              topologyKey: kubernetes.io/hostname
   - it: should render deployment with pre-exisiting resources and without a service account
     set:
       repository:
@@ -241,7 +271,7 @@ tests:
         - key: "skipme"
           operator: "Exists"
           effect: "NoSchedule"
-      affinity: |-
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
