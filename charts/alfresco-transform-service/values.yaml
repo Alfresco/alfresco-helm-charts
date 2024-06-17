@@ -21,6 +21,10 @@ transformrouter:
                   operator: In
                   values:
                     - "{{ .Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
             topologyKey: topology.kubernetes.io/zone
         - weight: 5
           podAffinityTerm:
@@ -35,6 +39,10 @@ transformrouter:
                   operator: In
                   values:
                     - "{{ .Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
             topologyKey: kubernetes.io/hostname
   podAnnotations: {}
   podLabels: {}
@@ -95,6 +103,10 @@ pdfrenderer:
                   operator: In
                   values:
                     - "{{ .Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
             topologyKey: topology.kubernetes.io/zone
         - weight: 5
           podAffinityTerm:
@@ -109,6 +121,10 @@ pdfrenderer:
                   operator: In
                   values:
                     - "{{ .Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
             topologyKey: kubernetes.io/hostname
   podAnnotations: {}
   podLabels: {}
@@ -201,29 +217,37 @@ imagemagick:
           podAffinityTerm:
             labelSelector:
               matchExpressions:
-              - key: app.kubernetes.io/name
-                operator: In
-                values:
-                - >-
-                  {{ template "alfresco-transform-service.imagemagick.name" . }}
-              - key: app.kubernetes.io/instance
-                operator: In
-                values:
-                - "{{ .Release.Name }}"
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - >-
+                      {{ template "alfresco-transform-service.imagemagick.name" . }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - "{{ .Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
             topologyKey: topology.kubernetes.io/zone
         - weight: 5
           podAffinityTerm:
             labelSelector:
               matchExpressions:
-              - key: app.kubernetes.io/name
-                operator: In
-                values:
-                - >-
-                  {{ template "alfresco-transform-service.imagemagick.name" . }}
-              - key: app.kubernetes.io/instance
-                operator: In
-                values:
-                - "{{ .Release.Name }}"
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - >-
+                      {{ template "alfresco-transform-service.imagemagick.name" . }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - "{{ .Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
             topologyKey: kubernetes.io/hostname
   podAnnotations: {}
   podLabels: {}
@@ -325,6 +349,10 @@ libreoffice:
                   operator: In
                   values:
                     - "{{ .Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
             topologyKey: topology.kubernetes.io/zone
         - weight: 5
           podAffinityTerm:
@@ -339,6 +367,10 @@ libreoffice:
                   operator: In
                   values:
                     - "{{ .Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
             topologyKey: kubernetes.io/hostname
   podAnnotations: {}
   podLabels: {}
@@ -440,6 +472,10 @@ tika:
                   operator: In
                   values:
                     - "{{ .Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
             topologyKey: topology.kubernetes.io/zone
         - weight: 5
           podAffinityTerm:
@@ -454,6 +490,10 @@ tika:
                   operator: In
                   values:
                     - "{{ .Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
             topologyKey: kubernetes.io/hostname
   podAnnotations: {}
   podLabels: {}
@@ -555,6 +595,10 @@ transformmisc:
                   operator: In
                   values:
                     - "{{ .Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
             topologyKey: topology.kubernetes.io/zone
         - weight: 5
           podAffinityTerm:
@@ -569,6 +613,10 @@ transformmisc:
                   operator: In
                   values:
                     - "{{ .Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
             topologyKey: kubernetes.io/hostname
   podAnnotations: {}
   podLabels: {}
@@ -670,6 +718,10 @@ filestore:
                 operator: In
                 values:
                   - "{{ .Release.Name }}"
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - "{{ $.Chart.Name }}"
           topologyKey: topology.kubernetes.io/zone
       - weight: 5
         podAffinityTerm:
@@ -684,6 +736,10 @@ filestore:
                 operator: In
                 values:
                   - "{{ .Release.Name }}"
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - "{{ $.Chart.Name }}"
           topologyKey: kubernetes.io/hostname
   podAnnotations: {}
   podLabels: {}

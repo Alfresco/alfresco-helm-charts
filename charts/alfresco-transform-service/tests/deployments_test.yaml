@@ -79,6 +79,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
               topologyKey: topology.kubernetes.io/zone
         template: deployment-imagemagick.yaml
       - contains:
@@ -96,6 +100,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
               topologyKey: kubernetes.io/hostname
         template: deployment-imagemagick.yaml
       - contains:
@@ -113,6 +121,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
               topologyKey: topology.kubernetes.io/zone
         template: deployment-libreoffice.yaml
       - contains:
@@ -130,6 +142,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
               topologyKey: kubernetes.io/hostname
         template: deployment-libreoffice.yaml
       - contains:
@@ -147,6 +163,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
               topologyKey: topology.kubernetes.io/zone
         template: deployment-tika.yaml
       - contains:
@@ -164,6 +184,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
               topologyKey: kubernetes.io/hostname
         template: deployment-tika.yaml
       - contains:
@@ -181,6 +205,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
               topologyKey: topology.kubernetes.io/zone
         template: deployment-pdfrenderer.yaml
       - contains:
@@ -198,6 +226,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
               topologyKey: kubernetes.io/hostname
         template: deployment-pdfrenderer.yaml
       - contains:
@@ -215,6 +247,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
               topologyKey: kubernetes.io/hostname
         template: deployment-transform-misc.yaml
       - contains:
@@ -232,6 +268,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
               topologyKey: topology.kubernetes.io/zone
         template: deployment-transform-misc.yaml
       - contains:
@@ -249,6 +289,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
               topologyKey: kubernetes.io/hostname
         template: deployment-transform-router.yaml
       - contains:
@@ -266,6 +310,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
               topologyKey: topology.kubernetes.io/zone
         template: deployment-transform-router.yaml
       - contains:
@@ -283,6 +331,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
               topologyKey: kubernetes.io/hostname
         template: deployment-filestore.yaml
       - contains:
@@ -300,6 +352,10 @@ tests:
                     operator: In
                     values:
                       - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
               topologyKey: topology.kubernetes.io/zone
         template: deployment-filestore.yaml
 
