@@ -42,7 +42,7 @@ spec:
                       operator: In
                       values:
                         - {{ .Release.Name }}
-                topologyKey: failure-domain.beta.kubernetes.io/zone
+                topologyKey: topology.kubernetes.io/zone
             - weight: 5
               podAffinityTerm:
                 labelSelector:
