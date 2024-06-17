@@ -33,7 +33,7 @@ spec:
       serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values.imagemagick| indent 4 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ template "alfresco-transform-service.imagemagick.name" . }}
           image: "{{ .Values.imagemagick.image.repository }}:{{ .Values.imagemagick.image.tag }}"
           imagePullPolicy: {{ .Values.imagemagick.image.pullPolicy }}
           {{- include "component-security-context" .Values.imagemagick| indent 8 }}

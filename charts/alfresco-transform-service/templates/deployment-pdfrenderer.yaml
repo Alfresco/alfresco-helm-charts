@@ -33,7 +33,7 @@ spec:
       serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values.pdfrenderer | indent 4 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ template "alfresco-transform-service.pdfrenderer.name" . }}
           image: "{{ .Values.pdfrenderer.image.repository }}:{{ .Values.pdfrenderer.image.tag }}"
           imagePullPolicy: {{ .Values.pdfrenderer.image.pullPolicy }}
           {{- include "component-security-context" .Values.pdfrenderer | indent 8 }}

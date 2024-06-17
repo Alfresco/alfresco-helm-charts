@@ -31,7 +31,7 @@ spec:
       serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values.transformrouter | indent 4 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ template "alfresco-transform-service.transform-router.name" . }}
           image: "{{ .Values.transformrouter.image.repository }}:{{ .Values.transformrouter.image.tag }}"
           imagePullPolicy: {{ .Values.transformrouter.image.pullPolicy }}
           {{- include "component-security-context" .Values.transformrouter | indent 8 }}

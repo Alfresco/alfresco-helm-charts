@@ -33,7 +33,7 @@ spec:
       serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values.libreoffice | indent 4 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ template "alfresco-transform-service.libreoffice.name" . }}
           image: "{{ .Values.libreoffice.image.repository }}:{{ .Values.libreoffice.image.tag }}"
           imagePullPolicy: {{ .Values.libreoffice.image.pullPolicy }}
           {{- include "component-security-context" .Values.libreoffice | indent 8 }}

@@ -31,7 +31,7 @@ spec:
       serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values.filestore | indent 4 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ template "alfresco-transform-service.filestore.name" . }}
           image: "{{ .Values.filestore.image.repository }}:{{ .Values.filestore.image.tag }}"
           imagePullPolicy: {{ .Values.filestore.image.pullPolicy }}
           {{- include "component-security-context" .Values.filestore | indent 8 }}
