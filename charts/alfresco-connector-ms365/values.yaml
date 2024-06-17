@@ -1,3 +1,4 @@
+---
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
 strategy:
@@ -8,7 +9,7 @@ replicaCount: 2
 nodeSelector: {}
 tolerations: []
 # -- Pod affinity, passed thru tpl function
-affinity: |-
+affinity:
   podAntiAffinity:
     preferredDuringSchedulingIgnoredDuringExecution:
       - weight: 10
@@ -18,11 +19,12 @@ affinity: |-
               - key: app.kubernetes.io/name
                 operator: In
                 values:
-                  - {{ template "alfresco-connector-ms365.name" . }}
+                  - >-
+                    {{ template "alfresco-connector-ms365.name" $ }}
               - key: app.kubernetes.io/instance
                 operator: In
                 values:
-                  - {{ .Release.Name }}
+                  - "{{ .Release.Name }}"
           topologyKey: topology.kubernetes.io/zone
       - weight: 5
         podAffinityTerm:
@@ -31,11 +33,12 @@ affinity: |-
               - key: app.kubernetes.io/name
                 operator: In
                 values:
-                  - {{ template "alfresco-connector-ms365.name" . }}
+                  - >-
+                    {{ template "alfresco-connector-ms365.name" $ }}
               - key: app.kubernetes.io/instance
                 operator: In
                 values:
-                  - {{ .Release.Name }}
+                  - "{{ .Release.Name }}"
           topologyKey: kubernetes.io/hostname
 podAnnotations: {}
 podLabels: {}
