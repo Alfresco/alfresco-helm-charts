@@ -180,19 +180,27 @@ imagemagick:
           podAffinityTerm:
             labelSelector:
               matchExpressions:
-              - key: app
+              - key: app.kubernetes.io/name
                 operator: In
                 values:
                 - {{ template "alfresco-transform-service.imagemagick.name" . }}
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                - {{ .Release.Name }}
             topologyKey: topology.kubernetes.io/zone
         - weight: 5
           podAffinityTerm:
             labelSelector:
               matchExpressions:
-              - key: app
+              - key: app.kubernetes.io/name
                 operator: In
                 values:
                 - {{ template "alfresco-transform-service.imagemagick.name" . }}
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                - {{ .Release.Name }}
             topologyKey: app.kubernetes.io/name
   podAnnotations: {}
   podLabels: {}

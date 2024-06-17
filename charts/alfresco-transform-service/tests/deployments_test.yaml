@@ -64,6 +64,23 @@ tests:
       - isNull:
           path: spec.template.spec.containers[0].env
         template: deployment-filestore.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - imagemagick
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+              topologyKey: topology.kubernetes.io/zone
+        template: deployment-imagemagick.yaml
 
   - it: should render expected annotations in every deployment
     values:
