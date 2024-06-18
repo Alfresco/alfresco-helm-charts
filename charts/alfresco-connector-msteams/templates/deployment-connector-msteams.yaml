@@ -29,7 +29,7 @@ spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       {{- with .Values.affinity }}
       affinity:
-	  {{- tpl (toYaml .) $ | nindent 8 }}
+        {{- tpl (toYaml .) $ | nindent 8 }}
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
