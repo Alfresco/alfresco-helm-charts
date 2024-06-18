@@ -4,10 +4,10 @@ transformrouter:
   replicaCount: 1
   nodeSelector: {}
   tolerations: []
-  # -- Pod affinity, passed thru tpl function
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
+        # -- Prefer to schedule on different zones
         - weight: 10
           podAffinityTerm:
             labelSelector:
@@ -26,6 +26,7 @@ transformrouter:
                   values:
                     - "{{ $.Chart.Name }}"
             topologyKey: topology.kubernetes.io/zone
+        # -- Prefer to schedule on different nodes
         - weight: 5
           podAffinityTerm:
             labelSelector:
@@ -86,10 +87,10 @@ pdfrenderer:
   replicaCount: 2
   nodeSelector: {}
   tolerations: []
-  # -- Pod affinity, passed thru tpl function
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
+        # -- Prefer to schedule on different zones
         - weight: 10
           podAffinityTerm:
             labelSelector:
@@ -108,6 +109,7 @@ pdfrenderer:
                   values:
                     - "{{ $.Chart.Name }}"
             topologyKey: topology.kubernetes.io/zone
+        # -- Prefer to schedule on different nodes
         - weight: 5
           podAffinityTerm:
             labelSelector:
@@ -209,10 +211,10 @@ imagemagick:
   replicaCount: 2
   nodeSelector: {}
   tolerations: []
-  # -- Pod affinity, passed thru tpl function
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
+        # -- Prefer to schedule on different zones
         - weight: 10
           podAffinityTerm:
             labelSelector:
@@ -231,6 +233,7 @@ imagemagick:
                   values:
                     - "{{ $.Chart.Name }}"
             topologyKey: topology.kubernetes.io/zone
+        # -- Prefer to schedule on different nodes
         - weight: 5
           podAffinityTerm:
             labelSelector:
@@ -336,6 +339,7 @@ libreoffice:
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
+        # -- Prefer to schedule on different zones
         - weight: 10
           podAffinityTerm:
             labelSelector:
@@ -354,6 +358,7 @@ libreoffice:
                   values:
                     - "{{ $.Chart.Name }}"
             topologyKey: topology.kubernetes.io/zone
+        # -- Prefer to schedule on different nodes
         - weight: 5
           podAffinityTerm:
             labelSelector:
@@ -459,6 +464,7 @@ tika:
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
+        # -- Prefer to schedule on different zones
         - weight: 10
           podAffinityTerm:
             labelSelector:
@@ -477,6 +483,7 @@ tika:
                   values:
                     - "{{ $.Chart.Name }}"
             topologyKey: topology.kubernetes.io/zone
+        # -- Prefer to schedule on different nodes
         - weight: 5
           podAffinityTerm:
             labelSelector:
@@ -582,6 +589,7 @@ transformmisc:
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
+        # -- Prefer to schedule on different zones
         - weight: 10
           podAffinityTerm:
             labelSelector:
@@ -600,6 +608,7 @@ transformmisc:
                   values:
                     - "{{ $.Chart.Name }}"
             topologyKey: topology.kubernetes.io/zone
+        # -- Prefer to schedule on different nodes
         - weight: 5
           podAffinityTerm:
             labelSelector:
@@ -705,6 +714,7 @@ filestore:
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
+      # -- Prefer to schedule on different zones
       - weight: 10
         podAffinityTerm:
           labelSelector:
@@ -723,6 +733,7 @@ filestore:
                 values:
                   - "{{ $.Chart.Name }}"
           topologyKey: topology.kubernetes.io/zone
+      # -- Prefer to schedule on different nodes
       - weight: 5
         podAffinityTerm:
           labelSelector:

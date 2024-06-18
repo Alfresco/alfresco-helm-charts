@@ -168,6 +168,7 @@ tags:
 affinity:
   podAntiAffinity:
     preferredDuringSchedulingIgnoredDuringExecution:
+      # -- Prefer to schedule pods in different zones
       - weight: 10
         podAffinityTerm:
           labelSelector:
@@ -186,6 +187,7 @@ affinity:
                 values:
                   - "{{ $.Chart.Name }}"
           topologyKey: topology.kubernetes.io/zone
+      # -- Prefer to schedule pods in different nodes
       - weight: 5
         podAffinityTerm:
           labelSelector:
