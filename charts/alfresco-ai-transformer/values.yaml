@@ -514,10 +514,10 @@ messageBroker:
       password: BROKER_PASSWORD
 nodeSelector: {}
 tolerations: []
-# -- string representation of the YAML affinity rules (can use templates)
-affinity: |-
+affinity:
   podAntiAffinity:
     preferredDuringSchedulingIgnoredDuringExecution:
+      # -- Prefer to schedule pods in different zones
       - weight: 10
         podAffinityTerm:
           labelSelector:
@@ -525,12 +525,36 @@ affinity: |-
               - key: app.kubernetes.io/name
                 operator: In
                 values:
-                  - {{ template "alfresco-ai-transformer.name" $ }}
+                  - >-
+                    {{ template "alfresco-ai-transformer.name" $ }}
               - key: app.kubernetes.io/instance
                 operator: In
                 values:
-                  - {{ $.Release.Name }}
+                  - "{{ $.Release.Name }}"
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - "{{ $.Chart.Name }}"
           topologyKey: topology.kubernetes.io/zone
+      # -- Prefer to schedule pods in different nodes
+      - weight: 5
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - >-
+                    {{ template "alfresco-ai-transformer.name" $ }}
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                  - "{{ $.Release.Name }}"
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - "{{ $.Chart.Name }}"
+          topologyKey: kubernetes.io/hostname
 extraVolumes: []
 extraVolumeMounts: []
 extraInitContainers: []

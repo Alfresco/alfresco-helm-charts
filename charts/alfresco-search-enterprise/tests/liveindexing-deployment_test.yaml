@@ -67,6 +67,132 @@ tests:
               configMapKeyRef:
                 name: RELEASE-NAME-alfresco-search-enterprise-ats
                 key: SFS_URL
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - content
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-search-enterprise
+              topologyKey: topology.kubernetes.io/zone
+        documentIndex: 0
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - content
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-search-enterprise
+              topologyKey: kubernetes.io/hostname
+        documentIndex: 0
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - metadata
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-search-enterprise
+              topologyKey: topology.kubernetes.io/zone
+        documentIndex: 1
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - metadata
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-search-enterprise
+              topologyKey: kubernetes.io/hostname
+        documentIndex: 1
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - path
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-search-enterprise
+              topologyKey: topology.kubernetes.io/zone
+        documentIndex: 2
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - path
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-search-enterprise
+              topologyKey: kubernetes.io/hostname
+        documentIndex: 2
 
   - it: |
       Render default mainfest with embedded elasticsearch and pre-existing secret

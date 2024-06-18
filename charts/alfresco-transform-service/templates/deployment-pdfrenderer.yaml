@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.pdfrenderer.name" . }}
+  name: {{ template "alfresco-transform-service.pdfrenderer.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.pdfrenderer.labels" . | nindent 4 }}
 spec:
@@ -33,13 +33,13 @@ spec:
       serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values.pdfrenderer | indent 4 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ template "alfresco-transform-service.pdfrenderer.name" . }}
           image: "{{ .Values.pdfrenderer.image.repository }}:{{ .Values.pdfrenderer.image.tag }}"
           imagePullPolicy: {{ .Values.pdfrenderer.image.pullPolicy }}
           {{- include "component-security-context" .Values.pdfrenderer | indent 8 }}
           envFrom:
             - configMapRef:
-                name: {{ template "alfresco-transform-service.pdfrenderer.name" . }}
+                name: {{ template "alfresco-transform-service.pdfrenderer.fullname" . }}
           env:
             {{- include "alfresco-transform-service.messageBroker.env" $ | nindent 12 }}
           ports:
@@ -60,7 +60,7 @@ spec:
       {{- end }}
       {{- with .Values.pdfrenderer.affinity }}
       affinity:
-        {{- tpl . $ | nindent 8 }}
+        {{- tpl (toYaml .) $ | nindent 8 }}
       {{- end }}
       {{- with .Values.pdfrenderer.tolerations }}
       tolerations:

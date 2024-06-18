@@ -5,19 +5,76 @@ templates:
 values: &test_values
   - values/test_values.yaml
 tests:
-  - it: should have basic metadata in place in deployment
+  - it: should render default values
     asserts:
       - equal:
           path: metadata.name
           value: RELEASE-NAME-alfresco-repository
-        template: deployment.yaml
-
-  - it: should have one replica by default
-    asserts:
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - alfresco-repository
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-repository
+              topologyKey: topology.kubernetes.io/zone
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - alfresco-repository
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-repository
+              topologyKey: kubernetes.io/hostname
       - equal:
           path: spec.replicas
           value: 1
-        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-database
+                key: DATABASE_URL
+      - contains:
+          path: spec.template.spec.containers[0].envFrom
+          content:
+            configMapRef:
+              name: RELEASE-NAME-alfresco-opts
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "2"
+              memory: "2Gi"
+            limits:
+              cpu: "4"
+              memory: "8Gi"
 
   - it: should have number of replica set rom values
     set:
@@ -35,16 +92,6 @@ tests:
     asserts:
       - isNull:
           path: spec.replicas
-        template: deployment.yaml
-
-  - it: should have default configmap in env
-    asserts:
-      - contains:
-          path: spec.template.spec.containers[0].envFrom
-          content:
-            configMapRef:
-              name: RELEASE-NAME-alfresco-opts
-        template: deployment.yaml
 
   - it: should have a volume and a volumeMount for alfresco-global.properties
     set:
@@ -62,7 +109,6 @@ tests:
               items:
                 - key: alfresco-global.properties
                   path: alfresco-global.properties
-        template: deployment.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
@@ -70,20 +116,6 @@ tests:
             mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
             subPath: alfresco-global.properties
             readOnly: true
-        template: deployment.yaml
-
-  - it: should render cpu and memory limits
-    asserts:
-      - equal:
-          path: spec.template.spec.containers[0].resources
-          value:
-            requests:
-              cpu: "2"
-              memory: "2Gi"
-            limits:
-              cpu: "4"
-              memory: "8Gi"
-        template: deployment.yaml
 
   - it: should have custom extra volumes when defined
     set:
@@ -100,7 +132,6 @@ tests:
             awsElasticBlockStore:
               volumeID: "whatever"
               fsType: ext4
-        template: deployment.yaml
 
   - it: should have custom secrets for license and subsytems
     set:
@@ -124,14 +155,12 @@ tests:
                 path: license.lic
               optional: true
               secretName: repository-secrets
-        template: deployment.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content: &acsLicenseMount
             name: acs-license
             mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/license
             readOnly: true
-        template: deployment.yaml
       - contains:
           path: spec.template.spec.volumes
           content:
@@ -139,14 +168,12 @@ tests:
             secret:
               secretName: myAzureAD
               defaultMode: 0400
-        template: deployment.yaml
       - contains:
           path: spec.template.spec.containers[0].volumeMounts
           content:
             name: myAzureAD
             mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/subsystems/Authentication/ldap-ad/myAzureAD
             readOnly: true
-        template: deployment.yaml
 
   - it: should not have any license volume but vars instead
     set:
@@ -159,11 +186,9 @@ tests:
       - notContains:
           path: spec.template.spec.volumes
           content: *acsLicenseVol
-        template: deployment.yaml
       - notContains:
           path: spec.template.spec.containers[0].volumeMounts
           content: *acsLicenseMount
-        template: deployment.yaml
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -173,18 +198,6 @@ tests:
                 key: MYSECRETVAR
                 name: mysecret
                 optional: true
-        template: deployment.yaml
-
-  - it: should render default DATABASE URL
-    asserts:
-      - contains:
-          path: spec.template.spec.containers[0].env
-          content:
-            name: DATABASE_URL
-            valueFrom:
-              configMapKeyRef:
-                name: RELEASE-NAME-alfresco-database
-                key: DATABASE_URL
 
   - it: should render deployment using provided database cm
     set:
@@ -226,11 +239,9 @@ tests:
       - lengthEqual:
           path: spec.template.spec.initContainers
           count: 2
-        template: deployment.yaml
       - lengthEqual:
           path: spec.template.spec.containers
           count: 2
-        template: deployment.yaml
 
   - it: should allow setting nodeSelector properly
     values: *test_values
@@ -241,7 +252,6 @@ tests:
       - equal:
           path: spec.template.spec.nodeSelector.node_label
           value: node_value
-        template: deployment.yaml
 
   - it: should render labels for deployment
     values: *test_values

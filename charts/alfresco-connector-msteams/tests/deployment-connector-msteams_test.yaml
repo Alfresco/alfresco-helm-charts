@@ -5,7 +5,7 @@ templates:
 tests:
 - it: should have basic deployment properties by default
   values: &testvalues
-  - values/test_values.yaml
+    - values/test_values.yaml
   template: deployment-connector-msteams.yaml
   asserts:
     - contains:
@@ -47,6 +47,46 @@ tests:
           limits:
             cpu: "1"
             memory: "1000Mi"
+    - contains:
+        path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+        content:
+          weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - alfresco-connector-msteams
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - RELEASE-NAME
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - alfresco-connector-msteams
+            topologyKey: topology.kubernetes.io/zone
+    - contains:
+        path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+        content:
+          weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - alfresco-connector-msteams
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - RELEASE-NAME
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - alfresco-connector-msteams
+            topologyKey: kubernetes.io/hostname
 - it: should render deployment with existing secrets and configmaps
   values: *testvalues
   set:

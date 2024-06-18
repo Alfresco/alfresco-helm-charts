@@ -129,7 +129,6 @@ ingress:
   path: /syncservice
 nodeSelector: {}
 tolerations: []
-affinity: ""
 terminationGracePeriodSeconds: 60
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
@@ -138,3 +137,44 @@ hazelcast:
   service:
     port: 5701
     type: ClusterIP
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      # -- Prefer to schedule pods on nodes with different zones
+      - weight: 10
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - >-
+                    {{ template "alfresco-sync-service.name" $ }}
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                  - "{{ $.Release.Name }}"
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - "{{ $.Chart.Name }}"
+          topologyKey: topology.kubernetes.io/zone
+      # -- Prefer to schedule pods on nodes with different nodes
+      - weight: 5
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - >-
+                    {{ template "alfresco-sync-service.name" $ }}
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                  - "{{ $.Release.Name }}"
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - "{{ $.Chart.Name }}"
+          topologyKey: kubernetes.io/hostname

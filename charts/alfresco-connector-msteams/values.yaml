@@ -1,3 +1,4 @@
+---
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
 strategy:
@@ -66,6 +67,48 @@ serviceAccount:
   # -- The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: msteams-sa
+# -- Affinity settings for pod assignment (can contain templates if passed as string)
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      # -- Prefer to schedule pods in different zones
+      - weight: 10
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - >-
+                    {{ template "alfresco-connector-msteams.name" . }}
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                  - "{{ .Release.Name }}"
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - "{{ $.Chart.Name }}"
+          topologyKey: topology.kubernetes.io/zone
+      # -- Prefer to schedule pods in different nodes
+      - weight: 5
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - >-
+                    {{ template "alfresco-connector-msteams.name" . }}
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                  - "{{ .Release.Name }}"
+              - key: app.kubernetes.io/component
+                operator: In
+                values:
+                  - "{{ $.Chart.Name }}"
+          topologyKey: kubernetes.io/hostname
 repository:
   # -- URL of the Alfresco repository
   url: null

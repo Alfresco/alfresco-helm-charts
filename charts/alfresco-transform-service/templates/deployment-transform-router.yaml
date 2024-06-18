@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.transform-router.name" . }}
+  name: {{ template "alfresco-transform-service.transform-router.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.transform-router.labels" . | nindent 4 }}
 spec:
@@ -31,13 +31,13 @@ spec:
       serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values.transformrouter | indent 4 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ template "alfresco-transform-service.transform-router.name" . }}
           image: "{{ .Values.transformrouter.image.repository }}:{{ .Values.transformrouter.image.tag }}"
           imagePullPolicy: {{ .Values.transformrouter.image.pullPolicy }}
           {{- include "component-security-context" .Values.transformrouter | indent 8 }}
           envFrom:
             - configMapRef:
-                name: {{ template "alfresco-transform-service.transform-router.name" . }}
+                name: {{ template "alfresco-transform-service.transform-router.fullname" . }}
           env:
             {{- include "alfresco-transform-service.messageBroker.env" $ | nindent 12 }}
           ports:
@@ -58,7 +58,7 @@ spec:
       {{- end }}
       {{- with .Values.transformrouter.affinity }}
       affinity:
-        {{- tpl . $ | nindent 8 }}
+        {{- tpl (toYaml .) $ | nindent 8 }}
       {{- end }}
       {{- with .Values.transformrouter.tolerations }}
       tolerations:

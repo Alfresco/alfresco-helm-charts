@@ -3,17 +3,17 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "alfresco-transform-service.transform-router.name" . }}
+  name: {{ template "alfresco-transform-service.transform-router.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.transform-router.labels" . | nindent 4 }}
 data:
   {{- include "alfresco-transform-service.sfs.url" . | nindent 2 }}
-  IMAGEMAGICK_URL: http://{{ template "alfresco-transform-service.imagemagick.name" . }}:80
-  PDF_RENDERER_URL: http://{{ template "alfresco-transform-service.pdfrenderer.name" . }}:80
-  LIBREOFFICE_URL: http://{{ template "alfresco-transform-service.libreoffice.name" . }}:80
-  TIKA_URL: http://{{ template "alfresco-transform-service.tika.name" . }}:80
+  IMAGEMAGICK_URL: http://{{ template "alfresco-transform-service.imagemagick.fullname" . }}
+  PDF_RENDERER_URL: http://{{ template "alfresco-transform-service.pdfrenderer.fullname" . }}
+  LIBREOFFICE_URL: http://{{ template "alfresco-transform-service.libreoffice.fullname" . }}
+  TIKA_URL: http://{{ template "alfresco-transform-service.tika.fullname" . }}
   {{- if .Values.transformmisc.enabled }}
-  MISC_URL: http://{{ template "alfresco-transform-service.transform-misc.name" . }}:80
+  MISC_URL: http://{{ template "alfresco-transform-service.transform-misc.fullname" . }}
   {{- end }}
   {{- toYaml .Values.transformrouter.environment | nindent 2 }}
 {{- end }}

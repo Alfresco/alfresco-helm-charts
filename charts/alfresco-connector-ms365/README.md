@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-ms365
 
-![Version: 0.7.1](https://img.shields.io/badge/Version-0.7.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.1](https://img.shields.io/badge/AppVersion-2.0.1-informational?style=flat-square)
+![Version: 1.0.0-alpha.0](https://img.shields.io/badge/Version-1.0.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.1](https://img.shields.io/badge/AppVersion-2.0.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector ms365 service
 
@@ -15,13 +15,14 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.3 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | string | `"podAntiAffinity:\n  preferredDuringSchedulingIgnoredDuringExecution:\n    - weight: 10\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n            - key: app.kubernetes.io/name\n              operator: In\n              values:\n                - {{ template \"alfresco-connector-ms365.name\" . }}\n            - key: app.kubernetes.io/instance\n              operator: In\n              values:\n                - {{ .Release.Name }}\n        topologyKey: failure-domain.beta.kubernetes.io/zone\n    - weight: 5\n      podAffinityTerm:\n        labelSelector:\n          matchExpressions:\n            - key: app.kubernetes.io/name\n              operator: In\n              values:\n                - {{ template \"alfresco-connector-ms365.name\" . }}\n            - key: app.kubernetes.io/instance\n              operator: In\n              values:\n                - {{ .Release.Name }}\n        topologyKey: kubernetes.io/hostname"` | Pod affinity, passed thru tpl function |
+| affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-ms365.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ .Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule pods in different zones |
+| affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-ms365.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ .Release.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}` | Prefer to schedule pods in different nodes |
 | environment | object | `{}` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `9095` |  |

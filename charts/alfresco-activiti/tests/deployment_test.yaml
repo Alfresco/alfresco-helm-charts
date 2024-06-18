@@ -6,11 +6,11 @@ templates:
   - pvc.yaml
 tests:
   - it: should have basic metadata in place in deployment & default config
+    template: deployment.yaml
     asserts:
       - equal:
           path: metadata.name
           value: RELEASE-NAME-alfresco-activiti
-        template: deployment.yaml
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -19,7 +19,6 @@ tests:
               configMapKeyRef:
                 name: RELEASE-NAME-alfresco-activiti-database
                 key: DATABASE_URL
-        template: deployment.yaml
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -28,7 +27,46 @@ tests:
               secretKeyRef:
                 name: RELEASE-NAME-alfresco-activiti-database
                 key: DATABASE_USERNAME
-        template: deployment.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - alfresco-activiti
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-activiti
+              topologyKey: topology.kubernetes.io/zone
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - alfresco-activiti
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-activiti
+              topologyKey: kubernetes.io/hostname
   - it: should have basic metadata in place in deployment & default config
     set:
       envFromExistingConfigMap: apscfg

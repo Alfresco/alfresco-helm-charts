@@ -64,6 +64,300 @@ tests:
       - isNull:
           path: spec.template.spec.containers[0].env
         template: deployment-filestore.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - imagemagick
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
+              topologyKey: topology.kubernetes.io/zone
+        template: deployment-imagemagick.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - imagemagick
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
+              topologyKey: kubernetes.io/hostname
+        template: deployment-imagemagick.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - libreoffice
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
+              topologyKey: topology.kubernetes.io/zone
+        template: deployment-libreoffice.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - libreoffice
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
+              topologyKey: kubernetes.io/hostname
+        template: deployment-libreoffice.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - tika
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
+              topologyKey: topology.kubernetes.io/zone
+        template: deployment-tika.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - tika
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
+              topologyKey: kubernetes.io/hostname
+        template: deployment-tika.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - pdfrenderer
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
+              topologyKey: topology.kubernetes.io/zone
+        template: deployment-pdfrenderer.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - pdfrenderer
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
+              topologyKey: kubernetes.io/hostname
+        template: deployment-pdfrenderer.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - transform-misc
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
+              topologyKey: kubernetes.io/hostname
+        template: deployment-transform-misc.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - transform-misc
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
+              topologyKey: topology.kubernetes.io/zone
+        template: deployment-transform-misc.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - transform-router
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
+              topologyKey: kubernetes.io/hostname
+        template: deployment-transform-router.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - transform-router
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
+              topologyKey: topology.kubernetes.io/zone
+        template: deployment-transform-router.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - filestore
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
+              topologyKey: kubernetes.io/hostname
+        template: deployment-filestore.yaml
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - filestore
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-transform-service
+              topologyKey: topology.kubernetes.io/zone
+        template: deployment-filestore.yaml
 
   - it: should render expected annotations in every deployment
     values:

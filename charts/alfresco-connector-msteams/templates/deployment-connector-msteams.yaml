@@ -27,35 +27,10 @@ spec:
         nodeSelector: {{- .Values.nodeSelector | toYaml | nindent 8 }}
       {{- end }}
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      {{- with .Values.affinity }}
       affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 10
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: app.kubernetes.io/name
-                      operator: In
-                      values:
-                        - {{ template "alfresco-connector-msteams.name" . }}
-                    - key: app.kubernetes.io/instance
-                      operator: In
-                      values:
-                        - {{ .Release.Name }}
-                topologyKey: failure-domain.beta.kubernetes.io/zone
-            - weight: 5
-              podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                    - key: app.kubernetes.io/name
-                      operator: In
-                      values:
-                        - {{ template "alfresco-connector-msteams.name" . }}
-                    - key: app.kubernetes.io/instance
-                      operator: In
-                      values:
-                        - {{ .Release.Name }}
-                topologyKey: kubernetes.io/hostname
+        {{- tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.transform-misc.name" . }}
+  name: {{ template "alfresco-transform-service.transform-misc.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.transform-misc.labels" . | nindent 4 }}
 spec:
@@ -33,13 +33,13 @@ spec:
       serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values.transformmisc | indent 4 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ template "alfresco-transform-service.transform-misc.name" . }}
           image: "{{ .Values.transformmisc.image.repository }}:{{ .Values.transformmisc.image.tag }}"
           imagePullPolicy: {{ .Values.transformmisc.image.pullPolicy }}
           {{- include "component-security-context" .Values.transformmisc | indent 8 }}
           envFrom:
             - configMapRef:
-                name: {{ template "alfresco-transform-service.transform-misc.name" . }}
+                name: {{ template "alfresco-transform-service.transform-misc.fullname" . }}
           env:
             {{- include "alfresco-transform-service.messageBroker.env" $ | nindent 12 }}
           ports:
@@ -60,7 +60,7 @@ spec:
       {{- end }}
       {{- with .Values.transformmisc.affinity }}
       affinity:
-        {{- tpl . $ | nindent 8 }}
+        {{- tpl (toYaml .) $ | nindent 8 }}
       {{- end }}
       {{- with .Values.transformmisc.tolerations }}
       tolerations:

@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-transform-service.tika.name" . }}
+  name: {{ template "alfresco-transform-service.tika.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.tika.labels" . | nindent 4 }}
 spec:
@@ -33,13 +33,13 @@ spec:
       serviceAccountName: {{ include "alfresco-transform-service.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values.tika | indent 4 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ template "alfresco-transform-service.tika.name" . }}
           image: "{{ .Values.tika.image.repository }}:{{ .Values.tika.image.tag }}"
           imagePullPolicy: {{ .Values.tika.image.pullPolicy }}
           {{- include "component-security-context" .Values.tika | indent 8 }}
           envFrom:
             - configMapRef:
-                name: {{ template "alfresco-transform-service.tika.name" . }}
+                name: {{ template "alfresco-transform-service.tika.fullname" . }}
           env:
             {{- include "alfresco-transform-service.messageBroker.env" $ | nindent 12 }}
           ports:
@@ -60,7 +60,7 @@ spec:
       {{- end }}
       {{- with .Values.tika.affinity }}
       affinity:
-        {{- tpl . $ | nindent 8 }}
+        {{- tpl (toYaml .) $ | nindent 8 }}
       {{- end }}
       {{- with .Values.tika.tolerations }}
       tolerations:

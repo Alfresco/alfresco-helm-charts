@@ -11,11 +11,49 @@ tests:
       - isNull:
           path: spec.template.spec.nodeSelector
       - isNull:
-          path: spec.template.spec.affinity
-      - isNull:
           path: spec.template.spec.tolerations
       - isEmpty:
           path: spec.template.spec.volumes
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - alfresco-share
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-share
+              topologyKey: topology.kubernetes.io/zone
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - alfresco-share
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-share
+              topologyKey: kubernetes.io/hostname
 
   - it: should have customized metadata in place in deployment
     set:
@@ -26,7 +64,7 @@ tests:
         - key: "skipme"
           operator: "Exists"
           effect: "NoSchedule"
-      affinity: |-
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
