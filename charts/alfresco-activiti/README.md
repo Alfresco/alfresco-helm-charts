@@ -64,11 +64,12 @@ A Helm chart for Alfresco Activiti
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |
 | license.secretName | string | `nil` |  |
-| livenessProbe.failureThreshold | int | `5` |  |
-| livenessProbe.initialDelaySeconds | int | `25` |  |
-| livenessProbe.path | string | `"/activiti-app/app/rest/locale"` |  |
-| livenessProbe.periodSeconds | int | `10` |  |
-| livenessProbe.timeoutSeconds | int | `5` |  |
+| livenessProbe.<<.failureThreshold | int | `5` |  |
+| livenessProbe.<<.initialDelaySeconds | int | `25` |  |
+| livenessProbe.<<.path | string | `"/activiti-app/actuator/health/readiness"` | Make sure to set `readinessProbe.path` to `/activiti-app/app/rest/locale` if you're using a version of APS prior to 24.2.0 |
+| livenessProbe.<<.periodSeconds | int | `10` |  |
+| livenessProbe.<<.timeoutSeconds | int | `5` |  |
+| livenessProbe.path | string | `"/activiti-app/actuator/health/liveness"` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | persistence.baseSize | string | `"20Gi"` | Initial default size of dynamically provisioned storage |
@@ -83,7 +84,7 @@ A Helm chart for Alfresco Activiti
 | podSecurityContext.runAsUser | int | `33007` |  |
 | readinessProbe.failureThreshold | int | `5` |  |
 | readinessProbe.initialDelaySeconds | int | `25` |  |
-| readinessProbe.path | string | `"/activiti-app/app/rest/locale"` |  |
+| readinessProbe.path | string | `"/activiti-app/actuator/health/readiness"` | Make sure to set `readinessProbe.path` to `/activiti-app/app/rest/locale` if you're using a version of APS prior to 24.2.0 |
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.timeoutSeconds | int | `5` |  |
 | replicaCount | int | `1` |  |

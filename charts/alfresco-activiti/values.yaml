@@ -61,12 +61,15 @@ persistence:
     mountPath: "/usr/local/data"
     subPath: "alfresco-process-services/process-data"
 readinessProbe: &apsProbe
-  path: /activiti-app/app/rest/locale
+  # -- Make sure to set `readinessProbe.path` to `/activiti-app/app/rest/locale` if you're using a version of APS prior to 24.2.0
+  path: /activiti-app/actuator/health/readiness
   initialDelaySeconds: 25
   periodSeconds: 10
   failureThreshold: 5
   timeoutSeconds: 5
-livenessProbe: *apsProbe
+livenessProbe:
+  <<: *apsProbe
+  path: /activiti-app/actuator/health/liveness
 # -- Name of a pre-existing configmap to load env vars from (overrides .environment values)
 envFromExistingConfigMap: null
 environment:
