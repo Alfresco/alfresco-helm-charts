@@ -223,6 +223,25 @@ entries:
     version: 3.0.0
   alfresco-activiti:
   - apiVersion: v2
+    appVersion: 24.3.0-SNAPSHOT
+    created: "2024-06-19T10:29:35.548093972Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.3
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.8.5
+    description: A Helm chart for Alfresco Activiti
+    digest: b699032b4a5946f1db193547148dc5345489c469e13f38fcb69eee1dd90f9864
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    name: alfresco-activiti
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-activiti-0.2.0-alpha.1/alfresco-activiti-0.2.0-alpha.1.tgz
+    version: 0.2.0-alpha.1
+  - apiVersion: v2
     appVersion: 24.2.0
     created: "2024-06-18T13:51:01.967028307Z"
     dependencies:
@@ -4737,4 +4756,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-06-18T13:51:03.078187351Z"
+generated: "2024-06-19T10:29:35.548541014Z"
