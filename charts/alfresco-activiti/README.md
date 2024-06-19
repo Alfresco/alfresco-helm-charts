@@ -66,7 +66,7 @@ A Helm chart for Alfresco Activiti
 | license.secretName | string | `nil` |  |
 | livenessProbe.failureThreshold | int | `5` |  |
 | livenessProbe.initialDelaySeconds | int | `25` |  |
-| livenessProbe.path | string | `"/activiti-app/actuator/health/liveness"` | Make sure to set `lvenessProbe.path` to `/activiti-app/app/rest/locale` if you're using a version of APS prior to 24.3.0 |
+| livenessProbe.path | string | `"/activiti-app/actuator/health/liveness"` | For APS prior to 24.3.0, path must be set to `/activiti-app/app/rest/locale` |
 | livenessProbe.periodSeconds | int | `10` |  |
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nodeSelector | object | `{}` |  |
@@ -83,7 +83,7 @@ A Helm chart for Alfresco Activiti
 | podSecurityContext.runAsUser | int | `33007` |  |
 | readinessProbe.failureThreshold | int | `5` |  |
 | readinessProbe.initialDelaySeconds | int | `25` |  |
-| readinessProbe.path | string | `"/activiti-app/actuator/health/readiness"` | Make sure to set `readinessProbe.path` to `/activiti-app/app/rest/locale` if you're using a version of APS prior to 24.3.0 |
+| readinessProbe.path | string | `"/activiti-app/actuator/health/readiness"` | For APS prior to 24.3.0, path must be set to `/activiti-app/app/rest/locale` |
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.timeoutSeconds | int | `5` |  |
 | replicaCount | int | `1` |  |
