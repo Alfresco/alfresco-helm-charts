@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-activiti
 
-![Version: 0.2.0-alpha.0](https://img.shields.io/badge/Version-0.2.0--alpha.0-informational?style=flat-square) ![AppVersion: 24.2.0](https://img.shields.io/badge/AppVersion-24.2.0-informational?style=flat-square)
+![Version: 0.2.0-alpha.1](https://img.shields.io/badge/Version-0.2.0--alpha.1-informational?style=flat-square) ![AppVersion: 24.3.0-SNAPSHOT](https://img.shields.io/badge/AppVersion-24.3.0--SNAPSHOT-informational?style=flat-square)
 
 A Helm chart for Alfresco Activiti
 
@@ -55,7 +55,7 @@ A Helm chart for Alfresco Activiti
 | image.internalPort | int | `8080` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-process-services"` |  |
-| image.tag | string | `"24.2.0"` |  |
+| image.tag | string | `"develop-11791"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | ingress.className | string | `"nginx"` | supported ingress class |
@@ -66,7 +66,7 @@ A Helm chart for Alfresco Activiti
 | license.secretName | string | `nil` |  |
 | livenessProbe.failureThreshold | int | `5` |  |
 | livenessProbe.initialDelaySeconds | int | `25` |  |
-| livenessProbe.path | string | `"/activiti-app/app/rest/locale"` |  |
+| livenessProbe.path | string | `"/activiti-app/actuator/health/liveness"` | For APS prior to 24.3.0, path must be set to `/activiti-app/app/rest/locale` |
 | livenessProbe.periodSeconds | int | `10` |  |
 | livenessProbe.timeoutSeconds | int | `5` |  |
 | nodeSelector | object | `{}` |  |
@@ -83,7 +83,7 @@ A Helm chart for Alfresco Activiti
 | podSecurityContext.runAsUser | int | `33007` |  |
 | readinessProbe.failureThreshold | int | `5` |  |
 | readinessProbe.initialDelaySeconds | int | `25` |  |
-| readinessProbe.path | string | `"/activiti-app/app/rest/locale"` |  |
+| readinessProbe.path | string | `"/activiti-app/actuator/health/readiness"` | For APS prior to 24.3.0, path must be set to `/activiti-app/app/rest/locale` |
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.timeoutSeconds | int | `5` |  |
 | replicaCount | int | `1` |  |

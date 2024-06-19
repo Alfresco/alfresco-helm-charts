@@ -14,7 +14,7 @@ podSecurityContext:
   fsGroup: 33007
 image:
   repository: quay.io/alfresco/alfresco-process-services
-  tag: 24.2.0
+  tag: develop-11791
   pullPolicy: IfNotPresent
   internalPort: 8080
 service:
@@ -60,13 +60,20 @@ persistence:
   data:
     mountPath: "/usr/local/data"
     subPath: "alfresco-process-services/process-data"
-readinessProbe: &apsProbe
-  path: /activiti-app/app/rest/locale
+readinessProbe:
+  # -- For APS prior to 24.3.0, path must be set to `/activiti-app/app/rest/locale`
+  path: /activiti-app/actuator/health/readiness
   initialDelaySeconds: 25
   periodSeconds: 10
   failureThreshold: 5
   timeoutSeconds: 5
-livenessProbe: *apsProbe
+livenessProbe:
+  # -- For APS prior to 24.3.0, path must be set to `/activiti-app/app/rest/locale`
+  path: /activiti-app/actuator/health/liveness
+  initialDelaySeconds: 25
+  periodSeconds: 10
+  failureThreshold: 5
+  timeoutSeconds: 5
 # -- Name of a pre-existing configmap to load env vars from (overrides .environment values)
 envFromExistingConfigMap: null
 environment:
