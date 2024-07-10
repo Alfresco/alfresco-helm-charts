@@ -72,7 +72,7 @@ A Helm chart for Alfresco Activiti
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | persistence.baseSize | string | `"20Gi"` | Initial default size of dynamically provisioned storage |
-| persistence.data.mountPath | string | `"/usr/local/data"` |  |
+| persistence.data.mountPath | string | `"/usr/local/data"` | Where to mount data into the container |
 | persistence.data.subPath | string | `"alfresco-process-services/process-data"` |  |
 | persistence.enabled | bool | `false` | Persist Alfresco Process data |
 | persistence.existingClaim | string | `nil` | Define if you want to reuse an already existing PVC |
