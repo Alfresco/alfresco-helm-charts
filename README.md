@@ -67,6 +67,9 @@ We are ensuring backward compatibility with older K8s versions with
 
 ## Release
 
+Helm charts versioning should comply to [agreed
+scheme](https://hyland.atlassian.net/wiki/spaces/TECH/pages/edit-v2/1293317631#individual-component-charts-(alfresco-helm-charts))
+
 * Ensure alfresco-common [version](../charts/alfresco-common/Chart.yaml) is not a
   pre-release, otherwise release it.
 * Ensure
