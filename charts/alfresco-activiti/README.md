@@ -55,7 +55,7 @@ A Helm chart for Alfresco Activiti
 | image.internalPort | int | `8080` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-process-services"` |  |
-| image.tag | string | `"develop-12323"` |  |
+| image.tag | string | `"develop-11791"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | ingress.className | string | `"nginx"` | supported ingress class |
@@ -72,8 +72,7 @@ A Helm chart for Alfresco Activiti
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | persistence.baseSize | string | `"20Gi"` | Initial default size of dynamically provisioned storage |
-| persistence.data.mountPath | string | `"/usr/local/data"` | Where to mount data into the container |
-| persistence.data.subPath | string | `"alfresco-process-services/process-data"` |  |
+| persistence.data | object | `{"mountPath":"/usr/local/data","subPath":"alfresco-process-services/process-data"}` | Where to mount data into the container |
 | persistence.enabled | bool | `false` | Persist Alfresco Process data |
 | persistence.existingClaim | string | `nil` | Define if you want to reuse an already existing PVC |
 | persistence.storageClass | string | `nil` | Define if you already have a custom storage class defined for dynamically provisioned storage |
