@@ -815,6 +815,7 @@ filestore:
   volumes: []
   volumeMounts: []
   strategy:
+    # -- Custom strategy for filestore deployment
     type: RollingUpdate
 messageBroker:
   # -- Activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true)
