@@ -153,3 +153,24 @@ tests:
           app.kubernetes.io/version: 2.0.0
           helm.sh/chart: alfresco-connector-msteams-1.0.0
   template: deployment-connector-msteams.yaml
+
+- it: should render probes
+  asserts:
+    - equal:
+        path: spec.template.spec.containers[0].readinessProbe
+        value:
+          tcpSocket:
+            port: 3978
+          initialDelaySeconds: 20
+          periodSeconds: 60
+          timeoutSeconds: 10
+    - equal:
+        path: spec.template.spec.containers[0].livenessProbe
+        value:
+          tcpSocket:
+            port: 3978
+          initialDelaySeconds: 10
+          periodSeconds: 20
+          failureThreshold: 1
+          timeoutSeconds: 10
+  template: deployment-connector-msteams.yaml
