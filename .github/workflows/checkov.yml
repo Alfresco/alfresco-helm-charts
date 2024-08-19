@@ -26,7 +26,7 @@ jobs:
           skip_download: true # Do not download any data from Bridgecrew's servers
 
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@b611370bb5703a7efb587f9d136a52ea24c5c38c # v3.25.11
+        uses: github/codeql-action/upload-sarif@883d8588e56d1753a8a58c1c86e88976f0c23449 # v3.26.3
 
         if: success() || failure()
         with:
