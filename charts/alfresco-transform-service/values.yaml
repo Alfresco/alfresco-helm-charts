@@ -814,6 +814,8 @@ filestore:
       subPath: "alfresco-content-services/filestore-data"
   volumes: []
   volumeMounts: []
+  strategy:
+    type: RollingUpdate
 messageBroker:
   # -- Activemq connection url (e.g. failover:(nio://my-broker:61616)?timeout=3000&jms.useCompression=true)
   url: null

@@ -66,6 +66,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | filestore.service.externalPort | int | `80` |  |
 | filestore.service.name | string | `"filestore"` |  |
 | filestore.service.type | string | `"ClusterIP"` |  |
+| filestore.strategy.type | string | `"RollingUpdate"` |  |
 | filestore.tolerations | list | `[]` |  |
 | filestore.volumeMounts | list | `[]` |  |
 | filestore.volumes | list | `[]` |  |
