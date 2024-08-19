@@ -1,0 +1,23 @@
+---
+suite: test filestore deployment features
+templates:
+  - deployment-filestore.yaml
+  - config-filestore.yaml
+
+tests:
+  - it: should render default strategy type
+    asserts:
+      - equal:
+          path: spec.strategy.type
+          value: RollingUpdate
+        template: deployment-filestore.yaml
+  - it: should render overridden strategy type
+    set:
+      filestore:
+        strategy:
+          type: Recreate
+    asserts:
+      - equal:
+          path: spec.strategy.type
+          value: Recreate
+        template: deployment-filestore.yaml

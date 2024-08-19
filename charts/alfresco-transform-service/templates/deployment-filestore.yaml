@@ -11,7 +11,7 @@ spec:
     matchLabels:
       {{- include "alfresco-transform-service.filestore.selectorLabels" . | nindent 6 }}
   strategy:
-    type: RollingUpdate
+    type: {{ .Values.filestore.strategy.type }}
     rollingUpdate:
       {{- toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
   template:
@@ -50,7 +50,7 @@ spec:
             {{- toYaml . | nindent 12 }}
             {{- end }}
       volumes:
-      {{- include "data_volume" .Values.filestore | nindent 8 }}
+      {{- include "alfresco-common.data_volume" .Values.filestore | nindent 8 }}
       {{- with .Values.filestore.volumes }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
