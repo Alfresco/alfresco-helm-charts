@@ -96,3 +96,23 @@ tests:
             app.kubernetes.io/name: testName
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-connector-ms365-1.0.0
+
+  - it: should render probes
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe
+          value:
+            tcpSocket:
+              port: 9095
+            initialDelaySeconds: 20
+            periodSeconds: 60
+            timeoutSeconds: 10
+      - equal:
+          path: spec.template.spec.containers[0].livenessProbe
+          value:
+            tcpSocket:
+              port: 9095
+            initialDelaySeconds: 10
+            periodSeconds: 20
+            failureThreshold: 1
+            timeoutSeconds: 10

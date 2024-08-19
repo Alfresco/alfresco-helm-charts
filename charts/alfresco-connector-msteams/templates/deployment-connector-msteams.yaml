@@ -46,15 +46,6 @@ spec:
               - containerPort: {{ .Values.image.internalPort }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
           readinessProbe:
-            tcpSocket:
-              port: {{ .Values.image.internalPort }}
-            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           livenessProbe:
-            tcpSocket:
-              port: {{ .Values.image.internalPort }}
-            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-            failureThreshold: 1
-            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
