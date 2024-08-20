@@ -11,6 +11,12 @@ tests:
           path: spec.strategy.type
           value: RollingUpdate
         template: deployment-filestore.yaml
+      - equal:
+          path: spec.strategy.rollingUpdate
+          value:
+            maxSurge: 1
+            maxUnavailable: 0
+        template: deployment-filestore.yaml
   - it: should render overridden strategy type
     set:
       filestore:
@@ -20,4 +26,7 @@ tests:
       - equal:
           path: spec.strategy.type
           value: Recreate
+        template: deployment-filestore.yaml
+      - notExists:
+          path: spec.strategy.rollingUpdate
         template: deployment-filestore.yaml
