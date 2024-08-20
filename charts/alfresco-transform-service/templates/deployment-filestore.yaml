@@ -12,8 +12,10 @@ spec:
       {{- include "alfresco-transform-service.filestore.selectorLabels" . | nindent 6 }}
   strategy:
     type: {{ .Values.filestore.strategy.type }}
+    {{- if eq .Values.filestore.strategy.type "RollingUpdate" }}
     rollingUpdate:
       {{- toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
+    {{- end }}
   template:
     metadata:
       annotations:
