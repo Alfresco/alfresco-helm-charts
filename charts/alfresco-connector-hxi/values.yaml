@@ -1,0 +1,145 @@
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
+nodeSelector: {}
+tolerations: []
+resources:
+  requests:
+    cpu: "0.5"
+    memory: "256Mi"
+  limits:
+    cpu: "2"
+    memory: "2048Mi"
+liveIngester:
+  image:
+    repository: quay.io/alfresco/alfresco-hxinsight-connector-live-ingester
+    tag: 1.0.0-A10
+    pullPolicy: IfNotPresent
+    internalPort: 8080
+  replicaCount: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  environment: null
+  service:
+    name: hxi-live-ingester-service
+    type: ClusterIP
+    externalPort: 8080
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        # -- Prefer to schedule the content pod on a different zone
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - >-
+                      {{ template "alfresco-connector-hxi.name" $ }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - "{{ $.Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
+            topologyKey: topology.kubernetes.io/zone
+        # -- Prefer to schedule the content pod on a different node
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - >-
+                      {{ template "alfresco-connector-hxi.name" $ }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - "{{ $.Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
+            topologyKey: kubernetes.io/hostname
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "alfresco-connector-hxi-sa"
+messageBroker:
+  # --  Broker URL formatted as per:
+  # https://activemq.apache.org/failover-transport-reference
+  url: null
+  # -- Broker username
+  username: null
+  # -- Broker password
+  password: null
+  existingConfigMap:
+    # -- Alternatively, provide message broker connection details via an existing
+    # configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the message broker
+      url: BROKER_URL
+  # -- Provide connection details alternatively via an existing secret that
+  # contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
+  existingSecret:
+    name: null
+    keys:
+      username: BROKER_USERNAME
+      password: BROKER_PASSWORD
+repository:
+  # -- URL of the Alfresco repository
+  url: null
+  existingConfigMap:
+    # -- Alternatively, provide repository connection details via an existing
+    # configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the full url to connect to the
+      # alfresco repository
+      url: REPOSITORY_URL
+ats:
+  # -- URL of the alfresco transform (trouter or tengine-aio)
+  transformUrl: null
+  # -- URL of the alfresco shared filestore
+  sfsUrl: null
+  existingConfigMap:
+    # -- Alternatively, provide ATS details via an existing configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the alfresco transform
+      transformUrl: ATS_URL
+      # -- Key within the configmap holding the URL of the alfresco shared filestore
+      sfsUrl: SFS_URL
+hxi:
+  hxAuthTokenUrl: null
+  hxInsightUrl: null
+  hxClientId: null
+  hxClientSecret: null
+  hxEnvKey: null
+  hxAppSourceId: null
+  existingConfigMap:
+    name: null
+    keys:
+      hxAuthTokenUrl: HX_AUTH_TOKEN_URL
+      hxInsightUrl: HX_INSIGHT_URL
+  existingSecret:
+    name: null
+    keys:
+      hxClientId: HX_CLIENT_ID
+      hxClientSecret: HX_CLIENT_SECRET
+      hxEnvKey: HX_ENV_KEY
+      hxAppSourceId: HX_APP_SOURCE_ID

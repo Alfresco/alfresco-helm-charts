@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-connector-hxi.fullname" . }}
+  labels:
+    {{- include "alfresco-connector-hxi.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.liveIngester.service.type }}
+  ports:
+    - port: {{ .Values.liveIngester.service.externalPort }}
+      targetPort: {{ .Values.liveIngester.image.internalPort }}
+      name: {{ .Values.liveIngester.service.name }}
+  selector:
+    {{- include "alfresco-connector-hxi.selectorLabels" . | nindent 4 }}

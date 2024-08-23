@@ -1,0 +1,13 @@
+{{- if not .Values.repository.existingConfigMap.name -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: >-
+    {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "repo")) "Chart" .Chart "Release" .Release }}
+    {{ template "alfresco-connector-hxi.fullname" $ctx }}
+  labels:
+    {{- include "alfresco-connector-hxi.labels" . | nindent 4 }}
+data:
+  {{- $reqmsg := "You must provide valid base URL" }}
+  REPOSITORY_URL: {{ required $reqmsg .Values.repository.url | quote }}
+{{- end }}

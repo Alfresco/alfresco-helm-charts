@@ -1,0 +1,11 @@
+{{- if not .Values.hxi.existingConfigMap.name -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "alfresco-connector-hxi.fullname" . }}
+  labels:
+    {{- include "alfresco-connector-hxi.labels" . | nindent 4 }}
+data:
+  HX_AUTH_TOKEN_URL: {{ .Values.hxi.hxAuthTokenUrl | default "" | quote }}
+  HX_INSIGHT_URL: {{ .Values.hxi.hxInsightUrl | default "" | quote }}
+{{- end -}}
