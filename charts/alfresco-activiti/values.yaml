@@ -85,6 +85,7 @@ environment:
   # -- Cross Origin Resource Sharing configuration allowed http headers
   ACTIVITI_CORS_ALLOWED_HEADERS: >-
     Authorization,Content-Type,Cache-Control,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,X-CSRF-Token
+  # -- Cross Site Resource Forgery configuration toggle
   ACTIVITI_CSRF_DISABLED: "true"
   # -- ElasticSearch configuration
   # ACTIVITI_ES_SERVER_TYPE: "rest"

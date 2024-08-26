@@ -37,7 +37,7 @@ A Helm chart for Alfresco Activiti
 | environment.ACTIVITI_CORS_ALLOWED_METHODS | string | `"GET,POST,HEAD,OPTIONS,PUT,DELETE"` | Cross Origin Resource Sharing configuration allowed http methods |
 | environment.ACTIVITI_CORS_ALLOWED_ORIGIN_PATTERNS | string | `"*"` | Cross Origin Resource Sharing configuration allowed origins (list of glob-like patterns) |
 | environment.ACTIVITI_CORS_ENABLED | string | `"true"` | Cross Origin Resource Sharing configuration toggle |
-| environment.ACTIVITI_CSRF_DISABLED | string | `"true"` |  |
+| environment.ACTIVITI_CSRF_DISABLED | string | `"true"` | Cross Site Resource Forgery configuration toggle |
 | environment.IDENTITY_CREDENTIALS_SECRET | string | `""` | Alfresco Identity Service application secret |
 | environment.IDENTITY_SERVICE_ALWAYS_REFRESH_TOKEN | string | `"true"` | Alfresco Identity Service refresh service token |
 | environment.IDENTITY_SERVICE_AUTH | string | `"http://localhost:8080/auth"` | Alfresco Identity Service address |
