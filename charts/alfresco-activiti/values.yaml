@@ -51,7 +51,7 @@ persistence:
   accessModes:
     - ReadWriteOnce
   # -- Define if you want to reuse an already existing PVC
-  existingClaim: null # -- Where to mount data into the container
+  existingClaim: null  # -- Where to mount data into the container
   data:
     mountPath: "/usr/local/data"
     subPath: "alfresco-process-services/process-data"
