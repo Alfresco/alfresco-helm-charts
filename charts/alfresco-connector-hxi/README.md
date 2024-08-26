@@ -49,7 +49,16 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | liveIngester.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIngester.image.repository | string | `"quay.io/alfresco/alfresco-hxinsight-connector-live-ingester"` |  |
 | liveIngester.image.tag | string | `"1.0.0-A10"` |  |
+| liveIngester.livenessProbe.httpGet.path | string | `"/actuator/health/liveness"` |  |
+| liveIngester.livenessProbe.httpGet.port | int | `8080` |  |
+| liveIngester.livenessProbe.initialDelaySeconds | int | `30` |  |
+| liveIngester.livenessProbe.periodSeconds | int | `10` |  |
+| liveIngester.livenessProbe.timeoutSeconds | int | `3` |  |
 | liveIngester.replicaCount | int | `1` |  |
+| liveIngester.resources.limits.cpu | string | `"2"` |  |
+| liveIngester.resources.limits.memory | string | `"2048Mi"` |  |
+| liveIngester.resources.requests.cpu | string | `"0.5"` |  |
+| liveIngester.resources.requests.memory | string | `"256Mi"` |  |
 | liveIngester.service.externalPort | int | `8080` |  |
 | liveIngester.service.name | string | `"hxi-live-ingester-service"` |  |
 | liveIngester.service.type | string | `"ClusterIP"` |  |
@@ -68,10 +77,6 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | repository.existingConfigMap.keys.url | string | `"REPOSITORY_URL"` | Key within the configmap holding the full url to connect to the alfresco repository |
 | repository.existingConfigMap.name | string | `nil` | Alternatively, provide repository connection details via an existing configmap |
 | repository.url | string | `nil` | URL of the Alfresco repository |
-| resources.limits.cpu | string | `"2"` |  |
-| resources.limits.memory | string | `"2048Mi"` |  |
-| resources.requests.cpu | string | `"0.5"` |  |
-| resources.requests.memory | string | `"256Mi"` |  |
 | securityContext | object | `{}` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
