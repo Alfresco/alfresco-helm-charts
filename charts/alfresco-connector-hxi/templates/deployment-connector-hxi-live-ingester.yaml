@@ -49,12 +49,7 @@ spec:
             - containerPort: {{ .Values.liveIngester.image.internalPort }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
           livenessProbe:
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 3
-            httpGet:
-              path: /actuator/health/liveness
-              port: 8080
+            {{- toYaml .Values.liveIngester.livenessProbe | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
