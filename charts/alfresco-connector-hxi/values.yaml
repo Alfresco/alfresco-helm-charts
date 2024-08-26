@@ -6,13 +6,6 @@ podSecurityContext: {}
 securityContext: {}
 nodeSelector: {}
 tolerations: []
-resources:
-  requests:
-    cpu: "0.5"
-    memory: "256Mi"
-  limits:
-    cpu: "2"
-    memory: "2048Mi"
 liveIngester:
   image:
     repository: quay.io/alfresco/alfresco-hxinsight-connector-live-ingester
@@ -24,6 +17,20 @@ liveIngester:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
+  resources:
+    requests:
+      cpu: "0.5"
+      memory: "256Mi"
+    limits:
+      cpu: "2"
+      memory: "2048Mi"
+  livenessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 3
+    httpGet:
+      path: /actuator/health/liveness
+      port: 8080
   environment: null
   service:
     name: hxi-live-ingester-service

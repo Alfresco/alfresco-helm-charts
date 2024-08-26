@@ -47,7 +47,8 @@ spec:
             {{- end }}
           ports:
             - containerPort: {{ .Values.liveIngester.image.internalPort }}
-          resources: {{- toYaml .Values.resources | nindent 12 }}
+          resources:
+            {{- toYaml .Values.liveIngester.resources | nindent 12 }}
           livenessProbe:
             {{- toYaml .Values.liveIngester.livenessProbe | nindent 12 }}
       {{- with .Values.nodeSelector }}
