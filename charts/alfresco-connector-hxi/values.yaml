@@ -150,3 +150,8 @@ hxi:
       hxClientSecret: HX_CLIENT_SECRET
       hxEnvKey: HX_ENV_KEY
       hxAppSourceId: HX_APP_SOURCE_ID
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
+tags:
+  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
+  ci: false
