@@ -51,6 +51,8 @@ spec:
             {{- toYaml .Values.liveIngester.resources | nindent 12 }}
           livenessProbe:
             {{- toYaml .Values.liveIngester.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.liveIngester.livenessProbe | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
