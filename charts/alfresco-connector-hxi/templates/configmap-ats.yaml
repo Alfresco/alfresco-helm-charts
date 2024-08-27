@@ -7,5 +7,5 @@ metadata:
   labels:
     {{- include "alfresco-connector-hxi.labels" . | nindent 4 }}
 data:
-  {{ template "alfresco-connector-hxi.sfs.fullurl" (required "You need to provide the SFS URL using either ats.sfs_url value or a configmap" .Values.ats.sfsUrl) }}
+  {{ template "alfresco-connector-hxi.sfs.fullurl" (required "You need to provide the SFS URL using either ats.sfsUrl value or a configmap" .Values.ats.sfsUrl) }}
 {{- end }}

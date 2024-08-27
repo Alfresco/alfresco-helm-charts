@@ -19,5 +19,7 @@ messageBroker:
   url: nio://activemq-broker:61616
 repository:
   url: http://repository
+ats:
+  sfsUrl: http://alfresco-transform-services-sfs
 tags:
   ci: true
