@@ -10,5 +10,52 @@ Set environment variables necessary for configmap
     configMapKeyRef:
         name: {{ $cmName }}
         key: {{ .existingConfigMap.keys.url }}
+- name: AUTH_PROVIDERS_ALFRESCO_TYPE
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $cmName }}
+      key: {{ .existingConfigMap.keys.authType }}
+- name: AUTH_PROVIDERS_ALFRESCO_GRANTTYPE
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $cmName }}
+      key: {{ .existingConfigMap.keys.authGrantType }}
+- name: AUTH_PROVIDERS_ALFRESCO_TOKENURI
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $cmName }}
+      key: {{ .existingConfigMap.keys.authTokenUrl }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+
+Usage: include "alfresco-connector-hxi.secret.env" $
+
+*/}}
+{{- define "alfresco-connector-hxi.repository.secret.env" -}}
+{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repo")) "Chart" .Chart "Release" .Release }}
+{{- with .Values.repository }}
+{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-hxi.fullname" $cmCtx ) }}
+- name: AUTH_PROVIDERS_ALFRESCO_USERNAME
+  valueFrom:
+    secretKeyRef:
+      name: {{ $secretName }}
+      key: {{ .existingSecret.keys.username }}
+- name: AUTH_PROVIDERS_ALFRESCO_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ $secretName }}
+      key: {{ .existingSecret.keys.password }}
+- name: AUTH_PROVIDERS_ALFRESCO_CLIENTID
+  valueFrom:
+    secretKeyRef:
+      name: {{ $secretName }}
+      key: {{ .existingSecret.keys.clientId }}
+- name: AUTH_PROVIDERS_ALFRESCO_CLIENTSECRET
+  valueFrom:
+    secretKeyRef:
+      name: {{ $secretName }}
+      key: {{ .existingSecret.keys.clientSecret }}
 {{- end -}}
 {{- end -}}

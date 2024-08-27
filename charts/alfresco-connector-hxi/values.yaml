@@ -110,6 +110,13 @@ messageBroker:
 repository:
   # -- URL of the Alfresco repository
   url: null
+  authType: basic
+  authGrantType: null
+  authTokenUrl: null
+  username: null
+  password: null
+  clientId: null
+  clientSecret: null
   existingConfigMap:
     # -- Alternatively, provide repository connection details via an existing
     # configmap
@@ -118,6 +125,16 @@ repository:
       # -- Key within the configmap holding the full url to connect to the
       # alfresco repository
       url: REPOSITORY_URL
+      authType: REPOSITORY_AUTH_TYPE
+      authGrantType: REPOSITORY_AUTH_GRANT_TYPE
+      authTokenUrl: REPOSITORY_AUTH_TOKEN_URL
+  existingSecret:
+    name: null
+    keys:
+      username: REPOSITORY_USERNAME
+      password: REPOSITORY_PASSWORD
+      clientId: REPOSITORY_CLIENT_ID
+      clientSecret: REPOSITORY_CLIENT_SECRET
 ats:
   # -- URL of the alfresco transform (trouter or tengine-aio)
   transformUrl: null
