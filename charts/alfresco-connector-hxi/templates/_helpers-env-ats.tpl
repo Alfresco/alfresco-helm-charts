@@ -15,7 +15,7 @@ Usage: include "alfresco-connector-hxi.sfs.fullurl" "URL"
 Usage: include "alfresco-connector-hxi.sfs.cm.env" $
 
 */}}
-{{- define "alfresco-connector-hxi.sfs.cm.env" -}}
+{{- define "alfresco-connector-hxi.ats.cm.env" -}}
 {{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "ats")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.ats }}
 {{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-hxi.fullname" $cmCtx) }}

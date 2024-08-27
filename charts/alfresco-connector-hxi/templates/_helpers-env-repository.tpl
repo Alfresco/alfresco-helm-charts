@@ -1,5 +1,7 @@
 {{/*
-Set environment variables necessary for configmap
+
+Usage: include "alfresco-connector-hxi.repository.cm.env" $
+
 */}}
 {{- define "alfresco-connector-hxi.repository.cm.env" -}}
 {{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repo")) "Chart" .Chart "Release" .Release }}
@@ -30,7 +32,7 @@ Set environment variables necessary for configmap
 
 {{/*
 
-Usage: include "alfresco-connector-hxi.secret.env" $
+Usage: include "alfresco-connector-hxi.repository.secret.env" $
 
 */}}
 {{- define "alfresco-connector-hxi.repository.secret.env" -}}

@@ -37,7 +37,7 @@ spec:
           env:
             {{- include "alfresco-connector-hxi.activemq.cm.env" $ | indent 12 }}
             {{- include "alfresco-connector-hxi.activemq.secret.env" $ | indent 12 }}
-            {{- include "alfresco-connector-hxi.sfs.cm.env" $ | indent 12 }}
+            {{- include "alfresco-connector-hxi.ats.cm.env" $ | indent 12 }}
             {{- include "alfresco-connector-hxi.repository.cm.env" $ | indent 12 }}
             {{- include "alfresco-connector-hxi.repository.secret.env" $ | indent 12 }}
             {{- include "alfresco-connector-hxi.cm.env" $ | indent 12 }}
