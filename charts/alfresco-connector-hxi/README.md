@@ -27,6 +27,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ats.sfsUrl | string | `nil` | URL of the alfresco shared filestore |
 | ats.transformUrl | string | `nil` | URL of the alfresco transform (trouter or tengine-aio) |
 | fullnameOverride | string | `""` |  |
+| global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | hxi.existingConfigMap.keys.hxAuthTokenUrl | string | `"HX_AUTH_TOKEN_URL"` |  |
 | hxi.existingConfigMap.keys.hxInsightUrl | string | `"HX_INSIGHT_URL"` |  |
 | hxi.existingConfigMap.name | string | `nil` |  |
@@ -81,4 +82,5 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `"alfresco-connector-hxi-sa"` |  |
+| tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 | tolerations | list | `[]` |  |
