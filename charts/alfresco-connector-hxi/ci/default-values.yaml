@@ -17,5 +17,7 @@ activemq:
       memory: "1Gi"
 messageBroker:
   url: nio://activemq-broker:61616
+repository:
+  url: http://repository
 tags:
   ci: true
