@@ -23,3 +23,7 @@ ats:
   sfsUrl: http://alfresco-transform-services-sfs
 tags:
   ci: true
+
+liveIngester:
+  livenessProbe: null
+  readinessProbe: null
