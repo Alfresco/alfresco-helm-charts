@@ -7,7 +7,7 @@ strategy:
 replicaCount: 2
 image:
   repository: quay.io/alfresco/alfresco-ai-docker-engine
-  tag: 3.1.4
+  tag: 3.1.6
   pullPolicy: IfNotPresent
   internalPort: 8090
 service:
