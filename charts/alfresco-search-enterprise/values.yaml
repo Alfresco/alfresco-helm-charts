@@ -25,12 +25,12 @@ liveIndexing:
     image:
       repository: >-
         quay.io/alfresco/alfresco-elasticsearch-live-indexing-mediation
-      tag: 4.0.1
+      tag: 4.1.0
       pullPolicy: IfNotPresent
   content:
     image:
       repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-content
-      tag: 4.0.1
+      tag: 4.1.0
       pullPolicy: IfNotPresent
     replicaCount: 1
     affinity:
@@ -77,7 +77,7 @@ liveIndexing:
   metadata:
     image:
       repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-metadata
-      tag: 4.0.1
+      tag: 4.1.0
       pullPolicy: IfNotPresent
     replicaCount: 1
     affinity:
@@ -124,7 +124,7 @@ liveIndexing:
   path:
     image:
       repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-path
-      tag: 4.0.1
+      tag: 4.1.0
       pullPolicy: IfNotPresent
     replicaCount: 1
     affinity:
@@ -173,7 +173,7 @@ reindexing:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-elasticsearch-reindexing
-    tag: 4.0.1
+    tag: 4.1.0
     pullPolicy: IfNotPresent
   pathIndexingEnabled: true
   repository:
