@@ -53,8 +53,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | liveIngester.livenessProbe.httpGet.path | string | `"/actuator/health/liveness"` |  |
 | liveIngester.livenessProbe.httpGet.port | int | `8080` |  |
 | liveIngester.livenessProbe.initialDelaySeconds | int | `30` |  |
-| liveIngester.livenessProbe.periodSeconds | int | `10` |  |
-| liveIngester.livenessProbe.timeoutSeconds | int | `3` |  |
+| liveIngester.readinessProbe.httpGet.path | string | `"/actuator/health/liveness"` |  |
+| liveIngester.readinessProbe.httpGet.port | int | `8080` |  |
+| liveIngester.readinessProbe.initialDelaySeconds | int | `40` |  |
 | liveIngester.replicaCount | int | `1` |  |
 | liveIngester.resources.limits.cpu | string | `"2"` |  |
 | liveIngester.resources.limits.memory | string | `"2048Mi"` |  |
@@ -77,13 +78,14 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | podSecurityContext | object | `{}` |  |
 | repository.authGrantType | string | `nil` |  |
 | repository.authTokenUrl | string | `nil` |  |
-| repository.authType | string | `"basic"` |  |
+| repository.authType | string | `nil` |  |
 | repository.clientId | string | `nil` |  |
 | repository.clientSecret | string | `nil` |  |
 | repository.existingConfigMap.keys.authGrantType | string | `"REPOSITORY_AUTH_GRANT_TYPE"` |  |
 | repository.existingConfigMap.keys.authTokenUrl | string | `"REPOSITORY_AUTH_TOKEN_URL"` |  |
 | repository.existingConfigMap.keys.authType | string | `"REPOSITORY_AUTH_TYPE"` |  |
 | repository.existingConfigMap.keys.url | string | `"REPOSITORY_URL"` | Key within the configmap holding the full url to connect to the alfresco repository |
+| repository.existingConfigMap.keys.versionOverride | string | `"REPOSITORY_VERSION_OVERRIDE"` |  |
 | repository.existingConfigMap.name | string | `nil` | Alternatively, provide repository connection details via an existing configmap |
 | repository.existingSecret.keys.clientId | string | `"REPOSITORY_CLIENT_ID"` |  |
 | repository.existingSecret.keys.clientSecret | string | `"REPOSITORY_CLIENT_SECRET"` |  |
@@ -93,6 +95,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | repository.password | string | `nil` |  |
 | repository.url | string | `nil` | URL of the Alfresco repository |
 | repository.username | string | `nil` |  |
+| repository.versionOverride | string | `nil` |  |
 | securityContext | object | `{}` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
