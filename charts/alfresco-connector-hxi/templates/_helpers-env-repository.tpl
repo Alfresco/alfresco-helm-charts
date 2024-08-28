@@ -4,7 +4,7 @@ Usage: include "alfresco-connector-hxi.repository.cm.env" $
 
 */}}
 {{- define "alfresco-connector-hxi.repository.cm.env" -}}
-{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repo")) "Chart" .Chart "Release" .Release }}
+{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.repository }}
 {{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-hxi.fullname" $cmCtx) }}
 - name: ALFRESCO_REPOSITORY_BASEURL
@@ -41,7 +41,7 @@ Usage: include "alfresco-connector-hxi.repository.secret.env" $
 
 */}}
 {{- define "alfresco-connector-hxi.repository.secret.env" -}}
-{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repo")) "Chart" .Chart "Release" .Release }}
+{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.repository }}
 {{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-hxi.fullname" $cmCtx ) }}
 - name: AUTH_PROVIDERS_ALFRESCO_USERNAME
