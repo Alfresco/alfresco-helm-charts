@@ -11,7 +11,7 @@ liveIngester:
     repository: quay.io/alfresco/alfresco-hxinsight-connector-live-ingester
     tag: 1.0.0-A11
     pullPolicy: IfNotPresent
-    internalPort: 8080
+    internalPort: &appPort 80
   replicaCount: 1
   strategy:
     rollingUpdate:
@@ -24,21 +24,22 @@ liveIngester:
     limits:
       cpu: "2"
       memory: "2048Mi"
+  environment:
+    SERVER_PORT: *appPort
   livenessProbe:
     initialDelaySeconds: 30
     httpGet:
       path: /actuator/health/liveness
-      port: 8080
+      port: *appPort
   readinessProbe:
     initialDelaySeconds: 40
     httpGet:
       path: /actuator/health/liveness
-      port: 8080
-  environment: null
+      port: *appPort
   service:
     name: hxi-live-ingester-service
     type: ClusterIP
-    externalPort: 8080
+    externalPort: 80
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
