@@ -27,6 +27,11 @@ Usage: include "alfresco-connector-hxi.repository.cm.env" $
     configMapKeyRef:
       name: {{ $cmName }}
       key: {{ .existingConfigMap.keys.authTokenUrl }}
+- name: ALFRESCO_REPOSITORY_VERSIONOVERRIDE
+  valueFrom:
+    configMapKeyRef:
+        name: {{ $cmName }}
+        key: {{ .existingConfigMap.keys.versionOverride }}
 {{- end -}}
 {{- end -}}
 

@@ -26,8 +26,11 @@ liveIngester:
       memory: "2048Mi"
   livenessProbe:
     initialDelaySeconds: 30
-    periodSeconds: 10
-    timeoutSeconds: 3
+    httpGet:
+      path: /actuator/health/liveness
+      port: 8080
+  readinessProbe:
+    initialDelaySeconds: 40
     httpGet:
       path: /actuator/health/liveness
       port: 8080
@@ -110,13 +113,14 @@ messageBroker:
 repository:
   # -- URL of the Alfresco repository
   url: null
-  authType: basic
+  authType: null
   authGrantType: null
   authTokenUrl: null
   username: null
   password: null
   clientId: null
   clientSecret: null
+  versionOverride: null
   existingConfigMap:
     # -- Alternatively, provide repository connection details via an existing
     # configmap
@@ -128,6 +132,7 @@ repository:
       authType: REPOSITORY_AUTH_TYPE
       authGrantType: REPOSITORY_AUTH_GRANT_TYPE
       authTokenUrl: REPOSITORY_AUTH_TOKEN_URL
+      versionOverride: REPOSITORY_VERSION_OVERRIDE
   existingSecret:
     name: null
     keys:

@@ -7,9 +7,9 @@ metadata:
   labels:
     {{- include "alfresco-connector-hxi.labels" . | nindent 4 }}
 data:
-  {{- $reqmsg := "You must provide valid base URL" }}
-  REPOSITORY_URL: {{ required $reqmsg .Values.repository.url | quote }}
-  REPOSITORY_AUTH_TYPE: {{ .Values.repository.authType | quote }}
+  REPOSITORY_URL: {{ .Values.repository.url | default "" | quote }}
+  REPOSITORY_AUTH_TYPE: {{ .Values.repository.authType | default "basic" | quote }}
   REPOSITORY_AUTH_GRANT_TYPE: {{ .Values.repository.authGrantType | default "" | quote }}
   REPOSITORY_AUTH_TOKEN_URL: {{ .Values.repository.authTokenUrl | default "" | quote }}
+  REPOSITORY_VERSION_OVERRIDE: {{ .Values.repository.versionOverride | default "" | quote }}
 {{- end }}
