@@ -31,10 +31,10 @@ spec:
             {{- include "alfresco-connector-hxi.activemq.cm.env" $ | indent 12 }}
             {{- include "alfresco-connector-hxi.activemq.secret.env" $ | indent 12 }}
             - name: SPRING_DATASOURCE_URL
-                valueFrom:
-                  configMapKeyRef:
-                    name: {{ .Values.bulkIngester.db.existingConfigMap.name | default $dbFullName }}
-                    key: {{ .Values.bulkIngester.db.existingConfigMap.keys.url }}
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.bulkIngester.db.existingConfigMap.name | default $dbFullName }}
+                  key: {{ .Values.bulkIngester.db.existingConfigMap.keys.url }}
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
