@@ -9,6 +9,14 @@ liveIngester:
       memory: "500Mi"
   livenessProbe: null
   readinessProbe: null
+bulkIngester:
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "128Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
 activemq:
   fullnameOverride: activemq
   resources:
@@ -18,6 +26,8 @@ activemq:
     limits:
       cpu: "1000m"
       memory: "1Gi"
+db:
+  url: jdbc:postgresql://postgresql:5432/postgres
 messageBroker:
   url: nio://activemq-broker:61616
 repository:
