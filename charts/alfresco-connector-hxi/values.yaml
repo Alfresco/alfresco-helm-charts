@@ -81,6 +81,40 @@ liveIngester:
                   values:
                     - "{{ $.Chart.Name }}"
             topologyKey: kubernetes.io/hostname
+bulkIngester:
+  enabled: true
+  image:
+    repository: quay.io/alfresco/alfresco-hxinsight-connector-bulk-ingester
+    tag: 1.0.0-A11
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: "0.5"
+      memory: "128Mi"
+    limits:
+      cpu: "2"
+      memory: "512Mi"
+  initContainers:
+    waitForRepository:
+      resources:
+        limits:
+          cpu: "0.25"
+          memory: "10Mi"
+  db:
+    existingConfigMap:
+      name: null
+      keys:
+        url: DATABASE_URL
+    existingSecret:
+      name: null
+      keys:
+        username: DATABASE_USERNAME
+        password: DATABASE_PASSWORD
+  repository:
+    existingConfigMap:
+      name: null
+      keys:
+        url: REPOSITORY_URL
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
