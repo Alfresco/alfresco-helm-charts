@@ -31,7 +31,7 @@ spec:
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       containers:
         - name: {{ include "alfresco-connector-hxi.live-ingester.name" . }}
-          image: "{{ .Values.liveIngester.image.repository }}:{{ .Values.liveIngester.image.tag }}"
+          image: {{ printf "%s:%s" .Values.liveIngester.image.repository .Values.liveIngester.image.tag | quote }}
           imagePullPolicy: {{ .Values.liveIngester.image.pullPolicy }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           env:
