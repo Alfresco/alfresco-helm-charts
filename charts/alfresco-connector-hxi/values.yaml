@@ -94,35 +94,37 @@ bulkIngester:
     limits:
       cpu: "2"
       memory: "512Mi"
+  environment: null
   initContainers:
     waitForRepository:
       resources:
         limits:
           cpu: "0.25"
           memory: "10Mi"
-  db:
-    existingConfigMap:
-      name: null
-      keys:
-        url: DATABASE_URL
-    existingSecret:
-      name: null
-      keys:
-        username: DATABASE_USERNAME
-        password: DATABASE_PASSWORD
-  repository:
-    existingConfigMap:
-      name: null
-      keys:
-        url: REPOSITORY_URL
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: "alfresco-connector-hxi-sa"
+db:
+  # -- Provide the full JDBC url to connect to database service e.g.:
+  # `jdbc:postgresql://hostname:5432/database`
+  url: null
+  # -- The username required to access the service
+  username: null
+  # -- The password required to access the service
+  password: null
+  existingSecret:
+    # -- Alternatively, provide database credentials via an existing secret
+    name: null
+    keys:
+      # -- Key within the secret holding the database username
+      username: DATABASE_USERNAME
+      # -- Key within the secret holding the database password
+      password: DATABASE_PASSWORD
+  existingConfigMap:
+    # -- Alternatively, provide database connection details via an existing
+    # configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the full JDBC url to connect to
+      # database service
+      url: DATABASE_URL
 messageBroker:
   # --  Broker URL formatted as per:
   # https://activemq.apache.org/failover-transport-reference
@@ -207,6 +209,14 @@ hxi:
       hxClientSecret: HX_CLIENT_SECRET
       hxEnvKey: HX_ENV_KEY
       hxAppSourceId: HX_APP_SOURCE_ID
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "alfresco-connector-hxi-sa"
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
 tags:

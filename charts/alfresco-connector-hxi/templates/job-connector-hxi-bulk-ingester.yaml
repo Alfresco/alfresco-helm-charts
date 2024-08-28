@@ -27,24 +27,15 @@ spec:
           resources: {{- toYaml .Values.bulkIngester.resources | nindent 12 }}
           env:
             {{- $dbCtx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
-            {{- $dbFullName := (include "alfresco-connector-hxi.bulk-ingester.fullname" $dbCtx) }}
+            {{- $dbFullName := (include "alfresco-connector-hxi.fullname" $dbCtx) }}
+            {{- include "alfresco-connector-hxi.database.cm.env" $ | indent 12 }}
+            {{- include "alfresco-connector-hxi.database.secret.env" $ | indent 12 }}
             {{- include "alfresco-connector-hxi.activemq.cm.env" $ | indent 12 }}
             {{- include "alfresco-connector-hxi.activemq.secret.env" $ | indent 12 }}
-            - name: SPRING_DATASOURCE_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ .Values.bulkIngester.db.existingConfigMap.name | default $dbFullName }}
-                  key: {{ .Values.bulkIngester.db.existingConfigMap.keys.url }}
-            - name: SPRING_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.bulkIngester.db.existingSecret.name | default $dbFullName }}
-                  key: {{ .Values.bulkIngester.db.existingSecret.keys.password }}
-            - name: SPRING_DATASOURCE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.bulkIngester.db.existingSecret.name | default $dbFullName }}
-                  key: {{ .Values.bulkIngester.db.existingSecret.keys.username }}
+            {{- range $key, $val := $.Values.bulkIngester.environment }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end }}
           ports:
             - name: http
               containerPort: 8080
@@ -55,13 +46,13 @@ spec:
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           resources: {{- toYaml .Values.bulkIngester.initContainers.waitForRepository.resources | nindent 12 }}
           env:
-            {{- $repoCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "repo")) "Chart" $.Chart "Release" $.Release }}
-            {{- $repoCm := coalesce .Values.bulkIngester.repository.existingConfigMap.name (include "alfresco-connector-hxi.fullname" $repoCtx) }}
+            {{- $repoCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" $.Chart "Release" $.Release }}
+            {{- $repoCm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-connector-hxi.fullname" $repoCtx) }}
             - name: REPOSITORY_URL
               valueFrom:
                 configMapKeyRef:
                   name: {{ $repoCm }}
-                  key: {{ .Values.bulkIngester.repository.existingConfigMap.keys.url }}
+                  key: {{ .Values.repository.existingConfigMap.keys.url }}
           command: ["/bin/sh", "-c"]
           # Delay running the reindexing to give Alfresco Repository a chance to initialise its database
           args:
