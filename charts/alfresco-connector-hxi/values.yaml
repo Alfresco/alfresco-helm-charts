@@ -26,6 +26,7 @@ liveIngester:
       memory: "2048Mi"
   environment:
     SERVER_PORT: *appPort
+    ALFRESCO_BULKINGESTER_ENDPOINT: activemq:queue:bulk-ingester-events
   livenessProbe:
     initialDelaySeconds: 30
     httpGet:
@@ -94,7 +95,8 @@ bulkIngester:
     limits:
       cpu: "2"
       memory: "512Mi"
-  environment: null
+  environment:
+    ALFRESCO_BULK_INGEST_PUBLISHER_ENDPOINT: activemq:queue:bulk-ingester-events
   initContainers:
     waitForRepository:
       resources:
