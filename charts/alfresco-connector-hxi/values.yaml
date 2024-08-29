@@ -103,6 +103,7 @@ bulkIngester:
         limits:
           cpu: "0.25"
           memory: "10Mi"
+  affinity: {}
 db:
   # -- Provide the full JDBC url to connect to database service e.g.:
   # `jdbc:postgresql://hostname:5432/database`
