@@ -13,8 +13,8 @@ dependencies:
     repository: https://alfresco.github.io/alfresco-helm-charts/
     tags:
       - ci
-  - name: elasticsearch
-    repository: https://helm.elastic.co
-    version: 7.17.3
+  - name: postgresql
+    version: 12.5.6
+    repository: oci://registry-1.docker.io/bitnamicharts
     tags:
       - ci
