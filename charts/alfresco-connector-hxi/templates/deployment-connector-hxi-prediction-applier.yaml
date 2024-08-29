@@ -1,0 +1,65 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "alfresco-connector-hxi.prediction-applier.fullname" . }}
+  labels:
+    {{- include "alfresco-connector-hxi.prediction-applier.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.predictionApplier.replicaCount | default 1 }}
+  selector:
+    matchLabels:
+      {{- include "alfresco-connector-hxi.prediction-applier.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      {{- toYaml .Values.predictionApplier.strategy.rollingUpdate | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-connector-hxi.yaml") $ | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret-connector-hxi.yaml") $ | sha256sum }}
+        checksum/secret-broker: {{ include (print $.Template.BasePath "/secret-mq.yaml") $ | sha256sum }}
+        {{- with $.Values.podAnnotations }}
+          {{- toYaml $ | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "alfresco-connector-hxi.prediction-applier.labels" . | nindent 8 }}
+    spec:
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      serviceAccountName: {{ include "alfresco-connector-hxi.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
+      containers:
+        - name: {{ include "alfresco-connector-hxi.prediction-applier.name" . }}
+          image: {{ printf "%s:%s" .Values.predictionApplier.image.repository .Values.predictionApplier.image.tag | quote }}
+          imagePullPolicy: {{ .Values.predictionApplier.image.pullPolicy }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
+          env:
+            {{- include "alfresco-connector-hxi.repository.cm.env" $ | indent 12 }}
+            {{- include "alfresco-connector-hxi.repository.secret.env" $ | indent 12 }}
+            {{- include "alfresco-connector-hxi.cm.env" $ | indent 12 }}
+            {{- include "alfresco-connector-hxi.secret.env" $ | indent 12 }}
+            {{- range $key, $val := $.Values.predictionApplier.environment }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end }}
+          ports:
+            - containerPort: {{ .Values.predictionApplier.image.internalPort }}
+          resources:
+            {{- toYaml .Values.predictionApplier.resources | nindent 12 }}
+          livenessProbe:
+            {{- toYaml .Values.predictionApplier.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.predictionApplier.readinessProbe | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.predictionApplier.affinity }}
+      affinity:
+        {{- tpl (toYaml .) $ | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
