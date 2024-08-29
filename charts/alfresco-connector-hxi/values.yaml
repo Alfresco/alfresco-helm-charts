@@ -9,7 +9,7 @@ tolerations: []
 liveIngester:
   image:
     repository: quay.io/alfresco/alfresco-hxinsight-connector-live-ingester
-    tag: 1.0.0-A11
+    tag: 1.0.0-A13
     pullPolicy: IfNotPresent
     internalPort: &appPort 80
   replicaCount: 1
@@ -34,7 +34,7 @@ liveIngester:
   readinessProbe:
     initialDelaySeconds: 40
     httpGet:
-      path: /actuator/health/liveness
+      path: /actuator/health/readiness
       port: *appPort
   service:
     name: hxi-live-ingester-service
@@ -156,7 +156,7 @@ ats:
       sfsUrl: SFS_URL
 hxi:
   hxAuthTokenUrl: null
-  hxInsightUrl: null
+  hxInsightIngestionUrl: null
   hxClientId: null
   hxClientSecret: null
   hxEnvKey: null
@@ -165,7 +165,7 @@ hxi:
     name: null
     keys:
       hxAuthTokenUrl: HX_AUTH_TOKEN_URL
-      hxInsightUrl: HX_INSIGHT_URL
+      hxInsightIngestionUrl: HX_INSIGHT_INGESTION_URL
   existingSecret:
     name: null
     keys:
