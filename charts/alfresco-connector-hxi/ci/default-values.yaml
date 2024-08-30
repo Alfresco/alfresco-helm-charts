@@ -17,6 +17,15 @@ bulkIngester:
     limits:
       cpu: "1"
       memory: "1Gi"
+predictionApplier:
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "128Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
 activemq:
   fullnameOverride: activemq
   resources:
@@ -34,5 +43,7 @@ repository:
   url: http://repository
 ats:
   sfsUrl: http://alfresco-transform-services-sfs
+hxi:
+  hxInsightPredictionsUrl: http://hxi-predictions
 tags:
   ci: true
