@@ -8,4 +8,5 @@ metadata:
 data:
   HX_AUTH_TOKEN_URL: {{ .Values.hxi.hxAuthTokenUrl | default "" | quote }}
   HX_INSIGHT_INGESTION_URL: {{ .Values.hxi.hxInsightIngestionUrl | default "" | quote }}
+  HX_INSIGHT_PREDICTIONS_URL: {{ .Values.hxi.hxInsightIngestionUrl | default "" | quote }}
 {{- end -}}
