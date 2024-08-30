@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-connector-hxi.prediction-applier.fullname" . }}
+  labels:
+    {{- include "alfresco-connector-hxi.prediction-applier.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.predictionApplier.service.type }}
+  ports:
+    - port: {{ .Values.predictionApplier.service.externalPort }}
+      targetPort: {{ .Values.predictionApplier.image.internalPort }}
+      name: {{ .Values.predictionApplier.service.name }}
+  selector:
+    {{- include "alfresco-connector-hxi.prediction-applier.selectorLabels" . | nindent 4 }}

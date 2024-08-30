@@ -2,18 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "alfresco-connector-hxi.live-ingester.fullname" . }}
+  name: {{ include "alfresco-connector-hxi.prediction-applier.fullname" . }}
   labels:
-    {{- include "alfresco-connector-hxi.live-ingester.labels" . | nindent 4 }}
+    {{- include "alfresco-connector-hxi.prediction-applier.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.liveIngester.replicaCount | default 1 }}
+  replicas: {{ .Values.predictionApplier.replicaCount | default 1 }}
   selector:
     matchLabels:
-      {{- include "alfresco-connector-hxi.live-ingester.selectorLabels" . | nindent 6 }}
+      {{- include "alfresco-connector-hxi.prediction-applier.selectorLabels" . | nindent 6 }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      {{- toYaml .Values.liveIngester.strategy.rollingUpdate | nindent 6 }}
+      {{- toYaml .Values.predictionApplier.strategy.rollingUpdate | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -24,41 +24,40 @@ spec:
           {{- toYaml $ | nindent 8 }}
         {{- end }}
       labels:
-        {{- include "alfresco-connector-hxi.live-ingester.labels" . | nindent 8 }}
+        {{- include "alfresco-connector-hxi.prediction-applier.labels" . | nindent 8 }}
     spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       serviceAccountName: {{ include "alfresco-connector-hxi.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       containers:
-        - name: {{ include "alfresco-connector-hxi.live-ingester.name" . }}
-          image: {{ printf "%s:%s" .Values.liveIngester.image.repository .Values.liveIngester.image.tag | quote }}
-          imagePullPolicy: {{ .Values.liveIngester.image.pullPolicy }}
+        - name: {{ include "alfresco-connector-hxi.prediction-applier.name" . }}
+          image: {{ printf "%s:%s" .Values.predictionApplier.image.repository .Values.predictionApplier.image.tag | quote }}
+          imagePullPolicy: {{ .Values.predictionApplier.image.pullPolicy }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           env:
             {{- include "alfresco-connector-hxi.activemq.cm.env" . | indent 12 }}
             {{- include "alfresco-connector-hxi.activemq.secret.env" . | indent 12 }}
-            {{- include "alfresco-connector-hxi.ats.cm.env" . | indent 12 }}
             {{- include "alfresco-connector-hxi.repository.cm.env" . | indent 12 }}
             {{- include "alfresco-connector-hxi.repository.secret.env" . | indent 12 }}
-            {{- include "alfresco-connector-hxi.live-ingester.cm.env" . | indent 12 }}
+            {{- include "alfresco-connector-hxi.prediction-applier.cm.env" . | indent 12 }}
             {{- include "alfresco-connector-hxi.secret.env" . | indent 12 }}
-            {{- range $key, $val := $.Values.liveIngester.environment }}
+            {{- range $key, $val := $.Values.predictionApplier.environment }}
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end }}
           ports:
-            - containerPort: {{ .Values.liveIngester.image.internalPort }}
+            - containerPort: {{ .Values.predictionApplier.image.internalPort }}
           resources:
-            {{- toYaml .Values.liveIngester.resources | nindent 12 }}
+            {{- toYaml .Values.predictionApplier.resources | nindent 12 }}
           livenessProbe:
-            {{- toYaml .Values.liveIngester.livenessProbe | nindent 12 }}
+            {{- toYaml .Values.predictionApplier.livenessProbe | nindent 12 }}
           readinessProbe:
-            {{- toYaml .Values.liveIngester.readinessProbe | nindent 12 }}
+            {{- toYaml .Values.predictionApplier.readinessProbe | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.liveIngester.affinity }}
+      {{- with .Values.predictionApplier.affinity }}
       affinity:
         {{- tpl (toYaml .) $ | nindent 8 }}
       {{- end }}

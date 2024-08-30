@@ -7,16 +7,47 @@ Usage: include "alfresco-connector-hxi.cm.env" $
 {{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.hxi }}
 {{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-hxi.fullname" $cmCtx ) }}
-- name: HYLANDEXPERIENCE_INSIGHT_INGESTION_BASEURL
-  valueFrom:
-    configMapKeyRef:
-      name: {{ $cmName }}
-      key: {{ .existingConfigMap.keys.hxInsightIngestionUrl }}
 - name: AUTH_PROVIDERS_HYLANDEXPERIENCE_TOKENURI
   valueFrom:
     configMapKeyRef:
       name: {{ $cmName }}
       key: {{ .existingConfigMap.keys.hxAuthTokenUrl }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+
+Usage: include "alfresco-connector-hxi.live-ingester.cm.env" $
+
+*/}}
+{{- define "alfresco-connector-hxi.live-ingester.cm.env" -}}
+{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "")) "Chart" .Chart "Release" .Release }}
+{{- with .Values.hxi }}
+{{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-hxi.fullname" $cmCtx ) }}
+{{- include "alfresco-connector-hxi.cm.env" $ }}
+- name: HYLANDEXPERIENCE_INSIGHT_INGESTION_BASEURL
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $cmName }}
+      key: {{ .existingConfigMap.keys.hxInsightIngestionUrl }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+
+Usage: include "alfresco-connector-hxi.prediction-applier.cm.env" $
+
+*/}}
+{{- define "alfresco-connector-hxi.prediction-applier.cm.env" -}}
+{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "")) "Chart" .Chart "Release" .Release }}
+{{- with .Values.hxi }}
+{{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-hxi.fullname" $cmCtx ) }}
+{{- include "alfresco-connector-hxi.cm.env" $ }}
+- name: HYLANDEXPERIENCE_INSIGHT_PREDICTIONS_BASEURL
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $cmName }}
+      key: {{ .existingConfigMap.keys.hxInsightPredictionsUrl }}
 {{- end -}}
 {{- end -}}
 

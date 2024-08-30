@@ -11,7 +11,7 @@ liveIngester:
     repository: quay.io/alfresco/alfresco-hxinsight-connector-live-ingester
     tag: 1.0.0-A13
     pullPolicy: IfNotPresent
-    internalPort: &appPort 80
+    internalPort: &liveIngesterPort 80
   replicaCount: 1
   strategy:
     rollingUpdate:
@@ -25,18 +25,18 @@ liveIngester:
       cpu: "2"
       memory: "2048Mi"
   environment:
-    SERVER_PORT: *appPort
+    SERVER_PORT: *liveIngesterPort
     ALFRESCO_BULKINGESTER_ENDPOINT: activemq:queue:bulk-ingester-events
   livenessProbe:
     initialDelaySeconds: 30
     httpGet:
       path: /actuator/health/liveness
-      port: *appPort
+      port: *liveIngesterPort
   readinessProbe:
     initialDelaySeconds: 40
     httpGet:
       path: /actuator/health/readiness
-      port: *appPort
+      port: *liveIngesterPort
   service:
     name: hxi-live-ingester-service
     type: ClusterIP
@@ -104,6 +104,83 @@ bulkIngester:
           cpu: "0.25"
           memory: "10Mi"
   affinity: {}
+predictionApplier:
+  enabled: true
+  image:
+    repository: quay.io/alfresco/alfresco-hxinsight-connector-prediction-applier
+    tag: 1.0.0-A13
+    pullPolicy: IfNotPresent
+    internalPort: &predictionApplierPort 80
+  replicaCount: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  resources:
+    requests:
+      cpu: "0.5"
+      memory: "256Mi"
+    limits:
+      cpu: "2"
+      memory: "2048Mi"
+  environment:
+    SERVER_PORT: *predictionApplierPort
+    HYLANDEXPERIENCE.INSIGHT.PREDICTIONS.BUFFERENDPOINT: activemq:queue:predictions-buffer
+  livenessProbe:
+    initialDelaySeconds: 30
+    httpGet:
+      path: /actuator/health/liveness
+      port: *predictionApplierPort
+  readinessProbe:
+    initialDelaySeconds: 40
+    httpGet:
+      path: /actuator/health/readiness
+      port: *predictionApplierPort
+  service:
+    name: hxi-prediction-applier-service
+    type: ClusterIP
+    externalPort: 80
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        # -- Prefer to schedule the content pod on a different zone
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - >-
+                      {{ template "alfresco-connector-hxi.name" $ }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - "{{ $.Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
+            topologyKey: topology.kubernetes.io/zone
+        # -- Prefer to schedule the content pod on a different node
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - >-
+                      {{ template "alfresco-connector-hxi.name" $ }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - "{{ $.Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
+            topologyKey: kubernetes.io/hostname
 db:
   # -- Provide the full JDBC url to connect to database service e.g.:
   # `jdbc:postgresql://hostname:5432/database`
@@ -196,6 +273,7 @@ ats:
 hxi:
   hxAuthTokenUrl: null
   hxInsightIngestionUrl: null
+  hxInsightPredictionsUrl: null
   hxClientId: null
   hxClientSecret: null
   hxEnvKey: null
@@ -205,6 +283,7 @@ hxi:
     keys:
       hxAuthTokenUrl: HX_AUTH_TOKEN_URL
       hxInsightIngestionUrl: HX_INSIGHT_INGESTION_URL
+      hxInsightPredictionsUrl: HX_INSIGHT_PREDICTIONS_URL
   existingSecret:
     name: null
     keys:
