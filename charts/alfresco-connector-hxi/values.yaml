@@ -126,6 +126,7 @@ predictionApplier:
   environment:
     SERVER_PORT: *predictionApplierPort
     HYLANDEXPERIENCE.INSIGHT.PREDICTIONS.BUFFERENDPOINT: activemq:queue:predictions-buffer
+    HYLANDEXPERIENCE.INSIGHT.PREDICTIONS.POLLPERIODMILLIS: 300000
   livenessProbe:
     initialDelaySeconds: 30
     httpGet:
