@@ -125,6 +125,7 @@ predictionApplier:
       memory: "2048Mi"
   environment:
     SERVER_PORT: *predictionApplierPort
+    HYLANDEXPERIENCE.INSIGHT.PREDICTIONS.BUFFERENDPOINT: activemq:queue:predictions-buffer
   livenessProbe:
     initialDelaySeconds: 30
     httpGet:
@@ -272,6 +273,7 @@ ats:
 hxi:
   hxAuthTokenUrl: null
   hxInsightIngestionUrl: null
+  hxInsightPredictionsUrl: null
   hxClientId: null
   hxClientSecret: null
   hxEnvKey: null
@@ -281,6 +283,7 @@ hxi:
     keys:
       hxAuthTokenUrl: HX_AUTH_TOKEN_URL
       hxInsightIngestionUrl: HX_INSIGHT_INGESTION_URL
+      hxInsightPredictionsUrl: HX_INSIGHT_PREDICTIONS_URL
   existingSecret:
     name: null
     keys:
