@@ -105,6 +105,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | predictionApplier.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-hxi.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}` | Prefer to schedule the content pod on a different node |
 | predictionApplier.enabled | bool | `true` |  |
 | predictionApplier.environment."HYLANDEXPERIENCE.INSIGHT.PREDICTIONS.BUFFERENDPOINT" | string | `"activemq:queue:predictions-buffer"` |  |
+| predictionApplier.environment."HYLANDEXPERIENCE.INSIGHT.PREDICTIONS.POLLPERIODMILLIS" | int | `300000` |  |
 | predictionApplier.environment.SERVER_PORT | int | `8080` |  |
 | predictionApplier.image.internalPort | int | `8080` |  |
 | predictionApplier.image.pullPolicy | string | `"IfNotPresent"` |  |
