@@ -11,7 +11,7 @@ liveIngester:
     repository: quay.io/alfresco/alfresco-hxinsight-connector-live-ingester
     tag: 1.0.0-A13
     pullPolicy: IfNotPresent
-    internalPort: &liveIngesterPort 80
+    internalPort: &liveIngesterPort 8080
   replicaCount: 1
   strategy:
     rollingUpdate:
@@ -110,7 +110,7 @@ predictionApplier:
     repository: quay.io/alfresco/alfresco-hxinsight-connector-prediction-applier
     tag: 1.0.0-A13
     pullPolicy: IfNotPresent
-    internalPort: &predictionApplierPort 80
+    internalPort: &predictionApplierPort 8080
   replicaCount: 1
   strategy:
     rollingUpdate:
