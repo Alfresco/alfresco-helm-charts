@@ -52,6 +52,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | hxi.existingConfigMap.keys.hxAuthTokenUrl | string | `"HX_AUTH_TOKEN_URL"` |  |
 | hxi.existingConfigMap.keys.hxInsightIngestionUrl | string | `"HX_INSIGHT_INGESTION_URL"` |  |
+| hxi.existingConfigMap.keys.hxInsightPredictionsUrl | string | `"HX_INSIGHT_PREDICTIONS_URL"` |  |
 | hxi.existingConfigMap.name | string | `nil` |  |
 | hxi.existingSecret.keys.hxAppSourceId | string | `"HX_APP_SOURCE_ID"` |  |
 | hxi.existingSecret.keys.hxClientId | string | `"HX_CLIENT_ID"` |  |
@@ -64,6 +65,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | hxi.hxClientSecret | string | `nil` |  |
 | hxi.hxEnvKey | string | `nil` |  |
 | hxi.hxInsightIngestionUrl | string | `nil` |  |
+| hxi.hxInsightPredictionsUrl | string | `nil` |  |
 | imagePullSecrets | list | `[]` |  |
 | liveIngester.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-hxi.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule the content pod on a different zone |
 | liveIngester.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-hxi.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}` | Prefer to schedule the content pod on a different node |
@@ -99,6 +101,31 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
+| predictionApplier.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-hxi.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule the content pod on a different zone |
+| predictionApplier.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-hxi.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}` | Prefer to schedule the content pod on a different node |
+| predictionApplier.enabled | bool | `true` |  |
+| predictionApplier.environment."HYLANDEXPERIENCE.INSIGHT.PREDICTIONS.BUFFERENDPOINT" | string | `"activemq:queue:predictions-buffer"` |  |
+| predictionApplier.environment.SERVER_PORT | int | `80` |  |
+| predictionApplier.image.internalPort | int | `80` |  |
+| predictionApplier.image.pullPolicy | string | `"IfNotPresent"` |  |
+| predictionApplier.image.repository | string | `"quay.io/alfresco/alfresco-hxinsight-connector-prediction-applier"` |  |
+| predictionApplier.image.tag | string | `"1.0.0-A13"` |  |
+| predictionApplier.livenessProbe.httpGet.path | string | `"/actuator/health/liveness"` |  |
+| predictionApplier.livenessProbe.httpGet.port | int | `80` |  |
+| predictionApplier.livenessProbe.initialDelaySeconds | int | `30` |  |
+| predictionApplier.readinessProbe.httpGet.path | string | `"/actuator/health/readiness"` |  |
+| predictionApplier.readinessProbe.httpGet.port | int | `80` |  |
+| predictionApplier.readinessProbe.initialDelaySeconds | int | `40` |  |
+| predictionApplier.replicaCount | int | `1` |  |
+| predictionApplier.resources.limits.cpu | string | `"2"` |  |
+| predictionApplier.resources.limits.memory | string | `"2048Mi"` |  |
+| predictionApplier.resources.requests.cpu | string | `"0.5"` |  |
+| predictionApplier.resources.requests.memory | string | `"256Mi"` |  |
+| predictionApplier.service.externalPort | int | `80` |  |
+| predictionApplier.service.name | string | `"hxi-prediction-applier-service"` |  |
+| predictionApplier.service.type | string | `"ClusterIP"` |  |
+| predictionApplier.strategy.rollingUpdate.maxSurge | int | `1` |  |
+| predictionApplier.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | repository.authGrantType | string | `nil` |  |
 | repository.authTokenUrl | string | `nil` |  |
 | repository.authType | string | `nil` |  |
