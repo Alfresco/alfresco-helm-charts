@@ -17,6 +17,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.5.5 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.3 |
+| oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
 
@@ -27,6 +28,26 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ats.existingConfigMap.name | string | `nil` | Alternatively, provide ATS details via an existing configmap |
 | ats.sfsUrl | string | `nil` | URL of the alfresco shared filestore |
 | ats.transformUrl | string | `nil` | URL of the alfresco transform (trouter or tengine-aio) |
+| bulkIngester.affinity | object | `{}` |  |
+| bulkIngester.enabled | bool | `true` |  |
+| bulkIngester.environment.ALFRESCO_BULK_INGEST_PUBLISHER_ENDPOINT | string | `"activemq:queue:bulk-ingester-events"` |  |
+| bulkIngester.image.pullPolicy | string | `"IfNotPresent"` |  |
+| bulkIngester.image.repository | string | `"quay.io/alfresco/alfresco-hxinsight-connector-bulk-ingester"` |  |
+| bulkIngester.image.tag | string | `"1.0.0-A13"` |  |
+| bulkIngester.initContainers.waitForRepository.resources.limits.cpu | string | `"0.25"` |  |
+| bulkIngester.initContainers.waitForRepository.resources.limits.memory | string | `"10Mi"` |  |
+| bulkIngester.resources.limits.cpu | string | `"2"` |  |
+| bulkIngester.resources.limits.memory | string | `"512Mi"` |  |
+| bulkIngester.resources.requests.cpu | string | `"0.5"` |  |
+| bulkIngester.resources.requests.memory | string | `"128Mi"` |  |
+| db.existingConfigMap.keys.url | string | `"DATABASE_URL"` | Key within the configmap holding the full JDBC url to connect to database service |
+| db.existingConfigMap.name | string | `nil` | Alternatively, provide database connection details via an existing configmap |
+| db.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password |
+| db.existingSecret.keys.username | string | `"DATABASE_USERNAME"` | Key within the secret holding the database username |
+| db.existingSecret.name | string | `nil` | Alternatively, provide database credentials via an existing secret |
+| db.password | string | `nil` | The password required to access the service |
+| db.url | string | `nil` | Provide the full JDBC url to connect to database service e.g.: `jdbc:postgresql://hostname:5432/database` |
+| db.username | string | `nil` | The username required to access the service |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | hxi.existingConfigMap.keys.hxAuthTokenUrl | string | `"HX_AUTH_TOKEN_URL"` |  |
@@ -46,6 +67,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | imagePullSecrets | list | `[]` |  |
 | liveIngester.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-hxi.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule the content pod on a different zone |
 | liveIngester.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-hxi.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}` | Prefer to schedule the content pod on a different node |
+| liveIngester.environment.ALFRESCO_BULKINGESTER_ENDPOINT | string | `"activemq:queue:bulk-ingester-events"` |  |
 | liveIngester.environment.SERVER_PORT | int | `80` |  |
 | liveIngester.image.internalPort | int | `80` |  |
 | liveIngester.image.pullPolicy | string | `"IfNotPresent"` |  |
