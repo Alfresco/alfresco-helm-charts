@@ -26,6 +26,8 @@ predictionApplier:
     limits:
       cpu: "1"
       memory: "1Gi"
+  livenessProbe: null
+  readinessProbe: null
 activemq:
   fullnameOverride: activemq
   resources:
