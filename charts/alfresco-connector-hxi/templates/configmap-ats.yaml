@@ -1,0 +1,11 @@
+{{- if not .Values.ats.existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "ats")) "Chart" $.Chart "Release" $.Release }}
+  name: {{ template "alfresco-connector-hxi.fullname" $ctx }}
+  labels:
+    {{- include "alfresco-connector-hxi.labels" . | nindent 4 }}
+data:
+  SFS_URL: {{ required "You need to provide the SFS URL using either ats.sfsUrl value or a configmap" .Values.ats.sfsUrl }}
+{{- end }}

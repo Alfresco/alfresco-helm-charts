@@ -1,0 +1,15 @@
+{{- if not .Values.repository.existingConfigMap.name -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" $.Chart "Release" $.Release }}
+  name: {{ template "alfresco-connector-hxi.fullname" $ctx }}
+  labels:
+    {{- include "alfresco-connector-hxi.labels" . | nindent 4 }}
+data:
+  REPOSITORY_URL: {{ .Values.repository.url | default "" | quote }}
+  REPOSITORY_AUTH_TYPE: {{ .Values.repository.authType | default "basic" | quote }}
+  REPOSITORY_AUTH_GRANT_TYPE: {{ .Values.repository.authGrantType | default "" | quote }}
+  REPOSITORY_AUTH_TOKEN_URL: {{ .Values.repository.authTokenUrl | default "" | quote }}
+  REPOSITORY_VERSION_OVERRIDE: {{ .Values.repository.versionOverride | default "" | quote }}
+{{- end }}

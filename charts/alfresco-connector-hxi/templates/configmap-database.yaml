@@ -1,0 +1,11 @@
+{{- if and .Values.bulkIngester.enabled (not .Values.db.existingConfigMap.name) }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "database")) "Chart" $.Chart "Release" $.Release }}
+  name: {{ template "alfresco-connector-hxi.fullname" $ctx }}
+  labels:
+    {{- include "alfresco-connector-hxi.labels" . | nindent 4 }}
+data:
+  DATABASE_URL: {{ required "Specifying DB URL is mandatory when not using existingConfigMap" .Values.db.url }}
+{{- end }}

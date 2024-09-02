@@ -1,0 +1,307 @@
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
+nodeSelector: {}
+tolerations: []
+liveIngester:
+  image:
+    repository: quay.io/alfresco/alfresco-hxinsight-connector-live-ingester
+    tag: 1.0.0-A13
+    pullPolicy: IfNotPresent
+    internalPort: &liveIngesterPort 8080
+  replicaCount: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  resources:
+    requests:
+      cpu: "0.5"
+      memory: "256Mi"
+    limits:
+      cpu: "2"
+      memory: "2048Mi"
+  environment:
+    SERVER_PORT: *liveIngesterPort
+    ALFRESCO_BULKINGESTER_ENDPOINT: activemq:queue:bulk-ingester-events
+  livenessProbe:
+    initialDelaySeconds: 30
+    httpGet:
+      path: /actuator/health/liveness
+      port: *liveIngesterPort
+  readinessProbe:
+    initialDelaySeconds: 40
+    httpGet:
+      path: /actuator/health/readiness
+      port: *liveIngesterPort
+  service:
+    name: hxi-live-ingester-service
+    type: ClusterIP
+    externalPort: 80
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        # -- Prefer to schedule the content pod on a different zone
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - >-
+                      {{ template "alfresco-connector-hxi.name" $ }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - "{{ $.Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
+            topologyKey: topology.kubernetes.io/zone
+        # -- Prefer to schedule the content pod on a different node
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - >-
+                      {{ template "alfresco-connector-hxi.name" $ }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - "{{ $.Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
+            topologyKey: kubernetes.io/hostname
+bulkIngester:
+  enabled: true
+  image:
+    repository: quay.io/alfresco/alfresco-hxinsight-connector-bulk-ingester
+    tag: 1.0.0-A13
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: "0.5"
+      memory: "128Mi"
+    limits:
+      cpu: "2"
+      memory: "512Mi"
+  environment:
+    ALFRESCO_BULK_INGEST_PUBLISHER_ENDPOINT: activemq:queue:bulk-ingester-events
+  initContainers:
+    waitForRepository:
+      resources:
+        limits:
+          cpu: "0.25"
+          memory: "10Mi"
+  affinity: {}
+predictionApplier:
+  enabled: true
+  image:
+    repository: quay.io/alfresco/alfresco-hxinsight-connector-prediction-applier
+    tag: 1.0.0-A13
+    pullPolicy: IfNotPresent
+    internalPort: &predictionApplierPort 8080
+  replicaCount: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  resources:
+    requests:
+      cpu: "0.5"
+      memory: "256Mi"
+    limits:
+      cpu: "2"
+      memory: "2048Mi"
+  environment:
+    SERVER_PORT: *predictionApplierPort
+    HYLANDEXPERIENCE.INSIGHT.PREDICTIONS.BUFFERENDPOINT: activemq:queue:predictions-buffer
+    HYLANDEXPERIENCE.INSIGHT.PREDICTIONS.POLLPERIODMILLIS: 300000
+  livenessProbe:
+    initialDelaySeconds: 30
+    httpGet:
+      path: /actuator/health/liveness
+      port: *predictionApplierPort
+  readinessProbe:
+    initialDelaySeconds: 40
+    httpGet:
+      path: /actuator/health/readiness
+      port: *predictionApplierPort
+  service:
+    name: hxi-prediction-applier-service
+    type: ClusterIP
+    externalPort: 80
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        # -- Prefer to schedule the content pod on a different zone
+        - weight: 10
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - >-
+                      {{ template "alfresco-connector-hxi.name" $ }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - "{{ $.Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
+            topologyKey: topology.kubernetes.io/zone
+        # -- Prefer to schedule the content pod on a different node
+        - weight: 5
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - >-
+                      {{ template "alfresco-connector-hxi.name" $ }}
+                - key: app.kubernetes.io/instance
+                  operator: In
+                  values:
+                    - "{{ $.Release.Name }}"
+                - key: app.kubernetes.io/component
+                  operator: In
+                  values:
+                    - "{{ $.Chart.Name }}"
+            topologyKey: kubernetes.io/hostname
+db:
+  # -- Provide the full JDBC url to connect to database service e.g.:
+  # `jdbc:postgresql://hostname:5432/database`
+  url: null
+  # -- The username required to access the service
+  username: null
+  # -- The password required to access the service
+  password: null
+  existingSecret:
+    # -- Alternatively, provide database credentials via an existing secret
+    name: null
+    keys:
+      # -- Key within the secret holding the database username
+      username: DATABASE_USERNAME
+      # -- Key within the secret holding the database password
+      password: DATABASE_PASSWORD
+  existingConfigMap:
+    # -- Alternatively, provide database connection details via an existing
+    # configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the full JDBC url to connect to
+      # database service
+      url: DATABASE_URL
+messageBroker:
+  # --  Broker URL formatted as per:
+  # https://activemq.apache.org/failover-transport-reference
+  url: null
+  # -- Broker username
+  username: null
+  # -- Broker password
+  password: null
+  existingConfigMap:
+    # -- Alternatively, provide message broker connection details via an existing
+    # configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the message broker
+      url: BROKER_URL
+  # -- Provide connection details alternatively via an existing secret that
+  # contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
+  existingSecret:
+    name: null
+    keys:
+      username: BROKER_USERNAME
+      password: BROKER_PASSWORD
+repository:
+  # -- URL of the Alfresco repository
+  url: null
+  authType: null
+  authGrantType: null
+  authTokenUrl: null
+  username: null
+  password: null
+  clientId: null
+  clientSecret: null
+  versionOverride: null
+  existingConfigMap:
+    # -- Alternatively, provide repository connection details via an existing
+    # configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the full url to connect to the
+      # alfresco repository
+      url: REPOSITORY_URL
+      authType: REPOSITORY_AUTH_TYPE
+      authGrantType: REPOSITORY_AUTH_GRANT_TYPE
+      authTokenUrl: REPOSITORY_AUTH_TOKEN_URL
+      versionOverride: REPOSITORY_VERSION_OVERRIDE
+  existingSecret:
+    name: null
+    keys:
+      username: REPOSITORY_USERNAME
+      password: REPOSITORY_PASSWORD
+      clientId: REPOSITORY_CLIENT_ID
+      clientSecret: REPOSITORY_CLIENT_SECRET
+ats:
+  # -- URL of the alfresco transform (trouter or tengine-aio)
+  transformUrl: null
+  # -- URL of the alfresco shared filestore
+  sfsUrl: null
+  existingConfigMap:
+    # -- Alternatively, provide ATS details via an existing configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the alfresco transform
+      transformUrl: ATS_URL
+      # -- Key within the configmap holding the URL of the alfresco shared filestore
+      sfsUrl: SFS_URL
+hxi:
+  hxAuthTokenUrl: null
+  hxInsightIngestionUrl: null
+  hxInsightPredictionsUrl: null
+  hxClientId: null
+  hxClientSecret: null
+  hxEnvKey: null
+  hxAppSourceId: null
+  existingConfigMap:
+    name: null
+    keys:
+      hxAuthTokenUrl: HX_AUTH_TOKEN_URL
+      hxInsightIngestionUrl: HX_INSIGHT_INGESTION_URL
+      hxInsightPredictionsUrl: HX_INSIGHT_PREDICTIONS_URL
+  existingSecret:
+    name: null
+    keys:
+      hxClientId: HX_CLIENT_ID
+      hxClientSecret: HX_CLIENT_SECRET
+      hxEnvKey: HX_ENV_KEY
+      hxAppSourceId: HX_APP_SOURCE_ID
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "alfresco-connector-hxi-sa"
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
+tags:
+  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
+  ci: false
