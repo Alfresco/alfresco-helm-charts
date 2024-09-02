@@ -335,314 +335,335 @@
     
     "relUrl": "/charts/alfresco-ai-transformer/README.html#values"
   },"48": {
+    "doc": "alfresco-connector-hxi",
+    "title": "alfresco-connector-hxi",
+    "content": ". A Helm chart for deploying Alfresco connector hxi services . Checkout alfresco-content-services chart’s doc for an example of how to leverage this chart from an umbrella chart. ",
+    "url": "/alfresco-helm-charts/charts/alfresco-connector-hxi/README.html",
+    
+    "relUrl": "/charts/alfresco-connector-hxi/README.html"
+  },"49": {
+    "doc": "alfresco-connector-hxi",
+    "title": "Requirements",
+    "content": "| Repository | Name | Version | . | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.5.5 | . | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.3 | . | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 | . ",
+    "url": "/alfresco-helm-charts/charts/alfresco-connector-hxi/README.html#requirements",
+    
+    "relUrl": "/charts/alfresco-connector-hxi/README.html#requirements"
+  },"50": {
+    "doc": "alfresco-connector-hxi",
+    "title": "Values",
+    "content": "| Key | Type | Default | Description | . | ats.existingConfigMap.keys.sfsUrl | string | \"SFS_URL\" | Key within the configmap holding the URL of the alfresco shared filestore | . | ats.existingConfigMap.keys.transformUrl | string | \"ATS_URL\" | Key within the configmap holding the URL of the alfresco transform | . | ats.existingConfigMap.name | string | nil | Alternatively, provide ATS details via an existing configmap | . | ats.sfsUrl | string | nil | URL of the alfresco shared filestore | . | ats.transformUrl | string | nil | URL of the alfresco transform (trouter or tengine-aio) | . | bulkIngester.affinity | object | {} |   | . | bulkIngester.enabled | bool | true |   | . | bulkIngester.environment.ALFRESCO_BULK_INGEST_PUBLISHER_ENDPOINT | string | \"activemq:queue:bulk-ingester-events\" |   | . | bulkIngester.image.pullPolicy | string | \"IfNotPresent\" |   | . | bulkIngester.image.repository | string | \"quay.io/alfresco/alfresco-hxinsight-connector-bulk-ingester\" |   | . | bulkIngester.image.tag | string | \"1.0.0-A13\" |   | . | bulkIngester.initContainers.waitForRepository.resources.limits.cpu | string | \"0.25\" |   | . | bulkIngester.initContainers.waitForRepository.resources.limits.memory | string | \"10Mi\" |   | . | bulkIngester.resources.limits.cpu | string | \"2\" |   | . | bulkIngester.resources.limits.memory | string | \"512Mi\" |   | . | bulkIngester.resources.requests.cpu | string | \"0.5\" |   | . | bulkIngester.resources.requests.memory | string | \"128Mi\" |   | . | db.existingConfigMap.keys.url | string | \"DATABASE_URL\" | Key within the configmap holding the full JDBC url to connect to database service | . | db.existingConfigMap.name | string | nil | Alternatively, provide database connection details via an existing configmap | . | db.existingSecret.keys.password | string | \"DATABASE_PASSWORD\" | Key within the secret holding the database password | . | db.existingSecret.keys.username | string | \"DATABASE_USERNAME\" | Key within the secret holding the database username | . | db.existingSecret.name | string | nil | Alternatively, provide database credentials via an existing secret | . | db.password | string | nil | The password required to access the service | . | db.url | string | nil | Provide the full JDBC url to connect to database service e.g.: jdbc:postgresql://hostname:5432/database | . | db.username | string | nil | The username required to access the service | . | fullnameOverride | string | \"\" |   | . | global.alfrescoRegistryPullSecrets | string | \"quay-registry-secret\" |   | . | hxi.existingConfigMap.keys.hxAuthTokenUrl | string | \"HX_AUTH_TOKEN_URL\" |   | . | hxi.existingConfigMap.keys.hxInsightIngestionUrl | string | \"HX_INSIGHT_INGESTION_URL\" |   | . | hxi.existingConfigMap.keys.hxInsightPredictionsUrl | string | \"HX_INSIGHT_PREDICTIONS_URL\" |   | . | hxi.existingConfigMap.name | string | nil |   | . | hxi.existingSecret.keys.hxAppSourceId | string | \"HX_APP_SOURCE_ID\" |   | . | hxi.existingSecret.keys.hxClientId | string | \"HX_CLIENT_ID\" |   | . | hxi.existingSecret.keys.hxClientSecret | string | \"HX_CLIENT_SECRET\" |   | . | hxi.existingSecret.keys.hxEnvKey | string | \"HX_ENV_KEY\" |   | . | hxi.existingSecret.name | string | nil |   | . | hxi.hxAppSourceId | string | nil |   | . | hxi.hxAuthTokenUrl | string | nil |   | . | hxi.hxClientId | string | nil |   | . | hxi.hxClientSecret | string | nil |   | . | hxi.hxEnvKey | string | nil |   | . | hxi.hxInsightIngestionUrl | string | nil |   | . | hxi.hxInsightPredictionsUrl | string | nil |   | . | imagePullSecrets | list | [] |   | . | liveIngester.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | {\"podAffinityTerm\":{\"labelSelector\":{\"matchExpressions\":[{\"key\":\"app.kubernetes.io/name\",\"operator\":\"In\",\"values\":[\"{{ template \\\"alfresco-connector-hxi.name\\\" $ }}\"]},{\"key\":\"app.kubernetes.io/instance\",\"operator\":\"In\",\"values\":[\"{{ $.Release.Name }}\"]},{\"key\":\"app.kubernetes.io/component\",\"operator\":\"In\",\"values\":[\"{{ $.Chart.Name }}\"]}]},\"topologyKey\":\"topology.kubernetes.io/zone\"},\"weight\":10} | Prefer to schedule the content pod on a different zone | . | liveIngester.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | {\"podAffinityTerm\":{\"labelSelector\":{\"matchExpressions\":[{\"key\":\"app.kubernetes.io/name\",\"operator\":\"In\",\"values\":[\"{{ template \\\"alfresco-connector-hxi.name\\\" $ }}\"]},{\"key\":\"app.kubernetes.io/instance\",\"operator\":\"In\",\"values\":[\"{{ $.Release.Name }}\"]},{\"key\":\"app.kubernetes.io/component\",\"operator\":\"In\",\"values\":[\"{{ $.Chart.Name }}\"]}]},\"topologyKey\":\"kubernetes.io/hostname\"},\"weight\":5} | Prefer to schedule the content pod on a different node | . | liveIngester.environment.ALFRESCO_BULKINGESTER_ENDPOINT | string | \"activemq:queue:bulk-ingester-events\" |   | . | liveIngester.environment.SERVER_PORT | int | 8080 |   | . | liveIngester.image.internalPort | int | 8080 |   | . | liveIngester.image.pullPolicy | string | \"IfNotPresent\" |   | . | liveIngester.image.repository | string | \"quay.io/alfresco/alfresco-hxinsight-connector-live-ingester\" |   | . | liveIngester.image.tag | string | \"1.0.0-A13\" |   | . | liveIngester.livenessProbe.httpGet.path | string | \"/actuator/health/liveness\" |   | . | liveIngester.livenessProbe.httpGet.port | int | 8080 |   | . | liveIngester.livenessProbe.initialDelaySeconds | int | 30 |   | . | liveIngester.readinessProbe.httpGet.path | string | \"/actuator/health/readiness\" |   | . | liveIngester.readinessProbe.httpGet.port | int | 8080 |   | . | liveIngester.readinessProbe.initialDelaySeconds | int | 40 |   | . | liveIngester.replicaCount | int | 1 |   | . | liveIngester.resources.limits.cpu | string | \"2\" |   | . | liveIngester.resources.limits.memory | string | \"2048Mi\" |   | . | liveIngester.resources.requests.cpu | string | \"0.5\" |   | . | liveIngester.resources.requests.memory | string | \"256Mi\" |   | . | liveIngester.service.externalPort | int | 80 |   | . | liveIngester.service.name | string | \"hxi-live-ingester-service\" |   | . | liveIngester.service.type | string | \"ClusterIP\" |   | . | liveIngester.strategy.rollingUpdate.maxSurge | int | 1 |   | . | liveIngester.strategy.rollingUpdate.maxUnavailable | int | 0 |   | . | messageBroker.existingConfigMap.keys.url | string | \"BROKER_URL\" | Key within the configmap holding the URL of the message broker | . | messageBroker.existingConfigMap.name | string | nil | Alternatively, provide message broker connection details via an existing configmap | . | messageBroker.existingSecret | object | {\"keys\":{\"password\":\"BROKER_PASSWORD\",\"username\":\"BROKER_USERNAME\"},\"name\":null} | Provide connection details alternatively via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys | . | messageBroker.password | string | nil | Broker password | . | messageBroker.url | string | nil | Broker URL formatted as per: https://activemq.apache.org/failover-transport-reference | . | messageBroker.username | string | nil | Broker username | . | nameOverride | string | \"\" |   | . | nodeSelector | object | {} |   | . | podAnnotations | object | {} |   | . | podSecurityContext | object | {} |   | . | predictionApplier.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | {\"podAffinityTerm\":{\"labelSelector\":{\"matchExpressions\":[{\"key\":\"app.kubernetes.io/name\",\"operator\":\"In\",\"values\":[\"{{ template \\\"alfresco-connector-hxi.name\\\" $ }}\"]},{\"key\":\"app.kubernetes.io/instance\",\"operator\":\"In\",\"values\":[\"{{ $.Release.Name }}\"]},{\"key\":\"app.kubernetes.io/component\",\"operator\":\"In\",\"values\":[\"{{ $.Chart.Name }}\"]}]},\"topologyKey\":\"topology.kubernetes.io/zone\"},\"weight\":10} | Prefer to schedule the content pod on a different zone | . | predictionApplier.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | {\"podAffinityTerm\":{\"labelSelector\":{\"matchExpressions\":[{\"key\":\"app.kubernetes.io/name\",\"operator\":\"In\",\"values\":[\"{{ template \\\"alfresco-connector-hxi.name\\\" $ }}\"]},{\"key\":\"app.kubernetes.io/instance\",\"operator\":\"In\",\"values\":[\"{{ $.Release.Name }}\"]},{\"key\":\"app.kubernetes.io/component\",\"operator\":\"In\",\"values\":[\"{{ $.Chart.Name }}\"]}]},\"topologyKey\":\"kubernetes.io/hostname\"},\"weight\":5} | Prefer to schedule the content pod on a different node | . | predictionApplier.enabled | bool | true |   | . | predictionApplier.environment.”HYLANDEXPERIENCE.INSIGHT.PREDICTIONS.BUFFERENDPOINT” | string | \"activemq:queue:predictions-buffer\" |   | . | predictionApplier.environment.”HYLANDEXPERIENCE.INSIGHT.PREDICTIONS.POLLPERIODMILLIS” | int | 300000 |   | . | predictionApplier.environment.SERVER_PORT | int | 8080 |   | . | predictionApplier.image.internalPort | int | 8080 |   | . | predictionApplier.image.pullPolicy | string | \"IfNotPresent\" |   | . | predictionApplier.image.repository | string | \"quay.io/alfresco/alfresco-hxinsight-connector-prediction-applier\" |   | . | predictionApplier.image.tag | string | \"1.0.0-A13\" |   | . | predictionApplier.livenessProbe.httpGet.path | string | \"/actuator/health/liveness\" |   | . | predictionApplier.livenessProbe.httpGet.port | int | 8080 |   | . | predictionApplier.livenessProbe.initialDelaySeconds | int | 30 |   | . | predictionApplier.readinessProbe.httpGet.path | string | \"/actuator/health/readiness\" |   | . | predictionApplier.readinessProbe.httpGet.port | int | 8080 |   | . | predictionApplier.readinessProbe.initialDelaySeconds | int | 40 |   | . | predictionApplier.replicaCount | int | 1 |   | . | predictionApplier.resources.limits.cpu | string | \"2\" |   | . | predictionApplier.resources.limits.memory | string | \"2048Mi\" |   | . | predictionApplier.resources.requests.cpu | string | \"0.5\" |   | . | predictionApplier.resources.requests.memory | string | \"256Mi\" |   | . | predictionApplier.service.externalPort | int | 80 |   | . | predictionApplier.service.name | string | \"hxi-prediction-applier-service\" |   | . | predictionApplier.service.type | string | \"ClusterIP\" |   | . | predictionApplier.strategy.rollingUpdate.maxSurge | int | 1 |   | . | predictionApplier.strategy.rollingUpdate.maxUnavailable | int | 0 |   | . | repository.authGrantType | string | nil |   | . | repository.authTokenUrl | string | nil |   | . | repository.authType | string | nil |   | . | repository.clientId | string | nil |   | . | repository.clientSecret | string | nil |   | . | repository.existingConfigMap.keys.authGrantType | string | \"REPOSITORY_AUTH_GRANT_TYPE\" |   | . | repository.existingConfigMap.keys.authTokenUrl | string | \"REPOSITORY_AUTH_TOKEN_URL\" |   | . | repository.existingConfigMap.keys.authType | string | \"REPOSITORY_AUTH_TYPE\" |   | . | repository.existingConfigMap.keys.url | string | \"REPOSITORY_URL\" | Key within the configmap holding the full url to connect to the alfresco repository | . | repository.existingConfigMap.keys.versionOverride | string | \"REPOSITORY_VERSION_OVERRIDE\" |   | . | repository.existingConfigMap.name | string | nil | Alternatively, provide repository connection details via an existing configmap | . | repository.existingSecret.keys.clientId | string | \"REPOSITORY_CLIENT_ID\" |   | . | repository.existingSecret.keys.clientSecret | string | \"REPOSITORY_CLIENT_SECRET\" |   | . | repository.existingSecret.keys.password | string | \"REPOSITORY_PASSWORD\" |   | . | repository.existingSecret.keys.username | string | \"REPOSITORY_USERNAME\" |   | . | repository.existingSecret.name | string | nil |   | . | repository.password | string | nil |   | . | repository.url | string | nil | URL of the Alfresco repository | . | repository.username | string | nil |   | . | repository.versionOverride | string | nil |   | . | securityContext | object | {} |   | . | serviceAccount.annotations | object | {} |   | . | serviceAccount.create | bool | true |   | . | serviceAccount.name | string | \"alfresco-connector-hxi-sa\" |   | . | tags.ci | bool | false | A chart tag used for Hyland’s CI purpose. Do not set it to true. | . | tolerations | list | [] |   | . ",
+    "url": "/alfresco-helm-charts/charts/alfresco-connector-hxi/README.html#values",
+    
+    "relUrl": "/charts/alfresco-connector-hxi/README.html#values"
+  },"51": {
     "doc": "Process Services",
     "title": "Process Services",
     "content": " ",
     "url": "/alfresco-helm-charts/docs/guides/alfresco-process.html",
     
     "relUrl": "/docs/guides/alfresco-process.html"
-  },"49": {
+  },"52": {
     "doc": "Repository",
     "title": "Repository",
     "content": " ",
     "url": "/alfresco-helm-charts/docs/guides/alfresco-repository.html",
     
     "relUrl": "/docs/guides/alfresco-repository.html"
-  },"50": {
+  },"53": {
     "doc": "Alfresco Transform Service",
     "title": "Alfresco Transform Service",
     "content": " ",
     "url": "/alfresco-helm-charts/docs/guides/alfresco-transform-service.html",
     
     "relUrl": "/docs/guides/alfresco-transform-service.html"
-  },"51": {
+  },"54": {
     "doc": "Autoscaling",
     "title": "Alfresco Transform Service auto scaling",
     "content": "This document describes auto scaling principles implemented in this Helm chart. This document do not explain how to setup Kubernetes worker nodes auto-scaling. That is a completely different topic which can be addressed in different ways and is up to the Kubernetes administrator. ",
     "url": "/alfresco-helm-charts/charts/alfresco-transform-service/docs/autoscaling.html#alfresco-transform-service-auto-scaling",
     
     "relUrl": "/charts/alfresco-transform-service/docs/autoscaling.html#alfresco-transform-service-auto-scaling"
-  },"52": {
+  },"55": {
     "doc": "Autoscaling",
     "title": "Horizontal Pod Auto scaling",
     "content": "For general concepts about HPA please refer to official Kubernetes documentation. Tengine pods auto scaling is disabled by default. If you want to enable it you need to use the additional value: . tengine: autoscaling: enabled: true . Where tengine is one of imagemagick, libreoffice, transformmisc, tika or pdfrenderer. The default configuration implemented in this chart aims at being able to cope with peak load or spare resources on low level of utilization while also minimizing the number of scaling events because changing the cluster topology means additional computation. Default behaviour . Without any further configuration scaling would happen as follow: . | Cluster would spin up new pods every minute if the current average pods’ load remains above 75% CPU usage on average during 30 seconds. | Cluster would spin up no more than 2 pods or 50% more pods of the existing replicas (whichever is bigger) per minute. | There would never be more than 3 replicas in the Replicaset | There would never be less than 1 replicas in the Replicaset | Cluster would remove one pod at most if the CPU load get consistently below 75% on average for 5 minutes. | Cluster would kill pod only one after the other within a minute. | . CPU utilization/load is calculated with regards to the CPU resource request setting (.resources.requests.cpu) which is now set to 1 CPU by default. Customizing auto scaling . The values and behaviour exposed above are defaults we think are sensible to start with. Of course they will not fit every single deployment/installation of Alfresco on Kubernetes. Below are ways to tweak the auto scaling behaviour for your own setup. Settings the CPU resources correctly . CPU Resources request is the basis of calculation for the cluster to trigger scaling events. It is then very important to make sure it is set appropriately before enabling auto scaling. Imagine you have a production Kubernetes cluster with large worker nodes (say 3 * 32 CPU nodes). Having CPU requests set to 1 would most likely make the cluster spin up new pods very quickly. Instead it would be better to ensure your tengine pods have a sensible .resources.requests.cpu value set to say 4. Also you should note that the very same .resources.requests.cpu value is used by the Kubernetes scheduler, so setting it too high is not a good idea either. It should be set to a value which will allow pods to be scheduled on worker nodes alongside other pods. default .resources.limits.cpu is set to 4 CPU so you will also want to increase this value to something like 12. Just by setting a sensible .resources.requests.cpu the auto scaling behaviour would already make much more sense given the worker nodes’ size. Configuring the auto scaling behaviour . The autoscaling.* values below can be fined tuned. There a few things to take int account when changing those as explained: . | .minReplicas: This parameter is used to limit the lowest number of replicas | .maxReplicas: This parameter is used to limit the highest number of replicas | .behavior.scaleUp.stabilizationWindowSeconds: This parameter is used to avoid flapping replicasets. A very short peak load is not worth a scale up. So you surely want to avoid scaling without making sure the load has increased consistently and scale up needs to happen. That parameter tells for how long the load should be over target before the HPA controller decides to increase the number of replicas. The shorter this value, the more likely you are to spin up pods for short peak workload, so the pod could even be ready after the load is actually back to normal. Setting this too low when CPU resources requests is set to 1 is counter productive as it’s pretty easy to make 1 CPU busy. | .behavior.scaleDown.stabilizationWindowSeconds: This parameter is used in the same manner as for scale up events. One notable difference though is that scaling down has an immediate effect on the way the application handles the workload while scaling up is more expensive as pods need to startup before it can actually start handling requests. For that reason we think one should always be more cautious when brining the number of replica down. You probably want to avoid taking pods down too quickly if your workload is not very consistent. | `.behavior.scaleUp.policies[]: . | .periodSeconds: The faster an individual tengine pod is to startup (Tomcat complete startup) the lower this parameter can be. 60s appeared a good value for startup times around 90s. The lower this parameter the faster new pods can be spun up and the faster peak load can be handled. | .type &amp; value: For exact details on setting this part of the auto scaler policy check the kubernetes doc. Policies let you define the way you want to act upon scaling events. For scale up events, if you know your load peak are steep (but consistent) then you will want to scale the replicaset by more pods than if you load is growing more slowly. | . | . ",
     "url": "/alfresco-helm-charts/charts/alfresco-transform-service/docs/autoscaling.html#horizontal-pod-auto-scaling",
     
     "relUrl": "/charts/alfresco-transform-service/docs/autoscaling.html#horizontal-pod-auto-scaling"
-  },"53": {
+  },"56": {
     "doc": "Autoscaling",
     "title": "Autoscaling",
     "content": " ",
     "url": "/alfresco-helm-charts/charts/alfresco-transform-service/docs/autoscaling.html",
     
     "relUrl": "/charts/alfresco-transform-service/docs/autoscaling.html"
-  },"54": {
+  },"57": {
     "doc": "Autoscaling",
     "title": "Alfresco repository auto scaling",
     "content": "This document describes auto scaling principles implemented in this Helm chart. This document do not explain how to setup Kubernetes worker nodes auto-scaling. That is a completely different topic which can be addressed in different ways and is up to the Kubernetes administrator. ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/autoscaling.html#alfresco-repository-auto-scaling",
     
     "relUrl": "/charts/alfresco-repository/docs/autoscaling.html#alfresco-repository-auto-scaling"
-  },"55": {
+  },"58": {
     "doc": "Autoscaling",
     "title": "Horizontal Pod Auto scaling",
     "content": "For general concepts about HPA please refer to official Kubernetes documentation. Repository pods auto scaling is disabled by default. If you want to enable it you need to use the additional value: . autoscaling: enabled: true . The default configuration implemented in this chart aims at being able to cope with peak load or spare resources on low level of utilization while also minimizing the number of scaling events because changing the cluster topology means additional computation. Default behaviour: . Without any further configuration scaling would happen as follow: . | Cluster would spin up new pods every minute if the current average pods’ load is above 75% CPU usage during 30 seconds. | Cluster would spin up no more than 2 pods or 50% more pods of the existing replicas (whichever is bigger) per minute. | There would never be more than 3 replicas in the Replicaset | There would never be less than 1 replicas in the Replicaset | Cluster would remove one pod at most if the CPU load get consistently below 75% for 5 minutes. | Cluster would kill pod only one after the other within a minute. | . CPU utilization/load is calculated with regards to the CPU resource request setting (.resources.requests.cpu) which is now set to 1 CPU by default. Customizing auto scaling . The values and behaviour exposed above are defaults we think are sensible to start with. Of course they will not fit every single deployment/installation of Alfresco on Kubernetes. Below are ways to tweak the auto scaling behaviour for your own setup. Settings the CPU resources correctly. CPU Resources request is the basis of calculation for the cluster to trigger scaling events. It is then very important to make sure it is set appropriately before enabling auto scaling. Imagine you have a production Kubernetes cluster with large worker nodes (say 3 * 32 CPU nodes). Having CPU requests set to 2 would most likely make the cluster spin up new pods very quickly. Instead it would be better to ensure your repository pods have a sensible .resources.requests.cpu value set to say 8. Also you should note that the very same .resources.requests.cpu value is used by the Kubernetes scheduler, so setting it too high is not a good idea either. It should be set to a value which will allow pods to be scheduled on worker nodes alongside other pods. default .resources.limits.cpu is set to 4 CPU so you will also want to increase this value to something like 12. Just by setting a sensible .resources.requests.cpu the auto scaling behaviour would already make much more sense given the worker nodes’ size. Configuring the auto scaling behaviour . The autoscaling.* values below can be fined tuned. There a few things to take into account when changing those as explained: . | .minReplicas: This parameter is used to limit the lowest number of replicas | .maxReplicas: This parameter is used to limit the highest number of replicas the more member the Hazelcast cluster has, the more chatty the cluster is. Keeping the cluster below 6 to 8 nodes seems a good target. | .behavior.scaleUp.stabilizationWindowSeconds: This parameter is used to avoid flapping replicasets. A very short peak load is not worth a scale up. So you surely want to avoid scaling without making sure the load has increased consistently and scale up needs to happen. That parameter tells for how long the load should be over target before the HPA controller decides to increase the number of replicas. The shorter this value, the more likely you are to spin up pods for short peak workload, so the pod could even be ready after the load is actually back to normal. Setting this too low when CPU resources requests is set to 1 is counter productive as it’s pretty easy to make 1 CPU busy. | .behavior.scaleDown.stabilizationWindowSeconds: This parameter is used in the same manner as for scale up events. One notable difference though is that scaling down has an immediate effect on the way the application handles the workload while scaling up is more expensive as pods need to startup before it can actually start handling requests. For that reason we think one should always be more cautious when brining the number of replica down. You probably want to avoid taking pods down too quickly if your workload is not very consistent. | `.behavior.scaleUp.policies[]: . | .periodSeconds: The faster an individual repo pod is to startup (Tomcat complete startup) the lower this parameter can be. 60s appeared a good value for startup times around 90s. The lower this parameter the faster new pods can be spun up and the faster peak load can be handled. | .type &amp; value: For exact details on setting this part of the auto scaler policy check the kubernetes doc. Policies let you define the way you want to act upon scaling events. For scale up events, if you know your load peak are steep (but consistent) then you will want to scale the replicaset by more pods than if you load is growing more slowly. | . | . ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/autoscaling.html#horizontal-pod-auto-scaling",
     
     "relUrl": "/charts/alfresco-repository/docs/autoscaling.html#horizontal-pod-auto-scaling"
-  },"56": {
+  },"59": {
     "doc": "Autoscaling",
     "title": "Autoscaling",
     "content": " ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/autoscaling.html",
     
     "relUrl": "/charts/alfresco-repository/docs/autoscaling.html"
-  },"57": {
+  },"60": {
     "doc": "Build your own charts",
     "title": "Building your Content platform architecture with Alfresco charts",
     "content": " ",
     "url": "/alfresco-helm-charts/docs/build-your-own-charts.html#building-your-content-platform-architecture-with-alfresco-charts",
     
     "relUrl": "/docs/build-your-own-charts.html#building-your-content-platform-architecture-with-alfresco-charts"
-  },"58": {
+  },"61": {
     "doc": "Build your own charts",
     "title": "The alfresco-common library chart",
     "content": "Alfresco charts depend on a common library chart called alfresco-common. This chart provides a set of named templates one can use in order to build his own content platform chart. Named templates are reusable functions that can only return strings and always take a single argument, which eventually can be an object. For example the URL helper file provides functions to extract various elements from a given URL. For example: . | {{ template \"alfresco-common.url.scheme\" \"https://hub.alfresco.com/\" }} will return “https” | {{ template \"alfresco-common.url.port\" \"https://hub.alfresco.com/\" }} will return “443” | . Check out the dedicated Chart documentation to get a more comprehensive list of named templates the chart offers. ",
     "url": "/alfresco-helm-charts/docs/build-your-own-charts.html#the-alfresco-common-library-chart",
     
     "relUrl": "/docs/build-your-own-charts.html#the-alfresco-common-library-chart"
-  },"59": {
+  },"62": {
     "doc": "Build your own charts",
     "title": "Alfresco components charts",
     "content": "The individual Alfresco components’ chart are meant to be configurable and reusable. They do not provide a working system on their own and need to be either used from an “umbrella chart” or be given additional details about other components they interact with in order to actually deliver the service they are meant to deliver. For example the alfresco-repository chart needs to have a database to initialize its content repository. This document explains what are the options you can leverage to “pipe” an Alfresco chart with another or with an external service. Understanding the Alfresco Content platform . Before you begin, make sure you do understand the Alfresco Content platform and its components so you know exactly what you need or do not need. ⚠️TODO: create chart diagram showing dependencies and level of dependencies . Creating your Alfresco platform . There are numerous ways to create your own Alfresco deployment and the component charts hosted in this repository can be used as building blocks for this purpose. Depending on preferences you may want to use Terraform, Kustomize or simply wrap the component charts into an “umbrella chart”. Here we’ll focus on the later option but the same configuration principles apply to other methods. In the example below we’ll go through the process of integrating an ACS content platform made of: . | Alfresco content repository | A database that hosted outside of the kubernetes cluster | . Below example also present using an “umbrella” Helm chart but most of the same approach is applicable to other deployment method as explained above. Declaring chart as dependency . Helm provides a mechanism to declare dependencies and re-use existing charts. We’ll start by initializing a chart and declare the dependency to the alfresco-repository chart. helm create myecmplatform &amp;&amp; cd $_ . Edit the Chart.yaml to give the chart a sensible description, a version and optionally specify the version of your content platform. Then declare the dependency as shown below: . dependencies: - name: alfresco-repository version: 0.1.0 repository: https://alfresco.github.io/alfresco-helm-charts/ alias: repo . In the example above we use repo as an alias so any value in our chart that lives under the $.repo YAML path will actually be passed to the alfresco-repository chart. In other words, values documented for the alfresco-repository chart such as replicaCount will be used from your chart as repo.replicaCount. Configuring the chart . Now we need to let the repository where it can find its database. When it comes to configuring a chart so it can reach another component of the platform, the Alfresco component charts lets you do that in 2 different ways: . | Using regular values | Using kubernetes config resources (configMap or secret) | . Configuring database using values . First thing to do is to check the chart values documentation. There, we can see the database configuration can be done using the configuration.db element in our values.yaml file as shown below: . repo: configuration: db: url: jdbc:postgresql//db.ecm.infra.local/alfresco username: ecmdaouser password: ecmdaopass . Configuring database using kubernetes resources . When using kubernetes resources we will want to differentiate configuration details which are sensitive and which are not. The former will be stored in configMap, while the later would use secret. That means here we’ll use a configMap to set store the database URL while credentials would live in a secret. That concretely translate into the following kubernetes resources: . apiVersion: v1 kind: ConfigMap metadata: labels: app.kubernetes.io/instance: myEcmReleaseName app.kubernetes.io/name: Alfresco-content-platform app.kubernetes.io/version: 1.0.0 name: ecm-database-location namespace: myecm data: MY_ECM_DB_URL: jdbc:postgresql://db.ecm.infra.local/alfresco MY_ECM_DB_DRIVER: org.postgresql.Driver . apiVersion: v1 kind: Secret metadata: labels: app.kubernetes.io/instance: myEcmReleaseName app.kubernetes.io/name: Alfresco-content-platform app.kubernetes.io/version: 1.0.0 name: ecm-database-credentials namespace: myecm data: MY_ECM_DB_USER: c2NvdHQ= MY_ECM_DB_PASS: dGlnZXI= . For example, if you’re creating this ConfigMap using a wrapping Helm chart, you can reuse a templating function provided by the alfresco-repository chart alfresco-repository.db.cm . Now we need to let the alfresco-repository chart where to find this: . repo: configuration: db: existingConfigMap: name: ecm-database-location keys: url: MY_ECM_DB_URL driver: MY_ECM_DB_DRIVER existingSecret: name: ecm-database-credentials keys: username: MY_ECM_DB_USER password: MY_ECM_DB_PASS . If you used the templating function mentioned above and provided by the subchart the keys would be different than the ones mentioned in the example above. Actually the function would render teh default keys so it’s not needed to set them. ",
     "url": "/alfresco-helm-charts/docs/build-your-own-charts.html#alfresco-components-charts",
     
     "relUrl": "/docs/build-your-own-charts.html#alfresco-components-charts"
-  },"60": {
+  },"63": {
     "doc": "Build your own charts",
     "title": "Build your own charts",
     "content": " ",
     "url": "/alfresco-helm-charts/docs/build-your-own-charts.html",
     
     "relUrl": "/docs/build-your-own-charts.html"
-  },"61": {
+  },"64": {
     "doc": "Database configuration",
     "title": "Alfresco Process Service database configuration",
     "content": "Alfresco Process Service uses a relational database to store data. It is not possible to use the same database for both applications. Though, both databases can be hosted on the same database server. ",
     "url": "/alfresco-helm-charts/charts/alfresco-activiti/docs/databases-configuration.html#alfresco-process-service-database-configuration",
     
     "relUrl": "/charts/alfresco-activiti/docs/databases-configuration.html#alfresco-process-service-database-configuration"
-  },"62": {
+  },"65": {
     "doc": "Database configuration",
     "title": "Configuring the APS database",
     "content": "This charts uses generic configuration means reused in all our charts. You should start reading the getting-started guide. Using values . The most straightforward way to configure the APS database is to use the Helm values file. The following example shows how to configure the APS database: . database: url: jdbc:postgresql://postgresql:5432/activiti username: alfresco password: alfresco . Using a ConfigMap &amp; Secret . Another and more production-ready way to configure the APS database is to use configmaps and secrets from an umbrella chart. This chart depends on the alfresco-common library chart, which provides a named template to ease creation of the database configuration. Below is an example which assumes the alfresco-activiti chart is set as a dependency in the umbrella chart and values are configured as follows: . # apsdb could be anything else, it is just a name apsdb: url: jdbc:mysql://mysql:3306/activiti alfresco-activiti: database: existingConfigMap: name: my-database-config . Then create a ConfigMap template with the following content: . apiVersion: v1 kind: ConfigMap metadata: name: my-database-config data: {{ template \"alfresco-activiti.db.cm\" .Values.apsdb }} . If you chose to not use the “alfresco-activiti.db.cm” helper template, you need to make sure you also provide the DATABASE_DRIVER key in the configmap. The helper will try autodetect which class to use based on the URL provided. If you want to use a custom driver class, you can provide it in the apsdb.driver value. For the secret there is no helper and you need to provide one secret which contains 2 data keys: . | DATABASE_USERNAME | DATABASE_PASSWORD | . apiVersion: v1 kind: Secret metadata: name: my-database-secret type: Opaque data: DATABASE_USERNAME: {{ .Values.apsdb.username | b64enc | quote }} DATABASE_PASSWORD: {{ .Values.apsdb.password | b64enc | quote }} . You may want to reuse a secret which is already created in your cluster but has different keys. In this case you would need to configure the alfresco-activiti chart as follows: . alfresco-activiti: database: existingSecret: name: my-database-secret keys: username: MY_DATABASE_USERNAME password: MY_DATABASE_PASSWORD . ",
     "url": "/alfresco-helm-charts/charts/alfresco-activiti/docs/databases-configuration.html#configuring-the-aps-database",
     
     "relUrl": "/charts/alfresco-activiti/docs/databases-configuration.html#configuring-the-aps-database"
-  },"63": {
+  },"66": {
     "doc": "Database configuration",
     "title": "Database configuration",
     "content": " ",
     "url": "/alfresco-helm-charts/charts/alfresco-activiti/docs/databases-configuration.html",
     
     "relUrl": "/charts/alfresco-activiti/docs/databases-configuration.html"
-  },"64": {
+  },"67": {
     "doc": "Index configuration",
     "title": "Alfresco Process Services search index configuration",
     "content": "Alfresco Process Services can use an Elasticsearch index. This document provides information on how to configure the search index in Alfresco Process Services. ",
     "url": "/alfresco-helm-charts/charts/alfresco-activiti/docs/elasticsearch-configuration.html#alfresco-process-services-search-index-configuration",
     
     "relUrl": "/charts/alfresco-activiti/docs/elasticsearch-configuration.html#alfresco-process-services-search-index-configuration"
-  },"65": {
+  },"68": {
     "doc": "Index configuration",
     "title": "Elasticsearch configuration",
     "content": "It is quite common to tie Alfresco Process Services to an Elasticsearch index which lives outside of the Kubernetes cluster. For example your index might be provided by a managed Elasticsearch service such as AWS OpenSearch. APS for now only support ElasticSearch 7.x . In order to connect to an external Elasticsearch index, you need to configure the following properties in the values.yaml file: . environment: ACTIVITI_ES_REST_CLIENT_ADDRESS: vpc-id.region.es.amazonaws.com ACTIVITI_ES_REST_CLIENT_PORT: 443 ACTIVITI_ES_REST_CLIENT_SCHEMA: https ACTIVITI_ES_REST_CLIENT_AUTH_ENABLED: true ACTIVITI_ES_REST_CLIENT_USERNAME: admin ACTIVITI_ES_REST_CLIENT_PASSWORD: esadmin . If you’re using an internal PKI, you will need to provide a keystore containing the certificate chain for the Elasticsearch server as a Kubernetes secret which must contain the data key truststore.p12. environment: ... ACTIVITI_ES_REST_CLIENT_KEYSTORE: /path/to/keystore/truststore.p12 ACTIVITI_ES_REST_CLIENT_KEYSTORE_TYPE: PKCS12 ACTIVITI_ES_REST_CLIENT_KEYSTORE_PASSWORD: somesecretpass volumes: - name: truststore secret: secretName: internal-truststore volumeMounts: - name: truststore readOnly: true mountPath: /path/to/keystore . ",
     "url": "/alfresco-helm-charts/charts/alfresco-activiti/docs/elasticsearch-configuration.html#elasticsearch-configuration",
     
     "relUrl": "/charts/alfresco-activiti/docs/elasticsearch-configuration.html#elasticsearch-configuration"
-  },"66": {
+  },"69": {
     "doc": "Index configuration",
     "title": "Index configuration",
     "content": " ",
     "url": "/alfresco-helm-charts/charts/alfresco-activiti/docs/elasticsearch-configuration.html",
     
     "relUrl": "/charts/alfresco-activiti/docs/elasticsearch-configuration.html"
-  },"67": {
+  },"70": {
     "doc": "Email features",
     "title": "Configuring email related features",
     "content": "Alfresco repository can interact with users through emails in different ways. Below we describe how to enable and configure the 3 main email features Alfresco offers: . | Sending emails | Accepting incoming email | IMAP interface to the repository | . ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/email.html#configuring-email-related-features",
     
     "relUrl": "/charts/alfresco-repository/docs/email.html#configuring-email-related-features"
-  },"68": {
+  },"71": {
     "doc": "Email features",
     "title": "Sending emails",
     "content": "To enable Alfresco to send emails, it needs to communicate with a mail relay that administrators must configure. This mail relay is considered an integral part of the required architecture, and administrators can configure it using standard Alfresco properties. There are 2 ways to pass properties to the repository: . | Using configuration.repository.existingConfigMap | Using environment.CATALINA_OPTS env var. | . Using a configmap . Passing properties through a configmap is as simple as setting it in the alfresco-global.properties file. Start by creating a file called alfresco-global.properties as a regular properties file: . mail.host=mysmtp.infra.local mail.port=587 mail.username=alfresco mail.from.default=alfresco@domain.tld mail.smtp.auth=true mail.smtp.starttls.enable=true . Note: Although possible, we do not set the authentication password is not set in the configmap. Instead we will create a secret for it. We then create a configmap from the file with the mail properties (and possibly other properties): . kubectl create configmap repo-config \\ --from-file=alfresco-global.properties . Using a env vars . Passing properties through the CATALINA_OPTS environment variable can be done as shown below: . environment: CATALINA_OPTS: &gt;- -Dmail.host=mysmtp.infra.local -Dmail.port=587 -Dmail.username=alfresco -Dmail.from.default=alfresco@domain.tld -Dmail.smtp.auth=true -Dmail.smtp.starttls.enable=true . Passing credentials . Regardless of whether you choose to pass properties using a configmap or directly values, you should avoid passing credentials in the same way. To securely pass credentials we will create a secret so the Alfresco repository can authenticate to the mail relay: . kubectl create secret generic mail-secret \\ --from-literal \"MAIL_PASSWORe=mysupersecret\" . Now when installing the chart you can use the values below: . configuration: repository: existingConfigMap: repo-config existingSecrets: - name: repository-secrets key: license.lic purpose: acs-license - name: mail-secret key: MAIL_PASSWORD purpose: property:mail.password . Enabling TLS/SSL . If you need to negotiate TLS/SSL session with the mail relay and your mail relay uses a certificate that’s not from a known CA, you will need to import a truststore containing either the server certificate itself or its issuing CA. Checkout the keystore doc for more details import a truststore or a keystore works the same way. ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/email.html#sending-emails",
     
     "relUrl": "/charts/alfresco-repository/docs/email.html#sending-emails"
-  },"69": {
+  },"72": {
     "doc": "Email features",
     "title": "Accepting incoming email",
     "content": "Enabling Alfresco Inbound SMTP capabilities allow content to be fed into Alfresco repository using email and SMTP protocol. It is HIGHLY recommended to not expose Alfresco SMTP server directly to the outside world and instead have an SMTP proxy to implement required security measures. configuration: smtp: enabled: true port: 1465 service: annotations: service.beta.kubernetes.io/load-balancer-source-ranges: 10.0.0.0/24 service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-xxxx, subnet-yyyy service.beta.kubernetes.io/aws-load-balancer-ssl-cert=arn:aws:acm:region:account:certificate/certificate_ID environment: CATALINA_OPTS: &gt;- -Demail.inbound.unknownUser=anonymous -Demail.server.domain=myecm.domain.tld -Demail.server.allowed.senders=ecm-ingestor@myecm.domain.tld -Demail.server.blocked.senders=.* -Demail.server.auth.enabled=true . Here we configure an SMTPs service to listen on port 1465 through an AWS loadbalancer and accept emails from a single sender. This loadbalancer will be responsible for doing the SSL off-load and further traffic will be cleartext. This is suitable in most cases as - as said earlier - your SMTP server should never be exposed directly on internet and have an SMTP proxy in front of it. In case you really need to terminate the SSL session on the Alfresco repo see the keystore doc . ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/email.html#accepting-incoming-email",
     
     "relUrl": "/charts/alfresco-repository/docs/email.html#accepting-incoming-email"
-  },"70": {
+  },"73": {
     "doc": "Email features",
     "title": "Enabling IMAP",
     "content": "Similarly to SMTP inbound, it is possible to enable IMAP interface to the repository using the configuration below: . To get broader view on the available properties to configure IMAP please refer to the IMAP documentation . configuration: imap: enabled: true port: 1145 service: annotations: service.beta.kubernetes.io/load-balancer-source-ranges: 10.0.0.0/24 service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp environment: CATALINA_OPTS: &gt;- -Dimap.server.attachments.extraction.enabled=false . As usual, in order to configure IMAPs or IMAP/TLS refer to the keystore documentation. ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/email.html#enabling-imap",
     
     "relUrl": "/charts/alfresco-repository/docs/email.html#enabling-imap"
-  },"71": {
+  },"74": {
     "doc": "Email features",
     "title": "Email features",
     "content": " ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/email.html",
     
     "relUrl": "/charts/alfresco-repository/docs/email.html"
-  },"72": {
+  },"75": {
     "doc": "Enterprise license",
     "title": "Deploy Alfresco repository with enterprise license",
     "content": "Alfresco content repository Docker images come with an embedded license which last only 2 days. If you’ve built a custom image, it may have a one year license but in order to change it you would need to build a new image. You can also configure this chart so the license is instead read from a kubernetes secret so that, when it’s time to renew the license you only need to update that secret. This configuration relies on 2 steps: . | creating a secret to hold the license | configuring the chart to use that secret | . ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/enterprise-license.html#deploy-alfresco-repository-with-enterprise-license",
     
     "relUrl": "/charts/alfresco-repository/docs/enterprise-license.html#deploy-alfresco-repository-with-enterprise-license"
-  },"73": {
+  },"76": {
     "doc": "Enterprise license",
     "title": "Create a kubernetes secret to store the license",
     "content": "Make sure your license available is readable and you have appropriate kubernetes access in order to create a secret in the ACS namespace where you want to deploy the helm release. ACS_NAMESPACE=acs kubectl create secret generic mylicense \\ --namespace $ACS_NAMESPACE \\ --from-file ~/Downloads/Alfresco-ent72-foobar.lic . ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/enterprise-license.html#create-a-kubernetes-secret-to-store-the-license",
     
     "relUrl": "/charts/alfresco-repository/docs/enterprise-license.html#create-a-kubernetes-secret-to-store-the-license"
-  },"74": {
+  },"77": {
     "doc": "Enterprise license",
     "title": "Configure the chart to leverage that secret",
     "content": "In the chart value file add the following: . alfresco-repository: configuration: repository: existingSecrets: - name: mylicense key: Alfresco-ent72-foobar.lic purpose: acs-license . License files for your Alfresco enterprise subscription can be obtained from the Hyland Community portal . ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/enterprise-license.html#configure-the-chart-to-leverage-that-secret",
     
     "relUrl": "/charts/alfresco-repository/docs/enterprise-license.html#configure-the-chart-to-leverage-that-secret"
-  },"75": {
+  },"78": {
     "doc": "Enterprise license",
     "title": "Applying a new license (in case this is not a fresh deployment)",
     "content": "Before your license expires you will want to apply a new one. It’s actually very easy do to so. All you need to do is overwrite the secret you created on previous deployment. You can use the exact same command just replacing the license file with the new one. Once that’s done you can refresh the license from the Alfresco admin console and use the “Apply a new license” feature (check the admin doc . ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/enterprise-license.html#applying-a-new-license-in-case-this-is-not-a-fresh-deployment",
     
     "relUrl": "/charts/alfresco-repository/docs/enterprise-license.html#applying-a-new-license-in-case-this-is-not-a-fresh-deployment"
-  },"76": {
+  },"79": {
     "doc": "Enterprise license",
     "title": "Enterprise license",
     "content": " ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/enterprise-license.html",
     
     "relUrl": "/charts/alfresco-repository/docs/enterprise-license.html"
-  },"77": {
+  },"80": {
     "doc": "Guides",
     "title": "Guides",
     "content": "This section groups all the available guides tailored to achieve specific use cases with the Helm charts. ",
     "url": "/alfresco-helm-charts/docs/guides/",
     
     "relUrl": "/docs/guides/"
-  },"78": {
+  },"81": {
     "doc": "Home",
     "title": "Alfresco Helm Charts",
     "content": "This website contains user documentation for the independent and lightweight Helm charts for Alfresco Content Services platform that can be used as building blocks by devops teams to build the Content Services platform that match the organization needs. Check the acs-deployment repository for an example of how to leverage these charts on an umbrella chart. If you want to understand what are the principles to leverage in order to build on top of Alfresco components’ chart please refer to the Build your own charts section. Each individual chart has its own autogenerated reference documentation in charts. Default values are documented there. There is also a section for guides describing how to cover specific use cases. ",
     "url": "/alfresco-helm-charts/index.html#alfresco-helm-charts",
     
     "relUrl": "/index.html#alfresco-helm-charts"
-  },"79": {
+  },"82": {
     "doc": "Home",
     "title": "Home",
     "content": " ",
     "url": "/alfresco-helm-charts/index.html",
     
     "relUrl": "/index.html"
-  },"80": {
+  },"83": {
     "doc": "Custom keystores",
     "title": "Using custom keystore",
     "content": "Alfresco uses a set of keystores for different purposes. Among others thing keystores can be used for metadata encryption or traffic encryption. The alfresco-content-repository image comes with a keystore which contains a single security key. That key is primarily used for metadata encryption and it required when the repository starts up. In production environment it is recommended to use a custom keystore rather than the one present in the image. One may also need to have additional keystores deployed, for instance to allow using TLS encryption for a service the repository provides using an x509 certificate. We describe below how to do both. ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/keystores.html#using-custom-keystore",
     
     "relUrl": "/charts/alfresco-repository/docs/keystores.html#using-custom-keystore"
-  },"81": {
+  },"84": {
     "doc": "Custom keystores",
     "title": "The metadata keystore",
     "content": "This keystore is used for property encryption and needs to remain identical throughout the life of the repository. Losing this keystore or its passwords will result in a repository that cannot startup so it is absolutely crucial to to back them up in some safe place. First create a local keystore. It is recommended to use p12 containers nowadays and leverage AES algorithm: . keytool -genseckey \\ -keystore /path/to/keystore.p12 -storetype PKCS12 \\ -storepass secret -keyalg AES \\ -keysize 256 \\ -alias metadata . Now we need to create a secret with from that keystore file and its password in the namespace where Alfresco will be deployed: . kubectl create secret generic repository-keystores \\ --from-file=/path/to/keystore.p12 \\ --from-literal \"ENC_METADATA_STOREPASS=secret\" \\ --from-literal \"ENC_METADATA_KEYPASS=secret\" . Note, unlike the older JCEKS format, PKCS12 do not allow having different passwords for the keystore and the key. so both variables need to be populated with the same value (the same one that was used whn generating the keystore using keytool (here “secret”). Once the secret is created in target namespace we need to let the chart know it needs to mount it and provide necessary options for the repository to access that keystore. To do so use the properties below: . --- configuration: repository: existingSecrets: - name: repository-keystores key: ENC_METADATA_STOREPASS - name: repository-keystores key: ENC_METADATA_KEYPASS environment: JAVA_OPTS: &gt;- -Dencryption.keystore.type=PKCS12 -Dencryption.cipherAlgorithm=AES/CBC/PKCS5Padding -Dencryption.keyAlgorithm=AES -Dencryption.keystore.location=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore.p12 -Dmetadata-keystore.aliases=metadata -Dmetadata-keystore.metadata.algorithm=AES extraVolumes: - name: keystore secret: secretName: repository-keystores extraVolumeMounts: - name: keystore readOnly: true mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/keystore . Note credentials are not passed directly using environment.JAVA_OPTS but secrets. ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/keystores.html#the-metadata-keystore",
     
     "relUrl": "/charts/alfresco-repository/docs/keystores.html#the-metadata-keystore"
-  },"82": {
+  },"85": {
     "doc": "Custom keystores",
     "title": "Other keystore",
     "content": "The same approach would work to deploy any keystore. Below example describes how to deploy a custom keystore (here for imaps configuration) together with the required option so the repository can use it. First let’s create a keysotre with a self-signed cert &amp; store it in a p12 file. openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout server.key -out server.crt openssl pkcs12 -export -in server.crt -inkey server.key -out server.p12 -name localhost keytool -importkeystore \\ -deststorepass secret -destkeypass secret -destkeystore keystore.p12 -deststoretype PKCS12 \\ -srckeystore server.p12 -srcstoretype PKCS12 -srcstorepass secret \\ -alias localhost . Java prefers working with PKCS12 containers generated using keytool so that’s why we generate 2 p12 files . Then create a secret from this keystore file: . kubectl create secret generic repository-keystores \\ --from-file=keystore.p12 \\ . Now in order to make sure the repo can open the keystore we need to give the necessary credentials. We will pass credentials values as kubernetes secret keys’ values and their related java properties as their keys. For example in order to pass the property javax.net.ssl.keyStorePassword=secret we would create the secret as follow: . kubectl create secret generic kesystore-secret \\ --from-literal MYKEYSTORE_PASS=secret . credentials can be held in the same secret as the keystore itself. Now we need to reference these secrets and pass the non sensitive properties as environment.JAVA_OPTS when deploying the alfresco-repository chart: . extraVolumes: - name: keystore secret: secretName: repository-keystores extraVolumeMounts: - name: keystore readOnly: true mountPath: /usr/local/tomcat/shared/classes/alfresco/extension/keystore configuration: repository: existingSecrets: - name: kesystore-secret key: javax.net.ssl.keyStorePassword purpose: property:javax.net.ssl.keyStorePassword environment: JAVA_OPTS: &gt;- -Djavax.net.ssl.keyStore=/usr/local/tomcat/shared/classes/alfresco/extension/keystore/keystore.p12 . This very same procdure can apply to other service which require a certification to enable traffic encryption. ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/keystores.html#other-keystore",
     
     "relUrl": "/charts/alfresco-repository/docs/keystores.html#other-keystore"
-  },"83": {
+  },"86": {
     "doc": "Custom keystores",
     "title": "Custom keystores",
     "content": " ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/keystores.html",
     
     "relUrl": "/charts/alfresco-repository/docs/keystores.html"
-  },"84": {
+  },"87": {
     "doc": "Charts Reference",
     "title": "Charts Reference",
     "content": "This section groups all the reference documentation available for the charts we maintain. They are automatically generated via helm-docs. ",
     "url": "/alfresco-helm-charts/docs/reference.html",
     
     "relUrl": "/docs/reference.html"
-  },"85": {
+  },"88": {
     "doc": "Global properties",
     "title": "Configuring Alfresco repository",
     "content": "Alfresco repository can be configured using properties files. The most common one is alfresco-global.properties. Another option to pass configuration properties for the Alfresco repository is to use the CATALINA_OPTSenvironment variable. Using env vars to configure an application is very common in containerized environments. In some circumstances you might need/want to use subsystem configuration. This is mostly useful in case you need to instantiate several times the same subsystem, otherwise you should prefer properties or environment variables. Neither environment variables nor configmaps are really suitable to pass sensitive data. For that purpose secrets are recommended. Below we provide details on how to use each of these option and how (the subsystem approach is explained here. ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/repository-properties.html#configuring-alfresco-repository",
     
     "relUrl": "/charts/alfresco-repository/docs/repository-properties.html#configuring-alfresco-repository"
-  },"86": {
+  },"89": {
     "doc": "Global properties",
     "title": "Repository configuration using alfresco-global.properties",
     "content": "Although the alfresco-repository chart do not generate the alfresco-globa.properties file, it can be passed as a pre-existing configmap making it easy for you to port your existing configuration to kubernetes environments. Such a pre-existing secret must be referenced using the value configuration.repository.existingConfigMap. configuration: repository: existingConfigMap: my-global-properties-cm . This configmap should be the mere representation of the file, for example: . apiVersion: v1 kind: ConfigMap metadata: name: my-global-properties-cm data: alfresco-global.properties: | deployment.method=HELM_CHART alfresco.host=myecm.domain.tld alfresco.port=443 alfresco.protocol=https . ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/repository-properties.html#repository-configuration-using-alfresco-globalproperties",
     
     "relUrl": "/charts/alfresco-repository/docs/repository-properties.html#repository-configuration-using-alfresco-globalproperties"
-  },"87": {
+  },"90": {
     "doc": "Global properties",
     "title": "Repository configuration using environment variables",
     "content": "Using environment variable is quite similar to using a properties file. All one need to do in order to switch from one approach to the other is to prefix the property with the -D java uses to set system properties. Such properties are passed as shown below using the environment.CATALINA_OPTS value. environment: CATALINA_OPTS: &gt;- -DalfrescoNtlm1:alfrescoNtlm,ldap1:ldap -Dsynchronization.externalUserControl=true -Dsynchronization.externalUserControlSubsystemName=ldap1 -Dldap.synchronization.userAccountStatusProperty=pwdAccountLockedTime -Dldap.synchronization.disabledAccountPropertyValue=000001010000Z . ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/repository-properties.html#repository-configuration-using-environment-variables",
     
     "relUrl": "/charts/alfresco-repository/docs/repository-properties.html#repository-configuration-using-environment-variables"
-  },"88": {
+  },"91": {
     "doc": "Global properties",
     "title": "Sensitive data within the repository configuration",
     "content": "Sometimes the data required as a repository property is considered sensitive. In such case we recommend using the approach below. In the first place you will need a secret to hold the sensitive data you want to pass to the Alfresco repository. One can be created as follow: . kubectl create secret generic repo-secret \\ --from-literal \"REPO_ADMIN_PASSWORD=moreSecureThanAdmin\" . Now we will reference that secret in the list of configuration.repository.existingSecrets by specifying its name, the key which holds the sensitive data we need and specify the name of the property we want to assign that value to. Here the name of the secret is repo-scret, the key holding the sensitive value is REPO_ADMIN_PASSWORD and the property must be specified using purpose attribute and following the syntax “property:doted.notation.property” . configuration: repository: existingSecrets: - name: repo-secret key: REPO_ADMIN_PASSWORD purpose: property:alfresco_user_store.adminpassword . ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/repository-properties.html#sensitive-data-within-the-repository-configuration",
     
     "relUrl": "/charts/alfresco-repository/docs/repository-properties.html#sensitive-data-within-the-repository-configuration"
-  },"89": {
+  },"92": {
     "doc": "Global properties",
     "title": "Global properties",
     "content": " ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/repository-properties.html",
     
     "relUrl": "/charts/alfresco-repository/docs/repository-properties.html"
-  },"90": {
+  },"93": {
     "doc": "Subsystems",
     "title": "Configuring Alfresco subsystems",
     "content": "This chart offers a rather simple mechanism to configure Alfresco Subsystems. Although subsystems are well known to most Alfresco administrators, in a kubernetes environment they should be used only when necessary (e.g. if in need to instantiate several instances of the same subsystem) . Subsystem configuration relies on providing a secret which contains all the configuration files for the subsystems. The secret needs to be added to the list of configuration.repository.existingSecrets: . configuration: repository: existingSecrets: - name: ldap1 purpose: subsystems:Authentication:ldap . For the above configuration to work there are some rules to follow: . | name must match both the secret name and the subsystem instance name (in case the subsystem name must be referenced somewhere else, e.g. in authentication.chain) | purpose must be of the form: subsystems:subsystemName:subsystemType | The secret must contain all necessary files to configure the subsystem. Usually a bean definition XML file and properties file. (see example below) | . Kubernetes secrets can not be bigger than 1MB. That means that this method will not work in case a subsystem contain 1MB of data or more. This should not be the case for most subsystems but is important t know in case of customizations . ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/subsystems.html#configuring-alfresco-subsystems",
     
     "relUrl": "/charts/alfresco-repository/docs/subsystems.html#configuring-alfresco-subsystems"
-  },"91": {
+  },"94": {
     "doc": "Subsystems",
     "title": "Examples: ContentStore configuration",
     "content": "Creating the subsystem’s secret: . Place all the configuration files in a folder on your local system. Sample files can be extracted from the S3 AMP file. For more details on the content of the files check out the Alfresco S3 connector docs. mkdir s3-config unzip -d s3-config ~/Downloads/alfresco-s3-connector-5.1.0.amp config/alfresco/subsystems/ContentStore/S3/ tree s3-config s3-config/ ├── s3-contentstore-context.xml └── s3-contentstore.properties ... By default subsystem Beans may include other XML files from upper level directories. This is not possible with as kubernetes secrets are projected down from a single directory (mount point). If your subsystem config does this kind of inclusion you’ll need to amend the Bean to not use import statement or import from the current directory. Create the secret using kubectl . kubectl create secret generic S3 --from-file=s3-config/ . Pass the following configuration.repository.existingSecrets together with the property to set the new contentstore subsystem as the default contentstore: . configuration: repository: existingSecrets: - name: repository-secrets key: license.lic purpose: acs-license - name: S3 purpose: subsystems:ContentStore:S3 environment: CATALINA_OPTS: &gt;- -Dfilecontentstore.subsystem.name=S3 . As a list, configuration.repository/existingSecrets cannot be merged so you would need to re-define the license secret to have it deployed. ",
     "url": "/alfresco-helm-charts/charts/alfresco-repository/docs/subsystems.html#examples-contentstore-configuration",
     
     "relUrl": "/charts/alfresco-repository/docs/subsystems.html#examples-contentstore-configuration"
-  },"92": {
+  },"95": {
     "doc": "Subsystems",
     "title": "Subsystems",
     "content": " ",
