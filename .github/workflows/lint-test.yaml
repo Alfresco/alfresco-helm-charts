@@ -11,6 +11,7 @@ on:
       - labeled
     paths:
       - 'charts/**'
+      - '.github/workflows/lint-test.yaml'
       - '!charts/**/README.md'
       - '!charts/**/README.md.gotmpl'
       - '!charts/**/docs/**'
