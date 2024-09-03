@@ -11,6 +11,7 @@ on:
       - labeled
     paths:
       - 'charts/**'
+      - '.github/workflows/lint-test.yaml'
       - '!charts/**/README.md'
       - '!charts/**/README.md.gotmpl'
       - '!charts/**/docs/**'
@@ -38,7 +39,7 @@ jobs:
 
       - name: Set up Unit Test plugin for Helm
         env:
-          HELM_UNITTEST_VERSION: v0.4.1
+          HELM_UNITTEST_VERSION: v0.6.1
         run: |
           helm plugin install https://github.com/helm-unittest/helm-unittest --version $HELM_UNITTEST_VERSION
 
