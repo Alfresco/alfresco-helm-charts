@@ -7,8 +7,6 @@ liveIngester:
     limits:
       cpu: "1"
       memory: "500Mi"
-  livenessProbe: null
-  readinessProbe: null
 bulkIngester:
   resources:
     requests:
@@ -26,8 +24,6 @@ predictionApplier:
     limits:
       cpu: "1"
       memory: "1Gi"
-  livenessProbe: null
-  readinessProbe: null
 activemq:
   fullnameOverride: activemq
   resources:
@@ -42,7 +38,7 @@ db:
 messageBroker:
   url: nio://activemq-broker:61616
 repository:
-  url: http://repository
+  versionOverride: '23.3.0'
 ats:
   sfsUrl: http://alfresco-transform-services-sfs
 hxi:
