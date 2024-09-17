@@ -46,7 +46,7 @@ Usage: include "alfresco-common.csrf.origin" $
   {{- $known_url := urlJoin (dict "host" $parsed_url.host "scheme" $parsed_url.scheme) }}
   {{- $csrf_origins = append $csrf_origins $known_url }}
 {{- end }}
-{{- $csrf_origins | join "," }}
+{{- $csrf_origins | join "\\|" }}
 {{- end -}}
 
 {{/*
