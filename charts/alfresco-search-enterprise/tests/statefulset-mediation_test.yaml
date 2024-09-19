@@ -1,5 +1,5 @@
 ---
-suite: test liveindexing template rendering
+suite: mediation sts
 templates:
   - statefulset-mediation.yaml
   - service-headless-mediation.yaml
@@ -44,4 +44,27 @@ tests:
             app.kubernetes.io/name: mediation
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-search-enterprise-1.0.0
+        template: statefulset-mediation.yaml
+
+  - it: should render default environment variables in statefulset
+    asserts:
+      - lengthEqual:
+          path: spec.template.spec.containers[0].env
+          count: 11
+        template: statefulset-mediation.yaml
+
+  - it: should render custom environment variables for statefulset
+    set:
+      liveIndexing:
+        environment:
+          key1: value1
+          key2: value2
+        mediation:
+          environment:
+            key3: value3
+            key4: value4
+    asserts:
+      - lengthEqual:
+          path: spec.template.spec.containers[0].env
+          count: 15
         template: statefulset-mediation.yaml
