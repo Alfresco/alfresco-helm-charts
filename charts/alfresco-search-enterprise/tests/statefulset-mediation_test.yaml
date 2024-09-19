@@ -57,14 +57,22 @@ tests:
     set:
       liveIndexing:
         environment:
-          key1: value1
-          key2: value2
+          CUSTOM_COMMON_ENV: custom_value
         mediation:
           environment:
-            key3: value3
-            key4: value4
+            CUSTOM_MEDIATION_ENV: custom_value
+    template: statefulset-mediation.yaml
     asserts:
       - lengthEqual:
           path: spec.template.spec.containers[0].env
-          count: 15
-        template: statefulset-mediation.yaml
+          count: 13
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_COMMON_ENV
+            value: custom_value
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_MEDIATION_ENV
+            value: custom_value
