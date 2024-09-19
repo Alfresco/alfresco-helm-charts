@@ -352,3 +352,62 @@ tests:
           content:
             name: CUSTOM_ENV
             value: custom_value
+      # documentIndex: content (0)
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_CONTENT_ENV
+            value: custom_value
+        documentIndex: 0
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_METADATA_ENV
+            value: custom_value
+        documentIndex: 0
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_PATH_ENV
+            value: custom_value
+        documentIndex: 0
+
+      # documentIndex: metadata (1)
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_METADATA_ENV
+            value: custom_value
+        documentIndex: 1
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_CONTENT_ENV
+            value: custom_value
+        documentIndex: 1
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_PATH_ENV
+            value: custom_value
+        documentIndex: 1
+
+      # documentIndex: path (2)
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_PATH_ENV
+            value: custom_value
+        documentIndex: 2
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_CONTENT_ENV
+            value: custom_value
+        documentIndex: 2
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_METADATA_ENV
+            value: custom_value
+        documentIndex: 2
