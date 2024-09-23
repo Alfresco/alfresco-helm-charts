@@ -66,3 +66,11 @@ tests:
             configMapRef:
               name: RELEASE-NAME-alfresco-activiti-admin
         template: deployment.yaml
+  - it: should render default probes
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].livenessProbe.httpGet.path
+          value: /activiti-admin/actuator/health/liveness
+      - equal:
+          path: spec.template.spec.containers[0].readinessProbe.httpGet.path
+          value: /activiti-admin/actuator/health/readiness
