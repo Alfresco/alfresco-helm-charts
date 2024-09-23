@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-service
 
-![Version: 3.3.2](https://img.shields.io/badge/Version-3.3.2-informational?style=flat-square) ![AppVersion: 2.0.11](https://img.shields.io/badge/AppVersion-2.0.11-informational?style=flat-square)
+![Version: 3.3.3](https://img.shields.io/badge/Version-3.3.3-informational?style=flat-square) ![AppVersion: 2.0.11](https://img.shields.io/badge/AppVersion-2.0.11-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
@@ -42,7 +42,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainer.image.repository | string | `"busybox"` |  |
 | initContainer.image.tag | string | `"1.35.0"` |  |
-| initContainer.resources.limits.memory | string | `"10Mi"` |  |
+| initContainer.resources.limits.memory | string | `"20Mi"` |  |
 | initContainer.resources.requests.memory | string | `"5Mi"` |  |
 | insightEngineImage.internalPort | string | `nil` | container's port search service is listening on change if your custom image use a different port. |
 | insightEngineImage.pullPolicy | string | `"IfNotPresent"` |  |

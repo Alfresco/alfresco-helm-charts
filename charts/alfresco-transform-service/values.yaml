@@ -767,7 +767,7 @@ filestore:
     resources:
       limits:
         cpu: "0.50"
-        memory: "10Mi"
+        memory: "20Mi"
   service:
     name: filestore
     type: ClusterIP
