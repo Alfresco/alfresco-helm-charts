@@ -29,8 +29,7 @@ spec:
       {{- include "alfresco-common.imagePullSecrets" $ | indent 6 }}
       containers:
         - name: {{ include (printf "alfresco-search-enterprise.%s.name" $serviceName) $ }}
-          image: "{{ $service.image.repository }}:\
-            {{ index $service.image.tag }}"
+          image: {{ $service.image.repository }}:{{ $service.image.tag }}
           imagePullPolicy: {{ $service.image.pullPolicy }}
             {{- include "alfresco-common.component-security-context" $.Values | indent 8 }}
           env:
