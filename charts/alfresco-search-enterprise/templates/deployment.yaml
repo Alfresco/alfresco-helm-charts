@@ -29,9 +29,9 @@ spec:
       {{- include "alfresco-common.imagePullSecrets" $ | indent 6 }}
       containers:
         - name: {{ include (printf "alfresco-search-enterprise.%s.name" $serviceName) $ }}
-          image: "{{ index $.Values "liveIndexing" $serviceName "image" "repository" }}:\
-            {{ index $.Values "liveIndexing" $serviceName "image" "tag" }}"
-          imagePullPolicy: {{ index $.Values "liveIndexing" $serviceName "image" "pullPolicy" }}
+          image: "{{ $service.image.repository }}:\
+            {{ index $service.image.tag }}"
+          imagePullPolicy: {{ $service.image.pullPolicy }}
             {{- include "alfresco-common.component-security-context" $.Values | indent 8 }}
           env:
             {{- include "alfresco-search-enterprise.activemq.secret.env" $ | nindent 12 }}
@@ -52,7 +52,7 @@ spec:
                 configMapKeyRef:
                   name: {{ $ats_cm }}
                   key: {{ $.Values.ats.existingConfigMap.keys.sfs_url }}
-            {{- range $key, $val := deepCopy $.Values.liveIndexing.environment | mustMerge (index $.Values "liveIndexing" $serviceName "environment") }}
+            {{- range $key, $val := deepCopy $.Values.liveIndexing.environment | mustMerge ($service.environment) }}
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end }}

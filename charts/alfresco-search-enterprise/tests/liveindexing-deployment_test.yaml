@@ -3,7 +3,7 @@ suite: test liveindexing template rendering
 templates:
   - configmap-ats.yaml
   - configmap-elasticsearch.yaml
-  - liveindexing-deployment.yaml
+  - deployment.yaml
   - secret-elasticsearch.yaml
   - secret-database.yaml
   - secret-messagebroker.yaml
@@ -13,7 +13,7 @@ tests:
       using provided values and check deployment has appropriate defaults
     values: &testvalues
       - values/embedded-charts-values.yaml
-    template: liveindexing-deployment.yaml
+    template: deployment.yaml
     asserts:
       - equal:
           path: data.SEARCH_URL
@@ -197,7 +197,7 @@ tests:
   - it: |
       Render default manifest with embedded elasticsearch and pre-existing secret
     values: *testvalues
-    template: liveindexing-deployment.yaml
+    template: deployment.yaml
     set:
       search:
         existingConfigMap:
@@ -274,14 +274,14 @@ tests:
       - equal:
           path: spec.template.spec.nodeSelector.node_label
           value: node_value
-        template: liveindexing-deployment.yaml
+        template: deployment.yaml
 
   - it: should render labels for deployment
     values: *testvalues
     chart:
       version: 1.0.0
       appVersion: 2.0.0
-    template: liveindexing-deployment.yaml
+    template: deployment.yaml
     documentIndex: 0
     asserts:
       - isSubset:
@@ -299,7 +299,7 @@ tests:
     chart:
       version: 1.0.0
       appVersion: 2.0.0
-    template: liveindexing-deployment.yaml
+    template: deployment.yaml
     documentIndex: 1
     asserts:
       - isSubset:
@@ -317,7 +317,7 @@ tests:
     chart:
       version: 1.0.0
       appVersion: 2.0.0
-    template: liveindexing-deployment.yaml
+    template: deployment.yaml
     documentIndex: 2
     asserts:
       - isSubset:
@@ -345,7 +345,7 @@ tests:
         path:
           environment:
             CUSTOM_PATH_ENV: custom_value
-    template: liveindexing-deployment.yaml
+    template: deployment.yaml
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
