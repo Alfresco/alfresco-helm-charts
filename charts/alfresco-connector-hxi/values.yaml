@@ -102,7 +102,7 @@ bulkIngester:
       resources:
         limits:
           cpu: "0.25"
-          memory: "10Mi"
+          memory: "20Mi"
   affinity: {}
 predictionApplier:
   enabled: true

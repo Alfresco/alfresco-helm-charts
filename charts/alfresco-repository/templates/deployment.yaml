@@ -33,7 +33,7 @@ spec:
           resources:
             limits:
               cpu: "0.25"
-              memory: "12Mi"
+              memory: "20Mi"
           env:
             {{ include "alfresco-repository.db.env" . | indent 12 }}
           command:
