@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-hxi
 
-![Version: 0.1.0-alpha.0](https://img.shields.io/badge/Version-0.1.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
+![Version: 0.1.0-alpha.1](https://img.shields.io/badge/Version-0.1.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector hxi services
 
@@ -35,7 +35,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | bulkIngester.image.repository | string | `"quay.io/alfresco/alfresco-hxinsight-connector-bulk-ingester"` |  |
 | bulkIngester.image.tag | string | `"1.0.0-A13"` |  |
 | bulkIngester.initContainers.waitForRepository.resources.limits.cpu | string | `"0.25"` |  |
-| bulkIngester.initContainers.waitForRepository.resources.limits.memory | string | `"10Mi"` |  |
+| bulkIngester.initContainers.waitForRepository.resources.limits.memory | string | `"20Mi"` |  |
 | bulkIngester.resources.limits.cpu | string | `"2"` |  |
 | bulkIngester.resources.limits.memory | string | `"512Mi"` |  |
 | bulkIngester.resources.requests.cpu | string | `"0.5"` |  |

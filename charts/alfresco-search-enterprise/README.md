@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-enterprise
 
-![Version: 4.0.0](https://img.shields.io/badge/Version-4.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
+![Version: 4.0.1](https://img.shields.io/badge/Version-4.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -79,7 +79,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | reindexing.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-reindexing"` |  |
 | reindexing.image.tag | string | `"4.1.0"` |  |
 | reindexing.initcontainers.waitForRepository.resources.limits.cpu | string | `"0.25"` |  |
-| reindexing.initcontainers.waitForRepository.resources.limits.memory | string | `"10Mi"` |  |
+| reindexing.initcontainers.waitForRepository.resources.limits.memory | string | `"20Mi"` |  |
 | reindexing.pathIndexingEnabled | bool | `true` |  |
 | reindexing.repository.existingConfigMap.keys.url | string | `"REPOSITORY_URL"` | Key within the configmap holding the full url to connect to the alfresco repository |
 | reindexing.repository.existingConfigMap.name | string | `nil` | Alternatively, provide repository connection details via an existing configmap |
