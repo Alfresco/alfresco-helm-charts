@@ -234,7 +234,7 @@ reindexing:
       resources:
         limits:
           cpu: "0.25"
-          memory: "10Mi"
+          memory: "20Mi"
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

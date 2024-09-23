@@ -85,7 +85,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | reindexing.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-reindexing"` |  |
 | reindexing.image.tag | string | `"4.1.0"` |  |
 | reindexing.initcontainers.waitForRepository.resources.limits.cpu | string | `"0.25"` |  |
-| reindexing.initcontainers.waitForRepository.resources.limits.memory | string | `"10Mi"` |  |
+| reindexing.initcontainers.waitForRepository.resources.limits.memory | string | `"20Mi"` |  |
 | reindexing.pathIndexingEnabled | bool | `true` |  |
 | reindexing.repository.existingConfigMap.keys.url | string | `"REPOSITORY_URL"` | Key within the configmap holding the full url to connect to the alfresco repository |
 | reindexing.repository.existingConfigMap.name | string | `nil` | Alternatively, provide repository connection details via an existing configmap |

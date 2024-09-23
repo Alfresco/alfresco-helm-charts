@@ -127,7 +127,7 @@ initContainer:
     requests:
       memory: "5Mi"
     limits:
-      memory: "10Mi"
+      memory: "20Mi"
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
 nodeSelector: {}
