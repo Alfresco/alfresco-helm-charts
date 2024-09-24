@@ -3,7 +3,7 @@ suite: test liveindexing template rendering
 templates:
   - configmap-ats.yaml
   - configmap-elasticsearch.yaml
-  - liveindexing-deployment.yaml
+  - deployment.yaml
   - secret-elasticsearch.yaml
   - secret-database.yaml
   - secret-messagebroker.yaml
@@ -13,7 +13,7 @@ tests:
       using provided values and check deployment has appropriate defaults
     values: &testvalues
       - values/embedded-charts-values.yaml
-    template: liveindexing-deployment.yaml
+    template: deployment.yaml
     asserts:
       - equal:
           path: data.SEARCH_URL
@@ -195,9 +195,9 @@ tests:
         documentIndex: 2
 
   - it: |
-      Render default mainfest with embedded elasticsearch and pre-existing secret
+      Render default manifest with embedded elasticsearch and pre-existing secret
     values: *testvalues
-    template: liveindexing-deployment.yaml
+    template: deployment.yaml
     set:
       search:
         existingConfigMap:
@@ -274,14 +274,14 @@ tests:
       - equal:
           path: spec.template.spec.nodeSelector.node_label
           value: node_value
-        template: liveindexing-deployment.yaml
+        template: deployment.yaml
 
   - it: should render labels for deployment
     values: *testvalues
     chart:
       version: 1.0.0
       appVersion: 2.0.0
-    template: liveindexing-deployment.yaml
+    template: deployment.yaml
     documentIndex: 0
     asserts:
       - isSubset:
@@ -299,7 +299,7 @@ tests:
     chart:
       version: 1.0.0
       appVersion: 2.0.0
-    template: liveindexing-deployment.yaml
+    template: deployment.yaml
     documentIndex: 1
     asserts:
       - isSubset:
@@ -317,7 +317,7 @@ tests:
     chart:
       version: 1.0.0
       appVersion: 2.0.0
-    template: liveindexing-deployment.yaml
+    template: deployment.yaml
     documentIndex: 2
     asserts:
       - isSubset:
@@ -329,3 +329,85 @@ tests:
             app.kubernetes.io/name: path
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-search-enterprise-1.0.0
+
+  - it: should render custom environment variables
+    values: *testvalues
+    set:
+      liveIndexing:
+        environment:
+          CUSTOM_ENV: custom_value
+        content:
+          environment:
+            CUSTOM_CONTENT_ENV: custom_value
+        metadata:
+          environment:
+            CUSTOM_METADATA_ENV: custom_value
+        path:
+          environment:
+            CUSTOM_PATH_ENV: custom_value
+    template: deployment.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_ENV
+            value: custom_value
+      # documentIndex: content (0)
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_CONTENT_ENV
+            value: custom_value
+        documentIndex: 0
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_METADATA_ENV
+            value: custom_value
+        documentIndex: 0
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_PATH_ENV
+            value: custom_value
+        documentIndex: 0
+
+      # documentIndex: metadata (1)
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_METADATA_ENV
+            value: custom_value
+        documentIndex: 1
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_CONTENT_ENV
+            value: custom_value
+        documentIndex: 1
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_PATH_ENV
+            value: custom_value
+        documentIndex: 1
+
+      # documentIndex: path (2)
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_PATH_ENV
+            value: custom_value
+        documentIndex: 2
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_CONTENT_ENV
+            value: custom_value
+        documentIndex: 2
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_METADATA_ENV
+            value: custom_value
+        documentIndex: 2

@@ -35,7 +35,7 @@ spec:
                 configMapKeyRef:
                   name: {{ $ats_cm }}
                   key: {{ .Values.ats.existingConfigMap.keys.transform_url }}
-            {{- range $key, $val := .Values.liveIndexing.environment }}
+            {{- range $key, $val := deepCopy .Values.liveIndexing.environment | mustMerge .Values.liveIndexing.mediation.environment }}
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end }}
