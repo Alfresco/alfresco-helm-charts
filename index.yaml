@@ -1410,6 +1410,20 @@ entries:
   alfresco-connector-ms365:
   - apiVersion: v2
     appVersion: 2.0.3
+    created: "2024-09-25T08:40:52.463666966Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.3
+    description: A Helm chart for deploying Alfresco connector ms365 service
+    digest: 117d8e8e6ad9b4f048b55874a84da9b615bfd0b59bd132bc8de9dcf12d865cfe
+    name: alfresco-connector-ms365
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-ms365-2.1.0/alfresco-connector-ms365-2.1.0.tgz
+    version: 2.1.0
+  - apiVersion: v2
+    appVersion: 2.0.3
     created: "2024-08-27T07:11:26.823409581Z"
     dependencies:
     - name: alfresco-common
@@ -1661,6 +1675,20 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-ms365-0.1.0-alpha.0/alfresco-connector-ms365-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-connector-msteams:
+  - apiVersion: v2
+    appVersion: 2.0.3
+    created: "2024-09-25T08:40:52.696889098Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.3
+    description: A Helm chart for deploying Alfresco connector msteams service
+    digest: 5fc61c9653d6f9fc9fcb9e0a19ace65bbcf0bc330020c767bd30e72578f6454d
+    name: alfresco-connector-msteams
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-msteams-1.1.0/alfresco-connector-msteams-1.1.0.tgz
+    version: 1.1.0
   - apiVersion: v2
     appVersion: 2.0.3
     created: "2024-08-27T07:11:26.959486921Z"
@@ -5447,4 +5475,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-09-25T07:43:49.578936416Z"
+generated: "2024-09-25T08:40:52.697966416Z"
