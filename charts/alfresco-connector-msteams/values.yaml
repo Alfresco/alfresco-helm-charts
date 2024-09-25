@@ -17,6 +17,7 @@ service:
   type: ClusterIP
   externalPort: 80
 ingress:
+  className: nginx
   path: /ms-teams-service
   tls: []
   extraAnnotations: {}

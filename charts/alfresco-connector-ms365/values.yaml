@@ -57,6 +57,7 @@ service:
   type: ClusterIP
   externalPort: 80
 ingress:
+  className: nginx
   path: /ooi-service
   tls: []
   extraAnnotations: {}

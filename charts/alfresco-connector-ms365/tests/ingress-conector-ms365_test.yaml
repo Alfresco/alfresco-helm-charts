@@ -16,3 +16,8 @@ tests:
         content:
           annotationTest1: test1
           annotationTest2: test2
+- it: should render default ingressClassName
+  asserts:
+    - equal:
+        path: spec.ingressClassName
+        value: nginx
