@@ -323,7 +323,7 @@
   },"46": {
     "doc": "alfresco-share",
     "title": "Requirements",
-    "content": "| Repository | Name | Version | . | https://alfresco.github.io/alfresco-helm-charts | alfresco-common | 3.1.3 | . ",
+    "content": "| Repository | Name | Version | . | https://alfresco.github.io/alfresco-helm-charts | alfresco-common | 3.1.4 | . ",
     "url": "/alfresco-helm-charts/charts/alfresco-share/README.html#requirements",
     
     "relUrl": "/charts/alfresco-share/README.html#requirements"
