@@ -187,6 +187,9 @@ reindexing:
     pullPolicy: IfNotPresent
   pathIndexingEnabled: true
   environment: {}
+  # -- When to execute the reindexing job (e.g. `post-install` or `post-upgrade`
+  # or set to false to apply as a standard resource)
+  hookExecution: post-install
   repository:
     # -- URL of the Alfresco repository
     url: null

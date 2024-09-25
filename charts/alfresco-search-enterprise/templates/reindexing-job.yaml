@@ -2,9 +2,13 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "alfresco-search-enterprise.fullname" . }}-reindexing
+  name: {{ include "alfresco-search-enterprise.fullname" . }}-reindexing{{ if eq (.Values.reindexing.hookExecution | default "") "post-upgrade" }}-{{ randAlphaNum 5 | lower }}{{ end }}
   labels:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
+  annotations:
+    {{- with .Values.reindexing.hookExecution }}
+    "helm.sh/hook": {{ . | quote }}
+    {{- end }}
 spec:
   template:
     metadata:
