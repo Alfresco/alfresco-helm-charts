@@ -2,3 +2,7 @@ tags:
   ci: true
 
 replicaCount: 2
+
+known_urls:
+  - "http://localhost:8080"
+  - "http://localhost:8080/share"
