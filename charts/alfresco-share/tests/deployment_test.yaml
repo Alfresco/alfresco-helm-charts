@@ -131,8 +131,8 @@ tests:
             provided known_urls MUST start with a scheme (http :// or https://)
   - it: |
       should render custom CSRF config.
-      referers MUST be a regex with pipes escaped (due to the way vars are substitued in Share pods
-      origins MUST be a list of hosts (without paths) separated by commas.
+      referrers MUST be a regex with pipes escaped (due to the way vars are substituted in Share pods
+      origins MUST be a list of hosts (without paths) separated by pipes.
     set:
       known_urls:
         - https://ecm.domain.tld/myapp/callback
@@ -140,27 +140,39 @@ tests:
         - http://app.domain.local:8000
     asserts:
       - equal:
-          path: spec.template.spec.containers[0].env[0].value
-          value: >-
-            https://ecm.domain.tld/myapp/callback/.*\|https://ecm.domain.tld/alfresco/.*\|http://app.domain.local:8000/.*
+          path: spec.template.spec.containers[0].env[0]
+          value:
+            name: CSRF_FILTER_REFERER
+            value: >-
+              https://ecm.domain.tld/myapp/callback/.*\|https://ecm.domain.tld/alfresco/.*\|http://app.domain.local:8000/.*
       - equal:
-          path: spec.template.spec.containers[0].env[1].value
-          value: https://ecm.domain.tld,https://ecm.domain.tld,http://app.domain.local:8000
+          path: spec.template.spec.containers[0].env[1]
+          value:
+            name: CSRF_FILTER_ORIGIN
+            value: https://ecm.domain.tld\|https://ecm.domain.tld\|http://app.domain.local:8000
       - equal:
-          path: spec.template.spec.containers[0].env[2].value
-          value: https://ecm.domain.tld
+          path: spec.template.spec.containers[0].env[2]
+          value:
+            name: BASEURL
+            value: https://ecm.domain.tld
 
   - it: should render a default Xorigin restriction config
     asserts:
       - equal:
-          path: spec.template.spec.containers[0].env[0].value
-          value: http://localhost/.*\|https://localhost/.*
+          path: spec.template.spec.containers[0].env[0]
+          value:
+            name: CSRF_FILTER_REFERER
+            value: http://localhost/.*\|https://localhost/.*
       - equal:
-          path: spec.template.spec.containers[0].env[1].value
-          value: http://localhost,https://localhost
+          path: spec.template.spec.containers[0].env[1]
+          value:
+            name: CSRF_FILTER_ORIGIN
+            value: http://localhost\|https://localhost
       - equal:
-          path: spec.template.spec.containers[0].env[2].value
-          value: http://localhost
+          path: spec.template.spec.containers[0].env[2]
+          value:
+            name: BASEURL
+            value: http://localhost
 
   - it: should render extra configs
     set:
