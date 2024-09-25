@@ -14,13 +14,20 @@ service:
   name: activiti-admin
   type: ClusterIP
   externalPort: 80
-livenessProbe: &adminProbe
-  path: /activiti-admin/
+livenessProbe:
+  # -- For APS prior to 24.3.0, path must be set to `/activiti-admin/`
+  path: /activiti-admin/actuator/health/liveness
   initialDelaySeconds: 25
   periodSeconds: 10
   failureThreshold: 5
   timeoutSeconds: 5
-readinessProbe: *adminProbe
+readinessProbe:
+  # -- For APS prior to 24.3.0, path must be set to `/activiti-admin/`
+  path: /activiti-admin/actuator/health/readiness
+  initialDelaySeconds: 25
+  periodSeconds: 10
+  failureThreshold: 5
+  timeoutSeconds: 5
 ingress:
   # -- Toggle ingress for APS admin
   enabled: true

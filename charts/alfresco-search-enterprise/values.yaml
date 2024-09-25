@@ -21,18 +21,24 @@ contentMediaTypeCache:
   enabled: true
   refreshTime: 0 0 * * * *
 liveIndexing:
+  # -- Set environment variables for all the live indexing components (mediation, content, metadata, path)
+  environment: {}
   mediation:
     image:
       repository: >-
         quay.io/alfresco/alfresco-elasticsearch-live-indexing-mediation
       tag: 4.1.0
       pullPolicy: IfNotPresent
+    # -- Set environment variables for the mediation component
+    environment: {}
   content:
     image:
       repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-content
       tag: 4.1.0
       pullPolicy: IfNotPresent
     replicaCount: 1
+    # -- Set environment variables for the content component
+    environment: {}
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
@@ -80,6 +86,8 @@ liveIndexing:
       tag: 4.1.0
       pullPolicy: IfNotPresent
     replicaCount: 1
+    # -- Set environment variables for the metadata component
+    environment: {}
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
@@ -127,6 +135,8 @@ liveIndexing:
       tag: 4.1.0
       pullPolicy: IfNotPresent
     replicaCount: 1
+    # -- Set environment variables for the path component
+    environment: {}
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
@@ -176,6 +186,7 @@ reindexing:
     tag: 4.1.0
     pullPolicy: IfNotPresent
   pathIndexingEnabled: true
+  environment: {}
   repository:
     # -- URL of the Alfresco repository
     url: null
@@ -223,7 +234,7 @@ reindexing:
       resources:
         limits:
           cpu: "0.25"
-          memory: "10Mi"
+          memory: "20Mi"
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
