@@ -4,7 +4,7 @@ reindexing:
   # a db would be required but helm install won't wait for the job to be ready
   enabled: true
   # ... but only if it's not defined as an hook
-  hookExecution: post-install
+  hookExecution: false
   repository:
     url: http://repository
   db:
