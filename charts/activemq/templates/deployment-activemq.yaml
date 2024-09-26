@@ -55,20 +55,10 @@ spec:
           containerPort: {{ .Values.services.broker.ports.internal.amqp | default 5672 }}
         - name: web-console
           containerPort: {{ .Values.services.webConsole.ports.internal.webConsole | default 8161 }}
-        readinessProbe:
-          tcpSocket:
-            port: {{ .Values.services.broker.ports.internal.openwire | default 61616 }}
-          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
-          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
-          timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
         livenessProbe:
-          tcpSocket:
-            port: {{ .Values.services.broker.ports.internal.openwire | default 61616 }}
-          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
-          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          {{- toYaml .Values.livenessProbe | nindent 12 }}
+        readinessProbe:
+          {{- toYaml .Values.readinessProbe | nindent 12 }}
         resources: {{- toYaml .Values.resources | nindent 12 }}
         volumeMounts:
           - name: data

@@ -46,6 +46,18 @@ ingress:
           pathType: Prefix
   tls: []
 
+livenessProbe:
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 3
+
+readinessProbe:
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 3
+
 resources:
   limits:
     cpu: 100m

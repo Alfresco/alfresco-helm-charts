@@ -50,11 +50,15 @@ readinessProbe:
   periodSeconds: 10
   timeoutSeconds: 1
   failureThreshold: 6
+  tcpSocket:
+    port: 61616
 livenessProbe:
   initialDelaySeconds: 60
   periodSeconds: 10
   timeoutSeconds: 1
   failureThreshold: 6
+  tcpSocket:
+    port: 61616
 persistence:
   enabled: true
   baseSize: 20Gi

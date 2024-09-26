@@ -34,6 +34,7 @@ A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate A
 | livenessProbe.failureThreshold | int | `6` |  |
 | livenessProbe.initialDelaySeconds | int | `60` |  |
 | livenessProbe.periodSeconds | int | `10` |  |
+| livenessProbe.tcpSocket.port | int | `61616` |  |
 | livenessProbe.timeoutSeconds | int | `1` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessModes | list | `["ReadWriteOnce"]` | defines type of access required by the persistent volume [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) |
@@ -49,6 +50,7 @@ A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate A
 | readinessProbe.failureThreshold | int | `6` |  |
 | readinessProbe.initialDelaySeconds | int | `5` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
+| readinessProbe.tcpSocket.port | int | `61616` |  |
 | readinessProbe.timeoutSeconds | int | `1` |  |
 | replicaCount | int | `1` |  |
 | resources.limits.cpu | string | `"2"` |  |
