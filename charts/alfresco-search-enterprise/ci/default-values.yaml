@@ -1,8 +1,10 @@
 # avoid too long resource names being truncated and conflicting
 nameOverride: aesc
 reindexing:
-  # requires postgres database at startup
+  # a db would be required but helm install won't wait for the job to be ready
   enabled: true
+  # ... but only if it's not defined as an hook
+  hookExecution: post-install
   repository:
     url: http://repository
   db:
