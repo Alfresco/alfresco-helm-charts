@@ -3,8 +3,8 @@ enabled: true
 replicaCount: 1
 nodeSelector: {}
 image:
-  repository: alfresco/alfresco-activemq
-  tag: 5.18.5-jre17-rockylinux8
+  repository: apache/activemq-classic
+  tag: 5.18.4
   pullPolicy: IfNotPresent
 adminUser:
   # -- An existing kubernetes secret that contains BROKER_USERNAME and BROKER_PASSWORD keys to override the default user credentials
@@ -65,7 +65,7 @@ persistence:
     - ReadWriteOnce
   existingClaim: null
   data:
-    mountPath: "/opt/activemq/data"
+    mountPath: "/opt/apache-activemq/data"
     subPath: "alfresco-infrastructure/activemq-data"
 global:
   # -- Authenticate to image registry before pulling by providing an existing
