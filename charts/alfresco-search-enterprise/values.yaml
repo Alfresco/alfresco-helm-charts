@@ -190,6 +190,8 @@ reindexing:
   # -- When to execute the reindexing job (e.g. `post-install` or `post-upgrade`
   # or set to false to apply as a standard resource)
   hookExecution: post-install
+  # -- Time to live for the job after it has finished to run
+  ttlSecondsAfterFinished: 3600
   repository:
     # -- URL of the Alfresco repository
     url: null

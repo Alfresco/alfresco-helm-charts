@@ -95,6 +95,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | reindexing.resources.limits.memory | string | `"512Mi"` |  |
 | reindexing.resources.requests.cpu | string | `"0.5"` |  |
 | reindexing.resources.requests.memory | string | `"128Mi"` |  |
+| reindexing.ttlSecondsAfterFinished | int | `3600` | Time to live for the job after it has finished to run |
 | resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
