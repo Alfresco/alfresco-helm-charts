@@ -160,7 +160,7 @@ tests:
         path: spec.template.spec.containers[0].readinessProbe
         value:
           tcpSocket:
-            port: 3978
+            port: service-port
           initialDelaySeconds: 20
           periodSeconds: 60
           timeoutSeconds: 10
@@ -168,7 +168,7 @@ tests:
         path: spec.template.spec.containers[0].livenessProbe
         value:
           tcpSocket:
-            port: 3978
+            port: service-port
           initialDelaySeconds: 10
           periodSeconds: 20
           failureThreshold: 1
