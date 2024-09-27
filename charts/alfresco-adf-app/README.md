@@ -38,6 +38,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.tls | list | `[]` |  |
 | livenessProbe.failureThreshold | int | `3` |  |
 | livenessProbe.initialDelaySeconds | int | `0` |  |
+| livenessProbe.path | string | `"/"` |  |
 | livenessProbe.periodSeconds | int | `10` |  |
 | livenessProbe.timeoutSeconds | int | `1` |  |
 | nameOverride | string | `""` |  |
@@ -48,6 +49,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | podSecurityContext.runAsUser | int | `101` | Retrocompat with Activiti Common chart |
 | readinessProbe.failureThreshold | int | `3` |  |
 | readinessProbe.initialDelaySeconds | int | `0` |  |
+| readinessProbe.path | string | `"/"` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.timeoutSeconds | int | `1` |  |
 | replicaCount | int | `1` |  |

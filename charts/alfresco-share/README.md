@@ -52,7 +52,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.tls | list | `[]` |  |
 | known_urls | string | `nil` | Provide the list of URL considered allowed to access Share resources (used for CSRF protection). The value be either a list of strings or a single string separated by spaces. |
 | livenessProbe.httpGet.path | string | `"/share"` |  |
-| livenessProbe.httpGet.port | int | `8080` |  |
+| livenessProbe.httpGet.port | string | `"http"` |  |
 | livenessProbe.initialDelaySeconds | int | `15` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `5` |  |
@@ -63,7 +63,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | podLabels | object | `{}` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | readinessProbe.httpGet.path | string | `"/share"` |  |
-| readinessProbe.httpGet.port | int | `8080` |  |
+| readinessProbe.httpGet.port | string | `"http"` |  |
 | readinessProbe.initialDelaySeconds | int | `15` |  |
 | readinessProbe.periodSeconds | int | `30` |  |
 | readinessProbe.timeoutSeconds | int | `5` |  |

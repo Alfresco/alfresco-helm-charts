@@ -91,14 +91,14 @@ environment:
 readinessProbe:
   httpGet:
     path: /share
-    port: 8080
+    port: http
   initialDelaySeconds: 15
   periodSeconds: 30
   timeoutSeconds: 5
 livenessProbe:
   httpGet:
     path: /share
-    port: 8080
+    port: http
   initialDelaySeconds: 15
   periodSeconds: 20
   timeoutSeconds: 5
