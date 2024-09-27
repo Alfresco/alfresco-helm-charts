@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-enterprise
 
-![Version: 4.1.0](https://img.shields.io/badge/Version-4.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
+![Version: 4.2.0-alpha.0](https://img.shields.io/badge/Version-4.2.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -81,6 +81,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | reindexing.db.username | string | `nil` | The username required to access the service |
 | reindexing.enabled | bool | `true` | Create the one-shot job to trigger the reindexing of repo contents |
 | reindexing.environment | object | `{}` |  |
+| reindexing.hookExecution | string | `"post-install"` | When to execute the reindexing job (e.g. `post-install` or `post-upgrade` or set to false to apply as a standard resource) |
 | reindexing.image.pullPolicy | string | `"IfNotPresent"` |  |
 | reindexing.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-reindexing"` |  |
 | reindexing.image.tag | string | `"4.1.0"` |  |
@@ -94,6 +95,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | reindexing.resources.limits.memory | string | `"512Mi"` |  |
 | reindexing.resources.requests.cpu | string | `"0.5"` |  |
 | reindexing.resources.requests.memory | string | `"128Mi"` |  |
+| reindexing.ttlSecondsAfterFinished | int | `3600` | Time to live for the job after it has finished to run |
 | resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |

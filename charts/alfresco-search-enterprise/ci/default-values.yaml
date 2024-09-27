@@ -1,8 +1,10 @@
 # avoid too long resource names being truncated and conflicting
 nameOverride: aesc
 reindexing:
-  # requires postgres database at startup
+  # A database is required for reindexing, but Helm does not wait for the job to complete during installation.
   enabled: true
+  # Allows tests to pass, otherwise when reindexing job is run as hook, installation will fail.
+  hookExecution: false
   repository:
     url: http://repository
   db:
