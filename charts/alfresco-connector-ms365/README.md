@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-ms365
 
-![Version: 2.1.0](https://img.shields.io/badge/Version-2.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.3](https://img.shields.io/badge/AppVersion-2.0.3-informational?style=flat-square)
+![Version: 2.2.0-alpha.0](https://img.shields.io/badge/Version-2.2.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.3](https://img.shields.io/badge/AppVersion-2.0.3-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector ms365 service
 
@@ -36,7 +36,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | livenessProbe.failureThreshold | int | `1` |  |
 | livenessProbe.initialDelaySeconds | int | `10` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
-| livenessProbe.tcpSocket.port | int | `9095` |  |
+| livenessProbe.tcpSocket.port | string | `"service-port"` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
@@ -45,7 +45,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | podSecurityContext.runAsUser | int | `33006` |  |
 | readinessProbe.initialDelaySeconds | int | `20` |  |
 | readinessProbe.periodSeconds | int | `60` |  |
-| readinessProbe.tcpSocket.port | int | `9095` |  |
+| readinessProbe.tcpSocket.port | string | `"service-port"` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | replicaCount | int | `2` |  |
 | repository.existingConfigMap.keys.host | string | `"REPO_HOST"` | name of the key in the configMap where to find the repository service host |

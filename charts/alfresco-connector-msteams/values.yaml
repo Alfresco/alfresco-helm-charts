@@ -33,13 +33,13 @@ resources:
     memory: "1000Mi"
 readinessProbe:
   tcpSocket:
-    port: 3978
+    port: service-port
   initialDelaySeconds: 20
   periodSeconds: 60
   timeoutSeconds: 10
 livenessProbe:
   tcpSocket:
-    port: 3978
+    port: service-port
   initialDelaySeconds: 10
   failureThreshold: 1
   periodSeconds: 20

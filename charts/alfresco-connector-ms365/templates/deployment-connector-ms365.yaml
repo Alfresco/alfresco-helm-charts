@@ -34,7 +34,8 @@ spec:
           env:
             {{- include "alfresco-connector-ms365.env" $ | indent 12 }}
           ports:
-              - containerPort: {{ .Values.image.internalPort }}
+            - name: {{ .Values.readinessProbe.tcpSocket.port }}
+              containerPort: {{ .Values.image.internalPort }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
           readinessProbe:
             {{- toYaml .Values.readinessProbe | nindent 12 }}

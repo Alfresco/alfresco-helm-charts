@@ -65,6 +65,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | messageBroker.user | string | `nil` |  |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.runAsUser | int | `33015` |  |
+| readinessProbe.failureThreshold | int | `3` |  |
 | readinessProbe.initialDelaySeconds | int | `20` |  |
 | readinessProbe.path | string | `"/ready"` |  |
 | readinessProbe.periodSeconds | int | `60` |  |
