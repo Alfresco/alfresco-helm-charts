@@ -117,18 +117,9 @@ spec:
         {{- end }}
         resources: {{- toYaml .Values.resources | nindent 12 }}
         readinessProbe:
-          httpGet:
-            path: /alfresco/healthcheck
-            port: serviceport
-          initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
-          failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
-          periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+          {{- toYaml .Values.readinessProbe | nindent 12 }}
         livenessProbe:
-          httpGet:
-            path: /alfresco/healthcheck
-            port: serviceport
-          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          {{- toYaml .Values.livenessProbe | nindent 12 }}
         lifecycle:
           preStop:
             exec:

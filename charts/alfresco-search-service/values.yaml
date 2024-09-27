@@ -118,6 +118,7 @@ livenessProbe:
   initialDelaySeconds: 130
   periodSeconds: 20
   timeoutSeconds: 10
+  failureThreshold: 1
 initContainer:
   image:
     repository: busybox

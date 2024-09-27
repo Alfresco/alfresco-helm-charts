@@ -87,18 +87,18 @@ spec:
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
           readinessProbe:
             httpGet:
-              path: /ready
+              path: {{ .Values.readinessProbe.path }}
               port: {{ .Values.image.internalPort }}
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
           livenessProbe:
             httpGet:
-              path: /live
+              path: {{ .Values.livenessProbe.path }}
               port: {{ .Values.image.internalPort }}
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-            failureThreshold: 1
+            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
           {{- if .Values.command }}
           command:

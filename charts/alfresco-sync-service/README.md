@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-sync-service
 
-![Version: 6.0.1](https://img.shields.io/badge/Version-6.0.1-informational?style=flat-square) ![AppVersion: 5.0.0](https://img.shields.io/badge/AppVersion-5.0.0-informational?style=flat-square)
+![Version: 7.0.0-alpha.0](https://img.shields.io/badge/Version-7.0.0--alpha.0-informational?style=flat-square) ![AppVersion: 5.0.0](https://img.shields.io/badge/AppVersion-5.0.0-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -50,6 +50,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.extraAnnotations | object | `{}` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes nginx.ingress.kubernetes.io/ssl-redirect: "false" |
 | ingress.path | string | `"/syncservice"` |  |
 | ingress.tls | list | `[]` |  |
+| livenessProbe.httpGet.path | string | `"/alfresco/healthcheck"` |  |
+| livenessProbe.httpGet.port | string | `"serviceport"` |  |
 | livenessProbe.initialDelaySeconds | int | `30` |  |
 | livenessProbe.periodSeconds | int | `30` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
@@ -70,6 +72,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
 | podSecurityContext.runAsUser | int | `33020` |  |
 | readinessProbe.failureThreshold | int | `12` |  |
+| readinessProbe.httpGet.path | string | `"/alfresco/healthcheck"` |  |
+| readinessProbe.httpGet.port | string | `"serviceport"` |  |
 | readinessProbe.initialDelaySeconds | int | `20` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |

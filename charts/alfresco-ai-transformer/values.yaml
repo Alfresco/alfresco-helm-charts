@@ -36,13 +36,16 @@ environment:
     -XX:MinRAMPercentage=50
     -XX:MaxRAMPercentage=80
 readinessProbe:
+  path: /ready
   initialDelaySeconds: 20
   periodSeconds: 60
   timeoutSeconds: 10
 livenessProbe:
+  path: /live
   initialDelaySeconds: 10
   periodSeconds: 20
   timeoutSeconds: 10
+  failureThreshold: 1
   livenessPercent: 400
   livenessTransformPeriodSeconds: 600
   maxTransforms: 10000

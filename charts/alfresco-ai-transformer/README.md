@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-ai-transformer
 
-![Version: 2.0.1](https://img.shields.io/badge/Version-2.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.6](https://img.shields.io/badge/AppVersion-3.1.6-informational?style=flat-square)
+![Version: 2.1.0-alpha.0](https://img.shields.io/badge/Version-2.1.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.6](https://img.shields.io/badge/AppVersion-3.1.6-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco ai transformer service
 
@@ -47,11 +47,13 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
 | image.tag | string | `"3.1.6"` |  |
+| livenessProbe.failureThreshold | int | `1` |  |
 | livenessProbe.initialDelaySeconds | int | `10` |  |
 | livenessProbe.livenessPercent | int | `400` |  |
 | livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
 | livenessProbe.maxTransformSeconds | int | `1800` |  |
 | livenessProbe.maxTransforms | int | `10000` |  |
+| livenessProbe.path | string | `"/live"` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | messageBroker.existingConfigMap | object | `{"keys":{"url":"BROKER_URL"},"name":null}` | Alternatively, provide credentials via an existing secret and set the keys as they are given |
@@ -64,6 +66,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.runAsUser | int | `33015` |  |
 | readinessProbe.initialDelaySeconds | int | `20` |  |
+| readinessProbe.path | string | `"/ready"` |  |
 | readinessProbe.periodSeconds | int | `60` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | replicaCount | int | `2` |  |

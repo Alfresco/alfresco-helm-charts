@@ -89,9 +89,7 @@ spec:
                   | xmllint --xpath '/response/str[@name="status"]/text()' -
                   )
                   = "OK" ]
-            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
+              {{- toYaml .Values.readinessProbe | nindent 12 }}
           livenessProbe:
             exec:
               command:
@@ -104,10 +102,7 @@ spec:
                   | xmllint --xpath '/response/lst/int[@name="status"]/text()' -
                   )
                   -eq 0 ]
-            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-            failureThreshold: 1
-            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
       volumes:
         {{- include "alfresco-common.data_volume" .Values | nindent 8 }}
         {{- with .Values.volumes }}

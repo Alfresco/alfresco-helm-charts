@@ -46,10 +46,16 @@ resources:
     cpu: "2"
     memory: "2000Mi"
 livenessProbe:
+  httpGet:
+    path: /alfresco/healthcheck
+    port: serviceport
   initialDelaySeconds: 30
   periodSeconds: 30
   timeoutSeconds: 10
 readinessProbe:
+  httpGet:
+    path: /alfresco/healthcheck
+    port: serviceport
   initialDelaySeconds: 20
   periodSeconds: 10
   failureThreshold: 12

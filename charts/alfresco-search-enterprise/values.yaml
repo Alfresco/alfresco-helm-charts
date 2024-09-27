@@ -39,6 +39,18 @@ liveIndexing:
     replicaCount: 1
     # -- Set environment variables for the content component
     environment: {}
+    livenessProbe:
+      initialDelaySeconds: 300
+      timeoutSeconds: 60
+      httpGet:
+        path: /actuator/health
+        port: http
+    readinessProbe:
+      initialDelaySeconds: 60
+      timeoutSeconds: 60
+      httpGet:
+        path: /actuator/health
+        port: http
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
@@ -88,6 +100,18 @@ liveIndexing:
     replicaCount: 1
     # -- Set environment variables for the metadata component
     environment: {}
+    livenessProbe:
+      initialDelaySeconds: 300
+      timeoutSeconds: 60
+      httpGet:
+        path: /actuator/health
+        port: http
+    readinessProbe:
+      initialDelaySeconds: 60
+      timeoutSeconds: 60
+      httpGet:
+        path: /actuator/health
+        port: http
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
@@ -137,6 +161,18 @@ liveIndexing:
     replicaCount: 1
     # -- Set environment variables for the path component
     environment: {}
+    livenessProbe:
+      initialDelaySeconds: 300
+      timeoutSeconds: 60
+      httpGet:
+        path: /actuator/health
+        port: http
+    readinessProbe:
+      initialDelaySeconds: 60
+      timeoutSeconds: 60
+      httpGet:
+        path: /actuator/health
+        port: http
     affinity:
       podAntiAffinity:
         preferredDuringSchedulingIgnoredDuringExecution:
