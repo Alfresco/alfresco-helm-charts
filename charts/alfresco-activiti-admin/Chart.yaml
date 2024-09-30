@@ -5,7 +5,7 @@ version: 0.3.0
 appVersion: 24.3.0
 dependencies:
   - name: alfresco-common
-    version: 3.1.3
+    version: 3.1.4
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: postgresql
     repository: oci://registry-1.docker.io/bitnamicharts
