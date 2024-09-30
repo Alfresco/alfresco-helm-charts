@@ -47,14 +47,18 @@ ingress:
   tls: []
 
 livenessProbe:
-  path: /
+  httpGet:
+    path: /
+    port: http
   initialDelaySeconds: 0
   periodSeconds: 10
   timeoutSeconds: 1
   failureThreshold: 3
 
 readinessProbe:
-  path: /
+  httpGet:
+    path: /
+    port: http
   initialDelaySeconds: 0
   periodSeconds: 10
   timeoutSeconds: 1

@@ -8,7 +8,7 @@ data:
   {{- range $key, $val := .Values.environment }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
-  livenessPercent: "{{ .Values.livenessProbe.livenessPercent }}"
-  livenessTransformPeriodSeconds: "{{ .Values.livenessProbe.livenessTransformPeriodSeconds }}"
-  maxTransforms: "{{ .Values.livenessProbe.maxTransforms }}"
-  maxTransformSeconds: "{{ .Values.livenessProbe.maxTransformSeconds }}"
+  livenessPercent: "{{ .Values.transformerLiveness.livenessPercent }}"
+  livenessTransformPeriodSeconds: "{{ .Values.transformerLiveness.livenessTransformPeriodSeconds }}"
+  maxTransforms: "{{ .Values.transformerLiveness.maxTransforms }}"
+  maxTransformSeconds: "{{ .Values.transformerLiveness.maxTransformSeconds }}"

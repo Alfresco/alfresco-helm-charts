@@ -80,27 +80,16 @@ spec:
                   key: {{ .Values.aws.existingConfigMap.keys.comprehendRoleARN }}
 
           ports:
-            - containerPort: {{ .Values.image.internalPort }}
+            - name: service-port
+              containerPort: {{ .Values.image.internalPort }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
           readinessProbe:
-            httpGet:
-              path: {{ .Values.readinessProbe.path }}
-              port: {{ .Values.image.internalPort }}
-            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
-            timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
-            failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           livenessProbe:
-            httpGet:
-              path: {{ .Values.livenessProbe.path }}
-              port: {{ .Values.image.internalPort }}
-            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
-            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
-            failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
-            timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
           {{- if .Values.command }}
           command:
             {{- toYaml .Values.command | nindent 12 }}

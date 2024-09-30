@@ -48,12 +48,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
 | image.tag | string | `"3.1.6"` |  |
 | livenessProbe.failureThreshold | int | `1` |  |
+| livenessProbe.httpGet.path | string | `"/live"` |  |
+| livenessProbe.httpGet.port | string | `"service-port"` |  |
 | livenessProbe.initialDelaySeconds | int | `10` |  |
-| livenessProbe.livenessPercent | int | `400` |  |
-| livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
-| livenessProbe.maxTransformSeconds | int | `1800` |  |
-| livenessProbe.maxTransforms | int | `10000` |  |
-| livenessProbe.path | string | `"/live"` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | messageBroker.existingConfigMap | object | `{"keys":{"url":"BROKER_URL"},"name":null}` | Alternatively, provide credentials via an existing secret and set the keys as they are given |
@@ -66,8 +63,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.runAsUser | int | `33015` |  |
 | readinessProbe.failureThreshold | int | `3` |  |
+| readinessProbe.httpGet.path | string | `"/ready"` |  |
+| readinessProbe.httpGet.port | string | `"service-port"` |  |
 | readinessProbe.initialDelaySeconds | int | `20` |  |
-| readinessProbe.path | string | `"/ready"` |  |
 | readinessProbe.periodSeconds | int | `60` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | replicaCount | int | `2` |  |
@@ -88,4 +86,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 | tolerations | list | `[]` |  |
+| transformerLiveness.livenessPercent | int | `400` |  |
+| transformerLiveness.livenessTransformPeriodSeconds | int | `600` |  |
+| transformerLiveness.maxTransformSeconds | int | `1800` |  |
+| transformerLiveness.maxTransforms | int | `10000` |  |
 | trouter.pipelines | list | See | List of transformer pipelines the ATS router can advertise when using AI To get more details abous pipeline configuration check https://docs.alfresco.com/transform-service/latest/config/#transform-pipelines https://github.com/Alfresco/alfresco-ai-renditions/blob/master/ai-renditions/docker-compose/ai-pipeline-routes.json |

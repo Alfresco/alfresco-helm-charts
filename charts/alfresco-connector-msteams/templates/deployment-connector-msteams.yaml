@@ -43,7 +43,7 @@ spec:
             {{- include "alfresco-connector-msteams.repo-msteams.env" $ | nindent 12 }}
             {{- include "alfresco-connector-msteams.secret-msteams.env" $ | nindent 12 }}
           ports:
-            - name: {{ .Values.readinessProbe.tcpSocket.port }}
+            - name: service-port
               containerPort: {{ .Values.image.internalPort }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
           readinessProbe:
