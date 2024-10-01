@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # activemq
 
-![Version: 4.0.0-alpha.0](https://img.shields.io/badge/Version-4.0.0--alpha.0-informational?style=flat-square) ![AppVersion: 5.18.5](https://img.shields.io/badge/AppVersion-5.18.5-informational?style=flat-square)
+![Version: 3.6.0-alpha.0](https://img.shields.io/badge/Version-3.6.0--alpha.0-informational?style=flat-square) ![AppVersion: 5.18.5](https://img.shields.io/badge/AppVersion-5.18.5-informational?style=flat-square)
 
 A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (not meant to be used in production).
 
