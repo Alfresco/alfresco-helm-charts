@@ -60,8 +60,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | resources.requests.cpu | string | `"100m"` |  |
 | resources.requests.memory | string | `"128Mi"` |  |
 | securityContext | object | `{}` |  |
-| service.port | int | `80` |  |
-| service.targetPort | int | `8080` |  |
+| service.port | int | `8080` |  |
+| service.targetPort | string | `"http"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.automount | bool | `true` | Automatically mount a ServiceAccount's API credentials? |
