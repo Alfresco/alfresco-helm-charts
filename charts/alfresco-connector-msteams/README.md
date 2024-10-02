@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-msteams
 
-![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.3](https://img.shields.io/badge/AppVersion-2.0.3-informational?style=flat-square)
+![Version: 1.2.0-alpha.0](https://img.shields.io/badge/Version-1.2.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.3](https://img.shields.io/badge/AppVersion-2.0.3-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector msteams service
 
@@ -39,7 +39,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | livenessProbe.failureThreshold | int | `1` |  |
 | livenessProbe.initialDelaySeconds | int | `10` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
-| livenessProbe.tcpSocket.port | int | `3978` |  |
+| livenessProbe.tcpSocket.port | string | `"service-port"` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | microsoft.app.existingSecret.keys.id | string | `"MICROSOFT_APP_ID"` |  |
 | microsoft.app.existingSecret.keys.password | string | `"MICROSOFT_APP_PASSWORD"` |  |
@@ -52,7 +52,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | podSecurityContext.runAsUser | int | `33041` |  |
 | readinessProbe.initialDelaySeconds | int | `20` |  |
 | readinessProbe.periodSeconds | int | `60` |  |
-| readinessProbe.tcpSocket.port | int | `3978` |  |
+| readinessProbe.tcpSocket.port | string | `"service-port"` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | replicaCount | int | `2` |  |
 | repository.existingConfigMap.keys.url | string | `"ALFRESCO_BASE_URL"` | Key within the configmap holding the full url to connect to the alfresco repository |

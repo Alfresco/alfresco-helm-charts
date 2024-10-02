@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-ai-transformer
 
-![Version: 2.0.1](https://img.shields.io/badge/Version-2.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.6](https://img.shields.io/badge/AppVersion-3.1.6-informational?style=flat-square)
+![Version: 3.0.0-alpha.0](https://img.shields.io/badge/Version-3.0.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.6](https://img.shields.io/badge/AppVersion-3.1.6-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco ai transformer service
 
@@ -47,11 +47,10 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
 | image.tag | string | `"3.1.6"` |  |
+| livenessProbe.failureThreshold | int | `1` |  |
+| livenessProbe.httpGet.path | string | `"/live"` |  |
+| livenessProbe.httpGet.port | string | `"service-port"` |  |
 | livenessProbe.initialDelaySeconds | int | `10` |  |
-| livenessProbe.livenessPercent | int | `400` |  |
-| livenessProbe.livenessTransformPeriodSeconds | int | `600` |  |
-| livenessProbe.maxTransformSeconds | int | `1800` |  |
-| livenessProbe.maxTransforms | int | `10000` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |
 | messageBroker.existingConfigMap | object | `{"keys":{"url":"BROKER_URL"},"name":null}` | Alternatively, provide credentials via an existing secret and set the keys as they are given |
@@ -63,6 +62,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | messageBroker.user | string | `nil` |  |
 | nodeSelector | object | `{}` |  |
 | podSecurityContext.runAsUser | int | `33015` |  |
+| readinessProbe.failureThreshold | int | `3` |  |
+| readinessProbe.httpGet.path | string | `"/ready"` |  |
+| readinessProbe.httpGet.port | string | `"service-port"` |  |
 | readinessProbe.initialDelaySeconds | int | `20` |  |
 | readinessProbe.periodSeconds | int | `60` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
@@ -84,4 +86,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 | tolerations | list | `[]` |  |
+| transformerLiveness.livenessPercent | int | `400` |  |
+| transformerLiveness.livenessTransformPeriodSeconds | int | `600` |  |
+| transformerLiveness.maxTransformSeconds | int | `1800` |  |
+| transformerLiveness.maxTransforms | int | `10000` |  |
 | trouter.pipelines | list | See | List of transformer pipelines the ATS router can advertise when using AI To get more details abous pipeline configuration check https://docs.alfresco.com/transform-service/latest/config/#transform-pipelines https://github.com/Alfresco/alfresco-ai-renditions/blob/master/ai-renditions/docker-compose/ai-pipeline-routes.json |

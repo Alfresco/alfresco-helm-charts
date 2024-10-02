@@ -36,13 +36,22 @@ environment:
     -XX:MinRAMPercentage=50
     -XX:MaxRAMPercentage=80
 readinessProbe:
+  httpGet:
+    path: /ready
+    port: service-port
   initialDelaySeconds: 20
   periodSeconds: 60
   timeoutSeconds: 10
+  failureThreshold: 3
 livenessProbe:
+  httpGet:
+    path: /live
+    port: service-port
   initialDelaySeconds: 10
   periodSeconds: 20
   timeoutSeconds: 10
+  failureThreshold: 1
+transformerLiveness:
   livenessPercent: 400
   livenessTransformPeriodSeconds: 600
   maxTransforms: 10000

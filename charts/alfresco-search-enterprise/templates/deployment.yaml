@@ -60,17 +60,9 @@ spec:
               containerPort: 8080
               protocol: TCP
           livenessProbe:
-            initialDelaySeconds: 300
-            timeoutSeconds: 60
-            httpGet:
-              path: /actuator/health
-              port: http
+            {{- toYaml $service.livenessProbe | nindent 12 }}
           readinessProbe:
-            initialDelaySeconds: 60
-            timeoutSeconds: 60
-            httpGet:
-              path: /actuator/health
-              port: http
+            {{- toYaml $service.readinessProbe | nindent 12 }}
           resources: {{- toYaml $.Values.resources | nindent 12 }}
       {{- with $.Values.nodeSelector }}
       nodeSelector:

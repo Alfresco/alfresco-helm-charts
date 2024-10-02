@@ -74,13 +74,13 @@ resources:
 environment: {}
 readinessProbe:
   tcpSocket:
-    port: 9095
+    port: service-port
   initialDelaySeconds: 20
   periodSeconds: 60
   timeoutSeconds: 10
 livenessProbe:
   tcpSocket:
-    port: 9095
+    port: service-port
   initialDelaySeconds: 10
   periodSeconds: 20
   failureThreshold: 1

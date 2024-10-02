@@ -32,8 +32,8 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
-  targetPort: 8080
+  port: 8080
+  targetPort: http
 
 ingress:
   enabled: true
@@ -45,6 +45,24 @@ ingress:
         - path: /
           pathType: Prefix
   tls: []
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 3
 
 resources:
   limits:
