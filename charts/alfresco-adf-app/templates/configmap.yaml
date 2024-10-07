@@ -6,6 +6,6 @@ metadata:
   labels:
     {{- include "alfresco-adf-app.labels" . | nindent 4 }}
 data:
-  config.json: >-
+  app.config.json: >-
     {{- .Values.configMap | toJson | nindent 4 }}
 {{- end }}

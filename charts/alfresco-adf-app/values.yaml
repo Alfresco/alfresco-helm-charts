@@ -78,7 +78,7 @@ volumes: []
 # -- Additional volumeMounts on the output Deployment definition
 volumeMounts: []
 
-configMap: []
+configMap: {}
 
 nodeSelector: {}
 
