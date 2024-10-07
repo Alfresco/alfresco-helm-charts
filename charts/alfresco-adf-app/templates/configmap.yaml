@@ -1,0 +1,11 @@
+{{- if .Values.configMap }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "alfresco-adf-app.fullname" . }}
+  labels:
+    {{- include "alfresco-adf-app.labels" . | nindent 4 }}
+data:
+  config.json: >-
+    {{- .Values.configMap | toJson | nindent 4 }}
+{{- end }}
