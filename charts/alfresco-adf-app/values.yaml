@@ -78,6 +78,9 @@ volumes: []
 # -- Additional volumeMounts on the output Deployment definition
 volumeMounts: []
 
+# -- Additional configMap which converts yaml to json. This is useful for
+# creating a app.config.json file for nginx apps. Which then can be mounted as a
+# volume.
 configMap: {}
 
 nodeSelector: {}

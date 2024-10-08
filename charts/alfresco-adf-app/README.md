@@ -22,7 +22,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
-| configMap | object | `{}` |  |
+| configMap | object | `{}` | Additional configMap which converts yaml to json. This is useful for creating a app.config.json file for nginx apps. Which then can be mounted as a volume. |
 | env | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` | If a private image registry a secret can be defined and passed to kubernetes, see: https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
