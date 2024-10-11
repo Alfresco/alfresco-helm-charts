@@ -9,6 +9,11 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+environment:
+  AUDIT_EVENTINGESTION_DLQ_CONSUMEPERIOD: 60000
+  AUDIT_EVENTINGESTION_DLQ_CONSUMPTIONCOUNT: 1000
+  SPRING_PROFILES_ACTIVE: "durable-subscriptions"
+
 messageBroker:
   # --  Broker URL formatted as per:
   # https://activemq.apache.org/failover-transport-reference
@@ -36,7 +41,7 @@ search:
   # -- The URL where the search/indexing service is available
   url: null
   # -- The username required to access the search/indexing service, if any
-  user: null
+  username: null
   # -- The password required to access the search/indexing service, if any
   password: null
   existingConfigMap:
@@ -95,14 +100,8 @@ ingress:
 
 resources: {}
 
-livenessProbe:
-  httpGet:
-    path: /
-    port: http
-readinessProbe:
-  httpGet:
-    path: /
-    port: http
+livenessProbe: {}
+readinessProbe: {}
 
 # Additional volumes on the output Deployment definition.
 volumes: []

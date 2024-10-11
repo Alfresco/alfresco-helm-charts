@@ -17,6 +17,9 @@ A Helm chart for Kubernetes to deploy Alfresco Audit Storage
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| environment.AUDIT_EVENTINGESTION_DLQ_CONSUMEPERIOD | int | `60000` |  |
+| environment.AUDIT_EVENTINGESTION_DLQ_CONSUMPTIONCOUNT | int | `1000` |  |
+| environment.SPRING_PROFILES_ACTIVE | string | `"durable-subscriptions"` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-audit-storage"` |  |
@@ -29,8 +32,7 @@ A Helm chart for Kubernetes to deploy Alfresco Audit Storage
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
-| livenessProbe.httpGet.path | string | `"/"` |  |
-| livenessProbe.httpGet.port | string | `"http"` |  |
+| livenessProbe | object | `{}` |  |
 | messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap holding the URL of the message broker |
 | messageBroker.existingConfigMap.name | string | `nil` | Alternatively, provide message broker connection details via an existing configmap |
 | messageBroker.existingSecret | object | `{"keys":{"password":"BROKER_PASSWORD","username":"BROKER_USERNAME"},"name":null}` | Provide connection details alternatively via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
@@ -42,8 +44,7 @@ A Helm chart for Kubernetes to deploy Alfresco Audit Storage
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| readinessProbe.httpGet.path | string | `"/"` |  |
-| readinessProbe.httpGet.port | string | `"http"` |  |
+| readinessProbe | object | `{}` |  |
 | replicaCount | int | `1` |  |
 | resources | object | `{}` |  |
 | search.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap holding the URL of the search/indexing service |
@@ -53,7 +54,7 @@ A Helm chart for Kubernetes to deploy Alfresco Audit Storage
 | search.existingSecret.name | string | `nil` | Alternatively, provide search/indexing credentials via an existing secret |
 | search.password | string | `nil` | The password required to access the search/indexing service, if any |
 | search.url | string | `nil` | The URL where the search/indexing service is available |
-| search.user | string | `nil` | The username required to access the search/indexing service, if any |
+| search.username | string | `nil` | The username required to access the search/indexing service, if any |
 | securityContext | object | `{}` |  |
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |

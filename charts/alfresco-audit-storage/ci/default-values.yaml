@@ -1,19 +1,5 @@
 # avoid too long resource names being truncated and conflicting
-nameOverride: aesc
-reindexing:
-  # A database is required for reindexing, but Helm does not wait for the job to complete during installation.
-  enabled: true
-  # Allows tests to pass, otherwise when reindexing job is run as hook, installation will fail.
-  hookExecution: false
-  repository:
-    url: http://repository
-  db:
-    url: jdbc:postgresql://postgresql:5432/postgres
-ats:
-  transform_url: http://alfresco-transform-services-router
-  sfs_url: http://alfresco-transform-services-sfs
-contentMediaTypeCache:
-  enabled: false
+nameOverride: aas
 resources:
   requests:
     cpu: "100m"
@@ -21,8 +7,6 @@ resources:
   limits:
     cpu: "1"
     memory: "1Gi"
-search:
-  url: http://elasticsearch-master:9200
 elasticsearch:
   replicas: 1
   clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
@@ -43,6 +27,8 @@ activemq:
     limits:
       cpu: "1000m"
       memory: "1Gi"
+search:
+  url: http://elasticsearch-master:9200
 messageBroker:
   url: nio://activemq-broker:61616
 tags:
