@@ -1,0 +1,121 @@
+replicaCount: 1
+
+image:
+  repository: quay.io/alfresco/alfresco-audit-storage
+  pullPolicy: IfNotPresent
+  tag: "0.0.1-A8"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+messageBroker:
+  # --  Broker URL formatted as per:
+  # https://activemq.apache.org/failover-transport-reference
+  url: null
+  # -- Broker username
+  username: null
+  # -- Broker password
+  password: null
+  existingConfigMap:
+    # -- Alternatively, provide message broker connection details via an existing
+    # configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the message broker
+      url: BROKER_URL
+  # -- Provide connection details alternatively via an existing secret that
+  # contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
+  existingSecret:
+    name: null
+    keys:
+      username: BROKER_USERNAME
+      password: BROKER_PASSWORD
+
+search:
+  # -- The URL where the search/indexing service is available
+  url: null
+  # -- The username required to access the search/indexing service, if any
+  user: null
+  # -- The password required to access the search/indexing service, if any
+  password: null
+  existingConfigMap:
+    # -- Alternatively, provide search/indexing service connection details via
+    # an existing configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the search/indexing service
+      url: SEARCH_URL
+  existingSecret:
+    # -- Alternatively, provide search/indexing credentials via an existing secret
+    name: null
+    keys:
+      # -- Key within the secret that holds the search/indexing username
+      username: SEARCH_USERNAME
+      # -- Key within the secret that holds the search/indexing password
+      password: SEARCH_PASSWORD
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+tags:
+  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
+  ci: false
