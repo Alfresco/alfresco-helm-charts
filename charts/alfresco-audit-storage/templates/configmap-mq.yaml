@@ -2,9 +2,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: >-
-    {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "mq")) "Chart" .Chart "Release" .Release }}
-    {{ template "alfresco-audit-storage.fullname" $ctx }}
+  {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "mq")) "Chart" .Chart "Release" .Release }}
+  name: {{ template "alfresco-audit-storage.fullname" $ctx }}
   labels:
     {{- include "alfresco-audit-storage.labels" . | nindent 4 }}
 data:
