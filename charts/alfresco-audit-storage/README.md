@@ -34,6 +34,10 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.repository | string | `"quay.io/alfresco/alfresco-audit-storage"` |  |
 | image.tag | string | `"0.0.1-A8"` |  |
 | imagePullSecrets | list | `[]` |  |
+| livenessProbe.httpGet.path | string | `"/actuator/health/liveness"` |  |
+| livenessProbe.httpGet.port | string | `"http"` |  |
+| livenessProbe.initialDelaySeconds | int | `15` |  |
+| livenessProbe.periodSeconds | int | `60` |  |
 | messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap holding the URL of the message broker |
 | messageBroker.existingConfigMap.name | string | `nil` | Alternatively, provide message broker connection details via an existing configmap |
 | messageBroker.existingSecret | object | `{"keys":{"password":"BROKER_PASSWORD","username":"BROKER_USERNAME"},"name":null}` | Provide connection details alternatively via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
@@ -47,6 +51,10 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | podSecurityContext.fsGroup | int | `1000` |  |
 | podSecurityContext.runAsGroup | int | `1000` |  |
 | podSecurityContext.runAsUser | int | `33000` |  |
+| readinessProbe.httpGet.path | string | `"/actuator/health/readiness"` |  |
+| readinessProbe.httpGet.port | string | `"http"` |  |
+| readinessProbe.initialDelaySeconds | int | `15` |  |
+| readinessProbe.periodSeconds | int | `60` |  |
 | replicaCount | int | `1` |  |
 | resources.limits.cpu | string | `"1"` |  |
 | resources.limits.memory | string | `"512Mi"` |  |
