@@ -1,4 +1,4 @@
-{{- if not .Values.messageBroker.existingConfigMap.name -}}
+{{- if not .Values.messageBrokerConnection.existingConfigMap.name -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:

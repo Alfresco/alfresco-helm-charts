@@ -12,10 +12,6 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/config-es: {{ include (print $.Template.BasePath "/configmap-es.yaml") $ | sha256sum }}
-        checksum/config-mq: {{ include (print $.Template.BasePath "/configmap-mq.yaml") $ | sha256sum }}
-        checksum/secret-es: {{ include (print $.Template.BasePath "/secret-es.yaml") $ | sha256sum }}
-        checksum/secret-mq: {{ include (print $.Template.BasePath "/secret-mq.yaml") $ | sha256sum }}
       {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}

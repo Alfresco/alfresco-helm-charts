@@ -12,13 +12,26 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+livenessProbe:
+  httpGet:
+    path: /actuator/health/liveness
+    port: http
+  initialDelaySeconds: 15
+  periodSeconds: 60
+readinessProbe:
+  httpGet:
+    path: /actuator/health/readiness
+    port: http
+  initialDelaySeconds: 15
+  periodSeconds: 60
+
 environment:
   AUDIT_EVENTINGESTION_URI: activemq:topic:alfresco.repo.event2
   AUDIT_EVENTINGESTION_DLQ_CONSUMEPERIOD: 60000
   AUDIT_EVENTINGESTION_DLQ_CONSUMPTIONCOUNT: 1000
   SPRING_PROFILES_ACTIVE: "durable-subscriptions"
 
-messageBroker:
+messageBrokerConnection:
   # --  Broker URL formatted as per:
   # https://activemq.apache.org/failover-transport-reference
   url: null
@@ -41,40 +54,27 @@ messageBroker:
       username: BROKER_USERNAME
       password: BROKER_PASSWORD
 
-livenessProbe:
-  httpGet:
-    path: /actuator/health/liveness
-    port: http
-  initialDelaySeconds: 15
-  periodSeconds: 60
-readinessProbe:
-  httpGet:
-    path: /actuator/health/readiness
-    port: http
-  initialDelaySeconds: 15
-  periodSeconds: 60
-
-search:
-  # -- The URL where the search/indexing service is available
+elasticSearchConnection:
+  # -- The URL where the elasticsearch service is available
   url: null
-  # -- The username required to access the search/indexing service, if any
+  # -- The username required to access the elasticsearch service, if any
   username: null
-  # -- The password required to access the search/indexing service, if any
+  # -- The password required to access the elasticsearch service, if any
   password: null
   existingConfigMap:
-    # -- Alternatively, provide search/indexing service connection details via
+    # -- Alternatively, provide elasticsearch service connection details via
     # an existing configmap
     name: null
     keys:
-      # -- Key within the configmap holding the URL of the search/indexing service
+      # -- Key within the configmap holding the URL of the elasticsearch service
       url: SEARCH_URL
   existingSecret:
-    # -- Alternatively, provide search/indexing credentials via an existing secret
+    # -- Alternatively, provide elasticsearch credentials via an existing secret
     name: null
     keys:
-      # -- Key within the secret that holds the search/indexing username
+      # -- Key within the secret that holds the elasticsearch username
       username: SEARCH_USERNAME
-      # -- Key within the secret that holds the search/indexing password
+      # -- Key within the secret that holds the elasticsearch password
       password: SEARCH_PASSWORD
 
 serviceAccount:

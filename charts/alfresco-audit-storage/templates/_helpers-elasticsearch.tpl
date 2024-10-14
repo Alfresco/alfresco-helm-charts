@@ -5,7 +5,7 @@ Usage: include "alfresco-audit-storage.config.audit.entryStorage.es.env" $
 */}}
 {{- define "alfresco-audit-storage.config.audit.entryStorage.es.env" -}}
 {{- $esCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "es")) "Chart" .Chart "Release" .Release }}
-{{- with .Values.search }}
+{{- with .Values.elasticSearchConnection }}
 {{- $esCm := coalesce .existingConfigMap.name (include "alfresco-audit-storage.fullname" $esCtx) }}
 - name: AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI
   valueFrom:
@@ -22,7 +22,7 @@ Usage: include "alfresco-audit-storage.config.audit.entryStorage.envCredentials"
 */}}
 {{- define "alfresco-audit-storage.config.audit.entryStorage.envCredentials" -}}
 {{- $esCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "es")) "Chart" .Chart "Release" .Release }}
-{{- with .Values.search }}
+{{- with .Values.elasticSearchConnection }}
 {{- $esSecret := coalesce .existingSecret.name (include "alfresco-audit-storage.fullname" $esCtx) }}
 - name: AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME
   valueFrom:

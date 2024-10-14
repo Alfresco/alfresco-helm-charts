@@ -1,4 +1,4 @@
-{{- with .Values.search }}
+{{- with .Values.elasticSearchConnection }}
 {{- if not .existingConfigMap.name }}
 apiVersion: v1
 kind: ConfigMap
@@ -8,7 +8,7 @@ metadata:
   labels:
     {{- include "alfresco-audit-storage.labels" $ | nindent 4 }}
 data:
-  {{- $reqMsg := "Please provide elasticsearch connection details as .search.url values or using an .search.existingConfigMap." }}
+  {{- $reqMsg := "Please provide elasticsearch connection details as .elasticSearchConnection.url values or using an .elasticSearchConnection.existingConfigMap." }}
   {{- $esProtocol := required $reqMsg (include "alfresco-common.url.scheme" .url) }}
   {{- $esHost := required $reqMsg (include "alfresco-common.url.host" .url) }}
   {{- $esPort := required $reqMsg (include "alfresco-common.url.port" .url) }}
