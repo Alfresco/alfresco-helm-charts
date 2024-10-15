@@ -1,0 +1,198 @@
+suite: test configmaps
+templates:
+  - deployment.yaml
+tests:
+  - it: should have default image pull secret
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets[0].name
+          value: quay-registry-secret
+  - it: should have default securityContext
+    asserts:
+      - equal:
+          path: spec.template.spec.securityContext
+          value:
+            runAsUser: 33000
+            runAsGroup: 1000
+            fsGroup: 1000
+  - it: should have default container name
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].name
+          value: alfresco-audit-storage
+  - it: should have custom container image
+    set:
+      image:
+        repository: "custom-repo"
+        tag: "custom-tag"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: "custom-repo:custom-tag"
+  - it: should have custom imagePullPolicy
+    set:
+      image:
+        pullPolicy: "Always"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: "Always"
+  - it: should have default securityContext
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].securityContext
+          value:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+  - it: should have default ports section
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].ports[0]
+          value:
+            containerPort: 8081
+            name: http
+            protocol: TCP
+  - it: should have envs section with external cm and secrets
+    set:
+      messageBroker:
+        existingConfigMap:
+          name: mq-external-config
+          keys:
+            url: BROKER_URL_EXTERNAL
+        existingSecret:
+          name: mq-external-secret
+          keys:
+            username: BROKER_USERNAME_EXTERNAL
+            password: BROKER_PASSWORD_EXTERNAL
+      index:
+        existingConfigMap:
+          name: es-external-config
+          keys:
+            url: SEARCH_URL_EXTERNAL
+        existingSecret:
+          name: es-external-secret
+          keys:
+            username: SEARCH_USERNAME_EXTERNAL
+            password: SEARCH_PASSWORD_EXTERNAL
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ACTIVEMQ_USER
+            valueFrom:
+              secretKeyRef:
+                key: BROKER_USERNAME_EXTERNAL
+                name: mq-external-secret
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ACTIVEMQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: BROKER_PASSWORD_EXTERNAL
+                name: mq-external-secret
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ACTIVEMQ_BROKERURL
+            valueFrom:
+              configMapKeyRef:
+                key: BROKER_URL_EXTERNAL
+                name: mq-external-config
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: SEARCH_USERNAME_EXTERNAL
+                name: es-external-secret
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: SEARCH_PASSWORD_EXTERNAL
+                name: es-external-secret
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI
+            valueFrom:
+              configMapKeyRef:
+                key: SEARCH_URL_EXTERNAL
+                name: es-external-config
+  - it: should contain default envs
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ACTIVEMQ_USER
+            valueFrom:
+              secretKeyRef:
+                key: BROKER_USERNAME
+                name: RELEASE-NAME-alfresco-audit-storage-mq
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ACTIVEMQ_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: BROKER_PASSWORD
+                name: RELEASE-NAME-alfresco-audit-storage-mq
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ACTIVEMQ_BROKERURL
+            valueFrom:
+              configMapKeyRef:
+                key: BROKER_URL
+                name: RELEASE-NAME-alfresco-audit-storage-mq
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: SEARCH_USERNAME
+                name: RELEASE-NAME-alfresco-audit-storage-es
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: SEARCH_PASSWORD
+                name: RELEASE-NAME-alfresco-audit-storage-es
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUDIT_ENTRYSTORAGE_OPENSEARCH_CONNECTOR_URI
+            valueFrom:
+              configMapKeyRef:
+                key: SEARCH_URL
+                name: RELEASE-NAME-alfresco-audit-storage-es
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUDIT_EVENTINGESTION_DLQ_CONSUMEPERIOD
+            value: "60000"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUDIT_EVENTINGESTION_DLQ_CONSUMPTIONCOUNT
+            value: "1000"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUDIT_EVENTINGESTION_URI
+            value: activemq:topic:alfresco.repo.event2
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_PROFILES_ACTIVE
+            value: durable-subscriptions

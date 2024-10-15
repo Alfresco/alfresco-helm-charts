@@ -1,0 +1,127 @@
+replicaCount: 1
+
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
+
+image:
+  repository: quay.io/alfresco/alfresco-audit-storage
+  pullPolicy: IfNotPresent
+  tag: "0.0.1-A8"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health/liveness
+    port: http
+  initialDelaySeconds: 15
+  periodSeconds: 60
+readinessProbe:
+  httpGet:
+    path: /actuator/health/readiness
+    port: http
+  initialDelaySeconds: 15
+  periodSeconds: 60
+
+environment:
+  AUDIT_EVENTINGESTION_URI: activemq:topic:alfresco.repo.event2
+  AUDIT_EVENTINGESTION_DLQ_CONSUMEPERIOD: 60000
+  AUDIT_EVENTINGESTION_DLQ_CONSUMPTIONCOUNT: 1000
+  SPRING_PROFILES_ACTIVE: "durable-subscriptions"
+
+messageBroker:
+  # --  Broker URL formatted as per:
+  # https://activemq.apache.org/failover-transport-reference
+  url: null
+  # -- Broker username
+  username: null
+  # -- Broker password
+  password: null
+  existingConfigMap:
+    # -- Alternatively, provide message broker connection details via an existing
+    # configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the message broker
+      url: BROKER_URL
+  # -- Provide connection details alternatively via an existing secret that
+  # contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys
+  existingSecret:
+    name: null
+    keys:
+      username: BROKER_USERNAME
+      password: BROKER_PASSWORD
+
+index:
+  # -- The URL where the elasticsearch service is available
+  url: null
+  # -- The username required to access the elasticsearch service, if any
+  username: null
+  # -- The password required to access the elasticsearch service, if any
+  password: null
+  existingConfigMap:
+    # -- Alternatively, provide elasticsearch service connection details via
+    # an existing configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the elasticsearch service
+      url: SEARCH_URL
+  existingSecret:
+    # -- Alternatively, provide elasticsearch credentials via an existing secret
+    name: null
+    keys:
+      # -- Key within the secret that holds the elasticsearch username
+      username: SEARCH_USERNAME
+      # -- Key within the secret that holds the elasticsearch password
+      password: SEARCH_PASSWORD
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext:
+  runAsUser: 33000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 8081
+
+resources:
+  requests:
+    cpu: "0.5"
+    memory: "256Mi"
+  limits:
+    cpu: "1"
+    memory: "512Mi"
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+tags:
+  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
+  ci: false

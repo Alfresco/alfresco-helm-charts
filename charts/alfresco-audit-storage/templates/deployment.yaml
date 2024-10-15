@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "alfresco-audit-storage.fullname" . }}
+  labels:
+    {{- include "alfresco-audit-storage.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "alfresco-audit-storage.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "alfresco-audit-storage.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
+      serviceAccountName: {{ include "alfresco-audit-storage.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ printf "%s:%s" .Values.image.repository .Values.image.tag | quote }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            {{- include "alfresco-audit-storage.activemq.secret.env" $ | nindent 12 }}
+            {{- include "alfresco-audit-storage.activemq.cm.env" $ | nindent 12 }}
+            {{- include "alfresco-audit-storage.config.audit.entryStorage.envCredentials" $ | nindent 12 }}
+            {{- include "alfresco-audit-storage.config.audit.entryStorage.es.env" $ | nindent 12 }}
+            {{- range $key, $val := $.Values.environment }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

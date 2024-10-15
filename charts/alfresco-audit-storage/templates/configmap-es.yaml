@@ -1,0 +1,17 @@
+{{- with .Values.index }}
+{{- if not .existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "es")) "Chart" $.Chart "Release" $.Release }}
+  name: {{ template "alfresco-audit-storage.fullname" $ctx }}
+  labels:
+    {{- include "alfresco-audit-storage.labels" $ | nindent 4 }}
+data:
+  {{- $reqMsg := "Please provide elasticsearch connection details as .index.url values or using an .index.existingConfigMap." }}
+  {{- $esProtocol := required $reqMsg (include "alfresco-common.url.scheme" .url) }}
+  {{- $esHost := required $reqMsg (include "alfresco-common.url.host" .url) }}
+  {{- $esPort := required $reqMsg (include "alfresco-common.url.port" .url) }}
+  SEARCH_URL: {{ printf "%s://%s:%v" $esProtocol $esHost $esPort }}
+{{- end }}
+{{- end }}

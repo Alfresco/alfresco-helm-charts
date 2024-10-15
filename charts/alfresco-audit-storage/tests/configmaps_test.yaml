@@ -1,0 +1,58 @@
+---
+suite: test configmaps
+templates:
+  - configmap-mq.yaml
+  - configmap-es.yaml
+tests:
+  - it: should fail rendering manifest without required ActiveMQ values
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            You need to provide an ActiveMQ URL using messageBroker.url or using an existingConfigMap check chart README file
+        template: configmap-mq.yaml
+
+  - it: should create a cm from messageBroker provided values
+    values: &testvalues
+      - values/embedded-charts-values.yaml
+    asserts:
+      - equal:
+          path: data.BROKER_URL
+          value: failover:(nio://activemq-broker:61616)
+        template: configmap-mq.yaml
+      - equal:
+          path: data.SEARCH_URL
+          value: http://elasticsearch-master:9200
+        template: configmap-es.yaml
+
+  - it: should not render cm when existingConfigMap is set
+    values: *testvalues
+    set:
+      index.existingConfigMap:
+        name: external-mq-configmap
+      messageBroker.existingConfigMap:
+        name: external-es-configmap
+    asserts:
+      - hasDocuments:
+          count: 0
+        template: configmap-es.yaml
+      - hasDocuments:
+          count: 0
+        template: configmap-mq.yaml
+
+  - it: should render labels for configmaps
+    values: *testvalues
+    set:
+      nameOverride: testName
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-audit-storage
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: testName
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-audit-storage-1.0.0

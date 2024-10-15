@@ -1,0 +1,50 @@
+---
+suite: test service
+templates:
+  - service.yaml
+tests:
+  - it: render default service
+    asserts:
+      - equal:
+          path: spec.type
+          value: ClusterIP
+      - contains:
+          path: spec.ports
+          content:
+            port: 8081
+            targetPort: http
+            protocol: TCP
+            name: http-traffic
+
+  - it: render modified service
+    set:
+      service.type: NodePort
+      service.port: 2222
+    asserts:
+      - equal:
+          path: spec.type
+          value: NodePort
+      - contains:
+          path: spec.ports
+          content:
+            port: 2222
+            targetPort: http
+            protocol: TCP
+            name: http-traffic
+
+  - it: should render labels for service
+    set:
+      nameOverride: testName
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-audit-storage
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: testName
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-audit-storage-1.0.0

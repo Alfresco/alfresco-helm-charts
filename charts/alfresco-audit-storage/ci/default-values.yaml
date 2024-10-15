@@ -1,0 +1,34 @@
+nameOverride: aas
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+  limits:
+    cpu: "1"
+    memory: "1Gi"
+elasticsearch:
+  replicas: 1
+  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
+  esJavaOpts: "-Xmx512m -Xms512m"
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "1Gi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
+activemq:
+  fullnameOverride: activemq
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
+index:
+  url: http://elasticsearch-master:9200
+messageBroker:
+  url: nio://activemq-broker:61616
+tags:
+  ci: true
