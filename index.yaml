@@ -1124,6 +1124,31 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-ai-transformer-0.1.0-alpha.0/alfresco-ai-transformer-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
+  alfresco-audit-storage:
+  - apiVersion: v2
+    appVersion: 0.0.1-A8
+    created: "2024-10-15T10:11:54.696539586Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.3
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.5.5
+    - name: elasticsearch
+      repository: https://helm.elastic.co
+      tags:
+      - ci
+      version: 7.17.3
+    description: A Helm chart for Kubernetes to deploy Alfresco Audit Storage
+    digest: 80acc479eb730211bb6e67a56b00fb36fe9cea17f309245b87d5cec60950da5a
+    name: alfresco-audit-storage
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-audit-storage-0.1.0-alpha.0/alfresco-audit-storage-0.1.0-alpha.0.tgz
+    version: 0.1.0-alpha.0
   alfresco-common:
   - apiVersion: v2
     created: "2024-09-23T10:56:19.969719298Z"
@@ -5754,4 +5779,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-10-02T14:46:38.208621028Z"
+generated: "2024-10-15T10:11:54.696938189Z"
