@@ -24,14 +24,6 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
-| elasticSearchConnection.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap holding the URL of the elasticsearch service |
-| elasticSearchConnection.existingConfigMap.name | string | `nil` | Alternatively, provide elasticsearch service connection details via an existing configmap |
-| elasticSearchConnection.existingSecret.keys.password | string | `"SEARCH_PASSWORD"` | Key within the secret that holds the elasticsearch password |
-| elasticSearchConnection.existingSecret.keys.username | string | `"SEARCH_USERNAME"` | Key within the secret that holds the elasticsearch username |
-| elasticSearchConnection.existingSecret.name | string | `nil` | Alternatively, provide elasticsearch credentials via an existing secret |
-| elasticSearchConnection.password | string | `nil` | The password required to access the elasticsearch service, if any |
-| elasticSearchConnection.url | string | `nil` | The URL where the elasticsearch service is available |
-| elasticSearchConnection.username | string | `nil` | The username required to access the elasticsearch service, if any |
 | environment.AUDIT_EVENTINGESTION_DLQ_CONSUMEPERIOD | int | `60000` |  |
 | environment.AUDIT_EVENTINGESTION_DLQ_CONSUMPTIONCOUNT | int | `1000` |  |
 | environment.AUDIT_EVENTINGESTION_URI | string | `"activemq:topic:alfresco.repo.event2"` |  |
@@ -42,16 +34,24 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.repository | string | `"quay.io/alfresco/alfresco-audit-storage"` |  |
 | image.tag | string | `"0.0.1-A8"` |  |
 | imagePullSecrets | list | `[]` |  |
+| index.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap holding the URL of the elasticsearch service |
+| index.existingConfigMap.name | string | `nil` | Alternatively, provide elasticsearch service connection details via an existing configmap |
+| index.existingSecret.keys.password | string | `"SEARCH_PASSWORD"` | Key within the secret that holds the elasticsearch password |
+| index.existingSecret.keys.username | string | `"SEARCH_USERNAME"` | Key within the secret that holds the elasticsearch username |
+| index.existingSecret.name | string | `nil` | Alternatively, provide elasticsearch credentials via an existing secret |
+| index.password | string | `nil` | The password required to access the elasticsearch service, if any |
+| index.url | string | `nil` | The URL where the elasticsearch service is available |
+| index.username | string | `nil` | The username required to access the elasticsearch service, if any |
 | livenessProbe.httpGet.path | string | `"/actuator/health/liveness"` |  |
 | livenessProbe.httpGet.port | string | `"http"` |  |
 | livenessProbe.initialDelaySeconds | int | `15` |  |
 | livenessProbe.periodSeconds | int | `60` |  |
-| messageBrokerConnection.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap holding the URL of the message broker |
-| messageBrokerConnection.existingConfigMap.name | string | `nil` | Alternatively, provide message broker connection details via an existing configmap |
-| messageBrokerConnection.existingSecret | object | `{"keys":{"password":"BROKER_PASSWORD","username":"BROKER_USERNAME"},"name":null}` | Provide connection details alternatively via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
-| messageBrokerConnection.password | string | `nil` | Broker password |
-| messageBrokerConnection.url | string | `nil` | Broker URL formatted as per: https://activemq.apache.org/failover-transport-reference |
-| messageBrokerConnection.username | string | `nil` | Broker username |
+| messageBroker.existingConfigMap.keys.url | string | `"BROKER_URL"` | Key within the configmap holding the URL of the message broker |
+| messageBroker.existingConfigMap.name | string | `nil` | Alternatively, provide message broker connection details via an existing configmap |
+| messageBroker.existingSecret | object | `{"keys":{"password":"BROKER_PASSWORD","username":"BROKER_USERNAME"},"name":null}` | Provide connection details alternatively via an existing secret that contains BROKER_URL, BROKER_USERNAME and BROKER_PASSWORD keys |
+| messageBroker.password | string | `nil` | Broker password |
+| messageBroker.url | string | `nil` | Broker URL formatted as per: https://activemq.apache.org/failover-transport-reference |
+| messageBroker.username | string | `nil` | Broker username |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |

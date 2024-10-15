@@ -31,7 +31,7 @@ environment:
   AUDIT_EVENTINGESTION_DLQ_CONSUMPTIONCOUNT: 1000
   SPRING_PROFILES_ACTIVE: "durable-subscriptions"
 
-messageBrokerConnection:
+messageBroker:
   # --  Broker URL formatted as per:
   # https://activemq.apache.org/failover-transport-reference
   url: null
@@ -54,7 +54,7 @@ messageBrokerConnection:
       username: BROKER_USERNAME
       password: BROKER_PASSWORD
 
-elasticSearchConnection:
+index:
   # -- The URL where the elasticsearch service is available
   url: null
   # -- The username required to access the elasticsearch service, if any

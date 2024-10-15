@@ -57,7 +57,7 @@ tests:
             protocol: TCP
   - it: should have envs section with external cm and secrets
     set:
-      messageBrokerConnection:
+      messageBroker:
         existingConfigMap:
           name: mq-external-config
           keys:
@@ -67,7 +67,7 @@ tests:
           keys:
             username: BROKER_USERNAME_EXTERNAL
             password: BROKER_PASSWORD_EXTERNAL
-      elasticSearchConnection:
+      index:
         existingConfigMap:
           name: es-external-config
           keys:

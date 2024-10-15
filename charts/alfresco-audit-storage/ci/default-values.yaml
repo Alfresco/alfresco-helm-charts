@@ -26,9 +26,9 @@ activemq:
     limits:
       cpu: "1000m"
       memory: "1Gi"
-elasticSearchConnection:
+index:
   url: http://elasticsearch-master:9200
-messageBrokerConnection:
+messageBroker:
   url: nio://activemq-broker:61616
 tags:
   ci: true
