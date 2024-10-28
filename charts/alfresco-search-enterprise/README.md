@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-enterprise
 
-![Version: 4.2.0-alpha.1](https://img.shields.io/badge/Version-4.2.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
+![Version: 4.2.0-alpha.2](https://img.shields.io/badge/Version-4.2.0--alpha.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -131,7 +131,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | search.existingSecret.name | string | `nil` | Alternatively, provide search/indexing credentials via an existing secret |
 | search.password | string | `nil` | The password required to access the search/indexing service, if any |
 | search.url | string | `nil` | The URL where the search/indexing service is available |
-| search.user | string | `nil` | The username required to access the search/indexing service, if any |
+| search.username | string | `nil` | The username required to access the search/indexing service, if any |
 | securityContext | object | `{}` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
