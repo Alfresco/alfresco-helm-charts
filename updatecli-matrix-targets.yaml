@@ -109,6 +109,13 @@ matrix:
       helm_target: charts/alfresco-repository/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
+    audit-storage:
+      version:
+      pattern:
+      image:
+      helm_target: charts/alfresco-audit-storage/values.yaml
+      helm_key: $.image.tag
+      helm_update_appVersion: true
     activemq:
       version:
       pattern:
