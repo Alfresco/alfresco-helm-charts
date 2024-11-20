@@ -99,10 +99,14 @@ bulkIngester:
     ALFRESCO_BULK_INGEST_PUBLISHER_ENDPOINT: activemq:queue:bulk-ingester-events
   initContainers:
     waitForRepository:
+      image:
+        repository: curlimages/curl
+        tag: "8.11.0"
+        pullPolicy: IfNotPresent
       resources:
         limits:
-          cpu: "0.25"
-          memory: "20Mi"
+          cpu: 250m
+          memory: 20Mi
   affinity: {}
 predictionApplier:
   enabled: true

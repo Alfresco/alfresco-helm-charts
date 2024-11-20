@@ -27,13 +27,11 @@ spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       initContainers:
         - name: wait-db-ready
-          image: busybox:1.35
-          imagePullPolicy: IfNotPresent
+          image: {{ printf "%s:%s" .Values.initContainers.waitDbReady.image.repository .Values.initContainers.waitDbReady.image.tag | quote }}
+          imagePullPolicy: {{ .Values.initContainers.waitDbReady.image.pullPolicy }}
           {{- include "alfresco-common.component-security-context" dict | indent 8 }}
           resources:
-            limits:
-              cpu: "0.25"
-              memory: "20Mi"
+            {{- toYaml .Values.initContainers.waitDbReady.resources | nindent 12 }}
           env:
             {{ include "alfresco-repository.db.env" . | indent 12 }}
           command:

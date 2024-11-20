@@ -301,6 +301,16 @@ command: []
 args: []
 nodeSelector: {}
 tolerations: []
+initContainers:
+  waitDbReady:
+    image:
+      repository: busybox
+      tag: 1.37.0
+      pullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: 250m
+        memory: 20Mi
 global:
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:

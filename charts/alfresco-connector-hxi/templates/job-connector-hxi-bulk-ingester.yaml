@@ -42,7 +42,8 @@ spec:
               protocol: TCP
       initContainers:
         - name: wait-for-repository
-          image: curlimages/curl:7.79.1
+          image: {{ printf "%s:%s" .Values.bulkIngester.initContainers.waitForRepository.image.repository .Values.bulkIngester.initContainers.waitForRepository.image.tag | quote }}
+          imagePullPolicy: {{ .Values.bulkIngester.initContainers.waitForRepository.image.pullPolicy }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           resources: {{- toYaml .Values.bulkIngester.initContainers.waitForRepository.resources | nindent 12 }}
           env:
