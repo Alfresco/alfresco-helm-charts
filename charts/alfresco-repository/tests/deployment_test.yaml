@@ -226,6 +226,19 @@ tests:
                 name: mycm
                 key: DBDRIVER
 
+  - it: should have the default init container
+    values: *test_values
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[0].name
+          value: wait-db-ready
+      - matchRegex:
+          path: spec.template.spec.initContainers[0].image
+          pattern: "busybox:.+"
+      - equal:
+          path: spec.template.spec.initContainers[0].imagePullPolicy
+          value: IfNotPresent
+
   - it: should deploy with extra containers
     values: *test_values
     set:
