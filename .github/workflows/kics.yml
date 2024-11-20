@@ -32,6 +32,6 @@ jobs:
           platform_type: 'kubernetes'
           disable_secrets: true
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@e2b3eafc8d227b0241d48be5f425d47c2d750a13 # v3.26.8
+        uses: github/codeql-action/upload-sarif@ea9e4e37992a54ee68a9622e985e60c8e8f12d9f # v3.26.8
         with:
           sarif_file: report-dir/results.sarif
