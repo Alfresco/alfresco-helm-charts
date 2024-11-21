@@ -42,10 +42,12 @@ spec:
               protocol: TCP
       initContainers:
         - name: wait-for-repository
-          image: {{ printf "%s:%s" .Values.bulkIngester.initContainers.waitForRepository.image.repository .Values.bulkIngester.initContainers.waitForRepository.image.tag | quote }}
-          imagePullPolicy: {{ .Values.bulkIngester.initContainers.waitForRepository.image.pullPolicy }}
+          {{- with .Values.bulkIngester.initContainers.waitForRepository }}
+          image: {{ printf "%s:%s" .image.repository .image.tag | quote }}
+          imagePullPolicy: {{ .image.pullPolicy }}
+          resources: {{- toYaml .resources | nindent 12 }}
+          {{- end }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
-          resources: {{- toYaml .Values.bulkIngester.initContainers.waitForRepository.resources | nindent 12 }}
           env:
             {{- $repoCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" $.Chart "Release" $.Release }}
             {{- $repoCm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-connector-hxi.fullname" $repoCtx) }}

@@ -27,11 +27,12 @@ spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       initContainers:
         - name: wait-db-ready
-          image: {{ printf "%s:%s" .Values.initContainers.waitDbReady.image.repository .Values.initContainers.waitDbReady.image.tag | quote }}
-          imagePullPolicy: {{ .Values.initContainers.waitDbReady.image.pullPolicy }}
-          {{- include "alfresco-common.component-security-context" dict | indent 8 }}
-          resources:
-            {{- toYaml .Values.initContainers.waitDbReady.resources | nindent 12 }}
+          {{- with .Values.initContainers.waitDbReady }}
+          image: {{ printf "%s:%s" .image.repository .image.tag | quote }}
+          imagePullPolicy: {{ .image.pullPolicy }}
+          resources: {{- toYaml .resources | nindent 12 }}
+          {{- end }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           env:
             {{ include "alfresco-repository.db.env" . | indent 12 }}
           command:
