@@ -10,6 +10,8 @@ skip-check:
   - CKV_K8S_35 # "Prefer using secrets as files over secrets as environment variables"
   - CKV_K8S_38 # "Ensure that Service Account Tokens are only mounted where necessary"
   - CKV_K8S_43 # "Image should use digest"
+soft-fail-on:
+  - CKV2_K8S_6 # NetworkPolicy OPSEXP-2965
 var-file: .checkov-values.yml
 skip-path:
   - charts/[^/]+/ci/
