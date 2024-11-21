@@ -24,8 +24,7 @@ podAnnotations: {}
 podLabels: {}
 
 podSecurityContext:
-  # -- Retrocompat with Activiti Common chart
-  runAsUser: 101
+  runAsUser: 33000
   runAsNonRoot: true
 
 securityContext: {}
