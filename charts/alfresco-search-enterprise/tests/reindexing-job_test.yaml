@@ -140,6 +140,18 @@ tests:
       - hasDocuments:
           count: 0
 
+  - it: should render default init container
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[0].name
+          value: wait-for-repository
+      - matchRegex:
+          path: spec.template.spec.initContainers[0].image
+          pattern: "curlimages/curl:.+"
+      - equal:
+          path: spec.template.spec.initContainers[0].imagePullPolicy
+          value: IfNotPresent
+
   - it: render the initContainer with given configmap details
     set:
       reindexing:

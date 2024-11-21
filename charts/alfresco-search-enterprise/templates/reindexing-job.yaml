@@ -77,9 +77,12 @@ spec:
                 protocol: TCP
       initContainers:
         - name: wait-for-repository
-          image: curlimages/curl:7.79.1
+          {{- with .Values.reindexing.initcontainers.waitForRepository }}
+          image: {{ printf "%s:%s" .image.repository .image.tag | quote }}
+          imagePullPolicy: {{ .image.pullPolicy }}
+          resources: {{- toYaml .resources | nindent 12 }}
+          {{- end }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
-          resources: {{- toYaml .Values.reindexing.initcontainers.waitForRepository.resources | nindent 12 }}
           env:
             {{- $repoCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" $.Chart "Release" $.Release }}
             {{- $repoCm := coalesce .Values.reindexing.repository.existingConfigMap.name (include "alfresco-search-enterprise.fullname" $repoCtx) }}

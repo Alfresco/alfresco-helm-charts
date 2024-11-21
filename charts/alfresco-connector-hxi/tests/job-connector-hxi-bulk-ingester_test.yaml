@@ -1,0 +1,16 @@
+---
+suite: test bulk ingester job manifest
+templates:
+  - job-connector-hxi-bulk-ingester.yaml
+tests:
+  - it: should have the default init container
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[0].name
+          value: wait-for-repository
+      - matchRegex:
+          path: spec.template.spec.initContainers[0].image
+          pattern: "curlimages/curl:.+"
+      - equal:
+          path: spec.template.spec.initContainers[0].imagePullPolicy
+          value: IfNotPresent
