@@ -27,14 +27,14 @@ liveIndexing:
     image:
       repository: >-
         quay.io/alfresco/alfresco-elasticsearch-live-indexing-mediation
-      tag: 4.1.0
+      tag: 4.2.0
       pullPolicy: IfNotPresent
     # -- Set environment variables for the mediation component
     environment: {}
   content:
     image:
       repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-content
-      tag: 4.1.0
+      tag: 4.2.0
       pullPolicy: IfNotPresent
     replicaCount: 1
     # -- Set environment variables for the content component
@@ -95,7 +95,7 @@ liveIndexing:
   metadata:
     image:
       repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-metadata
-      tag: 4.1.0
+      tag: 4.2.0
       pullPolicy: IfNotPresent
     replicaCount: 1
     # -- Set environment variables for the metadata component
@@ -156,7 +156,7 @@ liveIndexing:
   path:
     image:
       repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-path
-      tag: 4.1.0
+      tag: 4.2.0
       pullPolicy: IfNotPresent
     replicaCount: 1
     # -- Set environment variables for the path component
@@ -219,7 +219,7 @@ reindexing:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-elasticsearch-reindexing
-    tag: 4.1.0
+    tag: 4.2.0
     pullPolicy: IfNotPresent
   pathIndexingEnabled: true
   environment: {}
