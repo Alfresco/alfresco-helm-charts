@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-hxi
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.1](https://img.shields.io/badge/AppVersion-1.0.1-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector hxi services
 
@@ -33,7 +33,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | bulkIngester.environment.ALFRESCO_BULK_INGEST_PUBLISHER_ENDPOINT | string | `"activemq:queue:bulk-ingester-events"` |  |
 | bulkIngester.image.pullPolicy | string | `"IfNotPresent"` |  |
 | bulkIngester.image.repository | string | `"quay.io/alfresco/alfresco-hxinsight-connector-bulk-ingester"` |  |
-| bulkIngester.image.tag | string | `"1.0.1"` |  |
+| bulkIngester.image.tag | string | `"1.0.0-A13"` |  |
 | bulkIngester.initContainers.waitForRepository.image.pullPolicy | string | `"IfNotPresent"` |  |
 | bulkIngester.initContainers.waitForRepository.image.repository | string | `"curlimages/curl"` |  |
 | bulkIngester.initContainers.waitForRepository.image.tag | string | `"8.11.0"` |  |
@@ -77,7 +77,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | liveIngester.image.internalPort | int | `8080` |  |
 | liveIngester.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIngester.image.repository | string | `"quay.io/alfresco/alfresco-hxinsight-connector-live-ingester"` |  |
-| liveIngester.image.tag | string | `"1.0.1"` |  |
+| liveIngester.image.tag | string | `"1.0.0-A13"` |  |
 | liveIngester.livenessProbe.httpGet.path | string | `"/actuator/health/liveness"` |  |
 | liveIngester.livenessProbe.httpGet.port | int | `8080` |  |
 | liveIngester.livenessProbe.initialDelaySeconds | int | `30` |  |
@@ -113,7 +113,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | predictionApplier.image.internalPort | int | `8080` |  |
 | predictionApplier.image.pullPolicy | string | `"IfNotPresent"` |  |
 | predictionApplier.image.repository | string | `"quay.io/alfresco/alfresco-hxinsight-connector-prediction-applier"` |  |
-| predictionApplier.image.tag | string | `"1.0.1"` |  |
+| predictionApplier.image.tag | string | `"1.0.0-A13"` |  |
 | predictionApplier.livenessProbe.httpGet.path | string | `"/actuator/health/liveness"` |  |
 | predictionApplier.livenessProbe.httpGet.port | int | `8080` |  |
 | predictionApplier.livenessProbe.initialDelaySeconds | int | `30` |  |

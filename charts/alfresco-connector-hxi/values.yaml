@@ -9,7 +9,7 @@ tolerations: []
 liveIngester:
   image:
     repository: quay.io/alfresco/alfresco-hxinsight-connector-live-ingester
-    tag: 1.0.1
+    tag: 1.0.0-A13
     pullPolicy: IfNotPresent
     internalPort: &liveIngesterPort 8080
   replicaCount: 1
@@ -86,7 +86,7 @@ bulkIngester:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-hxinsight-connector-bulk-ingester
-    tag: 1.0.1
+    tag: 1.0.0-A13
     pullPolicy: IfNotPresent
   resources:
     requests:
@@ -112,7 +112,7 @@ predictionApplier:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-hxinsight-connector-prediction-applier
-    tag: 1.0.1
+    tag: 1.0.0-A13
     pullPolicy: IfNotPresent
     internalPort: &predictionApplierPort 8080
   replicaCount: 1
