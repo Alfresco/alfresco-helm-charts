@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-service
 
-![Version: 4.0.0-alpha.1](https://img.shields.io/badge/Version-4.0.0--alpha.1-informational?style=flat-square) ![AppVersion: 2.0.13](https://img.shields.io/badge/AppVersion-2.0.13-informational?style=flat-square)
+![Version: 4.0.0](https://img.shields.io/badge/Version-4.0.0-informational?style=flat-square) ![AppVersion: 2.0.13](https://img.shields.io/badge/AppVersion-2.0.13-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
@@ -21,7 +21,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | alfresco-insight-zeppelin | 3.0.3 |
+|  | alfresco-insight-zeppelin | 3.0.4 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 |
 
 ## Values
