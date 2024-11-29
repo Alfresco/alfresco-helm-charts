@@ -1564,6 +1564,30 @@ entries:
     version: 1.0.0
   alfresco-connector-hxi:
   - apiVersion: v2
+    appVersion: 1.0.1
+    created: "2024-11-29T11:54:19.426241886Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 3.1.4
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.6.0
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.5.6
+    description: A Helm chart for deploying Alfresco connector hxi services
+    digest: ca1ed2ab16a8d16994e24bfbd2bc791cd1bbdf4463f3fd4f180a5600e21b2d8b
+    name: alfresco-connector-hxi
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-hxi-0.1.1/alfresco-connector-hxi-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 1.0.0
     created: "2024-11-29T09:53:11.07189619Z"
     dependencies:
@@ -6180,4 +6204,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-11-29T09:53:12.231584239Z"
+generated: "2024-11-29T11:54:19.426760742Z"
