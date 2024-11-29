@@ -38,6 +38,7 @@ db:
 messageBroker:
   url: nio://activemq-broker:61616
 repository:
+  url: https://httpbin.org/status/204
   versionOverride: '23.3.0'
 ats:
   sfsUrl: http://alfresco-transform-services-sfs
