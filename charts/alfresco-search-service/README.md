@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-service
 
-![Version: 4.0.0-alpha.1](https://img.shields.io/badge/Version-4.0.0--alpha.1-informational?style=flat-square) ![AppVersion: 2.0.12](https://img.shields.io/badge/AppVersion-2.0.12-informational?style=flat-square)
+![Version: 4.0.0](https://img.shields.io/badge/Version-4.0.0-informational?style=flat-square) ![AppVersion: 2.0.13](https://img.shields.io/badge/AppVersion-2.0.13-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
@@ -21,8 +21,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | alfresco-insight-zeppelin | 3.0.3 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.3 |
+|  | alfresco-insight-zeppelin | 3.0.4 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 |
 
 ## Values
 
@@ -47,7 +47,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | insightEngineImage.internalPort | string | `nil` | container's port search service is listening on change if your custom image use a different port. |
 | insightEngineImage.pullPolicy | string | `"IfNotPresent"` |  |
 | insightEngineImage.repository | string | `"quay.io/alfresco/insight-engine"` |  |
-| insightEngineImage.tag | string | `"2.0.12"` |  |
+| insightEngineImage.tag | string | `"2.0.13"` |  |
 | livenessProbe.failureThreshold | int | `1` |  |
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
@@ -84,7 +84,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | searchServicesImage.internalPort | string | `nil` | container's port search service is listening on change if your custom image use a different port. |
 | searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
 | searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
-| searchServicesImage.tag | string | `"2.0.12"` |  |
+| searchServicesImage.tag | string | `"2.0.13"` |  |
 | service.name | string | `"solr"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |

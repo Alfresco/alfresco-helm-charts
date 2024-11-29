@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-msteams
 
-![Version: 1.2.0-alpha.0](https://img.shields.io/badge/Version-1.2.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.3](https://img.shields.io/badge/AppVersion-2.0.3-informational?style=flat-square)
+![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.4](https://img.shields.io/badge/AppVersion-2.0.4-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector msteams service
 
@@ -15,7 +15,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.3 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 |
 
 ## Values
 
@@ -31,7 +31,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.internalPort | int | `3978` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-ms-teams-service"` |  |
-| image.tag | string | `"2.0.3"` |  |
+| image.tag | string | `"2.0.4"` |  |
 | ingress.className | string | `"nginx"` |  |
 | ingress.extraAnnotations | object | `{}` |  |
 | ingress.path | string | `"/ms-teams-service"` |  |

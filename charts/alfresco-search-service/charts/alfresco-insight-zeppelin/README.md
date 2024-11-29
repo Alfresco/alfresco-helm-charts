@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-insight-zeppelin
 
-![Version: 3.0.3](https://img.shields.io/badge/Version-3.0.3-informational?style=flat-square) ![AppVersion: 2.0.12](https://img.shields.io/badge/AppVersion-2.0.12-informational?style=flat-square)
+![Version: 3.0.4](https://img.shields.io/badge/Version-3.0.4-informational?style=flat-square) ![AppVersion: 2.0.13](https://img.shields.io/badge/AppVersion-2.0.13-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Insight Zeppelin
 
@@ -21,7 +21,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.3 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 |
 
 ## Values
 
@@ -36,7 +36,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/insight-zeppelin"` |  |
-| image.tag | string | `"2.0.12"` |  |
+| image.tag | string | `"2.0.13"` |  |
 | ingress.path | string | `"/zeppelin"` |  |
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |

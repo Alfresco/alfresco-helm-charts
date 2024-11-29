@@ -6,7 +6,7 @@ global:
 image:
   repository: quay.io/alfresco/alfresco-audit-storage
   pullPolicy: IfNotPresent
-  tag: "0.0.1-A8"
+  tag: 1.0.0
 
 imagePullSecrets: []
 nameOverride: ""
