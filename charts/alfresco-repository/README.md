@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.4.0](https://img.shields.io/badge/AppVersion-23.4.0-informational?style=flat-square)
+![Version: 0.8.1](https://img.shields.io/badge/Version-0.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.4.0](https://img.shields.io/badge/AppVersion-23.4.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -45,7 +45,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | configuration.db.url | string | `nil` | JDBC url of the database This is a mandatory parameter |
 | configuration.db.username | string | `nil` | Username to authentication to the repository database |
 | configuration.hz.port | int | `5701` | Hazelcast listener port Only change it if you use a custom image where the port has been changed from default |
-| configuration.imap | object | see below | Basic IMAP capabilities config (limited to enabling/disabling). In order to pass more IMAP properties and configure the subsystem more deeply, please use value `environment.CATALINA_OPTS` or `configuration.repository.existingConfiMap` and check the [available properties for this subsystem](https://docs.alfresco.com/content-services/latest/config/email/#imap-subsystem-properties) |
+| configuration.imap | object | see below | Basic IMAP capabilities config (limited to enabling/disabling). In order to pass more IMAP properties and configure the subsystem more deeply, please use value `environment.CATALINA_OPTS` or `configuration.repository.existingConfiMap` and check the [available properties for this subsystem](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP/IMAP-Subsystem-Properties) |
 | configuration.imap.enabled | bool | `false` | Enable/Disable Alfresco repository IMAP capabilities |
 | configuration.imap.port | int | `1143` | port to use to listen for IMAP clients |
 | configuration.imap.protocol | string | `"imap"` | Protocol to use to talk to IMAP clients (imap or imaps) |

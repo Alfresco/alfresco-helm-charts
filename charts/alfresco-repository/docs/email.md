@@ -147,8 +147,7 @@ Similarly to SMTP inbound, it is possible to enable IMAP interface to the
 repository  using the configuration below:
 
 To get broader view on the available properties to configure IMAP please refer
-to the [IMAP
-documentation](https://docs.alfresco.com/content-services/latest/config/email/#configure-imap)
+to the [IMAP documentation][imap]
 
 ```properties
 configuration:
@@ -167,3 +166,5 @@ environment:
 
 As usual, in order to configure IMAPs or IMAP/TLS refer to the
 [keystore](keystores.md) documentation.
+
+[imap]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP

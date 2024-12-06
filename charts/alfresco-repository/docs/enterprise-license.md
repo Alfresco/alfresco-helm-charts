@@ -53,7 +53,8 @@ alfresco-repository:
 Before your license expires you will want to apply a new one. It's actually
 very easy do to so. All you need to do is overwrite the secret you created on
 previous deployment. You can use the exact same command just replacing the
-license file with the new one. Once that's done you can refresh the license
-from the Alfresco admin console and use the "Apply a new license" feature
-(check the [admin
-doc](https://docs.alfresco.com/content-services/latest/admin/license/#uploadlicense)
+license file with the new one. Once that's done you can refresh the license from
+the Alfresco admin console and use the "Apply a new license" feature (check the
+[admin doc][license]
+
+[license]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/Licenses/Upload-new-license
