@@ -76,6 +76,9 @@ scheme](https://hyland.atlassian.net/wiki/spaces/TECH/pages/edit-v2/1293317631#i
   [supported-matrix](https://github.com/Alfresco/alfresco-updatecli/blob/master/deployments/values/supported-matrix.yaml)
   has been manually updated for the latest acs version released and the
   compatibility matrix is up to date.
+* For minor releases, ensure to update the links beginning with
+  `https://support.hyland.com/r/Alfresco` to reflect the latest version or
+  corresponding minor update documentation.
 * Trigger the creation of an update branch by executing [Bump
   version](../.github/workflows/updatecli.yaml) with `values` option. Optionally
   you can test not yet merged changes from alfresco-updatecli by specifying a
