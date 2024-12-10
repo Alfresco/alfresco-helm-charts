@@ -5,5 +5,6 @@ description: |
   A helper subchart to avoid duplication in alfresco charts and set common
   external dependencies
 type: library
-version: 4.0.0-alpha.0
+version: 4.0.0-alpha.1
+dependencies: []
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
