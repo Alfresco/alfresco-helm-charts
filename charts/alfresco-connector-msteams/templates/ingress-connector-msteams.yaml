@@ -6,11 +6,10 @@ metadata:
   name: {{ $serviceName }}
   labels:
     {{- include "alfresco-connector-msteams.labels" . | nindent 4 }}
+  {{- with .Values.ingress.extraAnnotations }}
   annotations:
-    {{- if .Values.ingress.extraAnnotations }}
-    {{- toYaml .Values.ingress.extraAnnotations | nindent 4 }}
-    {{- end }}
-
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   {{- if .Values.ingress.tls }}
@@ -24,13 +23,17 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-  - http:
-      paths:
-      - path: {{ .Values.ingress.path }}
-        {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
-        pathType: Prefix
-        {{- end }}
-        backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
-  {{- if .Values.ingress.hostName }}
-    host: {{ tpl .Values.ingress.hostName $ }}
-  {{- end }}
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ $serviceName }}
+                port:
+                  number: {{ $servicePort }}
+          {{- end }}
+    {{- end }}

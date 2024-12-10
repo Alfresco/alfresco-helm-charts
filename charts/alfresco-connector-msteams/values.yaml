@@ -18,7 +18,10 @@ service:
   externalPort: 80
 ingress:
   className: nginx
-  path: /ms-teams-service
+  hosts:
+    - paths:
+        - path: /ms-teams-service
+          pathType: Prefix
   tls: []
   extraAnnotations: {}
 podSecurityContext:

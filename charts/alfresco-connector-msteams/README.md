@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-msteams
 
-![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.4](https://img.shields.io/badge/AppVersion-2.0.4-informational?style=flat-square)
+![Version: 2.0.0-alpha.0](https://img.shields.io/badge/Version-2.0.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.4](https://img.shields.io/badge/AppVersion-2.0.4-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector msteams service
 
@@ -34,7 +34,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.tag | string | `"2.0.4"` |  |
 | ingress.className | string | `"nginx"` |  |
 | ingress.extraAnnotations | object | `{}` |  |
-| ingress.path | string | `"/ms-teams-service"` |  |
+| ingress.hosts[0].paths[0].path | string | `"/ms-teams-service"` |  |
+| ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |
 | livenessProbe.failureThreshold | int | `1` |  |
 | livenessProbe.initialDelaySeconds | int | `10` |  |

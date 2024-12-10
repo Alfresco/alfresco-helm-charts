@@ -1,6 +1,6 @@
 {{- if .Values.ingress.enabled }}
-{{- $servicePort := .Values.service.name | default (include "alfresco-search.svcPort" .) -}}
-{{- $backendSvc := dict "serviceName" (include "alfresco-search-service.deployment.name" .) "servicePort" $servicePort "context" $ -}}
+{{- $servicePort := (include "alfresco-search.svcPort" .) -}}
+{{- $serviceName := (include "alfresco-search-service.deployment.name" .) -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -27,14 +27,18 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-  - http:
-      paths:
-      - path: {{ .Values.ingress.path }}
-        {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
-        pathType: Prefix
-        {{- end }}
-        backend: {{- include "common.ingress.backend" $backendSvc | nindent 10 }}
-    {{- if .Values.ingress.hostName }}
-    host: {{ tpl .Values.ingress.hostName . }}
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ $serviceName }}
+                port:
+                  number: {{ $servicePort }}
+          {{- end }}
     {{- end }}
 {{- end }}

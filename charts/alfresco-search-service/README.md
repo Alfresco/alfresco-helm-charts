@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-service
 
-![Version: 4.0.0](https://img.shields.io/badge/Version-4.0.0-informational?style=flat-square) ![AppVersion: 2.0.13](https://img.shields.io/badge/AppVersion-2.0.13-informational?style=flat-square)
+![Version: 5.0.0-alpha.0](https://img.shields.io/badge/Version-5.0.0--alpha.0-informational?style=flat-square) ![AppVersion: 2.0.13](https://img.shields.io/badge/AppVersion-2.0.13-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
@@ -21,7 +21,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | alfresco-insight-zeppelin | 3.0.4 |
+|  | alfresco-insight-zeppelin | 4.0.0-alpha.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 |
 
 ## Values
@@ -37,7 +37,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.className | string | `"nginx"` |  |
 | ingress.enabled | bool | `false` | Expose the solr admin console behind basic auth |
 | ingress.existingSecretName | string | `nil` | An existing secret that contains an `auth` key with a value in the same format of `ingress.basicAuth` |
-| ingress.path | string | `"/solr"` |  |
+| ingress.hosts[0].paths[0].path | string | `"/solr"` |  |
+| ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |
 | initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainer.image.repository | string | `"busybox"` |  |

@@ -13,7 +13,13 @@ service:
   type: ClusterIP
   externalPort: 80
 ingress:
-  path: /zeppelin
+  className: nginx
+  hosts:
+    - paths:
+        - path: /zeppelin
+          pathType: Prefix
+  tls: []
+  extraAnnotations: {}
 repository:
   # -- Alfresco repository URL
   url: http://alfresco-search-service

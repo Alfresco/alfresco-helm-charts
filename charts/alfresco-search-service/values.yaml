@@ -37,7 +37,10 @@ service:
 ingress:
   # -- Expose the solr admin console behind basic auth
   enabled: false
-  path: /solr
+  hosts:
+    - paths:
+        - path: /solr
+          pathType: Prefix
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
