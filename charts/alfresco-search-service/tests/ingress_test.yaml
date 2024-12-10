@@ -59,3 +59,45 @@ tests:
             app.kubernetes.io/name: testName
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-search-service-1.0.0
+
+  - it: should render default rules
+    set:
+      ingress:
+        enabled: true
+    asserts:
+      - equal:
+          path: spec.rules
+          value:
+            - host:
+              http:
+                paths:
+                  - backend:
+                      service:
+                        name: RELEASE-NAME-solr
+                        port:
+                          number: 80
+                    path: /solr
+                    pathType: Prefix
+  - it: should render rules with host
+    set:
+      ingress:
+        enabled: true
+        hosts:
+          - host: testhost
+            paths:
+            - path: /solr
+              pathType: Prefix
+    asserts:
+      - equal:
+          path: spec.rules
+          value:
+            - host: testhost
+              http:
+                paths:
+                  - backend:
+                      service:
+                        name: RELEASE-NAME-solr
+                        port:
+                          number: 80
+                    path: /solr
+                    pathType: Prefix

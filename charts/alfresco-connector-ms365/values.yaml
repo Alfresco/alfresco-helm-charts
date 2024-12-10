@@ -58,7 +58,10 @@ service:
   externalPort: 80
 ingress:
   className: nginx
-  path: /ooi-service
+  hosts:
+    - paths:
+        - path: /ooi-service
+          pathType: Prefix
   tls: []
   extraAnnotations: {}
 podSecurityContext:

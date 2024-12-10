@@ -26,13 +26,17 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-  {{- if .Values.ingress.hostName }}
-  - host: {{ tpl .Values.ingress.hostName $ }}
-    http:
-  {{- else }}
-  - http:
-  {{- end }}
-      paths:
-      - path: {{ .Values.ingress.path }}(/|$)(.*)
-        pathType: Prefix
-        backend: {{- include "common.ingress.backend" (dict "serviceName" $serviceName "servicePort" $servicePort "context" $) | nindent 10 }}
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ $serviceName }}
+                port:
+                  number: {{ $servicePort }}
+          {{- end }}
+    {{- end }}

@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-sync-service
 
-![Version: 6.1.0](https://img.shields.io/badge/Version-6.1.0-informational?style=flat-square) ![AppVersion: 5.1.0](https://img.shields.io/badge/AppVersion-5.1.0-informational?style=flat-square)
+![Version: 7.0.0-alpha.0](https://img.shields.io/badge/Version-7.0.0--alpha.0-informational?style=flat-square) ![AppVersion: 5.1.0](https://img.shields.io/badge/AppVersion-5.1.0-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -20,7 +20,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | Repository | Name | Version |
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.6.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0-alpha.0 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
@@ -48,7 +48,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.repository | string | `"quay.io/alfresco/service-sync"` |  |
 | image.tag | string | `"5.1.0"` |  |
 | ingress.extraAnnotations | object | `{}` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes nginx.ingress.kubernetes.io/ssl-redirect: "false" |
-| ingress.path | string | `"/syncservice"` |  |
+| ingress.hosts[0].paths[0].path | string | `"/syncservice(/|$)(.*)"` |  |
+| ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |
 | livenessProbe.httpGet.path | string | `"/alfresco/healthcheck"` |  |
 | livenessProbe.httpGet.port | string | `"serviceport"` |  |

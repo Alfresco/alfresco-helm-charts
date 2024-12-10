@@ -21,3 +21,40 @@ tests:
     - equal:
         path: spec.ingressClassName
         value: nginx
+- it: should render default rules
+  asserts:
+    - equal:
+        path: spec.rules
+        value:
+          - host:
+            http:
+              paths:
+                - backend:
+                    service:
+                      name: RELEASE-NAME-alfresco-connector-ms365
+                      port:
+                        number: 80
+                  path: /ooi-service
+                  pathType: Prefix
+- it: should render rules with host
+  set:
+    ingress:
+      hosts:
+        - host: testhost
+          paths:
+          - path: /ooi-service
+            pathType: Prefix
+  asserts:
+    - equal:
+        path: spec.rules
+        value:
+          - host: testhost
+            http:
+              paths:
+                - backend:
+                    service:
+                      name: RELEASE-NAME-alfresco-connector-ms365
+                      port:
+                        number: 80
+                  path: /ooi-service
+                  pathType: Prefix

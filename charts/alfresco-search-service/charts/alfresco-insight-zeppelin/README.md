@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-insight-zeppelin
 
-![Version: 3.0.4](https://img.shields.io/badge/Version-3.0.4-informational?style=flat-square) ![AppVersion: 2.0.13](https://img.shields.io/badge/AppVersion-2.0.13-informational?style=flat-square)
+![Version: 4.0.0-alpha.0](https://img.shields.io/badge/Version-4.0.0--alpha.0-informational?style=flat-square) ![AppVersion: 2.0.13](https://img.shields.io/badge/AppVersion-2.0.13-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Insight Zeppelin
 
@@ -21,7 +21,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0-alpha.0 |
 
 ## Values
 
@@ -37,7 +37,11 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/insight-zeppelin"` |  |
 | image.tag | string | `"2.0.13"` |  |
-| ingress.path | string | `"/zeppelin"` |  |
+| ingress.className | string | `"nginx"` |  |
+| ingress.extraAnnotations | object | `{}` |  |
+| ingress.hosts[0].paths[0].path | string | `"/zeppelin"` |  |
+| ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| ingress.tls | list | `[]` |  |
 | livenessProbe.initialDelaySeconds | int | `130` |  |
 | livenessProbe.periodSeconds | int | `20` |  |
 | livenessProbe.timeoutSeconds | int | `10` |  |

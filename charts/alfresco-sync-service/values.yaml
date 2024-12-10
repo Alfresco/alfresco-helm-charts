@@ -132,7 +132,10 @@ ingress:
   # nginx.ingress.kubernetes.io/ssl-redirect: "false"
   extraAnnotations: {}
   tls: []
-  path: /syncservice
+  hosts:
+    - paths:
+        - path: /syncservice(/|$)(.*)
+          pathType: Prefix
 nodeSelector: {}
 tolerations: []
 terminationGracePeriodSeconds: 60
