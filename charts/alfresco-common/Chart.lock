@@ -1,6 +1,0 @@
-dependencies:
-- name: common
-  repository: oci://registry-1.docker.io/bitnamicharts
-  version: 1.17.1
-digest: sha256:287d0ac4eb057679560ea00b24450c7513276140cc7c16b6db7d57816e8138b3
-generated: "2023-09-20T14:56:20.984441+02:00"
