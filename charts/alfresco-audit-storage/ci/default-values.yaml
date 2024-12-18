@@ -7,6 +7,7 @@ resources:
     cpu: "1"
     memory: "1Gi"
 elasticsearch:
+  fullnameOverride: elasticsearch
   master:
     masterOnly: false
     replicaCount: 1
@@ -33,7 +34,7 @@ activemq:
       cpu: "1000m"
       memory: "1Gi"
 index:
-  url: http://elasticsearch-master:9200
+  url: http://elasticsearch:9200
 messageBroker:
   url: nio://activemq-broker:61616
 tags:
