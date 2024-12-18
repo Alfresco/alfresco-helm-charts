@@ -1230,6 +1230,30 @@ entries:
   alfresco-audit-storage:
   - apiVersion: v2
     appVersion: 1.0.0
+    created: "2024-12-18T13:46:31.319502936Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0-alpha.0
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.6.0
+    - name: elasticsearch
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 21.4.1
+    description: A Helm chart for Kubernetes to deploy Alfresco Audit Storage
+    digest: ccf12a3e9d704c62ad1172a5e9c97910ea3c40bb8c4faa12794d05d2805af130
+    name: alfresco-audit-storage
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-audit-storage-0.2.0-alpha.0/alfresco-audit-storage-0.2.0-alpha.0.tgz
+    version: 0.2.0-alpha.0
+  - apiVersion: v2
+    appVersion: 1.0.0
     created: "2024-11-29T09:53:10.924112024Z"
     dependencies:
     - name: alfresco-common
@@ -3058,6 +3082,30 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-repository-0.1.0-alpha.0/alfresco-repository-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-search-enterprise:
+  - apiVersion: v2
+    appVersion: 4.2.0
+    created: "2024-12-18T13:46:31.461227555Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0-alpha.0
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.6.0
+    - name: elasticsearch
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 21.4.1
+    description: A Helm chart for deploying Alfresco Elasticsearch connector
+    digest: 7d65e82ad6f7ee0960efdad7bba5e63ca08b306e3b7e3441a52e63bbe6fc0c63
+    name: alfresco-search-enterprise
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-search-enterprise-4.3.0-alpha.0/alfresco-search-enterprise-4.3.0-alpha.0.tgz
+    version: 4.3.0-alpha.0
   - apiVersion: v2
     appVersion: 4.2.0
     created: "2024-11-29T09:53:11.679296354Z"
@@ -6317,4 +6365,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2024-12-10T16:47:05.559165249Z"
+generated: "2024-12-18T13:46:31.462472917Z"
