@@ -155,7 +155,7 @@
   },"22": {
     "doc": "alfresco-search-enterprise",
     "title": "Requirements",
-    "content": "| Repository | Name | Version | . | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.6.0 | . | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 | . | https://helm.elastic.co | elasticsearch | 7.17.3 | . ",
+    "content": "| Repository | Name | Version | . | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.6.0 | . | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0-alpha.0 | . | oci://registry-1.docker.io/bitnamicharts | elasticsearch | 21.4.1 | . ",
     "url": "/alfresco-helm-charts/charts/alfresco-search-enterprise/README.html#requirements",
     
     "relUrl": "/charts/alfresco-search-enterprise/README.html#requirements"
@@ -176,7 +176,7 @@
   },"25": {
     "doc": "alfresco-audit-storage",
     "title": "Requirements",
-    "content": "| Repository | Name | Version | . | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.6.0 | . | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 | . | https://helm.elastic.co | elasticsearch | 7.17.3 | . ",
+    "content": "| Repository | Name | Version | . | https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.6.0 | . | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0-alpha.0 | . | oci://registry-1.docker.io/bitnamicharts | elasticsearch | 21.4.1 | . ",
     "url": "/alfresco-helm-charts/charts/alfresco-audit-storage/README.html#requirements",
     
     "relUrl": "/charts/alfresco-audit-storage/README.html#requirements"
