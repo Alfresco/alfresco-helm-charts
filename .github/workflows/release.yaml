@@ -51,7 +51,6 @@ jobs:
         run: |
           helm repo add self https://alfresco.github.io/alfresco-helm-charts/
           helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
-          helm repo add elastic https://helm.elastic.co
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@a917fd15b20e8b64b94d9158ad54cd6345335584 # v1.6.0
