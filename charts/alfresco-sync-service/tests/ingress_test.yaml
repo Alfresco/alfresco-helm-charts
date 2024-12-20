@@ -16,7 +16,7 @@ tests:
                       port:
                         number: 80
                   path: /syncservice(/|$)(.*)
-                  pathType: Prefix
+                  pathType: ImplementationSpecific
 - it: should render rules with host
   set:
     ingress:
@@ -24,7 +24,7 @@ tests:
         - host: testhost
           paths:
           - path: /syncservice(/|$)(.*)
-            pathType: Prefix
+            pathType: ImplementationSpecific
   asserts:
     - equal:
         path: spec.rules
@@ -38,4 +38,4 @@ tests:
                       port:
                         number: 80
                   path: /syncservice(/|$)(.*)
-                  pathType: Prefix
+                  pathType: ImplementationSpecific

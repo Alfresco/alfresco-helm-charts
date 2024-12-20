@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-sync-service
 
-![Version: 7.0.0-alpha.0](https://img.shields.io/badge/Version-7.0.0--alpha.0-informational?style=flat-square) ![AppVersion: 5.1.0](https://img.shields.io/badge/AppVersion-5.1.0-informational?style=flat-square)
+![Version: 7.0.0-alpha.1](https://img.shields.io/badge/Version-7.0.0--alpha.1-informational?style=flat-square) ![AppVersion: 5.1.0](https://img.shields.io/badge/AppVersion-5.1.0-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -49,7 +49,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.tag | string | `"5.1.0"` |  |
 | ingress.extraAnnotations | object | `{}` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes nginx.ingress.kubernetes.io/ssl-redirect: "false" |
 | ingress.hosts[0].paths[0].path | string | `"/syncservice(/|$)(.*)"` |  |
-| ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
 | livenessProbe.httpGet.path | string | `"/alfresco/healthcheck"` |  |
 | livenessProbe.httpGet.port | string | `"serviceport"` |  |

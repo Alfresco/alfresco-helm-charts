@@ -135,7 +135,7 @@ ingress:
   hosts:
     - paths:
         - path: /syncservice(/|$)(.*)
-          pathType: Prefix
+          pathType: ImplementationSpecific
 nodeSelector: {}
 tolerations: []
 terminationGracePeriodSeconds: 60
