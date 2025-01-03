@@ -7,16 +7,23 @@ resources:
     cpu: "1"
     memory: "1Gi"
 elasticsearch:
-  replicas: 1
-  clusterHealthCheckParams: "wait_for_status=yellow&timeout=1s"
-  esJavaOpts: "-Xmx512m -Xms512m"
-  resources:
-    requests:
-      cpu: "100m"
-      memory: "1Gi"
-    limits:
-      cpu: "1000m"
-      memory: "1Gi"
+  fullnameOverride: elasticsearch
+  master:
+    masterOnly: false
+    replicaCount: 1
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "1Gi"
+      limits:
+        cpu: "1000m"
+        memory: "1Gi"
+  data:
+    replicaCount: 0
+  coordinating:
+    replicaCount: 0
+  ingest:
+    replicaCount: 0
 activemq:
   fullnameOverride: activemq
   resources:
@@ -27,7 +34,7 @@ activemq:
       cpu: "1000m"
       memory: "1Gi"
 index:
-  url: http://elasticsearch-master:9200
+  url: http://elasticsearch:9200
 messageBroker:
   url: nio://activemq-broker:61616
 tags:
