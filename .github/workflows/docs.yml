@@ -22,7 +22,7 @@ on:
 
 jobs:
   publish:
-    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@fd99d4580a739fc4d062c0cfe2554e396c2dae91
+    uses: Alfresco/jekyll-build-tools/.github/workflows/jekyll-publish.yml@3072e96e552efe393302064e00f70bacc59d9b6d
     if: github.event_name == 'pull_request' || github.event.workflow_run.conclusion == 'success'
     with:
       working-directory: .
