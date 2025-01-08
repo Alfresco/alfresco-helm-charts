@@ -127,10 +127,12 @@ database:
       # -- Key within the secret holding the database password
       password: DATABASE_PASSWORD
 ingress:
-  # -- useful when running Sync service without SSL termination done by a load
-  # balancer, e.g. when ran on Minikube for testing purposes
-  # nginx.ingress.kubernetes.io/ssl-redirect: "false"
-  extraAnnotations: {}
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /alfresco/$2
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "sync_affinity_route"
+    nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
   tls: []
   hosts:
     - paths:

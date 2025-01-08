@@ -47,7 +47,11 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/service-sync"` |  |
 | image.tag | string | `"5.1.0"` |  |
-| ingress.extraAnnotations | object | `{}` | useful when running Sync service without SSL termination done by a load balancer, e.g. when ran on Minikube for testing purposes nginx.ingress.kubernetes.io/ssl-redirect: "false" |
+| ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
+| ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/alfresco/$2"` |  |
+| ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-hash" | string | `"sha1"` |  |
+| ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-name" | string | `"sync_affinity_route"` |  |
+| ingress.annotations."nginx.ingress.kubernetes.io/use-regex" | string | `"true"` |  |
 | ingress.hosts[0].paths[0].path | string | `"/syncservice(/|$)(.*)"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | ingress.tls | list | `[]` |  |
