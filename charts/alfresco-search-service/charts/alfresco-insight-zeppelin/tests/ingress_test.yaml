@@ -1,8 +1,8 @@
 suite: test zeppelin ingress
 templates:
 - ingress.yaml
-set:
-  enabled: true
+values:
+  - values/test_values.yaml
 tests:
 - it: should render default rules
   asserts:
