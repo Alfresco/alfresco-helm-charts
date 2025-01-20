@@ -106,7 +106,7 @@
   },"15": {
     "doc": "alfresco-search-service",
     "title": "Requirements",
-    "content": "| Repository | Name | Version | . |   | alfresco-insight-zeppelin | 4.0.0-alpha.0 | . | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0-alpha.0 | . ",
+    "content": "| Repository | Name | Version | . |   | alfresco-insight-zeppelin | 4.0.0-alpha.1 | . | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0-alpha.0 | . ",
     "url": "/alfresco-helm-charts/charts/alfresco-search-service/README.html#requirements",
     
     "relUrl": "/charts/alfresco-search-service/README.html#requirements"
