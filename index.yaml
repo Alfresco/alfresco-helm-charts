@@ -3972,6 +3972,31 @@ entries:
   alfresco-search-service:
   - apiVersion: v2
     appVersion: 2.0.13
+    created: "2025-01-20T13:03:15.393123464Z"
+    dependencies:
+    - condition: alfresco-insight-zeppelin.enabled
+      name: alfresco-insight-zeppelin
+      repository: ""
+      version: 4.0.0-alpha.1
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0-alpha.0
+    description: A Helm chart for deploying Alfresco Search Service
+    digest: 9456dc79a1c36ced769c3aadfe1cb8b0589406230f2979d91881be83dc0e796b
+    home: https://www.alfresco.com
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - alfresco search services
+    - alfresco insight engine
+    - solr
+    name: alfresco-search-service
+    sources:
+    - https://github.com/Alfresco/alfresco-helm-charts
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-search-service-5.0.0-alpha.1/alfresco-search-service-5.0.0-alpha.1.tgz
+    version: 5.0.0-alpha.1
+  - apiVersion: v2
+    appVersion: 2.0.13
     created: "2024-12-10T16:47:05.337200268Z"
     dependencies:
     - condition: alfresco-insight-zeppelin.enabled
@@ -6395,4 +6420,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2025-01-08T17:27:54.417053783Z"
+generated: "2025-01-20T13:03:15.394197269Z"
