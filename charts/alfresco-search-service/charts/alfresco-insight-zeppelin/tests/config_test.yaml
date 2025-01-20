@@ -2,6 +2,8 @@
 suite: test zeppelin configmap
 templates:
   - config.yaml
+values:
+  - values/test_values.yaml
 tests:
   - it: should have default port and hosts
     asserts:
