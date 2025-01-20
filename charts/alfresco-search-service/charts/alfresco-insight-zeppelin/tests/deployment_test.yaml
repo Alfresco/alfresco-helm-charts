@@ -3,6 +3,8 @@ suite: test zeppelin deployment
 templates:
   - deployment.yaml
   - config.yaml
+set:
+  enabled: true
 tests:
   - it: should have basic metadata in place
     asserts:

@@ -18,6 +18,6 @@ helm-extra-args: --timeout 600s
 validate-maintainers: false
 
 additional-commands:
-  - helm unittest --color --with-subchart=false {{ .Path }}
+  - helm unittest --color {{ .Path }}
   - helm template {{ .Path }} --output-dir {{ .Path }}/render -f {{ .Path }}/ci/default-values.yaml
   - yamllint -c .yamllint.yml {{ .Path }}/render
