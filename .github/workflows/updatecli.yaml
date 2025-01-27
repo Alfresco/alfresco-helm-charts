@@ -37,7 +37,7 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: updatecli/updatecli-action@79983ec58a76fe0c87fc76f5a5c7ef8df0bb36c4 # v2.77.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v8.12.0
 
       - run: updatecli apply
         env:
@@ -81,7 +81,7 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: updatecli/updatecli-action@79983ec58a76fe0c87fc76f5a5c7ef8df0bb36c4 # v2.77.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v8.12.0
 
       - name: Checkout updatecli configs
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
