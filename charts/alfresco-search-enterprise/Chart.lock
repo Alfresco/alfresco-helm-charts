@@ -4,9 +4,9 @@ dependencies:
   version: 4.0.0
 - name: activemq
   repository: https://alfresco.github.io/alfresco-helm-charts/
-  version: 3.6.0
+  version: 3.6.1
 - name: elasticsearch
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 21.4.1
-digest: sha256:221f865f28808df44ca5099d93f2c8bfb3ad057a19a06d274e573abec4fe08c7
-generated: "2025-01-29T10:58:59.048745018Z"
+digest: sha256:54bcccfd50e208537bb5f52240eb8615efe0b5da6f5836b5f62137cb2500f0ad
+generated: "2025-01-29T11:21:02.026871308Z"
