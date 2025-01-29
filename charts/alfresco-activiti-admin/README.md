@@ -13,7 +13,7 @@ A Helm chart for Alfresco Activiti
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
 ## Values
