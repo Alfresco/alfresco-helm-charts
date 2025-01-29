@@ -1302,6 +1302,17 @@ entries:
     version: 0.1.0-alpha.0
   alfresco-common:
   - apiVersion: v2
+    created: "2025-01-29T10:53:13.886151977Z"
+    description: 'A helper subchart to avoid duplication in alfresco charts and set
+      common external dependencies '
+    digest: 2be8ebca4be3d628d101583d47017cbbee71afdeba8dfc7bfb0b1baf9d1e3a6a
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    name: alfresco-common
+    type: library
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-common-4.0.0/alfresco-common-4.0.0.tgz
+    version: 4.0.0
+  - apiVersion: v2
     created: "2024-12-10T16:09:19.081655815Z"
     description: 'A helper subchart to avoid duplication in alfresco charts and set
       common external dependencies '
@@ -6420,4 +6431,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2025-01-20T13:03:15.394197269Z"
+generated: "2025-01-29T10:53:13.887395936Z"
