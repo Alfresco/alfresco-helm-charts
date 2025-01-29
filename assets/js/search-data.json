@@ -169,7 +169,7 @@
   },"24": {
     "doc": "activemq",
     "title": "Requirements",
-    "content": "| Repository | Name | Version | . | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 | . ",
+    "content": "| Repository | Name | Version | . | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 | . ",
     "url": "/alfresco-helm-charts/charts/activemq/README.html#requirements",
     
     "relUrl": "/charts/activemq/README.html#requirements"
