@@ -1,11 +1,11 @@
 apiVersion: v2
 description: A Helm chart for Alfresco Activiti
 name: alfresco-activiti-admin
-version: 0.4.0
-appVersion: 24.4.0
+version: 0.4.1
+appVersion: 24.4.2
 dependencies:
   - name: alfresco-common
-    version: 3.1.4
+    version: 4.0.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
   - name: postgresql
     repository: oci://registry-1.docker.io/bitnamicharts

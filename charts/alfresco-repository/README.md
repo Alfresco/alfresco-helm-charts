@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 0.8.1](https://img.shields.io/badge/Version-0.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.4.0](https://img.shields.io/badge/AppVersion-23.4.0-informational?style=flat-square)
+![Version: 0.8.2](https://img.shields.io/badge/Version-0.8.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.4.1](https://img.shields.io/badge/AppVersion-23.4.1-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -15,7 +15,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 3.1.4 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
@@ -92,7 +92,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.port | int | `8080` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
-| image.tag | string | `"23.4.0"` |  |
+| image.tag | string | `"23.4.1"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/affinity":"cookie","nginx.ingress.kubernetes.io/proxy-body-size":"5g","nginx.ingress.kubernetes.io/session-cookie-hash":"sha1","nginx.ingress.kubernetes.io/session-cookie-name":"alfrescoRepo"}` | provide annotations for nginx ingress (no toher ingress is supported at that point) |
 | ingress.className | string | `"nginx"` | supported ingress class |
