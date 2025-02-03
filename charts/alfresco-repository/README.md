@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 0.8.2](https://img.shields.io/badge/Version-0.8.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.4.1](https://img.shields.io/badge/AppVersion-23.4.1-informational?style=flat-square)
+![Version: 0.9.0-alpha.0](https://img.shields.io/badge/Version-0.9.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.4.1](https://img.shields.io/badge/AppVersion-23.4.1-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -94,7 +94,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
 | image.tag | string | `"23.4.1"` |  |
 | imagePullSecrets | list | `[]` |  |
-| ingress.annotations | object | `{"nginx.ingress.kubernetes.io/affinity":"cookie","nginx.ingress.kubernetes.io/proxy-body-size":"5g","nginx.ingress.kubernetes.io/session-cookie-hash":"sha1","nginx.ingress.kubernetes.io/session-cookie-name":"alfrescoRepo"}` | provide annotations for nginx ingress (no toher ingress is supported at that point) |
+| ingress.annotations | object | `{"nginx.ingress.kubernetes.io/affinity":"cookie","nginx.ingress.kubernetes.io/proxy-body-size":"5g","nginx.ingress.kubernetes.io/proxy-read-timeout":"20m","nginx.ingress.kubernetes.io/session-cookie-hash":"sha1","nginx.ingress.kubernetes.io/session-cookie-name":"alfrescoRepo"}` | provide annotations for nginx ingress (no toher ingress is supported at that point) |
+| ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` | File uploads are limited to 5g |
+| ingress.annotations."nginx.ingress.kubernetes.io/proxy-read-timeout" | string | `"20m"` | File uploads will timeout after 20 minutes |
 | ingress.className | string | `"nginx"` | supported ingress class |
 | ingress.enabled | bool | `true` | Toggle ingress |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
