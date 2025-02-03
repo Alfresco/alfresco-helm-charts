@@ -22,8 +22,8 @@ jobs:
     env:
       INSTALL_NAMESPACE: alfresco
       # See https://github.com/kubernetes-sigs/kind/releases for the latest available images
-      KIND_VERSION: v0.22.0
-      KIND_NODE_IMAGE: kindest/node:v1.29.2@sha256:51a1434a5397193442f0be2a297b488b6c919ce8a3931be0ce822606ea5ca245
+      KIND_VERSION: v0.26.0
+      KIND_NODE_IMAGE: kindest/node:v1.31.4@sha256:2cb39f7295fe7eafee0842b1052a599a4fb0f8bcf3f83d96c7f4864c357c6c30
       TEST_ALL_CHARTS: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && 'true' || 'false' }}
       TEST_ALL_CHARTS_ARG: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && '--all' || '' }}
       PR_FROM_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork }}
@@ -40,7 +40,7 @@ jobs:
 
       - name: Set up Unit Test plugin for Helm
         env:
-          HELM_UNITTEST_VERSION: v0.7.1
+          HELM_UNITTEST_VERSION: v0.7.2
         run: |
           helm plugin install https://github.com/helm-unittest/helm-unittest --version $HELM_UNITTEST_VERSION
 
