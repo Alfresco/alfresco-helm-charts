@@ -212,8 +212,6 @@ service:
 ingress:
   # -- Toggle ingress
   enabled: true
-  # -- provide annotations for nginx ingress (no toher ingress is supported at
-  # that point)
   annotations:
     # -- File uploads will timeout after 20 minutes
     nginx.ingress.kubernetes.io/proxy-read-timeout: 20m
