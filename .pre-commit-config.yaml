@@ -19,10 +19,10 @@ repos:
     hooks:
       - id: kubeconform-helm
         alias: kubeconform-helm-min
-        name: "Kubeconform Helm - min k8s version"
+        name: "Kubeconform Helm - min k8s version (most recent EKS version inextended support)"
         files: ^charts/[^/]+/(\.kubeconform|\.helmignore|templates/NOTES.txt|.*\.(ya?ml|json|tpl))$
         args:
-          - --kubernetes-version=1.27.0
+          - --kubernetes-version=1.28.15 # eks.34 https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html
           - --exclude-charts=alfresco-common
           - --values-dir=ci
           - --strict
@@ -30,9 +30,10 @@ repos:
     rev: v0.1.17
     hooks:
       - id: kubeconform-helm
-        name: "Kubeconform Helm - current k8s version"
+        name: "Kubeconform Helm - current k8s version (current as in currently supported by both Alfresco & AWS)"
         files: ^charts/[^/]+/(\.kubeconform|\.helmignore|templates/NOTES.txt|.*\.(ya?ml|json|tpl))$
         args:
+          - --kubernetes-version=1.31.4 # eks.17 https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html
           - --exclude-charts=alfresco-common
           - --values-dir=ci
           - --strict
