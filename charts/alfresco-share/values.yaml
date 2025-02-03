@@ -61,6 +61,9 @@ ingress:
   enabled: true
   className: nginx
   annotations:
+    # -- Files uploads will timeout if longer than 20 minutes
+    nginx.ingress.kubernetes.io/proxy-read-timeout: 20m
+    # -- Files uploads are limited to 5GB
     nginx.ingress.kubernetes.io/proxy-body-size: 5g
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/session-cookie-name: "alfrescoShare"

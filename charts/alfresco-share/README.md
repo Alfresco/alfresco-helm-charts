@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-share
 
-![Version: 1.2.1](https://img.shields.io/badge/Version-1.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.4.1](https://img.shields.io/badge/AppVersion-23.4.1-informational?style=flat-square)
+![Version: 1.3.0-alpha.0](https://img.shields.io/badge/Version-1.3.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 23.4.1](https://img.shields.io/badge/AppVersion-23.4.1-informational?style=flat-square)
 
 Alfresco Share Helm chart for Kubernetes
 
@@ -40,7 +40,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.tag | string | `"23.4.1"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
-| ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
+| ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` | Files uploads are limited to 5GB |
+| ingress.annotations."nginx.ingress.kubernetes.io/proxy-read-timeout" | string | `"20m"` | Files uploads will timeout if longer than 20 minutes |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-expires" | string | `"604800"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-max-age" | string | `"604800"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-name" | string | `"alfrescoShare"` |  |

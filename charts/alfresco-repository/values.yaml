@@ -212,9 +212,10 @@ service:
 ingress:
   # -- Toggle ingress
   enabled: true
-  # -- provide annotations for nginx ingress (no toher ingress is supported at
-  # that point)
   annotations:
+    # -- File uploads will timeout after 20 minutes
+    nginx.ingress.kubernetes.io/proxy-read-timeout: 20m
+    # -- File uploads are limited to 5g
     nginx.ingress.kubernetes.io/proxy-body-size: 5g
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/session-cookie-name: "alfrescoRepo"
