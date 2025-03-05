@@ -220,6 +220,8 @@ ingress:
     nginx.ingress.kubernetes.io/affinity: "cookie"
     nginx.ingress.kubernetes.io/session-cookie-name: "alfrescoRepo"
     nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
+  serverSnippet:
+    prometheusEnabled: true
   # -- supported ingress class
   className: nginx
   hosts:

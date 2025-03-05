@@ -105,6 +105,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.hosts[0].paths[1].path | string | `"/api-explorer"` |  |
 | ingress.hosts[0].paths[1].pathType | string | `"Prefix"` |  |
+| ingress.serverSnippet.prometheusEnabled | bool | `true` |  |
 | ingress.tls | list | `[]` |  |
 | initContainers.waitDbReady.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.waitDbReady.image.repository | string | `"busybox"` |  |

@@ -73,9 +73,9 @@ Usage: include "alfresco-repository.nginx.secure.annotations" ""
 nginx.ingress.kubernetes.io/server-snippet: |
 {{- if eq "solr" .Values.configuration.search.flavor }}
   location ~ ^/.*/(wc)?s(ervice)?/api/solr/.*$ {return 403;}
-  location ~ ^/.*/proxy/.*/api/solr/.*$ {return 403;}
 {{- end }}
-  location ~ ^/.*/-default-/proxy/.*/api/.*$ {return 403;}
+{{- if .Values.ingress.serverSnippet.prometheusEnabled }}
   location ~ ^/.*/s/prometheus$ {return 403;}
+{{- end }}
 {{- end }}
 {{- end }}
