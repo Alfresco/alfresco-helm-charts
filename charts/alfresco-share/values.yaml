@@ -70,6 +70,8 @@ ingress:
     nginx.ingress.kubernetes.io/session-cookie-path: "/share"
     nginx.ingress.kubernetes.io/session-cookie-max-age: "604800"
     nginx.ingress.kubernetes.io/session-cookie-expires: "604800"
+  serverSnippet:
+    solrEnabled: false
   hosts:
     - paths:
         - path: /share
