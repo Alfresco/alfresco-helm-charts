@@ -46,11 +46,15 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-max-age" | string | `"604800"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-name" | string | `"alfrescoShare"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-path" | string | `"/share"` |  |
+| ingress.annotations."nginx.ingress.kubernetes.io/use-regex" | string | `"true"` |  |
 | ingress.className | string | `"nginx"` |  |
+| ingress.denyService.disableSolr | bool | `true` |  |
+| ingress.denyService.enabled | bool | `true` |  |
+| ingress.denyService.name | string | `"share-deny"` |  |
+| ingress.denyService.port | int | `80` |  |
 | ingress.enabled | bool | `true` |  |
 | ingress.hosts[0].paths[0].path | string | `"/share"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.serverSnippet.solrEnabled | bool | `false` |  |
 | ingress.tls | list | `[]` |  |
 | known_urls | string | `nil` | Provide the list of URL considered allowed to access Share resources (used for CSRF protection). The value be either a list of strings or a single string separated by spaces. |
 | livenessProbe.httpGet.path | string | `"/share"` |  |

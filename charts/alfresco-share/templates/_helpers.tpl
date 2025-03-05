@@ -61,19 +61,3 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-
-{{/*
-Define required annotations for secure ACS/SHARE API access
-
-Usage: include "alfresco-share.nginx.secure.annotations" ""
-
-*/}}
-{{- define "alfresco-share.ingress.nginx.secure.annotations" -}}
-{{- if eq "nginx" .Values.ingress.className }}
-nginx.ingress.kubernetes.io/server-snippet: |
-{{- if .Values.ingress.serverSnippet.solrEnabled }}
-  location ~ ^/.*/proxy/.*/api/solr/.*$ {return 403;}
-{{- end }}
-  location ~ ^/.*/-default-/proxy/.*/api/.*$ {return 403;}
-{{- end }}
-{{- end }}

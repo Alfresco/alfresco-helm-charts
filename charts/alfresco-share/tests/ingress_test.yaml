@@ -3,18 +3,6 @@ suite: test share ingress
 templates:
   - ingress.yaml
 tests:
-  - it: should render with default security annotations
-    asserts:
-      - equal:
-          path: metadata.annotations['nginx.ingress.kubernetes.io/server-snippet']
-          value: |
-            location ~ ^/.*/-default-/proxy/.*/api/.*$ {return 403;}
-        template: ingress.yaml
-      - equal:
-          path: spec.ingressClassName
-          value: nginx
-        template: ingress.yaml
-
   - it: should render labels for ingress
     chart:
       version: 1.0.0

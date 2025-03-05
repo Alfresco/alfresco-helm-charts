@@ -8,7 +8,6 @@ metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_153=We're filtering out snippet in named template
     {{- include "alfresco-common.nginx.annotations" .Values }}
-    {{- include "alfresco-share.ingress.nginx.secure.annotations" . | nindent 4 }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   {{- with .Values.ingress.tls }}
@@ -34,6 +33,24 @@ spec:
                 name: {{ template "alfresco-share.fullname" $ }}
                 port:
                   number: {{ $.Values.service.port }}
+          {{- end }}
+          {{- if $.Values.ingress.denyService.enabled }}
+          {{- if $.Values.ingress.denyService.disableSolr }}
+          - path: "/.*/proxy/.*/api/solr/.*"
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $.Values.ingress.denyService.name }}
+                port:
+                  number: {{ $.Values.ingress.denyService.port }}
+          {{- end }}
+          - path: "/.*/-default-/proxy/.*/api/.*"
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ $.Values.ingress.denyService.name}}
+                port:
+                  number: {{ $.Values.ingress.denyService.port }}
           {{- end }}
     {{- end }}
 {{- end }}
