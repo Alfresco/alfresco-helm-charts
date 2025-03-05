@@ -1,0 +1,13 @@
+{{- with .Values.ingress }}
+{{- if and .enabled .denyService.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .denyService.name }}
+spec:
+  ports:
+    - port: {{ .denyService.port }}
+      targetPort: {{ .denyService.port }}
+{{- end }}
+{{- end }}
