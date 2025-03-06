@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-adf-app
 
-![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.2.2](https://img.shields.io/badge/Version-0.2.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic Alfresco Development Framework Helm chart for Kubernetes
 
@@ -46,8 +46,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
+| podSecurityContext.runAsGroup | int | `101` |  |
 | podSecurityContext.runAsNonRoot | bool | `true` |  |
-| podSecurityContext.runAsUser | int | `33000` |  |
+| podSecurityContext.runAsUser | int | `101` | For compatibility with nginxinc/nginx-unprivileged used by adf apps |
 | readinessProbe.failureThreshold | int | `3` |  |
 | readinessProbe.httpGet.path | string | `"/"` |  |
 | readinessProbe.httpGet.port | string | `"http"` |  |
