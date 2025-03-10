@@ -19,7 +19,7 @@ repos:
     hooks:
       - id: kubeconform-helm
         alias: kubeconform-helm-min
-        name: "Kubeconform Helm - min k8s version" # most older EKS version still in extended support
+        name: "Kubeconform Helm - min k8s version" # the oldest EKS version still in extended support
         files: ^charts/[^/]+/(\.kubeconform|\.helmignore|templates/NOTES.txt|.*\.(ya?ml|json|tpl))$
         args:
           - --kubernetes-version=1.28.15 # eks.34 https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html
