@@ -24,7 +24,9 @@ podAnnotations: {}
 podLabels: {}
 
 podSecurityContext:
-  runAsUser: 33000
+  # -- For compatibility with nginxinc/nginx-unprivileged used by adf apps
+  runAsUser: 101
+  runAsGroup: 101
   runAsNonRoot: true
 
 securityContext: {}
