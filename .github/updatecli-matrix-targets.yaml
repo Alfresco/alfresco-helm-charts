@@ -3,11 +3,7 @@
 # https://github.com/Alfresco/alfresco-updatecli/tree/master/deployments
 matrix:
   current:
-    id:
     search:
-      version:
-      pattern:
-      image:
       helm_target: >-
         charts/alfresco-search-service/values.yaml
       helm_keys:
@@ -15,15 +11,11 @@ matrix:
         insight: $.insightEngineImage.tag
       helm_update_appVersion: true
     insight-zeppelin:
-      version:
-      pattern:
       helm_target: >-
         charts/alfresco-search-service/charts/alfresco-insight-zeppelin/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
     search-enterprise:
-      version:
-      pattern:
       helm_target: >-
         charts/alfresco-search-enterprise/values.yaml
       helm_keys:
@@ -35,105 +27,65 @@ matrix:
           Path: $.liveIndexing.path.image.tag
       helm_update_appVersion: true
     sync:
-      version:
-      pattern:
       helm_target: >-
         charts/alfresco-sync-service/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
     onedrive:
-      version:
-      pattern:
       helm_target: charts/alfresco-connector-ms365/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
     msteams:
-      version:
-      pattern:
       helm_target: charts/alfresco-connector-msteams/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
     intelligence:
-      version:
-      pattern:
       helm_target: charts/alfresco-ai-transformer/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
     trouter:
-      version:
-      pattern:
       helm_target: charts/alfresco-transform-service/values.yaml
       helm_key: $.transformrouter.image.tag
       helm_update_appVersion: true
     sfs:
-      version:
-      pattern:
       helm_target: charts/alfresco-transform-service/values.yaml
       helm_key: $.filestore.image.tag
     tengine-misc:
-      version:
-      pattern:
       helm_target: charts/alfresco-transform-service/values.yaml
       helm_key: $.transformmisc.image.tag
     tengine-im:
-      version:
-      pattern:
       helm_target: charts/alfresco-transform-service/values.yaml
       helm_key: $.imagemagick.image.tag
     tengine-lo:
-      version:
-      pattern:
       helm_target: charts/alfresco-transform-service/values.yaml
       helm_key: $.libreoffice.image.tag
     tengine-pdf:
-      version:
-      pattern:
       helm_target: charts/alfresco-transform-service/values.yaml
       helm_key: $.pdfrenderer.image.tag
     tengine-tika:
-      version:
-      pattern:
       helm_target: charts/alfresco-transform-service/values.yaml
       helm_key: $.tika.image.tag
     share:
-      version:
-      pattern:
-      image:
       helm_target: charts/alfresco-share/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
     acs:
-      version:
-      pattern:
-      image:
       helm_target: charts/alfresco-repository/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
     audit-storage:
-      version:
-      pattern:
-      image:
       helm_target: charts/alfresco-audit-storage/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
     activemq:
-      version:
-      pattern:
-      image:
       helm_target: charts/activemq/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
     activiti:
-      version:
-      pattern:
-      image:
       helm_target: charts/alfresco-activiti/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
     activiti-admin:
-      version:
-      pattern:
-      image:
       helm_target: charts/alfresco-activiti-admin/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
