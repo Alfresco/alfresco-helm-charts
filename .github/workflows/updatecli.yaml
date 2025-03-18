@@ -27,25 +27,25 @@ jobs:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v8.14.0
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v8.17.0
 
       - name: Login to quay.io
-        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v8.14.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v8.17.0
 
       - run: updatecli apply
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@29e77d9158142e043783ea9eb831535b06474860 # v8.14.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@800d7f17549f77367edfb0ad788cf627bc3defe0 # v8.17.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@29e77d9158142e043783ea9eb831535b06474860 # v8.14.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@800d7f17549f77367edfb0ad788cf627bc3defe0 # v8.17.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
@@ -71,10 +71,10 @@ jobs:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v8.14.0
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v8.17.0
 
       - name: Login to quay.io
-        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
@@ -100,9 +100,9 @@ jobs:
             -v alfresco-updatecli/deployments/values/supported-matrix.yaml \
             -v .github/updatecli-matrix-targets.yaml
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@29e77d9158142e043783ea9eb831535b06474860 # v8.14.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@800d7f17549f77367edfb0ad788cf627bc3defe0 # v8.17.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@29e77d9158142e043783ea9eb831535b06474860 # v8.14.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@800d7f17549f77367edfb0ad788cf627bc3defe0 # v8.17.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
