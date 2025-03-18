@@ -81,7 +81,7 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v8.14.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v8.17.0
 
       - name: Checkout updatecli configs
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -90,16 +90,15 @@ jobs:
           ref: ${{ inputs.alfresco-updatecli-ref || 'master' }}
           path: alfresco-updatecli
 
-      - name: Preprocess values file appending existing keys only
-        run: yq '. *? load("alfresco-updatecli/deployments/values/supported-matrix.yaml") | explode(.)' updatecli-matrix-targets.yaml | tee ./merged.yaml
-
       - name: updatecli apply
-        # path to values file must be relative https://github.com/updatecli/updatecli/issues/1253
-        run: updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl -v ./merged.yaml
         env:
           QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
+        run: |
+          updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl \
+            -v alfresco-updatecli/deployments/values/supported-matrix.yaml \
+            -v .github/updatecli-matrix-targets.yaml
 
       - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@29e77d9158142e043783ea9eb831535b06474860 # v8.14.0
       - name: Regenerate helm docs if necessary
