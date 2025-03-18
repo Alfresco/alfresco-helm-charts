@@ -3,7 +3,7 @@ name: alfresco-connector-msteams
 description: A Helm chart for deploying Alfresco connector msteams service
 type: application
 version: 2.0.0
-appVersion: 2.0.5
+appVersion: 2.0.6
 dependencies:
   - name: alfresco-common
     version: 4.0.0
