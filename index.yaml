@@ -323,6 +323,25 @@ entries:
     version: 3.0.0
   alfresco-activiti:
   - apiVersion: v2
+    appVersion: 25.1.1
+    created: "2025-03-18T15:54:01.178974954Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.8.5
+    description: A Helm chart for Alfresco Activiti
+    digest: 9dc61c924a5842e651bf3c2a9c8e6eb74359b33a5b1c71a7a00e37084719e581
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    name: alfresco-activiti
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-activiti-0.4.0/alfresco-activiti-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
     appVersion: 24.4.2
     created: "2025-01-30T16:03:01.588581276Z"
     dependencies:
@@ -532,6 +551,25 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-activiti-0.1.0-alpha.0/alfresco-activiti-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-activiti-admin:
+  - apiVersion: v2
+    appVersion: 25.1.1
+    created: "2025-03-18T15:54:01.404999349Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.8.5
+    description: A Helm chart for Alfresco Activiti
+    digest: 45c48dbe5177260c05488b7638cb8dd8cf8ef5dcbbbb9dfb5fd28c6dc927d004
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    name: alfresco-activiti-admin
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-activiti-admin-0.5.0/alfresco-activiti-admin-0.5.0.tgz
+    version: 0.5.0
   - apiVersion: v2
     appVersion: 24.4.2
     created: "2025-01-30T16:03:01.742080459Z"
@@ -879,6 +917,25 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-adf-app-0.1.0-alpha.0/alfresco-adf-app-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-ai-transformer:
+  - apiVersion: v2
+    appVersion: 3.1.9
+    created: "2025-03-18T15:54:01.598729951Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.6.1
+    description: A Helm chart for deploying Alfresco ai transformer service
+    digest: e40b02041c1016c08182454300a360c3389611a56ced2cbc2ef5b8c37d6d91e7
+    name: alfresco-ai-transformer
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-ai-transformer-3.0.2/alfresco-ai-transformer-3.0.2.tgz
+    version: 3.0.2
   - apiVersion: v2
     appVersion: 3.1.8
     created: "2025-01-30T16:03:01.96450174Z"
@@ -1331,6 +1388,30 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-ai-transformer-0.1.0-alpha.0/alfresco-ai-transformer-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-audit-storage:
+  - apiVersion: v2
+    appVersion: 1.1.0
+    created: "2025-03-18T15:54:02.125316346Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.6.1
+    - name: elasticsearch
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 21.4.1
+    description: A Helm chart for Kubernetes to deploy Alfresco Audit Storage
+    digest: ed1ec0b0f5b9ead2e71f490f634f3188318353eaa9f2bd02ae31e2e74b19f539
+    name: alfresco-audit-storage
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-audit-storage-0.3.0/alfresco-audit-storage-0.3.0.tgz
+    version: 0.3.0
   - apiVersion: v2
     appVersion: 1.0.0
     created: "2025-01-30T16:03:02.081905492Z"
@@ -1906,6 +1987,20 @@ entries:
     version: 0.1.0-alpha.0
   alfresco-connector-ms365:
   - apiVersion: v2
+    appVersion: 2.0.6
+    created: "2025-03-18T15:54:02.301318043Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    description: A Helm chart for deploying Alfresco connector ms365 service
+    digest: 5412026957063c48680ff65a1deedb05a8115964a371457549ee4e556026052e
+    name: alfresco-connector-ms365
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-ms365-3.0.1/alfresco-connector-ms365-3.0.1.tgz
+    version: 3.0.1
+  - apiVersion: v2
     appVersion: 2.0.5
     created: "2025-01-30T16:03:02.331346392Z"
     dependencies:
@@ -2229,6 +2324,20 @@ entries:
     version: 0.1.0-alpha.0
   alfresco-connector-msteams:
   - apiVersion: v2
+    appVersion: 2.0.6
+    created: "2025-03-18T15:54:02.49998374Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    description: A Helm chart for deploying Alfresco connector msteams service
+    digest: dd4dbcf4819c4079f184254df3cf901dd8caa4af35c2df93c7974b28c9c73d30
+    name: alfresco-connector-msteams
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-msteams-2.0.1/alfresco-connector-msteams-2.0.1.tgz
+    version: 2.0.1
+  - apiVersion: v2
     appVersion: 2.0.5
     created: "2025-01-30T16:03:02.449125822Z"
     dependencies:
@@ -2481,6 +2590,25 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-msteams-0.1.0-alpha.0/alfresco-connector-msteams-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-repository:
+  - apiVersion: v2
+    appVersion: 25.1.0
+    created: "2025-03-18T15:54:02.819427942Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.5.6
+    description: Alfresco content repository Helm chart
+    digest: 7bb5032f3cb3e5fb0f801dc1b2f537e94c336f2bd75034aec30ecde4cb9e5666
+    name: alfresco-repository
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-repository-0.9.0/alfresco-repository-0.9.0.tgz
+    version: 0.9.0
   - apiVersion: v2
     appVersion: 23.4.1
     created: "2025-02-03T10:20:47.263210952Z"
@@ -3310,6 +3438,30 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-repository-0.1.0-alpha.0/alfresco-repository-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-search-enterprise:
+  - apiVersion: v2
+    appVersion: 5.0.0
+    created: "2025-03-18T15:54:03.021714624Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.6.1
+    - name: elasticsearch
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 21.4.1
+    description: A Helm chart for deploying Alfresco Elasticsearch connector
+    digest: e07d22d87d4ee4be59f17ea3d0a2db7ad011b723c42bb2143007c1864aa38019
+    name: alfresco-search-enterprise
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-search-enterprise-4.4.0/alfresco-search-enterprise-4.4.0.tgz
+    version: 4.4.0
   - apiVersion: v2
     appVersion: 4.2.0
     created: "2025-01-30T16:03:02.699793624Z"
@@ -4223,6 +4375,31 @@ entries:
     version: 1.0.0
   alfresco-search-service:
   - apiVersion: v2
+    appVersion: 2.0.15
+    created: "2025-03-18T15:54:03.213104758Z"
+    dependencies:
+    - condition: alfresco-insight-zeppelin.enabled
+      name: alfresco-insight-zeppelin
+      repository: ""
+      version: 4.0.1
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    description: A Helm chart for deploying Alfresco Search Service
+    digest: cd40766daf34a437c9b0ea88393ffd6aaca5a27e8338c0a4291ef5efabc03be2
+    home: https://www.alfresco.com
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - alfresco search services
+    - alfresco insight engine
+    - solr
+    name: alfresco-search-service
+    sources:
+    - https://github.com/Alfresco/alfresco-helm-charts
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-search-service-5.0.1/alfresco-search-service-5.0.1.tgz
+    version: 5.0.1
+  - apiVersion: v2
     appVersion: 2.0.14
     created: "2025-01-30T16:03:02.876259518Z"
     dependencies:
@@ -4989,6 +5166,20 @@ entries:
     version: 1.0.0
   alfresco-share:
   - apiVersion: v2
+    appVersion: 25.1.0
+    created: "2025-03-18T15:54:03.439527934Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts
+      version: 4.0.0
+    description: Alfresco Share Helm chart for Kubernetes
+    digest: 645c483a3401f457f61f884888503057cb7bc6af9c6700f57cedadc8720fec19
+    name: alfresco-share
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-share-1.3.0/alfresco-share-1.3.0.tgz
+    version: 1.3.0
+  - apiVersion: v2
     appVersion: 23.4.1
     created: "2025-02-03T10:20:47.386278839Z"
     dependencies:
@@ -5297,6 +5488,36 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-share-0.1.0-alpha.0/alfresco-share-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-sync-service:
+  - apiVersion: v2
+    appVersion: 5.2.0
+    created: "2025-03-18T15:54:03.618657109Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.6.1
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.5.6
+    description: Alfresco Sync Service
+    digest: 5278f2f384fbeb33a16f473bd8fe9646752928fee2cb3824e94f0e5fb232985d
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - syncservice
+    - alfresco
+    - application
+    name: alfresco-sync-service
+    sources:
+    - https://github.com/Alfresco/acs-deployment
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-sync-service-7.1.0/alfresco-sync-service-7.1.0.tgz
+    version: 7.1.0
   - apiVersion: v2
     appVersion: 5.1.0
     created: "2025-01-30T16:03:03.081755821Z"
@@ -6230,6 +6451,25 @@ entries:
     version: 4.0.0
   alfresco-transform-service:
   - apiVersion: v2
+    appVersion: 4.1.7
+    created: "2025-03-18T15:54:03.856032219Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.6.1
+    description: A Helm chart for deploying Alfresco Transform Services
+    digest: 84dfdf35c38e7e1ff0c7cc73b8622b29b7319db65ec65d437c0735603c97154f
+    name: alfresco-transform-service
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-2.1.4/alfresco-transform-service-2.1.4.tgz
+    version: 2.1.4
+  - apiVersion: v2
     appVersion: 4.1.6
     created: "2025-01-30T16:03:03.186258326Z"
     dependencies:
@@ -6774,4 +7014,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2025-03-11T12:03:15.128885809Z"
+generated: "2025-03-18T15:54:03.85799488Z"
