@@ -7,7 +7,7 @@ podAnnotations: {}
 podLabels: {}
 image:
   repository: quay.io/alfresco/alfresco-process-services-admin
-  tag: 24.4.2
+  tag: 25.1.1
   pullPolicy: IfNotPresent
   internalPort: 8080
 service:

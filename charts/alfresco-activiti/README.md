@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-activiti
 
-![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![AppVersion: 24.4.2](https://img.shields.io/badge/AppVersion-24.4.2-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![AppVersion: 25.1.1](https://img.shields.io/badge/AppVersion-25.1.1-informational?style=flat-square)
 
 A Helm chart for Alfresco Activiti
 
@@ -55,7 +55,7 @@ A Helm chart for Alfresco Activiti
 | image.internalPort | int | `8080` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-process-services"` |  |
-| image.tag | string | `"24.4.2"` |  |
+| image.tag | string | `"25.1.1"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
 | ingress.className | string | `"nginx"` | supported ingress class |
