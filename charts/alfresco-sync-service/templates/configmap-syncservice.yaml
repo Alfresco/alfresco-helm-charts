@@ -7,6 +7,11 @@ metadata:
     {{- include "alfresco-sync-service.labels" . | nindent 4 }}
 data:
   JAVA_OPTS: >-
+    {{- $isClutered := gt (int .Values.replicaCount) 1 }}
+    -Dsync.cluster.enabled={{ $isClutered }}
+    {{- if $isClutered }}
+    -Dsync.hazelcast.configLocation=classpath:hazelcast-tcp.xml
+    {{- end }}
     -Dsql.db.url=$DATABASE_URL
     -Dsql.db.driver=$DATABASE_DRIVER
     -Dsql.db.username=$DATABASE_USERNAME
@@ -18,9 +23,6 @@ data:
     -Dmessaging.broker.url=$BROKER_URL
     -Dmessaging.username=$BROKER_USERNAME
     -Dmessaging.password=$BROKER_PASSWORD
-    {{- if gt (int .Values.replicaCount) 1 }}
-    -Dsync.hazelcast.configLocation=classpath:hazelcast-tcp.xml
-    {{- end }}
     {{- with .Values.environment }}
     {{ .JAVA_OPTS }}
     {{- end }}
