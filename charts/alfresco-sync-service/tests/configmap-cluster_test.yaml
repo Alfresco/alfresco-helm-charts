@@ -2,11 +2,18 @@
 suite: test hazelcast configmap
 templates:
   - configmap-hazelcast.yaml
+  - configmap-syncservice.yaml
 tests:
   - it: should not render the configmap when replicaCount is 1
     asserts:
       - hasDocuments:
           count: 0
+        template: configmap-hazelcast.yaml
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsync\.cluster\.enabled=false($|\s)
+        template: configmap-syncservice.yaml
   - it: should render default contents when replicaCount is 2
     set:
       replicaCount: 2
@@ -14,8 +21,16 @@ tests:
       - equal:
           path: metadata.name
           value: RELEASE-NAME-sync-hazelcast-tcp
+        template: configmap-hazelcast.yaml
       - isNotNullOrEmpty:
           path: data["hazelcast-tcp.xml"]
+        template: configmap-hazelcast.yaml
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsync\.cluster\.enabled=true($|\s)
+        template: configmap-syncservice.yaml
+
   - it: should render labels for configmap
     set:
       replicaCount: 2
@@ -33,3 +48,4 @@ tests:
             app.kubernetes.io/name: testName
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-sync-service-1.0.0
+        template: configmap-hazelcast.yaml
