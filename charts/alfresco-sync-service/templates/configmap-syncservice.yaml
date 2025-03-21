@@ -7,9 +7,9 @@ metadata:
     {{- include "alfresco-sync-service.labels" . | nindent 4 }}
 data:
   JAVA_OPTS: >-
-    {{- $isClutered := gt (int .Values.replicaCount) 1 }}
-    -Dsync.cluster.enabled={{ $isClutered }}
-    {{- if $isClutered }}
+    {{- $isClusterEnabled := gt (int .Values.replicaCount) 1 }}
+    -Dsync.cluster.enabled={{ $isClusterEnabled }}
+    {{- if $isClusterEnabled }}
     -Dsync.hazelcast.configLocation=classpath:hazelcast-tcp.xml
     {{- end }}
     -Dsql.db.url=$DATABASE_URL
