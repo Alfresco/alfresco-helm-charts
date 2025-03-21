@@ -5490,6 +5490,36 @@ entries:
   alfresco-sync-service:
   - apiVersion: v2
     appVersion: 5.2.0
+    created: "2025-03-21T12:06:37.339261177Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.6.1
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.5.6
+    description: Alfresco Sync Service
+    digest: a513fe993e58b02d09ab067166f70446ca4fe2b5a0ff4b1f9ace7f7500aec0fb
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - syncservice
+    - alfresco
+    - application
+    name: alfresco-sync-service
+    sources:
+    - https://github.com/Alfresco/acs-deployment
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-sync-service-7.1.1/alfresco-sync-service-7.1.1.tgz
+    version: 7.1.1
+  - apiVersion: v2
+    appVersion: 5.2.0
     created: "2025-03-18T15:54:03.618657109Z"
     dependencies:
     - name: alfresco-common
@@ -7014,4 +7044,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2025-03-18T15:54:03.85799488Z"
+generated: "2025-03-21T12:06:37.339927577Z"
