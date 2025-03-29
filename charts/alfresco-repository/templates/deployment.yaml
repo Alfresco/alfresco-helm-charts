@@ -12,7 +12,11 @@ spec:
     matchLabels:
       {{- include "alfresco-repository.selectorLabels" . | nindent 6 }}
   strategy:
+    {{- if eq (.Values.strategy.type | default .Values.global.strategy.type) "Recreate" }}
+    type: Recreate
+    {{- else }}
     {{- toYaml (.Values.strategy | default .Values.global.strategy) | nindent 4 }}
+    {{- end }}
   template:
     metadata:
       annotations:
