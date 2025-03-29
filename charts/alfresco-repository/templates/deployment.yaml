@@ -12,7 +12,11 @@ spec:
     matchLabels:
       {{- include "alfresco-repository.selectorLabels" . | nindent 6 }}
   strategy:
-    {{- toYaml (.Values.strategy | default .Values.global.strategy) | nindent 4 }}
+    type: {{ coalesce .Values.strategy.type .Values.global.strategy.type | default "RollingUpdate" }}
+    {{- if eq (coalesce .Values.strategy.type .Values.global.strategy.type | default "RollingUpdate") "RollingUpdate" }}
+    rollingUpdate:
+      {{- toYaml (coalesce .Values.strategy.rollingUpdate .Values.global.strategy.rollingUpdate) | nindent 6 }}
+    {{- end }}
   template:
     metadata:
       annotations:
