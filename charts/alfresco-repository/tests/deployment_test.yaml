@@ -283,3 +283,31 @@ tests:
             app.kubernetes.io/name: testName
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-repository-1.0.0
+
+  - it: should have rollingUpdate when strategy.type is RollingUpdate
+    set:
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxSurge: 2
+          maxUnavailable: 1
+    asserts:
+      - equal:
+          path: spec.strategy.type
+          value: RollingUpdate
+      - isSubset:
+          path: spec.strategy.rollingUpdate
+          content:
+            maxSurge: 2
+            maxUnavailable: 1
+
+  - it: should NOT have rollingUpdate when strategy.type is Recreate
+    set:
+      strategy:
+        type: Recreate
+    asserts:
+      - equal:
+          path: spec.strategy.type
+          value: Recreate
+      - notExists:
+          path: spec.strategy.rollingUpdate
