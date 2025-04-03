@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-transform-service
 
-![Version: 2.1.4](https://img.shields.io/badge/Version-2.1.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.7](https://img.shields.io/badge/AppVersion-4.1.7-informational?style=flat-square)
+![Version: 2.1.5](https://img.shields.io/badge/Version-2.1.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.1.7](https://img.shields.io/badge/AppVersion-4.1.7-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Transform Services
 
@@ -35,7 +35,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | filestore.image.tag | string | `"4.1.7"` |  |
 | filestore.initContainer.image.pullPolicy | string | `"IfNotPresent"` |  |
 | filestore.initContainer.image.repository | string | `"busybox"` |  |
-| filestore.initContainer.image.tag | string | `"1.35.0"` |  |
+| filestore.initContainer.image.tag | string | `"1.37"` |  |
 | filestore.initContainer.resources.limits.cpu | string | `"0.50"` |  |
 | filestore.initContainer.resources.limits.memory | string | `"20Mi"` |  |
 | filestore.livenessProbe.initialDelaySeconds | int | `10` |  |

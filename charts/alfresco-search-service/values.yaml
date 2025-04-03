@@ -125,7 +125,7 @@ livenessProbe:
 initContainer:
   image:
     repository: busybox
-    tag: 1.35.0
+    tag: "1.37"
     pullPolicy: IfNotPresent
   resources:
     requests:
