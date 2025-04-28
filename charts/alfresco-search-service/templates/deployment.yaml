@@ -71,12 +71,12 @@ spec:
             - containerPort: {{ template "alfresco-search.containerPort" . }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-          - name: data
-            mountPath: {{ .Values.persistence.search.data.mountPath }}
-            subPath: {{ .Values.persistence.search.data.subPath }}
-          {{- with .Values.volumeMounts }}
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            - name: data
+              mountPath: {{ .Values.persistence.search.data.mountPath }}
+              subPath: {{ .Values.persistence.search.data.subPath }}
+            {{- with .Values.volumeMounts }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
           readinessProbe:
             exec:
               command:

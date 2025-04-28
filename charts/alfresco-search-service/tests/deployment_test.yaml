@@ -78,6 +78,36 @@ tests:
               persistentVolumeClaim:
                 claimName: solr-default-pvc
 
+  - it: should render custom pvc volumes
+    template: deployment.yaml
+    values: *testvalues
+    set:
+      volumeMounts:
+        - mountPath: /path/to/mount/from/volume/
+          name: test
+      volumes:
+        - name: test
+          secret:
+            secretName: test-secret
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].volumeMounts
+          value:
+            - name: data
+              mountPath: /opt/alfresco-search-services/data
+              subPath: alfresco-content-services/solr-data
+            - mountPath: /path/to/mount/from/volume/
+              name: test
+      - equal:
+          path: spec.template.spec.volumes
+          value:
+            - name: data
+              persistentVolumeClaim:
+                claimName: solr-default-pvc
+            - name: test
+              secret:
+                secretName: test-secret
+
   - it: should render default cpu and memory limits
     values: *testvalues
     template: deployment.yaml
