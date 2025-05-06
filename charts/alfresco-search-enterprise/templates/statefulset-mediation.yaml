@@ -17,25 +17,24 @@ spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       containers:
-        {{- with .Values.liveIndexing.mediation }}
+      {{- with .Values.liveIndexing.mediation }}
         - name: {{ template "alfresco-search-enterprise.name" $ctx }}
           image: {{ .image.repository }}:{{ .image.tag }}
           imagePullPolicy: {{ .image.pullPolicy }}
-        {{- end }}
-          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
+          {{- include "alfresco-common.component-security-context" $.Values | indent 8 }}
           env:
-            {{- include "alfresco-search-enterprise.activemq.secret.env" . | nindent 12 }}
-            {{- include "alfresco-search-enterprise.activemq.cm.env" . | nindent 12 }}
-            {{- include "alfresco-common.spring.activemq.env" . | nindent 12 }}
-            {{- include "alfresco-search-enterprise.env" . | nindent 12 }}
+            {{- include "alfresco-search-enterprise.activemq.secret.env" $ | nindent 12 }}
+            {{- include "alfresco-search-enterprise.activemq.cm.env" $ | nindent 12 }}
+            {{- include "alfresco-common.spring.activemq.env" $ | nindent 12 }}
+            {{- include "alfresco-search-enterprise.env" $ | nindent 12 }}
             {{- $atsCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "ats")) "Chart" $.Chart "Release" $.Release }}
-            {{- $ats_cm := coalesce .Values.ats.existingConfigMap.name (include "alfresco-search-enterprise.fullname" $atsCtx) }}
+            {{- $ats_cm := coalesce $.Values.ats.existingConfigMap.name (include "alfresco-search-enterprise.fullname" $atsCtx) }}
             - name: ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL
               valueFrom:
                 configMapKeyRef:
                   name: {{ $ats_cm }}
-                  key: {{ .Values.ats.existingConfigMap.keys.transform_url }}
-            {{- range $key, $val := deepCopy .Values.liveIndexing.environment | mustMerge .Values.liveIndexing.mediation.environment }}
+                  key: {{ $.Values.ats.existingConfigMap.keys.transform_url }}
+            {{- range $key, $val := deepCopy $.Values.liveIndexing.environment | mustMerge .environment }}
             - name: {{ $key }}
               value: {{ $val | quote }}
             {{- end }}
@@ -55,7 +54,7 @@ spec:
             httpGet:
               path: /actuator/health
               port: http
-          resources: {{- toYaml .Values.resources | nindent 12 }}
+          resources: {{- toYaml $.Values.resources | nindent 12 }}
       {{- with $.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -67,4 +66,5 @@ spec:
       {{- with $.Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- end }}
