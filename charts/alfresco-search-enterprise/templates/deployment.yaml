@@ -15,9 +15,6 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/secret-broker: {{ include (print $.Template.BasePath "/secret-messagebroker.yaml") $ | sha256sum }}
-        checksum/secret-database: {{ include (print $.Template.BasePath "/secret-database.yaml") $ | sha256sum }}
-        checksum/secret-elasticsearch: {{ include (print $.Template.BasePath "/secret-elasticsearch.yaml") $ | sha256sum }}
       {{- with $.Values.podAnnotations }}
         {{- toYaml $ | nindent 8 }}
       {{- end }}
