@@ -1,3 +1,9 @@
+---
+title: Truststore
+parent: Alfresco Search Enterprise
+grand_parent: Guides
+---
+
 # Setting custom java truststore
 
 There multiple use cases where you may want to set a custom keystore or
