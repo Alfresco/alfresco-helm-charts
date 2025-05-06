@@ -1,0 +1,94 @@
+---
+suite: test environment variables merging
+templates:
+  - deployment.yaml
+  - reindexing-job.yaml
+  - statefulset-mediation.yaml
+tests:
+  - it: should render envs everywhere
+    values: &testvalues
+      - values/embedded-charts-values.yaml
+    set:
+      reindexing:
+        enabled: true
+        environment:
+          env1: VALUE1
+      liveIndexing:
+        environment:
+          env1: VALUE1
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: env1
+            value: VALUE1
+  - it: should render envs in reindexing job only
+    values: *testvalues
+    set:
+      reindexing:
+        enabled: true
+        environment:
+          env1: VALUE1
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: env1
+            value: VALUE1
+        documentSelector:
+          path: kind
+          value: Job
+          skipEmptyTemplates: true
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: env1
+            value: VALUE1
+        documentSelector:
+          path: kind
+          value: Deployment
+          skipEmptyTemplates: true
+          matchMany: true
+  - it: should prefer more specific values in deployments
+    values: *testvalues
+    set:
+      liveIndexing:
+        environment:
+          env1: VALUE1
+        metadata:
+          environment:
+            env1: VALUE2
+    template: deployment.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: env1
+            value: VALUE2
+        documentSelector:
+          path: metadata.name
+          value: RELEASE-NAME-metadata
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: env1
+            value: VALUE1
+        documentSelector:
+          path: metadata.name
+          value: RELEASE-NAME-content
+  - it: should prefer more specific values in statefulset
+    values: *testvalues
+    set:
+      liveIndexing:
+        environment:
+          env1: VALUE1
+        mediation:
+          environment:
+            env1: VALUE2
+    template: statefulset-mediation.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: env1
+            value: VALUE2
