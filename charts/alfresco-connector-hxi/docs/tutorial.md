@@ -6,7 +6,7 @@ grand_parent: Guides
 
 # Connecting HXI Chart to a Running Repository Instance
 
-This guide walks you through connecting an HXI chart to a running repository
+This guide walks you through connecting an HXI chart to a previously deployed repository
 instance, with a focus on configuring the live ingester. It includes setting up
 the HXI Helm chart and ensuring the repository instance is correctly configured
 for the HXI extension.
@@ -15,7 +15,7 @@ for the HXI extension.
 
 Before you begin, make sure you have:
 
-1. A running ACS (Alfresco Content Services).
+1. A working Alfresco Content Services deployment
 2. The HXI (Hyland Experience Insight) extension installed and enabled on the repository.
 3. From your ACS stack:
    - ActiveMQ URL
