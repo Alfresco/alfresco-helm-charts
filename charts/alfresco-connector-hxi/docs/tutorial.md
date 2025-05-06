@@ -15,7 +15,7 @@ for the HXI extension.
 
 Before you begin, make sure you have:
 
-1. A running ACS (Alfresco Content Services) stack.
+1. A running ACS (Alfresco Content Services).
 2. The HXI (Hyland Experience Insight) extension installed and enabled on the repository.
 3. From your ACS stack:
    - ActiveMQ URL
