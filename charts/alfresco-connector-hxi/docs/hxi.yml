@@ -1,0 +1,25 @@
+hxi:
+  hxAuthTokenUrl: "https://auth.iam.staging.experience.hyland.com/idp/connect/token"
+  hxInsightIngestionUrl: "https://ingestion-api.insight.staging.ncp.hyland.com/v1"
+  hxClientId: sc-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
+  hxClientSecret: your-client-secret
+  hxEnvKey: alfresco-kd-ci-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
+  hxAppSourceId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
+  hxEnv: staging
+liveIngester:
+  image:
+    repository: quay.io/alfresco/alfresco-hxinsight-connector-live-ingester
+    tag: 2.0.2 # same as extension for alfresco-repository
+messageBroker:
+  url: failover:(nio://acs-activemq-broker:61616)?timeout=3000&jms.useCompression=true
+  username: admin
+  password: admin
+ats:
+  sfsUrl: http://acs-filestore
+repository:
+  authType: basic
+  versionOverride: 25.1.0 # same as alfresco-repository
+bulkIngester:
+  enabled: false
+predictionApplier:
+  enabled: false
