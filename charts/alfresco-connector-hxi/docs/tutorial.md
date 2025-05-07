@@ -34,8 +34,10 @@ Before you begin, make sure you have:
 
 > Tip: For better security, store credentials such as secrets and passwords in
 > Kubernetes secrets. This guide demonstrates inline configuration for
-> simplicity. For secure handling, refer to the `existingSecret` option in the
-> ACS deployment documentation.
+> simplicity. For secure handling, refer to the
+> [`existingSecret`](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/values/hxi.yml)
+> option in the ACS deployment
+> [documentation](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/examples/with-knowledge-retrieval.md).
 
 ## Setup Steps
 
