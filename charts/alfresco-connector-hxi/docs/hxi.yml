@@ -1,10 +1,10 @@
 hxi:
   hxAuthTokenUrl: "https://auth.iam.staging.experience.hyland.com/idp/connect/token"
   hxInsightIngestionUrl: "https://ingestion-api.insight.staging.ncp.hyland.com/v1"
-  hxClientId: sc-e26b1939-0012-4fb6-b270-d63188d6b78c
+  hxClientId: sc-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
   hxClientSecret: your-client-secret
-  hxEnvKey: alfresco-kd-ci-8931ff99-97d8-4c36-a235-ba9269286322
-  hxAppSourceId: 984b2de8-528a-488a-94c2-342e84ec8eb0
+  hxEnvKey: alfresco-kd-ci-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
+  hxAppSourceId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
   hxEnv: staging
 liveIngester:
   image:

@@ -47,7 +47,9 @@ Before you begin, make sure you have:
 2. **Apply the Helm chart** using your configured values file:
 
 ```bash
-helm install hxi . --values docs/hxi.yml
+helm repo add alfresco-helm-charts https://alfresco.github.io/alfresco-helm-charts/
+helm repo update
+helm install hxi alfresco-helm-charts/alfresco-connector-hxi --values charts/alfresco-connector-hxi/docs/hxi.yml
 ```
 
 3. **Review the output** from the Helm chart installation. You will see a list
