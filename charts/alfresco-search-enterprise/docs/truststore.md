@@ -6,7 +6,7 @@ grand_parent: Guides
 
 # Setting custom java truststore
 
-There multiple use cases where you may want to set a custom keystore or
+There are multiple use cases where you may want to set a custom keystore or
 truststore. It can be because you need to interact with a third party service
 which uses a self-signed certificate or a prvite CA that is not shipped with
 the container. Or maybe the service you are trying to connect to uses a
