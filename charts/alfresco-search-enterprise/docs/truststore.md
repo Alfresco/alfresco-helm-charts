@@ -55,7 +55,11 @@ want to create the secret (needs to be the same namespace where your pods are
 running).
 
 This will produce a YAML output you can then apply to your Kubernetes
-cluster or save to a file for applying later.
+cluster or save to a file for applying later with the command below:
+
+```bash
+kubectl apply -f <path-to-secret-file>
+```
 
 ## Mount the secret in the pod
 
