@@ -283,6 +283,7 @@ hxi:
   hxClientSecret: null
   hxEnvKey: null
   hxAppSourceId: null
+  hxEnv: null
   existingConfigMap:
     name: null
     keys:
