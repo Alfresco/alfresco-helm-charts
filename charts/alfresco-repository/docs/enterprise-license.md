@@ -57,4 +57,4 @@ license file with the new one. Once that's done you can refresh the license from
 the Alfresco admin console and use the "Apply a new license" feature (check the
 [admin doc][license]
 
-[license]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Administer/Licenses/Upload-new-license
+[license]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/25.1/Alfresco-Content-Services/Administer/Licenses/Upload-new-license

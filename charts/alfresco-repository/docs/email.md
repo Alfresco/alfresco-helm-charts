@@ -167,4 +167,4 @@ environment:
 As usual, in order to configure IMAPs or IMAP/TLS refer to the
 [keystore](keystores.md) documentation.
 
-[imap]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/23.4/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP
+[imap]: https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/25.1/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP
