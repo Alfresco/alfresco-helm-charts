@@ -1,0 +1,123 @@
+---
+suite: test generic Extra resources
+templates:
+  - deployment.yaml
+  - reindexing-job.yaml
+  - statefulset-mediation.yaml
+tests:
+  - it: should have no extra resource by default
+    values: &testvalues
+      - values/embedded-charts-values.yaml
+    set:
+      reindexing:
+        enabled: true
+    asserts:
+      - notExists:
+          path: spec.template.spec.containers[0].volumeMounts
+      - notExists:
+          path: spec.template.spec.volumes
+  - it: should have global extra resources
+    values: *testvalues
+    set:
+      extraVolumes:
+        - name: extra-volume
+          secret:
+            secretName: extra-secret
+      extraVolumeMounts:
+        - name: extra-volume
+          mountPath: /extra
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: extra-volume
+            mountPath: /extra
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: extra-volume
+            secret:
+              secretName: extra-secret
+  - it: should have a mix of global & local extra resources in deployments
+    values: *testvalues
+    set:
+      extraVolumes:
+        - name: extra-volume
+          secret:
+            secretName: extra-secret
+      liveIndexing:
+        metadata:
+          extraVolumeMounts:
+            - name: extra-volume
+              mountPath: /extra
+    template: deployment.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: extra-volume
+            mountPath: /extra
+        documentSelector:
+          path: metadata.name
+          value: RELEASE-NAME-metadata
+      - notExists:
+          path: spec.template.spec.containers[0].volumeMounts
+        documentSelector:
+          path: metadata.name
+          value: RELEASE-NAME-content
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: extra-volume
+            secret:
+              secretName: extra-secret
+  - it: should have a mix of global & local extra resources in sts
+    values: *testvalues
+    set:
+      extraVolumes:
+        - name: extra-volume
+          secret:
+            secretName: extra-secret
+      liveIndexing:
+        mediation:
+          extraVolumeMounts:
+            - name: extra-volume
+              mountPath: /extra
+    template: statefulset-mediation.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: extra-volume
+            mountPath: /extra
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: extra-volume
+            secret:
+              secretName: extra-secret
+  - it: should have a mix of global & local extra resources in reindexing job
+    values: *testvalues
+    set:
+      extraVolumes:
+        - name: extra-volume
+          secret:
+            secretName: extra-secret
+      reindexing:
+        enabled: true
+        extraVolumeMounts:
+          - name: extra-volume
+            mountPath: /extra
+    template: reindexing-job.yaml
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: extra-volume
+            mountPath: /extra
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: extra-volume
+            secret:
+              secretName: extra-secret

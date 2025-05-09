@@ -15,9 +15,6 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/secret-broker: {{ include (print $.Template.BasePath "/secret-messagebroker.yaml") $ | sha256sum }}
-        checksum/secret-database: {{ include (print $.Template.BasePath "/secret-database.yaml") $ | sha256sum }}
-        checksum/secret-elasticsearch: {{ include (print $.Template.BasePath "/secret-elasticsearch.yaml") $ | sha256sum }}
       {{- with $.Values.podAnnotations }}
         {{- toYaml $ | nindent 8 }}
       {{- end }}
@@ -64,6 +61,10 @@ spec:
           readinessProbe:
             {{- toYaml $service.readinessProbe | nindent 12 }}
           resources: {{- toYaml $.Values.resources | nindent 12 }}
+          {{- with coalesce $service.extraVolumeMounts $.Values.extraVolumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
       {{- with $.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -74,6 +75,10 @@ spec:
       {{- end }}
       {{- with $.Values.tolerations }}
       tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with coalesce $service.extraVolumes $.Values.extraVolumes }}
+      volumes:
         {{- toYaml . | nindent 8 }}
       {{- end }}
 {{- end }}
