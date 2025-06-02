@@ -19,7 +19,7 @@ jobs:
 
       - name: Add dependency chart repos
         run: |
-          helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
+          helm repo add bitnami https://charts.bitnami.com/bitnami
 
       - name: Run checkov
         uses: bridgecrewio/checkov-action@66cb7d1a5d82e11edf60ee12d465423dbac41916 # v12.3006.0
