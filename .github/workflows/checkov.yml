@@ -21,12 +21,17 @@ jobs:
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
 
-      - name: Update Helm dependencies
+      - name: Update Helm dependencies for Bitnami OCI charts only
         run: |
           find charts -name Chart.yaml -exec dirname {} \; | while read chart_dir; do
             if [ -f "$chart_dir/Chart.yaml" ]; then
-              echo "Updating dependencies for $chart_dir"
-              helm dependency update "$chart_dir" || echo "Failed to update dependencies for $chart_dir"
+              # Check if the chart has OCI Bitnami dependencies
+              if grep -q "repository: oci://registry-1.docker.io/bitnamicharts" "$chart_dir/Chart.yaml"; then
+                echo "Updating dependencies for $chart_dir"
+                helm dependency update "$chart_dir" || echo "Failed to update dependencies for $chart_dir"
+              else
+                echo "Skipping $chart_dir (no Bitnami OCI dependencies)"
+              fi
             fi
           done
 
