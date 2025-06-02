@@ -17,6 +17,8 @@ repository:
   host: dummy
   port: 8080
 
+index:
+  url: http://elasticsearch:9200
 
 elasticsearch:
   enabled: true
@@ -42,6 +44,7 @@ search:
 ats:
   transform_url: http://transform
   sfs_url: http://sfs
+  sfsUrl: http://sfs
 
 sfs:
   url: http://sfs
@@ -54,3 +57,6 @@ microsoft:
   app:
     id: dummy
     password: dummy
+
+db:
+  url: jdbc:postgresql://hostname:5432/database
