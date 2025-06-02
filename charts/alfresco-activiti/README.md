@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-activiti
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![AppVersion: 25.1.1](https://img.shields.io/badge/AppVersion-25.1.1-informational?style=flat-square)
+![Version: 0.4.1](https://img.shields.io/badge/Version-0.4.1-informational?style=flat-square) ![AppVersion: 25.1.1](https://img.shields.io/badge/AppVersion-25.1.1-informational?style=flat-square)
 
 A Helm chart for Alfresco Activiti
 
