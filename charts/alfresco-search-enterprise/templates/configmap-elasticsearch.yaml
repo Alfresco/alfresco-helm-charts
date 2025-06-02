@@ -13,6 +13,9 @@ data:
   {{- $esProtocol := include "alfresco-common.url.scheme" .url }}
   {{- $esHost := include "alfresco-common.url.host" .url }}
   {{- $esPort := include "alfresco-common.url.port" .url }}
+  {{- if or (not $esProtocol) (not $esHost) (not $esPort) }}
+    {{- fail (printf "%s Invalid URL format - missing scheme, host, or port: %s" $reqMsg .url) }}
+  {{- end }}
   SEARCH_URL: {{ printf "%s://%s:%v" $esProtocol $esHost $esPort }}
 {{- end }}
 {{- end }}

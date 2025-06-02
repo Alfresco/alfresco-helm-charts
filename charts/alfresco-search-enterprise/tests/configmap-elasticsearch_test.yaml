@@ -8,6 +8,14 @@ tests:
       - failedTemplate:
           errorMessage: "Please provide elasticsearch connection details as .search.url values or using an .search.existingConfigMap."
 
+  - it: should fail rendering manifest when url is missing scheme, host, or port
+    set:
+      search:
+        url: elasticsearch:9200
+    asserts:
+      - failedTemplate:
+          errorMessage: "Please provide elasticsearch connection details as .search.url values or using an .search.existingConfigMap. Invalid URL format - missing scheme, host, or port: elasticsearch:9200"
+
   - it: should create a cm from search provided values
     values: &testvalues
       - values/embedded-charts-values.yaml
