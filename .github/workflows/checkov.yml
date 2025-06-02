@@ -21,6 +21,15 @@ jobs:
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
 
+      - name: Update Helm dependencies
+        run: |
+          find charts -name Chart.yaml -exec dirname {} \; | while read chart_dir; do
+            if [ -f "$chart_dir/Chart.yaml" ]; then
+              echo "Updating dependencies for $chart_dir"
+              helm dependency update "$chart_dir" || echo "Failed to update dependencies for $chart_dir"
+            fi
+          done
+
       - name: Run checkov
         uses: bridgecrewio/checkov-action@66cb7d1a5d82e11edf60ee12d465423dbac41916 # v12.3006.0
         with:
