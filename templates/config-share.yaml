@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.config.share.configMapName }}
+  labels:
+    {{- include "alfresco-content-services.labels" . | nindent 4 }}
+data:
+  alfresco-global.properties: |
+    {{- $alfUrl := include "alfresco-common.external.url" . }}
+    deployment.method=HELM_CHART
+    alfresco.host={{ template "alfresco-common.external.host" . }}
+    alfresco.protocol={{ template "alfresco-common.external.scheme" . }}
+    alfresco.port={{ template "alfresco-common.external.port" . }}
+    aos.baseUrlOverwrite={{ $alfUrl }}/alfresco/aos
+    csrf.filter.origin={{ $alfUrl }}
+    csrf.filter.referer={{ $alfUrl }}/.*
+    {{- if .Values.share.enabled }}
+    share.protocol={{ template "alfresco-common.external.scheme" . }}
+    share.host={{ template "alfresco-common.external.host" . }}
+    share.port={{ template "alfresco-common.external.port" . }}
+    {{- end }}
+    local.transform.service.enabled={{ index .Values "alfresco-transform-service" "enabled" }}
+    {{- with (index .Values "alfresco-transform-service") }}
+    {{- $ats_for_enterprise := and .filestore.enabled .transformrouter.enabled }}
+    transform.service.enabled={{ and .enabled $ats_for_enterprise }}
+    {{- end }}
+    {{- if index .Values "alfresco-transform-service" "enabled" }}
+    {{- include "alfresco-content-services.atsConfig" . | indent 4 }}
+    {{- end }}
+    {{- with .Values.global.mail }}
+    {{- if .host }}
+    mail.host={{ .host }}
+    mail.port={{ .port }}
+    mail.protocol={{ .protocol }}
+    mail.smtp.auth={{ .smtp.auth }}
+    mail.smtps.auth={{ .smtp.auth }}
+    mail.smtp.starttls.enable={{ .smtp.starttls.enable }}
+    {{- if or .smtp.auth .smtps.auth }}
+    mail.username={{ .username }}
+    {{- end }}
+    {{- end }}
+    {{- end }}
+    {{- if index .Values "alfresco-sync-service" "enabled" }}
+    dsync.service.uris={{ $alfUrl }}/syncservice
+    {{- else }}
+    events.subsystem.autoStart=false
+    {{- end }}
+    {{- range $key, $value := .Values.config.share.additionalGlobalProperties }}
+    {{ $key }}={{ $value }}
+    {{- end }}
