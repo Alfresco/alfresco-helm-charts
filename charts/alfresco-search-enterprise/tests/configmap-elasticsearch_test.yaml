@@ -8,13 +8,21 @@ tests:
       - failedTemplate:
           errorMessage: "Please provide elasticsearch connection details as .search.url values or using an .search.existingConfigMap."
 
+  - it: should fail when there is no scheme separator in the URL
+    set:
+      search:
+        url: elasticsearch
+    asserts:
+      - failedTemplate:
+          errorMessage: "Please provide elasticsearch connection details as .search.url values or using an .search.existingConfigMap. Invalid URL format - URL must contain '://' scheme separator. Provided: elasticsearch"
+
   - it: should fail rendering manifest when url is missing scheme, host, or port
     set:
       search:
-        url: elasticsearch:9200
+        url: http://:9200
     asserts:
       - failedTemplate:
-          errorMessage: "Please provide elasticsearch connection details as .search.url values or using an .search.existingConfigMap. Invalid URL format - missing scheme, host, or port: elasticsearch:9200"
+          errorMessage: "Please provide elasticsearch connection details as .search.url values or using an .search.existingConfigMap. Invalid URL format missing host. Provided: http://:9200"
 
   - it: should create a cm from search provided values
     values: &testvalues
