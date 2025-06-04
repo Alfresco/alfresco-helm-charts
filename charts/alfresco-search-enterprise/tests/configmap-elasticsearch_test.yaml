@@ -1,0 +1,73 @@
+---
+suite: test elasticsearch configmap
+templates:
+  - configmap-elasticsearch.yaml
+tests:
+  - it: should fail rendering manifest without required Elasticsearch values
+    asserts:
+      - failedTemplate:
+          errorMessage: "Please provide elasticsearch connection details as .search.url values or using an .search.existingConfigMap."
+
+  - it: should fail when there is no scheme separator in the URL
+    set:
+      search:
+        url: elasticsearch
+    asserts:
+      - failedTemplate:
+          errorMessage: "Please provide elasticsearch connection details as .search.url values or using an .search.existingConfigMap. Invalid URL format - URL must contain '://' scheme separator. Provided: elasticsearch"
+
+  - it: should fail rendering manifest when url is missing scheme, host, or port
+    set:
+      search:
+        url: http://:9200
+    asserts:
+      - failedTemplate:
+          errorMessage: "Please provide elasticsearch connection details as .search.url values or using an .search.existingConfigMap. Invalid URL format missing host. Provided: http://:9200"
+
+  - it: should create a cm from search provided values
+    values: &testvalues
+      - values/embedded-charts-values.yaml
+    set:
+      search:
+        url: http://elasticsearch:9200
+    asserts:
+      - equal:
+          path: data.SEARCH_URL
+          value: http://elasticsearch:9200
+
+  - it: should create a cm from search provided values with https
+    values: *testvalues
+    set:
+      search:
+        url: https://elasticsearch:9200
+    asserts:
+      - equal:
+          path: data.SEARCH_URL
+          value: https://elasticsearch:9200
+
+  - it: should not render elasticsearch cm when existingConfigMap is set
+    values: *testvalues
+    set:
+      search.existingConfigMap:
+        name: external-es-configmap
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render labels for elasticsearch configmap
+    values: *testvalues
+    set:
+      nameOverride: testName
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-search-enterprise
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: testName
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-search-enterprise-1.0.0

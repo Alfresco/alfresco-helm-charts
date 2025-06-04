@@ -9,9 +9,16 @@ metadata:
     {{- include "alfresco-search-enterprise.labels" $ | nindent 4 }}
 data:
   {{- $reqMsg := "Please provide elasticsearch connection details as .search.url values or using an .search.existingConfigMap." }}
-  {{- $esProtocol := required $reqMsg (include "alfresco-common.url.scheme" .url) }}
-  {{- $esHost := required $reqMsg (include "alfresco-common.url.host" .url) }}
-  {{- $esPort := required $reqMsg (include "alfresco-common.url.port" .url) }}
+  {{- $assertCondition := required $reqMsg .url }}
+  {{- if not (contains "://" .url) }}
+    {{- fail (printf "%s Invalid URL format - URL must contain '://' scheme separator. Provided: %s" $reqMsg .url) }}
+  {{- end }}
+  {{- $esProtocol := include "alfresco-common.url.scheme" .url }}
+  {{- $esHost := include "alfresco-common.url.host" .url }}
+  {{- $esPort := include "alfresco-common.url.port" .url }}
+  {{- if not $esHost }}
+    {{- fail (printf "%s Invalid URL format missing host. Provided: %s" $reqMsg .url) }}
+  {{- end }}
   SEARCH_URL: {{ printf "%s://%s:%v" $esProtocol $esHost $esPort }}
 {{- end }}
 {{- end }}
