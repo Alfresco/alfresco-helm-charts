@@ -17,20 +17,20 @@ jobs:
       contents: write
     steps:
       - name: Ensure SHA pinned actions
-        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@2d6823da4039243036c86d76f503c84e2ded2517 # v3.0.24
+        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@fc87bb5b5a97953d987372e74478de634726b3e5 # v3.0.25
         with:
           allowlist: |
             Alfresco/alfresco-build-tools/
 
       - name: Setup helm docs
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@8cd8c3798c79d10540e2876ad7cf2a5311cbd1ae # v8.20.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@f37c44cc085236178ebb8834eb634b0b4b550a40 # v8.23.0
 
       - name: Install kubeconform helm plugin
         run: |
           helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.1.12
 
       - name: Run pre-commit
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@8cd8c3798c79d10540e2876ad7cf2a5311cbd1ae # v8.20.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@f37c44cc085236178ebb8834eb634b0b4b550a40 # v8.23.0
         with:
           # disable auto-commit for PRs from forks
           auto-commit: ${{ github.event_name != 'pull_request' || ! github.event.pull_request.head.repo.fork }}
