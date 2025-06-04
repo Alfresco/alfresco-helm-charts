@@ -17,6 +17,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
+      - name: Add dependency chart repos
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+
+      - name: Update Helm dependencies for Bitnami OCI charts only
+        run: |
+          find charts -name Chart.yaml -exec dirname {} \; | while read chart_dir; do
+            if [ -f "$chart_dir/Chart.yaml" ]; then
+              # Check if the chart has OCI Bitnami dependencies
+              if grep -q "repository: oci://registry-1.docker.io/bitnamicharts" "$chart_dir/Chart.yaml"; then
+                echo "Updating dependencies for $chart_dir"
+                helm dependency update "$chart_dir" || echo "Failed to update dependencies for $chart_dir"
+              else
+                echo "Skipping $chart_dir (no Bitnami OCI dependencies)"
+              fi
+            fi
+          done
+
       - name: Run checkov
         uses: bridgecrewio/checkov-action@66cb7d1a5d82e11edf60ee12d465423dbac41916 # v12.3006.0
         with:

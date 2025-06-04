@@ -25,6 +25,7 @@ spec:
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       containers:
         - name: {{ template "alfresco-activiti-admin.name" . }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
