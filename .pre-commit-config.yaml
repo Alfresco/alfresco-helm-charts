@@ -10,6 +10,7 @@ repos:
       - id: end-of-file-fixer
         exclude: README.md
       - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
   - repo: https://github.com/norwoodj/helm-docs
     rev: v1.13.1
     hooks:
