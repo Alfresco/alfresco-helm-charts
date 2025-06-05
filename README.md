@@ -89,3 +89,7 @@ scheme](https://hyland.atlassian.net/wiki/spaces/TECH/pages/edit-v2/1293317631#i
 * Ensure that all the charts are getting a GA release (non-alpha) at this point.
 * Once the PR has been merged and all charts released, you can head to
   [acs-deployment](https://github.com/Alfresco/acs-deployment) to update the ACS umbrella chart.
+
+### Alternate release step
+If a manual bump (i.e. a major one) has been done on a dedicated branch (ticket reference), then the `BumpVersions` workflow can be triggered on this same branch and all the changes will be reviewed in the PR.  
+In this case, the `updatecli-bump-acs` branch will not be created.  
