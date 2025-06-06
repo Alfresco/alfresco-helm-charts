@@ -79,11 +79,9 @@ scheme](https://hyland.atlassian.net/wiki/spaces/TECH/pages/edit-v2/1293317631#i
 * For minor releases, ensure to update the links beginning with
   `https://support.hyland.com/r/Alfresco` to reflect the latest version or
   corresponding minor update documentation.
-* Trigger the creation of an update branch by executing [Bump
-  version](../.github/workflows/updatecli.yaml) with `values` option. Optionally
-  you can test not yet merged changes from alfresco-updatecli by specifying a
-  branch other than master.
-* Check that `updatecli-bump-acs` branch has been created. Review changes made
+* Trigger the `BumpVersions` workflow by executing [Bump
+  version](../.github/workflows/updatecli.yaml) with `values` option. Optionally you can create a dedicated branch (ticket reference) if you want the workflow changes to be reviewed inside a PR.
+* If no custom branch other than master is created then check that `updatecli-bump-acs` branch has been created by the workflow. Review changes made
   by updatecli according to the supported matrix, eventually revert manually
   unwanted changes and push again.
 * Ensure that all the charts are getting a GA release (non-alpha) at this point.

@@ -18,7 +18,7 @@ repository:
 known_urls: null
 image:
   repository: quay.io/alfresco/alfresco-share
-  tag: 25.1.0
+  tag: 25.1.1
   pullPolicy: IfNotPresent
   # -- Internal port where the pod is listening. Should only be changed is you
   # use a custom image which uses a different port.
