@@ -81,6 +81,13 @@ spec:
             - name: {{ $key }}
               value: {{ $value }}
             {{- end }}
+            {{- range .Values.configuration.share.existingSecrets }}
+            {{- if not (or (eq "acs-license" .purpose) (hasPrefix "subsystems:" (.purpose | default ""))) }}
+              {{- $repoSecretsKeyRef := dict "name" .name "key" .key "optional" true }}
+              {{- $repoSecretsEnv:= dict "name" .key "valueFrom" (dict "secretKeyRef" $repoSecretsKeyRef) }}
+              {{- list $repoSecretsEnv | toYaml | nindent 12 }}
+              {{- end }}
+            {{- end }}
           volumeMounts:
             {{- if and (gt (int .Values.replicaCount) 1) .Values.managedApplicationContext.enabled }}
             - name: custom-application-context-volume
@@ -90,6 +97,10 @@ spec:
             {{- with .Values.extraVolumeMounts }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
+            - name: global-properties
+              mountPath: /usr/local/tomcat/shared/classes/alfresco-global.properties
+              subPath: alfresco-global.properties
+              readOnly: true
           readinessProbe:
             {{- toYaml .Values.readinessProbe | nindent 12 }}
           livenessProbe:
@@ -108,6 +119,12 @@ spec:
         {{- if .Values.extraVolumes }}
         {{- toYaml .Values.extraVolumes | nindent 8 }}
         {{- end }}
+        - name: global-properties
+          configMap:
+            name: share
+            items:
+              - key: alfresco-global.properties
+                path: alfresco-global.properties
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
