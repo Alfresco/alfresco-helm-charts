@@ -6,7 +6,7 @@ metadata:
   name: {{ $serviceName }}
   labels:
     {{- include "alfresco-connector-ms365.labels" . | nindent 4 }}
-  # support both extraAnnotation and annotations until the extra one is removed
+  # supports both extraAnnotation and annotations until the extra one is removed
   {{- $extra := .Values.ingress.extraAnnotations | default dict }}
   {{- $main := .Values.ingress.annotations | default dict }}
   {{- $all := merge $extra $main }}
