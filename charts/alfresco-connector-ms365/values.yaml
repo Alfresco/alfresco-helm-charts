@@ -63,6 +63,7 @@ ingress:
         - path: /ooi-service
           pathType: Prefix
   tls: []
+  annotations: {}
   extraAnnotations: {}
 podSecurityContext:
   runAsNonRoot: true
