@@ -34,3 +34,4 @@ jobs:
         with:
           # disable auto-commit for PRs from forks
           auto-commit: ${{ github.event_name != 'pull_request' || ! github.event.pull_request.head.repo.fork }}
+          python-version: 3.12
