@@ -3,7 +3,7 @@ default_language_version:
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: mixed-line-ending
         args: ["--fix=lf"]
@@ -11,11 +11,11 @@ repos:
         exclude: README.md
       - id: trailing-whitespace
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.13.1
+    rev: v1.14.2
     hooks:
       - id: helm-docs
   - repo: https://github.com/jtyr/kubeconform-helm
-    rev: v0.1.17
+    rev: v0.2.0
     hooks:
       - id: kubeconform-helm
         alias: kubeconform-helm-min
@@ -27,7 +27,7 @@ repos:
           - --values-dir=ci
           - --strict
   - repo: https://github.com/jtyr/kubeconform-helm
-    rev: v0.1.17
+    rev: v0.2.0
     hooks:
       - id: kubeconform-helm
         name: "Kubeconform Helm - current k8s version" # current as in currently supported by both Alfresco & AWS
