@@ -23,6 +23,7 @@ ingress:
         - path: /ms-teams-service
           pathType: Prefix
   tls: []
+  annotations: {}
   extraAnnotations: {}
 podSecurityContext:
   runAsNonRoot: true

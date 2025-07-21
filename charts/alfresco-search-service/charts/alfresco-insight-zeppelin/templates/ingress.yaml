@@ -7,12 +7,11 @@ metadata:
   labels:
     {{- include "alfresco-insight-zeppelin.labels" . | nindent 4 }}
   # supports both extraAnnotation and annotations until the extra one is removed
-  {{- $extra := .Values.ingress.extraAnnotations | default dict }}
-  {{- $main := .Values.ingress.annotations | default dict }}
-  {{- $all := merge $extra $main }}
-  {{- if $all }}
+  {{- with .Values.ingress }}
+  {{- with merge .extraAnnotations .annotations }}
   annotations:
-  {{- toYaml $all | nindent 4 }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}

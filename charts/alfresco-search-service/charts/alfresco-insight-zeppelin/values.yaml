@@ -19,6 +19,7 @@ ingress:
         - path: /zeppelin
           pathType: Prefix
   tls: []
+  annotations: {}
   extraAnnotations: {}
 repository:
   # -- Alfresco repository URL
