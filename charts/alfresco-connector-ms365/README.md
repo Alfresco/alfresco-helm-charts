@@ -29,6 +29,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
 | image.tag | string | `"2.0.7"` |  |
+| ingress.annotations | object | `{}` |  |
 | ingress.className | string | `"nginx"` |  |
 | ingress.extraAnnotations | object | `{}` |  |
 | ingress.hosts[0].paths[0].path | string | `"/ooi-service"` |  |
