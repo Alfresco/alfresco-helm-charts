@@ -1,2 +1,2 @@
 # Deprecation
-- `extraAnnotations` is deprecated in favor of `annotations`
+- `.ingress.extraAnnotations` is deprecated in favor of `.ingress.annotations`
