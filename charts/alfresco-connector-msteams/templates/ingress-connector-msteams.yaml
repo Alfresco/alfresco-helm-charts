@@ -6,9 +6,12 @@ metadata:
   name: {{ $serviceName }}
   labels:
     {{- include "alfresco-connector-msteams.labels" . | nindent 4 }}
-  {{- with .Values.ingress.extraAnnotations }}
+  # supports both extraAnnotation and annotations until the extra one is removed
+  {{- with .Values.ingress }}
+  {{- with merge .extraAnnotations .annotations }}
   annotations:
-    {{- toYaml . | nindent 4 }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}

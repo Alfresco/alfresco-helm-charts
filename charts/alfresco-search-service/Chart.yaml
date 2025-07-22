@@ -10,11 +10,11 @@ keywords:
 name: alfresco-search-service
 sources:
   - https://github.com/Alfresco/alfresco-helm-charts
-version: 5.0.4
+version: 5.1.0
 appVersion: 2.0.16
 dependencies:
   - name: alfresco-insight-zeppelin
-    version: 4.0.2
+    version: 4.1.0
     condition: alfresco-insight-zeppelin.enabled
   - name: alfresco-common
     version: 4.0.0
