@@ -7,10 +7,6 @@ metadata:
 data:
   {{- if .Values.environment }}
     {{- range $key, $val := .Values.environment }}
-      {{- if eq $key "ACTIVITI_ES_REST_CLIENT_ADDRESS" }}
-        {{- $key | nindent 4 }}: {{ template "alfresco-activiti.activiti-5113.elasticsearch" $ }}
-      {{- else }}
-        {{- $key | nindent 4 }}: {{ tpl $val $ | quote }}
-      {{- end }}
+      {{- $key | nindent 4 }}: {{ tpl $val $ | quote }}
     {{- end }}
   {{- end }}
