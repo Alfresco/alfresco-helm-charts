@@ -85,5 +85,8 @@ scheme](https://hyland.atlassian.net/wiki/spaces/TECH/pages/edit-v2/1293317631#i
   by updatecli according to the supported matrix, eventually revert manually
   unwanted changes and push again.
 * Ensure that all the charts are getting a GA release (non-alpha) at this point.
+* Ensure the any deprecation warning is added to the global
+  [UPGRADE.md](../UPGRADE.md) file & the version about to be published indeed
+  remove the plannedremoval as stated in this same file.
 * Once the PR has been merged and all charts released, you can head to
   [acs-deployment](https://github.com/Alfresco/acs-deployment) to update the ACS umbrella chart.
