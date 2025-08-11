@@ -24,6 +24,8 @@ resources:
 search:
   url: http://elasticsearch:9200
 elasticsearch:
+  image:
+    repository: bitnamilegacy/elasticsearch
   fullnameOverride: elasticsearch
   master:
     masterOnly: false
@@ -54,3 +56,6 @@ messageBroker:
   url: nio://activemq-broker:61616
 tags:
   ci: true
+global:
+  security:
+    allowInsecureImages: true
