@@ -12,6 +12,9 @@ messageBroker:
   username: *mquser
   password: *mqpass
 postgresql:
+  image:
+    repository: bitnamilegacy/postgresql
+    tag: 14.4.0
   fullnameOverride: pgsync
   auth:
     enablePostgresUser: false
