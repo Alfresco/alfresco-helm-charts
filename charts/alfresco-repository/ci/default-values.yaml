@@ -9,7 +9,7 @@ postgresql:
   fullnameOverride: pg-postgresql-acs
   image:
     repository: bitnamilegacy/postgresql
-    tag: 14.4.0
+    tag: 16.6.0
   auth:
     username: *pguser
     password: *pgpass
