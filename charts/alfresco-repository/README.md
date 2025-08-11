@@ -45,7 +45,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | configuration.db.url | string | `nil` | JDBC url of the database This is a mandatory parameter |
 | configuration.db.username | string | `nil` | Username to authentication to the repository database |
 | configuration.hz.port | int | `5701` | Hazelcast listener port Only change it if you use a custom image where the port has been changed from default |
-| configuration.imap | object | see below | Basic IMAP capabilities config (limited to enabling/disabling). In order to pass more IMAP properties and configure the subsystem more deeply, please use value `environment.CATALINA_OPTS` or `configuration.repository.existingConfiMap` and check the [available properties for this subsystem](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/25.1/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP/IMAP-Subsystem-Properties) |
+| configuration.imap | object | see below | Basic IMAP capabilities config (limited to enabling/disabling). In order to pass more IMAP properties and configure the subsystem more deeply, please use value `environment.CATALINA_OPTS` or `configuration.repository.existingConfiMap` and check the [available properties for this subsystem](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/25.2/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP/IMAP-Subsystem-Properties) |
 | configuration.imap.enabled | bool | `false` | Enable/Disable Alfresco repository IMAP capabilities |
 | configuration.imap.port | int | `1143` | port to use to listen for IMAP clients |
 | configuration.imap.protocol | string | `"imap"` | Protocol to use to talk to IMAP clients (imap or imaps) |

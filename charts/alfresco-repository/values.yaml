@@ -152,7 +152,7 @@ configuration:
   # please use value `environment.CATALINA_OPTS` or
   # `configuration.repository.existingConfiMap` and check the [available
   # properties for this
-  # subsystem](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/25.1/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP/IMAP-Subsystem-Properties)
+  # subsystem](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/25.2/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP/IMAP-Subsystem-Properties)
   # @default -- see below
   imap:
     # -- Enable/Disable Alfresco repository IMAP capabilities
