@@ -2,8 +2,6 @@ replicaCount: 1
 
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
-  security:
-    allowInsecureImages: true
 
 image:
   repository: quay.io/alfresco/alfresco-audit-storage
@@ -123,11 +121,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-elasticsearch:
-  image:
-    repository: bitnamilegacy/elasticsearch
-    tag: 8.17.3
 
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.

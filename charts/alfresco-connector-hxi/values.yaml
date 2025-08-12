@@ -307,10 +307,6 @@ serviceAccount:
   name: "alfresco-connector-hxi-sa"
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
-postgresql:
-  image:
-    repository: bitnamilegacy/postgresql
-    tag: 16.6.0
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
   ci: false

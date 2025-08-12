@@ -94,10 +94,6 @@ database:
 workaround:
   # -- Enable workaround for [ACTIVITI-5113](https://hyland.atlassian.net/browse/ACTIVITI-5113) required for versions before 24.2.0
   ACTIVITI-5113: false
-postgresql:
-  image:
-    repository: bitnamilegacy/postgresql
-    tag: 16.6.0
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
   ci: false

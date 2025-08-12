@@ -347,12 +347,6 @@ search:
       password: SEARCH_PASSWORD
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
-  security:
-    allowInsecureImages: true
-elasticsearch:
-  image:
-    repository: bitnamilegacy/elasticsearch
-    tag: 8.17.3
 tags:
   # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
   ci: false

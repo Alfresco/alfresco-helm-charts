@@ -24,15 +24,12 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
-| elasticsearch.image.repository | string | `"bitnamilegacy/elasticsearch"` |  |
-| elasticsearch.image.tag | string | `"8.17.3"` |  |
 | environment.AUDIT_EVENTINGESTION_DLQ_CONSUMEPERIOD | int | `60000` |  |
 | environment.AUDIT_EVENTINGESTION_DLQ_CONSUMPTIONCOUNT | int | `1000` |  |
 | environment.AUDIT_EVENTINGESTION_URI | string | `"activemq:topic:alfresco.repo.event2"` |  |
 | environment.SPRING_PROFILES_ACTIVE | string | `"durable-subscriptions"` |  |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
-| global.security.allowInsecureImages | bool | `true` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-audit-storage"` |  |
 | image.tag | string | `"1.1.0"` |  |
