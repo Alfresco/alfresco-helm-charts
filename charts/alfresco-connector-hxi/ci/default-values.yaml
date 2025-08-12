@@ -33,6 +33,10 @@ activemq:
     limits:
       cpu: "1000m"
       memory: "1Gi"
+postgresql:
+  image:
+    repository: bitnamilegacy/postgresql
+    tag: 16.6.0
 db:
   url: jdbc:postgresql://postgresql:5432/postgres
 messageBroker:

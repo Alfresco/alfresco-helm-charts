@@ -8,7 +8,8 @@ configuration:
 postgresql:
   fullnameOverride: pg-postgresql-acs
   image:
-    tag: 14.4.0
+    repository: bitnamilegacy/postgresql
+    tag: 16.6.0
   auth:
     username: *pguser
     password: *pgpass

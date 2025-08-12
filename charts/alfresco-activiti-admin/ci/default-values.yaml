@@ -1,7 +1,8 @@
 postgresql:
   fullnameOverride: activiti-admin-postgresql
   image:
-    tag: 14.9.0
+    repository: bitnamilegacy/postgresql
+    tag: 16.6.0
   auth:
     username: &dbuser alfresco
     password: &dbpass alfresco-pass
