@@ -7,9 +7,6 @@ resources:
     cpu: "1"
     memory: "1Gi"
 elasticsearch:
-  image:
-    repository: bitnamilegacy/elasticsearch
-    tag: 8.17.3
   fullnameOverride: elasticsearch
   master:
     masterOnly: false
@@ -42,6 +39,3 @@ messageBroker:
   url: nio://activemq-broker:61616
 tags:
   ci: true
-global:
-  security:
-    allowInsecureImages: true

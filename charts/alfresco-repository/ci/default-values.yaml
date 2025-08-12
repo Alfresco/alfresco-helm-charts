@@ -7,9 +7,6 @@ configuration:
     url: failover:(tcp://localhost:61616)
 postgresql:
   fullnameOverride: pg-postgresql-acs
-  image:
-    repository: bitnamilegacy/postgresql
-    tag: 16.6.0
   auth:
     username: *pguser
     password: *pgpass

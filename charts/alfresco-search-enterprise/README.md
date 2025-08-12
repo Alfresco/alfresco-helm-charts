@@ -30,8 +30,11 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ats.transform_url | string | `nil` | URL of the alfresco transform (trouter or tengine-aio) |
 | contentMediaTypeCache.enabled | bool | `true` |  |
 | contentMediaTypeCache.refreshTime | string | `"0 0 * * * *"` |  |
+| elasticsearch.image.repository | string | `"bitnamilegacy/elasticsearch"` |  |
+| elasticsearch.image.tag | string | `"8.17.3"` |  |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
+| global.security.allowInsecureImages | bool | `true` |  |
 | imagePullSecrets | list | `[]` |  |
 | indexName | string | `"alfresco"` | Name of the existing search index, usually created by repo |
 | liveIndexing.content.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-search-enterprise.content.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule the content pod on a different zone |

@@ -81,6 +81,8 @@ A Helm chart for Alfresco Activiti
 | podSecurityContext.fsGroup | int | `33007` |  |
 | podSecurityContext.runAsGroup | int | `33007` |  |
 | podSecurityContext.runAsUser | int | `33007` |  |
+| postgresql.image.repository | string | `"bitnamilegacy/postgresql"` |  |
+| postgresql.image.tag | string | `"16.6.0"` |  |
 | readinessProbe.failureThreshold | int | `5` |  |
 | readinessProbe.initialDelaySeconds | int | `25` |  |
 | readinessProbe.path | string | `"/activiti-app/actuator/health/readiness"` | For APS prior to 24.3.0, path must be set to `/activiti-app/app/rest/locale` |
