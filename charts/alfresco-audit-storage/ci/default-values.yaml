@@ -9,6 +9,7 @@ resources:
 elasticsearch:
   image:
     repository: bitnamilegacy/elasticsearch
+    tag: 8.17.3
   fullnameOverride: elasticsearch
   master:
     masterOnly: false
