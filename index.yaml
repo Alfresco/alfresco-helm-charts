@@ -1071,6 +1071,25 @@ entries:
     version: 0.1.0-alpha.0
   alfresco-ai-transformer:
   - apiVersion: v2
+    appVersion: 3.2.1
+    created: "2025-08-27T13:12:43.879848939Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.6.2
+    description: A Helm chart for deploying Alfresco ai transformer service
+    digest: 81db35f0e2490ef33ba614da928311a0e1426e781bde93851c8827c3f516269e
+    name: alfresco-ai-transformer
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-ai-transformer-3.1.1/alfresco-ai-transformer-3.1.1.tgz
+    version: 3.1.1
+  - apiVersion: v2
     appVersion: 3.2.0
     created: "2025-07-18T12:51:35.753714106Z"
     dependencies:
@@ -7294,6 +7313,25 @@ entries:
     version: 4.0.0
   alfresco-transform-service:
   - apiVersion: v2
+    appVersion: 4.2.1
+    created: "2025-08-27T13:12:44.034649373Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.6.2
+    description: A Helm chart for deploying Alfresco Transform Services
+    digest: db46cb413ff0ae0f3f5fafe2e6f0104fd60e9caf422358345a4625a487ffbbb2
+    name: alfresco-transform-service
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-2.2.1/alfresco-transform-service-2.2.1.tgz
+    version: 2.2.1
+  - apiVersion: v2
     appVersion: 4.2.0
     created: "2025-07-18T12:51:36.800696523Z"
     dependencies:
@@ -7914,4 +7952,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-transform-service-0.1.0-alpha.0/alfresco-transform-service-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
-generated: "2025-08-12T13:01:10.953406027Z"
+generated: "2025-08-27T13:12:44.035613217Z"
