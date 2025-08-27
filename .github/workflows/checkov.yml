@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Add dependency chart repos
         run: |
@@ -36,7 +36,7 @@ jobs:
           done
 
       - name: Run checkov
-        uses: bridgecrewio/checkov-action@6375fb7a379f76cc615af7b954f0ef630037c351 # v12.3039.0
+        uses: bridgecrewio/checkov-action@afa85d3c6187ef3fdda6368e5e7a2c2247160d66 # v12.3054.0
         with:
           config_file: .checkov.yml
           output_format: cli,sarif
@@ -44,7 +44,7 @@ jobs:
           skip_download: true # Do not download any data from Bridgecrew's servers
 
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@181d5eefc20863364f96762470ba6f862bdef56b # v3.29.2
+        uses: github/codeql-action/upload-sarif@3c3833e0f8c1c83d449a7478aa59c036a9165498 # v3.29.11
 
         if: success() || failure()
         with:
