@@ -7,6 +7,8 @@ resources:
     cpu: "1"
     memory: "1Gi"
 elasticsearch:
+  sysctlImage:
+    repository: bitnamilegacy/os-shell
   image:
     repository: bitnamilegacy/elasticsearch
     tag: 8.17.3
