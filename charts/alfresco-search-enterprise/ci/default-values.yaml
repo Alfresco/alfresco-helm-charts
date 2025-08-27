@@ -24,6 +24,8 @@ resources:
 search:
   url: http://elasticsearch:9200
 elasticsearch:
+  sysctlImage:
+    repository: bitnamilegacy/os-shell
   image:
     repository: bitnamilegacy/elasticsearch
     tag: 8.17.3
