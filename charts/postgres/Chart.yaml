@@ -1,0 +1,10 @@
+apiVersion: v2
+name: postgres
+description: A Helm chart for deploying PostgreSQL (this chart is used only for Alfresco CI purposes, please do not use it)
+type: application
+version: 0.1.0
+appVersion: "16.6"
+dependencies:
+  - name: alfresco-common
+    version: 4.0.0
+    repository: https://alfresco.github.io/alfresco-helm-charts/
