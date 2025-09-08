@@ -11,7 +11,10 @@ auth:
 livenessProbe:
   exec:
     command:
-      - pg_isready -d $POSTGRES_DB -U $POSTGRES_USER
+      - /bin/sh
+      - '-c'
+      - '-e'
+      - exec pg_isready -d $POSTGRES_DB -U $POSTGRES_USER
   failureThreshold: 3
   initialDelaySeconds: 30
   periodSeconds: 10
@@ -19,7 +22,10 @@ livenessProbe:
 readinessProbe:
   exec:
     command:
-      - pg_isready -d $POSTGRES_DB -U $POSTGRES_USER
+      - /bin/sh
+      - '-c'
+      - '-e'
+      - exec pg_isready -d $POSTGRES_DB -U $POSTGRES_USER
   failureThreshold: 3
   initialDelaySeconds: 5
   periodSeconds: 10

@@ -24,7 +24,10 @@ Use a community-supported or enterprise-grade PostgreSQL chart instead.
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"postgres"` |  |
 | image.tag | float | `16.6` |  |
-| livenessProbe.exec.command[0] | string | `"pg_isready -d $POSTGRES_DB -U $POSTGRES_USER"` |  |
+| livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
+| livenessProbe.exec.command[1] | string | `"-c"` |  |
+| livenessProbe.exec.command[2] | string | `"-e"` |  |
+| livenessProbe.exec.command[3] | string | `"exec pg_isready -d $POSTGRES_DB -U $POSTGRES_USER"` |  |
 | livenessProbe.failureThreshold | int | `3` |  |
 | livenessProbe.initialDelaySeconds | int | `30` |  |
 | livenessProbe.periodSeconds | int | `10` |  |
@@ -44,7 +47,10 @@ Use a community-supported or enterprise-grade PostgreSQL chart instead.
 | primary.resources.requests.memory | string | `"1Gi"` |  |
 | primary.service.name | string | `"postgresql"` | used for naming pvc |
 | primary.service.ports.postgresql | int | `5432` |  |
-| readinessProbe.exec.command[0] | string | `"pg_isready -d $POSTGRES_DB -U $POSTGRES_USER"` |  |
+| readinessProbe.exec.command[0] | string | `"/bin/sh"` |  |
+| readinessProbe.exec.command[1] | string | `"-c"` |  |
+| readinessProbe.exec.command[2] | string | `"-e"` |  |
+| readinessProbe.exec.command[3] | string | `"exec pg_isready -d $POSTGRES_DB -U $POSTGRES_USER"` |  |
 | readinessProbe.failureThreshold | int | `3` |  |
 | readinessProbe.initialDelaySeconds | int | `5` |  |
 | readinessProbe.periodSeconds | int | `10` |  |
