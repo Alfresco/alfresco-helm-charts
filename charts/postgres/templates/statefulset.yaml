@@ -16,10 +16,13 @@ spec:
       labels:
         {{- include "postgres.labels" $ | nindent 8 }}
     spec:
+    {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       containers:
         - name: postgres
           image: "{{ .image.repository }}:{{ .image.tag }}"
           imagePullPolicy: {{ .image.pullPolicy }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           {{- $extConf := .primary.extendedConfiguration }}
           {{- if $extConf }}
           args:
@@ -48,6 +51,8 @@ spec:
               containerPort: {{ .primary.service.ports.postgresql | default 5432 }}
           livenessProbe:
             {{- toYaml .livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .primary.resources | nindent 12 }}
           volumeMounts:
