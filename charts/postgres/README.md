@@ -2,10 +2,10 @@
 
 ![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 16.6](https://img.shields.io/badge/AppVersion-16.6-informational?style=flat-square)
 
-WARNING: This chart is for Alfresco's internal CI purposes ONLY.
-DO NOT use this chart in any development, staging, or production environment.
-It is not supported, not secure, and may be removed without notice.
-Use a community-supported or enterprise-grade PostgreSQL chart instead.
+WARNING: This chart is meant to ease initial deployment for TESTING purposes.
+DO NOT use this chart in any staging, or production environment. It has very limited options.
+It is not meant to be configurable and we do not aim at making it particularly secure or add features to it. Its SOLE goal is to allow for quickly spinning up an Alfresco platform on kubernetes, any issue that does not affect this is likely to not be fixed.
+For any other purpose, make sure to deploy your own enterprise grade PostgreSQL instance and configure Alfresco charts to point to it.
 
 ## Requirements
 

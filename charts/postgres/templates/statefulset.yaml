@@ -29,10 +29,9 @@ spec:
         - name: postgres
           image: "{{ .image.repository }}:{{ .image.tag }}"
           imagePullPolicy: {{ .image.pullPolicy }}
-          {{- $extConf := .primary.extendedConfiguration }}
-          {{- if $extConf }}
+          {{- with .primary.extendedConfiguration }}
           args:
-            {{- range $line := splitList "\n" $extConf }}
+            {{- range $line := splitList "\n" . }}
             {{- if $line }}
             - "-c"
             - {{ $line | trim | quote }}
