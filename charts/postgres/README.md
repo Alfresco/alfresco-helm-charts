@@ -2,7 +2,10 @@
 
 ![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 16.6](https://img.shields.io/badge/AppVersion-16.6-informational?style=flat-square)
 
-A Helm chart for deploying PostgreSQL (this chart is used only for Alfresco CI purposes, please do not use it)
+WARNING: This chart is for Alfresco's internal CI purposes ONLY.
+DO NOT use this chart in any development, staging, or production environment.
+It is not supported, not secure, and may be removed without notice.
+Use a community-supported or enterprise-grade PostgreSQL chart instead.
 
 ## Requirements
 
