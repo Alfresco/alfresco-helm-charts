@@ -1,0 +1,69 @@
+nameOverride: &nameOverride postgresql
+image:
+  repository: postgres
+  tag: 16.6
+  pullPolicy: IfNotPresent
+auth:
+  existingSecret: null
+  username: alfresco
+  password: alfresco
+  database: alfresco
+livenessProbe:
+  exec:
+    command:
+      - /bin/sh
+      - '-c'
+      - '-e'
+      - exec pg_isready -d $POSTGRES_DB -U $POSTGRES_USER
+  failureThreshold: 3
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds:
+readinessProbe:
+  exec:
+    command:
+      - /bin/sh
+      - '-c'
+      - '-e'
+      - exec pg_isready -d $POSTGRES_DB -U $POSTGRES_USER
+  failureThreshold: 3
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 3
+primary:
+  extendedConfiguration: |
+    max_connections=250
+    shared_buffers=512MB
+    effective_cache_size=2GB
+    wal_level=minimal
+    max_wal_senders=0
+    max_replication_slots=0
+    log_min_messages=LOG
+  service:
+    # -- used for naming pvc
+    name: *nameOverride
+    ports:
+      postgresql: 5432
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "1Gi"
+    limits:
+      cpu: "8"
+      memory: "8Gi"
+  persistence:
+    enabled: false
+    # -- set the storageClass to use for dynamic provisioning.
+    # setting it to null means "default storageClass".
+    storageClass: null
+    baseSize: 8Gi
+    # -- provide an existing persistent volume claim name to persist SQL data
+    # Make sure the root folder has the appropriate permissions/ownership set.
+    existingClaim: null
+    # -- defines type of access required by the persistent volume
+    # [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)
+    accessModes:
+      - ReadWriteOnce
+    data:
+      subPath: "alfresco-content-services/database-data"
+      mountPath: "/var/lib/postgresql/data"

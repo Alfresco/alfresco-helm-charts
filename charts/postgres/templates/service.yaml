@@ -1,0 +1,17 @@
+{{- with .Values }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "postgres.fullname" $ }}
+  labels:
+    {{- include "postgres.labels" $ | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .primary.service.ports.postgresql | default 5432 }}
+      targetPort: tcp-postgresql
+      protocol: TCP
+      name: tcp-postgresql
+  selector:
+    {{- include "postgres.selectorLabels" $ | nindent 4 }}
+{{ end }}

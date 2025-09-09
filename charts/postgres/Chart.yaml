@@ -1,0 +1,18 @@
+apiVersion: v2
+name: postgres
+description: |
+  WARNING: This chart is meant to ease initial deployment for TESTING purposes.
+  DO NOT use this chart in any staging, or production environment. It has very
+  limited options. It is not meant to be configurable and we do not aim at
+  making it particularly secure or add features to it. Its SOLE goal is to allow
+  for quickly spinning up an Alfresco platform on kubernetes, any issue that
+  does not affect this is likely to not be fixed. For any other purpose, make
+  sure to deploy your own enterprise grade PostgreSQL instance and configure
+  Alfresco charts to point to it.
+type: application
+version: 0.1.0
+appVersion: "16.6"
+dependencies:
+  - name: alfresco-common
+    version: 4.0.0
+    repository: https://alfresco.github.io/alfresco-helm-charts/

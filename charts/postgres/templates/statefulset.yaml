@@ -1,0 +1,69 @@
+{{- with .Values }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ template "postgres.fullname" $ }}
+  labels:
+    {{- include "postgres.labels" $ | nindent 4 }}
+  annotations:
+    checkov.io/skip1: CKV_K8S_20=unsupported
+    checkov.io/skip2: CKV_K8S_23=unsupported
+    checkov.io/skip3: CKV_K8S_28=unsupported
+    checkov.io/skip4: CKV_K8S_29=unsupported
+    checkov.io/skip5: CKV_K8S_30=unsupported
+    checkov.io/skip6: CKV_K8S_37=unsupported
+    checkov.io/skip7: CKV_K8S_40=unsupported
+spec:
+  replicas: 1
+  serviceName: {{ template "postgres.fullname" $ }}
+  selector:
+    matchLabels:
+      {{- include "postgres.selectorLabels" $ | nindent 8 }}
+  template:
+    metadata:
+      labels:
+        {{- include "postgres.labels" $ | nindent 8 }}
+    spec:
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      containers:
+        - name: postgres
+          image: "{{ .image.repository }}:{{ .image.tag }}"
+          imagePullPolicy: {{ .image.pullPolicy }}
+          {{- with .primary.extendedConfiguration }}
+          args:
+            {{- range $line := splitList "\n" . }}
+            {{- if $line }}
+            - "-c"
+            - {{ $line | trim | quote }}
+            {{- end }}
+            {{- end }}
+          {{- end }}
+          {{- if .auth.existingSecret }}
+          envFrom:
+            - secretRef:
+                name: {{ .auth.existingSecret }}
+          {{- else }}
+          env:
+            - name: POSTGRES_DB
+              value: {{ .auth.database | default "alfresco" }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .auth.password | default "alfresco" }}
+            - name: POSTGRES_USER
+              value: {{ .auth.username | default "alfresco" }}
+          {{- end }}
+          ports:
+            - name: tcp-postgresql
+              containerPort: {{ .primary.service.ports.postgresql | default 5432 }}
+          livenessProbe:
+            {{- toYaml .livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .primary.resources | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: {{ .primary.persistence.data.mountPath }}
+              subPath: {{ .primary.persistence.data.subPath }}
+      volumes:
+        {{- include "alfresco-common.data_volume" .primary | nindent 8 }}
+{{- end }}
