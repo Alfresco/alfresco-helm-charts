@@ -52,7 +52,7 @@ spec:
     - metadata:
         name: data
       spec:
-        accessModes: [ "ReadWriteOnce" ]
+        accessModes: ["ReadWriteOnce"]
         {{- if .Values.elasticsearch.persistence.storageClassName }}
         storageClassName: {{ .Values.elasticsearch.persistence.storageClassName }}
         {{- end }}

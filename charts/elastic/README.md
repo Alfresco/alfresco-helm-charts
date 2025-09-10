@@ -37,7 +37,7 @@ Use a community-supported or enterprise-grade chart instead.
 | fullnameOverride | string | `""` |  |
 | kibana.image.pullPolicy | string | `"IfNotPresent"` |  |
 | kibana.image.repository | string | `"kibana"` |  |
-| kibana.image.tag | string | `"7.17.26"` |  |
+| kibana.image.tag | string | `"8.17.0"` |  |
 | kibana.ingress.annotations | object | `{}` |  |
 | kibana.ingress.className | string | `""` |  |
 | kibana.ingress.enabled | bool | `false` |  |

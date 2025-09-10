@@ -1,0 +1,49 @@
+---
+suite: test elasticsearch statefulset
+templates:
+  - elasticsearch-statefulset.yaml
+tests:
+  - it: should render elasticsearch image with correct version
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: "elasticsearch:8.17.3"
+
+  - it: should render cpu and memory limits
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "500m"
+              memory: "2Gi"
+            limits:
+              cpu: 1
+              memory: "2Gi"
+
+  - it: should set elasticsearch environment variables
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: discovery.type
+            value: "single-node"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ES_JAVA_OPTS
+            value: "-Xms512m -Xmx512m"
+
+  - it: should render with ci values
+    values:
+      - ../ci/default-values.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "100m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"

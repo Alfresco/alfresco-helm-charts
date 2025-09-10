@@ -43,7 +43,7 @@ elasticsearch:
 kibana:
   image:
     repository: kibana
-    tag: 7.17.26
+    tag: 8.17.0
     pullPolicy: IfNotPresent
 
   resources:
