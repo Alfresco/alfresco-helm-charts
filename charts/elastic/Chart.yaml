@@ -1,0 +1,10 @@
+apiVersion: v2
+name: elastic
+description: |
+  WARNING: This chart is for Alfresco's internal CI purposes ONLY.
+  DO NOT use this chart in any development, staging, or production environment.
+  It is not supported, not secure, and may be removed without notice.
+  Use a community-supported or enterprise-grade chart instead.
+type: application
+version: 0.1.0
+appVersion: "7.17.0"

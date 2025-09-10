@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "elastic.fullname" . }}-kb
+  labels:
+    {{- include "elastic.labels" . | nindent 4 }}
+    app.kubernetes.io/component: kibana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "elastic.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: kibana
+  template:
+    metadata:
+      labels:
+        {{- include "elastic.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: kibana
+    spec:
+      containers:
+        - name: kibana
+          image: "{{ .Values.kibana.image.repository }}:{{ .Values.kibana.image.tag }}"
+          imagePullPolicy: {{ .Values.kibana.image.pullPolicy }}
+          env:
+            - name: ELASTICSEARCH_HOSTS
+              value: "http://{{ include "elastic.fullname" . }}-es:9200"
+          {{- if .Values.elasticsearch.credentials.enabled }}
+            - name: ELASTICSEARCH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "elastic.es-secret-name" . }}
+                  key: {{ .Values.elasticsearch.credentials.existingSecret.usernameKey | default "username" }}
+            - name: ELASTICSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "elastic.es-secret-name" . }}
+                  key: {{ .Values.elasticsearch.credentials.existingSecret.passwordKey | default "password" }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: 5601
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.kibana.resources | nindent 12 }}

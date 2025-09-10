@@ -1,0 +1,66 @@
+nameOverride: ""
+fullnameOverride: ""
+
+elasticsearch:
+  image:
+    repository: elasticsearch
+    tag: 8.17.3
+    pullPolicy: IfNotPresent
+
+  credentials:
+    enabled: false
+    username: elastic
+    password: "" # Auto-generated if not set
+    existingSecret:
+      name: ""
+      usernameKey: "username"
+      passwordKey: "password"
+
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
+
+  persistence:
+    enabled: true
+    size: 5Gi
+    storageClassName: ""
+
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+    hosts:
+      - host: elasticsearch.local
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls: []
+
+kibana:
+  image:
+    repository: kibana
+    tag: 7.17.26
+    pullPolicy: IfNotPresent
+
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 1Gi
+
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+    hosts:
+      - host: kibana.local
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls: []
