@@ -68,7 +68,7 @@ kibana:
   serverBasePath: "/kibana"
   image:
     repository: kibana
-    tag: 8.17.0
+    tag: 8.17.3
     pullPolicy: IfNotPresent
   resources:
     requests:
@@ -79,7 +79,7 @@ kibana:
       memory: 1Gi
   ingress:
     enabled: false
-    className: nginx
+    className: "nginx"
     annotations: {}
     hosts:
       - paths:
