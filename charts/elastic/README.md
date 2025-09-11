@@ -36,8 +36,9 @@ Alfresco charts to point to it.
 | elasticsearch.ingress.hosts[0].paths[0].path | string | `"/elasticsearch"` |  |
 | elasticsearch.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | elasticsearch.ingress.tls | list | `[]` |  |
-| elasticsearch.livenessProbe.httpGet.path | string | `"/_cluster/health?local=true"` |  |
-| elasticsearch.livenessProbe.httpGet.port | int | `9200` |  |
+| elasticsearch.livenessProbe.exec.command[0] | string | `"sh"` |  |
+| elasticsearch.livenessProbe.exec.command[1] | string | `"-c"` |  |
+| elasticsearch.livenessProbe.exec.command[2] | string | `"curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"` |  |
 | elasticsearch.livenessProbe.initialDelaySeconds | int | `30` |  |
 | elasticsearch.livenessProbe.periodSeconds | int | `20` |  |
 | elasticsearch.livenessProbe.timeoutSeconds | int | `5` |  |
@@ -48,8 +49,9 @@ Alfresco charts to point to it.
 | elasticsearch.persistence.enabled | bool | `false` |  |
 | elasticsearch.persistence.existingClaim | string | `nil` |  |
 | elasticsearch.persistence.storageClass | string | `nil` |  |
-| elasticsearch.readinessProbe.httpGet.path | string | `"/_cluster/health"` |  |
-| elasticsearch.readinessProbe.httpGet.port | int | `9200` |  |
+| elasticsearch.readinessProbe.exec.command[0] | string | `"sh"` |  |
+| elasticsearch.readinessProbe.exec.command[1] | string | `"-c"` |  |
+| elasticsearch.readinessProbe.exec.command[2] | string | `"curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"` |  |
 | elasticsearch.readinessProbe.initialDelaySeconds | int | `30` |  |
 | elasticsearch.readinessProbe.periodSeconds | int | `20` |  |
 | elasticsearch.readinessProbe.timeoutSeconds | int | `5` |  |

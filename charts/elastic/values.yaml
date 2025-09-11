@@ -46,16 +46,20 @@ elasticsearch:
             pathType: ImplementationSpecific
     tls: []
   livenessProbe:
-    httpGet:
-      path: /_cluster/health?local=true
-      port: 9200
+    exec:
+      command:
+        - sh
+        - -c
+        - "curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"
     initialDelaySeconds: 30
     periodSeconds: 20
     timeoutSeconds: 5
   readinessProbe:
-    httpGet:
-      path: /_cluster/health
-      port: 9200
+    exec:
+      command:
+        - sh
+        - -c
+        - "curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"
     initialDelaySeconds: 30
     periodSeconds: 20
     timeoutSeconds: 5
