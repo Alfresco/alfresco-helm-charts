@@ -28,14 +28,28 @@ elasticsearch:
     size: 5Gi
     storageClassName: ""
   ingress:
-    enabled: true
-    className: nginx
+    enabled: false
+    className: ""
     annotations: {}
     hosts:
       - paths:
           - path: /elasticsearch
             pathType: ImplementationSpecific
     tls: []
+  livenessProbe:
+    httpGet:
+      path: /_cluster/health?local=true
+      port: 9200
+    initialDelaySeconds: 30
+    periodSeconds: 20
+    timeoutSeconds: 5
+  readinessProbe:
+    httpGet:
+      path: /_cluster/health
+      port: 9200
+    initialDelaySeconds: 30
+    periodSeconds: 20
+    timeoutSeconds: 5
 kibana:
   serverBasePath: "/kibana"
   image:
@@ -58,3 +72,11 @@ kibana:
           - path: /kibana
             pathType: ImplementationSpecific
     tls: []
+  livenessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5

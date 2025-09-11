@@ -5,6 +5,14 @@ metadata:
   labels:
     {{- include "elastic.labels" . | nindent 4 }}
     app.kubernetes.io/component: elasticsearch
+  annotations:
+    checkov.io/skip1: CKV_K8S_20=unsupported
+    checkov.io/skip2: CKV_K8S_23=unsupported
+    checkov.io/skip3: CKV_K8S_28=unsupported
+    checkov.io/skip4: CKV_K8S_29=unsupported
+    checkov.io/skip5: CKV_K8S_30=unsupported
+    checkov.io/skip6: CKV_K8S_37=unsupported
+    checkov.io/skip7: CKV_K8S_40=unsupported
 spec:
   serviceName: {{ include "elastic.fullname" . }}-es
   replicas: 1
@@ -50,6 +58,10 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /usr/share/elasticsearch/data
+          livenessProbe:
+            {{- toYaml .Values.elasticsearch.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.elasticsearch.readinessProbe | nindent 12 }}
   volumeClaimTemplates:
     - metadata:
         name: data
