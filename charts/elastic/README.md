@@ -65,7 +65,7 @@ Alfresco charts to point to it.
 | kibana.enabled | bool | `false` |  |
 | kibana.image.pullPolicy | string | `"IfNotPresent"` |  |
 | kibana.image.repository | string | `"kibana"` |  |
-| kibana.image.tag | string | `"8.17.0"` |  |
+| kibana.image.tag | string | `"8.17.3"` |  |
 | kibana.ingress.annotations | object | `{}` |  |
 | kibana.ingress.className | string | `"nginx"` |  |
 | kibana.ingress.enabled | bool | `false` |  |
