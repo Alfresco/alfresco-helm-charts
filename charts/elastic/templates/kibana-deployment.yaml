@@ -32,7 +32,7 @@ spec:
           imagePullPolicy: {{ .Values.kibana.image.pullPolicy }}
           env:
             - name: ELASTICSEARCH_HOSTS
-              value: "http://{{ include "elastic.fullname" . }}-es:9200"
+              value: "http://{{ include "elastic.es-servicename" . }}:9200"
           {{- if .Values.elasticsearch.credentials.enabled }}
             - name: ELASTICSEARCH_USERNAME
               valueFrom:

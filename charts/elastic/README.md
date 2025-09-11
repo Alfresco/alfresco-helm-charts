@@ -32,7 +32,7 @@ Alfresco charts to point to it.
 | elasticsearch.image.tag | string | `"8.17.3"` |  |
 | elasticsearch.ingress.annotations | object | `{}` |  |
 | elasticsearch.ingress.className | string | `"nginx"` |  |
-| elasticsearch.ingress.enabled | bool | `false` |  |
+| elasticsearch.ingress.enabled | bool | `true` |  |
 | elasticsearch.ingress.hosts[0].paths[0].path | string | `"/elasticsearch"` |  |
 | elasticsearch.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | elasticsearch.ingress.tls | list | `[]` |  |
@@ -65,7 +65,7 @@ Alfresco charts to point to it.
 | kibana.image.tag | string | `"8.17.0"` |  |
 | kibana.ingress.annotations | object | `{}` |  |
 | kibana.ingress.className | string | `"nginx"` |  |
-| kibana.ingress.enabled | bool | `false` |  |
+| kibana.ingress.enabled | bool | `true` |  |
 | kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
 | kibana.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | kibana.ingress.tls | list | `[]` |  |

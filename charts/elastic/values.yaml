@@ -37,7 +37,7 @@ elasticsearch:
     # -- used for naming pvc
     name: elasticsearch
   ingress:
-    enabled: false
+    enabled: true
     className: "nginx"
     annotations: {}
     hosts:
@@ -73,7 +73,7 @@ kibana:
       cpu: 1
       memory: 1Gi
   ingress:
-    enabled: false
+    enabled: true
     className: nginx
     annotations: {}
     hosts:

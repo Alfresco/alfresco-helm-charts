@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "elastic.fullname" . }}-kb
+  name: {{ include "elastic.kibana-servicename" . }}
   labels:
     {{- include "elastic.labels" . | nindent 4 }}
     app.kubernetes.io/component: kibana

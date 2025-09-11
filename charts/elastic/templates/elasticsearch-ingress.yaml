@@ -34,7 +34,7 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ include "elastic.fullname" $ }}-es
+                name: {{ include "elastic.es-servicename" $ }}
                 port:
                   number: 9200
           {{- end }}

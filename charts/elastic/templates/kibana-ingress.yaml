@@ -34,7 +34,7 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ include "elastic.fullname" $ }}-kb
+                name: {{ include "elastic.kibana-servicename" $ }}
                 port:
                   number: 5601
           {{- end }}

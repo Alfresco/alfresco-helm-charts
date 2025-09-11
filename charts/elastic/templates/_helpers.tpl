@@ -57,3 +57,11 @@ Get the name of the secret containing Elasticsearch credentials.
 {{- printf "%s-es-credentials" (include "elastic.fullname" .) }}
 {{- end }}
 {{- end -}}
+
+{{- define "elastic.es-servicename" -}}
+{{ include "elastic.fullname" . }}
+{{- end -}}
+
+{{- define "elastic.kibana-servicename" -}}
+{{ include "elastic.fullname" . }}-kibana
+{{- end -}}
