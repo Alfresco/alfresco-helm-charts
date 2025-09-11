@@ -36,7 +36,7 @@ spec:
             - name: discovery.type
               value: "single-node"
             - name: ES_JAVA_OPTS
-              value: "-Xms512m -Xmx512m"
+              value: "-Xms256m -Xmx512m"
           {{- if .Values.elasticsearch.credentials.enabled }}
             - name: ELASTIC_USERNAME
               valueFrom:
@@ -55,21 +55,13 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.elasticsearch.resources | nindent 12 }}
-          volumeMounts:
-            - name: data
-              mountPath: /usr/share/elasticsearch/data
           livenessProbe:
             {{- toYaml .Values.elasticsearch.livenessProbe | nindent 12 }}
           readinessProbe:
             {{- toYaml .Values.elasticsearch.readinessProbe | nindent 12 }}
-  volumeClaimTemplates:
-    - metadata:
-        name: data
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        {{- if .Values.elasticsearch.persistence.storageClassName }}
-        storageClassName: {{ .Values.elasticsearch.persistence.storageClassName }}
-        {{- end }}
-        resources:
-          requests:
-            storage: {{ .Values.elasticsearch.persistence.size }}
+          volumeMounts:
+            - name: data
+              mountPath: {{ .Values.elasticsearch.persistence.data.mountPath }}
+              subPath: {{ .Values.elasticsearch.persistence.data.subPath }}
+      volumes:
+        {{- include "alfresco-common.data_volume" .Values.elasticsearch | nindent 8 }}

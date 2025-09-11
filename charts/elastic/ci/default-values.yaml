@@ -6,8 +6,6 @@ elasticsearch:
     limits:
       cpu: "500m"
       memory: "1Gi"
-  persistence:
-    size: "1Gi"
 kibana:
   resources:
     requests:

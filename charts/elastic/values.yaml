@@ -24,12 +24,21 @@ elasticsearch:
       cpu: 1
       memory: 2Gi
   persistence:
-    enabled: true
-    size: 5Gi
-    storageClassName: ""
+    enabled: false
+    storageClass: null
+    baseSize: 8Gi
+    existingClaim: null
+    accessModes:
+      - ReadWriteOnce
+    data:
+      subPath: "alfresco-content-services/elasticsearch-data"
+      mountPath: "/usr/share/elasticsearch/data"
+  service:
+    # -- used for naming pvc
+    name: elasticsearch
   ingress:
     enabled: false
-    className: ""
+    className: "nginx"
     annotations: {}
     hosts:
       - paths:
@@ -64,7 +73,7 @@ kibana:
       cpu: 1
       memory: 1Gi
   ingress:
-    enabled: true
+    enabled: false
     className: nginx
     annotations: {}
     hosts:

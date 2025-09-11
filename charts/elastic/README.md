@@ -31,7 +31,7 @@ Alfresco charts to point to it.
 | elasticsearch.image.repository | string | `"elasticsearch"` |  |
 | elasticsearch.image.tag | string | `"8.17.3"` |  |
 | elasticsearch.ingress.annotations | object | `{}` |  |
-| elasticsearch.ingress.className | string | `""` |  |
+| elasticsearch.ingress.className | string | `"nginx"` |  |
 | elasticsearch.ingress.enabled | bool | `false` |  |
 | elasticsearch.ingress.hosts[0].paths[0].path | string | `"/elasticsearch"` |  |
 | elasticsearch.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
@@ -41,9 +41,13 @@ Alfresco charts to point to it.
 | elasticsearch.livenessProbe.initialDelaySeconds | int | `30` |  |
 | elasticsearch.livenessProbe.periodSeconds | int | `20` |  |
 | elasticsearch.livenessProbe.timeoutSeconds | int | `5` |  |
-| elasticsearch.persistence.enabled | bool | `true` |  |
-| elasticsearch.persistence.size | string | `"5Gi"` |  |
-| elasticsearch.persistence.storageClassName | string | `""` |  |
+| elasticsearch.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
+| elasticsearch.persistence.baseSize | string | `"8Gi"` |  |
+| elasticsearch.persistence.data.mountPath | string | `"/usr/share/elasticsearch/data"` |  |
+| elasticsearch.persistence.data.subPath | string | `"alfresco-content-services/elasticsearch-data"` |  |
+| elasticsearch.persistence.enabled | bool | `false` |  |
+| elasticsearch.persistence.existingClaim | string | `nil` |  |
+| elasticsearch.persistence.storageClass | string | `nil` |  |
 | elasticsearch.readinessProbe.httpGet.path | string | `"/_cluster/health"` |  |
 | elasticsearch.readinessProbe.httpGet.port | int | `9200` |  |
 | elasticsearch.readinessProbe.initialDelaySeconds | int | `30` |  |
@@ -53,6 +57,7 @@ Alfresco charts to point to it.
 | elasticsearch.resources.limits.memory | string | `"2Gi"` |  |
 | elasticsearch.resources.requests.cpu | string | `"500m"` |  |
 | elasticsearch.resources.requests.memory | string | `"2Gi"` |  |
+| elasticsearch.service.name | string | `"elasticsearch"` | used for naming pvc |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | kibana.image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -60,7 +65,7 @@ Alfresco charts to point to it.
 | kibana.image.tag | string | `"8.17.0"` |  |
 | kibana.ingress.annotations | object | `{}` |  |
 | kibana.ingress.className | string | `"nginx"` |  |
-| kibana.ingress.enabled | bool | `true` |  |
+| kibana.ingress.enabled | bool | `false` |  |
 | kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
 | kibana.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | kibana.ingress.tls | list | `[]` |  |
