@@ -18,11 +18,13 @@ spec:
         {{- include "elastic.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: elasticsearch
     spec:
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       containers:
         - name: elasticsearch
           image: "{{ .Values.elasticsearch.image.repository }}:{{ .Values.elasticsearch.image.tag }}"
-          imagePullPolicy: {{ .Values.elasticsearch.image.pullPolicy }}
           env:
+            - name: xpack.security.enabled
+              value: "false"
             - name: discovery.type
               value: "single-node"
             - name: ES_JAVA_OPTS

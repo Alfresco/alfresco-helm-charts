@@ -1,3 +1,5 @@
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
 nameOverride: ""
 fullnameOverride: ""
 
@@ -6,16 +8,14 @@ elasticsearch:
     repository: elasticsearch
     tag: 8.17.3
     pullPolicy: IfNotPresent
-
   credentials:
     enabled: false
     username: elastic
-    password: "" # Auto-generated if not set
+    password: ""
     existingSecret:
       name: ""
       usernameKey: "username"
       passwordKey: "password"
-
   resources:
     requests:
       cpu: 500m
@@ -23,29 +23,25 @@ elasticsearch:
     limits:
       cpu: 1
       memory: 2Gi
-
   persistence:
     enabled: true
     size: 5Gi
     storageClassName: ""
-
   ingress:
-    enabled: false
-    className: ""
+    enabled: true
+    className: nginx
     annotations: {}
     hosts:
-      - host: elasticsearch.local
-        paths:
-          - path: /
+      - paths:
+          - path: /elasticsearch
             pathType: ImplementationSpecific
     tls: []
-
 kibana:
+  serverBasePath: "/kibana"
   image:
     repository: kibana
     tag: 8.17.0
     pullPolicy: IfNotPresent
-
   resources:
     requests:
       cpu: 500m
@@ -53,14 +49,12 @@ kibana:
     limits:
       cpu: 1
       memory: 1Gi
-
   ingress:
-    enabled: false
-    className: ""
+    enabled: true
+    className: nginx
     annotations: {}
     hosts:
-      - host: kibana.local
-        paths:
-          - path: /
+      - paths:
+          - path: /kibana
             pathType: ImplementationSpecific
     tls: []

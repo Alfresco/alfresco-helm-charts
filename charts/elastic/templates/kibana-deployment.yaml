@@ -17,6 +17,7 @@ spec:
         {{- include "elastic.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: kibana
     spec:
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       containers:
         - name: kibana
           image: "{{ .Values.kibana.image.repository }}:{{ .Values.kibana.image.tag }}"
@@ -36,6 +37,10 @@ spec:
                   name: {{ include "elastic.es-secret-name" . }}
                   key: {{ .Values.elasticsearch.credentials.existingSecret.passwordKey | default "password" }}
           {{- end }}
+            - name: SERVER_BASEPATH
+              value: {{ .Values.kibana.serverBasePath }}
+            - name: SERVER_REWRITEBASEPATH
+              value: "true"
           ports:
             - name: http
               containerPort: 5601

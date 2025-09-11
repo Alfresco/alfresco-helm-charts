@@ -1,11 +1,21 @@
 # elastic
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 7.17.0](https://img.shields.io/badge/AppVersion-7.17.0-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.17.3](https://img.shields.io/badge/AppVersion-8.17.3-informational?style=flat-square)
 
-WARNING: This chart is for Alfresco's internal CI purposes ONLY.
-DO NOT use this chart in any development, staging, or production environment.
-It is not supported, not secure, and may be removed without notice.
-Use a community-supported or enterprise-grade chart instead.
+WARNING: This chart is meant to ease initial deployment for TESTING purposes.
+DO NOT use this chart in any staging, or production environment. It has very
+limited options. It is not meant to be configurable and we do not aim at
+making it particularly secure or add features to it. Its SOLE goal is to allow
+for quickly spinning up an Alfresco platform on kubernetes, any issue that
+does not affect this is likely to not be fixed. For any other purpose, make
+sure to deploy your own enterprise grade Elasticsearch instance and configure
+Alfresco charts to point to it.
+
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
 
 ## Values
 
@@ -21,10 +31,9 @@ Use a community-supported or enterprise-grade chart instead.
 | elasticsearch.image.repository | string | `"elasticsearch"` |  |
 | elasticsearch.image.tag | string | `"8.17.3"` |  |
 | elasticsearch.ingress.annotations | object | `{}` |  |
-| elasticsearch.ingress.className | string | `""` |  |
-| elasticsearch.ingress.enabled | bool | `false` |  |
-| elasticsearch.ingress.hosts[0].host | string | `"elasticsearch.local"` |  |
-| elasticsearch.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| elasticsearch.ingress.className | string | `"nginx"` |  |
+| elasticsearch.ingress.enabled | bool | `true` |  |
+| elasticsearch.ingress.hosts[0].paths[0].path | string | `"/elasticsearch"` |  |
 | elasticsearch.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | elasticsearch.ingress.tls | list | `[]` |  |
 | elasticsearch.persistence.enabled | bool | `true` |  |
@@ -35,20 +44,21 @@ Use a community-supported or enterprise-grade chart instead.
 | elasticsearch.resources.requests.cpu | string | `"500m"` |  |
 | elasticsearch.resources.requests.memory | string | `"2Gi"` |  |
 | fullnameOverride | string | `""` |  |
+| global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | kibana.image.pullPolicy | string | `"IfNotPresent"` |  |
 | kibana.image.repository | string | `"kibana"` |  |
 | kibana.image.tag | string | `"8.17.0"` |  |
 | kibana.ingress.annotations | object | `{}` |  |
-| kibana.ingress.className | string | `""` |  |
-| kibana.ingress.enabled | bool | `false` |  |
-| kibana.ingress.hosts[0].host | string | `"kibana.local"` |  |
-| kibana.ingress.hosts[0].paths[0].path | string | `"/"` |  |
+| kibana.ingress.className | string | `"nginx"` |  |
+| kibana.ingress.enabled | bool | `true` |  |
+| kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
 | kibana.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | kibana.ingress.tls | list | `[]` |  |
 | kibana.resources.limits.cpu | int | `1` |  |
 | kibana.resources.limits.memory | string | `"1Gi"` |  |
 | kibana.resources.requests.cpu | string | `"500m"` |  |
 | kibana.resources.requests.memory | string | `"1Gi"` |  |
+| kibana.serverBasePath | string | `"/kibana"` |  |
 | nameOverride | string | `""` |  |
 
 ----------------------------------------------
