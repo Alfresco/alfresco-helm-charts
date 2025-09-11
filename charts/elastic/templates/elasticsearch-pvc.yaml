@@ -1,0 +1,3 @@
+{{- if and (not .Values.elasticsearch.persistence.existingClaim) .Values.elasticsearch.persistence.enabled }}
+{{ include "component_pvc" .Values.elasticsearch }}
+{{- end }}
