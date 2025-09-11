@@ -1,16 +1,16 @@
 elasticsearch:
   resources:
     requests:
-      cpu: "100m"
+      cpu: "0.01"
       memory: "512Mi"
     limits:
-      cpu: "500m"
+      cpu: "1"
       memory: "1Gi"
 kibana:
   resources:
     requests:
-      cpu: "100m"
-      memory: "256Mi"
-    limits:
-      cpu: "500m"
+      cpu: "0.01"
       memory: "512Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
