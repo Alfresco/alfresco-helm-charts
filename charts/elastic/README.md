@@ -60,6 +60,7 @@ Alfresco charts to point to it.
 | elasticsearch.service.name | string | `"elasticsearch"` | used for naming pvc |
 | fullnameOverride | string | `""` |  |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
+| kibana.enabled | bool | `false` |  |
 | kibana.image.pullPolicy | string | `"IfNotPresent"` |  |
 | kibana.image.repository | string | `"kibana"` |  |
 | kibana.image.tag | string | `"8.17.0"` |  |

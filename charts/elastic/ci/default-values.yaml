@@ -7,6 +7,7 @@ elasticsearch:
       cpu: "1"
       memory: "1Gi"
 kibana:
+  enabled: true
   resources:
     requests:
       cpu: "0.01"

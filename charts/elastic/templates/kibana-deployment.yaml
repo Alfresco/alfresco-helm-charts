@@ -1,3 +1,4 @@
+{{- if .Values.kibana.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -65,3 +66,4 @@ spec:
               path: {{ .Values.kibana.serverBasePath }}/status
               port: 5601
             {{- toYaml .Values.kibana.readinessProbe | nindent 12 }}
+{{- end }}

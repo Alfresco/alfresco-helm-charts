@@ -60,6 +60,7 @@ elasticsearch:
     periodSeconds: 20
     timeoutSeconds: 5
 kibana:
+  enabled: false
   serverBasePath: "/kibana"
   image:
     repository: kibana
