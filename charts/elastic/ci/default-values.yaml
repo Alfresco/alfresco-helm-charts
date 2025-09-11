@@ -8,7 +8,6 @@ elasticsearch:
       memory: "1Gi"
   persistence:
     size: "1Gi"
-
 kibana:
   resources:
     requests:

@@ -64,10 +64,10 @@ Alfresco charts to point to it.
 | kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
 | kibana.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
 | kibana.ingress.tls | list | `[]` |  |
-| kibana.livenessProbe.initialDelaySeconds | int | `30` |  |
+| kibana.livenessProbe.initialDelaySeconds | int | `60` |  |
 | kibana.livenessProbe.periodSeconds | int | `10` |  |
 | kibana.livenessProbe.timeoutSeconds | int | `5` |  |
-| kibana.readinessProbe.initialDelaySeconds | int | `30` |  |
+| kibana.readinessProbe.initialDelaySeconds | int | `60` |  |
 | kibana.readinessProbe.periodSeconds | int | `10` |  |
 | kibana.readinessProbe.timeoutSeconds | int | `5` |  |
 | kibana.resources.limits.cpu | int | `1` |  |
