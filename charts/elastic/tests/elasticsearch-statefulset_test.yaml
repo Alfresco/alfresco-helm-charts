@@ -32,7 +32,7 @@ tests:
           path: spec.template.spec.containers[0].env
           content:
             name: ES_JAVA_OPTS
-            value: "-Xms512m -Xmx512m"
+            value: "-Xms256m -Xmx512m"
 
   - it: should render with ci values
     values:
