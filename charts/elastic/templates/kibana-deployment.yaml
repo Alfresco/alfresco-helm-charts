@@ -1,0 +1,69 @@
+{{- if .Values.kibana.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "elastic.fullname" . }}-kb
+  labels:
+    {{- include "elastic.labels" . | nindent 4 }}
+    app.kubernetes.io/component: kibana
+  annotations:
+    checkov.io/skip1: CKV_K8S_20=unsupported
+    checkov.io/skip2: CKV_K8S_23=unsupported
+    checkov.io/skip3: CKV_K8S_28=unsupported
+    checkov.io/skip4: CKV_K8S_29=unsupported
+    checkov.io/skip5: CKV_K8S_30=unsupported
+    checkov.io/skip6: CKV_K8S_37=unsupported
+    checkov.io/skip7: CKV_K8S_40=unsupported
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "elastic.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: kibana
+  template:
+    metadata:
+      labels:
+        {{- include "elastic.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: kibana
+    spec:
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      containers:
+        - name: kibana
+          image: "{{ .Values.kibana.image.repository }}:{{ .Values.kibana.image.tag }}"
+          imagePullPolicy: {{ .Values.kibana.image.pullPolicy }}
+          env:
+            - name: ELASTICSEARCH_HOSTS
+              value: "http://{{ include "elastic.es-servicename" . }}:9200"
+          {{- if .Values.elasticsearch.credentials.enabled }}
+            - name: ELASTICSEARCH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "elastic.es-secret-name" . }}
+                  key: {{ .Values.elasticsearch.credentials.existingSecret.usernameKey | default "username" }}
+            - name: ELASTICSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "elastic.es-secret-name" . }}
+                  key: {{ .Values.elasticsearch.credentials.existingSecret.passwordKey | default "password" }}
+          {{- end }}
+            - name: SERVER_BASEPATH
+              value: {{ .Values.kibana.serverBasePath }}
+            - name: SERVER_REWRITEBASEPATH
+              value: "true"
+          ports:
+            - name: http
+              containerPort: 5601
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.kibana.resources | nindent 12 }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.kibana.serverBasePath }}/status
+              port: 5601
+            {{- toYaml .Values.kibana.livenessProbe | nindent 12 }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.kibana.serverBasePath }}/status
+              port: 5601
+            {{- toYaml .Values.kibana.readinessProbe | nindent 12 }}
+{{- end }}

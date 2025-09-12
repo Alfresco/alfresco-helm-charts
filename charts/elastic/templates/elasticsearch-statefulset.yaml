@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "elastic.fullname" . }}-es
+  labels:
+    {{- include "elastic.labels" . | nindent 4 }}
+    app.kubernetes.io/component: elasticsearch
+  annotations:
+    checkov.io/skip1: CKV_K8S_20=unsupported
+    checkov.io/skip2: CKV_K8S_23=unsupported
+    checkov.io/skip3: CKV_K8S_28=unsupported
+    checkov.io/skip4: CKV_K8S_29=unsupported
+    checkov.io/skip5: CKV_K8S_30=unsupported
+    checkov.io/skip6: CKV_K8S_37=unsupported
+    checkov.io/skip7: CKV_K8S_40=unsupported
+spec:
+  serviceName: {{ include "elastic.fullname" . }}-es
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "elastic.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: elasticsearch
+  template:
+    metadata:
+      labels:
+        {{- include "elastic.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: elasticsearch
+    spec:
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      containers:
+        - name: elasticsearch
+          image: "{{ .Values.elasticsearch.image.repository }}:{{ .Values.elasticsearch.image.tag }}"
+          env:
+            - name: xpack.security.enabled
+              value: "false"
+            - name: discovery.type
+              value: "single-node"
+            - name: ES_JAVA_OPTS
+              value: "-Xms256m -Xmx512m"
+          {{- if .Values.elasticsearch.credentials.enabled }}
+            - name: ELASTIC_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "elastic.es-secret-name" . }}
+                  key: {{ .Values.elasticsearch.credentials.existingSecret.usernameKey | default "username" }}
+            - name: ELASTIC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "elastic.es-secret-name" . }}
+                  key: {{ .Values.elasticsearch.credentials.existingSecret.passwordKey | default "password" }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: 9200
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.elasticsearch.resources | nindent 12 }}
+          livenessProbe:
+            {{- toYaml .Values.elasticsearch.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.elasticsearch.readinessProbe | nindent 12 }}
+          volumeMounts:
+            - name: data
+              mountPath: {{ .Values.elasticsearch.persistence.data.mountPath }}
+              subPath: {{ .Values.elasticsearch.persistence.data.subPath }}
+      volumes:
+        {{- include "alfresco-common.data_volume" .Values.elasticsearch | nindent 8 }}

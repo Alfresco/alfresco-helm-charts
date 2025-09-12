@@ -1,0 +1,96 @@
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
+nameOverride: ""
+fullnameOverride: ""
+
+elasticsearch:
+  image:
+    repository: elasticsearch
+    tag: 8.17.3
+    pullPolicy: IfNotPresent
+  credentials:
+    enabled: false
+    username: elastic
+    password: ""
+    existingSecret:
+      name: ""
+      usernameKey: "username"
+      passwordKey: "password"
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+    limits:
+      cpu: 1
+      memory: 2Gi
+  persistence:
+    enabled: false
+    storageClass: null
+    baseSize: 8Gi
+    existingClaim: null
+    accessModes:
+      - ReadWriteOnce
+    data:
+      subPath: "alfresco-content-services/elasticsearch-data"
+      mountPath: "/usr/share/elasticsearch/data"
+  service:
+    # -- used for naming pvc
+    name: elasticsearch
+  ingress:
+    enabled: false
+    className: "nginx"
+    annotations: {}
+    hosts:
+      - paths:
+          - path: /elasticsearch
+            pathType: ImplementationSpecific
+    tls: []
+  livenessProbe:
+    exec:
+      command:
+        - sh
+        - -c
+        - "curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"
+    initialDelaySeconds: 30
+    periodSeconds: 20
+    timeoutSeconds: 5
+  readinessProbe:
+    exec:
+      command:
+        - sh
+        - -c
+        - "curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"
+    initialDelaySeconds: 30
+    periodSeconds: 20
+    timeoutSeconds: 5
+kibana:
+  enabled: false
+  serverBasePath: "/kibana"
+  image:
+    repository: kibana
+    tag: 8.17.3
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 1Gi
+  ingress:
+    enabled: false
+    className: "nginx"
+    annotations: {}
+    hosts:
+      - paths:
+          - path: /kibana
+            pathType: ImplementationSpecific
+    tls: []
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+  readinessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
