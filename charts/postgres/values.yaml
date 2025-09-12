@@ -18,7 +18,7 @@ livenessProbe:
   failureThreshold: 3
   initialDelaySeconds: 30
   periodSeconds: 10
-  timeoutSeconds:
+  timeoutSeconds: 3
 readinessProbe:
   exec:
     command:
