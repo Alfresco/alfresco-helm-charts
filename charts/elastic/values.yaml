@@ -23,6 +23,8 @@ elasticsearch:
     limits:
       cpu: 1
       memory: 2Gi
+  podSecurityContext:
+    fsGroup: 1000
   persistence:
     enabled: false
     storageClass: null
@@ -31,7 +33,6 @@ elasticsearch:
     accessModes:
       - ReadWriteOnce
     data:
-      subPath: "alfresco-content-services/elasticsearch-data"
       mountPath: "/usr/share/elasticsearch/data"
   service:
     # -- used for naming pvc

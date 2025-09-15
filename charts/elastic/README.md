@@ -45,10 +45,10 @@ Alfresco charts to point to it.
 | elasticsearch.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | elasticsearch.persistence.baseSize | string | `"8Gi"` |  |
 | elasticsearch.persistence.data.mountPath | string | `"/usr/share/elasticsearch/data"` |  |
-| elasticsearch.persistence.data.subPath | string | `"alfresco-content-services/elasticsearch-data"` |  |
 | elasticsearch.persistence.enabled | bool | `false` |  |
 | elasticsearch.persistence.existingClaim | string | `nil` |  |
 | elasticsearch.persistence.storageClass | string | `nil` |  |
+| elasticsearch.podSecurityContext.fsGroup | int | `1000` |  |
 | elasticsearch.readinessProbe.exec.command[0] | string | `"sh"` |  |
 | elasticsearch.readinessProbe.exec.command[1] | string | `"-c"` |  |
 | elasticsearch.readinessProbe.exec.command[2] | string | `"curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"` |  |
