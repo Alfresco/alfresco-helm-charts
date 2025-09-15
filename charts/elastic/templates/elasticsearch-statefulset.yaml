@@ -27,6 +27,7 @@ spec:
         app.kubernetes.io/component: elasticsearch
     spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-common.component-pod-security-context" .Values.elasticsearch | indent 4 }}
       containers:
         - name: elasticsearch
           image: "{{ .Values.elasticsearch.image.repository }}:{{ .Values.elasticsearch.image.tag }}"
@@ -62,6 +63,5 @@ spec:
           volumeMounts:
             - name: data
               mountPath: {{ .Values.elasticsearch.persistence.data.mountPath }}
-              subPath: {{ .Values.elasticsearch.persistence.data.subPath }}
       volumes:
         {{- include "alfresco-common.data_volume" .Values.elasticsearch | nindent 8 }}

@@ -1,6 +1,6 @@
 # elastic
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.17.3](https://img.shields.io/badge/AppVersion-8.17.3-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.17.3](https://img.shields.io/badge/AppVersion-8.17.3-informational?style=flat-square)
 
 WARNING: This chart is meant to ease initial deployment for TESTING purposes.
 DO NOT use this chart in any staging, or production environment. It has very
@@ -45,10 +45,10 @@ Alfresco charts to point to it.
 | elasticsearch.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
 | elasticsearch.persistence.baseSize | string | `"8Gi"` |  |
 | elasticsearch.persistence.data.mountPath | string | `"/usr/share/elasticsearch/data"` |  |
-| elasticsearch.persistence.data.subPath | string | `"alfresco-content-services/elasticsearch-data"` |  |
 | elasticsearch.persistence.enabled | bool | `false` |  |
 | elasticsearch.persistence.existingClaim | string | `nil` |  |
 | elasticsearch.persistence.storageClass | string | `nil` |  |
+| elasticsearch.podSecurityContext.fsGroup | int | `1000` |  |
 | elasticsearch.readinessProbe.exec.command[0] | string | `"sh"` |  |
 | elasticsearch.readinessProbe.exec.command[1] | string | `"-c"` |  |
 | elasticsearch.readinessProbe.exec.command[2] | string | `"curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"` |  |
