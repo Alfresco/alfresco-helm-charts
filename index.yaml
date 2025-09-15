@@ -8003,6 +8003,27 @@ entries:
   elastic:
   - apiVersion: v2
     appVersion: 8.17.3
+    created: "2025-09-15T10:55:41.375589322Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    description: 'WARNING: This chart is meant to ease initial deployment for TESTING
+      purposes. DO NOT use this chart in any staging, or production environment. It
+      has very limited options. It is not meant to be configurable and we do not aim
+      at making it particularly secure or add features to it. Its SOLE goal is to
+      allow for quickly spinning up an Alfresco platform on kubernetes, any issue
+      that does not affect this is likely to not be fixed. For any other purpose,
+      make sure to deploy your own enterprise grade Elasticsearch instance and configure
+      Alfresco charts to point to it. '
+    digest: bb6d0abd0823727332a759661ccd6c12a0c71b45386e167da938afadde9dbf5a
+    name: elastic
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/elastic-0.1.1/elastic-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 8.17.3
     created: "2025-09-12T08:22:10.269729875Z"
     dependencies:
     - name: alfresco-common
@@ -8065,4 +8086,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2025-09-12T15:24:57.363901568Z"
+generated: "2025-09-15T10:55:41.376245341Z"
