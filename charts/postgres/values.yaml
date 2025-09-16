@@ -8,6 +8,8 @@ auth:
   username: alfresco
   password: alfresco
   database: alfresco
+podSecurityContext:
+  fsGroup: 1000
 livenessProbe:
   exec:
     command:
