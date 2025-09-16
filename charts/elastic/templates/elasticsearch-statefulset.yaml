@@ -61,7 +61,7 @@ spec:
           readinessProbe:
             {{- toYaml .Values.elasticsearch.readinessProbe | nindent 12 }}
           volumeMounts:
-            - name: elasticdata
+            - name: data
               mountPath: {{ .Values.elasticsearch.persistence.data.mountPath }}
       volumes:
         {{- include "alfresco-common.data_volume" .Values.elasticsearch | nindent 8 }}

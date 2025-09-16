@@ -25,6 +25,7 @@ spec:
         {{- include "postgres.labels" $ | nindent 8 }}
     spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      {{- include "alfresco-common.component-pod-security-context" . | indent 4 }}
       containers:
         - name: postgres
           image: "{{ .image.repository }}:{{ .image.tag }}"
