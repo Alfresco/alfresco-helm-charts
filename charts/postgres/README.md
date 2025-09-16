@@ -43,7 +43,7 @@ Alfresco charts to point to it.
 | primary.persistence.baseSize | string | `"8Gi"` |  |
 | primary.persistence.data.mountPath | string | `"/var/lib/postgresql/data"` |  |
 | primary.persistence.data.subPath | string | `"alfresco-content-services/database-data"` |  |
-| primary.persistence.enabled | bool | `true` |  |
+| primary.persistence.enabled | bool | `false` |  |
 | primary.persistence.existingClaim | string | `nil` | provide an existing persistent volume claim name to persist SQL data Make sure the root folder has the appropriate permissions/ownership set. |
 | primary.persistence.storageClass | string | `nil` | set the storageClass to use for dynamic provisioning. setting it to null means "default storageClass". |
 | primary.resources.limits.cpu | string | `"8"` |  |
