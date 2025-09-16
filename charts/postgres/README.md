@@ -1,6 +1,6 @@
 # postgres
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 16.6](https://img.shields.io/badge/AppVersion-16.6-informational?style=flat-square)
+![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 16.6](https://img.shields.io/badge/AppVersion-16.6-informational?style=flat-square)
 
 WARNING: This chart is meant to ease initial deployment for TESTING purposes.
 DO NOT use this chart in any staging, or production environment. It has very
@@ -37,6 +37,7 @@ Alfresco charts to point to it.
 | livenessProbe.periodSeconds | int | `10` |  |
 | livenessProbe.timeoutSeconds | int | `3` |  |
 | nameOverride | string | `"postgresql"` |  |
+| podSecurityContext.fsGroup | int | `1000` |  |
 | primary.extendedConfiguration | string | `"max_connections=250\nshared_buffers=512MB\neffective_cache_size=2GB\nwal_level=minimal\nmax_wal_senders=0\nmax_replication_slots=0\nlog_min_messages=LOG\n"` |  |
 | primary.persistence.accessModes | list | `["ReadWriteOnce"]` | defines type of access required by the persistent volume [Access_Modes] (https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes) |
 | primary.persistence.baseSize | string | `"8Gi"` |  |
