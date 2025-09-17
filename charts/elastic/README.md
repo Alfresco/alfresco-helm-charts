@@ -39,7 +39,7 @@ Alfresco charts to point to it.
 | elasticsearch.livenessProbe.exec.command[0] | string | `"sh"` |  |
 | elasticsearch.livenessProbe.exec.command[1] | string | `"-c"` |  |
 | elasticsearch.livenessProbe.exec.command[2] | string | `"curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"` |  |
-| elasticsearch.livenessProbe.initialDelaySeconds | int | `100` |  |
+| elasticsearch.livenessProbe.initialDelaySeconds | int | `60` |  |
 | elasticsearch.livenessProbe.periodSeconds | int | `20` |  |
 | elasticsearch.livenessProbe.timeoutSeconds | int | `5` |  |
 | elasticsearch.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
@@ -52,7 +52,7 @@ Alfresco charts to point to it.
 | elasticsearch.readinessProbe.exec.command[0] | string | `"sh"` |  |
 | elasticsearch.readinessProbe.exec.command[1] | string | `"-c"` |  |
 | elasticsearch.readinessProbe.exec.command[2] | string | `"curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"` |  |
-| elasticsearch.readinessProbe.initialDelaySeconds | int | `100` |  |
+| elasticsearch.readinessProbe.initialDelaySeconds | int | `60` |  |
 | elasticsearch.readinessProbe.periodSeconds | int | `20` |  |
 | elasticsearch.readinessProbe.timeoutSeconds | int | `5` |  |
 | elasticsearch.resources.limits.cpu | int | `1` |  |
