@@ -36,8 +36,6 @@ spec:
               value: "false"
             - name: discovery.type
               value: "single-node"
-            - name: ES_JAVA_OPTS
-              value: "-Xms256m -Xmx512m"
           {{- if .Values.elasticsearch.credentials.enabled }}
             - name: ELASTIC_USERNAME
               valueFrom:
