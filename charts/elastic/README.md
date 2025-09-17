@@ -1,6 +1,6 @@
 # elastic
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.17.3](https://img.shields.io/badge/AppVersion-8.17.3-informational?style=flat-square)
+![Version: 0.1.2](https://img.shields.io/badge/Version-0.1.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.17.3](https://img.shields.io/badge/AppVersion-8.17.3-informational?style=flat-square)
 
 WARNING: This chart is meant to ease initial deployment for TESTING purposes.
 DO NOT use this chart in any staging, or production environment. It has very
@@ -39,7 +39,7 @@ Alfresco charts to point to it.
 | elasticsearch.livenessProbe.exec.command[0] | string | `"sh"` |  |
 | elasticsearch.livenessProbe.exec.command[1] | string | `"-c"` |  |
 | elasticsearch.livenessProbe.exec.command[2] | string | `"curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"` |  |
-| elasticsearch.livenessProbe.initialDelaySeconds | int | `30` |  |
+| elasticsearch.livenessProbe.initialDelaySeconds | int | `60` |  |
 | elasticsearch.livenessProbe.periodSeconds | int | `20` |  |
 | elasticsearch.livenessProbe.timeoutSeconds | int | `5` |  |
 | elasticsearch.persistence.accessModes[0] | string | `"ReadWriteOnce"` |  |
@@ -52,7 +52,7 @@ Alfresco charts to point to it.
 | elasticsearch.readinessProbe.exec.command[0] | string | `"sh"` |  |
 | elasticsearch.readinessProbe.exec.command[1] | string | `"-c"` |  |
 | elasticsearch.readinessProbe.exec.command[2] | string | `"curl -s -X GET http://localhost:9200/_cluster/health?pretty | grep status | grep -q '\\(green\\|yellow\\)'"` |  |
-| elasticsearch.readinessProbe.initialDelaySeconds | int | `30` |  |
+| elasticsearch.readinessProbe.initialDelaySeconds | int | `60` |  |
 | elasticsearch.readinessProbe.periodSeconds | int | `20` |  |
 | elasticsearch.readinessProbe.timeoutSeconds | int | `5` |  |
 | elasticsearch.resources.limits.cpu | int | `1` |  |
