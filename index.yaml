@@ -2342,6 +2342,20 @@ entries:
   alfresco-connector-ms365:
   - apiVersion: v2
     appVersion: 2.0.7
+    created: "2025-09-29T14:51:36.664700709Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    description: A Helm chart for deploying Alfresco connector ms365 service
+    digest: ea9b2b10646f62223d206ee40de9080ae73315f16338ef6822f57ad419197052
+    name: alfresco-connector-ms365
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-ms365-3.2.0/alfresco-connector-ms365-3.2.0.tgz
+    version: 3.2.0
+  - apiVersion: v2
+    appVersion: 2.0.7
     created: "2025-07-22T07:15:22.136931771Z"
     dependencies:
     - name: alfresco-common
@@ -2705,6 +2719,20 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-ms365-0.1.0-alpha.0/alfresco-connector-ms365-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-connector-msteams:
+  - apiVersion: v2
+    appVersion: 2.0.7
+    created: "2025-09-29T14:51:36.785576514Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    description: A Helm chart for deploying Alfresco connector msteams service
+    digest: 8e70c4ea4cc0143db8dd3fde1512cc594298fa07d7dd1c8c78b23aa26763d380
+    name: alfresco-connector-msteams
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-msteams-2.2.0/alfresco-connector-msteams-2.2.0.tgz
+    version: 2.2.0
   - apiVersion: v2
     appVersion: 2.0.7
     created: "2025-07-22T07:15:22.253481614Z"
@@ -8158,4 +8186,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2025-09-29T14:34:31.40230555Z"
+generated: "2025-09-29T14:51:36.787004863Z"
