@@ -31,6 +31,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.tag | string | `"2.0.7"` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `"nginx"` |  |
+| ingress.enabled | bool | `true` | Enable or disable ingress resource creation |
 | ingress.extraAnnotations | object | `{}` |  |
 | ingress.hosts[0].paths[0].path | string | `"/ooi-service"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |

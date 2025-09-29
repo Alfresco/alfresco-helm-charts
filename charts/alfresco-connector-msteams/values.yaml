@@ -17,6 +17,8 @@ service:
   type: ClusterIP
   externalPort: 80
 ingress:
+  # -- Enable or disable ingress resource creation
+  enabled: true
   className: nginx
   hosts:
     - paths:
