@@ -2,7 +2,15 @@ suite: test sync ingress
 templates:
 - ingress.yaml
 tests:
-  - it: should render default rules
+  - it: should not render ingress when disabled
+    set:
+      ingress:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render default rules when enabled
     asserts:
       - equal:
           path: spec.rules
