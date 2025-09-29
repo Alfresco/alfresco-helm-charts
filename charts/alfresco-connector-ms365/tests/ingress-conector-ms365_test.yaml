@@ -95,3 +95,10 @@ tests:
                           number: 80
                     path: /ooi-service
                     pathType: Prefix
+  - it: should not render any ingress when disabled
+    set:
+      ingress:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
