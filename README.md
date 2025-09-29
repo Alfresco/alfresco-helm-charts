@@ -70,6 +70,8 @@ We are ensuring backward compatibility with older K8s versions with
 Helm charts versioning should comply to [agreed
 scheme](https://hyland.atlassian.net/wiki/spaces/TECH/pages/edit-v2/1293317631#individual-component-charts-(alfresco-helm-charts))
 
+> **Note**: For automated assistance with version bumping, see the [Copilot Instructions](.github/agents/copilot-instructions.md) which provide guidance on semantic versioning when making chart changes.
+
 * Ensure alfresco-common [version](../charts/alfresco-common/Chart.yaml) is not a
   pre-release, otherwise release it.
 * Ensure
