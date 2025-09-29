@@ -58,7 +58,7 @@ version: 1.5.2
 # After adding a new feature (minor bump)
 version: 1.6.0
 
-# After fixing a bug (patch bump)  
+# After fixing a bug (patch bump)
 version: 1.5.3
 
 # After breaking change (major bump)
