@@ -1,7 +1,8 @@
 ---
 repository:
-  host: dummy-repo
-  port: 80
+  host: alfresco.github.io/alfresco-helm-charts/test
+  port: 443
+  scheme: https
 activemq:
   fullnameOverride: mqsync
   adminUser:
