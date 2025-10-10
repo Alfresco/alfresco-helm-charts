@@ -4,3 +4,5 @@ htdocsConfigMap: dummy-repo
 httpdConfConfigMap: httpd-conf
 service:
   type: ClusterIP
+image:
+  repository: bitnamilegacy/apache
