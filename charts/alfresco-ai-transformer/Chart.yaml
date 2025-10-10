@@ -2,7 +2,7 @@ apiVersion: v2
 name: alfresco-ai-transformer
 description: A Helm chart for deploying Alfresco ai transformer service
 type: application
-version: 3.1.1
+version: 3.1.2
 appVersion: 3.2.2
 dependencies:
   - name: alfresco-common
