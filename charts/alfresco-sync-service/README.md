@@ -5,11 +5,7 @@ parent: Charts Reference
 
 # alfresco-sync-service
 
-<<<<<<< HEAD
-![Version: 7.3.0-alpha.0](https://img.shields.io/badge/Version-7.3.0--alpha.0-informational?style=flat-square) ![AppVersion: 5.2.0](https://img.shields.io/badge/AppVersion-5.2.0-informational?style=flat-square)
-=======
-![Version: 7.2.0](https://img.shields.io/badge/Version-7.2.0-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
->>>>>>> bc5e7d3 (🛠 Updatecli pipeline acs bump)
+![Version: 7.3.0](https://img.shields.io/badge/Version-7.3.0-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
 
 Alfresco Sync Service
 
