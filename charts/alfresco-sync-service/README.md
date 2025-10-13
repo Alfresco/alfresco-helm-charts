@@ -88,6 +88,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | repository.existingConfigMap.keys.port | string | `"REPO_PORT"` |  |
 | repository.existingConfigMap.keys.scheme | string | `"REPO_SCHEME"` |  |
 | repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing message broker details |
+| repository.fullUrl | string | `nil` | Full URL to ACS repository (alternative to host/port/scheme) |
 | repository.host | string | `nil` | ACS repository host |
 | repository.port | string | `nil` | ACS repository port |
 | repository.scheme | string | `nil` | ACS repository port |
