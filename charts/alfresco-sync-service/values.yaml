@@ -74,6 +74,7 @@ repository:
     name: null
     keys:
       # -- configmap key where to find the URL of the message broker
+      url: REPO_URL
       host: REPO_HOST
       port: REPO_PORT
       scheme: REPO_SCHEME

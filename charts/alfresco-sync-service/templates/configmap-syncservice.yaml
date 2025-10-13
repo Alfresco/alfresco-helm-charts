@@ -19,11 +19,10 @@ data:
     {{- if .Values.repository.url }}
     -Drepo.syncconfig.url=$REPO_URL/alfresco/service/devicesync/config
     -Dsync.authentication.basicAuthUrl=$REPO_URL/alfresco/s/api/authentication
-    {{- else }}
+    {{- end }}
     -Drepo.hostname=$REPO_HOST
     -Drepo.port=$REPO_PORT
     -Drepo.scheme=${REPO_SCHEME:-http}
-    {{- end }}
     -Ddw.server.applicationConnectors[0].type=http
     -Dmessaging.broker.url=$BROKER_URL
     -Dmessaging.username=$BROKER_USERNAME

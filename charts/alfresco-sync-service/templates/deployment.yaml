@@ -89,8 +89,8 @@ spec:
             valueFrom:
               configMapKeyRef:
                 name: {{ $repoCm }}
-                key: REPO_URL
-          {{- else }}
+                key: {{ .existingConfigMap.keys.url }}
+          {{- end }}
           - name: REPO_HOST
             valueFrom:
               configMapKeyRef:
@@ -107,7 +107,6 @@ spec:
                 name: {{ $repoCm }}
                 key: {{ .existingConfigMap.keys.scheme }}
                 optional: true
-          {{- end }}
           {{- end }}
         volumeMounts:
           {{- if gt (int .Values.replicaCount) 1 }}

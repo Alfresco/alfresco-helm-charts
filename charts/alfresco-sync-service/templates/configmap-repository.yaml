@@ -11,6 +11,9 @@ data:
   {{- $reqmsg := "You must provide repository details throught values or using an existing configmap" }}
   {{- if .url }}
   REPO_URL: {{ required $reqmsg .url }}
+  REPO_HOST: {{ include "alfresco-common.url.host" .url }}
+  REPO_PORT: {{ include "alfresco-common.url.port" .url | quote }}
+  REPO_SCHEME: {{ include "alfresco-common.url.scheme" .url }}
   {{- else }}
   REPO_HOST: {{ required $reqmsg .host }}
   REPO_PORT: {{ required $reqmsg .port | quote }}
