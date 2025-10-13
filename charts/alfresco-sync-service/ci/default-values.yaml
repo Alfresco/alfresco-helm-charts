@@ -1,6 +1,6 @@
 ---
 repository:
-  fullUrl: https://alfresco.github.io/alfresco-helm-charts/test
+  url: https://alfresco.github.io/alfresco-helm-charts/test
 activemq:
   fullnameOverride: mqsync
   adminUser:

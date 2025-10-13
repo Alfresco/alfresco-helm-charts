@@ -16,7 +16,7 @@ data:
     -Dsql.db.driver=$DATABASE_DRIVER
     -Dsql.db.username=$DATABASE_USERNAME
     -Dsql.db.password=$DATABASE_PASSWORD
-    {{- if .Values.repository.fullUrl }}
+    {{- if .Values.repository.url }}
     -Drepo.syncconfig.url=$REPO_URL/alfresco/service/devicesync/config
     -Dsync.authentication.basicAuthUrl=$REPO_URL/alfresco/s/api/authentication
     {{- else }}
