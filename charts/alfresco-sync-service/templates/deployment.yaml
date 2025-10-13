@@ -84,13 +84,6 @@ spec:
           {{- end }}
           {{- with .Values.repository }}
           {{- $repoCm := coalesce .existingConfigMap.name (include "alfresco-sync-service.repository" $) }}
-          {{- if .url }}
-          - name: REPO_URL
-            valueFrom:
-              configMapKeyRef:
-                name: {{ $repoCm }}
-                key: REPO_URL
-          {{- else }}
           - name: REPO_HOST
             valueFrom:
               configMapKeyRef:
@@ -107,7 +100,6 @@ spec:
                 name: {{ $repoCm }}
                 key: {{ .existingConfigMap.keys.scheme }}
                 optional: true
-          {{- end }}
           {{- end }}
         volumeMounts:
           {{- if gt (int .Values.replicaCount) 1 }}

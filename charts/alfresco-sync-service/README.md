@@ -91,7 +91,6 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | repository.host | string | `nil` | ACS repository host |
 | repository.port | string | `nil` | ACS repository port |
 | repository.scheme | string | `nil` | ACS repository port |
-| repository.url | string | `nil` | Full URL to ACS repository (alternative to host/port/scheme) |
 | resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2000Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
