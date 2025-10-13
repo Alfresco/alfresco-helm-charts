@@ -61,8 +61,6 @@ readinessProbe:
   failureThreshold: 12
   timeoutSeconds: 10
 repository:
-  # -- Full URL to ACS repository (alternative to host/port/scheme)
-  url: null
   # -- ACS repository host
   host: null
   # -- ACS repository port
@@ -74,7 +72,6 @@ repository:
     name: null
     keys:
       # -- configmap key where to find the URL of the message broker
-      url: REPO_URL
       host: REPO_HOST
       port: REPO_PORT
       scheme: REPO_SCHEME

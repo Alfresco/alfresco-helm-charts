@@ -1,6 +1,16 @@
 ---
 repository:
-  url: https://alfresco.github.io/alfresco-helm-charts/test
+  # -- Just for passing the required values during the CI tests; real mock is done in `environment.JAVA_OPTS`
+  host: dummy-repo
+  port: 80
+environment:
+  JAVA_OPTS: >-
+    -Dsql.db.pool.initial=25
+    -Dsql.db.pool.max=75
+    -Dsync.metrics.reporter.graphite.enabled=false
+    -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
+    -Drepo.syncconfig.url=https://alfresco.github.io/alfresco-helm-charts/test/alfresco/service/devicesync/config
+    -Dsync.authentication.basicAuthUrl=https://alfresco.github.io/alfresco-helm-charts/test/alfresco/s/api/authentication
 activemq:
   fullnameOverride: mqsync
   adminUser:

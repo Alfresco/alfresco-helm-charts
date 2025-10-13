@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-sync-service
 
-![Version: 7.3.0](https://img.shields.io/badge/Version-7.3.0-informational?style=flat-square) ![AppVersion: 5.2.0](https://img.shields.io/badge/AppVersion-5.2.0-informational?style=flat-square)
+![Version: 7.3.0-alpha.0](https://img.shields.io/badge/Version-7.3.0--alpha.0-informational?style=flat-square) ![AppVersion: 5.2.0](https://img.shields.io/badge/AppVersion-5.2.0-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -84,15 +84,13 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | readinessProbe.periodSeconds | int | `10` |  |
 | readinessProbe.timeoutSeconds | int | `10` |  |
 | replicaCount | int | `1` |  |
-| repository.existingConfigMap.keys.host | string | `"REPO_HOST"` |  |
+| repository.existingConfigMap.keys.host | string | `"REPO_HOST"` | configmap key where to find the URL of the message broker |
 | repository.existingConfigMap.keys.port | string | `"REPO_PORT"` |  |
 | repository.existingConfigMap.keys.scheme | string | `"REPO_SCHEME"` |  |
-| repository.existingConfigMap.keys.url | string | `"REPO_URL"` | configmap key where to find the URL of the message broker |
 | repository.existingConfigMap.name | string | `nil` | Name of a pre-existing configmap containing message broker details |
 | repository.host | string | `nil` | ACS repository host |
 | repository.port | string | `nil` | ACS repository port |
 | repository.scheme | string | `nil` | ACS repository port |
-| repository.url | string | `nil` | Full URL to ACS repository (alternative to host/port/scheme) |
 | resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2000Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
