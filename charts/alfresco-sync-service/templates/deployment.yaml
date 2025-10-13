@@ -84,7 +84,7 @@ spec:
           {{- end }}
           {{- with .Values.repository }}
           {{- $repoCm := coalesce .existingConfigMap.name (include "alfresco-sync-service.repository" $) }}
-          {{- if .fullUrl }}
+          {{- if .url }}
           - name: REPO_URL
             valueFrom:
               configMapKeyRef:
