@@ -36,7 +36,7 @@ jobs:
           done
 
       - name: Run checkov
-        uses: bridgecrewio/checkov-action@cba89e33f08479973cadc681333ffe84f7c8e824 # v12.3064.0
+        uses: bridgecrewio/checkov-action@197d53917e0ff43d63111c0808e40b1aaf28ec1c # v12.3068.0
         with:
           config_file: .checkov.yml
           output_format: cli,sarif
@@ -44,7 +44,7 @@ jobs:
           skip_download: true # Do not download any data from Bridgecrew's servers
 
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@e296a935590eb16afc0c0108289f68c87e2a89a5 # v4.30.7
+        uses: github/codeql-action/upload-sarif@4e94bd11f71e507f7f87df81788dff88d1dacbfb # v4.31.0
 
         if: success() || failure()
         with:
