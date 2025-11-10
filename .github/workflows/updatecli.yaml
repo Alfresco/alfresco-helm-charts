@@ -27,7 +27,7 @@ jobs:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v9.3.1
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v9.3.3
 
       - name: Login to quay.io
         uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
@@ -37,21 +37,21 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v9.3.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v9.3.3
 
       - run: updatecli apply
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@348e767723102af8cff995773904a2c16b098d11 # v9.3.1
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@7bb0d8f13a52db230cff8d3e2895880d6a11c66a # v9.3.3
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@348e767723102af8cff995773904a2c16b098d11 # v9.3.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@7bb0d8f13a52db230cff8d3e2895880d6a11c66a # v9.3.3
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
 
       - name: Git Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6.0.1
+        uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 # v7.0.0
         with:
           commit_message: |
             🛠 Updatecli pipeline bump
@@ -70,7 +70,7 @@ jobs:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v9.3.1
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v9.3.3
 
       - name: Login to quay.io
         uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
@@ -80,7 +80,7 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v9.3.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v9.3.3
 
       - name: Checkout updatecli configs
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
@@ -99,15 +99,15 @@ jobs:
             -v alfresco-updatecli/deployments/values/supported-matrix.yaml \
             -v .github/updatecli-matrix-targets.yaml
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@348e767723102af8cff995773904a2c16b098d11 # v9.3.1
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@7bb0d8f13a52db230cff8d3e2895880d6a11c66a # v9.3.3
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@348e767723102af8cff995773904a2c16b098d11 # v9.3.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@7bb0d8f13a52db230cff8d3e2895880d6a11c66a # v9.3.3
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
 
       - name: Git Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@778341af668090896ca464160c2def5d1d1a3eb0 # v6.0.1
+        uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 # v7.0.0
         with:
           commit_message: |
             🛠 Updatecli pipeline acs bump
