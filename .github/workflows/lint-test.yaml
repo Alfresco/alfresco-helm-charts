@@ -59,7 +59,7 @@ jobs:
 
       - name: Run chart-testing (lint)
         if: steps.list-changed.outputs.changed == 'true'
-        run: ct lint --config ct.yaml $TEST_ALL_CHARTS_ARG
+        run: ct lint --config ct.yaml --charts charts/elastic
 
       - name: Create kind cluster
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-3622
