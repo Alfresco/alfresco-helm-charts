@@ -22,8 +22,6 @@ jobs:
     env:
       INSTALL_NAMESPACE: alfresco
       # See https://github.com/kubernetes-sigs/kind/releases for the latest available images
-      KIND_VERSION: v0.30.0
-      KIND_NODE_IMAGE: kindest/node:v1.32.8@sha256:abd489f042d2b644e2d033f5c2d900bc707798d075e8186cb65e3f1367a9d5a1
       TEST_ALL_CHARTS: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && 'true' || 'false' }}
       TEST_ALL_CHARTS_ARG: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && '--all' || '' }}
       PR_FROM_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork }}
@@ -62,7 +60,7 @@ jobs:
         run: ct lint --config ct.yaml $TEST_ALL_CHARTS_ARG
 
       - name: Create kind cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@OPSEXP-3622
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v9.5.0 # v9.5.0
         if: steps.list-changed.outputs.changed == 'true' && env.PR_FROM_FORK == 'false'
         with:
           ingress-nginx-ref: skip
