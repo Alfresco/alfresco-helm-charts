@@ -1,4 +1,9 @@
 ---
+# -- Additional labels to be added to all resources (deployments, statefulsets, services, pods, etc.)
+# Example:
+#   Product: k8s
+#   Environment: DEV
+additionalLabels: {}
 # -- Define the type of Alfresco Search to use. The default is Alfresco Search
 # Services.
 # The type can be set to use Insight Engine with

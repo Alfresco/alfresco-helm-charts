@@ -1,4 +1,9 @@
 nameOverride: &nameOverride postgresql
+# -- Additional labels to be added to all resources (deployments, statefulsets, services, pods, etc.)
+# Example:
+#   Product: k8s
+#   Environment: DEV
+additionalLabels: {}
 image:
   repository: postgres
   tag: 16.6
