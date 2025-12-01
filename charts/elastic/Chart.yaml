@@ -10,7 +10,7 @@ description: |
   sure to deploy your own enterprise grade Elasticsearch instance and configure
   Alfresco charts to point to it.
 type: application
-version: 0.1.2
+version: 0.2.0
 appVersion: "8.17.3"
 dependencies:
   - name: alfresco-common
