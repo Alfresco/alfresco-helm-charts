@@ -22,12 +22,12 @@ jobs:
     name: Helm charts dependencies
     if: inputs.update-type == 'charts'
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v9.5.0
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v10.1.0
 
       - name: Login to quay.io
         uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
@@ -37,15 +37,15 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v10.1.0
 
       - run: updatecli apply
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@09cfe8ab1d2b7105052c7bd79281cd1e16c68e11 # v9.5.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@4f90df9def7f8f253a1898db65c72c6f0f06c098 # v9.5.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@09cfe8ab1d2b7105052c7bd79281cd1e16c68e11 # v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@4f90df9def7f8f253a1898db65c72c6f0f06c098 # v9.5.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
@@ -65,12 +65,12 @@ jobs:
     name: Image tags values dependencies
     if: inputs.update-type == 'values'
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v9.5.0
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v10.1.0
 
       - name: Login to quay.io
         uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
@@ -80,10 +80,10 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v10.1.0
 
       - name: Checkout updatecli configs
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6.0.0
         with:
           repository: alfresco/alfresco-updatecli
           ref: ${{ inputs.alfresco-updatecli-ref || 'master' }}
@@ -99,9 +99,9 @@ jobs:
             -v alfresco-updatecli/deployments/values/supported-matrix.yaml \
             -v .github/updatecli-matrix-targets.yaml
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@09cfe8ab1d2b7105052c7bd79281cd1e16c68e11 # v9.5.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@4f90df9def7f8f253a1898db65c72c6f0f06c098 # v9.5.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@09cfe8ab1d2b7105052c7bd79281cd1e16c68e11 # v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@4f90df9def7f8f253a1898db65c72c6f0f06c098 # v9.5.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
