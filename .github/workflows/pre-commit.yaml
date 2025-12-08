@@ -23,14 +23,14 @@ jobs:
             Alfresco/alfresco-build-tools/
 
       - name: Setup helm docs
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@09cfe8ab1d2b7105052c7bd79281cd1e16c68e11 # v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@ee10ec96d25c2cdfc6f45d3398aae1c6190f4d5d # v10.5.0
 
       - name: Install kubeconform helm plugin
         run: |
           helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.2.0
 
       - name: Run pre-commit
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@09cfe8ab1d2b7105052c7bd79281cd1e16c68e11 # v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@ee10ec96d25c2cdfc6f45d3398aae1c6190f4d5d # v10.5.0
         with:
           # disable auto-commit for PRs from forks
           auto-commit: ${{ github.event_name != 'pull_request' || ! github.event.pull_request.head.repo.fork }}
