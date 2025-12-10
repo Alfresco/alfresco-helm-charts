@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # activemq
 
-![Version: 3.6.2](https://img.shields.io/badge/Version-3.6.2-informational?style=flat-square) ![AppVersion: 5.18.7](https://img.shields.io/badge/AppVersion-5.18.7-informational?style=flat-square)
+![Version: 3.7.0](https://img.shields.io/badge/Version-3.7.0-informational?style=flat-square) ![AppVersion: 5.18.7](https://img.shields.io/badge/AppVersion-5.18.7-informational?style=flat-square)
 
 A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (not meant to be used in production).
 
@@ -23,6 +23,7 @@ A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate A
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| additionalLabels | object | `{}` | Additional labels to be added to all resources (deployments, statefulsets, services, pods, etc.) Example:   Product: k8s   Environment: DEV |
 | adminUser.existingSecretName | string | `nil` | An existing kubernetes secret that contains BROKER_USERNAME and BROKER_PASSWORD keys to override the default user credentials |
 | adminUser.password | string | `"admin"` | Password for the default user with administrative privileges |
 | adminUser.user | string | `"admin"` | Username for the default user with administrative privileges |

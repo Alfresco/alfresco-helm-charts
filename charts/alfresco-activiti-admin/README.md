@@ -20,6 +20,7 @@ A Helm chart for Alfresco Activiti
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| additionalLabels | object | `{}` | Additional labels to be added to all resources (deployments, statefulsets, services, pods, etc.) Example:   Product: k8s   Environment: DEV |
 | affinity | object | `{}` |  |
 | database.driver | string | `nil` | JDBC driver Class |
 | database.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver Class for admin app |
