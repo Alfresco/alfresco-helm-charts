@@ -1,5 +1,10 @@
 # Leave this to true to deploy the chart
 enabled: true
+# -- Additional labels to be added to all resources (deployments, statefulsets, services, pods, etc.)
+# Example:
+#   Product: k8s
+#   Environment: DEV
+additionalLabels: {}
 replicaCount: 1
 nodeSelector: {}
 image:

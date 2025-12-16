@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-insight-zeppelin
 
-![Version: 4.1.1](https://img.shields.io/badge/Version-4.1.1-informational?style=flat-square) ![AppVersion: 2.0.17](https://img.shields.io/badge/AppVersion-2.0.17-informational?style=flat-square)
+![Version: 4.2.0](https://img.shields.io/badge/Version-4.2.0-informational?style=flat-square) ![AppVersion: 2.0.17](https://img.shields.io/badge/AppVersion-2.0.17-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Insight Zeppelin
 
@@ -27,6 +27,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| additionalLabels | object | `{}` | Additional labels to be added to all resources (deployments, statefulsets, services, pods, etc.) Example:   Product: k8s   Environment: DEV |
 | affinity | string | `""` | Pod affinity, passed thru tpl function |
 | environment.ZEPPELIN_INTP_MEM | string | `"-Xms512m -Xmx1g"` |  |
 | environment.ZEPPELIN_MEM | string | `"-Xms512m -Xmx1g"` |  |
