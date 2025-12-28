@@ -37,7 +37,14 @@ Common labels
 helm.sh/chart: {{ include "elastic.chart" . }}
 {{ include "elastic.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- with .Values.additionalLabels }}
+{{- $labels := dict }}
+{{- if .Values.global.additionalLabels }}
+{{- $labels = merge $labels .Values.global.additionalLabels }}
+{{- end }}
+{{- if .Values.additionalLabels }}
+{{- $labels = merge $labels .Values.additionalLabels }}
+{{- end }}
+{{- with $labels }}
 {{- toYaml . | nindent 0 }}
 {{- end }}
 {{- end -}}
