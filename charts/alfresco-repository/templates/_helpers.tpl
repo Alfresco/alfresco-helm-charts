@@ -42,7 +42,7 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/component: {{ .Chart.Name }}
 {{- $labels := dict }}
-{{- if .Values.global.additionalLabels }}
+{{- if and .Values.global .Values.global.additionalLabels }}
 {{- $labels = merge $labels .Values.global.additionalLabels }}
 {{- end }}
 {{- if .Values.additionalLabels }}

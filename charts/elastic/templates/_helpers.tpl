@@ -38,7 +38,7 @@ helm.sh/chart: {{ include "elastic.chart" . }}
 {{ include "elastic.selectorLabels" . }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- $labels := dict }}
-{{- if .Values.global.additionalLabels }}
+{{- if and .Values.global .Values.global.additionalLabels }}
 {{- $labels = merge $labels .Values.global.additionalLabels }}
 {{- end }}
 {{- if .Values.additionalLabels }}
