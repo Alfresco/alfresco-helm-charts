@@ -13,7 +13,7 @@ chart-repos:
   - self=https://alfresco.github.io/alfresco-helm-charts/
   - bitnami=https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
 
-helm-extra-args: --timeout 660s
+helm-extra-args: --timeout 600s
 
 validate-maintainers: false
 
