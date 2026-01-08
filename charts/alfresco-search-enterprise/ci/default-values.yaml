@@ -57,6 +57,8 @@ activemq:
       memory: "1Gi"
 messageBroker:
   url: nio://activemq-broker:61616
+  username: admin
+  password: admin
 tags:
   ci: true
 global:
