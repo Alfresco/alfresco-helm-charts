@@ -44,7 +44,7 @@ jobs:
         id: set-matrix
         run: |
           if [[ "$TEST_ALL_CHARTS" == "true" ]]; then
-            charts=$(ls -1 charts | awk -v prefix='charts/' '{print prefix $0}')
+            charts=$(ls -1 charts | grep -v alfresco-common | awk -v prefix='charts/' '{print prefix $0}')
           else
             charts=$(ct list-changed --config ct.yaml)
           fi
