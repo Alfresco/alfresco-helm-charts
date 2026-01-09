@@ -230,3 +230,17 @@ tests:
               configMapKeyRef:
                 name: broker-configmap
                 key: BROKER_URL
+
+  - it: should render nodeSelector when provided
+    values: *testvalues
+    set:
+      nodeSelector:
+        disktype: ssd
+        environment: production
+    template: deployment-ai-transformer.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.nodeSelector
+          value:
+            disktype: ssd
+            environment: production
