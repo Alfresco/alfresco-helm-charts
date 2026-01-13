@@ -22,12 +22,12 @@ jobs:
     name: Helm charts dependencies
     if: inputs.update-type == 'charts'
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v9.5.0
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v12.4.2
 
       - name: Login to quay.io
         uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
@@ -37,21 +37,21 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v12.4.2
 
       - run: updatecli apply
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@09cfe8ab1d2b7105052c7bd79281cd1e16c68e11 # v9.5.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@abf5c06a9dce1ef819dce81150f84d1c66908e0b # v9.5.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@09cfe8ab1d2b7105052c7bd79281cd1e16c68e11 # v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@abf5c06a9dce1ef819dce81150f84d1c66908e0b # v9.5.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
 
       - name: Git Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 # v7.0.0
+        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
         with:
           commit_message: |
             🛠 Updatecli pipeline bump
@@ -65,12 +65,12 @@ jobs:
     name: Image tags values dependencies
     if: inputs.update-type == 'values'
     steps:
-      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v9.5.0
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v12.4.2
 
       - name: Login to quay.io
         uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
@@ -80,10 +80,10 @@ jobs:
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v12.4.2
 
       - name: Checkout updatecli configs
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           repository: alfresco/alfresco-updatecli
           ref: ${{ inputs.alfresco-updatecli-ref || 'master' }}
@@ -99,15 +99,15 @@ jobs:
             -v alfresco-updatecli/deployments/values/supported-matrix.yaml \
             -v .github/updatecli-matrix-targets.yaml
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@09cfe8ab1d2b7105052c7bd79281cd1e16c68e11 # v9.5.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@abf5c06a9dce1ef819dce81150f84d1c66908e0b # v9.5.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@09cfe8ab1d2b7105052c7bd79281cd1e16c68e11 # v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@abf5c06a9dce1ef819dce81150f84d1c66908e0b # v9.5.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
 
       - name: Git Auto Commit
-        uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 # v7.0.0
+        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
         with:
           commit_message: |
             🛠 Updatecli pipeline acs bump
