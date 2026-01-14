@@ -40,6 +40,10 @@ fullnameOverride: ""
 #   Product: k8s
 #   Environment: DEV
 additionalLabels: {}
+# -- Global additional labels that can be set at parent/umbrella chart level
+# These will be merged with chart-level additionalLabels, with chart-level taking precedence
+global:
+  additionalLabels: {}
 serviceAccount:
   # -- Specifies whether a service account should be created
   create: true

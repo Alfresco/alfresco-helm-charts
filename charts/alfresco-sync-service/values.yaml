@@ -4,6 +4,10 @@
 #   Product: k8s
 #   Environment: DEV
 additionalLabels: {}
+# -- Global additional labels that can be set at parent/umbrella chart level
+# These will be merged with chart-level additionalLabels, with chart-level taking precedence
+global:
+  additionalLabels: {}
 replicaCount: 1
 # -- Global definition of Docker registry pull secret which can be overridden
 # from parent ACS Helm chart(s)
