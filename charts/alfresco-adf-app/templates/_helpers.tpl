@@ -41,7 +41,9 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/component: {{ .Chart.Name }}
-{{- with merge .Values.additionalLabels .Values.global.additionalLabels }}
+{{- $chartLabels := .Values.additionalLabels | default dict }}
+{{- $globalLabels := .Values.global.additionalLabels | default dict }}
+{{- with merge $chartLabels $globalLabels }}
 {{- toYaml . | nindent 0 }}
 {{- end }}
 {{- end }}
