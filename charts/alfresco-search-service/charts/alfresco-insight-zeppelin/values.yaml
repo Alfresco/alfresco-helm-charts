@@ -4,10 +4,6 @@
 #   Product: k8s
 #   Environment: DEV
 additionalLabels: {}
-# -- Global additional labels that can be set at parent/umbrella chart level
-# These will be merged with chart-level additionalLabels, with chart-level taking precedence
-global:
-  additionalLabels: {}
 replicaCount: 1
 image:
   repository: quay.io/alfresco/insight-zeppelin
@@ -63,6 +59,9 @@ global:
   # -- Global definition of Docker registry pull secret which can be overridden
   # from parent ACS Helm chart(s)
   alfrescoRegistryPullSecrets: quay-registry-secret
+  # -- Global additional labels that can be set at parent/umbrella chart level
+  # These will be merged with chart-level additionalLabels, with chart-level taking precedence
+  additionalLabels: {}
   strategy:
     rollingUpdate:
       maxSurge: 1

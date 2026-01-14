@@ -1,15 +1,14 @@
 ---
 global:
   alfrescoRegistryPullSecrets: quay-registry-secret
+  # -- Global additional labels that can be set at parent/umbrella chart level
+  # These will be merged with chart-level additionalLabels, with chart-level taking precedence
+  additionalLabels: {}
 # -- Additional labels to be added to all resources (deployments, statefulsets, services, pods, etc.)
 # Example:
 #   Product: k8s
 #   Environment: DEV
 additionalLabels: {}
-# -- Global additional labels that can be set at parent/umbrella chart level
-# These will be merged with chart-level additionalLabels, with chart-level taking precedence
-global:
-  additionalLabels: {}
 podSecurityContext:
   runAsUser: 33007
 podAnnotations: {}
