@@ -28,6 +28,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | alfresco.baseUrl | string | `"change_me_alf_base_url"` |  |
 | alfresco.digitalWorkspace.contextPath | string | `"/workspace/"` |  |
 | environment | string | `nil` |  |
+| global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `3978` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |

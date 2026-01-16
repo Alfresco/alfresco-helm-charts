@@ -28,6 +28,7 @@ A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate A
 | adminUser.password | string | `"admin"` | Password for the default user with administrative privileges |
 | adminUser.user | string | `"admin"` | Username for the default user with administrative privileges |
 | enabled | bool | `true` |  |
+| global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` | Authenticate to image registry before pulling by providing an existing secret of type kubernetes.io/dockerconfigjson |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"alfresco/alfresco-activemq"` |  |

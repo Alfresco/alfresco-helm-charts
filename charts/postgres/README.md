@@ -26,6 +26,7 @@ Alfresco charts to point to it.
 | auth.existingSecret | string | `nil` |  |
 | auth.password | string | `"alfresco"` |  |
 | auth.username | string | `"alfresco"` |  |
+| global | object | `{"additionalLabels":{}}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"postgres"` |  |
 | image.tag | float | `16.6` |  |

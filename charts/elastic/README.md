@@ -62,6 +62,7 @@ Alfresco charts to point to it.
 | elasticsearch.resources.requests.memory | string | `"2Gi"` |  |
 | elasticsearch.service.name | string | `"elasticsearch"` | used for naming pvc |
 | fullnameOverride | string | `""` |  |
+| global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | kibana.enabled | bool | `false` |  |
 | kibana.image.pullPolicy | string | `"IfNotPresent"` |  |

@@ -41,7 +41,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | database.url | string | `nil` | JDBC url to connect to the external DB |
 | database.username | string | `nil` | JDBC username to use to connect to the DB |
 | environment.JAVA_OPTS | string | `"-Dsql.db.pool.initial=25 -Dsql.db.pool.max=75 -Dsync.metrics.reporter.graphite.enabled=false -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
-| global | object | `{"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
+| global | object | `{"additionalLabels":{},"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
+| global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | hazelcast.service.port | int | `5701` |  |
 | hazelcast.service.type | string | `"ClusterIP"` |  |
 | image.internalPort | int | `9090` |  |
