@@ -40,8 +40,14 @@ helm.sh/chart: {{ include "alfresco-insight-zeppelin.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- $chartLabels := .Values.additionalLabels | default dict }}
-{{- $globalLabels := .Values.global.additionalLabels | default dict }}
+{{- $chartLabels := dict }}
+{{- if .Values.additionalLabels }}
+{{- $chartLabels = .Values.additionalLabels }}
+{{- end }}
+{{- $globalLabels := dict }}
+{{- if .Values.global.additionalLabels }}
+{{- $globalLabels = .Values.global.additionalLabels }}
+{{- end }}
 {{- with merge $chartLabels $globalLabels }}
 {{- toYaml . | nindent 0 }}
 {{- end }}
