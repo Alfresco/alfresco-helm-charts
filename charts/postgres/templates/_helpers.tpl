@@ -48,7 +48,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- if .Values.global.additionalLabels }}
 {{- $globalLabels = .Values.global.additionalLabels }}
 {{- end }}
-{{- with merge $chartLabels $globalLabels }}
+{{- with merge $globalLabels $chartLabels }}
 {{- toYaml . | nindent 0 }}
 {{- end }}
 {{- end }}
