@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-insight-zeppelin
 
-![Version: 4.2.0](https://img.shields.io/badge/Version-4.2.0-informational?style=flat-square) ![AppVersion: 2.0.17](https://img.shields.io/badge/AppVersion-2.0.17-informational?style=flat-square)
+![Version: 4.3.0](https://img.shields.io/badge/Version-4.3.0-informational?style=flat-square) ![AppVersion: 2.0.17](https://img.shields.io/badge/AppVersion-2.0.17-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Insight Zeppelin
 
