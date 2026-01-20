@@ -9,7 +9,7 @@
 {{- end }}
 
 {{- define "alfresco-connector-hxi.bulk-ingester.labels" -}}
-{{- $scope := (dict "Values" (dict "nameOverride" (include "alfresco-connector-hxi.bulk-ingester.name" .)) "Chart" .Chart "Release" .Release) }}
+{{- $scope := (dict "Values" (dict "nameOverride" (include "alfresco-connector-hxi.bulk-ingester.name" .) "additionalLabels" .Values.additionalLabels "global" .Values.global) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-connector-hxi.labels" $scope }}
 {{- end }}
 

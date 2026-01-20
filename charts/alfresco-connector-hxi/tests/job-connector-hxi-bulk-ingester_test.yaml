@@ -14,3 +14,29 @@ tests:
       - equal:
           path: spec.template.spec.initContainers[0].imagePullPolicy
           value: IfNotPresent
+  - it: should have default labels
+    asserts:
+      - exists:
+          path: metadata.labels["app.kubernetes.io/component"]
+      - exists:
+          path: metadata.labels["app.kubernetes.io/instance"]
+      - exists:
+          path: metadata.labels["app.kubernetes.io/managed-by"]
+      - exists:
+          path: metadata.labels["app.kubernetes.io/name"]
+      - exists:
+          path: metadata.labels["app.kubernetes.io/version"]
+      - exists:
+          path: metadata.labels["helm.sh/chart"]
+  - it: should have additional labels when set
+    set:
+      additionalLabels:
+        label1: value1
+        label2: value2
+    asserts:
+      - equal:
+          path: metadata.labels["label1"]
+          value: value1
+      - equal:
+          path: metadata.labels["label2"]
+          value: value2
