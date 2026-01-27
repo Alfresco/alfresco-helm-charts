@@ -3,7 +3,7 @@ apiVersion: v2
 name: alfresco-search-enterprise
 description: A Helm chart for deploying Alfresco Elasticsearch connector
 type: application
-version: 4.7.0
+version: 4.7.1
 appVersion: 5.2.1
 dependencies:
   - name: alfresco-common
