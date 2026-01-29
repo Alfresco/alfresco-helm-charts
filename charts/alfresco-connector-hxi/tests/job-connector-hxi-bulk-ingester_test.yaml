@@ -16,14 +16,18 @@ tests:
           value: IfNotPresent
   - it: should have default labels
     asserts:
-      - exists:
+      - equal:
           path: metadata.labels["app.kubernetes.io/component"]
-      - exists:
+          value: alfresco-connector-hxi
+      - equal:
           path: metadata.labels["app.kubernetes.io/instance"]
-      - exists:
+          value: RELEASE-NAME
+      - equal:
           path: metadata.labels["app.kubernetes.io/managed-by"]
-      - exists:
+          value: Helm
+      - equal:
           path: metadata.labels["app.kubernetes.io/name"]
+          value: alfresco-connector-hxi-bulk-ingester
       - exists:
           path: metadata.labels["app.kubernetes.io/version"]
       - exists:
