@@ -1,5 +1,5 @@
 {{- define "alfresco-connector-hxi.live-ingester.labels" -}}
-{{- $scope := (dict "Values" (dict "nameOverride" (include "alfresco-connector-hxi.live-ingester.name" .)) "Chart" .Chart "Release" .Release) }}
+{{- $scope := (dict "Values" (dict "nameOverride" (include "alfresco-connector-hxi.live-ingester.name" .) "additionalLabels" .Values.additionalLabels "global" .Values.global) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-connector-hxi.labels" $scope }}
 {{- end }}
 
@@ -19,7 +19,7 @@
 {{- end }}
 
 {{- define "alfresco-connector-hxi.prediction-applier.labels" -}}
-{{- $scope := (dict "Values" (dict "nameOverride" (include "alfresco-connector-hxi.prediction-applier.name" .)) "Chart" .Chart "Release" .Release) }}
+{{- $scope := (dict "Values" (dict "nameOverride" (include "alfresco-connector-hxi.prediction-applier.name" .) "additionalLabels" .Values.additionalLabels "global" .Values.global) "Chart" .Chart "Release" .Release) }}
 {{- include "alfresco-connector-hxi.labels" $scope }}
 {{- end }}
 
