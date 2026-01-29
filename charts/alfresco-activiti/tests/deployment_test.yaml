@@ -177,3 +177,13 @@ tests:
           path: spec.template.spec.containers[0].volumeMounts[0].name
           value: license
         template: deployment.yaml
+  - it: should render pod annotations when set
+    set:
+      podAnnotations:
+        alfresco-helm-charts.github.io/test: annotate-pods
+    asserts:
+      - template: deployment.yaml
+        isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            alfresco-helm-charts.github.io/test: annotate-pods

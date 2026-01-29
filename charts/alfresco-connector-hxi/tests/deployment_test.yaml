@@ -1,0 +1,24 @@
+---
+suite: test live ingester deployment
+templates:
+  - deployment-connector-hxi-prediction-applier.yaml
+  - deployment-connector-hxi-live-ingester.yaml
+  - configmap-connector-hxi.yaml
+  - secret-connector-hxi.yaml
+  - secret-mq.yaml
+tests:
+  - it: should render pods annotations
+    set:
+      podAnnotations:
+        alfresco-helm-charts.github.io/test: annotate-pods
+    asserts:
+      - template: deployment-connector-hxi-live-ingester.yaml
+        isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            alfresco-helm-charts.github.io/test: annotate-pods
+      - template: deployment-connector-hxi-prediction-applier.yaml
+        isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            alfresco-helm-charts.github.io/test: annotate-pods

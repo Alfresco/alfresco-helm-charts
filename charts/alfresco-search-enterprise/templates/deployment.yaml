@@ -16,7 +16,7 @@ spec:
     metadata:
       annotations:
       {{- with $.Values.podAnnotations }}
-        {{- toYaml $ | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- include (printf "alfresco-search-enterprise.%s.labels" $serviceName) $ | nindent 8 }}

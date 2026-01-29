@@ -74,3 +74,13 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].readinessProbe.httpGet.path
           value: /activiti-admin/actuator/health/readiness
+  - it: should render pod annotations when set
+    set:
+      podAnnotations:
+        alfresco-helm-charts.github.io/test: annotate-pods
+    asserts:
+      - template: deployment.yaml
+        isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            alfresco-helm-charts.github.io/test: annotate-pods

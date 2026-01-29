@@ -276,7 +276,7 @@ tests:
           value: node_value
         template: deployment.yaml
 
-  - it: should render labels for deployment
+  - it: should render labels & pod annotations for deployment
     values: *testvalues
     chart:
       version: 1.0.0
@@ -284,6 +284,10 @@ tests:
     template: deployment.yaml
     documentIndex: 0
     asserts:
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            alfresco-helm-charts.github.io/test: annotate-pods
       - isSubset:
           path: metadata.labels
           content:

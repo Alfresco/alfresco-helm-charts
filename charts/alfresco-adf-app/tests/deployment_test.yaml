@@ -1,0 +1,14 @@
+---
+suite: test ADF deployment
+templates:
+  - deployment.yaml
+tests:
+  - it: should render pods annotations
+    set:
+      podAnnotations:
+        alfresco-helm-charts.github.io/test: annotate-pods
+    asserts:
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            alfresco-helm-charts.github.io/test: annotate-pods

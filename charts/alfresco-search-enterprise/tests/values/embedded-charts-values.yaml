@@ -5,3 +5,5 @@ search:
 ats:
   transform_url: http://transform
   sfs_url: http://sfs
+podAnnotations:
+  alfresco-helm-charts.github.io/test: annotate-pods
