@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  {{- $imapCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) .protocol)) "Chart" $.Chart "Release" $.Release }}
+  {{- $imapCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) .protocol) "additionalLabels" $.Values.additionalLabels "global" $.Values.global) "Chart" $.Chart "Release" $.Release }}
   name: {{ include "alfresco-repository.fullname" $imapCtx }}
   labels:
     {{- include "alfresco-repository.labels" $imapCtx | nindent 4 }}
