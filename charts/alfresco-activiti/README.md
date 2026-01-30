@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-activiti
 
-![Version: 0.7.1](https://img.shields.io/badge/Version-0.7.1-informational?style=flat-square) ![AppVersion: 25.3.0](https://img.shields.io/badge/AppVersion-25.3.0-informational?style=flat-square)
+![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![AppVersion: 25.3.0](https://img.shields.io/badge/AppVersion-25.3.0-informational?style=flat-square)
 
 A Helm chart for Alfresco Activiti
 
@@ -52,6 +52,7 @@ A Helm chart for Alfresco Activiti
 | environment.IDENTITY_SERVICE_SSL_REQUIRED | string | `"none"` | Alfresco Identity Service force using SSL |
 | environment.IDENTITY_SERVICE_TOKEN_STORE | string | `"session"` | Alfresco Identity Service token storage configuration |
 | environment.IDENTITY_SERVICE_USE_BROWSER_BASED_LOGOUT | string | `"true"` | Alfresco Identity Service browser initiated logout toggle |
+| global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `8080` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |

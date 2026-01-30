@@ -71,6 +71,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | filestore.tolerations | list | `[]` |  |
 | filestore.volumeMounts | list | `[]` |  |
 | filestore.volumes | list | `[]` |  |
+| global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | global.strategy.rollingUpdate.maxSurge | int | `1` |  |
 | global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |

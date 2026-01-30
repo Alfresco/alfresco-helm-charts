@@ -40,7 +40,7 @@ helm.sh/chart: {{ include "postgres.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- with .Values.additionalLabels }}
+{{- with mustMerge .Values.additionalLabels .Values.global.additionalLabels }}
 {{- toYaml . | nindent 0 }}
 {{- end }}
 {{- end }}

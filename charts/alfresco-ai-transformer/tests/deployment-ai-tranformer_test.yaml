@@ -118,6 +118,13 @@ tests:
 
   - it: should render labels for deployment
     values: *testvalues
+    set:
+      additionalLabels:
+        my-custom-chart-label: custom-value
+      global:
+        additionalLabels:
+          my-global-custom-label: global-custom-value
+          my-custom-chart-label: global-custom-value
     chart:
       version: 1.0.0
       appVersion: 2.0.0
@@ -131,6 +138,8 @@ tests:
             app.kubernetes.io/name: alfresco-ai-transformer
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-ai-transformer-1.0.0
+            my-custom-chart-label: custom-value
+            my-global-custom-label: global-custom-value
         template: deployment-ai-transformer.yaml
 
   - it: should render deployment with existing secrets and configmaps

@@ -32,6 +32,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | contentMediaTypeCache.enabled | bool | `true` |  |
 | contentMediaTypeCache.refreshTime | string | `"0 0 * * * *"` |  |
 | fullnameOverride | string | `""` |  |
+| global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | imagePullSecrets | list | `[]` |  |
 | indexName | string | `"alfresco"` | Name of the existing search index, usually created by repo |

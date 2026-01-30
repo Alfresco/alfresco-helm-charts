@@ -53,6 +53,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | db.url | string | `nil` | Provide the full JDBC url to connect to database service e.g.: `jdbc:postgresql://hostname:5432/database` |
 | db.username | string | `nil` | The username required to access the service |
 | fullnameOverride | string | `""` |  |
+| global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | hxi.existingConfigMap.keys.hxAuthTokenUrl | string | `"HX_AUTH_TOKEN_URL"` |  |
 | hxi.existingConfigMap.keys.hxInsightIngestionUrl | string | `"HX_INSIGHT_INGESTION_URL"` |  |

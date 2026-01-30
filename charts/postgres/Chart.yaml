@@ -10,7 +10,7 @@ description: |
   sure to deploy your own enterprise grade PostgreSQL instance and configure
   Alfresco charts to point to it.
 type: application
-version: 0.2.0
+version: 0.3.0
 appVersion: "16.6"
 dependencies:
   - name: alfresco-common

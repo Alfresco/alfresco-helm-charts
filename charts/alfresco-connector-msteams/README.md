@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-msteams
 
-![Version: 2.3.0](https://img.shields.io/badge/Version-2.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.8](https://img.shields.io/badge/AppVersion-2.0.8-informational?style=flat-square)
+![Version: 2.4.0](https://img.shields.io/badge/Version-2.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.8](https://img.shields.io/badge/AppVersion-2.0.8-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector msteams service
 
@@ -28,6 +28,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | alfresco.baseUrl | string | `"change_me_alf_base_url"` |  |
 | alfresco.digitalWorkspace.contextPath | string | `"/workspace/"` |  |
 | environment | string | `nil` |  |
+| global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `3978` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |

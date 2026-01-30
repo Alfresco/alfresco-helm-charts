@@ -26,7 +26,7 @@ jobs:
       TEST_ALL_CHARTS: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && 'true' || 'false' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           fetch-depth: 0
 
@@ -72,7 +72,7 @@ jobs:
         chart: ${{ fromJson(needs.list-changed.outputs.matrix) }}
     steps:
       - name: Checkout
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           fetch-depth: 0
 
@@ -107,7 +107,7 @@ jobs:
         chart: ${{ fromJson(needs.list-changed.outputs.matrix) }}
     steps:
       - name: Checkout
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           fetch-depth: 0
 
@@ -122,7 +122,7 @@ jobs:
           version: v3.10.1
 
       - name: Create kind cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v12.2.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v12.4.2
         with:
           ingress-nginx-ref: skip
 
