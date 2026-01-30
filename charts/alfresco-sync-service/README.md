@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-sync-service
 
-![Version: 7.5.0](https://img.shields.io/badge/Version-7.5.0-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
+![Version: 7.6.0](https://img.shields.io/badge/Version-7.6.0-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -19,7 +19,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.6.2 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.7.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
