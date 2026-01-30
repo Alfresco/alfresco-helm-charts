@@ -30,7 +30,7 @@ repos:
         name: "Kubeconform Helm - current k8s version" # current as in currently supported by both Alfresco & AWS
         files: ^charts/[^/]+/(\.kubeconform|\.helmignore|templates/NOTES.txt|.*\.(ya?ml|json|tpl))$
         args:
-          - --kubernetes-version=1.31.4 # eks.17 https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html
+          - --kubernetes-version=1.34.2 # eks.10 https://docs.aws.amazon.com/eks/latest/userguide/platform-versions.html
           - --exclude-charts=alfresco-common
           - --values-dir=ci
           - --strict
