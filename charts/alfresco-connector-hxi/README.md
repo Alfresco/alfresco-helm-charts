@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-hxi
 
-![Version: 0.2.1](https://img.shields.io/badge/Version-0.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.2](https://img.shields.io/badge/AppVersion-2.0.2-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.2](https://img.shields.io/badge/AppVersion-2.0.2-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector hxi services
 
@@ -53,6 +53,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | db.url | string | `nil` | Provide the full JDBC url to connect to database service e.g.: `jdbc:postgresql://hostname:5432/database` |
 | db.username | string | `nil` | The username required to access the service |
 | fullnameOverride | string | `""` |  |
+| global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | hxi.existingConfigMap.keys.hxAuthTokenUrl | string | `"HX_AUTH_TOKEN_URL"` |  |
 | hxi.existingConfigMap.keys.hxInsightIngestionUrl | string | `"HX_INSIGHT_INGESTION_URL"` |  |

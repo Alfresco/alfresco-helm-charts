@@ -273,6 +273,12 @@ tests:
       appVersion: 2.0.0
     set:
       nameOverride: testName
+      additionalLabels:
+        my-custom-chart-label: custom-value
+      global:
+        additionalLabels:
+          my-global-custom-label: global-custom-value
+          my-custom-chart-label: global-custom-value
     asserts:
       - isSubset:
           path: metadata.labels
@@ -283,6 +289,8 @@ tests:
             app.kubernetes.io/name: testName
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-repository-1.0.0
+            my-global-custom-label: global-custom-value
+            my-custom-chart-label: custom-value
 
   - it: should have rollingUpdate when strategy.type is RollingUpdate
     set:

@@ -603,6 +603,13 @@ tests:
   - it: should render labels for every deployment
     values:
       - values/test_values.yaml
+    set:
+      additionalLabels:
+        my-custom-chart-label: custom-value
+      global:
+        additionalLabels:
+          my-global-custom-label: global-custom-value
+          my-custom-chart-label: global-custom-value
     chart:
       version: 1.0.0
       appVersion: 2.0.0
@@ -616,6 +623,8 @@ tests:
             app.kubernetes.io/name: filestore
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-transform-service-1.0.0
+            my-custom-chart-label: custom-value
+            my-global-custom-label: global-custom-value
         template: deployment-filestore.yaml
       - isSubset:
           path: metadata.labels
@@ -626,6 +635,8 @@ tests:
             app.kubernetes.io/name: imagemagick
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-transform-service-1.0.0
+            my-custom-chart-label: custom-value
+            my-global-custom-label: global-custom-value
         template: deployment-imagemagick.yaml
       - isSubset:
           path: metadata.labels
@@ -636,6 +647,8 @@ tests:
             app.kubernetes.io/name: libreoffice
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-transform-service-1.0.0
+            my-custom-chart-label: custom-value
+            my-global-custom-label: global-custom-value
         template: deployment-libreoffice.yaml
       - isSubset:
           path: metadata.labels
@@ -646,6 +659,8 @@ tests:
             app.kubernetes.io/name: pdfrenderer
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-transform-service-1.0.0
+            my-custom-chart-label: custom-value
+            my-global-custom-label: global-custom-value
         template: deployment-pdfrenderer.yaml
       - isSubset:
           path: metadata.labels
@@ -656,6 +671,8 @@ tests:
             app.kubernetes.io/name: tika
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-transform-service-1.0.0
+            my-custom-chart-label: custom-value
+            my-global-custom-label: global-custom-value
         template: deployment-tika.yaml
       - isSubset:
           path: metadata.labels
@@ -666,6 +683,8 @@ tests:
             app.kubernetes.io/name: transform-misc
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-transform-service-1.0.0
+            my-custom-chart-label: custom-value
+            my-global-custom-label: global-custom-value
         template: deployment-transform-misc.yaml
       - isSubset:
           path: metadata.labels
@@ -676,6 +695,8 @@ tests:
             app.kubernetes.io/name: transform-router
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-transform-service-1.0.0
+            my-custom-chart-label: custom-value
+            my-global-custom-label: global-custom-value
         template: deployment-transform-router.yaml
 
   - it: should render expected liveness probe configs in cm

@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-activiti-admin
 
-![Version: 0.8.1](https://img.shields.io/badge/Version-0.8.1-informational?style=flat-square) ![AppVersion: 25.3.0](https://img.shields.io/badge/AppVersion-25.3.0-informational?style=flat-square)
+![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![AppVersion: 25.3.0](https://img.shields.io/badge/AppVersion-25.3.0-informational?style=flat-square)
 
 A Helm chart for Alfresco Activiti
 
@@ -37,6 +37,7 @@ A Helm chart for Alfresco Activiti
 | environment.ACTIVITI_ADMIN_REST_APP_PASSWORD | string | `"admin"` | activiti-app password |
 | environment.ACTIVITI_ADMIN_REST_APP_PORT | string | `"80"` | activiti-app port |
 | environment.ACTIVITI_ADMIN_REST_APP_USERNAME | string | `"admin@app.activiti.com"` | activiti-app username |
+| global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.internalPort | int | `8080` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |

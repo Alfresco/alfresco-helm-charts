@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-audit-storage
 
-![Version: 0.5.1](https://img.shields.io/badge/Version-0.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.0](https://img.shields.io/badge/AppVersion-1.2.0-informational?style=flat-square)
+![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.0](https://img.shields.io/badge/AppVersion-1.2.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes to deploy Alfresco Audit Storage
 
@@ -30,6 +30,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | environment.AUDIT_EVENTINGESTION_URI | string | `"activemq:topic:alfresco.repo.event2"` |  |
 | environment.SPRING_PROFILES_ACTIVE | string | `"durable-subscriptions"` |  |
 | fullnameOverride | string | `""` |  |
+| global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-audit-storage"` |  |

@@ -22,3 +22,41 @@ tests:
           path: spec.template.metadata.annotations
           content:
             alfresco-helm-charts.github.io/test: annotate-pods
+
+  - it: should render labels for job
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    set:
+      nameOverride: testName
+      additionalLabels:
+        my-custom-chart-label: custom-value
+      global:
+        additionalLabels:
+          my-global-custom-label: global-custom-value
+          my-custom-chart-label: global-custom-value
+    asserts:
+      - template: deployment-connector-hxi-prediction-applier.yaml
+        isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-connector-hxi
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: testName-prediction-applier
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-connector-hxi-1.0.0
+            my-global-custom-label: global-custom-value
+            my-custom-chart-label: custom-value
+      - template: deployment-connector-hxi-live-ingester.yaml
+        isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-connector-hxi
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: testName-live-ingester
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-connector-hxi-1.0.0
+            my-global-custom-label: global-custom-value
+            my-custom-chart-label: custom-value
