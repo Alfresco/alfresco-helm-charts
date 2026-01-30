@@ -1,0 +1,41 @@
+---
+suite: test bulk ingester job manifest
+templates:
+  - job-connector-hxi-bulk-ingester.yaml
+tests:
+  - it: should have the default init container
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[0].name
+          value: wait-for-repository
+      - matchRegex:
+          path: spec.template.spec.initContainers[0].image
+          pattern: "curlimages/curl:.+"
+      - equal:
+          path: spec.template.spec.initContainers[0].imagePullPolicy
+          value: IfNotPresent
+
+  - it: should render labels for job
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    set:
+      nameOverride: testName
+      additionalLabels:
+        my-custom-chart-label: custom-value
+      global:
+        additionalLabels:
+          my-global-custom-label: global-custom-value
+          my-custom-chart-label: global-custom-value
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-connector-hxi
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: testName-bulk-ingester
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-connector-hxi-1.0.0
+            my-global-custom-label: global-custom-value
+            my-custom-chart-label: custom-value
