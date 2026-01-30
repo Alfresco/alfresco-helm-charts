@@ -59,6 +59,7 @@ tests:
       global:
         additionalLabels:
           my-global-custom-label: global-custom-value
+          my-custom-chart-label: global-custom-value
     asserts:
       - isSubset:
           path: metadata.labels

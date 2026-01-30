@@ -284,6 +284,7 @@ tests:
       global:
         additionalLabels:
           my-global-custom-label: global-custom-value
+          my-custom-chart-label: global-custom-value
     chart:
       version: 1.0.0
       appVersion: 2.0.0
