@@ -35,6 +35,9 @@ data:
     -Demail.server.enabled={{ .smtp.enabled | toString }}
     -Demail.inbound.enabled={{ .smtp.enabled | toString }}
     -Demail.server.port={{ .smtp.port | toString }}
+    {{- if .debug.enabled }}
+    -agentlib:jdwp=transport=dt_socket,server=y,suspend={{ .debug.suspend | default "n" }},address=0.0.0.0:{{ .debug.port }}
+    {{- end }}
     {{- end }}
     {{ .Values.environment.CATALINA_OPTS | default "" }}
   JAVA_OPTS: >-
