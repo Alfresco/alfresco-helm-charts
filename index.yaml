@@ -1983,6 +1983,30 @@ entries:
   alfresco-audit-storage:
   - apiVersion: v2
     appVersion: 1.2.0
+    created: "2026-02-03T15:26:51.321192616Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    - name: activemq
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      tags:
+      - ci
+      version: 3.7.0
+    - name: elasticsearch
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 21.4.1
+    description: A Helm chart for Kubernetes to deploy Alfresco Audit Storage
+    digest: dea3f21e010f01920ff04537aef46af14773a4150056564fc1a468ff70a3ed6a
+    name: alfresco-audit-storage
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-audit-storage-0.7.2/alfresco-audit-storage-0.7.2.tgz
+    version: 0.7.2
+  - apiVersion: v2
+    appVersion: 1.2.0
     created: "2026-02-03T11:58:44.587752123Z"
     dependencies:
     - name: alfresco-common
@@ -9540,4 +9564,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2026-02-03T11:58:44.589064998Z"
+generated: "2026-02-03T15:26:51.321940934Z"
