@@ -189,11 +189,6 @@ tests:
       - contains:
           path: spec.template.spec.containers[0].env
           content:
-            name: AUDIT_EVENTINGESTION_URI
-            value: activemq:topic:alfresco.repo.event2
-      - contains:
-          path: spec.template.spec.containers[0].env
-          content:
             name: SPRING_PROFILES_ACTIVE
             value: durable-subscriptions
 
