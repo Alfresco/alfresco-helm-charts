@@ -34,7 +34,6 @@ readinessProbe:
   periodSeconds: 60
 
 environment:
-  AUDIT_EVENTINGESTION_URI: activemq:topic:alfresco.repo.event2
   AUDIT_EVENTINGESTION_DLQ_CONSUMEPERIOD: 60000
   AUDIT_EVENTINGESTION_DLQ_CONSUMPTIONCOUNT: 1000
   SPRING_PROFILES_ACTIVE: "durable-subscriptions"
