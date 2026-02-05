@@ -27,7 +27,7 @@ helm plugin install https://github.com/helm-unittest/helm-unittest --version v1.
 
 **Pre-commit hooks:**
 ```bash
-pre-commit install  # Must be run after each commit
+pre-commit install  # Sets up automatic pre-commit hooks (run once per repo)
 ```
 
 ### Testing Commands
