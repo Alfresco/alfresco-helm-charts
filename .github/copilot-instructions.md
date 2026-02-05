@@ -69,6 +69,8 @@ pre-commit run --all-files
 - Tests require the chart to have a `ci/default-values.yaml` file
 - Integration tests on KinD require Quay.io credentials (CI only)
 - Pre-commit hooks will automatically run on commit
+- **When making changes under a chart's `templates/` folder**, add new tests or
+  improve existing ones to cover the template changes.
 - **Re-evaluate and propose updates to this instruction file** whenever the
   supported Kubernetes version changes or any dependency versions referenced
   here change (e.g., kubeconform or helm-unittest).
