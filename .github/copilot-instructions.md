@@ -75,7 +75,8 @@ pre-commit run --all-files
 
 ### Common Pitfalls
 
-1. **Forgetting to bump chart versions** - This is the #1 mistake. Always bump Chart.yaml version for any chart changes
+1. **Forgetting to bump chart versions** - This is the #1 mistake. Always bump
+   Chart.yaml version for any chart changes
 2. **Missing helm plugins** - Both kubeconform-helm and helm-unittest are required
 3. **Not running pre-commit** - Pre-commit catches many issues before CI
 4. **Testing without ci/default-values.yaml** - Each chart needs valid test values
@@ -165,11 +166,14 @@ charts/<chart-name>/
 
 ## Chart Version Bumping Requirements
 
-**CRITICAL REQUIREMENT**: Always remember to bump the Chart.yaml version when making changes to any chart in the `charts/` directory, following semantic versioning principles.
+**CRITICAL REQUIREMENT**: Always remember to bump the Chart.yaml version when
+making changes to any chart in the `charts/` directory, following semantic
+versioning principles.
 
 ### Semantic Versioning Rules
 
-When making changes to any chart folder under `charts/`, you MUST bump the version in the corresponding `Chart.yaml` file according to these rules:
+When making changes to any chart folder under `charts/`, you MUST bump the
+version in the corresponding `Chart.yaml` file according to these rules:
 
 #### Major Version Bump (X.y.z → X+1.0.0)
 **Required for non-backward-compatible changes:**
