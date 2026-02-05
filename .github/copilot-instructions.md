@@ -5,8 +5,8 @@
 This repository contains Helm charts for deploying Alfresco Content Services (ACS) and related components to Kubernetes. It includes 18 individual charts for various Alfresco services including repository, share, search, transform services, and integrations.
 
 **Key Technologies:**
-- Helm 3 (v3.10.2+)
-- Kubernetes 1.28.15+ (tested up to 1.34.2)
+- Helm 3
+- Kubernetes
 - YAML templating
 - GitHub Actions for CI/CD
 
@@ -14,20 +14,20 @@ This repository contains Helm charts for deploying Alfresco Content Services (AC
 
 ### Prerequisites Setup
 
-**On macOS:**
+**On homebrew supported platforms:**
 ```bash
 brew bundle install  # Installs all required tools from Brewfile
 ```
 
 **Required Helm plugins (any platform):**
 ```bash
-helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.1.12
-helm plugin install https://github.com/helm-unittest/helm-unittest --version v0.3.4
+helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.2.0
+helm plugin install https://github.com/helm-unittest/helm-unittest --version v1.0.0
 ```
 
 **Pre-commit hooks:**
 ```bash
-pre-commit install  # Must be run after cloning
+pre-commit install  # Must be run after each commit
 ```
 
 ### Testing Commands
@@ -202,29 +202,6 @@ When working on changes to any chart (e.g., `charts/alfresco-repository/`, `char
 4. **Verify version format**: Ensure version follows semantic versioning (e.g., "1.2.3")
 5. **Check dependencies**: If modifying alfresco-common, update dependent charts' requirements
 
-### Chart Structure Reference
-
-Each chart is located in `charts/{chart-name}/` and contains:
-- `Chart.yaml` - Contains the version field that must be updated
-- `values.yaml` - Default configuration values
-- `templates/` - Kubernetes resource templates
-
-### Examples of Version Bumping
-
-```yaml
-# Before change (in Chart.yaml)
-version: 1.5.2
-
-# After adding a new feature (minor bump)
-version: 1.6.0
-
-# After fixing a bug (patch bump)
-version: 1.5.3
-
-# After breaking change (major bump)
-version: 2.0.0
-```
-
 ### Special Considerations
 
 - **alfresco-common chart**: Changes here often require updating dependent charts
@@ -259,8 +236,6 @@ Current chart versions (as reference):
 - `alfresco-repository`: 0.10.1 (application chart)
 - `alfresco-connector-hxi`: 0.1.5 (newer chart)
 - `elastic`: 0.1.2 (infrastructure chart)
-
-**Remember: Every change to chart files requires a corresponding version bump in Chart.yaml!**
 
 ### Automation Note
 
