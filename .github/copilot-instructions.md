@@ -254,12 +254,19 @@ The repository uses GitHub Actions to automatically release charts when versions
 
 ### Chart Dependencies
 
-Many charts depend on `alfresco-common` (currently v4.0.0), which is a library chart providing shared templates and helpers. When updating alfresco-common:
+Many charts depend on `alfresco-common` (currently v4.0.0), which is a library chart providing shared templates and helpers. There is also a dependency chain through the `activemq` chart.
 
-1. Bump alfresco-common version first
-2. Update dependent charts' Chart.yaml dependencies section
-3. Run `helm dependency update charts/<chart-name>` for each dependent chart
-4. Test each dependent chart individually
+**Dependency chain:**
+1. `alfresco-common` - Base library chart (used by many charts)
+2. `activemq` - Depends on `alfresco-common`
+3. Multiple charts depend on `activemq` (e.g., alfresco-sync-service, alfresco-transform-service, alfresco-audit-storage, alfresco-ai-transformer, alfresco-connector-hxi, alfresco-search-enterprise)
+
+**When updating alfresco-common:**
+1. Bump `alfresco-common` version first
+2. Update `activemq` chart to reference the new `alfresco-common` version
+3. Update all charts that depend on either `alfresco-common` or `activemq`
+4. Run `helm dependency update charts/<chart-name>` for each affected chart
+5. Test each dependent chart individually
 
 ### External Dependencies
 
