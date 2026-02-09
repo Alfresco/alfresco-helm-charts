@@ -3,20 +3,99 @@ suite: test share ingress
 templates:
   - ingress.yaml
 tests:
-  - it: should render with default security annotations
+  - it: should render with default ingress class
     asserts:
-      - equal:
-          path: metadata.annotations['nginx.ingress.kubernetes.io/server-snippet']
-          value: |
-            location ~ ^/.*/(wc)?s(ervice)?/api/solr/.*$ {return 403;}
-            location ~ ^/.*/proxy/.*/api/solr/.*$ {return 403;}
-            location ~ ^/.*/-default-/proxy/.*/api/.*$ {return 403;}
-            location ~ ^/.*/s/prometheus$ {return 403;}
-        template: ingress.yaml
       - equal:
           path: spec.ingressClassName
           value: nginx
-        template: ingress.yaml
+
+  - it: should sanitize ingress
+    set:
+      ingress:
+        annotations:
+          nginx.ingress.kubernetes.io/server-snippet: listen 6666;
+    asserts:
+      - notMatchRegex:
+          path: metadata.annotations['nginx.ingress.kubernetes.io/server-snippet']
+          pattern: listen 6666;
+      - equal:
+          path: spec.ingressClassName
+          value: nginx
+
+  - it: should render default rules with blocked solr paths
+    asserts:
+      - contains:
+          path: spec.rules[0].http.paths
+          content:
+            path: /share/service/proxy/alfresco/api/solr/aclchangesets
+            pathType: Prefix
+            backend:
+              service:
+                name: blocked-aclchangesets
+                port:
+                  number: 80
+      - contains:
+          path: spec.rules[0].http.paths
+          content:
+            path: /share/proxy/alfresco-noauth/api/solr/aclchangesets
+            pathType: Prefix
+            backend:
+              service:
+                name: blocked-aclchangesets
+                port:
+                  number: 80
+      - contains:
+          path: spec.rules[0].http.paths
+          content:
+            path: /share/proxy/alfresco-feed/api/solr/aclchangesets
+            pathType: Prefix
+            backend:
+              service:
+                name: blocked-aclchangesets
+                port:
+                  number: 80
+      - contains:
+          path: spec.rules[0].http.paths
+          content:
+            path: /share
+            pathType: Prefix
+            backend:
+              service:
+                name: RELEASE-NAME-alfresco-share
+                port:
+                  number: 80
+
+  - it: should allow custom serviceName override
+    set:
+      ingress:
+        hosts:
+          - paths:
+              - path: /share
+                pathType: Prefix
+                serviceName: custom-service
+                servicePort: 8080
+    asserts:
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.name
+          value: custom-service
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.port.number
+          value: 8080
+
+  - it: should render tls section with specified values
+    set:
+      ingress:
+        tls:
+         - secretName: chart-example-tls
+           hosts:
+             - chart-example.local
+    asserts:
+      - equal:
+          path: spec.tls
+          value:
+            - hosts:
+                - "chart-example.local"
+              secretName: chart-example-tls
 
   - it: should render labels for ingress
     chart:

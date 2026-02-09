@@ -13,7 +13,6 @@ metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_153=We're filtering out snippet in named template
     {{- include "alfresco-common.nginx.annotations" .Values }}
-    {{- include "alfresco-common.nginx.secure.annotations" .Values }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   {{- if .Values.ingress.tls }}
@@ -38,9 +37,9 @@ spec:
             {{- end }}
             backend:
               service:
-                name: {{ $fullName }}
+                name: {{ .serviceName | default $fullName }}
                 port:
-                  number: {{ $svcPort }}
+                  number: {{ .servicePort | default $svcPort }}
           {{- end }}
     {{- end }}
 {{- end }}

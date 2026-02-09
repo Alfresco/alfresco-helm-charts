@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 0.13.0](https://img.shields.io/badge/Version-0.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 25.3.0](https://img.shields.io/badge/AppVersion-25.3.0-informational?style=flat-square)
+![Version: 0.14.0-alpha.0](https://img.shields.io/badge/Version-0.14.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 25.3.0](https://img.shields.io/badge/AppVersion-25.3.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -107,6 +107,16 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.hosts[0].paths[1].path | string | `"/api-explorer"` |  |
 | ingress.hosts[0].paths[1].pathType | string | `"Prefix"` |  |
+| ingress.hosts[0].paths[2] | object | `{"path":"/alfresco/service/api/solr/aclchangesets","pathType":"Prefix","serviceName":"blocked-aclchangesets"}` | Block direct access to Solr ACL changesets endpoints as it contains sensitive information |
+| ingress.hosts[0].paths[3].path | string | `"/alfresco/s/api/solr/aclchangesets"` |  |
+| ingress.hosts[0].paths[3].pathType | string | `"Prefix"` |  |
+| ingress.hosts[0].paths[3].serviceName | string | `"blocked-aclchangesets"` |  |
+| ingress.hosts[0].paths[4].path | string | `"/alfresco/wcservice/api/solr/aclchangesets"` |  |
+| ingress.hosts[0].paths[4].pathType | string | `"Prefix"` |  |
+| ingress.hosts[0].paths[4].serviceName | string | `"blocked-aclchangesets"` |  |
+| ingress.hosts[0].paths[5].path | string | `"/alfresco/wcs/api/solr/aclchangesets"` |  |
+| ingress.hosts[0].paths[5].pathType | string | `"Prefix"` |  |
+| ingress.hosts[0].paths[5].serviceName | string | `"blocked-aclchangesets"` |  |
 | ingress.tls | list | `[]` |  |
 | initContainers.waitDbReady.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.waitDbReady.image.repository | string | `"busybox"` |  |

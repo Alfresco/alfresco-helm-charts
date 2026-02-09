@@ -78,7 +78,18 @@ ingress:
   hosts:
     - paths:
         - path: /share
-          pathType: ImplementationSpecific
+          pathType: Prefix
+        # -- Block direct access to Solr ACL changesets endpoints as it contains sensitive information
+        - path: /share/service/proxy/alfresco/api/solr/aclchangesets
+          pathType: Prefix
+          serviceName: blocked-aclchangesets
+        - path: /share/proxy/alfresco-noauth/api/solr/aclchangesets
+          pathType: Prefix
+          serviceName: blocked-aclchangesets
+        - path: /share/proxy/alfresco-feed/api/solr/aclchangesets
+          pathType: Prefix
+          serviceName: blocked-aclchangesets
+
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

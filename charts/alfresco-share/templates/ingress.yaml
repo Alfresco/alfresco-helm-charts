@@ -1,4 +1,6 @@
 {{- if .Values.ingress.enabled -}}
+{{- $fullName := include "alfresco-share.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -8,7 +10,6 @@ metadata:
   annotations:
     checkov.io/skip1: CKV_K8S_153=We're filtering out snippet in named template
     {{- include "alfresco-common.nginx.annotations" .Values }}
-    {{- include "alfresco-common.nginx.secure.annotations" .Values }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   {{- with .Values.ingress.tls }}
@@ -31,9 +32,9 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ template "alfresco-share.fullname" $ }}
+                name: {{ .serviceName | default $fullName }}
                 port:
-                  number: {{ $.Values.service.port }}
+                  number: {{ .servicePort | default $svcPort }}
           {{- end }}
     {{- end }}
 {{- end }}
