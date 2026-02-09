@@ -27,41 +27,51 @@ tests:
       - contains:
           path: spec.rules[0].http.paths
           content:
-            path: /alfresco/service/api/solr/aclchangesets
+            path: /alfresco/service/api/solr/
             pathType: Prefix
             backend:
               service:
-                name: blocked-aclchangesets
+                name: blocked-api-solr
                 port:
                   number: 80
       - contains:
           path: spec.rules[0].http.paths
           content:
-            path: /alfresco/s/api/solr/aclchangesets
+            path: /alfresco/s/api/solr/
             pathType: Prefix
             backend:
               service:
-                name: blocked-aclchangesets
+                name: blocked-api-solr
                 port:
                   number: 80
       - contains:
           path: spec.rules[0].http.paths
           content:
-            path: /alfresco/wcservice/api/solr/aclchangesets
+            path: /alfresco/wcservice/api/solr/
             pathType: Prefix
             backend:
               service:
-                name: blocked-aclchangesets
+                name: blocked-api-solr
                 port:
                   number: 80
       - contains:
           path: spec.rules[0].http.paths
           content:
-            path: /alfresco/wcs/api/solr/aclchangesets
+            path: /alfresco/wcs/api/solr/
             pathType: Prefix
             backend:
               service:
-                name: blocked-aclchangesets
+                name: blocked-api-solr
+                port:
+                  number: 80
+      - contains:
+          path: spec.rules[0].http.paths
+          content:
+            path: /alfresco/s/prometheus
+            pathType: Prefix
+            backend:
+              service:
+                name: blocked-prometheus
                 port:
                   number: 80
       - contains:

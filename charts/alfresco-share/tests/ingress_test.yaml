@@ -27,31 +27,31 @@ tests:
       - contains:
           path: spec.rules[0].http.paths
           content:
-            path: /share/service/proxy/alfresco/api/solr/aclchangesets
+            path: /share/service/proxy/alfresco/api/solr/
             pathType: Prefix
             backend:
               service:
-                name: blocked-aclchangesets
+                name: blocked-api-solr
                 port:
                   number: 80
       - contains:
           path: spec.rules[0].http.paths
           content:
-            path: /share/proxy/alfresco-noauth/api/solr/aclchangesets
+            path: /share/proxy/alfresco-noauth/api/solr/
             pathType: Prefix
             backend:
               service:
-                name: blocked-aclchangesets
+                name: blocked-api-solr
                 port:
                   number: 80
       - contains:
           path: spec.rules[0].http.paths
           content:
-            path: /share/proxy/alfresco-feed/api/solr/aclchangesets
+            path: /share/proxy/alfresco-feed/api/solr/
             pathType: Prefix
             backend:
               service:
-                name: blocked-aclchangesets
+                name: blocked-api-solr
                 port:
                   number: 80
       - contains:

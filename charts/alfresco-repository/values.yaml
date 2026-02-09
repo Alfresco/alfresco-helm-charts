@@ -233,19 +233,22 @@ ingress:
           pathType: Prefix
         - path: /api-explorer
           pathType: Prefix
-        # -- Block direct access to Solr ACL changesets endpoints as it contains sensitive information
-        - path: /alfresco/service/api/solr/aclchangesets
+        # -- Block direct access to Solr API endpoints as it contains sensitive information
+        - path: /alfresco/service/api/solr/
           pathType: Prefix
-          serviceName: blocked-aclchangesets
-        - path: /alfresco/s/api/solr/aclchangesets
+          serviceName: blocked-api-solr
+        - path: /alfresco/s/api/solr/
           pathType: Prefix
-          serviceName: blocked-aclchangesets
-        - path: /alfresco/wcservice/api/solr/aclchangesets
+          serviceName: blocked-api-solr
+        - path: /alfresco/wcservice/api/solr/
           pathType: Prefix
-          serviceName: blocked-aclchangesets
-        - path: /alfresco/wcs/api/solr/aclchangesets
+          serviceName: blocked-api-solr
+        - path: /alfresco/wcs/api/solr/
           pathType: Prefix
-          serviceName: blocked-aclchangesets
+          serviceName: blocked-api-solr
+        - path: /alfresco/s/prometheus
+          pathType: Prefix
+          serviceName: blocked-prometheus
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:

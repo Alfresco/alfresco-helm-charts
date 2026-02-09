@@ -52,13 +52,13 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.enabled | bool | `true` |  |
 | ingress.hosts[0].paths[0].path | string | `"/share"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
-| ingress.hosts[0].paths[1] | object | `{"path":"/share/service/proxy/alfresco/api/solr/aclchangesets","pathType":"Prefix","serviceName":"blocked-aclchangesets"}` | Block direct access to Solr ACL changesets endpoints as it contains sensitive information |
-| ingress.hosts[0].paths[2].path | string | `"/share/proxy/alfresco-noauth/api/solr/aclchangesets"` |  |
+| ingress.hosts[0].paths[1] | object | `{"path":"/share/service/proxy/alfresco/api/solr/","pathType":"Prefix","serviceName":"blocked-api-solr"}` | Block direct access to Solr API endpoints as it contains sensitive information |
+| ingress.hosts[0].paths[2].path | string | `"/share/proxy/alfresco-noauth/api/solr/"` |  |
 | ingress.hosts[0].paths[2].pathType | string | `"Prefix"` |  |
-| ingress.hosts[0].paths[2].serviceName | string | `"blocked-aclchangesets"` |  |
-| ingress.hosts[0].paths[3].path | string | `"/share/proxy/alfresco-feed/api/solr/aclchangesets"` |  |
+| ingress.hosts[0].paths[2].serviceName | string | `"blocked-api-solr"` |  |
+| ingress.hosts[0].paths[3].path | string | `"/share/proxy/alfresco-feed/api/solr/"` |  |
 | ingress.hosts[0].paths[3].pathType | string | `"Prefix"` |  |
-| ingress.hosts[0].paths[3].serviceName | string | `"blocked-aclchangesets"` |  |
+| ingress.hosts[0].paths[3].serviceName | string | `"blocked-api-solr"` |  |
 | ingress.tls | list | `[]` |  |
 | known_urls | string | `nil` | Provide the list of URL considered allowed to access Share resources (used for CSRF protection). The value be either a list of strings or a single string separated by spaces. |
 | livenessProbe.httpGet.path | string | `"/share"` |  |
