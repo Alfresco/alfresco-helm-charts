@@ -15,6 +15,14 @@ tests:
           path: spec.ingressClassName
           value: nginx
 
+  - it: should not render ingress when disabled
+    set:
+      ingress:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
   - it: should contains values overrides
     values:
       - values/ingress_enabled.yaml
@@ -86,3 +94,21 @@ tests:
                           number: 80
                     path: /solr
                     pathType: Prefix
+
+  - it: should allow custom serviceName override
+    set:
+      ingress:
+        enabled: true
+        hosts:
+          - paths:
+              - path: /
+                pathType: Prefix
+                serviceName: custom-service
+                servicePort: 8080
+    asserts:
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.name
+          value: custom-service
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.port.number
+          value: 8080
