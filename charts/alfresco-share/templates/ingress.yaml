@@ -1,10 +1,10 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "alfresco-share.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
+{{- $serviceName := include "alfresco-share.fullname" . -}}
+{{- $servicePort := .Values.service.port -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ template "alfresco-share.fullname" . }}
+  name: {{ $serviceName }}
   labels:
     {{- include "alfresco-share.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
@@ -33,9 +33,9 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ .serviceName | default $fullName }}
+                name: {{ .serviceName | default $serviceName }}
                 port:
-                  number: {{ .servicePort | default $svcPort }}
+                  number: {{ .servicePort | default $servicePort }}
           {{- end }}
     {{- end }}
 {{- end }}

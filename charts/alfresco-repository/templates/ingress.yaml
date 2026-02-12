@@ -1,13 +1,10 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "alfresco-repository.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
-{{/*
-We only support latest apiVersion which is stable now.
-*/}}
+{{- $serviceName := include "alfresco-repository.fullname" . -}}
+{{- $servicePort := .Values.service.port -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $serviceName }}
   labels:
     {{- include "alfresco-repository.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
@@ -38,9 +35,9 @@ spec:
             {{- end }}
             backend:
               service:
-                name: {{ .serviceName | default $fullName }}
+                name: {{ .serviceName | default $serviceName }}
                 port:
-                  number: {{ .servicePort | default $svcPort }}
+                  number: {{ .servicePort | default $servicePort }}
           {{- end }}
     {{- end }}
 {{- end }}
