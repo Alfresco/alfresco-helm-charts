@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-service
 
-![Version: 5.3.0](https://img.shields.io/badge/Version-5.3.0-informational?style=flat-square) ![AppVersion: 2.0.17](https://img.shields.io/badge/AppVersion-2.0.17-informational?style=flat-square)
+![Version: 6.0.0-alpha.0](https://img.shields.io/badge/Version-6.0.0--alpha.0-informational?style=flat-square) ![AppVersion: 2.0.17](https://img.shields.io/badge/AppVersion-2.0.17-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
@@ -34,11 +34,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | environment.SOLR_CREATE_ALFRESCO_DEFAULTS | string | `"alfresco,archive"` |  |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
-| ingress.annotations | object | `{"nginx.ingress.kubernetes.io/auth-realm":"Authentication Required - Alfresco Search Services","nginx.ingress.kubernetes.io/auth-type":"basic","nginx.ingress.kubernetes.io/whitelist-source-range":"0.0.0.0/0"}` | nginx ingress annotations (see https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations) |
-| ingress.basicAuth | string | `nil` | Default solr basic auth user/password: admin / admin You can create your own with htpasswd utilility & encode it with base640. Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'` basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg== |
+| ingress.annotations | object | `{}` |  |
 | ingress.className | string | `"nginx"` |  |
 | ingress.enabled | bool | `false` | Expose the solr admin console behind basic auth |
-| ingress.existingSecretName | string | `nil` | An existing secret that contains an `auth` key with a value in the same format of `ingress.basicAuth` |
 | ingress.hosts[0].paths[0].path | string | `"/solr"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |
