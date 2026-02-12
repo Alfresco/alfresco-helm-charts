@@ -36,7 +36,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `"nginx"` |  |
-| ingress.enabled | bool | `false` | Expose the solr admin console behind basic auth |
+| ingress.enabled | bool | `false` | Expose the solr endpoint - make sure authentication is properly configured if you do so |
 | ingress.hosts[0].paths[0].path | string | `"/solr"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |

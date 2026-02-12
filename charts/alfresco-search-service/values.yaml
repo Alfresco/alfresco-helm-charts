@@ -40,7 +40,7 @@ service:
   # -- Should you want to change the service port
   # externalPort: 80
 ingress:
-  # -- Expose the solr admin console behind basic auth
+  # -- Expose the solr endpoint - make sure authentication is properly configured if you do so
   enabled: false
   hosts:
     - paths:
