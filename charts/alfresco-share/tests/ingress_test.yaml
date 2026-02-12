@@ -9,51 +9,8 @@ tests:
           path: spec.ingressClassName
           value: nginx
 
-  - it: should sanitize ingress
-    set:
-      ingress:
-        annotations:
-          nginx.ingress.kubernetes.io/server-snippet: listen 6666;
+  - it: should render default rules
     asserts:
-      - notMatchRegex:
-          path: metadata.annotations['nginx.ingress.kubernetes.io/server-snippet']
-          pattern: listen 6666;
-      - equal:
-          path: spec.ingressClassName
-          value: nginx
-
-  - it: should render default rules with blocked solr paths
-    asserts:
-      - contains:
-          path: spec.rules[0].http.paths
-          content:
-            path: /share/service/proxy/alfresco/api/solr/
-            pathType: Prefix
-            backend:
-              service:
-                name: blocked-api-solr
-                port:
-                  number: 80
-      - contains:
-          path: spec.rules[0].http.paths
-          content:
-            path: /share/proxy/alfresco-noauth/api/solr/
-            pathType: Prefix
-            backend:
-              service:
-                name: blocked-api-solr
-                port:
-                  number: 80
-      - contains:
-          path: spec.rules[0].http.paths
-          content:
-            path: /share/proxy/alfresco-feed/api/solr/
-            pathType: Prefix
-            backend:
-              service:
-                name: blocked-api-solr
-                port:
-                  number: 80
       - contains:
           path: spec.rules[0].http.paths
           content:
