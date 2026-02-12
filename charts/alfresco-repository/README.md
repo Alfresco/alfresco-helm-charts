@@ -107,19 +107,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.hosts[0].paths[1].path | string | `"/api-explorer"` |  |
 | ingress.hosts[0].paths[1].pathType | string | `"Prefix"` |  |
-| ingress.hosts[0].paths[2] | object | `{"path":"/alfresco/service/api/solr/","pathType":"Prefix","serviceName":"blocked-api-solr"}` | Block direct access to Solr API endpoints as it contains sensitive information |
-| ingress.hosts[0].paths[3].path | string | `"/alfresco/s/api/solr/"` |  |
-| ingress.hosts[0].paths[3].pathType | string | `"Prefix"` |  |
-| ingress.hosts[0].paths[3].serviceName | string | `"blocked-api-solr"` |  |
-| ingress.hosts[0].paths[4].path | string | `"/alfresco/wcservice/api/solr/"` |  |
-| ingress.hosts[0].paths[4].pathType | string | `"Prefix"` |  |
-| ingress.hosts[0].paths[4].serviceName | string | `"blocked-api-solr"` |  |
-| ingress.hosts[0].paths[5].path | string | `"/alfresco/wcs/api/solr/"` |  |
-| ingress.hosts[0].paths[5].pathType | string | `"Prefix"` |  |
-| ingress.hosts[0].paths[5].serviceName | string | `"blocked-api-solr"` |  |
-| ingress.hosts[0].paths[6].path | string | `"/alfresco/s/prometheus"` |  |
-| ingress.hosts[0].paths[6].pathType | string | `"Prefix"` |  |
-| ingress.hosts[0].paths[6].serviceName | string | `"blocked-prometheus"` |  |
+| ingress.hosts[0].paths[2] | object | `{"path":"/alfresco/s/prometheus","pathType":"Prefix","serviceName":"blocked-prometheus"}` | Block direct access to prometheus endpoint |
 | ingress.tls | list | `[]` |  |
 | initContainers.waitDbReady.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.waitDbReady.image.repository | string | `"busybox"` |  |

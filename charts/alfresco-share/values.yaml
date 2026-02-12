@@ -79,16 +79,6 @@ ingress:
     - paths:
         - path: /share
           pathType: Prefix
-        # -- Block direct access to Solr API endpoints as it contains sensitive information
-        - path: /share/service/proxy/alfresco/api/solr/
-          pathType: Prefix
-          serviceName: blocked-api-solr
-        - path: /share/proxy/alfresco-noauth/api/solr/
-          pathType: Prefix
-          serviceName: blocked-api-solr
-        - path: /share/proxy/alfresco-feed/api/solr/
-          pathType: Prefix
-          serviceName: blocked-api-solr
 
   tls: []
   #  - secretName: chart-example-tls
