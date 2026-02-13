@@ -2367,6 +2367,17 @@ entries:
     version: 0.1.0-alpha.0
   alfresco-common:
   - apiVersion: v2
+    created: "2026-02-13T14:15:01.260788805Z"
+    description: 'A helper subchart to avoid duplication in alfresco charts and set
+      common external dependencies '
+    digest: b96ce76d4c4ac66933df20e94cab4bbc20d4e2f40d3a2062fd9c90b3e7b1d8a4
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    name: alfresco-common
+    type: library
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-common-5.0.0-alpha.0/alfresco-common-5.0.0-alpha.0.tgz
+    version: 5.0.0-alpha.0
+  - apiVersion: v2
     created: "2025-01-29T10:53:13.886151977Z"
     description: 'A helper subchart to avoid duplication in alfresco charts and set
       common external dependencies '
@@ -3783,6 +3794,25 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-msteams-0.1.0-alpha.0/alfresco-connector-msteams-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-repository:
+  - apiVersion: v2
+    appVersion: 25.3.0
+    created: "2026-02-13T14:15:01.503372114Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    - name: postgresql
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - ci
+      version: 12.5.6
+    description: Alfresco content repository Helm chart
+    digest: baede935a6dde9668a3192ae99409d064b4bd64ebd9125259a49ecb2721cea73
+    name: alfresco-repository
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-repository-1.0.0-alpha.0/alfresco-repository-1.0.0-alpha.0.tgz
+    version: 1.0.0-alpha.0
   - apiVersion: v2
     appVersion: 25.3.0
     created: "2026-01-30T10:27:49.077773061Z"
@@ -6052,6 +6082,31 @@ entries:
   alfresco-search-service:
   - apiVersion: v2
     appVersion: 2.0.17
+    created: "2026-02-13T14:15:01.686198177Z"
+    dependencies:
+    - condition: alfresco-insight-zeppelin.enabled
+      name: alfresco-insight-zeppelin
+      repository: ""
+      version: 4.3.0
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 4.0.0
+    description: A Helm chart for deploying Alfresco Search Service
+    digest: 80066db4971c4a675ec6ce056561fe98503f5a4a5048e34ba0e8254e0a77b84d
+    home: https://www.alfresco.com
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - alfresco search services
+    - alfresco insight engine
+    - solr
+    name: alfresco-search-service
+    sources:
+    - https://github.com/Alfresco/alfresco-helm-charts
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-search-service-6.0.0-alpha.0/alfresco-search-service-6.0.0-alpha.0.tgz
+    version: 6.0.0-alpha.0
+  - apiVersion: v2
+    appVersion: 2.0.17
     created: "2026-01-30T10:27:49.476890577Z"
     dependencies:
     - condition: alfresco-insight-zeppelin.enabled
@@ -7016,6 +7071,20 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-search-service-1.0.0/alfresco-search-service-1.0.0.tgz
     version: 1.0.0
   alfresco-share:
+  - apiVersion: v2
+    appVersion: 25.3.0
+    created: "2026-02-13T14:15:01.93713635Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts
+      version: 4.0.0
+    description: Alfresco Share Helm chart for Kubernetes
+    digest: 3c8b853e69415fe9ca65ed8e9c32672912d099b8c110dcf572c8a3ec6b706b92
+    name: alfresco-share
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-share-2.0.0-alpha.0/alfresco-share-2.0.0-alpha.0.tgz
+    version: 2.0.0-alpha.0
   - apiVersion: v2
     appVersion: 25.3.0
     created: "2026-01-30T10:27:49.635850151Z"
@@ -9588,4 +9657,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2026-02-12T14:07:14.297985966Z"
+generated: "2026-02-13T14:15:01.939115277Z"
