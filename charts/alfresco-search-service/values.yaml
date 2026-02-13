@@ -40,31 +40,14 @@ service:
   # -- Should you want to change the service port
   # externalPort: 80
 ingress:
-  # -- Expose the solr admin console behind basic auth
+  # -- Expose the solr endpoint - make sure authentication is properly configured if you do so
   enabled: false
   hosts:
     - paths:
         - path: /solr
           pathType: Prefix
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
-  # -- Default solr basic auth user/password: admin / admin
-  # You can create your own with htpasswd utilility & encode it with base640.
-  # Example: `echo -n "$(htpasswd -nbm admin admin)" | base64 | tr -d '\n'`
-  # basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
-  basicAuth: null
-  # -- An existing secret that contains an `auth` key with a value in the same
-  # format of `ingress.basicAuth`
-  existingSecretName: null
-  # -- nginx ingress annotations (see
-  # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations)
-  annotations:
-    nginx.ingress.kubernetes.io/auth-type: basic
-    nginx.ingress.kubernetes.io/auth-realm: >-
-      Authentication Required - Alfresco Search Services
-    nginx.ingress.kubernetes.io/whitelist-source-range: 0.0.0.0/0
+  annotations: {}
   className: nginx
 # Below values must be set by parent chart
 repository:

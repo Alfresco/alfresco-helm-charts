@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-share
 
-![Version: 1.7.0](https://img.shields.io/badge/Version-1.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 25.3.0](https://img.shields.io/badge/AppVersion-25.3.0-informational?style=flat-square)
+![Version: 2.0.0-alpha.0](https://img.shields.io/badge/Version-2.0.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 25.3.0](https://img.shields.io/badge/AppVersion-25.3.0-informational?style=flat-square)
 
 Alfresco Share Helm chart for Kubernetes
 
@@ -51,7 +51,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.className | string | `"nginx"` |  |
 | ingress.enabled | bool | `true` |  |
 | ingress.hosts[0].paths[0].path | string | `"/share"` |  |
-| ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
+| ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.tls | list | `[]` |  |
 | known_urls | string | `nil` | Provide the list of URL considered allowed to access Share resources (used for CSRF protection). The value be either a list of strings or a single string separated by spaces. |
 | livenessProbe.httpGet.path | string | `"/share"` |  |

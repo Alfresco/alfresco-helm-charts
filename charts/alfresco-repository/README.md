@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 0.13.0](https://img.shields.io/badge/Version-0.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 25.3.0](https://img.shields.io/badge/AppVersion-25.3.0-informational?style=flat-square)
+![Version: 1.0.0-alpha.0](https://img.shields.io/badge/Version-1.0.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 25.3.0](https://img.shields.io/badge/AppVersion-25.3.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -107,6 +107,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.hosts[0].paths[1].path | string | `"/api-explorer"` |  |
 | ingress.hosts[0].paths[1].pathType | string | `"Prefix"` |  |
+| ingress.hosts[0].paths[2] | object | `{"path":"/alfresco/s/prometheus","pathType":"Prefix","serviceName":"blocked-prometheus"}` | Block direct access to prometheus endpoint |
 | ingress.tls | list | `[]` |  |
 | initContainers.waitDbReady.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.waitDbReady.image.repository | string | `"busybox"` |  |

@@ -1,19 +1,16 @@
 {{- if .Values.ingress.enabled }}
-{{- $servicePort := (include "alfresco-search.svcPort" .) -}}
 {{- $serviceName := (include "alfresco-search-service.deployment.name" .) -}}
+{{- $servicePort := (include "alfresco-search.svcPort" .) -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ template "alfresco-search-service.deployment.name" . }}
-  annotations:
-    {{- if eq "nginx" .Values.ingress.className }}
-    nginx.ingress.kubernetes.io/auth-secret: {{ $.Values.ingress.existingSecretName | default (include "alfresco-search-service.ingress-secret.name" .) }}
-    {{- end }}
-    {{- with .Values.ingress.annotations -}}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
+  name: {{ $serviceName }}
   labels:
     {{- include "alfresco-search-service.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   {{- if .Values.ingress.tls }}
@@ -36,9 +33,9 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ $serviceName }}
+                name: {{ .serviceName | default $serviceName }}
                 port:
-                  number: {{ $servicePort }}
+                  number: {{ .servicePort | default $servicePort }}
           {{- end }}
     {{- end }}
 {{- end }}

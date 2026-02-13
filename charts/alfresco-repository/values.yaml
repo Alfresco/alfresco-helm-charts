@@ -233,6 +233,10 @@ ingress:
           pathType: Prefix
         - path: /api-explorer
           pathType: Prefix
+        # -- Block direct access to prometheus endpoint
+        - path: /alfresco/s/prometheus
+          pathType: Prefix
+          serviceName: blocked-prometheus
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
