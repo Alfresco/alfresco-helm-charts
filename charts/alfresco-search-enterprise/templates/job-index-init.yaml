@@ -23,7 +23,7 @@ spec:
       serviceAccountName: {{ include "alfresco-search-enterprise.serviceAccountName" . }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
-      restartPolicy: Never
+      restartPolicy: {{ .Values.indexInit.restartPolicy }}
       containers:
         - name: {{ .Chart.Name }}-index-init
           image: "{{ .Values.indexInit.image.repository }}:{{ .Values.indexInit.image.tag }}"

@@ -49,6 +49,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | indexInit.resources.limits.memory | string | `"256Mi"` |  |
 | indexInit.resources.requests.cpu | string | `"0.25"` |  |
 | indexInit.resources.requests.memory | string | `"64Mi"` |  |
+| indexInit.restartPolicy | string | `"OnFailure"` | Pod restart policy for the job pod (e.g. Never, OnFailure) |
 | indexInit.ttlSecondsAfterFinished | int | `3600` | Time to live for the job after it has finished |
 | indexName | string | `"alfresco"` | Name of the existing search index, usually created by repo |
 | liveIndexing.content.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-search-enterprise.content.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule the content pod on a different zone |
@@ -139,6 +140,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | reindexing.resources.limits.memory | string | `"512Mi"` |  |
 | reindexing.resources.requests.cpu | string | `"0.5"` |  |
 | reindexing.resources.requests.memory | string | `"128Mi"` |  |
+| reindexing.restartPolicy | string | `"Never"` | Pod restart policy for the job pod (e.g. Never, OnFailure) |
 | reindexing.ttlSecondsAfterFinished | int | `3600` | Time to live for the job after it has finished to run |
 | resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |

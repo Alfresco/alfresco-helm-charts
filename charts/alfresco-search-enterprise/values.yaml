@@ -231,6 +231,8 @@ reindexing:
   # -- When to execute the reindexing job (e.g. `post-install` or `post-upgrade`
   # or set to false to apply as a standard resource)
   hookExecution: post-install
+  # -- Pod restart policy for the job pod (e.g. Never, OnFailure)
+  restartPolicy: Never
   # -- Time to live for the job after it has finished to run
   ttlSecondsAfterFinished: 3600
   repository:
@@ -296,6 +298,8 @@ indexInit:
   environment: {}
   # -- When to execute the job as a helm hook (e.g. post-install/post-upgrade) or set to false to apply as a standard resource
   hookExecution: false
+  # -- Pod restart policy for the job pod (e.g. Never, OnFailure)
+  restartPolicy: OnFailure
   # -- Time to live for the job after it has finished
   ttlSecondsAfterFinished: 3600
   resources:
