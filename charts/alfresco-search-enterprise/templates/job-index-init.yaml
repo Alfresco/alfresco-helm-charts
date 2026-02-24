@@ -43,40 +43,41 @@ spec:
               set -euo pipefail
               echo "Starting index init job"
               ES_URL=$(echo $SPRING_ELASTICSEARCH_REST_URIS | cut -d',' -f1)
-              echo "Targeting OpenSearch at: $ES_URL"
 
-              STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -u "$SPRING_ELASTICSEARCH_REST_USERNAME:$SPRING_ELASTICSEARCH_REST_PASSWORD" "$ES_URL/{{ .Values.indexName }}")
+              STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -u "$SPRING_ELASTICSEARCH_REST_USERNAME:$SPRING_ELASTICSEARCH_REST_PASSWORD" "$ES_URL/{{ .Values.indexName }}" || echo "000")
 
               if [ "$STATUS_CODE" -eq 000 ]; then
-                echo "Error: OpenSearch is not reachable at $ES_URL. Exiting with error."
+                echo "Error: OpenSearch is not reachable at $ES_URL. Exiting."
                 exit 1
               fi
 
               if [ "$STATUS_CODE" -eq 404 ]; then
-                echo "Index not found. Creating with custom settings..."
+                echo "Index not found. Creating with shards: {{ .Values.indexInit.numberOfShards }} and replicas: {{ .Values.indexInit.numberOfReplicas }}"
                 curl -sSf -X PUT "$ES_URL/{{ .Values.indexName }}" \
                   -H 'Content-Type: application/json' \
                   -u "$SPRING_ELASTICSEARCH_REST_USERNAME:$SPRING_ELASTICSEARCH_REST_PASSWORD" \
-                  -d'{
+                  -d '{
                     "settings": {
                       "index": {
                         "number_of_shards": {{ .Values.indexInit.numberOfShards }},
                         "number_of_replicas": {{ .Values.indexInit.numberOfReplicas }}
                       }
                     }
-                  }' || echo "Error: failed to create index at $ES_URL/alfresco"
-              else
-                echo "Index already exists. Updating number_of_replicas only..."
-                curl -sSf -X PUT "$ES_URL/alfresco/_settings" \
+                  }' || (echo "CRITICAL: Failed to create index." && exit 1)
+              elif [ "$STATUS_CODE" -eq 200 ]; then
+                echo "Index exists. Enforcing replica count: {{ .Values.indexInit.numberOfReplicas }}"
+                curl -sSf -X PUT "$ES_URL/{{ .Values.indexName }}/_settings" \
                   -H 'Content-Type: application/json' \
                   -u "$SPRING_ELASTICSEARCH_REST_USERNAME:$SPRING_ELASTICSEARCH_REST_PASSWORD" \
-                  -d'{
-                    "settings": {
-                      "index": {
-                        "number_of_replicas": {{ .Values.indexInit.numberOfReplicas }}
-                      }
+                  -d '{
+                    "index": {
+                      "number_of_replicas": {{ .Values.indexInit.numberOfReplicas }}
                     }
-                  }' && echo "Updated replicas to {{ .Values.indexInit.numberOfReplicas }}" || echo "Warning: failed to update replicas for $ES_URL/alfresco"
+                  }' || (echo "Warning: Could not update settings" && exit 1)
+              else
+                echo "CRITICAL: Unexpected status code $STATUS_CODE received from OpenSearch."
+                echo "Please check credentials, permissions, or cluster health."
+                exit 1
               fi
           {{- with coalesce .Values.indexInit.extraVolumeMounts $.Values.extraVolumeMounts }}
           volumeMounts:
