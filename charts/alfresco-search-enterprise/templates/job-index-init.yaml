@@ -47,7 +47,7 @@ spec:
               STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" -u "$SPRING_ELASTICSEARCH_REST_USERNAME:$SPRING_ELASTICSEARCH_REST_PASSWORD" "$ES_URL/{{ .Values.indexName }}" || echo "000")
 
               if [ "$STATUS_CODE" -eq 000 ]; then
-                echo "Error: OpenSearch is not reachable at $ES_URL. Exiting."
+                echo "Error: Index server is not reachable at $ES_URL. Exiting."
                 exit 1
               fi
 
@@ -75,7 +75,7 @@ spec:
                     }
                   }' || (echo "Warning: Could not update settings" && exit 1)
               else
-                echo "CRITICAL: Unexpected status code $STATUS_CODE received from OpenSearch."
+                echo "CRITICAL: Unexpected status code $STATUS_CODE received from index server."
                 echo "Please check credentials, permissions, or cluster health."
                 exit 1
               fi
