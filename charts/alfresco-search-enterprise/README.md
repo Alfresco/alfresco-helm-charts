@@ -35,6 +35,21 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | imagePullSecrets | list | `[]` |  |
+| indexInit.enabled | bool | `false` | One-shot job to configure the Alfresco search index with custom settings |
+| indexInit.environment | object | `{}` | Environment variables to set for the container |
+| indexInit.extraVolumeMounts | list | `[]` |  |
+| indexInit.extraVolumes | list | `[]` |  |
+| indexInit.hookExecution | bool | `false` | When to execute the job as a helm hook (e.g. post-install/post-upgrade) or set to false to apply as a standard resource |
+| indexInit.image.pullPolicy | string | `"IfNotPresent"` |  |
+| indexInit.image.repository | string | `"curlimages/curl"` |  |
+| indexInit.image.tag | string | `"8.11.0"` |  |
+| indexInit.numberOfReplicas | int | `1` |  |
+| indexInit.numberOfShards | int | `1` | Default shard/replica settings used when creating or updating an index. Remember that `elasticsearch.createIndexIfNotExists` in Alfresco properties needs to not be set to true for the job to setup number of shards. Replicas can be updated regardless of the index being created by Alfresco or not. |
+| indexInit.resources.limits.cpu | string | `"1"` |  |
+| indexInit.resources.limits.memory | string | `"256Mi"` |  |
+| indexInit.resources.requests.cpu | string | `"0.25"` |  |
+| indexInit.resources.requests.memory | string | `"64Mi"` |  |
+| indexInit.ttlSecondsAfterFinished | int | `3600` | Time to live for the job after it has finished |
 | indexName | string | `"alfresco"` | Name of the existing search index, usually created by repo |
 | liveIndexing.content.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-search-enterprise.content.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule the content pod on a different zone |
 | liveIndexing.content.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-search-enterprise.content.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}` | Prefer to schedule the content pod on a different node |

@@ -1,0 +1,67 @@
+---
+suite: test index-init job manifest
+templates:
+  - job-index-init.yaml
+tests:
+  - it: should have env vars for elasticsearch credentials
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-es
+                key: SEARCH_USERNAME
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-es
+                key: SEARCH_PASSWORD
+
+  - it: should not be present when disabled
+    set:
+      indexInit.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render default container image
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: "curlimages/curl:.+"
+      - equal:
+          path: spec.template.spec.containers[0].imagePullPolicy
+          value: IfNotPresent
+
+  - it: has hook annotation when enabled as post-install
+    set:
+      indexInit:
+        enabled: true
+        hookExecution: post-install
+    asserts:
+      - equal:
+          path: metadata.annotations
+          value:
+            "helm.sh/hook": "post-install"
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-search-enterprise-index-init
+
+  - it: has changed hook annotation when set to post-upgrade
+    set:
+      indexInit:
+        enabled: true
+        hookExecution: post-upgrade
+    asserts:
+      - equal:
+          path: metadata.annotations
+          value:
+            "helm.sh/hook": "post-upgrade"
+      - matchRegex:
+          path: metadata.name
+          pattern: RELEASE-NAME-alfresco-search-enterprise-index-init-[a-z0-9]{5}

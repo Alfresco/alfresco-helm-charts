@@ -283,8 +283,36 @@ reindexing:
         pullPolicy: IfNotPresent
       resources:
         limits:
-          cpu: 250m
-          memory: 20Mi
+          cpu: "250m"
+          memory: "20Mi"
+indexInit:
+  # -- One-shot job to configure the Alfresco search index with custom settings
+  enabled: false
+  image:
+    repository: curlimages/curl
+    tag: "8.11.0"
+    pullPolicy: IfNotPresent
+  # -- Environment variables to set for the container
+  environment: {}
+  # -- When to execute the job as a helm hook (e.g. post-install/post-upgrade) or set to false to apply as a standard resource
+  hookExecution: false
+  # -- Time to live for the job after it has finished
+  ttlSecondsAfterFinished: 3600
+  resources:
+    requests:
+      cpu: "0.25"
+      memory: "64Mi"
+    limits:
+      cpu: "1"
+      memory: "256Mi"
+  extraVolumeMounts: []
+  extraVolumes: []
+  # -- Default shard/replica settings used when creating or updating an index.
+  # Remember that `elasticsearch.createIndexIfNotExists` in Alfresco properties
+  # needs to not be set to true for the job to setup number of shards. Replicas
+  # can be updated regardless of the index being created by Alfresco or not.
+  numberOfShards: 1
+  numberOfReplicas: 1
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
