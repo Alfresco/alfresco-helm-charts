@@ -21,14 +21,14 @@ spec:
         {{- include "alfresco-search-enterprise.labels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "alfresco-search-enterprise.serviceAccountName" . }}
-      {{- include "alfresco-common.component-pod-security-context" .Values | indent 6 }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       restartPolicy: Never
       containers:
         - name: {{ .Chart.Name }}-index-init
           image: "{{ .Values.indexInit.image.repository }}:{{ .Values.indexInit.image.tag }}"
           imagePullPolicy: {{ .Values.indexInit.image.pullPolicy }}
-          {{- include "alfresco-common.component-security-context" .Values | indent 10 }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           resources: {{- toYaml .Values.indexInit.resources | nindent 12 }}
           env:
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
