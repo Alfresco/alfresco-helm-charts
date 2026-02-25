@@ -231,6 +231,8 @@ reindexing:
   # -- When to execute the reindexing job (e.g. `post-install` or `post-upgrade`
   # or set to false to apply as a standard resource)
   hookExecution: post-install
+  # -- Pod restart policy for the job pod (e.g. Never, OnFailure)
+  restartPolicy: Never
   # -- Time to live for the job after it has finished to run
   ttlSecondsAfterFinished: 3600
   repository:
@@ -283,8 +285,41 @@ reindexing:
         pullPolicy: IfNotPresent
       resources:
         limits:
-          cpu: 250m
-          memory: 20Mi
+          cpu: "250m"
+          memory: "20Mi"
+indexInit:
+  # -- One-shot job to create the Alfresco search index with custom
+  # shards/replicas settings, or to update the number of replicas to an existing
+  # index.
+  enabled: false
+  image:
+    repository: curlimages/curl
+    tag: "8.11.0"
+    pullPolicy: IfNotPresent
+  # -- Environment variables to set for the container
+  environment: {}
+  # -- When to execute the job, by default as a standard resource or as a helm hook (e.g. post-install/post-upgrade)
+  hookExecution: false
+  # -- Pod restart policy for the job pod (e.g. Never, OnFailure)
+  restartPolicy: OnFailure
+  # -- Time to live for the job after it has finished
+  ttlSecondsAfterFinished: 3600
+  resources:
+    requests:
+      cpu: "0.25"
+      memory: "64Mi"
+    limits:
+      cpu: "1"
+      memory: "256Mi"
+  extraVolumeMounts: []
+  extraVolumes: []
+  # -- Number of shards used when creating a new index. Remember that
+  # `elasticsearch.createIndexIfNotExists` in Alfresco properties needs to not
+  # be set to true for the job to have a chance to set it up.
+  numberOfShards: 1
+  # -- Number of replicas used when creating or updating the index. Replicas can
+  # be updated regardless of the index being created by this job or not.
+  numberOfReplicas: 1
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

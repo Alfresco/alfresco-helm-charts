@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-enterprise
 
-![Version: 4.9.0](https://img.shields.io/badge/Version-4.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
+![Version: 4.10.0-alpha.0](https://img.shields.io/badge/Version-4.10.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -35,6 +35,22 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | imagePullSecrets | list | `[]` |  |
+| indexInit.enabled | bool | `false` | One-shot job to create the Alfresco search index with custom shards/replicas settings, or to update the number of replicas to an existing index. |
+| indexInit.environment | object | `{}` | Environment variables to set for the container |
+| indexInit.extraVolumeMounts | list | `[]` |  |
+| indexInit.extraVolumes | list | `[]` |  |
+| indexInit.hookExecution | bool | `false` | When to execute the job, by default as a standard resource or as a helm hook (e.g. post-install/post-upgrade) |
+| indexInit.image.pullPolicy | string | `"IfNotPresent"` |  |
+| indexInit.image.repository | string | `"curlimages/curl"` |  |
+| indexInit.image.tag | string | `"8.11.0"` |  |
+| indexInit.numberOfReplicas | int | `1` | Number of replicas used when creating or updating the index. Replicas can be updated regardless of the index being created by this job or not. |
+| indexInit.numberOfShards | int | `1` | Number of shards used when creating a new index. Remember that `elasticsearch.createIndexIfNotExists` in Alfresco properties needs to not be set to true for the job to have a chance to set it up. |
+| indexInit.resources.limits.cpu | string | `"1"` |  |
+| indexInit.resources.limits.memory | string | `"256Mi"` |  |
+| indexInit.resources.requests.cpu | string | `"0.25"` |  |
+| indexInit.resources.requests.memory | string | `"64Mi"` |  |
+| indexInit.restartPolicy | string | `"OnFailure"` | Pod restart policy for the job pod (e.g. Never, OnFailure) |
+| indexInit.ttlSecondsAfterFinished | int | `3600` | Time to live for the job after it has finished |
 | indexName | string | `"alfresco"` | Name of the existing search index, usually created by repo |
 | liveIndexing.content.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-search-enterprise.content.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule the content pod on a different zone |
 | liveIndexing.content.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-search-enterprise.content.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}` | Prefer to schedule the content pod on a different node |
@@ -124,6 +140,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | reindexing.resources.limits.memory | string | `"512Mi"` |  |
 | reindexing.resources.requests.cpu | string | `"0.5"` |  |
 | reindexing.resources.requests.memory | string | `"128Mi"` |  |
+| reindexing.restartPolicy | string | `"Never"` | Pod restart policy for the job pod (e.g. Never, OnFailure) |
 | reindexing.ttlSecondsAfterFinished | int | `3600` | Time to live for the job after it has finished to run |
 | resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
