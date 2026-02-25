@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-enterprise
 
-![Version: 4.9.0](https://img.shields.io/badge/Version-4.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
+![Version: 4.9.0](https://img.shields.io/badge/Version-4.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.4.0-A.2](https://img.shields.io/badge/AppVersion-5.4.0--A.2-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -41,7 +41,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | liveIndexing.content.environment | object | `{}` | Set environment variables for the content component |
 | liveIndexing.content.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.content.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-content"` |  |
-| liveIndexing.content.image.tag | string | `"5.3.0"` |  |
+| liveIndexing.content.image.tag | string | `"5.4.0-A.2"` |  |
 | liveIndexing.content.livenessProbe.httpGet.path | string | `"/actuator/health"` |  |
 | liveIndexing.content.livenessProbe.httpGet.port | string | `"http"` |  |
 | liveIndexing.content.livenessProbe.initialDelaySeconds | int | `300` |  |
@@ -55,13 +55,13 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | liveIndexing.mediation.environment | object | `{}` | Set environment variables for the mediation component |
 | liveIndexing.mediation.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.mediation.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-mediation"` |  |
-| liveIndexing.mediation.image.tag | string | `"5.3.0"` |  |
+| liveIndexing.mediation.image.tag | string | `"5.4.0-A.2"` |  |
 | liveIndexing.metadata.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-search-enterprise.metadata.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule the content pod on a different zone |
 | liveIndexing.metadata.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-search-enterprise.metadata.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}` | Prefer to schedule the content pod on a different node |
 | liveIndexing.metadata.environment | object | `{}` | Set environment variables for the metadata component |
 | liveIndexing.metadata.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.metadata.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-metadata"` |  |
-| liveIndexing.metadata.image.tag | string | `"5.3.0"` |  |
+| liveIndexing.metadata.image.tag | string | `"5.4.0-A.2"` |  |
 | liveIndexing.metadata.livenessProbe.httpGet.path | string | `"/actuator/health"` |  |
 | liveIndexing.metadata.livenessProbe.httpGet.port | string | `"http"` |  |
 | liveIndexing.metadata.livenessProbe.initialDelaySeconds | int | `300` |  |
@@ -76,7 +76,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | liveIndexing.path.environment | object | `{}` | Set environment variables for the path component |
 | liveIndexing.path.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.path.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-path"` |  |
-| liveIndexing.path.image.tag | string | `"5.3.0"` |  |
+| liveIndexing.path.image.tag | string | `"5.4.0-A.2"` |  |
 | liveIndexing.path.livenessProbe.httpGet.path | string | `"/actuator/health"` |  |
 | liveIndexing.path.livenessProbe.httpGet.port | string | `"http"` |  |
 | liveIndexing.path.livenessProbe.initialDelaySeconds | int | `300` |  |
@@ -110,7 +110,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | reindexing.hookExecution | string | `"post-install"` | When to execute the reindexing job (e.g. `post-install` or `post-upgrade` or set to false to apply as a standard resource) |
 | reindexing.image.pullPolicy | string | `"IfNotPresent"` |  |
 | reindexing.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-reindexing"` |  |
-| reindexing.image.tag | string | `"5.3.0"` |  |
+| reindexing.image.tag | string | `"5.4.0-A.2"` |  |
 | reindexing.initcontainers.waitForRepository.image.pullPolicy | string | `"IfNotPresent"` |  |
 | reindexing.initcontainers.waitForRepository.image.repository | string | `"curlimages/curl"` |  |
 | reindexing.initcontainers.waitForRepository.image.tag | string | `"8.11.0"` |  |

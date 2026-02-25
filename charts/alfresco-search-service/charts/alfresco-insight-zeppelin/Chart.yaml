@@ -11,7 +11,7 @@ name: alfresco-insight-zeppelin
 version: 4.3.0
 sources:
   - https://github.com/Alfresco/alfresco-helm-charts
-appVersion: 2.0.17
+appVersion: 2.1.0-SNAPSHOT
 dependencies:
   - name: alfresco-common
     version: 4.0.0

@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-ai-transformer
 
-![Version: 3.4.0](https://img.shields.io/badge/Version-3.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.0](https://img.shields.io/badge/AppVersion-3.3.0-informational?style=flat-square)
+![Version: 3.4.0](https://img.shields.io/badge/Version-3.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.2-A.2](https://img.shields.io/badge/AppVersion-3.3.2--A.2-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco ai transformer service
 
@@ -48,7 +48,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.internalPort | int | `8090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-ai-docker-engine"` |  |
-| image.tag | string | `"3.3.0"` |  |
+| image.tag | string | `"3.3.2-A.2"` |  |
 | livenessProbe.failureThreshold | int | `1` |  |
 | livenessProbe.httpGet.path | string | `"/live"` |  |
 | livenessProbe.httpGet.port | string | `"service-port"` |  |

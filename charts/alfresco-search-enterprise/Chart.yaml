@@ -4,7 +4,7 @@ name: alfresco-search-enterprise
 description: A Helm chart for deploying Alfresco Elasticsearch connector
 type: application
 version: 4.9.0
-appVersion: 5.3.0
+appVersion: 5.4.0-A.2
 dependencies:
   - name: alfresco-common
     version: 4.0.0

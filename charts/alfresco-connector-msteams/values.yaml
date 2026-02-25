@@ -17,7 +17,7 @@ replicaCount: 2
 nodeSelector: {}
 image:
   repository: quay.io/alfresco/alfresco-ms-teams-service
-  tag: 2.0.8
+  tag: 2.1.0-A.4
   pullPolicy: IfNotPresent
   internalPort: 3978
 service:
