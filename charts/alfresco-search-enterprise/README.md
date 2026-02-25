@@ -35,16 +35,16 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | imagePullSecrets | list | `[]` |  |
-| indexInit.enabled | bool | `false` | One-shot job to configure the Alfresco search index with custom settings |
+| indexInit.enabled | bool | `false` | One-shot job to create the Alfresco search index with custom shards/replicas settings, or to update the number of replicas to an existing index. |
 | indexInit.environment | object | `{}` | Environment variables to set for the container |
 | indexInit.extraVolumeMounts | list | `[]` |  |
 | indexInit.extraVolumes | list | `[]` |  |
-| indexInit.hookExecution | bool | `false` | When to execute the job as a helm hook (e.g. post-install/post-upgrade) or set to false to apply as a standard resource |
+| indexInit.hookExecution | bool | `false` | When to execute the job, by default as a standard resource or as a helm hook (e.g. post-install/post-upgrade) |
 | indexInit.image.pullPolicy | string | `"IfNotPresent"` |  |
 | indexInit.image.repository | string | `"curlimages/curl"` |  |
 | indexInit.image.tag | string | `"8.11.0"` |  |
-| indexInit.numberOfReplicas | int | `1` |  |
-| indexInit.numberOfShards | int | `1` | Default shard/replica settings used when creating or updating an index. Remember that `elasticsearch.createIndexIfNotExists` in Alfresco properties needs to not be set to true for the job to setup number of shards. Replicas can be updated regardless of the index being created by Alfresco or not. |
+| indexInit.numberOfReplicas | int | `1` | Number of replicas used when creating or updating the index. Replicas can be updated regardless of the index being created by this job or not. |
+| indexInit.numberOfShards | int | `1` | Number of shards used when creating a new index. Remember that `elasticsearch.createIndexIfNotExists` in Alfresco properties needs to not be set to true for the job to have a change to set it up. |
 | indexInit.resources.limits.cpu | string | `"1"` |  |
 | indexInit.resources.limits.memory | string | `"256Mi"` |  |
 | indexInit.resources.requests.cpu | string | `"0.25"` |  |

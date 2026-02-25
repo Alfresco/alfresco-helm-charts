@@ -288,7 +288,9 @@ reindexing:
           cpu: "250m"
           memory: "20Mi"
 indexInit:
-  # -- One-shot job to configure the Alfresco search index with custom settings
+  # -- One-shot job to create the Alfresco search index with custom
+  # shards/replicas settings, or to update the number of replicas to an existing
+  # index.
   enabled: false
   image:
     repository: curlimages/curl
@@ -296,7 +298,7 @@ indexInit:
     pullPolicy: IfNotPresent
   # -- Environment variables to set for the container
   environment: {}
-  # -- When to execute the job as a helm hook (e.g. post-install/post-upgrade) or set to false to apply as a standard resource
+  # -- When to execute the job, by default as a standard resource or as a helm hook (e.g. post-install/post-upgrade)
   hookExecution: false
   # -- Pod restart policy for the job pod (e.g. Never, OnFailure)
   restartPolicy: OnFailure
@@ -311,11 +313,12 @@ indexInit:
       memory: "256Mi"
   extraVolumeMounts: []
   extraVolumes: []
-  # -- Default shard/replica settings used when creating or updating an index.
-  # Remember that `elasticsearch.createIndexIfNotExists` in Alfresco properties
-  # needs to not be set to true for the job to setup number of shards. Replicas
-  # can be updated regardless of the index being created by Alfresco or not.
+  # -- Number of shards used when creating a new index. Remember that
+  # `elasticsearch.createIndexIfNotExists` in Alfresco properties needs to not
+  # be set to true for the job to have a change to set it up.
   numberOfShards: 1
+  # -- Number of replicas used when creating or updating the index. Replicas can
+  # be updated regardless of the index being created by this job or not.
   numberOfReplicas: 1
 serviceAccount:
   # Specifies whether a service account should be created
