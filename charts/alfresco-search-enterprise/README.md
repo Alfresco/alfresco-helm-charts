@@ -44,7 +44,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | indexInit.image.repository | string | `"curlimages/curl"` |  |
 | indexInit.image.tag | string | `"8.11.0"` |  |
 | indexInit.numberOfReplicas | int | `1` | Number of replicas used when creating or updating the index. Replicas can be updated regardless of the index being created by this job or not. |
-| indexInit.numberOfShards | int | `1` | Number of shards used when creating a new index. Remember that `elasticsearch.createIndexIfNotExists` in Alfresco properties needs to not be set to true for the job to have a change to set it up. |
+| indexInit.numberOfShards | int | `1` | Number of shards used when creating a new index. Remember that `elasticsearch.createIndexIfNotExists` in Alfresco properties needs to not be set to true for the job to have a chance to set it up. |
 | indexInit.resources.limits.cpu | string | `"1"` |  |
 | indexInit.resources.limits.memory | string | `"256Mi"` |  |
 | indexInit.resources.requests.cpu | string | `"0.25"` |  |
