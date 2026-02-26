@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-share
 
-![Version: 2.0.0-alpha.0](https://img.shields.io/badge/Version-2.0.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 25.3.0](https://img.shields.io/badge/AppVersion-25.3.0-informational?style=flat-square)
+![Version: 2.0.0-alpha.0](https://img.shields.io/badge/Version-2.0.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0-A.17](https://img.shields.io/badge/AppVersion-26.1.0--A.17-informational?style=flat-square)
 
 Alfresco Share Helm chart for Kubernetes
 
@@ -39,7 +39,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.port | int | `8080` | Internal port where the pod is listening. Should only be changed is you use a custom image which uses a different port. |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |
-| image.tag | string | `"25.3.0"` |  |
+| image.tag | string | `"26.1.0-A.17"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` | Files uploads are limited to 5GB |
