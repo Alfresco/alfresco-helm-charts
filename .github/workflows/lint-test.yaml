@@ -82,8 +82,10 @@ jobs:
       - name: Set up Unit Test plugin for Helm
         env:
           HELM_UNITTEST_VERSION: v1.0.3
-        run: |
-          helm plugin install https://github.com/helm-unittest/helm-unittest --version $HELM_UNITTEST_VERSION
+        run: >-
+          helm plugin install https://github.com/helm-unittest/helm-unittest
+          --version $HELM_UNITTEST_VERSION
+          --verify=false
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
