@@ -97,7 +97,7 @@ configuration:
     password: null
     # -- Solr inter process shared secret
     solr-secret: null
-    # -- A list of additional elasticsearch.* properties to be passed as -D
+    # -- A map of additional elasticsearch.* properties to be passed as -D
     # arguments to the repository when search.flavor is set to elasticsearch.
     # See more on the [docs](https://support.hyland.com/r/Alfresco/Alfresco-Search-Enterprise/5.3/Alfresco-Search-Enterprise/Configure/Overview/Alfresco-Repository)
     elasticsearchProperties:
