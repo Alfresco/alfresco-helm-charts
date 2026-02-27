@@ -97,6 +97,18 @@ configuration:
     password: null
     # -- Solr inter process shared secret
     solr-secret: null
+    # -- A map of additional elasticsearch.* properties to be passed as -D
+    # arguments to the repository when search.flavor is set to elasticsearch.
+    # See more on the [docs](https://support.hyland.com/r/Alfresco/Alfresco-Search-Enterprise/5.3/Alfresco-Search-Enterprise/Configure/Overview/Alfresco-Repository)
+    elasticsearchProperties:
+      # -- Automatically create the search index if it does not exist at
+      # repository startup. Enabled by default for convenience but it is
+      # recommended to disable it in production and create the index with the
+      # right shards/replicas settings beforehand. See also the `indexInit`
+      # feature in the `alfresco-search-enterprise` chart.
+      createIndexIfNotExists: true
+      # -- Name of the search index to use.
+      indexName: alfresco
     existingSecret:
       # -- Optional secret containing search service credentials
       name: null
