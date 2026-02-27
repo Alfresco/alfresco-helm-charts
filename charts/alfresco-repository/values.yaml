@@ -147,6 +147,15 @@ configuration:
     service:
       # -- Use annations to get custom behavior of the loadbalancer exposing the service
       annotations: null
+  # -- Debug port configuration for remote debugging (JDWP)
+  # @default -- see below
+  debug:
+    # -- Enable/Disable debug port exposure and JDWP agent
+    enabled: false
+    # -- port to use for remote debugging
+    port: 8888
+    # -- suspend JVM on startup waiting for debugger (y/n)
+    suspend: "n"
   # -- Basic IMAP capabilities config (limited to enabling/disabling). In order
   # to pass more IMAP properties and configure the subsystem more deeply,
   # please use value `environment.CATALINA_OPTS` or
