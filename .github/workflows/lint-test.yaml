@@ -65,6 +65,8 @@ jobs:
           fi
 
   lint:
+    needs: list-changed
+    if: needs.list-changed.outputs.has-changes == 'true'
     runs-on: ubuntu-slim
     steps:
       - name: Checkout
