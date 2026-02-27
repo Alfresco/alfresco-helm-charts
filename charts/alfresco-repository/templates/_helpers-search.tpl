@@ -48,7 +48,9 @@ Usage: include "alfresco-repository.search.config" $
   -Delasticsearch.secureComms=$SEARCH_SECURECOMMS
   -Delasticsearch.user=$ELASTICSEARCH_USERNAME
   -Delasticsearch.password=$ELASTICSEARCH_PASSWORD
-  -Delasticsearch.createIndexIfNotExists=true
+  {{- range $key, $val := .elasticsearchProperties }}
+  -Delasticsearch.{{ $key }}={{ $val }}
+  {{- end }}
   {{- end }}
 {{- end }}
 {{- end -}}
