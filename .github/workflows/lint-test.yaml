@@ -63,13 +63,7 @@ jobs:
           fi
 
   lint:
-    needs: list-changed
-    if: needs.list-changed.outputs.has-changes == 'true'
     runs-on: ubuntu-slim
-    strategy:
-      fail-fast: false
-      matrix:
-        chart: ${{ fromJson(needs.list-changed.outputs.matrix) }}
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -93,7 +87,7 @@ jobs:
           version: v3.10.1
 
       - name: Run chart-testing (lint)
-        run: ct lint --config ct.yaml --charts ${{ matrix.chart }}
+        run: ct lint --config ct.yaml
 
   install:
     needs: list-changed
