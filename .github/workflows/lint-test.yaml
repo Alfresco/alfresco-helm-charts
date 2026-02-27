@@ -17,17 +17,15 @@ on:
       - '!charts/**/docs/**'
 
 env:
+  TEST_ALL_CHARTS: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && 'true' || 'false' }}
   HELM_VERSION: v4.1.1
   CHART_TESTING_VERSION: v3.14.0
-
 jobs:
   list-changed:
     runs-on: ubuntu-slim
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       has-changes: ${{ steps.set-matrix.outputs.has-changes }}
-    env:
-      TEST_ALL_CHARTS: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && 'true' || 'false' }}
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -93,7 +91,7 @@ jobs:
           version: ${{ env.CHART_TESTING_VERSION }}
 
       - name: Run chart-testing (lint)
-        run: ct lint --config ct.yaml
+        run: ct lint --config ct.yaml ${{ env.TEST_ALL_CHARTS == 'true' && '--all' || '' }}
 
   install:
     needs: list-changed
