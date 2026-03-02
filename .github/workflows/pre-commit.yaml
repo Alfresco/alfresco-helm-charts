@@ -17,7 +17,7 @@ jobs:
       contents: write
     steps:
       - name: Ensure SHA pinned actions
-        uses: zgosalvez/github-actions-ensure-sha-pinned-actions@70c4af2ed5282c51ba40566d026d6647852ffa3e # v5.0.1
+        uses: hyland/github-actions-ensure-sha-pinned-actions@v1.2.0
         with:
           allowlist: |
             Alfresco/alfresco-build-tools/
