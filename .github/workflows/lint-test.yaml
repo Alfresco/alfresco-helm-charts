@@ -16,14 +16,16 @@ on:
       - '!charts/**/README.md.gotmpl'
       - '!charts/**/docs/**'
 
+env:
+  TEST_ALL_CHARTS: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && 'true' || 'false' }}
+  HELM_VERSION: v4.1.1
+  CHART_TESTING_VERSION: v3.14.0
 jobs:
   list-changed:
     runs-on: ubuntu-slim
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       has-changes: ${{ steps.set-matrix.outputs.has-changes }}
-    env:
-      TEST_ALL_CHARTS: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && 'true' || 'false' }}
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -33,12 +35,12 @@ jobs:
       - name: Set up Helm
         uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4.3.1
         with:
-          version: v3.10.2
+          version: ${{ env.HELM_VERSION }}
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
         with:
-          version: v3.10.1
+          version: ${{ env.CHART_TESTING_VERSION }}
 
       - name: List changed charts and create matrix
         id: set-matrix
@@ -66,10 +68,6 @@ jobs:
     needs: list-changed
     if: needs.list-changed.outputs.has-changes == 'true'
     runs-on: ubuntu-slim
-    strategy:
-      fail-fast: false
-      matrix:
-        chart: ${{ fromJson(needs.list-changed.outputs.matrix) }}
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -79,21 +77,23 @@ jobs:
       - name: Set up Helm
         uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4.3.1
         with:
-          version: v3.10.2
+          version: ${{ env.HELM_VERSION }}
 
       - name: Set up Unit Test plugin for Helm
         env:
-          HELM_UNITTEST_VERSION: v1.0.0
-        run: |
-          helm plugin install https://github.com/helm-unittest/helm-unittest --version $HELM_UNITTEST_VERSION
+          HELM_UNITTEST_VERSION: v1.0.3
+        run: >-
+          helm plugin install https://github.com/helm-unittest/helm-unittest
+          --version $HELM_UNITTEST_VERSION
+          --verify=false
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
         with:
-          version: v3.10.1
+          version: ${{ env.CHART_TESTING_VERSION }}
 
       - name: Run chart-testing (lint)
-        run: ct lint --config ct.yaml --charts ${{ matrix.chart }}
+        run: ct lint --config ct.yaml ${{ env.TEST_ALL_CHARTS == 'true' && '--all' || '' }}
 
   install:
     needs: list-changed
@@ -114,12 +114,12 @@ jobs:
       - name: Set up Helm
         uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4.3.1
         with:
-          version: v3.10.2
+          version: ${{ env.HELM_VERSION }}
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
         with:
-          version: v3.10.1
+          version: ${{ env.CHART_TESTING_VERSION }}
 
       - name: Create kind cluster
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v12.10.2
