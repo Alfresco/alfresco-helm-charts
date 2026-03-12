@@ -1,6 +1,8 @@
 ---
 apiVersion: v2
 description: Alfresco Sync Service
+version: 7.7.0
+appVersion: 5.3.1
 keywords:
   - syncservice
   - alfresco
@@ -8,8 +10,6 @@ keywords:
 name: alfresco-sync-service
 sources:
   - https://github.com/Alfresco/acs-deployment
-version: 7.6.0
-appVersion: 5.3.1
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
 dependencies:
   - name: alfresco-common

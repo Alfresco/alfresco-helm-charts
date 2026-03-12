@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-service
 
-![Version: 6.0.0-alpha.0](https://img.shields.io/badge/Version-6.0.0--alpha.0-informational?style=flat-square) ![AppVersion: 2.0.17](https://img.shields.io/badge/AppVersion-2.0.17-informational?style=flat-square)
+![Version: 6.0.0](https://img.shields.io/badge/Version-6.0.0-informational?style=flat-square) ![AppVersion: 2.0.18](https://img.shields.io/badge/AppVersion-2.0.18-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
