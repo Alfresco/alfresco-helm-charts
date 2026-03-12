@@ -56,7 +56,6 @@ Alfresco charts to point to it.
 | elasticsearch.readinessProbe.initialDelaySeconds | int | `60` |  |
 | elasticsearch.readinessProbe.periodSeconds | int | `20` |  |
 | elasticsearch.readinessProbe.timeoutSeconds | int | `5` |  |
-| elasticsearch.resources.limits.cpu | int | `1` |  |
 | elasticsearch.resources.limits.memory | string | `"2Gi"` |  |
 | elasticsearch.resources.requests.cpu | string | `"500m"` |  |
 | elasticsearch.resources.requests.memory | string | `"2Gi"` |  |
@@ -80,7 +79,6 @@ Alfresco charts to point to it.
 | kibana.readinessProbe.initialDelaySeconds | int | `60` |  |
 | kibana.readinessProbe.periodSeconds | int | `10` |  |
 | kibana.readinessProbe.timeoutSeconds | int | `5` |  |
-| kibana.resources.limits.cpu | int | `1` |  |
 | kibana.resources.limits.memory | string | `"1Gi"` |  |
 | kibana.resources.requests.cpu | string | `"500m"` |  |
 | kibana.resources.requests.memory | string | `"1Gi"` |  |
