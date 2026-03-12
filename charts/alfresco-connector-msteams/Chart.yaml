@@ -6,5 +6,5 @@ version: 2.4.0
 appVersion: 2.1.0
 dependencies:
   - name: alfresco-common
-    version: 4.0.0
+    version: 5.0.0
     repository: https://alfresco.github.io/alfresco-helm-charts/

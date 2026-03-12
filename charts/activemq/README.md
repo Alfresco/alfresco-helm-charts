@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # activemq
 
-![Version: 3.8.0](https://img.shields.io/badge/Version-3.8.0-informational?style=flat-square) ![AppVersion: 6.2.1](https://img.shields.io/badge/AppVersion-6.2.1-informational?style=flat-square)
+![Version: 4.0.0](https://img.shields.io/badge/Version-4.0.0-informational?style=flat-square) ![AppVersion: 6.2.1](https://img.shields.io/badge/AppVersion-6.2.1-informational?style=flat-square)
 
 A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (not meant to be used in production).
 
@@ -17,7 +17,7 @@ A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate A
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
 
 ## Values
 
