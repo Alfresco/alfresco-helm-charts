@@ -18,7 +18,7 @@ podSecurityContext:
   fsGroup: 33007
 image:
   repository: quay.io/alfresco/alfresco-process-services
-  tag: 25.3.0
+  tag: 26.1.0
   pullPolicy: IfNotPresent
   internalPort: 8080
 service:
