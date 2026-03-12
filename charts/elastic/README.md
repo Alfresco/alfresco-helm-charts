@@ -15,7 +15,7 @@ Alfresco charts to point to it.
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
 
 ## Values
 
