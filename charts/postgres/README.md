@@ -1,6 +1,6 @@
 # postgres
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 16.6](https://img.shields.io/badge/AppVersion-16.6-informational?style=flat-square)
+![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 16.6](https://img.shields.io/badge/AppVersion-16.6-informational?style=flat-square)
 
 WARNING: This chart is meant to ease initial deployment for TESTING purposes.
 DO NOT use this chart in any staging, or production environment. It has very
@@ -30,6 +30,7 @@ Alfresco charts to point to it.
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"postgres"` |  |
 | image.tag | float | `16.6` |  |
+| imagePullSecrets | list | `[]` | List of image pull secrets to use when pulling images Example:   imagePullSecrets:     - name: my-registry-secret |
 | livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
 | livenessProbe.exec.command[1] | string | `"-c"` |  |
 | livenessProbe.exec.command[2] | string | `"-e"` |  |
