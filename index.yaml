@@ -2367,6 +2367,17 @@ entries:
     version: 0.1.0-alpha.0
   alfresco-common:
   - apiVersion: v2
+    created: "2026-03-12T14:02:40.75353531Z"
+    description: 'A helper subchart to avoid duplication in alfresco charts and set
+      common external dependencies '
+    digest: 47f9affedf409d67e6d336e4a84bf1d85d1e925d8a99af370e5222049f8fc6ea
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    name: alfresco-common
+    type: library
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-common-5.0.0/alfresco-common-5.0.0.tgz
+    version: 5.0.0
+  - apiVersion: v2
     created: "2026-02-13T14:15:01.260788805Z"
     description: 'A helper subchart to avoid duplication in alfresco charts and set
       common external dependencies '
@@ -9700,4 +9711,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2026-02-27T09:35:20.913654559Z"
+generated: "2026-03-12T14:02:40.754516151Z"
