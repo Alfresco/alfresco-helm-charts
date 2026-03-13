@@ -11,6 +11,7 @@ skip-check:
   - CKV_K8S_38 # "Ensure that Service Account Tokens are only mounted where necessary"
   - CKV_K8S_43 # "Image should use digest"
   - CKV2_K8S_6 # "Minimize the admission of pods which lack an associated NetworkPolicy" OPSEXP-2965
+  - CKV_K8S_11 # https://www.reddit.com/r/kubernetes/comments/wgztqh/for_the_love_of_god_stop_using_cpu_limits_on/
 var-file: .checkov-values.yml
 skip-path:
   - charts/[^/]+/ci/
