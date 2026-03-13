@@ -10,9 +10,9 @@ description: |
   sure to deploy your own enterprise grade PostgreSQL instance and configure
   Alfresco charts to point to it.
 type: application
-version: 0.3.1
+version: 0.4.0
 appVersion: "16.6"
 dependencies:
   - name: alfresco-common
-    version: 4.0.0
+    version: 5.0.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
