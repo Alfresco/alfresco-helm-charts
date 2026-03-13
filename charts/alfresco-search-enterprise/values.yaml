@@ -36,7 +36,7 @@ liveIndexing:
       pullPolicy: IfNotPresent
     # -- Set environment variables for the mediation component
     environment:
-      # -- Avoid spurious stackstrace in the logs at startup ACS-10460
+      # -- Avoid spurious stacktrace in the logs at startup ACS-10460
       SPRING_ELASTICSEARCH_RESTCLIENT_SNIFFER_ENABLED: false
   content:
     image:
