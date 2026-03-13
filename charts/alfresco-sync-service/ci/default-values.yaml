@@ -11,6 +11,8 @@ environment:
     -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
     -Drepo.syncconfig.url=https://alfresco.github.io/alfresco-helm-charts/test/alfresco/service/devicesync/config
     -Dsync.authentication.basicAuthUrl=https://alfresco.github.io/alfresco-helm-charts/test/alfresco/s/api/authentication
+activemq:
+  fullnameOverride: activemq
 messageBroker:
   url: nio://activemq-broker:61616
   username: admin
