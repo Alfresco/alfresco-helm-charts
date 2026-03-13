@@ -36,7 +36,7 @@ activemq:
 postgresql:
   image:
     repository: bitnamilegacy/postgresql
-    tag: "17.9"
+    tag: 16.6.0
 db:
   url: jdbc:postgresql://postgresql:5432/postgres
 messageBroker:

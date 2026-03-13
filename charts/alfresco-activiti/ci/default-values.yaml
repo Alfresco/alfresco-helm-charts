@@ -2,7 +2,7 @@ postgresql:
   fullnameOverride: activiti-postgresql
   image:
     repository: bitnamilegacy/postgresql
-    tag: "17.9"
+    tag: 16.6.0
   auth:
     username: &dbuser alfresco
     password: &dbpass alfresco-pass
