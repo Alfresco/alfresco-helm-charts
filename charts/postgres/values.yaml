@@ -15,7 +15,7 @@ global:
 imagePullSecrets: []
 image:
   repository: postgres
-  tag: 16.6
+  tag: "17.9"
   pullPolicy: IfNotPresent
 auth:
   existingSecret: null

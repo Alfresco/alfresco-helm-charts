@@ -11,7 +11,7 @@ description: |
   Alfresco charts to point to it.
 type: application
 version: 0.4.0
-appVersion: "16.6"
+appVersion: "17.9"
 dependencies:
   - name: alfresco-common
     version: 5.0.0
