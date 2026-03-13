@@ -68,7 +68,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | liveIndexing.content.readinessProbe.timeoutSeconds | int | `60` |  |
 | liveIndexing.content.replicaCount | int | `1` |  |
 | liveIndexing.environment | object | `{}` | Set environment variables for all the live indexing components (mediation, content, metadata, path) |
-| liveIndexing.mediation.environment | object | `{}` | Set environment variables for the mediation component |
+| liveIndexing.mediation.environment | object | `{"SPRING_ELASTICSEARCH_RESTCLIENT_SNIFFER_ENABLED":false}` | Set environment variables for the mediation component |
+| liveIndexing.mediation.environment.SPRING_ELASTICSEARCH_RESTCLIENT_SNIFFER_ENABLED | bool | `false` | Avoid spurious stackstrace in the logs at startup ACS-10460 |
 | liveIndexing.mediation.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.mediation.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-mediation"` |  |
 | liveIndexing.mediation.image.tag | string | `"5.4.0"` |  |

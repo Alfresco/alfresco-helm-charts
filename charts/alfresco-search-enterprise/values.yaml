@@ -35,7 +35,9 @@ liveIndexing:
       tag: 5.4.0
       pullPolicy: IfNotPresent
     # -- Set environment variables for the mediation component
-    environment: {}
+    environment:
+      # -- Avoid spurious stackstrace in the logs at startup ACS-10460
+      SPRING_ELASTICSEARCH_RESTCLIENT_SNIFFER_ENABLED: false
   content:
     image:
       repository: quay.io/alfresco/alfresco-elasticsearch-live-indexing-content
