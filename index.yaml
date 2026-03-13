@@ -9522,6 +9522,27 @@ entries:
   elastic:
   - apiVersion: v2
     appVersion: 8.17.3
+    created: "2026-03-13T11:51:22.818228119Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: 'WARNING: This chart is meant to ease initial deployment for TESTING
+      purposes. DO NOT use this chart in any staging, or production environment. It
+      has very limited options. It is not meant to be configurable and we do not aim
+      at making it particularly secure or add features to it. Its SOLE goal is to
+      allow for quickly spinning up an Alfresco platform on kubernetes, any issue
+      that does not affect this is likely to not be fixed. For any other purpose,
+      make sure to deploy your own enterprise grade Elasticsearch instance and configure
+      Alfresco charts to point to it. '
+    digest: 0992f6effa9041a89bf9119482c008b4d6bdc65c8865d6cab492df1843d9f97b
+    name: elastic
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/elastic-0.4.0/elastic-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 8.17.3
     created: "2026-01-30T10:27:50.149426381Z"
     dependencies:
     - name: alfresco-common
@@ -9626,6 +9647,27 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/elastic-0.1.0/elastic-0.1.0.tgz
     version: 0.1.0
   postgres:
+  - apiVersion: v2
+    appVersion: "17.9"
+    created: "2026-03-13T11:51:23.008564241Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: 'WARNING: This chart is meant to ease initial deployment for TESTING
+      purposes. DO NOT use this chart in any staging, or production environment. It
+      has very limited options. It is not meant to be configurable and we do not aim
+      at making it particularly secure or add features to it. Its SOLE goal is to
+      allow for quickly spinning up an Alfresco platform on kubernetes, any issue
+      that does not affect this is likely to not be fixed. For any other purpose,
+      make sure to deploy your own enterprise grade PostgreSQL instance and configure
+      Alfresco charts to point to it. '
+    digest: 0a241ad583c0897c79290b1452f3e30b771b2d186d9cd43ac2756644e6a39f57
+    name: postgres
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.4.0/postgres-0.4.0.tgz
+    version: 0.4.0
   - apiVersion: v2
     appVersion: "16.6"
     created: "2026-03-12T18:36:32.71412832Z"
@@ -9752,4 +9794,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2026-03-12T18:36:32.715025616Z"
+generated: "2026-03-13T11:51:23.009799871Z"
