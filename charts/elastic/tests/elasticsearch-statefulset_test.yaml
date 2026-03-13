@@ -1,0 +1,40 @@
+suite: Elasticsearch StatefulSet basic tests
+templates:
+  - elasticsearch-statefulset.yaml
+tests:
+  - it: should render a StatefulSet for Elasticsearch
+    template: templates/elasticsearch-statefulset.yaml
+    asserts:
+      - isKind:
+          of: StatefulSet
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-elastic-es
+      - isNotEmpty:
+          path: spec.template.spec.containers
+      - equal:
+          path: spec.replicas
+          value: 1
+
+  - it: should set correct container image
+    template: templates/elasticsearch-statefulset.yaml
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: elasticsearch:8.17.3
+
+  - it: should set resource requests and limits
+    template: templates/elasticsearch-statefulset.yaml
+    asserts:
+      - isNotEmpty:
+          path: spec.template.spec.containers[0].resources.requests
+      - isNotEmpty:
+          path: spec.template.spec.containers[0].resources.limits
+
+  - it: should mount persistent volume
+    template: templates/elasticsearch-statefulset.yaml
+    asserts:
+      - isNotEmpty:
+          path: spec.template.spec.volumes
+      - isNotEmpty:
+          path: spec.template.spec.containers[0].volumeMounts
