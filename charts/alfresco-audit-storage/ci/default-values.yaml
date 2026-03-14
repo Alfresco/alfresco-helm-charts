@@ -42,6 +42,8 @@ index:
   url: http://elasticsearch:9200
 messageBroker:
   url: nio://activemq-broker:61616
+  username: admin
+  password: admin
 tags:
   ci: true
 global:

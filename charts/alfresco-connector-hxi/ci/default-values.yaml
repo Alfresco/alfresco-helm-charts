@@ -41,6 +41,8 @@ db:
   url: jdbc:postgresql://postgresql:5432/postgres
 messageBroker:
   url: nio://activemq-broker:61616
+  username: admin
+  password: admin
 repository:
   url: https://httpbin.org/status/204
   versionOverride: '23.3.0'

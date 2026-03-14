@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-sync-service
 
-![Version: 7.6.0](https://img.shields.io/badge/Version-7.6.0-informational?style=flat-square) ![AppVersion: 5.3.0](https://img.shields.io/badge/AppVersion-5.3.0-informational?style=flat-square)
+![Version: 7.7.0](https://img.shields.io/badge/Version-7.7.0-informational?style=flat-square) ![AppVersion: 5.3.1](https://img.shields.io/badge/AppVersion-5.3.1-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -19,8 +19,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 3.7.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 4.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
@@ -48,7 +48,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/service-sync"` |  |
-| image.tag | string | `"5.3.0"` |  |
+| image.tag | string | `"5.3.1"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/alfresco/$2"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-hash" | string | `"sha1"` |  |

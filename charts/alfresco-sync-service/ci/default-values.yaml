@@ -12,14 +12,11 @@ environment:
     -Drepo.syncconfig.url=https://alfresco.github.io/alfresco-helm-charts/test/alfresco/service/devicesync/config
     -Dsync.authentication.basicAuthUrl=https://alfresco.github.io/alfresco-helm-charts/test/alfresco/s/api/authentication
 activemq:
-  fullnameOverride: mqsync
-  adminUser:
-    user: &mquser admin
-    password: &mqpass admin
+  fullnameOverride: activemq
 messageBroker:
-  url: failover:(nio://mqsync-broker:61616)
-  username: *mquser
-  password: *mqpass
+  url: nio://activemq-broker:61616
+  username: admin
+  password: admin
 postgresql:
   image:
     repository: bitnamilegacy/postgresql
