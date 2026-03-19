@@ -122,7 +122,7 @@ jobs:
           version: ${{ env.CHART_TESTING_VERSION }}
 
       - name: Create kind cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v15.8.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v15.11.0
         with:
           ingress-nginx-ref: skip
 
