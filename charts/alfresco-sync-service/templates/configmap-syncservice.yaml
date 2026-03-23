@@ -26,6 +26,6 @@ data:
     {{- with .Values.environment }}
     {{ .JAVA_OPTS }}
     {{- end }}
-    {{- range $key, $val := omit .Values.environment "JAVA_OPTS" }}
-      {{- $key }}: {{ $val | quote | nindent 2 }}
-    {{- end }}
+  {{- range $key, $val := omit .Values.environment "JAVA_OPTS" }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}

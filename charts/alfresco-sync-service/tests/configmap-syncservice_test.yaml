@@ -1,0 +1,51 @@
+---
+suite: test syncservice configmap environment variables
+templates:
+  - configmap-syncservice.yaml
+tests:
+  - it: should render default JAVA_OPTS from environment values
+    asserts:
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: -Dsql\.db\.pool\.initial=25
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: -Dsql\.db\.pool\.max=75
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: -Dsync\.metrics\.reporter\.graphite\.enabled=false
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: -XX:MinRAMPercentage=50
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: -XX:MaxRAMPercentage=80
+
+  - it: should append custom JAVA_OPTS to the existing ones
+    set:
+      environment:
+        JAVA_OPTS: -Xms512m -Xmx2g
+    asserts:
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: -Xms512m
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: -Xmx2g
+      - matchRegex:
+          path: data.JAVA_OPTS
+          pattern: -Dsql\.db\.url=\$DATABASE_URL
+
+  - it: should render extra environment variables as configmap data entries
+    set:
+      environment:
+        JAVA_OPTS: -Xmx1g
+        EXTRA_VAR: custom-value
+        ANOTHER_VAR: another-value
+    asserts:
+      - equal:
+          path: data.EXTRA_VAR
+          value: custom-value
+      - equal:
+          path: data.ANOTHER_VAR
+          value: another-value
