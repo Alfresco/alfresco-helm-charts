@@ -19,7 +19,7 @@ tests:
     asserts:
       - equal:
           path: spec.template.spec.containers[0].image
-          value: elasticsearch:8.17.3
+          value: elasticsearch:8.17.10
 
   - it: should set resource requests and not set CPU limits
     asserts:

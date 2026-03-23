@@ -1,6 +1,6 @@
 # elastic
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.17.3](https://img.shields.io/badge/AppVersion-8.17.3-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.17.10](https://img.shields.io/badge/AppVersion-8.17.10-informational?style=flat-square)
 
 WARNING: This chart is meant to ease initial deployment for TESTING purposes.
 DO NOT use this chart in any staging, or production environment. It has very
@@ -30,7 +30,7 @@ Alfresco charts to point to it.
 | elasticsearch.credentials.username | string | `"elastic"` |  |
 | elasticsearch.image.pullPolicy | string | `"IfNotPresent"` |  |
 | elasticsearch.image.repository | string | `"elasticsearch"` |  |
-| elasticsearch.image.tag | string | `"8.17.3"` |  |
+| elasticsearch.image.tag | string | `"8.17.10"` |  |
 | elasticsearch.ingress.annotations | object | `{}` |  |
 | elasticsearch.ingress.className | string | `"nginx"` |  |
 | elasticsearch.ingress.enabled | bool | `false` |  |
@@ -66,7 +66,7 @@ Alfresco charts to point to it.
 | kibana.enabled | bool | `false` |  |
 | kibana.image.pullPolicy | string | `"IfNotPresent"` |  |
 | kibana.image.repository | string | `"kibana"` |  |
-| kibana.image.tag | string | `"8.17.3"` |  |
+| kibana.image.tag | string | `"8.17.10"` |  |
 | kibana.ingress.annotations | object | `{}` |  |
 | kibana.ingress.className | string | `"nginx"` |  |
 | kibana.ingress.enabled | bool | `false` |  |

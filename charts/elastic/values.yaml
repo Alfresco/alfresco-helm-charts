@@ -14,7 +14,7 @@ additionalLabels: {}
 elasticsearch:
   image:
     repository: elasticsearch
-    tag: 8.17.3
+    tag: 8.17.10
     pullPolicy: IfNotPresent
   credentials:
     enabled: false
@@ -76,7 +76,7 @@ kibana:
   serverBasePath: "/kibana"
   image:
     repository: kibana
-    tag: 8.17.3
+    tag: 8.17.10
     pullPolicy: IfNotPresent
   resources:
     requests:

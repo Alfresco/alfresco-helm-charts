@@ -11,7 +11,7 @@ elasticsearch:
     repository: bitnamilegacy/os-shell
   image:
     repository: bitnamilegacy/elasticsearch
-    tag: 8.17.3
+    tag: 8.17.10
   fullnameOverride: elasticsearch
   master:
     masterOnly: false
