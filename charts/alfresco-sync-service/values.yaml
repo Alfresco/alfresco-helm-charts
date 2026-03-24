@@ -87,6 +87,9 @@ messageBroker:
   # -- A failover URI formatted string, see:
   # https://activemq.apache.org/failover-transport-reference
   url: null
+  # -- When true, each pod gets a unique JMS client ID derived from the pod's
+  # UID, preventing client ID collisions in clustered deployments.
+  uniqueClientId: false
   # -- A name that will be used as a base to get broker connection details
   nameOverride: activemq
   # -- Username to authenticate as.
