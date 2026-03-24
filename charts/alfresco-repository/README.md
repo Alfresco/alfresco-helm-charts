@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 0.13.0](https://img.shields.io/badge/Version-0.13.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 25.3.0](https://img.shields.io/badge/AppVersion-25.3.0-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -15,7 +15,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
 | oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
@@ -61,6 +61,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | configuration.messageBroker.username | string | `nil` | Username to authenticate to the message broker |
 | configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties see [details](./docs/repository-properties.md) |
 | configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repository as env vars. This list can contain special secrets marked with predefined `purpose`: `acs-license` to pass license as a secret or subsystems:*:* to configure an Alfresco subsystem. See [Configuring Alfresco Subsystem](./docs/subsystems.md) for more details. |
+| configuration.search.elasticsearchProperties | object | `{"createIndexIfNotExists":true,"indexName":"alfresco"}` | A map of additional elasticsearch.* properties to be passed as -D arguments to the repository when search.flavor is set to elasticsearch. See more on the [docs](https://support.hyland.com/r/Alfresco/Alfresco-Search-Enterprise/5.3/Alfresco-Search-Enterprise/Configure/Overview/Alfresco-Repository) |
+| configuration.search.elasticsearchProperties.createIndexIfNotExists | bool | `true` | Automatically create the search index if it does not exist at repository startup. Enabled by default for convenience but it is recommended to disable it in production and create the index with the right shards/replicas settings beforehand. See also the `indexInit` feature in the `alfresco-search-enterprise` chart. |
+| configuration.search.elasticsearchProperties.indexName | string | `"alfresco"` | Name of the search index to use. |
 | configuration.search.existingConfigMap.keys.flavor | string | `"SEARCH_FLAVOR"` | configmap key where to find the search engine used |
 | configuration.search.existingConfigMap.keys.host | string | `"SEARCH_HOST"` | configmap key where to find the hostname part of the search URL. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. |
 | configuration.search.existingConfigMap.keys.port | string | `"SEARCH_PORT"` | configmap key where to find the port part of the search URL. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. |
@@ -94,7 +97,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | image.port | int | `8080` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-content-repository"` |  |
-| image.tag | string | `"25.3.0"` |  |
+| image.tag | string | `"26.1.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` | File uploads are limited to 5g |
@@ -107,6 +110,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
 | ingress.hosts[0].paths[1].path | string | `"/api-explorer"` |  |
 | ingress.hosts[0].paths[1].pathType | string | `"Prefix"` |  |
+| ingress.hosts[0].paths[2] | object | `{"path":"/alfresco/s/prometheus","pathType":"Prefix","serviceName":"blocked-prometheus"}` | Block direct access to prometheus endpoint |
 | ingress.tls | list | `[]` |  |
 | initContainers.waitDbReady.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.waitDbReady.image.repository | string | `"busybox"` |  |

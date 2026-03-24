@@ -3,18 +3,6 @@
 # https://github.com/Alfresco/alfresco-updatecli/tree/master/deployments
 matrix:
   current:
-    search:
-      helm_target: >-
-        charts/alfresco-search-service/values.yaml
-      helm_keys:
-        search: $.searchServicesImage.tag
-        insight: $.insightEngineImage.tag
-      helm_update_appVersion: true
-    insight-zeppelin:
-      helm_target: >-
-        charts/alfresco-search-service/charts/alfresco-insight-zeppelin/values.yaml
-      helm_key: $.image.tag
-      helm_update_appVersion: true
     search-enterprise:
       helm_target: >-
         charts/alfresco-search-enterprise/values.yaml
@@ -87,5 +75,20 @@ matrix:
       helm_update_appVersion: true
     activiti-admin:
       helm_target: charts/alfresco-activiti-admin/values.yaml
+      helm_key: $.image.tag
+      helm_update_appVersion: true
+
+  # Search Services (`search`) is no longer supported for Enterprise edition starting with ACS v26
+  25.N:
+    search:
+      helm_target: >-
+        charts/alfresco-search-service/values.yaml
+      helm_keys:
+        search: $.searchServicesImage.tag
+        insight: $.insightEngineImage.tag
+      helm_update_appVersion: true
+    insight-zeppelin:
+      helm_target: >-
+        charts/alfresco-search-service/charts/alfresco-insight-zeppelin/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true

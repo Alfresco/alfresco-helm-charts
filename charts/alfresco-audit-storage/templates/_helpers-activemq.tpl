@@ -33,7 +33,7 @@ Usage: include "alfresco-audit-storage.activemq.secret.env" $
 {{- $mqCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "mq")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.messageBroker }}
 {{- $mqSecret := coalesce .existingSecret.name (include "alfresco-audit-storage.fullname" $mqCtx) }}
-- name: SPRING_ACTIVEMQ_USERNAME
+- name: SPRING_ACTIVEMQ_USER
   valueFrom:
     secretKeyRef:
       name: {{ $mqSecret }}

@@ -27,6 +27,6 @@ sfs:
   url: http://acs-alfresco-transform-service
 messageBroker:
   <<: *mquser
-  url: failover:(nio://activemq:61616)
+  url: nio://activemq:61616
 tags:
   ci: true

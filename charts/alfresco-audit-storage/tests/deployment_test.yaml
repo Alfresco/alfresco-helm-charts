@@ -81,7 +81,7 @@ tests:
       - contains:
           path: spec.template.spec.containers[0].env
           content:
-            name: SPRING_ACTIVEMQ_USERNAME
+            name: SPRING_ACTIVEMQ_USER
             valueFrom:
               secretKeyRef:
                 key: BROKER_USERNAME_EXTERNAL
@@ -131,7 +131,7 @@ tests:
       - contains:
           path: spec.template.spec.containers[0].env
           content:
-            name: SPRING_ACTIVEMQ_USERNAME
+            name: SPRING_ACTIVEMQ_USER
             valueFrom:
               secretKeyRef:
                 key: BROKER_USERNAME

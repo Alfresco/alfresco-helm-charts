@@ -3,54 +3,62 @@ suite: test Alfresco repository ingress
 templates:
   - ingress.yaml
 tests:
-  - it: should render with default security annotations
+  - it: should render with default ingress class
     asserts:
-      - equal:
-          path: metadata.annotations['nginx.ingress.kubernetes.io/server-snippet']
-          value: |
-            location ~ ^/.*/(wc)?s(ervice)?/api/solr/.*$ {return 403;}
-            location ~ ^/.*/proxy/.*/api/solr/.*$ {return 403;}
-            location ~ ^/.*/-default-/proxy/.*/api/.*$ {return 403;}
-            location ~ ^/.*/s/prometheus$ {return 403;}
       - equal:
           path: spec.ingressClassName
           value: nginx
 
-  - it: should sanitize ingress
+  - it: should render default paths for repository
+    asserts:
+
+      - contains:
+          path: spec.rules[0].http.paths
+          content:
+            path: /alfresco/s/prometheus
+            pathType: Prefix
+            backend:
+              service:
+                name: blocked-prometheus
+                port:
+                  number: 80
+      - contains:
+          path: spec.rules[0].http.paths
+          content:
+            path: /api-explorer
+            pathType: Prefix
+            backend:
+              service:
+                name: RELEASE-NAME-alfresco-repository
+                port:
+                  number: 80
+      - contains:
+          path: spec.rules[0].http.paths
+          content:
+            path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: RELEASE-NAME-alfresco-repository
+                port:
+                  number: 80
+
+  - it: should allow custom serviceName override
     set:
       ingress:
-        annotations:
-          nginx.ingress.kubernetes.io/server-snippet: listen 6666;
-    asserts:
-      - notMatchRegex:
-          path: metadata.annotations['nginx.ingress.kubernetes.io/server-snippet']
-          pattern: listen 6666;
-      - equal:
-          path: spec.ingressClassName
-          value: nginx
-
-  - it: should render default rules section
+        hosts:
+          - paths:
+              - path: /
+                pathType: Prefix
+                serviceName: custom-service
+                servicePort: 8080
     asserts:
       - equal:
-          path: spec.rules
-          value:
-            - host:
-              http:
-                paths:
-                  - path: /
-                    pathType: Prefix
-                    backend:
-                      service:
-                        name: RELEASE-NAME-alfresco-repository
-                        port:
-                          number: 80
-                  - path: /api-explorer
-                    pathType: Prefix
-                    backend:
-                      service:
-                        name: RELEASE-NAME-alfresco-repository
-                        port:
-                          number: 80
+          path: spec.rules[0].http.paths[0].backend.service.name
+          value: custom-service
+      - equal:
+          path: spec.rules[0].http.paths[0].backend.service.port.number
+          value: 8080
 
   - it: should render tls section with specified values
     set:

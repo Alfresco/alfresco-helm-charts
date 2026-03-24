@@ -1,19 +1,16 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "alfresco-repository.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
-{{/*
-We only support latest apiVersion which is stable now.
-*/}}
+{{- $serviceName := include "alfresco-repository.fullname" . -}}
+{{- $servicePort := .Values.service.port -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ $serviceName }}
   labels:
     {{- include "alfresco-repository.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
   annotations:
-    checkov.io/skip1: CKV_K8S_153=We're filtering out snippet in named template
-    {{- include "alfresco-common.nginx.annotations" .Values }}
-    {{- include "alfresco-common.nginx.secure.annotations" .Values }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.className }}
   {{- if .Values.ingress.tls }}
@@ -38,9 +35,9 @@ spec:
             {{- end }}
             backend:
               service:
-                name: {{ $fullName }}
+                name: {{ .serviceName | default $serviceName }}
                 port:
-                  number: {{ $svcPort }}
+                  number: {{ .servicePort | default $servicePort }}
           {{- end }}
     {{- end }}
 {{- end }}

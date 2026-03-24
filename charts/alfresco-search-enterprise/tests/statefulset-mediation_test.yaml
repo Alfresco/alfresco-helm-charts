@@ -47,11 +47,37 @@ tests:
         template: statefulset-mediation.yaml
 
   - it: should render default environment variables in statefulset
+    template: statefulset-mediation.yaml
     asserts:
-      - lengthEqual:
+      - contains:
           path: spec.template.spec.containers[0].env
-          count: 11
-        template: statefulset-mediation.yaml
+          content:
+            name: SPRING_ELASTICSEARCH_RESTCLIENT_SNIFFER_ENABLED
+            value: "false"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_URL
+            valueFrom:
+              configMapKeyRef:
+                key: BROKER_URL
+                name: RELEASE-NAME-alfresco-search-enterprise-mq
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-mq
+                key: BROKER_USERNAME
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: BROKER_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-mq
+                key: BROKER_PASSWORD
 
   - it: should render custom environment variables for statefulset
     set:
@@ -63,9 +89,6 @@ tests:
             CUSTOM_MEDIATION_ENV: custom_value
     template: statefulset-mediation.yaml
     asserts:
-      - lengthEqual:
-          path: spec.template.spec.containers[0].env
-          count: 13
       - contains:
           path: spec.template.spec.containers[0].env
           content:
@@ -76,3 +99,8 @@ tests:
           content:
             name: CUSTOM_MEDIATION_ENV
             value: custom_value
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_RESTCLIENT_SNIFFER_ENABLED
+            value: "false"

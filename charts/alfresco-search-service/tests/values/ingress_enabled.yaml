@@ -1,8 +1,6 @@
 ---
 ingress:
   enabled: true
-  basicAuth: YWRtaW46JGFwcjEkVVJqb29uS00kSEMuS1EwVkRScFpwSHB2a3JwTDd1Lg==
-  existingSecretName: staging/solradmin
   annotations:
     nginx.ingress.kubernetes.io/auth-type: basic
     nginx.ingress.kubernetes.io/enable-cors: true

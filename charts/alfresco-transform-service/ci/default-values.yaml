@@ -12,7 +12,7 @@ activemq:
     password: admin
 
 messageBroker:
-  url: failover:(nio://activemq-broker:61616)?timeout=3000&jms.useCompression=true
+  url: nio://activemq-broker:61616
   user: admin
   password: admin
 

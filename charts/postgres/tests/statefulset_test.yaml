@@ -1,0 +1,41 @@
+suite: StatefulSet template
+templates:
+  - statefulset.yaml
+tests:
+  - it: should render imagePullSecrets when set
+    set:
+      imagePullSecrets:
+        - name: my-secret
+    asserts:
+      - contains:
+          path: spec.template.spec.imagePullSecrets
+          content:
+            name: my-secret
+
+  - it: should use default POSTGRES_USER when auth.username is not set
+    set: {}
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[2].value
+          value: alfresco
+
+  - it: should use custom POSTGRES_USER when auth.username is set
+    set:
+      auth:
+        username: customuser
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[2].value
+          value: customuser
+
+  - it: should mount data volume at specified mountPath
+    set:
+      primary:
+        persistence:
+          data:
+            mountPath: /custom/path
+            subPath: ""
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].volumeMounts[0].mountPath
+          value: /custom/path

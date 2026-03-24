@@ -1,6 +1,6 @@
 # postgres
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 16.6](https://img.shields.io/badge/AppVersion-16.6-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 17.9](https://img.shields.io/badge/AppVersion-17.9-informational?style=flat-square)
 
 WARNING: This chart is meant to ease initial deployment for TESTING purposes.
 DO NOT use this chart in any staging, or production environment. It has very
@@ -15,7 +15,7 @@ Alfresco charts to point to it.
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
 
 ## Values
 
@@ -29,7 +29,8 @@ Alfresco charts to point to it.
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"postgres"` |  |
-| image.tag | float | `16.6` |  |
+| image.tag | string | `"17.9"` |  |
+| imagePullSecrets | list | `[]` | List of image pull secrets to use when pulling images Example:   imagePullSecrets:     - name: my-registry-secret |
 | livenessProbe.exec.command[0] | string | `"/bin/sh"` |  |
 | livenessProbe.exec.command[1] | string | `"-c"` |  |
 | livenessProbe.exec.command[2] | string | `"-e"` |  |

@@ -8,9 +8,14 @@ global:
   # -- Global additional labels that can be set at parent/umbrella chart level
   # These will be merged with chart-level additionalLabels, with chart-level taking precedence
   additionalLabels: {}
+# -- List of image pull secrets to use when pulling images
+# Example:
+#   imagePullSecrets:
+#     - name: my-registry-secret
+imagePullSecrets: []
 image:
   repository: postgres
-  tag: 16.6
+  tag: "17.9"
   pullPolicy: IfNotPresent
 auth:
   existingSecret: null

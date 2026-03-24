@@ -1,6 +1,6 @@
 # elastic
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.17.3](https://img.shields.io/badge/AppVersion-8.17.3-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.17.3](https://img.shields.io/badge/AppVersion-8.17.3-informational?style=flat-square)
 
 WARNING: This chart is meant to ease initial deployment for TESTING purposes.
 DO NOT use this chart in any staging, or production environment. It has very
@@ -15,7 +15,7 @@ Alfresco charts to point to it.
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 4.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
 
 ## Values
 
@@ -56,7 +56,6 @@ Alfresco charts to point to it.
 | elasticsearch.readinessProbe.initialDelaySeconds | int | `60` |  |
 | elasticsearch.readinessProbe.periodSeconds | int | `20` |  |
 | elasticsearch.readinessProbe.timeoutSeconds | int | `5` |  |
-| elasticsearch.resources.limits.cpu | int | `1` |  |
 | elasticsearch.resources.limits.memory | string | `"2Gi"` |  |
 | elasticsearch.resources.requests.cpu | string | `"500m"` |  |
 | elasticsearch.resources.requests.memory | string | `"2Gi"` |  |
@@ -80,7 +79,6 @@ Alfresco charts to point to it.
 | kibana.readinessProbe.initialDelaySeconds | int | `60` |  |
 | kibana.readinessProbe.periodSeconds | int | `10` |  |
 | kibana.readinessProbe.timeoutSeconds | int | `5` |  |
-| kibana.resources.limits.cpu | int | `1` |  |
 | kibana.resources.limits.memory | string | `"1Gi"` |  |
 | kibana.resources.requests.cpu | string | `"500m"` |  |
 | kibana.resources.requests.memory | string | `"1Gi"` |  |
