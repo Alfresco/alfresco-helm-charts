@@ -43,9 +43,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@661ab6a0d23f6a269da039831907cffad37cc061 # v9.5.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v15.12.1
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@661ab6a0d23f6a269da039831907cffad37cc061 # v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v15.12.1
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
@@ -100,9 +100,9 @@ jobs:
             -v alfresco-updatecli/deployments/values/supported-matrix.yaml \
             -v .github/updatecli-matrix-targets.yaml
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@661ab6a0d23f6a269da039831907cffad37cc061 # v9.5.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v15.12.1
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@661ab6a0d23f6a269da039831907cffad37cc061 # v9.5.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v15.12.1
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
