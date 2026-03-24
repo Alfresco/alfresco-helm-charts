@@ -116,7 +116,7 @@ tests:
       - contains:
           path: spec.template.spec.containers[0].env
           content:
-            name: MESSAGING_CLIENT_ID
+            name: MESSAGING_CLIENTID
             value: sync-service-$(POD_ID)
       - contains:
           path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
