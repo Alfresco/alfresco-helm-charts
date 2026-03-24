@@ -101,6 +101,12 @@ spec:
                 key: {{ .existingConfigMap.keys.scheme }}
                 optional: true
           {{- end }}
+          - name: POD_ID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.uid
+          - name: MESSAGING_CLIENTID
+            value: sync-service-$(POD_ID)
         volumeMounts:
           {{- if gt (int .Values.replicaCount) 1 }}
           - name: hazelcast-tcp
