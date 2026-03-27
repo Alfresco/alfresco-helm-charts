@@ -7,7 +7,7 @@ tests:
     asserts:
       - equal:
           path: data.JAVA_OPTS
-          value: >-
+          value: &default_values >-
             -Dsync.cluster.enabled=false
             -Dsql.db.url=$DATABASE_URL
             -Dsql.db.driver=$DATABASE_DRIVER
@@ -79,10 +79,12 @@ tests:
   - it: should render extra environment variables as configmap data entries
     set:
       environment:
-        JAVA_OPTS: -Xmx1g
         EXTRA_VAR: custom-value
         ANOTHER_VAR: another-value
     asserts:
+      - equal:
+          path: data.JAVA_OPTS
+          value: *default_values
       - equal:
           path: data.EXTRA_VAR
           value: custom-value
