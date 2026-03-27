@@ -23,9 +23,7 @@ data:
     -Dmessaging.broker.url=$BROKER_URL
     -Dmessaging.username=$BROKER_USERNAME
     -Dmessaging.password=$BROKER_PASSWORD
-    {{- with .Values.environment.JAVA_OPTS }}
-    {{ . }}
-    {{- end }}
+    {{ with .Values.environment.JAVA_OPTS }}{{ . |  replace "\n" " " | trim }}{{ end }}
   {{- range $key, $val := omit .Values.environment "JAVA_OPTS" }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
