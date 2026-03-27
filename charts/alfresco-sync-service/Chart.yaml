@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 description: Alfresco Sync Service
-version: 7.8.0-alpha.2
+version: 7.8.0
 appVersion: 5.3.1
 keywords:
   - syncservice
