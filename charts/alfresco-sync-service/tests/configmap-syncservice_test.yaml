@@ -36,6 +36,56 @@ tests:
           path: data.JAVA_OPTS
           pattern: -Dsql\.db\.url=\$DATABASE_URL
 
+  - it: should render single line JAVA_OPTS without breaking YAML
+    set:
+      environment:
+        JAVA_OPTS: >-
+          -Xms512m
+          -Xmx2g
+          -Dfoo.bar=baz
+    asserts:
+      - equal:
+          path: data.JAVA_OPTS
+          value: >-
+            -Dsync.cluster.enabled=false
+            -Dsql.db.url=$DATABASE_URL
+            -Dsql.db.driver=$DATABASE_DRIVER
+            -Dsql.db.username=$DATABASE_USERNAME
+            -Dsql.db.password=$DATABASE_PASSWORD
+            -Drepo.hostname=$REPO_HOST
+            -Drepo.port=$REPO_PORT
+            -Drepo.scheme=${REPO_SCHEME:-http}
+            -Ddw.server.applicationConnectors[0].type=http
+            -Dmessaging.broker.url=$BROKER_URL
+            -Dmessaging.username=$BROKER_USERNAME
+            -Dmessaging.password=$BROKER_PASSWORD
+            -Xms512m -Xmx2g -Dfoo.bar=baz
+
+  - it: should render multiline custom JAVA_OPTS without breaking YAML
+    set:
+      environment:
+        JAVA_OPTS: |
+          -Xms512m
+          -Xmx2g
+          -Dfoo.bar=baz
+    asserts:
+      - equal:
+          path: data.JAVA_OPTS
+          value: >-
+            -Dsync.cluster.enabled=false
+            -Dsql.db.url=$DATABASE_URL
+            -Dsql.db.driver=$DATABASE_DRIVER
+            -Dsql.db.username=$DATABASE_USERNAME
+            -Dsql.db.password=$DATABASE_PASSWORD
+            -Drepo.hostname=$REPO_HOST
+            -Drepo.port=$REPO_PORT
+            -Drepo.scheme=${REPO_SCHEME:-http}
+            -Ddw.server.applicationConnectors[0].type=http
+            -Dmessaging.broker.url=$BROKER_URL
+            -Dmessaging.username=$BROKER_USERNAME
+            -Dmessaging.password=$BROKER_PASSWORD
+            -Xms512m -Xmx2g -Dfoo.bar=baz
+
   - it: should render extra environment variables as configmap data entries
     set:
       environment:
