@@ -5,36 +5,26 @@ templates:
 tests:
   - it: should render default JAVA_OPTS from environment values
     asserts:
-      - matchRegex:
+      - equal:
           path: data.JAVA_OPTS
-          pattern: -Dsql\.db\.pool\.initial=25
-      - matchRegex:
-          path: data.JAVA_OPTS
-          pattern: -Dsql\.db\.pool\.max=75
-      - matchRegex:
-          path: data.JAVA_OPTS
-          pattern: -Dsync\.metrics\.reporter\.graphite\.enabled=false
-      - matchRegex:
-          path: data.JAVA_OPTS
-          pattern: -XX:MinRAMPercentage=50
-      - matchRegex:
-          path: data.JAVA_OPTS
-          pattern: -XX:MaxRAMPercentage=80
-
-  - it: should append custom JAVA_OPTS to the existing ones
-    set:
-      environment:
-        JAVA_OPTS: -Xms512m -Xmx2g
-    asserts:
-      - matchRegex:
-          path: data.JAVA_OPTS
-          pattern: -Xms512m
-      - matchRegex:
-          path: data.JAVA_OPTS
-          pattern: -Xmx2g
-      - matchRegex:
-          path: data.JAVA_OPTS
-          pattern: -Dsql\.db\.url=\$DATABASE_URL
+          value: >-
+            -Dsync.cluster.enabled=false
+            -Dsql.db.url=$DATABASE_URL
+            -Dsql.db.driver=$DATABASE_DRIVER
+            -Dsql.db.username=$DATABASE_USERNAME
+            -Dsql.db.password=$DATABASE_PASSWORD
+            -Drepo.hostname=$REPO_HOST
+            -Drepo.port=$REPO_PORT
+            -Drepo.scheme=${REPO_SCHEME:-http}
+            -Ddw.server.applicationConnectors[0].type=http
+            -Dmessaging.broker.url=$BROKER_URL
+            -Dmessaging.username=$BROKER_USERNAME
+            -Dmessaging.password=$BROKER_PASSWORD
+            -Dsql.db.pool.initial=25
+            -Dsql.db.pool.max=75
+            -Dsync.metrics.reporter.graphite.enabled=false
+            -XX:MinRAMPercentage=50
+            -XX:MaxRAMPercentage=80
 
   - it: should render single line JAVA_OPTS without breaking YAML
     set:
