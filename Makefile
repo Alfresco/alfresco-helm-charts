@@ -40,6 +40,11 @@ install: setup ## Deploy deps + install chart (make install alfresco-repository)
 		-f $(CHARTS_DIR)/$(CHART)/ci/default-values.yaml \
 		--wait
 
+uninstall: ## Uninstall chart + teardown deps (make uninstall alfresco-repository)
+	@test -n "$(CHART)" || (echo "Usage: make uninstall <chart-name>"; exit 1)
+	helm uninstall $(CHART) --namespace $(NAMESPACE) --ignore-not-found
+	./scripts/ci-deps.sh teardown $(CHARTS_DIR)/$(CHART) $(NAMESPACE)
+
 clean: teardown ## Alias for teardown
 
 # Chart names as targets are no-ops (CHART is extracted via MAKECMDGOALS above)
