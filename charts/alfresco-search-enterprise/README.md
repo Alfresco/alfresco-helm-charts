@@ -157,5 +157,4 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `"alfresco-search-enterprise-sa"` |  |
-| tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 | tolerations | list | `[]` |  |

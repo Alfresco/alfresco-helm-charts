@@ -85,7 +85,6 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | sfs.url | string | `nil` | Alfresco Transformation filestore (e.g. http://acs-alfresco-transform-service) |
 | strategy.rollingUpdate.maxSurge | int | `1` |  |
 | strategy.rollingUpdate.maxUnavailable | int | `0` |  |
-| tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 | tolerations | list | `[]` |  |
 | transformerLiveness.livenessPercent | int | `400` |  |
 | transformerLiveness.livenessTransformPeriodSeconds | int | `600` |  |

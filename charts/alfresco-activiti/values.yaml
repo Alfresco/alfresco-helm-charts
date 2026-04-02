@@ -167,9 +167,6 @@ database:
       password: DATABASE_PASSWORD
 license:
   secretName: null
-tags:
-  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
-  ci: false
 affinity:
   podAntiAffinity:
     preferredDuringSchedulingIgnoredDuringExecution:
