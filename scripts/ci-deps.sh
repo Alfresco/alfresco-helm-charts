@@ -31,7 +31,7 @@ helm_install_dep() {
   chart_ref=$(yq eval ".deps.\"$dep\".chart" "$CONFIG_FILE")
   version=$(yq eval ".deps.\"$dep\".version" "$CONFIG_FILE")
   repo=$(yq eval ".deps.\"$dep\".repository // \"\"" "$CONFIG_FILE")
-  values_file="$CHART_PATH/ci/${dep}-values.yaml"
+  values_file="$CHART_PATH/ci/deps/${dep}-values.yaml"
   release_name="${dep}"
 
   local -a helm_args=(upgrade --install "$release_name" --namespace "$NAMESPACE" --wait)
