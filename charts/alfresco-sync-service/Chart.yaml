@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 description: Alfresco Sync Service
-version: 7.8.0
+version: 7.9.0
 appVersion: 5.3.1
 keywords:
   - syncservice
@@ -15,13 +15,3 @@ dependencies:
   - name: alfresco-common
     version: 5.0.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
-  - name: activemq
-    version: 4.0.0
-    repository: https://alfresco.github.io/alfresco-helm-charts/
-    tags:
-      - ci
-  - name: postgresql
-    version: 12.5.6
-    repository: oci://registry-1.docker.io/bitnamicharts
-    tags:
-      - ci

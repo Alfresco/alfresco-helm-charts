@@ -1,18 +1,4 @@
-postgresql:
-  fullnameOverride: activiti-admin-postgresql
-  image:
-    repository: bitnamilegacy/postgresql
-    tag: 16.6.0
-  auth:
-    username: &dbuser alfresco
-    password: &dbpass alfresco-pass
-    database: activiti-admin
-  primary:
-    persistence:
-      enabled: false
 database:
   url: postgresql://activiti-admin-postgresql:5432/activiti-admin
-  username: *dbuser
-  password: *dbpass
-tags:
-  ci: true
+  username: alfresco
+  password: alfresco-pass

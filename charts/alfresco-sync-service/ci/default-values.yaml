@@ -11,38 +11,11 @@ environment:
     -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80
     -Drepo.syncconfig.url=https://alfresco.github.io/alfresco-helm-charts/test/alfresco/service/devicesync/config
     -Dsync.authentication.basicAuthUrl=https://alfresco.github.io/alfresco-helm-charts/test/alfresco/s/api/authentication
-activemq:
-  fullnameOverride: activemq
 messageBroker:
   url: nio://activemq-broker:61616
   username: admin
   password: admin
-postgresql:
-  image:
-    repository: bitnamilegacy/postgresql
-    tag: 16.6.0
-  fullnameOverride: pgsync
-  auth:
-    enablePostgresUser: false
-    username: &dbuser alfresco
-    password: &dbpass admin
-    database: alfresco-sync
-  primary:
-    extendedConfiguration: |
-      shared_buffers = 256MB
-      max_connections = 100
-      wal_level = minimal
-      max_wal_senders = 0
-      max_replication_slots = 0
-      effective_cache_size = 1024GB
-      log_min_messages = LOG
-  resources:
-    limits:
-      cpu: "2"
-      memory: "2Gi"
 database:
   url: jdbc:postgresql://pgsync/alfresco-sync
-  username: *dbuser
-  password: *dbpass
-tags:
-  ci: true
+  username: alfresco
+  password: admin

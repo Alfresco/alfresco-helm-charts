@@ -271,13 +271,10 @@ Many charts depend on `alfresco-common` (currently v4.0.0), which is a library c
 ### External Dependencies
 
 Charts also depend on external charts:
-- **bitnami charts**: Used for PostgreSQL, ActiveMQ, etc.
-- Repository: `https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/`
 - Self-reference: `https://alfresco.github.io/alfresco-helm-charts/`
 
 These are configured in `ct.yaml` and must be added to local helm repos for testing:
 ```bash
-helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
 helm repo add self https://alfresco.github.io/alfresco-helm-charts/
 helm repo update
 ```

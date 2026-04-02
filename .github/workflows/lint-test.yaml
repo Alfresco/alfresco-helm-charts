@@ -157,6 +157,9 @@ jobs:
             popd
           fi
 
+      - name: Setup test dependencies
+        run: ./scripts/ci-deps.sh setup ${{ matrix.chart }} "$INSTALL_NAMESPACE"
+
       - name: Run chart-testing (install)
         run: >-
           ct install --config ct.yaml

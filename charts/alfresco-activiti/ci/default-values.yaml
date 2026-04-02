@@ -1,23 +1,9 @@
-postgresql:
-  fullnameOverride: activiti-postgresql
-  image:
-    repository: bitnamilegacy/postgresql
-    tag: 16.6.0
-  auth:
-    username: &dbuser alfresco
-    password: &dbpass alfresco-pass
-    database: activiti
-  primary:
-    persistence:
-      enabled: false
 license:
   secretName: aps-license
 database:
   url: postgresql://activiti-postgresql:5432/activiti
-  username: *dbuser
-  password: *dbpass
+  username: alfresco
+  password: alfresco-pass
 environment:
   ACTIVITI_CORS_ALLOWED_ORIGINS: "http://localhost"
   ACTIVITI_REVIEW_WORKFLOWS_ENABLED: "true"
-tags:
-  ci: true

@@ -1,0 +1,49 @@
+# Test dependencies configuration
+# Maps each chart to the external resources it needs for CI testing.
+# These dependencies are deployed before chart-testing (ct install)
+# and cleaned up afterwards to prevent resource exhaustion.
+#
+# Usage:
+#   scripts/ci-deps.sh setup <chart-path> <namespace>
+#   scripts/ci-deps.sh teardown <chart-path> <namespace>
+#
+# Each chart's ci/<dep-name>-values.yaml provides chart-specific
+# values for the dependency deployment.
+
+deps:
+  postgresql:
+    chart: postgres
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    version: 0.4.0
+  activemq:
+    chart: activemq
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    version: 4.0.0
+  elasticsearch:
+    chart: elastic
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    version: 0.4.0
+
+charts:
+  alfresco-activiti:
+    - postgresql
+  alfresco-activiti-admin:
+    - postgresql
+  alfresco-ai-transformer:
+    - activemq
+  alfresco-audit-storage:
+    - activemq
+    - elasticsearch
+  alfresco-connector-hxi:
+    - activemq
+    - postgresql
+  alfresco-repository:
+    - postgresql
+  alfresco-search-enterprise:
+    - activemq
+    - elasticsearch
+  alfresco-sync-service:
+    - activemq
+    - postgresql
+  alfresco-transform-service:
+    - activemq
