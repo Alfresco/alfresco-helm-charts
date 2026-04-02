@@ -8,8 +8,7 @@
 #   scripts/ci-deps.sh setup <chart-path> <namespace>
 #   scripts/ci-deps.sh teardown <chart-path> <namespace>
 #
-# Dependencies are deployed with values from <chart-path>/ci/<dep-name>-values.yaml
-# and existing kustomize resources from <chart-path>/ci/kustomize/ are also applied.
+# Dependencies are deployed with values from <chart-path>/ci/deps/<dep-name>-values.yaml if present.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"

@@ -8,7 +8,7 @@ INSTALLABLE_CHARTS := $(filter-out alfresco-common,$(CHARTS))
 # Auto-detect chart name from command line (e.g. make install alfresco-repository)
 CHART ?= $(firstword $(filter $(INSTALLABLE_CHARTS),$(MAKECMDGOALS)))
 
-.PHONY: help setup teardown test lint install clean $(INSTALLABLE_CHARTS)
+.PHONY: help setup teardown test lint install uninstall clean $(INSTALLABLE_CHARTS)
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
