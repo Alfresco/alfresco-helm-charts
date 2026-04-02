@@ -1,14 +1,5 @@
-# Test dependencies configuration
-# Maps each chart to the external resources it needs for CI testing.
-# These dependencies are deployed before chart-testing (ct install)
-# and cleaned up afterwards to prevent resource exhaustion.
-#
-# Usage:
-#   scripts/ci-deps.sh setup <chart-path> <namespace>
-#   scripts/ci-deps.sh teardown <chart-path> <namespace>
-#
-# Each chart's ci/<dep-name>-values.yaml provides chart-specific
-# values for the dependency deployment.
+# Test dependencies for CI
+# See README.md for usage details.
 
 deps:
   postgresql:
