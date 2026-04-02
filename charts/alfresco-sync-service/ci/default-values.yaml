@@ -16,6 +16,6 @@ messageBroker:
   username: admin
   password: admin
 database:
-  url: jdbc:postgresql://pgsync/alfresco-sync
+  url: jdbc:postgresql://postgresql/alfresco
   username: alfresco
-  password: admin
+  password: alfresco

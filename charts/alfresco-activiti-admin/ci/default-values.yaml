@@ -1,4 +1,4 @@
 database:
-  url: postgresql://activiti-admin-postgresql:5432/activiti-admin
+  url: postgresql://postgresql:5432/alfresco
   username: alfresco
-  password: alfresco-pass
+  password: alfresco

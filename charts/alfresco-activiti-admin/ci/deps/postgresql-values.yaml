@@ -1,5 +1,0 @@
-nameOverride: activiti-admin-postgresql
-auth:
-  username: alfresco
-  password: alfresco-pass
-  database: activiti-admin

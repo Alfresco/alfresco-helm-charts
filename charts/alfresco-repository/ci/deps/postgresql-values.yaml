@@ -1,5 +1,0 @@
-nameOverride: pg-postgresql-acs
-auth:
-  username: pguser
-  password: pgpass
-  database: alfresco
