@@ -21,7 +21,7 @@ NAMESPACE=${3:?Usage: $0 setup|teardown <chart-path> <namespace>}
 CHART_NAME=$(basename "$CHART_PATH")
 
 get_deps() {
-  yq eval ".charts.\"$CHART_NAME\" // [] | .[]" "$CONFIG_FILE"
+  yq eval ".charts.\"$CHART_NAME\" | .[]" "$CONFIG_FILE"
 }
 
 helm_install_dep() {

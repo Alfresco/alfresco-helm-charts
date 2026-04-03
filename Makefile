@@ -1,9 +1,8 @@
 NAMESPACE ?= default
 CHARTS_DIR := charts
 
-# List of all installable charts (excluding library chart alfresco-common)
-CHARTS := $(notdir $(wildcard $(CHARTS_DIR)/*))
-INSTALLABLE_CHARTS := $(filter-out alfresco-common,$(CHARTS))
+# List of all installable charts (type: application, excludes library charts)
+INSTALLABLE_CHARTS := $(notdir $(patsubst %/Chart.yaml,%,$(shell grep -l 'type: application' $(CHARTS_DIR)/*/Chart.yaml)))
 
 # Auto-detect chart name from command line (e.g. make install alfresco-repository)
 CHART ?= $(firstword $(filter $(INSTALLABLE_CHARTS),$(MAKECMDGOALS)))
@@ -35,6 +34,7 @@ test: ## Run unit tests (make test alfresco-repository)
 	helm unittest --color $(CHARTS_DIR)/$(CHART)
 
 install: setup ## Deploy deps + install chart (make install alfresco-repository)
+	helm dependency build $(CHARTS_DIR)/$(CHART)
 	helm upgrade --install $(CHART) $(CHARTS_DIR)/$(CHART) \
 		--namespace $(NAMESPACE) \
 		-f $(CHARTS_DIR)/$(CHART)/ci/default-values.yaml \

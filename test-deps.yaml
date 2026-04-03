@@ -16,10 +16,12 @@ deps:
     version: 0.4.0
 
 charts:
+  activemq: []
   alfresco-activiti:
     - postgresql
   alfresco-activiti-admin:
     - postgresql
+  alfresco-adf-app: []
   alfresco-ai-transformer:
     - activemq
   alfresco-audit-storage:
@@ -28,13 +30,19 @@ charts:
   alfresco-connector-hxi:
     - activemq
     - postgresql
+  alfresco-connector-ms365: []
+  alfresco-connector-msteams: []
   alfresco-repository:
     - postgresql
   alfresco-search-enterprise:
     - activemq
     - elasticsearch
+  alfresco-search-service: []
+  alfresco-share: []
   alfresco-sync-service:
     - activemq
     - postgresql
   alfresco-transform-service:
     - activemq
+  elastic: []
+  postgres: []
