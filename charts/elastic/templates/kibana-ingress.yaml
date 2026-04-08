@@ -11,8 +11,9 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  {{- if .Values.kibana.ingress.className }}
-  ingressClassName: {{ .Values.kibana.ingress.className }}
+  {{- $ingressClass := coalesce $.Values.global.ingressClassName .Values.kibana.ingress.className }}
+  {{- if $ingressClass }}
+  ingressClassName: {{ $ingressClass }}
   {{- end }}
   {{- if .Values.kibana.ingress.tls }}
   tls:

@@ -102,3 +102,11 @@ tests:
     asserts:
       - hasDocuments:
           count: 0
+  - it: should allow overriding ingress class name via global value
+    set:
+      global:
+        ingressClassName: custom-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: custom-ingress-class

@@ -111,6 +111,17 @@ Usage: include "alfresco-common.lazy.getValueFromKey" (dict "key" "path.to.key" 
 {{- end -}}
 
 {{/*
+Resolve ingress class name: uses global.ingressClassName if set, otherwise falls back to the provided local value.
+
+Usage: include "alfresco-common.ingress.className" (dict "rootCtx" $ "localClass" .Values.ingress.className)
+
+*/}}
+{{- define "alfresco-common.ingress.className" -}}
+{{- $globalClass := .rootCtx.Values.global.ingressClassName | default "" -}}
+{{- coalesce $globalClass .localClass -}}
+{{- end -}}
+
+{{/*
 Evaluate a value within the chart's context given a path, otherwise fallback to the global context
 
 Usage: include "alfresco-common.may.glob.value" dict "rootCtx" $ "path" "path.to.key")

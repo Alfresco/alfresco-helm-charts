@@ -92,3 +92,18 @@ tests:
                           number: 80
                     path: /zeppelin
                     pathType: Prefix
+
+  - it: should render with default ingress class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: nginx
+
+  - it: should allow overriding ingress class name via global value
+    set:
+      global:
+        ingressClassName: custom-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: custom-ingress-class
