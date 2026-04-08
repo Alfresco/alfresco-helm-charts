@@ -33,7 +33,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | environment.ZEPPELIN_MEM | string | `"-Xms512m -Xmx1g"` |  |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
-| global.strategy | object | `{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}` | Global ingress class name. When set, overrides ingress.className for all ingress resources in this chart. ingressClassName: "" |
+| global.ingressClassName | string | `""` | Global ingress class name. When set, overrides ingress.className for all ingress resources in this chart. |
+| global.strategy.rollingUpdate.maxSurge | int | `1` |  |
+| global.strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | image.internalPort | int | `9090` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/insight-zeppelin"` |  |

@@ -63,7 +63,7 @@ global:
   # These will be merged with chart-level additionalLabels, with chart-level taking precedence
   additionalLabels: {}
   # -- Global ingress class name. When set, overrides ingress.className for all ingress resources in this chart.
-  # ingressClassName: ""
+  ingressClassName: ""
   strategy:
     rollingUpdate:
       maxSurge: 1
