@@ -2,19 +2,9 @@ apiVersion: v2
 name: alfresco-connector-hxi
 description: A Helm chart for deploying Alfresco connector hxi services
 type: application
-version: 0.5.0
+version: 0.6.0
 appVersion: 2.0.2
 dependencies:
   - name: alfresco-common
     version: 5.0.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
-  - name: activemq
-    version: 4.0.0
-    repository: https://alfresco.github.io/alfresco-helm-charts/
-    tags:
-      - ci
-  - name: postgresql
-    version: 12.5.6
-    repository: oci://registry-1.docker.io/bitnamicharts
-    tags:
-      - ci

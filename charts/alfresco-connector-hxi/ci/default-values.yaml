@@ -24,21 +24,8 @@ predictionApplier:
     limits:
       cpu: "1"
       memory: "1Gi"
-activemq:
-  fullnameOverride: activemq
-  resources:
-    requests:
-      cpu: "100m"
-      memory: "512Mi"
-    limits:
-      cpu: "1000m"
-      memory: "1Gi"
-postgresql:
-  image:
-    repository: bitnamilegacy/postgresql
-    tag: 16.6.0
 db:
-  url: jdbc:postgresql://postgresql:5432/postgres
+  url: jdbc:postgresql://postgresql:5432/alfresco
 messageBroker:
   url: nio://activemq-broker:61616
   username: admin
@@ -50,5 +37,3 @@ ats:
   sfsUrl: http://alfresco-transform-services-sfs
 hxi:
   hxInsightPredictionsUrl: http://hxi-predictions
-tags:
-  ci: true

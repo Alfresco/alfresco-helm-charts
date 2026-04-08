@@ -46,7 +46,7 @@ jobs:
         id: set-matrix
         run: |
           if [[ "$TEST_ALL_CHARTS" == "true" ]]; then
-            charts=$(ls -1 charts | grep -v alfresco-common | awk -v prefix='charts/' '{print prefix $0}')
+            charts=$(make list-charts)
           else
             charts=$(ct list-changed --config ct.yaml)
           fi
@@ -156,6 +156,9 @@ jobs:
               kubectl -n "$INSTALL_NAMESPACE" apply -f -
             popd
           fi
+
+      - name: Setup test dependencies
+        run: ./scripts/ci-deps.sh setup ${{ matrix.chart }} "$INSTALL_NAMESPACE"
 
       - name: Run chart-testing (install)
         run: >-

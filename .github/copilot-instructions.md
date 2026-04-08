@@ -250,7 +250,7 @@ Current chart versions (as reference):
 
 The repository uses GitHub Actions to automatically release charts when versions are bumped. Make sure your version bump is intentional and follows the semantic versioning rules above.
 
-## Dependencies and External Charts
+## Dependencies
 
 ### Chart Dependencies
 
@@ -268,16 +268,9 @@ Many charts depend on `alfresco-common` (currently v4.0.0), which is a library c
 4. Run `helm dependency update charts/<chart-name>` for each affected chart
 5. Test each dependent chart individually
 
-### External Dependencies
+Self dependency:
 
-Charts also depend on external charts:
-- **bitnami charts**: Used for PostgreSQL, ActiveMQ, etc.
-- Repository: `https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/`
-- Self-reference: `https://alfresco.github.io/alfresco-helm-charts/`
-
-These are configured in `ct.yaml` and must be added to local helm repos for testing:
 ```bash
-helm repo add bitnami https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami/
 helm repo add self https://alfresco.github.io/alfresco-helm-charts/
 helm repo update
 ```

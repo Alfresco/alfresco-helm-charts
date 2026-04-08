@@ -343,9 +343,6 @@ global:
   alfrescoRegistryPullSecrets: quay-registry-secret
   # -- a fallback for .Values.known_urls that can be shared between charts
   known_urls: null
-tags:
-  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
-  ci: false
 affinity:
   podAntiAffinity:
     preferredDuringSchedulingIgnoredDuringExecution:
