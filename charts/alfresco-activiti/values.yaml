@@ -6,6 +6,7 @@ global:
   additionalLabels: {}
   # -- Global ingress class name. When set, overrides ingress.className for all ingress resources in this chart.
   # ingressClassName: ""
+
 # Example:
 #   Product: k8s
 #   Environment: DEV
