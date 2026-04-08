@@ -19,7 +19,7 @@ help: ## Show this help
 
 list-charts: ## List all installable charts
 	@for chart in $(INSTALLABLE_CHARTS); do \
-		echo "charts/$$chart"; \
+		echo "$(CHARTS_DIR)/$$chart"; \
 	done
 
 setup: ## Deploy test dependencies (make setup alfresco-repository)
