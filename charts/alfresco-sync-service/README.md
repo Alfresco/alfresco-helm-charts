@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-sync-service
 
-![Version: 7.9.0](https://img.shields.io/badge/Version-7.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.1](https://img.shields.io/badge/AppVersion-5.3.1-informational?style=flat-square)
+![Version: 7.9.1](https://img.shields.io/badge/Version-7.9.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.1](https://img.shields.io/badge/AppVersion-5.3.1-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -41,6 +41,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | environment.JAVA_OPTS | string | `"-Dsql.db.pool.initial=25 -Dsql.db.pool.max=75 -Dsync.metrics.reporter.graphite.enabled=false -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
 | global | object | `{"additionalLabels":{},"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
+| global.strategy | object | `{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}` | Global ingress class name. When set, overrides ingress.className for all ingress resources in this chart. ingressClassName: "" |
 | hazelcast.service.port | int | `5701` |  |
 | hazelcast.service.type | string | `"ClusterIP"` |  |
 | image.internalPort | int | `9090` |  |
@@ -52,6 +53,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-hash" | string | `"sha1"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-name" | string | `"sync_affinity_route"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/use-regex" | string | `"true"` |  |
+| ingress.className | string | `"nginx"` |  |
 | ingress.enabled | bool | `true` |  |
 | ingress.hosts[0].paths[0].path | string | `"/syncservice(/|$)(.*)"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |

@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-activiti-admin
 
-![Version: 0.11.0](https://img.shields.io/badge/Version-0.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 0.11.1](https://img.shields.io/badge/Version-0.11.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 A Helm chart for Alfresco Activiti
 
@@ -19,7 +19,7 @@ A Helm chart for Alfresco Activiti
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| additionalLabels | object | `{}` | Additional labels to be added to all resources (deployments, statefulsets, services, pods, etc.) Example:   Product: k8s   Environment: DEV |
+| additionalLabels | object | `{}` |  |
 | affinity | object | `{}` |  |
 | database.driver | string | `nil` | JDBC driver Class |
 | database.existingConfigMap.keys.driver | string | `"DATABASE_DRIVER"` | configmap key where to find the JDBC driver Class for admin app |
