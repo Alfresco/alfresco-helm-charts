@@ -7,7 +7,7 @@ INSTALLABLE_CHARTS := $(notdir $(patsubst %/Chart.yaml,%,$(shell grep -l 'type: 
 # Auto-detect chart name from command line (e.g. make install alfresco-repository)
 CHART ?= $(firstword $(filter $(INSTALLABLE_CHARTS),$(MAKECMDGOALS)))
 
-.PHONY: help setup teardown test lint install uninstall clean $(INSTALLABLE_CHARTS)
+.PHONY: help list-charts setup teardown test lint install uninstall clean $(INSTALLABLE_CHARTS)
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -16,6 +16,11 @@ help: ## Show this help
 	@echo "  Or use a chart name directly:"
 	@echo "    make install alfresco-repository"
 	@echo "    make test alfresco-repository"
+
+list-charts: ## List all installable charts
+	@for chart in $(INSTALLABLE_CHARTS); do \
+		echo "charts/$$chart"; \
+	done
 
 setup: ## Deploy test dependencies (make setup alfresco-repository)
 	@test -n "$(CHART)" || (echo "Usage: make setup <chart-name>"; exit 1)
