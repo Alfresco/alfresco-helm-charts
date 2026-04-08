@@ -91,7 +91,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | extraVolumes | list | `[]` |  |
 | fullnameOverride | string | `""` |  |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
-| global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` | Global ingress class name. When set, overrides ingress.className for all ingress resources in this chart. ingressClassName: "" https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret |
+| global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | global.known_urls | string | `nil` | a fallback for .Values.known_urls that can be shared between charts |
 | image.port | int | `8080` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
