@@ -64,6 +64,7 @@ global:
   additionalLabels: {}
   # -- Global ingress class name. When set, overrides ingress.className for all ingress resources in this chart.
   ingressClassName: ""
+  # -- Update strategy for the deployment
   strategy:
     rollingUpdate:
       maxSurge: 1

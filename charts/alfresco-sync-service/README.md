@@ -42,6 +42,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | global | object | `{"additionalLabels":{},"alfrescoRegistryPullSecrets":"quay-registry-secret","ingressClassName":"","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.ingressClassName | string | `""` | Global ingress class name override for all ingress resources in this chart |
+| global.strategy | object | `{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}` | Update strategy for the deployment |
 | hazelcast.service.port | int | `5701` |  |
 | hazelcast.service.type | string | `"ClusterIP"` |  |
 | image.internalPort | int | `9090` |  |
