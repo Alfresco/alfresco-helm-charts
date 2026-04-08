@@ -34,6 +34,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | fullnameOverride | string | `""` | Define a fully static name |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
+| global.ingressClassName | string | `""` | Global ingress class name override for all ingress resources in this chart |
 | global.known_urls | string | `nil` | a fallback for .Values.known_urls that can be shared between charts |
 | hazelcast.port | int | `5701` | Port used to expose the Hazelcast service when replicaCount > 1 |
 | image.port | int | `8080` | Internal port where the pod is listening. Should only be changed is you use a custom image which uses a different port. |
