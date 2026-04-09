@@ -29,6 +29,18 @@ tests:
       - equal:
           path: spec.ingressClassName
           value: custom-ingress-class
+  - it: should use local ingress class name over global when both are set
+    set:
+      elasticsearch:
+        ingress:
+          enabled: true
+          className: local-ingress-class
+      global:
+        ingressClassName: global-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: local-ingress-class
 ---
 suite: test kibana ingress
 templates:
@@ -62,3 +74,16 @@ tests:
       - equal:
           path: spec.ingressClassName
           value: custom-ingress-class
+  - it: should use local ingress class name over global when both are set
+    set:
+      kibana:
+        enabled: true
+        ingress:
+          enabled: true
+          className: local-ingress-class
+      global:
+        ingressClassName: global-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: local-ingress-class

@@ -79,3 +79,13 @@ tests:
       - equal:
           path: spec.ingressClassName
           value: custom-ingress-class
+  - it: should use local ingress class name over global when both are set
+    set:
+      global:
+        ingressClassName: global-ingress-class
+      ingress:
+        className: local-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: local-ingress-class
