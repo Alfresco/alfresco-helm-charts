@@ -4,7 +4,7 @@ global:
   # These will be merged with chart-level additionalLabels, with chart-level taking precedence
   additionalLabels: {}
   # -- Global ingress class name override for all ingress resources in this chart
-  ingressClassName: ""
+  ingressClassName: "nginx"
 nameOverride: ""
 fullnameOverride: ""
 # -- Additional labels to be added to all resources (deployments, statefulsets, services, pods, etc.)
@@ -48,7 +48,7 @@ elasticsearch:
     name: elasticsearch
   ingress:
     enabled: false
-    className: "nginx"
+    className: ""
     annotations: {}
     hosts:
       - paths:
@@ -88,7 +88,7 @@ kibana:
       memory: 1Gi
   ingress:
     enabled: false
-    className: "nginx"
+    className: ""
     annotations: {}
     hosts:
       - paths:

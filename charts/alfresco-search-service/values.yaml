@@ -48,7 +48,7 @@ ingress:
           pathType: Prefix
   tls: []
   annotations: {}
-  className: nginx
+  className: ""
 # Below values must be set by parent chart
 repository:
   # -- Alfresco repository hostname
@@ -126,7 +126,7 @@ global:
   # These will be merged with chart-level additionalLabels, with chart-level taking precedence
   additionalLabels: {}
   # -- Global ingress class name override for all ingress resources in this chart
-  ingressClassName: ""
+  ingressClassName: "nginx"
 nodeSelector: {}
 tolerations: []
 # -- Pod affinity, passed thru tpl function

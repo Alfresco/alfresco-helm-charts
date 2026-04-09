@@ -11,7 +11,10 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  ingressClassName: {{ coalesce .Values.global.ingressClassName .Values.elasticsearch.ingress.className }}
+  {{- $ingressClass := coalesce .Values.elasticsearch.ingress.className .Values.global.ingressClassName }}
+  {{- if $ingressClass }}
+  ingressClassName: {{ $ingressClass }}
+  {{- end }}
   {{- if .Values.elasticsearch.ingress.tls }}
   tls:
     {{- range .Values.elasticsearch.ingress.tls }}
