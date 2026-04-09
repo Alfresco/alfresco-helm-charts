@@ -12,6 +12,9 @@ global:
   # -- Global additional labels that can be set at parent/umbrella chart level
   # These will be merged with chart-level additionalLabels, with chart-level taking precedence
   additionalLabels: {}
+  # -- Global ingress class name override for all ingress resources in this chart
+  ingressClassName: "nginx"
+  # -- Update strategy for the deployment
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -139,6 +142,7 @@ database:
       password: DATABASE_PASSWORD
 ingress:
   enabled: true
+  className: ""
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /alfresco/$2

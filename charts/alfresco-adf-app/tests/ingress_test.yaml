@@ -1,0 +1,37 @@
+---
+suite: test ADF app ingress
+templates:
+  - ingress.yaml
+tests:
+  - it: should render with default ingress class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: nginx
+
+  - it: should not render ingress when disabled
+    set:
+      ingress:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should allow overriding ingress class name via global value
+    set:
+      global:
+        ingressClassName: custom-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: custom-ingress-class
+  - it: should use local ingress class name over global when both are set
+    set:
+      global:
+        ingressClassName: global-ingress-class
+      ingress:
+        className: local-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: local-ingress-class

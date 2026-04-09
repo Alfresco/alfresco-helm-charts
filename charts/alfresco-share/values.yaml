@@ -64,7 +64,7 @@ service:
   port: 80
 ingress:
   enabled: true
-  className: nginx
+  className: ""
   annotations:
     # -- Files uploads will timeout if longer than 20 minutes
     nginx.ingress.kubernetes.io/proxy-read-timeout: 20m
@@ -123,6 +123,8 @@ global:
   # -- Global additional labels that can be set at parent/umbrella chart level
   # These will be merged with chart-level additionalLabels, with chart-level taking precedence
   additionalLabels: {}
+  # -- Global ingress class name override for all ingress resources in this chart
+  ingressClassName: "nginx"
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
   alfrescoRegistryPullSecrets: quay-registry-secret
   # -- a fallback for .Values.known_urls that can be shared between charts

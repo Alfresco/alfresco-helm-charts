@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-adf-app
 
-![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic Alfresco Development Framework Helm chart for Kubernetes
 
@@ -27,12 +27,13 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | fullnameOverride | string | `""` |  |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
+| global.ingressClassName | string | `"nginx"` | Global ingress class name override for all ingress resources in this chart |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `""` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
-| ingress.className | string | `"nginx"` |  |
+| ingress.className | string | `""` |  |
 | ingress.enabled | bool | `true` |  |
 | ingress.hosts[0].host | string | `"chart-example.local"` |  |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |

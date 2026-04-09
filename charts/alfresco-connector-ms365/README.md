@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-ms365
 
-![Version: 3.5.0](https://img.shields.io/badge/Version-3.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.0](https://img.shields.io/badge/AppVersion-2.1.0-informational?style=flat-square)
+![Version: 3.6.0](https://img.shields.io/badge/Version-3.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.0](https://img.shields.io/badge/AppVersion-2.1.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector ms365 service
 
@@ -27,12 +27,13 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | environment | object | `{}` |  |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
+| global.ingressClassName | string | `"nginx"` | Global ingress class name override for all ingress resources in this chart |
 | image.internalPort | int | `9095` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-ooi-service"` |  |
 | image.tag | string | `"2.1.0"` |  |
 | ingress.annotations | object | `{}` |  |
-| ingress.className | string | `"nginx"` |  |
+| ingress.className | string | `""` |  |
 | ingress.enabled | bool | `true` | Enable or disable ingress resource creation |
 | ingress.extraAnnotations | object | `{}` |  |
 | ingress.hosts[0].paths[0].path | string | `"/ooi-service"` |  |

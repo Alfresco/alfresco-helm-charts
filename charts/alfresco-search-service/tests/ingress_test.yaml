@@ -112,3 +112,25 @@ tests:
       - equal:
           path: spec.rules[0].http.paths[0].backend.service.port.number
           value: 8080
+
+  - it: should allow overriding ingress class name via global value
+    set:
+      ingress:
+        enabled: true
+      global:
+        ingressClassName: custom-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: custom-ingress-class
+  - it: should use local ingress class name over global when both are set
+    set:
+      ingress:
+        enabled: true
+        className: local-ingress-class
+      global:
+        ingressClassName: global-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: local-ingress-class

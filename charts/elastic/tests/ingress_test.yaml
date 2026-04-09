@@ -1,0 +1,89 @@
+---
+suite: test elasticsearch ingress
+templates:
+  - elasticsearch-ingress.yaml
+tests:
+  - it: should not render ingress when disabled
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render with default ingress class when enabled
+    set:
+      elasticsearch:
+        ingress:
+          enabled: true
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: nginx
+
+  - it: should allow overriding ingress class name via global value
+    set:
+      elasticsearch:
+        ingress:
+          enabled: true
+      global:
+        ingressClassName: custom-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: custom-ingress-class
+  - it: should use local ingress class name over global when both are set
+    set:
+      elasticsearch:
+        ingress:
+          enabled: true
+          className: local-ingress-class
+      global:
+        ingressClassName: global-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: local-ingress-class
+---
+suite: test kibana ingress
+templates:
+  - kibana-ingress.yaml
+tests:
+  - it: should not render ingress when kibana or ingress disabled
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render with default ingress class when kibana and ingress enabled
+    set:
+      kibana:
+        enabled: true
+        ingress:
+          enabled: true
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: nginx
+
+  - it: should allow overriding ingress class name via global value
+    set:
+      kibana:
+        enabled: true
+        ingress:
+          enabled: true
+      global:
+        ingressClassName: custom-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: custom-ingress-class
+  - it: should use local ingress class name over global when both are set
+    set:
+      kibana:
+        enabled: true
+        ingress:
+          enabled: true
+          className: local-ingress-class
+      global:
+        ingressClassName: global-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: local-ingress-class

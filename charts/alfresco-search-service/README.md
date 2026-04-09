@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-service
 
-![Version: 6.0.0](https://img.shields.io/badge/Version-6.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.18](https://img.shields.io/badge/AppVersion-2.0.18-informational?style=flat-square)
+![Version: 6.1.0](https://img.shields.io/badge/Version-6.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.18](https://img.shields.io/badge/AppVersion-2.0.18-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Search Service
 
@@ -21,7 +21,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-|  | alfresco-insight-zeppelin | 4.4.0 |
+|  | alfresco-insight-zeppelin | 4.5.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
 
 ## Values
@@ -34,8 +34,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | environment.SOLR_CREATE_ALFRESCO_DEFAULTS | string | `"alfresco,archive"` |  |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
+| global.ingressClassName | string | `"nginx"` | Global ingress class name override for all ingress resources in this chart |
 | ingress.annotations | object | `{}` |  |
-| ingress.className | string | `"nginx"` |  |
+| ingress.className | string | `""` |  |
 | ingress.enabled | bool | `false` | Expose the solr endpoint - make sure authentication is properly configured if you do so |
 | ingress.hosts[0].paths[0].path | string | `"/solr"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
