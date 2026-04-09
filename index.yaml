@@ -404,6 +404,21 @@ entries:
   alfresco-activiti:
   - apiVersion: v2
     appVersion: 26.1.0
+    created: "2026-04-09T13:58:11.34849842Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: A Helm chart for Alfresco Activiti
+    digest: b7d315aa7f475afb163c290840c974c52764b07c6afa0c2c4a75f6f606e8fffc
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    name: alfresco-activiti
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-activiti-0.11.0/alfresco-activiti-0.11.0.tgz
+    version: 0.11.0
+  - apiVersion: v2
+    appVersion: 26.1.0
     created: "2026-04-08T09:56:55.772605539Z"
     dependencies:
     - name: alfresco-common
@@ -838,6 +853,21 @@ entries:
   alfresco-activiti-admin:
   - apiVersion: v2
     appVersion: 26.1.0
+    created: "2026-04-09T13:58:11.534904702Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: A Helm chart for Alfresco Activiti
+    digest: 3763f4d2dcfc4db93fc1f88eb437674cc138fa4e27b170085fa75b0cd1fe6ff8
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    name: alfresco-activiti-admin
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-activiti-admin-0.12.0/alfresco-activiti-admin-0.12.0.tgz
+    version: 0.12.0
+  - apiVersion: v2
+    appVersion: 26.1.0
     created: "2026-04-08T09:56:55.946717643Z"
     dependencies:
     - name: alfresco-common
@@ -1270,6 +1300,19 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-activiti-admin-0.1.0-alpha.0/alfresco-activiti-admin-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-adf-app:
+  - apiVersion: v2
+    created: "2026-04-09T13:58:11.738701511Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: A generic Alfresco Development Framework Helm chart for Kubernetes
+    digest: c4526f9b8570f3d49fa8bded9864b0f435c2216ec089f448cb29b06de14faeba
+    name: alfresco-adf-app
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-adf-app-0.6.0/alfresco-adf-app-0.6.0.tgz
+    version: 0.6.0
   - apiVersion: v2
     created: "2026-03-14T08:16:47.293549429Z"
     dependencies:
@@ -3245,6 +3288,20 @@ entries:
   alfresco-connector-ms365:
   - apiVersion: v2
     appVersion: 2.1.0
+    created: "2026-04-09T13:58:11.928180533Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: A Helm chart for deploying Alfresco connector ms365 service
+    digest: f624266f8dd7242d1a27cc3dc01a260c98afbe2a9d73b882585befd6e1bdf4d7
+    name: alfresco-connector-ms365
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-ms365-3.6.0/alfresco-connector-ms365-3.6.0.tgz
+    version: 3.6.0
+  - apiVersion: v2
+    appVersion: 2.1.0
     created: "2026-03-14T08:16:48.09982767Z"
     dependencies:
     - name: alfresco-common
@@ -3680,6 +3737,20 @@ entries:
   alfresco-connector-msteams:
   - apiVersion: v2
     appVersion: 2.1.0
+    created: "2026-04-09T13:58:12.096015332Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: A Helm chart for deploying Alfresco connector msteams service
+    digest: c42f489d40bcf51b77f6db9709a40832dcb3bfa86c9aadc5f37aa13fff5c3812
+    name: alfresco-connector-msteams
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-msteams-2.6.0/alfresco-connector-msteams-2.6.0.tgz
+    version: 2.6.0
+  - apiVersion: v2
+    appVersion: 2.1.0
     created: "2026-03-14T08:16:48.238833427Z"
     dependencies:
     - name: alfresco-common
@@ -4043,6 +4114,20 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-msteams-0.1.0-alpha.0/alfresco-connector-msteams-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-repository:
+  - apiVersion: v2
+    appVersion: 26.1.0
+    created: "2026-04-09T13:58:12.298970743Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: Alfresco content repository Helm chart
+    digest: 3b4c88f0b8bf4e01dba1fc13949ad260ea71ea628bca055e5e73b53031eb403d
+    name: alfresco-repository
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-repository-1.2.0/alfresco-repository-1.2.0.tgz
+    version: 1.2.0
   - apiVersion: v2
     appVersion: 26.1.0
     created: "2026-04-08T09:56:56.690117124Z"
@@ -6445,6 +6530,32 @@ entries:
   alfresco-search-service:
   - apiVersion: v2
     appVersion: 2.0.18
+    created: "2026-04-09T13:58:12.482348554Z"
+    dependencies:
+    - condition: alfresco-insight-zeppelin.enabled
+      name: alfresco-insight-zeppelin
+      repository: ""
+      version: 4.5.0
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: A Helm chart for deploying Alfresco Search Service
+    digest: 48f91b84007165e3bcb7f90607ab383d10607e0d0dfad3e93cc970e0d031d595
+    home: https://www.alfresco.com
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - alfresco search services
+    - alfresco insight engine
+    - solr
+    name: alfresco-search-service
+    sources:
+    - https://github.com/Alfresco/alfresco-helm-charts
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-search-service-6.1.0/alfresco-search-service-6.1.0.tgz
+    version: 6.1.0
+  - apiVersion: v2
+    appVersion: 2.0.18
     created: "2026-03-14T08:16:48.744386455Z"
     dependencies:
     - condition: alfresco-insight-zeppelin.enabled
@@ -7461,6 +7572,20 @@ entries:
   alfresco-share:
   - apiVersion: v2
     appVersion: 26.1.0
+    created: "2026-04-09T13:58:12.652832323Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts
+      version: 5.0.0
+    description: Alfresco Share Helm chart for Kubernetes
+    digest: d473a3f3f8f18b7892eea4c8377820aad5ba141520616b0e1271618afabbebc7
+    name: alfresco-share
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-share-2.1.0/alfresco-share-2.1.0.tgz
+    version: 2.1.0
+  - apiVersion: v2
+    appVersion: 26.1.0
     created: "2026-03-14T08:16:48.868549846Z"
     dependencies:
     - name: alfresco-common
@@ -7880,6 +8005,27 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-share-0.1.0-alpha.0/alfresco-share-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-sync-service:
+  - apiVersion: v2
+    appVersion: 5.3.1
+    created: "2026-04-09T13:58:12.873801956Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: Alfresco Sync Service
+    digest: 472267ef6380d8c0de1f173ea4cfebbca0f925781765c4b649b7beefea73f9ad
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - syncservice
+    - alfresco
+    - application
+    name: alfresco-sync-service
+    sources:
+    - https://github.com/Alfresco/acs-deployment
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-sync-service-7.10.0/alfresco-sync-service-7.10.0.tgz
+    version: 7.10.0
   - apiVersion: v2
     appVersion: 5.3.1
     created: "2026-04-08T09:56:57.135693967Z"
@@ -10084,6 +10230,27 @@ entries:
   elastic:
   - apiVersion: v2
     appVersion: 8.17.3
+    created: "2026-04-09T13:58:13.032284902Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: 'WARNING: This chart is meant to ease initial deployment for TESTING
+      purposes. DO NOT use this chart in any staging, or production environment. It
+      has very limited options. It is not meant to be configurable and we do not aim
+      at making it particularly secure or add features to it. Its SOLE goal is to
+      allow for quickly spinning up an Alfresco platform on kubernetes, any issue
+      that does not affect this is likely to not be fixed. For any other purpose,
+      make sure to deploy your own enterprise grade Elasticsearch instance and configure
+      Alfresco charts to point to it. '
+    digest: 864c1c42c924758c4327f2ce0b1e158458ca324a8d57066b5d04b96640428f30
+    name: elastic
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/elastic-0.5.0/elastic-0.5.0.tgz
+    version: 0.5.0
+  - apiVersion: v2
+    appVersion: 8.17.3
     created: "2026-03-13T11:51:22.818228119Z"
     dependencies:
     - name: alfresco-common
@@ -10356,4 +10523,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2026-04-08T09:56:57.291333001Z"
+generated: "2026-04-09T13:58:13.035211305Z"
