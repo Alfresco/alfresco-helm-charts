@@ -1,6 +1,6 @@
 # elastic
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.17.3](https://img.shields.io/badge/AppVersion-8.17.3-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.17.3](https://img.shields.io/badge/AppVersion-8.17.3-informational?style=flat-square)
 
 WARNING: This chart is meant to ease initial deployment for TESTING purposes.
 DO NOT use this chart in any staging, or production environment. It has very
@@ -32,7 +32,7 @@ Alfresco charts to point to it.
 | elasticsearch.image.repository | string | `"elasticsearch"` |  |
 | elasticsearch.image.tag | string | `"8.17.3"` |  |
 | elasticsearch.ingress.annotations | object | `{}` |  |
-| elasticsearch.ingress.className | string | `"nginx"` |  |
+| elasticsearch.ingress.className | string | `""` |  |
 | elasticsearch.ingress.enabled | bool | `false` |  |
 | elasticsearch.ingress.hosts[0].paths[0].path | string | `"/elasticsearch"` |  |
 | elasticsearch.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
@@ -63,12 +63,13 @@ Alfresco charts to point to it.
 | fullnameOverride | string | `""` |  |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
+| global.ingressClassName | string | `"nginx"` | Global ingress class name override for all ingress resources in this chart |
 | kibana.enabled | bool | `false` |  |
 | kibana.image.pullPolicy | string | `"IfNotPresent"` |  |
 | kibana.image.repository | string | `"kibana"` |  |
 | kibana.image.tag | string | `"8.17.3"` |  |
 | kibana.ingress.annotations | object | `{}` |  |
-| kibana.ingress.className | string | `"nginx"` |  |
+| kibana.ingress.className | string | `""` |  |
 | kibana.ingress.enabled | bool | `false` |  |
 | kibana.ingress.hosts[0].paths[0].path | string | `"/kibana"` |  |
 | kibana.ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
