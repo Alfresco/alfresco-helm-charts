@@ -17,7 +17,7 @@ tests:
       - hasDocuments:
           count: 0
 
-  - it: should use release name in ClusterRole name
+  - it: should use release name and namespace in ClusterRole name
     set:
       replicaCount: 2
     asserts:
@@ -26,7 +26,7 @@ tests:
           path: metadata.name
           value: RELEASE-NAME-NAMESPACE-share-hazelcast-cluster-role
 
-  - it: should use release name in ClusterRoleBinding name
+  - it: should use release name and namespace in ClusterRoleBinding name
     set:
       replicaCount: 2
     asserts:
