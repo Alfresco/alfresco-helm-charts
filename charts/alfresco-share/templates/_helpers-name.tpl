@@ -9,11 +9,9 @@
 {{- end }}
 
 {{- define "alfresco-share.cluster-role-hz.name" -}}
-{{- $scope := (dict "Values" (dict "nameOverride" "share-hazelcast-cluster-role" ) "Chart" .Chart "Release" .Release) }}
-{{- include "alfresco-share.fullname" $scope }}
+{{- printf "%s-%s-share-hazelcast-cluster-role" .Release.Name .Release.Namespace | trunc 253 | trimSuffix "-" }}
 {{- end }}
 
 {{- define "alfresco-share.cluster-role-binding-hz.name" -}}
-{{- $scope := (dict "Values" (dict "nameOverride" "share-hazelcast-cluster-role-binding" ) "Chart" .Chart "Release" .Release) }}
-{{- include "alfresco-share.fullname" $scope }}
+{{- printf "%s-%s-share-hazelcast-cluster-role-binding" .Release.Name .Release.Namespace | trunc 253 | trimSuffix "-" }}
 {{- end }}
