@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 1.3.0-alpha.0](https://img.shields.io/badge/Version-1.3.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -44,6 +44,10 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | configuration.db.password | string | `nil` | Password to authentication to the repository database |
 | configuration.db.url | string | `nil` | JDBC url of the database This is a mandatory parameter |
 | configuration.db.username | string | `nil` | Username to authentication to the repository database |
+| configuration.debug | object | see below | Debug port configuration for remote debugging (JDWP) |
+| configuration.debug.enabled | bool | `false` | Enable/Disable debug port exposure and JDWP agent |
+| configuration.debug.port | int | `8888` | port to use for remote debugging |
+| configuration.debug.suspend | string | `"n"` | suspend JVM on startup waiting for debugger (y/n) |
 | configuration.hz.port | int | `5701` | Hazelcast listener port Only change it if you use a custom image where the port has been changed from default |
 | configuration.imap | object | see below | Basic IMAP capabilities config (limited to enabling/disabling). In order to pass more IMAP properties and configure the subsystem more deeply, please use value `environment.CATALINA_OPTS` or `configuration.repository.existingConfiMap` and check the [available properties for this subsystem](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/25.2/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP/IMAP-Subsystem-Properties) |
 | configuration.imap.enabled | bool | `false` | Enable/Disable Alfresco repository IMAP capabilities |
