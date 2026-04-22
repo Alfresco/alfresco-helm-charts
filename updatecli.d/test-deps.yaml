@@ -1,0 +1,49 @@
+---
+name: "Bump test dependencies versions"
+
+sources:
+  activemq:
+    name: "activemq"
+    kind: helmchart
+    spec:
+      url: https://alfresco.github.io/alfresco-helm-charts/
+      name: activemq
+
+  postgres:
+    name: "postgres"
+    kind: helmchart
+    spec:
+      url: https://alfresco.github.io/alfresco-helm-charts/
+      name: postgres
+
+  elastic:
+    name: "elastic"
+    kind: helmchart
+    spec:
+      url: https://alfresco.github.io/alfresco-helm-charts/
+      name: elastic
+
+targets:
+  activemq:
+    name: "Update activemq version in test-deps.yaml"
+    kind: yaml
+    sourceid: activemq
+    spec:
+      file: test-deps.yaml
+      key: $.deps.activemq.version
+
+  postgres:
+    name: "Update postgres version in test-deps.yaml"
+    kind: yaml
+    sourceid: postgres
+    spec:
+      file: test-deps.yaml
+      key: $.deps.postgresql.version
+
+  elastic:
+    name: "Update elastic version in test-deps.yaml"
+    kind: yaml
+    sourceid: elastic
+    spec:
+      file: test-deps.yaml
+      key: $.deps.elasticsearch.version

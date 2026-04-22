@@ -12,6 +12,7 @@ on:
     paths:
       - 'charts/**'
       - '.github/workflows/lint-test.yaml'
+      - 'test-deps.yaml'
       - '!charts/**/README.md'
       - '!charts/**/README.md.gotmpl'
       - '!charts/**/docs/**'
@@ -37,6 +38,10 @@ jobs:
         with:
           version: ${{ env.HELM_VERSION }}
 
+      - name: List changed files
+        id: pr-changes
+        uses: Alfresco/alfresco-build-tools/.github/actions/github-list-changes@v17.6.0
+
       - name: Set up chart-testing
         uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
         with:
@@ -45,7 +50,7 @@ jobs:
       - name: List changed charts and create matrix
         id: set-matrix
         run: |
-          if [[ "$TEST_ALL_CHARTS" == "true" ]]; then
+          if [[ "$TEST_ALL_CHARTS" == "true" ]] || echo "${{ steps.pr-changes.outputs.all_changed_files }}" | grep -q '^test-deps.yaml$'; then
             charts=$(make list-charts)
           else
             charts=$(ct list-changed --config ct.yaml)
