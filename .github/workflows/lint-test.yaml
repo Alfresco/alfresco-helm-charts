@@ -12,6 +12,7 @@ on:
     paths:
       - 'charts/**'
       - '.github/workflows/lint-test.yaml'
+      - 'test-deps.yaml'
       - '!charts/**/README.md'
       - '!charts/**/README.md.gotmpl'
       - '!charts/**/docs/**'
@@ -37,6 +38,14 @@ jobs:
         with:
           version: ${{ env.HELM_VERSION }}
 
+      - name: Check if test dependencies file changed
+        id: pr-changes
+        uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
+        with:
+          filters: |
+            test-deps:
+              - 'test-deps.yaml'
+
       - name: Set up chart-testing
         uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
         with:
@@ -45,7 +54,7 @@ jobs:
       - name: List changed charts and create matrix
         id: set-matrix
         run: |
-          if [[ "$TEST_ALL_CHARTS" == "true" ]]; then
+          if [[ "$TEST_ALL_CHARTS" == "true" || "${{ steps.pr-changes.outputs.test-deps }}" == "true" ]]; then
             charts=$(make list-charts)
           else
             charts=$(ct list-changed --config ct.yaml)
