@@ -1,0 +1,71 @@
+---
+suite: test JDWP debug configuration
+templates:
+  - deployment.yaml
+  - configmap-repository.yaml
+values:
+  - values/test_values.yaml
+tests:
+  - it: should not expose debug port by default
+    template: deployment.yaml
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: debug
+            containerPort: 8888
+            protocol: TCP
+
+  - it: should not include jdwp agent in CATALINA_OPTS by default
+    template: configmap-repository.yaml
+    asserts:
+      - notMatchRegex:
+          path: data.CATALINA_OPTS
+          pattern: -agentlib:jdwp
+
+  - it: should expose debug port when debug is enabled
+    template: deployment.yaml
+    set:
+      configuration:
+        debug:
+          enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: debug
+            containerPort: 8888
+            protocol: TCP
+
+  - it: should include jdwp agent in CATALINA_OPTS when debug is enabled
+    template: configmap-repository.yaml
+    set:
+      configuration:
+        debug:
+          enabled: true
+    asserts:
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0\.0\.0\.0:8888($|\s)
+
+  - it: should use custom debug port and suspend settings
+    set:
+      configuration:
+        debug:
+          enabled: true
+          port: 5005
+          suspend: "y"
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            name: debug
+            containerPort: 5005
+            protocol: TCP
+        template: deployment.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=0\.0\.0\.0:5005($|\s)
+        template: configmap-repository.yaml

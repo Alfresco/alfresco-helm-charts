@@ -163,6 +163,11 @@ spec:
               containerPort: {{ .Values.configuration.smtp.port }}
               protocol: TCP
             {{- end }}
+            {{- if .Values.configuration.debug.enabled }}
+            - name: debug
+              containerPort: {{ .Values.configuration.debug.port }}
+              protocol: TCP
+            {{- end }}
           startupProbe:
             {{- toYaml .Values.startupProbe | nindent 12 }}
           livenessProbe:
