@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-sync-service
 
-![Version: 7.7.1](https://img.shields.io/badge/Version-7.7.1-informational?style=flat-square) ![AppVersion: 5.3.1](https://img.shields.io/badge/AppVersion-5.3.1-informational?style=flat-square)
+![Version: 7.10.1](https://img.shields.io/badge/Version-7.10.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.1](https://img.shields.io/badge/AppVersion-5.3.1-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -19,9 +19,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 4.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
-| oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
 
@@ -41,8 +39,10 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | database.url | string | `nil` | JDBC url to connect to the external DB |
 | database.username | string | `nil` | JDBC username to use to connect to the DB |
 | environment.JAVA_OPTS | string | `"-Dsql.db.pool.initial=25 -Dsql.db.pool.max=75 -Dsync.metrics.reporter.graphite.enabled=false -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
-| global | object | `{"additionalLabels":{},"alfrescoRegistryPullSecrets":"quay-registry-secret","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
+| global | object | `{"additionalLabels":{},"alfrescoRegistryPullSecrets":"quay-registry-secret","ingressClassName":"nginx","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
+| global.ingressClassName | string | `"nginx"` | Global ingress class name override for all ingress resources in this chart |
+| global.strategy | object | `{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}` | Update strategy for the deployment |
 | hazelcast.service.port | int | `5701` |  |
 | hazelcast.service.type | string | `"ClusterIP"` |  |
 | image.internalPort | int | `9090` |  |
@@ -54,6 +54,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-hash" | string | `"sha1"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-name" | string | `"sync_affinity_route"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/use-regex" | string | `"true"` |  |
+| ingress.className | string | `""` |  |
 | ingress.enabled | bool | `true` |  |
 | ingress.hosts[0].paths[0].path | string | `"/syncservice(/|$)(.*)"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
@@ -70,6 +71,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | messageBroker.existingSecret.name | string | `nil` | Name of a pre-existing secret containing message broker credentials |
 | messageBroker.nameOverride | string | `"activemq"` | A name that will be used as a base to get broker connection details |
 | messageBroker.password | string | `nil` | Credential to use to authenticate to the broker. |
+| messageBroker.uniqueClientId | bool | `false` | When true, each pod gets a unique JMS client ID derived from the pod's UID, preventing client ID collisions in clustered deployments. |
 | messageBroker.url | string | `nil` | A failover URI formatted string, see: https://activemq.apache.org/failover-transport-reference |
 | messageBroker.username | string | `nil` | Username to authenticate as. |
 | nodeSelector | object | `{}` |  |
@@ -103,6 +105,5 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `"alfresco-sync"` |  |
-| tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 | terminationGracePeriodSeconds | int | `60` |  |
 | tolerations | list | `[]` |  |

@@ -12,9 +12,9 @@ tests:
       - equal:
           path: metadata.name
           value: RELEASE-NAME-alfresco-sync-service
-      - isNull:
+      - notExists:
           path: spec.template.spec.nodeSelector
-      - isNull:
+      - notExists:
           path: spec.template.spec.tolerations
       - equal:
           path: spec.template.spec.containers[0].resources
@@ -106,6 +106,14 @@ tests:
               secretKeyRef:
                 name: RELEASE-NAME-alfresco-sync-mq
                 key: BROKER_PASSWORD
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: POD_ID
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MESSAGING_CLIENTID
       - contains:
           path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
           content:
@@ -146,6 +154,7 @@ tests:
                     values:
                       - alfresco-sync-service
               topologyKey: kubernetes.io/hostname
+
   - it: should render deployment with pre-exisiting resources and without a service account
     set:
       repository:
@@ -268,6 +277,7 @@ tests:
               secretKeyRef:
                 name: mymqcreds
                 key: MQPASS
+
   - it: should have customized metadata in place in deployment
     template: deployment.yaml
     values: *testvalues
@@ -325,6 +335,7 @@ tests:
           path: spec.template.spec.nodeSelector
           content:
             disktype: ssd
+
   - it: should render labels for config and secret
     values: *testvalues
     set:
@@ -370,3 +381,23 @@ tests:
             containerPort: 5701
             name: hazelcast
             protocol: TCP
+
+  - it: should inject POD_ID and MESSAGING_CLIENTID when uniqueClientId is enabled
+    template: deployment.yaml
+    values: *testvalues
+    set:
+      messageBroker:
+        uniqueClientId: true
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: POD_ID
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.uid
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: MESSAGING_CLIENTID
+            value: sync-service-$(POD_ID)

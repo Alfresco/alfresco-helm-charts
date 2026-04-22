@@ -1,0 +1,48 @@
+# Test dependencies for CI
+# See README.md for usage details.
+
+deps:
+  postgresql:
+    chart: postgres
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    version: 0.4.0
+  activemq:
+    chart: activemq
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    version: 4.0.0
+  elasticsearch:
+    chart: elastic
+    repository: https://alfresco.github.io/alfresco-helm-charts/
+    version: 0.4.0
+
+charts:
+  activemq: []
+  alfresco-activiti:
+    - postgresql
+  alfresco-activiti-admin:
+    - postgresql
+  alfresco-adf-app: []
+  alfresco-ai-transformer:
+    - activemq
+  alfresco-audit-storage:
+    - activemq
+    - elasticsearch
+  alfresco-connector-hxi:
+    - activemq
+    - postgresql
+  alfresco-connector-ms365: []
+  alfresco-connector-msteams: []
+  alfresco-repository:
+    - postgresql
+  alfresco-search-enterprise:
+    - activemq
+    - elasticsearch
+  alfresco-search-service: []
+  alfresco-share: []
+  alfresco-sync-service:
+    - activemq
+    - postgresql
+  alfresco-transform-service:
+    - activemq
+  elastic: []
+  postgres: []

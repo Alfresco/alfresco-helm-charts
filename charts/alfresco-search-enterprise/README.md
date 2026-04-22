@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-enterprise
 
-![Version: 4.10.0](https://img.shields.io/badge/Version-4.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.4.0](https://img.shields.io/badge/AppVersion-5.4.0-informational?style=flat-square)
+![Version: 4.11.0](https://img.shields.io/badge/Version-4.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.4.0](https://img.shields.io/badge/AppVersion-5.4.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -15,9 +15,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | activemq | 4.0.0 |
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
-| oci://registry-1.docker.io/bitnamicharts | elasticsearch | 21.4.1 |
 
 ## Values
 
@@ -159,5 +157,4 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `"alfresco-search-enterprise-sa"` |  |
-| tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 | tolerations | list | `[]` |  |

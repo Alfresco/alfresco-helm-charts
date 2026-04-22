@@ -54,6 +54,36 @@ workflow](https://github.com/Alfresco/alfresco-helm-charts/actions/workflows/upd
 
 ## Testing
 
+### Unit tests and linting
+
+```shell
+make test alfresco-repository
+make lint alfresco-repository
+```
+
+### Local integration testing
+
+Some charts need external services (database, message broker, search engine) to
+run integration tests. These dependencies are declared in
+[test-deps.yaml](test-deps.yaml) and managed by `scripts/ci-deps.sh`.
+
+```shell
+# Deploy deps, install the chart, then clean up when done:
+make install alfresco-repository
+make uninstall alfresco-repository
+```
+
+You can also manage dependencies separately:
+
+```shell
+make setup alfresco-repository      # deploy deps only
+make teardown alfresco-repository   # remove deps only
+```
+
+Set a custom namespace with `NAMESPACE=alfresco`.
+
+### CI
+
 Each chart is tested against a default configuration on
 [KinD](https://kind.sigs.k8s.io/). You can check the currently tested K8s version
 by looking at the `KIND_NODE_IMAGE` value in the main [lint-test

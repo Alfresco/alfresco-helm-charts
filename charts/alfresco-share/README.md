@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-share
 
-![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 2.1.1](https://img.shields.io/badge/Version-2.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 Alfresco Share Helm chart for Kubernetes
 
@@ -34,6 +34,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | fullnameOverride | string | `""` | Define a fully static name |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
+| global.ingressClassName | string | `"nginx"` | Global ingress class name override for all ingress resources in this chart |
 | global.known_urls | string | `nil` | a fallback for .Values.known_urls that can be shared between charts |
 | hazelcast.port | int | `5701` | Port used to expose the Hazelcast service when replicaCount > 1 |
 | image.port | int | `8080` | Internal port where the pod is listening. Should only be changed is you use a custom image which uses a different port. |
@@ -48,7 +49,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-max-age" | string | `"604800"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-name" | string | `"alfrescoShare"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-path" | string | `"/share"` |  |
-| ingress.className | string | `"nginx"` |  |
+| ingress.className | string | `""` |  |
 | ingress.enabled | bool | `true` |  |
 | ingress.hosts[0].paths[0].path | string | `"/share"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |

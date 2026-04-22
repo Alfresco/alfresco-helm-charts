@@ -12,6 +12,9 @@ global:
   # -- Global additional labels that can be set at parent/umbrella chart level
   # These will be merged with chart-level additionalLabels, with chart-level taking precedence
   additionalLabels: {}
+  # -- Global ingress class name override for all ingress resources in this chart
+  ingressClassName: "nginx"
+  # -- Update strategy for the deployment
   strategy:
     rollingUpdate:
       maxSurge: 1
@@ -87,6 +90,9 @@ messageBroker:
   # -- A failover URI formatted string, see:
   # https://activemq.apache.org/failover-transport-reference
   url: null
+  # -- When true, each pod gets a unique JMS client ID derived from the pod's
+  # UID, preventing client ID collisions in clustered deployments.
+  uniqueClientId: false
   # -- A name that will be used as a base to get broker connection details
   nameOverride: activemq
   # -- Username to authenticate as.
@@ -136,6 +142,7 @@ database:
       password: DATABASE_PASSWORD
 ingress:
   enabled: true
+  className: ""
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /alfresco/$2
@@ -150,9 +157,6 @@ ingress:
 nodeSelector: {}
 tolerations: []
 terminationGracePeriodSeconds: 60
-tags:
-  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
-  ci: false
 hazelcast:
   service:
     port: 5701

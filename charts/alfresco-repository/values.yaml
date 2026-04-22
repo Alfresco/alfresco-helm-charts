@@ -247,7 +247,7 @@ ingress:
     nginx.ingress.kubernetes.io/session-cookie-name: "alfrescoRepo"
     nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
   # -- supported ingress class
-  className: nginx
+  className: ""
   hosts:
     - paths:
         - path: /
@@ -348,13 +348,12 @@ global:
   # -- Global additional labels that can be set at parent/umbrella chart level
   # These will be merged with chart-level additionalLabels, with chart-level taking precedence
   additionalLabels: {}
+  # -- Global ingress class name override for all ingress resources in this chart
+  ingressClassName: "nginx"
   # https://github.com/Alfresco/acs-deployment/blob/a924ad6670911f64f1bba680682d266dd4ea27fb/docs/helm/eks-deployment.md#docker-registry-secret
   alfrescoRegistryPullSecrets: quay-registry-secret
   # -- a fallback for .Values.known_urls that can be shared between charts
   known_urls: null
-tags:
-  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
-  ci: false
 affinity:
   podAntiAffinity:
     preferredDuringSchedulingIgnoredDuringExecution:

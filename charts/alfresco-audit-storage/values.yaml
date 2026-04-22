@@ -128,7 +128,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-tags:
-  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
-  ci: false

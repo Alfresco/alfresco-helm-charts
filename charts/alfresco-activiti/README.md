@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-activiti
 
-![Version: 0.9.0](https://img.shields.io/badge/Version-0.9.0-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 0.11.0](https://img.shields.io/badge/Version-0.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 A Helm chart for Alfresco Activiti
 
@@ -14,7 +14,6 @@ A Helm chart for Alfresco Activiti
 | Repository | Name | Version |
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
-| oci://registry-1.docker.io/bitnamicharts | postgresql | 12.8.5 |
 
 ## Values
 
@@ -54,13 +53,14 @@ A Helm chart for Alfresco Activiti
 | environment.IDENTITY_SERVICE_USE_BROWSER_BASED_LOGOUT | string | `"true"` | Alfresco Identity Service browser initiated logout toggle |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
+| global.ingressClassName | string | `"nginx"` | Global ingress class name override for all ingress resources in this chart |
 | image.internalPort | int | `8080` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-process-services"` |  |
 | image.tag | string | `"26.1.0"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/affinity" | string | `"cookie"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/proxy-body-size" | string | `"5g"` |  |
-| ingress.className | string | `"nginx"` | supported ingress class |
+| ingress.className | string | `""` | supported ingress class |
 | ingress.enabled | bool | `true` | Toggle ingress for APS application |
 | ingress.hosts[0].paths[0].path | string | `"/activiti-app"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
@@ -96,7 +96,6 @@ A Helm chart for Alfresco Activiti
 | service.externalPort | int | `80` |  |
 | service.name | string | `"aps"` |  |
 | service.type | string | `"ClusterIP"` |  |
-| tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 | tolerations | list | `[]` |  |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |

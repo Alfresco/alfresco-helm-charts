@@ -16,3 +16,36 @@ tests:
     asserts:
       - hasDocuments:
           count: 0
+
+  - it: should use release name in ClusterRole name
+    set:
+      replicaCount: 2
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: RELEASE-NAME-NAMESPACE-sync-hazelcast-cluster-role
+
+  - it: should use release name in ClusterRoleBinding name
+    set:
+      replicaCount: 2
+    asserts:
+      - documentIndex: 1
+        equal:
+          path: metadata.name
+          value: RELEASE-NAME-NAMESPACE-sync-hazelcast-cluster-role-binding
+
+  - it: should use different names when release name changes
+    release:
+      name: my-release
+    set:
+      replicaCount: 2
+    asserts:
+      - documentIndex: 0
+        equal:
+          path: metadata.name
+          value: my-release-NAMESPACE-sync-hazelcast-cluster-role
+      - documentIndex: 1
+        equal:
+          path: metadata.name
+          value: my-release-NAMESPACE-sync-hazelcast-cluster-role-binding

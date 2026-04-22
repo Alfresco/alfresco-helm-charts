@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -16,7 +16,6 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | Repository | Name | Version |
 |------------|------|---------|
 | https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
-| oci://registry-1.docker.io/bitnamicharts | postgresql | 12.5.6 |
 
 ## Values
 
@@ -93,6 +92,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | fullnameOverride | string | `""` |  |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
+| global.ingressClassName | string | `"nginx"` | Global ingress class name override for all ingress resources in this chart |
 | global.known_urls | string | `nil` | a fallback for .Values.known_urls that can be shared between charts |
 | image.port | int | `8080` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
@@ -104,7 +104,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | ingress.annotations."nginx.ingress.kubernetes.io/proxy-read-timeout" | string | `"20m"` | File uploads will timeout after 20 minutes |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-hash" | string | `"sha1"` |  |
 | ingress.annotations."nginx.ingress.kubernetes.io/session-cookie-name" | string | `"alfrescoRepo"` |  |
-| ingress.className | string | `"nginx"` | supported ingress class |
+| ingress.className | string | `""` | supported ingress class |
 | ingress.enabled | bool | `true` | Toggle ingress |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
 | ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
@@ -159,6 +159,5 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | strategy.rollingUpdate.maxSurge | int | `1` |  |
 | strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | strategy.type | string | `"RollingUpdate"` |  |
-| tags.ci | bool | `false` | A chart tag used for Hyland's CI purpose. Do not set it to true. |
 | terminationGracePeriod | int | `60` | How long to wait for tomcat to complete shutdown before killing it |
 | tolerations | list | `[]` |  |

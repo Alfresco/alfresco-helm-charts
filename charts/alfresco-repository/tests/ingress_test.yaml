@@ -91,3 +91,22 @@ tests:
             app.kubernetes.io/name: testName
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: alfresco-repository-1.0.0
+
+  - it: should allow overriding ingress class name via global value
+    set:
+      global:
+        ingressClassName: custom-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: custom-ingress-class
+  - it: should use local ingress class name over global when both are set
+    set:
+      global:
+        ingressClassName: global-ingress-class
+      ingress:
+        className: local-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: local-ingress-class

@@ -4,6 +4,8 @@ global:
   # -- Global additional labels that can be set at parent/umbrella chart level
   # These will be merged with chart-level additionalLabels, with chart-level taking precedence
   additionalLabels: {}
+  # -- Global ingress class name override for all ingress resources in this chart
+  ingressClassName: "nginx"
 # -- Additional labels to be added to all resources (deployments, statefulsets, services, pods, etc.)
 # Example:
 #   Product: k8s
@@ -43,7 +45,7 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: 5g
     nginx.ingress.kubernetes.io/affinity: "cookie"
   # -- supported ingress class
-  className: nginx
+  className: ""
   hosts:
     - paths:
         - path: /activiti-admin
@@ -102,6 +104,3 @@ database:
 workaround:
   # -- Enable workaround for [ACTIVITI-5113](https://hyland.atlassian.net/browse/ACTIVITI-5113) required for versions before 24.2.0
   ACTIVITI-5113: false
-tags:
-  # -- A chart tag used for Hyland's CI purpose. Do not set it to true.
-  ci: false

@@ -75,3 +75,28 @@ tests:
             nginx.ingress.kubernetes.io/affinity: "cookie"
             nginx.ingress.kubernetes.io/session-cookie-name: "sync_affinity_route"
             nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
+
+  - it: should render with default ingress class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: nginx
+
+  - it: should allow overriding ingress class name via global value
+    set:
+      global:
+        ingressClassName: custom-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: custom-ingress-class
+  - it: should use local ingress class name over global when both are set
+    set:
+      global:
+        ingressClassName: global-ingress-class
+      ingress:
+        className: local-ingress-class
+    asserts:
+      - equal:
+          path: spec.ingressClassName
+          value: local-ingress-class
