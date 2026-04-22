@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # activemq
 
-![Version: 4.0.0](https://img.shields.io/badge/Version-4.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.2.1](https://img.shields.io/badge/AppVersion-6.2.1-informational?style=flat-square)
+![Version: 4.0.1](https://img.shields.io/badge/Version-4.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.2.4](https://img.shields.io/badge/AppVersion-6.2.4-informational?style=flat-square)
 
 A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (not meant to be used in production).
 
@@ -32,7 +32,7 @@ A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate A
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` | Authenticate to image registry before pulling by providing an existing secret of type kubernetes.io/dockerconfigjson |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"alfresco/alfresco-activemq"` |  |
-| image.tag | string | `"6.2.1-jre17-rockylinux8"` |  |
+| image.tag | string | `"6.2.4-jre17-rockylinux8"` |  |
 | livenessProbe.failureThreshold | int | `6` |  |
 | livenessProbe.initialDelaySeconds | int | `60` |  |
 | livenessProbe.periodSeconds | int | `10` |  |
