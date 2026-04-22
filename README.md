@@ -100,10 +100,18 @@ We are ensuring backward compatibility with older K8s versions with
 Helm charts versioning should comply to [agreed
 scheme](https://hyland.atlassian.net/wiki/spaces/TECH/pages/edit-v2/1293317631#individual-component-charts-(alfresco-helm-charts))
 
-> **Note**: For automated assistance with version bumping, see the [Copilot Instructions](.github/agents/copilot-instructions.md) which provide guidance on semantic versioning when making chart changes.
+> **Note**: For automated assistance with version bumping, see the [Copilot Instructions](.github/copilot-instructions.md) which provide guidance on semantic versioning when making chart changes.
 
 * Ensure alfresco-common [version](../charts/alfresco-common/Chart.yaml) is not a
   pre-release, otherwise release it.
+* Ensure test dependency charts
+  ([postgres](charts/postgres/Chart.yaml),
+  [elastic](charts/elastic/Chart.yaml),
+  [activemq](charts/activemq/Chart.yaml)) are not pre-release versions,
+  otherwise release them first. These are not Helm chart dependencies but are
+  required by CI integration tests (see [test-deps.yaml](test-deps.yaml)).
+  After releasing them, run the `Bump versions` workflow with the `charts` option to
+  update `test-deps.yaml` automatically.
 * Ensure
   [supported-matrix](https://github.com/Alfresco/alfresco-updatecli/blob/master/deployments/values/supported-matrix.yaml)
   has been manually updated for the latest acs version released and the
