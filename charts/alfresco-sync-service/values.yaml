@@ -92,7 +92,7 @@ messageBroker:
   url: null
   # -- When true, each pod gets a unique JMS client ID derived from the pod's
   # UID, preventing client ID collisions in clustered deployments.
-  uniqueClientId: false
+  uniqueClientId: true
   # -- A name that will be used as a base to get broker connection details
   nameOverride: activemq
   # -- Username to authenticate as.

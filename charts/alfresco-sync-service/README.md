@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-sync-service
 
-![Version: 7.10.2](https://img.shields.io/badge/Version-7.10.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.2](https://img.shields.io/badge/AppVersion-5.3.2-informational?style=flat-square)
+![Version: 8.0.0-alpha.0](https://img.shields.io/badge/Version-8.0.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.2](https://img.shields.io/badge/AppVersion-5.3.2-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -71,7 +71,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | messageBroker.existingSecret.name | string | `nil` | Name of a pre-existing secret containing message broker credentials |
 | messageBroker.nameOverride | string | `"activemq"` | A name that will be used as a base to get broker connection details |
 | messageBroker.password | string | `nil` | Credential to use to authenticate to the broker. |
-| messageBroker.uniqueClientId | bool | `false` | When true, each pod gets a unique JMS client ID derived from the pod's UID, preventing client ID collisions in clustered deployments. |
+| messageBroker.uniqueClientId | bool | `true` | When true, each pod gets a unique JMS client ID derived from the pod's UID, preventing client ID collisions in clustered deployments. |
 | messageBroker.url | string | `nil` | A failover URI formatted string, see: https://activemq.apache.org/failover-transport-reference |
 | messageBroker.username | string | `nil` | Username to authenticate as. |
 | nodeSelector | object | `{}` |  |
