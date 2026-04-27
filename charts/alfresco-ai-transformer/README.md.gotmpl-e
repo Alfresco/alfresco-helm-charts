@@ -8,7 +8,7 @@ parent: Charts Reference
 
 {{ template "chart.badgesSection" . }}
 
-![Helm-test coverage](https://raw.githubusercontent.com/alxgomz/alfresco-helm-charts/_xml_coverage_reports/data/main/alfresco-connector-ms365/badge.svg)
+![Helm-test coverage](https://raw.githubusercontent.com/alxgomz/alfresco-helm-charts/_xml_coverage_reports/data/features%2Fhelm-test-coverage/alfresco-ai-transformer/badge.svg)
 
 {{ template "chart.description" . }}
 

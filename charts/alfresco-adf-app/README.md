@@ -7,7 +7,7 @@ parent: Charts Reference
 
 ![Version: 0.6.1](https://img.shields.io/badge/Version-0.6.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
-![Helm-test coverage](https://raw.githubusercontent.com/alxgomz/alfresco-helm-charts/_xml_coverage_reports/data/features%2Fhelm-test-coverage/alfresco-adf-app/badge.svg)
+![Helm-test coverage](https://raw.githubusercontent.com/alxgomz/alfresco-helm-charts/_xml_coverage_reports/data/main/alfresco-adf-app/badge.svg)
 
 A generic Alfresco Development Framework Helm chart for Kubernetes
 
