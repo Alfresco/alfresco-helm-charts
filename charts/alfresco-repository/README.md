@@ -5,7 +5,9 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 1.3.0](https://img.shields.io/badge/Version-1.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 1.3.1](https://img.shields.io/badge/Version-1.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+
+![Helm-test coverage](https://raw.githubusercontent.com/alxgomz/alfresco-helm-charts/_xml_coverage_reports/data/features%2Fhelm-test-coverage/alfresco-repository/badge.svg)
 
 Alfresco content repository Helm chart
 

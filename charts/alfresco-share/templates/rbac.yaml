@@ -45,4 +45,4 @@ subjects:
   - kind: ServiceAccount
     name: {{ include "alfresco-share.serviceAccountName" . }}
     namespace: {{ .Release.Namespace }}
-{{- end -}}
+{{- end }}

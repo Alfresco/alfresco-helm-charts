@@ -5,7 +5,9 @@ parent: Charts Reference
 
 # activemq
 
-![Version: 4.0.1](https://img.shields.io/badge/Version-4.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.2.4](https://img.shields.io/badge/AppVersion-6.2.4-informational?style=flat-square)
+![Version: 4.0.2](https://img.shields.io/badge/Version-4.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.2.4](https://img.shields.io/badge/AppVersion-6.2.4-informational?style=flat-square)
+
+![Helm-test coverage](https://raw.githubusercontent.com/alxgomz/alfresco-helm-charts/_xml_coverage_reports/data/features%2Fhelm-test-coverage/activemq/badge.svg)
 
 A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (not meant to be used in production).
 

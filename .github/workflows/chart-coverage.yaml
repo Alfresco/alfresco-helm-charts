@@ -1,0 +1,99 @@
+name: Chart Coverage
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "charts/**"
+      - ".github/workflows/chart-coverage.yaml"
+      - "!charts/**/README.md"
+      - "!charts/**/README.md.gotmpl"
+      - "!charts/**/docs/**"
+  push:
+    branches:
+      - main
+    paths:
+      - "charts/**"
+      - ".github/workflows/chart-coverage.yaml"
+      - "!charts/**/README.md"
+      - "!charts/**/README.md.gotmpl"
+      - "!charts/**/docs/**"
+
+env:
+  HELM_VERSION: v4.1.1
+
+jobs:
+  list-charts:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Build chart matrix
+        id: set-matrix
+        run: |
+          charts=()
+          for chart_dir in charts/*/; do
+            [[ ! -f "${chart_dir}Chart.yaml" ]] && continue
+            grep -q "type: library" "${chart_dir}Chart.yaml" 2>/dev/null && continue
+            [[ ! -d "${chart_dir}templates" ]] && continue
+            charts+=("$(basename "$chart_dir")")
+          done
+          matrix=$(printf '%s\n' "${charts[@]}" | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+
+  coverage:
+    needs: list-charts
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        chart: ${{ fromJson(needs.list-charts.outputs.matrix) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Set up Helm
+        uses: azure/setup-helm@dda3372f752e03dde6b3237bc9431cdc2f7a02a2 # v5.0.0
+        with:
+          version: ${{ env.HELM_VERSION }}
+
+      - name: Fetch chart-coverage tool
+        run: |
+          curl -sSL https://raw.githubusercontent.com/jCOTINEAU/chart-coverage/main/helm-coverage.sh \
+            -o /usr/local/bin/helm-coverage
+          chmod +x /usr/local/bin/helm-coverage
+
+      - name: Update chart dependencies
+        run: helm dependency update "charts/${{ matrix.chart }}" 2>/dev/null || true
+
+      - name: Run coverage
+        run: |
+          values_args=""
+          if [[ -d "charts/${{ matrix.chart }}/ci" ]]; then
+            values_args="charts/${{ matrix.chart }}/ci"
+          fi
+
+          helm-coverage --cobertura "coverage-${{ matrix.chart }}.xml" \
+            "charts/${{ matrix.chart }}" $values_args
+
+      - name: Produce coverage report
+        uses: insightsengineering/coverage-action@v3
+        with:
+          path: coverage-${{ matrix.chart }}.xml
+          threshold: 0
+          fail: false
+          publish: true
+          diff: true
+          diff-branch: main
+          diff-storage: _xml_coverage_reports
+          storage-subdirectory: ${{ matrix.chart }}
+          coverage-summary-title: "Chart Coverage: ${{ matrix.chart }}"
+          togglable-report: true
