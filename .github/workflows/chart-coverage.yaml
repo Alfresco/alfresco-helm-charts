@@ -53,6 +53,7 @@ jobs:
       pull-requests: write
     strategy:
       fail-fast: false
+      max-parallel: 1
       matrix:
         chart: ${{ fromJson(needs.list-charts.outputs.matrix) }}
     steps:
