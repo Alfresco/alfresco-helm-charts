@@ -7,6 +7,8 @@ parent: Charts Reference
 
 ![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.2](https://img.shields.io/badge/AppVersion-2.0.2-informational?style=flat-square)
 
+![Helm-test coverage](https://raw.githubusercontent.com/alxgomz/alfresco-helm-charts/_xml_coverage_reports/data/features%2Fhelm-test-coverage/alfresco-connector-hxi/badge.svg)
+
 A Helm chart for deploying Alfresco connector hxi services
 
 Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for an example of how to leverage this chart from an umbrella chart.
