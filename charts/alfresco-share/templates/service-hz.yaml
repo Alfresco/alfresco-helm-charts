@@ -12,4 +12,4 @@ spec:
       port: {{ .Values.hazelcast.port }}
   selector:
     {{- include "alfresco-share.selectorLabels" . | nindent 4 }}
-{{- end -}}
+{{- end }}
