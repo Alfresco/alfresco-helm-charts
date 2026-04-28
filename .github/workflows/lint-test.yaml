@@ -40,7 +40,7 @@ jobs:
 
       - name: List changed files
         id: pr-changes
-        uses: Alfresco/alfresco-build-tools/.github/actions/github-list-changes@v17.6.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/github-list-changes@v17.6.1
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0
@@ -127,7 +127,7 @@ jobs:
           version: ${{ env.CHART_TESTING_VERSION }}
 
       - name: Create kind cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v17.2.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v17.6.1
         with:
           ingress-nginx-ref: skip
 
