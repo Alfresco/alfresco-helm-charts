@@ -123,9 +123,9 @@ repo:
 #### Configuring database using kubernetes resources
 
 When using kubernetes resources we will want to differentiate configuration
-details which are sensitive and which are not. The former will be stored in
+details which are sensitive and which are not. The latter will be stored in
 [configMap](https://kubernetes.io/docs/concepts/configuration/configmap/),
-while the later would use
+while the former would use
 [secret](https://kubernetes.io/fr/docs/concepts/configuration/secret/).
 
 That means here we'll use a configMap to set store the database URL while
