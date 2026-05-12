@@ -106,6 +106,21 @@ configuration:
       createIndexIfNotExists: true
       # -- Name of the search index to use.
       indexName: alfresco
+      # -- Name of the archive search index to use.
+      archive.indexName: alfresco-archive
+      # -- When using TLS (`https` or `mtls`), whether to verify the server
+      # certificate hostname matches.
+      ssl.host.name.verification: true
+      # -- Locale used for the Elasticsearch language analyzer.
+      index.locale: en
+      # -- Custom language analyzer configuration files. Multiple files can be
+      # specified as a comma-separated list (e.g.
+      # `file:/path/to/file.txt,file:/path/to/file2.txt`).
+      index.custom.analyzer.config.files: ""
+      # -- Maximum number of fields allowed in the search index mapping.
+      index.mapping.total_fields.limit: 7500
+      # -- Maximum number of results that can be returned by a single query.
+      index.max_result_window: 10000
     existingSecret:
       # -- Optional secret containing search service credentials
       name: null
