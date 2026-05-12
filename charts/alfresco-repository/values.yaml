@@ -235,6 +235,8 @@ service:
   name: repository
   type: ClusterIP
   port: 80
+  # -- Annotations to add to the repository service.
+  annotations: {}
 ingress:
   # -- Toggle ingress
   enabled: true

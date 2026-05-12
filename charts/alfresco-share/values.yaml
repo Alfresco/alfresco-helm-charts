@@ -62,6 +62,8 @@ service:
   name: share
   type: ClusterIP
   port: 80
+  # -- Annotations to add to the Share service.
+  annotations: {}
 ingress:
   enabled: true
   className: ""

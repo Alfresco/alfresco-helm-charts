@@ -1,0 +1,22 @@
+---
+suite: test repository service
+templates:
+  - service-repository.yaml
+tests:
+  - it: should not render annotations by default
+    asserts:
+      - isNull:
+          path: metadata.annotations
+
+  - it: should render service annotations
+    set:
+      service:
+        annotations:
+          traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
+          traefik.ingress.kubernetes.io/service.sticky.cookie.name: alfrescoRepo
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
+            traefik.ingress.kubernetes.io/service.sticky.cookie.name: alfrescoRepo
