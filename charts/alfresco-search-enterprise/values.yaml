@@ -292,9 +292,9 @@ reindexing:
           cpu: "250m"
           memory: "20Mi"
 indexInit:
-  # -- One-shot job to create the Alfresco search index with custom
-  # shards/replicas settings, or to update the number of replicas to an existing
-  # index.
+  # -- One-shot job to create an index template for the Alfresco search index
+  # with custom shards/replicas/mapping settings. The template is applied to
+  # indices matching the indexName pattern when they are created.
   enabled: false
   image:
     repository: curlimages/curl
@@ -324,6 +324,10 @@ indexInit:
   # -- Number of replicas used when creating or updating the index. Replicas can
   # be updated regardless of the index being created by this job or not.
   numberOfReplicas: 1
+  # -- Maximum number of results that can be returned by a single search request
+  maxResultWindow: 10000
+  # -- Maximum number of fields that can be created in the index
+  totalFieldsLimit: 7500
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
