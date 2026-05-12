@@ -293,8 +293,12 @@ reindexing:
           memory: "20Mi"
 indexInit:
   # -- One-shot job to create an index template for the Alfresco search index
-  # with custom shards/replicas/mapping settings. The template is applied to
-  # indices matching the indexName pattern when they are created.
+  # with custom shards/replicas/mapping settings. This job requires
+  # manage_index_templates privilege on the search/indexing service to be able
+  # to create the index template. If the regular elasticsearch user you're using
+  # doesn't have this privilege, you will need to ask your administrator to
+  # either grant your user this permission or create the template for you and
+  # keep indexInit.enabled to false.
   enabled: false
   image:
     repository: curlimages/curl

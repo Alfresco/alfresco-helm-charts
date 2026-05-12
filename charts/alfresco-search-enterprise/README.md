@@ -33,7 +33,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | imagePullSecrets | list | `[]` |  |
-| indexInit.enabled | bool | `false` | One-shot job to create an index template for the Alfresco search index with custom shards/replicas/mapping settings. The template is applied to indices matching the indexName pattern when they are created. |
+| indexInit.enabled | bool | `false` | One-shot job to create an index template for the Alfresco search index with custom shards/replicas/mapping settings. This job requires manage_index_templates privilege on the search/indexing service to be able to create the index template. If the regular elasticsearch user you're using doesn't have this privilege, you will need to ask your administrator to either grant your user this permission or create the template for you and keep indexInit.enabled to false. |
 | indexInit.environment | object | `{}` | Environment variables to set for the container |
 | indexInit.extraVolumeMounts | list | `[]` |  |
 | indexInit.extraVolumes | list | `[]` |  |
