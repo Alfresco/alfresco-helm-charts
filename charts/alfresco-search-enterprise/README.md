@@ -42,8 +42,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | indexInit.image.repository | string | `"curlimages/curl"` |  |
 | indexInit.image.tag | string | `"8.11.0"` |  |
 | indexInit.maxResultWindow | int | `10000` | Maximum number of results that can be returned by a single search request |
-| indexInit.numberOfReplicas | int | `1` | Number of replicas used when creating or updating the index. Replicas can be updated regardless of the index being created by this job or not. |
-| indexInit.numberOfShards | int | `1` | Number of shards used when creating a new index. Remember that `elasticsearch.createIndexIfNotExists` in Alfresco properties needs to not be set to true for the job to have a chance to set it up. |
+| indexInit.numberOfReplicas | int | `1` | Number of replicas to set when creating the index from the index template. The number of replicas to set depends on the required level of redundancy and high availability. It is often linked to the cluster topology. For example, if you have a 3 nodes cluster spread in 3 different failure domains, you can set numberOfReplicas to 2. |
+| indexInit.numberOfShards | int | `1` | Number of shards to set when creating the index from the index template. the number of shards to set deplends on the expected index size and growth. you should make sure that individual shards always remain smaller than 50GB. Shards cannot be changed after index creation. For more details, please refer to the Elasticsearch documentation. |
 | indexInit.resources.limits.cpu | string | `"1"` |  |
 | indexInit.resources.limits.memory | string | `"256Mi"` |  |
 | indexInit.resources.requests.cpu | string | `"0.25"` |  |
