@@ -87,7 +87,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | searchServicesImage.pullPolicy | string | `"IfNotPresent"` |  |
 | searchServicesImage.repository | string | `"quay.io/alfresco/search-services"` |  |
 | searchServicesImage.tag | string | `"2.0.19"` |  |
-| service.annotations | object | `{}` | Should you want to change the service port externalPort: 80 |
+| service.annotations | object | `{}` | Annotations to add to the service |
 | service.name | string | `"solr"` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
