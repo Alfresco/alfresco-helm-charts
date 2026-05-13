@@ -4193,6 +4193,20 @@ entries:
   alfresco-repository:
   - apiVersion: v2
     appVersion: 26.1.0
+    created: "2026-05-13T07:59:04.190381354Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: Alfresco content repository Helm chart
+    digest: f4dd2819fc996a70366b7c11b86a0ce95c387214a38ee8a017dbefee3ed5f9f4
+    name: alfresco-repository
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-repository-1.4.0/alfresco-repository-1.4.0.tgz
+    version: 1.4.0
+  - apiVersion: v2
+    appVersion: 26.1.0
     created: "2026-04-22T12:39:35.354833598Z"
     dependencies:
     - name: alfresco-common
@@ -7717,6 +7731,20 @@ entries:
   alfresco-share:
   - apiVersion: v2
     appVersion: 26.1.0
+    created: "2026-05-13T07:59:04.35190792Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts
+      version: 5.0.0
+    description: Alfresco Share Helm chart for Kubernetes
+    digest: 66b620f51896017b6d9d9d34954013d356dcc898392217b43b72eee20faf3938
+    name: alfresco-share
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-share-2.2.0/alfresco-share-2.2.0.tgz
+    version: 2.2.0
+  - apiVersion: v2
+    appVersion: 26.1.0
     created: "2026-04-21T12:32:16.493915185Z"
     dependencies:
     - name: alfresco-common
@@ -10738,4 +10766,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2026-04-22T12:39:35.980705286Z"
+generated: "2026-05-13T07:59:04.353445238Z"
