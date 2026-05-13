@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # activemq
 
-![Version: 4.0.1](https://img.shields.io/badge/Version-4.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.2.4](https://img.shields.io/badge/AppVersion-6.2.4-informational?style=flat-square)
+![Version: 4.0.2](https://img.shields.io/badge/Version-4.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 6.2.4](https://img.shields.io/badge/AppVersion-6.2.4-informational?style=flat-square)
 
 A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate ACS (not meant to be used in production).
 
@@ -60,6 +60,7 @@ A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate A
 | resources.requests.cpu | string | `"0.25"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
 | service.name | string | `"activemq"` |  |
+| services.broker.annotations | object | `{}` |  |
 | services.broker.ports.external.amqp | int | `5672` |  |
 | services.broker.ports.external.openwire | int | `61616` |  |
 | services.broker.ports.external.stomp | int | `61613` |  |
@@ -67,6 +68,7 @@ A Helm chart providing a basic Apache ActiveMQ deployment required to evaluate A
 | services.broker.ports.internal.openwire | int | `61616` |  |
 | services.broker.ports.internal.stomp | int | `61613` |  |
 | services.broker.type | string | `"ClusterIP"` |  |
+| services.webConsole.annotations | object | `{}` |  |
 | services.webConsole.ports.external.webConsole | int | `8161` |  |
 | services.webConsole.ports.internal.webConsole | int | `8161` |  |
 | services.webConsole.type | string | `"NodePort"` |  |

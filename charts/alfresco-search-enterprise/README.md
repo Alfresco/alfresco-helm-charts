@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-enterprise
 
-![Version: 4.12.0](https://img.shields.io/badge/Version-4.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.5.0](https://img.shields.io/badge/AppVersion-5.5.0-informational?style=flat-square)
+![Version: 4.12.1](https://img.shields.io/badge/Version-4.12.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.5.0](https://img.shields.io/badge/AppVersion-5.5.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -71,6 +71,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | liveIndexing.mediation.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIndexing.mediation.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-live-indexing-mediation"` |  |
 | liveIndexing.mediation.image.tag | string | `"5.5.0"` |  |
+| liveIndexing.mediation.service.annotations | object | `{}` |  |
 | liveIndexing.metadata.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-search-enterprise.metadata.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule the content pod on a different zone |
 | liveIndexing.metadata.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-search-enterprise.metadata.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}` | Prefer to schedule the content pod on a different node |
 | liveIndexing.metadata.environment | object | `{}` | Set environment variables for the metadata component |

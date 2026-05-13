@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-hxi
 
-![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.2](https://img.shields.io/badge/AppVersion-2.0.2-informational?style=flat-square)
+![Version: 0.6.1](https://img.shields.io/badge/Version-0.6.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.2](https://img.shields.io/badge/AppVersion-2.0.2-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector hxi services
 
@@ -90,6 +90,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | liveIngester.resources.limits.memory | string | `"2048Mi"` |  |
 | liveIngester.resources.requests.cpu | string | `"0.5"` |  |
 | liveIngester.resources.requests.memory | string | `"256Mi"` |  |
+| liveIngester.service.annotations | object | `{}` |  |
 | liveIngester.service.externalPort | int | `80` |  |
 | liveIngester.service.name | string | `"hxi-live-ingester-service"` |  |
 | liveIngester.service.type | string | `"ClusterIP"` |  |
@@ -126,6 +127,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | predictionApplier.resources.limits.memory | string | `"2048Mi"` |  |
 | predictionApplier.resources.requests.cpu | string | `"0.5"` |  |
 | predictionApplier.resources.requests.memory | string | `"256Mi"` |  |
+| predictionApplier.service.annotations | object | `{}` |  |
 | predictionApplier.service.externalPort | int | `80` |  |
 | predictionApplier.service.name | string | `"hxi-prediction-applier-service"` |  |
 | predictionApplier.service.type | string | `"ClusterIP"` |  |

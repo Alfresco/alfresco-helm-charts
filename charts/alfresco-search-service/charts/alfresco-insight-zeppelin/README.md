@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-insight-zeppelin
 
-![Version: 4.5.1](https://img.shields.io/badge/Version-4.5.1-informational?style=flat-square) ![AppVersion: 2.0.19](https://img.shields.io/badge/AppVersion-2.0.19-informational?style=flat-square)
+![Version: 4.5.2](https://img.shields.io/badge/Version-4.5.2-informational?style=flat-square) ![AppVersion: 2.0.19](https://img.shields.io/badge/AppVersion-2.0.19-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Insight Zeppelin
 
@@ -63,6 +63,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | resources.limits.memory | string | `"1024Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
 | resources.requests.memory | string | `"512Mi"` |  |
+| service.annotations | object | `{}` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"zeppelin"` |  |
 | service.type | string | `"ClusterIP"` |  |

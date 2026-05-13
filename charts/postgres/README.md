@@ -1,6 +1,6 @@
 # postgres
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 17.9](https://img.shields.io/badge/AppVersion-17.9-informational?style=flat-square)
+![Version: 0.4.1](https://img.shields.io/badge/Version-0.4.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 17.9](https://img.shields.io/badge/AppVersion-17.9-informational?style=flat-square)
 
 WARNING: This chart is meant to ease initial deployment for TESTING purposes.
 DO NOT use this chart in any staging, or production environment. It has very
@@ -53,6 +53,7 @@ Alfresco charts to point to it.
 | primary.resources.limits.memory | string | `"8Gi"` |  |
 | primary.resources.requests.cpu | string | `"500m"` |  |
 | primary.resources.requests.memory | string | `"1Gi"` |  |
+| primary.service.annotations | object | `{}` |  |
 | primary.service.name | string | `"postgresql"` | used for naming pvc |
 | primary.service.ports.postgresql | int | `5432` |  |
 | readinessProbe.exec.command[0] | string | `"/bin/sh"` |  |
