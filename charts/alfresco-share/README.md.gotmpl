@@ -12,6 +12,17 @@ parent: Charts Reference
 
 Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for an example of how to leverage this chart from an umbrella chart.
 
+## Service annotations
+
+Use `service.annotations` to add annotations to the Share Kubernetes Service. For example, to enable Traefik sticky sessions:
+
+```yaml
+service:
+  annotations:
+    traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.name: alfrescoShare
+```
+
 {{ template "chart.homepageLine" . }}
 
 {{ template "chart.maintainersSection" . }}

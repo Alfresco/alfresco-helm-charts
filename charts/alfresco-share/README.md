@@ -5,11 +5,22 @@ parent: Charts Reference
 
 # alfresco-share
 
-![Version: 2.1.1](https://img.shields.io/badge/Version-2.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 Alfresco Share Helm chart for Kubernetes
 
 Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for an example of how to leverage this chart from an umbrella chart.
+
+## Service annotations
+
+Use `service.annotations` to add annotations to the Share Kubernetes Service. For example, to enable Traefik sticky sessions:
+
+```yaml
+service:
+  annotations:
+    traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.name: alfrescoShare
+```
 
 ## Requirements
 
@@ -84,6 +95,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | securityContext.capabilities.drop[0] | string | `"NET_RAW"` |  |
 | securityContext.capabilities.drop[1] | string | `"ALL"` |  |
 | securityContext.runAsNonRoot | bool | `false` |  |
+| service.annotations | object | `{}` | Annotations to add to the Share service. |
 | service.name | string | `"share"` |  |
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |

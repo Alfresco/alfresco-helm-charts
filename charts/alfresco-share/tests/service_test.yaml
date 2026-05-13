@@ -8,8 +8,23 @@ tests:
       - equal:
           path: metadata.name
           value: RELEASE-NAME-alfresco-share
+      - isNull:
+          path: metadata.annotations
       - equal:
           path: spec.selector
           value:
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/name: alfresco-share
+
+  - it: should render service annotations
+    set:
+      service:
+        annotations:
+          traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
+          traefik.ingress.kubernetes.io/service.sticky.cookie.name: alfrescoShare
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
+            traefik.ingress.kubernetes.io/service.sticky.cookie.name: alfrescoShare
