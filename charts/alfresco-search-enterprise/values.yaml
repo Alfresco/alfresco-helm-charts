@@ -322,8 +322,8 @@ indexInit:
   extraVolumeMounts: []
   extraVolumes: []
   # -- Number of shards to set when creating the index from the index template.
-  # the number of shards to set deplends on the expected index size and growth.
-  # you should make sure that individual shards always remain smaller than 50GB.
+  # The number of shards to set depends on the expected index size and growth.
+  # You should make sure that individual shards always remain smaller than 50GB.
   # Shards cannot be changed after index creation. For more details, please
   # refer to the Elasticsearch documentation.
   numberOfShards: 1
