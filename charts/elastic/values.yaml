@@ -46,6 +46,7 @@ elasticsearch:
   service:
     # -- used for naming pvc
     name: elasticsearch
+    annotations: {}
   ingress:
     enabled: false
     className: ""
@@ -74,6 +75,8 @@ elasticsearch:
     periodSeconds: 20
     timeoutSeconds: 5
 kibana:
+  service:
+    annotations: {}
   enabled: false
   serverBasePath: "/kibana"
   image:

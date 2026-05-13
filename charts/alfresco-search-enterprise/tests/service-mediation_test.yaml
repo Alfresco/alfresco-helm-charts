@@ -1,0 +1,14 @@
+---
+suite: test search enterprise mediation service
+templates:
+  - service-headless-mediation.yaml
+tests:
+  - it: should render mediation service annotations
+    set:
+      liveIndexing.mediation.service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"

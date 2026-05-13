@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-sync-service
 
-![Version: 7.10.2](https://img.shields.io/badge/Version-7.10.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.2](https://img.shields.io/badge/AppVersion-5.3.2-informational?style=flat-square)
+![Version: 7.11.0](https://img.shields.io/badge/Version-7.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.2](https://img.shields.io/badge/AppVersion-5.3.2-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -43,6 +43,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.ingressClassName | string | `"nginx"` | Global ingress class name override for all ingress resources in this chart |
 | global.strategy | object | `{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}` | Update strategy for the deployment |
+| hazelcast.service.annotations | object | `{}` |  |
 | hazelcast.service.port | int | `5701` |  |
 | hazelcast.service.type | string | `"ClusterIP"` |  |
 | image.internalPort | int | `9090` |  |
@@ -99,6 +100,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | resources.limits.memory | string | `"2000Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
 | resources.requests.memory | string | `"800Mi"` |  |
+| service.annotations | object | `{}` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"syncservice"` |  |
 | service.type | string | `"NodePort"` |  |

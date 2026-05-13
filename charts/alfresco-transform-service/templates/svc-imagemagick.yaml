@@ -5,6 +5,10 @@ metadata:
   name: {{ template "alfresco-transform-service.imagemagick.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.imagemagick.labels" . | nindent 4 }}
+  {{- with .Values.imagemagick.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.imagemagick.service.type }}
   ports:

@@ -61,6 +61,7 @@ transformrouter:
     name: transform-router
     type: ClusterIP
     externalPort: 80
+    annotations: {}
   environment:
     JAVA_OPTS: >-
       -XX:MinRAMPercentage=50
@@ -144,6 +145,7 @@ pdfrenderer:
     name: pdfrenderer
     type: ClusterIP
     externalPort: 80
+    annotations: {}
   podSecurityContext:
     runAsNonRoot: true
     runAsUser: 33001
@@ -268,6 +270,7 @@ imagemagick:
     name: imagemagick
     type: ClusterIP
     externalPort: 80
+    annotations: {}
   podSecurityContext:
     runAsNonRoot: true
     runAsUser: 33002
@@ -393,6 +396,7 @@ libreoffice:
     name: libreoffice
     type: ClusterIP
     externalPort: 80
+    annotations: {}
   resources:
     requests:
       cpu: "250m"
@@ -518,6 +522,7 @@ tika:
     name: tika
     type: ClusterIP
     externalPort: 80
+    annotations: {}
   podSecurityContext:
     runAsNonRoot: true
     runAsUser: 33004
@@ -643,6 +648,7 @@ transformmisc:
     name: transformmisc
     type: ClusterIP
     externalPort: 80
+    annotations: {}
   podSecurityContext:
     runAsNonRoot: true
     runAsUser: 33006
@@ -777,6 +783,7 @@ filestore:
     name: filestore
     type: ClusterIP
     externalPort: 80
+    annotations: {}
   podSecurityContext:
     runAsUser: 33030
     runAsGroup: 1000

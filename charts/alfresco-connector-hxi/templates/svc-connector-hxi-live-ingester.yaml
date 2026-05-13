@@ -4,6 +4,10 @@ metadata:
   name: {{ template "alfresco-connector-hxi.live-ingester.fullname" . }}
   labels:
     {{- include "alfresco-connector-hxi.live-ingester.labels" . | nindent 4 }}
+  {{- with .Values.liveIngester.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.liveIngester.service.type }}
   ports:

@@ -39,6 +39,8 @@ service:
   type: ClusterIP
   # -- Should you want to change the service port
   # externalPort: 80
+  # -- Annotations to add to the service
+  annotations: {}
 ingress:
   # -- Expose the solr endpoint - make sure authentication is properly configured if you do so
   enabled: false

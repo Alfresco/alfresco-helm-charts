@@ -5,6 +5,10 @@ metadata:
   labels:
     {{- include "elastic.labels" . | nindent 4 }}
     app.kubernetes.io/component: elasticsearch
+  {{- with .Values.elasticsearch.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: ClusterIP
   ports:

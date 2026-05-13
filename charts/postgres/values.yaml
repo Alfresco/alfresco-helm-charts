@@ -58,6 +58,7 @@ primary:
   service:
     # -- used for naming pvc
     name: *nameOverride
+    annotations: {}
     ports:
       postgresql: 5432
   resources:

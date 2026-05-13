@@ -26,6 +26,7 @@ service:
   name: ms-teams-service
   type: ClusterIP
   externalPort: 80
+  annotations: {}
 ingress:
   # -- Enable or disable ingress resource creation
   enabled: true

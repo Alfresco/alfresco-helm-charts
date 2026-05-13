@@ -27,6 +27,7 @@ service:
   name: aps
   type: ClusterIP
   externalPort: 80
+  annotations: {}
 ingress:
   # -- Toggle ingress for APS application
   enabled: true

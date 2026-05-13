@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-ai-transformer
 
-![Version: 3.6.1](https://img.shields.io/badge/Version-3.6.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.4.1](https://img.shields.io/badge/AppVersion-3.4.1-informational?style=flat-square)
+![Version: 3.7.0](https://img.shields.io/badge/Version-3.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.4.1](https://img.shields.io/badge/AppVersion-3.4.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco ai transformer service
 
@@ -74,6 +74,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | resources.limits.memory | string | `"1000Mi"` |  |
 | resources.requests.cpu | string | `"0.25"` |  |
 | resources.requests.memory | string | `"1000Mi"` |  |
+| service.annotations | object | `{}` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"ai-transformer"` |  |
 | service.type | string | `"ClusterIP"` |  |

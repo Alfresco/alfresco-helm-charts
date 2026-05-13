@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-msteams
 
-![Version: 2.6.1](https://img.shields.io/badge/Version-2.6.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.1](https://img.shields.io/badge/AppVersion-2.1.1-informational?style=flat-square)
+![Version: 2.7.0](https://img.shields.io/badge/Version-2.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.1](https://img.shields.io/badge/AppVersion-2.1.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector msteams service
 
@@ -68,6 +68,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | resources.limits.memory | string | `"1000Mi"` |  |
 | resources.requests.cpu | string | `"0.5"` |  |
 | resources.requests.memory | string | `"1000Mi"` |  |
+| service.annotations | object | `{}` |  |
 | service.externalPort | int | `80` |  |
 | service.name | string | `"ms-teams-service"` |  |
 | service.type | string | `"ClusterIP"` |  |

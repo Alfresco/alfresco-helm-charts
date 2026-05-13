@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-transform-service
 
-![Version: 2.7.1](https://img.shields.io/badge/Version-2.7.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.4.1](https://img.shields.io/badge/AppVersion-4.4.1-informational?style=flat-square)
+![Version: 2.8.0](https://img.shields.io/badge/Version-2.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.4.1](https://img.shields.io/badge/AppVersion-4.4.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Transform Services
 
@@ -63,6 +63,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | filestore.resources.limits.memory | string | `"1Gi"` |  |
 | filestore.resources.requests.cpu | string | `"100m"` |  |
 | filestore.resources.requests.memory | string | `"250Mi"` |  |
+| filestore.service.annotations | object | `{}` |  |
 | filestore.service.externalPort | int | `80` |  |
 | filestore.service.name | string | `"filestore"` |  |
 | filestore.service.type | string | `"ClusterIP"` |  |
@@ -112,6 +113,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | imagemagick.resources.limits.memory | string | `"4Gi"` |  |
 | imagemagick.resources.requests.cpu | string | `"250m"` |  |
 | imagemagick.resources.requests.memory | string | `"250Mi"` |  |
+| imagemagick.service.annotations | object | `{}` |  |
 | imagemagick.service.externalPort | int | `80` |  |
 | imagemagick.service.name | string | `"imagemagick"` |  |
 | imagemagick.service.type | string | `"ClusterIP"` |  |
@@ -157,6 +159,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | libreoffice.resources.limits.memory | string | `"4Gi"` |  |
 | libreoffice.resources.requests.cpu | string | `"250m"` |  |
 | libreoffice.resources.requests.memory | string | `"500Mi"` |  |
+| libreoffice.service.annotations | object | `{}` |  |
 | libreoffice.service.externalPort | int | `80` |  |
 | libreoffice.service.name | string | `"libreoffice"` |  |
 | libreoffice.service.type | string | `"ClusterIP"` |  |
@@ -209,6 +212,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | pdfrenderer.resources.limits.memory | string | `"2Gi"` |  |
 | pdfrenderer.resources.requests.cpu | string | `"100m"` |  |
 | pdfrenderer.resources.requests.memory | string | `"250Mi"` |  |
+| pdfrenderer.service.annotations | object | `{}` |  |
 | pdfrenderer.service.externalPort | int | `80` |  |
 | pdfrenderer.service.name | string | `"pdfrenderer"` |  |
 | pdfrenderer.service.type | string | `"ClusterIP"` |  |
@@ -258,6 +262,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | tika.resources.limits.memory | string | `"4Gi"` |  |
 | tika.resources.requests.cpu | string | `"250m"` |  |
 | tika.resources.requests.memory | string | `"600Mi"` |  |
+| tika.service.annotations | object | `{}` |  |
 | tika.service.externalPort | int | `80` |  |
 | tika.service.name | string | `"tika"` |  |
 | tika.service.type | string | `"ClusterIP"` |  |
@@ -303,6 +308,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | transformmisc.resources.limits.memory | string | `"2Gi"` |  |
 | transformmisc.resources.requests.cpu | string | `"100m"` |  |
 | transformmisc.resources.requests.memory | string | `"250Mi"` |  |
+| transformmisc.service.annotations | object | `{}` |  |
 | transformmisc.service.externalPort | int | `80` |  |
 | transformmisc.service.name | string | `"transformmisc"` |  |
 | transformmisc.service.type | string | `"ClusterIP"` |  |
@@ -335,6 +341,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | transformrouter.resources.limits.memory | string | `"1Gi"` |  |
 | transformrouter.resources.requests.cpu | string | `"100m"` |  |
 | transformrouter.resources.requests.memory | string | `"250Mi"` |  |
+| transformrouter.service.annotations | object | `{}` |  |
 | transformrouter.service.externalPort | int | `80` |  |
 | transformrouter.service.name | string | `"transform-router"` |  |
 | transformrouter.service.type | string | `"ClusterIP"` |  |

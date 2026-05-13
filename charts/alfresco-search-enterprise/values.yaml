@@ -29,6 +29,8 @@ liveIndexing:
   # -- Set environment variables for all the live indexing components (mediation, content, metadata, path)
   environment: {}
   mediation:
+    service:
+      annotations: {}
     image:
       repository: >-
         quay.io/alfresco/alfresco-elasticsearch-live-indexing-mediation

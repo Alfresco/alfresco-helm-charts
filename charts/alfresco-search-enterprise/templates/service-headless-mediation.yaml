@@ -5,6 +5,10 @@ metadata:
   name: {{ template "alfresco-search-enterprise.name" $ctx }}
   labels:
     {{- include "alfresco-search-enterprise.mediation.labels" . | nindent 4 }}
+  {{- with .Values.liveIndexing.mediation.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   ports:
   - port: 8080

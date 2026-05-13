@@ -5,6 +5,10 @@ metadata:
   name: {{ template "alfresco-transform-service.transform-misc.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.transform-misc.labels" . | nindent 4 }}
+  {{- with .Values.transformmisc.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.transformmisc.service.type }}
   ports:

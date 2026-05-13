@@ -1,6 +1,6 @@
 # elastic
 
-![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.17.3](https://img.shields.io/badge/AppVersion-8.17.3-informational?style=flat-square)
+![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 8.17.3](https://img.shields.io/badge/AppVersion-8.17.3-informational?style=flat-square)
 
 WARNING: This chart is meant to ease initial deployment for TESTING purposes.
 DO NOT use this chart in any staging, or production environment. It has very
@@ -59,6 +59,7 @@ Alfresco charts to point to it.
 | elasticsearch.resources.limits.memory | string | `"2Gi"` |  |
 | elasticsearch.resources.requests.cpu | string | `"500m"` |  |
 | elasticsearch.resources.requests.memory | string | `"2Gi"` |  |
+| elasticsearch.service.annotations | object | `{}` |  |
 | elasticsearch.service.name | string | `"elasticsearch"` | used for naming pvc |
 | fullnameOverride | string | `""` |  |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
@@ -84,6 +85,7 @@ Alfresco charts to point to it.
 | kibana.resources.requests.cpu | string | `"500m"` |  |
 | kibana.resources.requests.memory | string | `"1Gi"` |  |
 | kibana.serverBasePath | string | `"/kibana"` |  |
+| kibana.service.annotations | object | `{}` |  |
 | nameOverride | string | `""` |  |
 
 ----------------------------------------------

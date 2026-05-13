@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-share
 
-![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 2.3.0](https://img.shields.io/badge/Version-2.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 Alfresco Share Helm chart for Kubernetes
 
@@ -48,6 +48,7 @@ service:
 | global.ingressClassName | string | `"nginx"` | Global ingress class name override for all ingress resources in this chart |
 | global.known_urls | string | `nil` | a fallback for .Values.known_urls that can be shared between charts |
 | hazelcast.port | int | `5701` | Port used to expose the Hazelcast service when replicaCount > 1 |
+| hazelcast.service.annotations | object | `{}` |  |
 | image.port | int | `8080` | Internal port where the pod is listening. Should only be changed is you use a custom image which uses a different port. |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-share"` |  |

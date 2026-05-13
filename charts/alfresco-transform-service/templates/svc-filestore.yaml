@@ -5,6 +5,10 @@ metadata:
   name: {{ template "alfresco-transform-service.filestore.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.filestore.labels" . | nindent 4 }}
+  {{- with .Values.filestore.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.filestore.service.type }}
   ports:

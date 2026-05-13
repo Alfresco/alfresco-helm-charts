@@ -1,0 +1,14 @@
+---
+suite: test connector ms365 service
+templates:
+  - svc-connector-ms365.yaml
+tests:
+  - it: should render service annotations
+    set:
+      service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"

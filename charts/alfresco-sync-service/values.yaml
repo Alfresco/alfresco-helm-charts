@@ -41,6 +41,7 @@ service:
   name: syncservice
   type: NodePort
   externalPort: 80
+  annotations: {}
 serviceAccount:
   # -- Specifies whether a service account should be created
   create: true
@@ -161,6 +162,7 @@ hazelcast:
   service:
     port: 5701
     type: ClusterIP
+    annotations: {}
 affinity:
   podAntiAffinity:
     preferredDuringSchedulingIgnoredDuringExecution:
