@@ -26,4 +26,3 @@ tests:
           path: metadata.annotations
           content:
             service.beta.kubernetes.io/aws-load-balancer-internal: "true"
-

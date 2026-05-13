@@ -56,4 +56,3 @@ tests:
           content:
             service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /api/health
         template: svc-activemq-web-console.yaml
-
