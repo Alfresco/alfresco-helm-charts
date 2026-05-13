@@ -4,6 +4,10 @@ metadata:
   name: {{ template "activemq.fullname" . }}-web-console
   labels:
     {{- include "activemq.labels" . | nindent 4 }}
+  {{- with .Values.services.webConsole.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.services.webConsole.type }}
   ports:

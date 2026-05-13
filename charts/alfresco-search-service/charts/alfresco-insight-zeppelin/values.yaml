@@ -17,6 +17,7 @@ service:
   name: zeppelin
   type: ClusterIP
   externalPort: 80
+  annotations: {}
 ingress:
   className: ""
   hosts:

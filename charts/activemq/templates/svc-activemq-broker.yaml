@@ -4,6 +4,10 @@ metadata:
   name: {{ template "activemq.fullname" . }}-broker
   labels:
     {{- include "activemq.labels" . | nindent 4 }}
+  {{- with .Values.services.broker.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.services.broker.type }}
   ports:

@@ -5,6 +5,10 @@ metadata:
   name: {{ template "alfresco-sync-service.service-hz.name" . }}
   labels:
     {{- include "alfresco-sync-service.labels" . | nindent 4 }}
+  {{- with .Values.hazelcast.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.hazelcast.service.type }}
   ports:

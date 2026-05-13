@@ -5,6 +5,10 @@ metadata:
   name: {{ template "alfresco-transform-service.tika.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.tika.labels" . | nindent 4 }}
+  {{- with .Values.tika.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.tika.service.type }}
   ports:

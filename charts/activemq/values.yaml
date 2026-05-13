@@ -43,6 +43,7 @@ services:
         amqp: 5672
         openwire: 61616
     type: ClusterIP
+    annotations: {}
   webConsole:
     ports:
       internal:
@@ -50,6 +51,7 @@ services:
       external:
         webConsole: 8161
     type: NodePort
+    annotations: {}
 readinessProbe:
   initialDelaySeconds: 5
   periodSeconds: 10

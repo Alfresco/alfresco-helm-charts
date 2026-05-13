@@ -5,6 +5,10 @@ metadata:
   name: {{ template "alfresco-transform-service.pdfrenderer.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.pdfrenderer.labels" . | nindent 4 }}
+  {{- with .Values.pdfrenderer.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.pdfrenderer.service.type }}
   ports:

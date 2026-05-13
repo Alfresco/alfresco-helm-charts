@@ -134,6 +134,8 @@ global:
 hazelcast:
   # -- Port used to expose the Hazelcast service when replicaCount > 1
   port: 5701
+  service:
+    annotations: {}
 managedApplicationContext:
   # -- Automatically inject a custom application context file which for now only
   # enables hazelcast clustering when more than one replica is configured.

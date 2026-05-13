@@ -5,6 +5,10 @@ metadata:
   name: {{ template "alfresco-transform-service.libreoffice.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.libreoffice.labels" . | nindent 4 }}
+  {{- with .Values.libreoffice.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.libreoffice.service.type }}
   ports:

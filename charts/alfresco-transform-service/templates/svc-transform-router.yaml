@@ -5,6 +5,10 @@ metadata:
   name: {{ template "alfresco-transform-service.transform-router.fullname" . }}
   labels:
     {{- include "alfresco-transform-service.transform-router.labels" . | nindent 4 }}
+  {{- with .Values.transformrouter.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.transformrouter.service.type }}
   ports:

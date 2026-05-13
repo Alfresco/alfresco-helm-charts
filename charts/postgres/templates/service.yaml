@@ -5,6 +5,10 @@ metadata:
   name: {{ template "postgres.fullname" $ }}
   labels:
     {{- include "postgres.labels" $ | nindent 4 }}
+  {{- with .primary.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: ClusterIP
   ports:

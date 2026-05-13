@@ -5,6 +5,10 @@ metadata:
   name: {{ template "alfresco-share.service-hz.name" . }}
   labels:
     {{- include "alfresco-share.labels" . | nindent 4 }}
+  {{- with .Values.hazelcast.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:

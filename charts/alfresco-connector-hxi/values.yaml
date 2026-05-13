@@ -46,6 +46,7 @@ liveIngester:
     name: hxi-live-ingester-service
     type: ClusterIP
     externalPort: 80
+    annotations: {}
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
@@ -150,6 +151,7 @@ predictionApplier:
     name: hxi-prediction-applier-service
     type: ClusterIP
     externalPort: 80
+    annotations: {}
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
