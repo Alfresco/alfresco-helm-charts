@@ -15,3 +15,15 @@ tests:
           value:
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/name: alfresco-sync-service
+
+  - it: should render hazelcast service annotations
+    set:
+      replicaCount: 2
+      hazelcast.service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+

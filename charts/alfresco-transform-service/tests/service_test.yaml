@@ -1,0 +1,87 @@
+---
+suite: test transform service service templates
+templates:
+  - svc-filestore.yaml
+  - svc-imagemagick.yaml
+  - svc-libreoffice.yaml
+  - svc-pdfrenderer.yaml
+  - svc-tika.yaml
+  - svc-transform-misc.yaml
+  - svc-transform-router.yaml
+tests:
+  - it: should render transform router service annotations
+    set:
+      transformrouter.service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    template: svc-transform-router.yaml
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+
+  - it: should render pdfrenderer service annotations
+    set:
+      pdfrenderer.service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    template: svc-pdfrenderer.yaml
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+
+  - it: should render imagemagick service annotations
+    set:
+      imagemagick.service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    template: svc-imagemagick.yaml
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+
+  - it: should render libreoffice service annotations
+    set:
+      libreoffice.service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    template: svc-libreoffice.yaml
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+
+  - it: should render tika service annotations
+    set:
+      tika.service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    template: svc-tika.yaml
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+
+  - it: should render transform misc service annotations
+    set:
+      transformmisc.service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    template: svc-transform-misc.yaml
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+
+  - it: should render filestore service annotations
+    set:
+      filestore.service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    template: svc-filestore.yaml
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"

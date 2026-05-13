@@ -1,0 +1,28 @@
+---
+suite: test elastic services
+templates:
+  - elasticsearch-service.yaml
+  - kibana-service.yaml
+tests:
+  - it: should render elasticsearch service annotations
+    set:
+      elasticsearch.service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    template: elasticsearch-service.yaml
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+
+  - it: should render kibana service annotations
+    set:
+      kibana.enabled: true
+      kibana.service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    template: kibana-service.yaml
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"

@@ -1,0 +1,14 @@
+---
+suite: test activiti service
+templates:
+  - service.yaml
+tests:
+  - it: should render service annotations
+    set:
+      service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"

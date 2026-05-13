@@ -35,3 +35,25 @@ tests:
             app.kubernetes.io/name: testComponent
             app.kubernetes.io/version: 2.0.0
             helm.sh/chart: activemq-1.0.0
+
+  - it: should render service annotations
+    set:
+      services:
+        broker:
+          annotations:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+        webConsole:
+          annotations:
+            service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /api/health
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+        template: svc-activemq-broker.yaml
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /api/health
+        template: svc-activemq-web-console.yaml
+

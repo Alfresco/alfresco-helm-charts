@@ -1,0 +1,27 @@
+---
+suite: test connector hxi services
+templates:
+  - svc-connector-hxi-live-ingester.yaml
+  - svc-connector-hxi-prediction-applier.yaml
+tests:
+  - it: should render live ingester service annotations
+    set:
+      liveIngester.service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    template: svc-connector-hxi-live-ingester.yaml
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+
+  - it: should render prediction applier service annotations
+    set:
+      predictionApplier.service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    template: svc-connector-hxi-prediction-applier.yaml
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
