@@ -4327,6 +4327,20 @@ entries:
   alfresco-repository:
   - apiVersion: v2
     appVersion: 26.1.0
+    created: "2026-05-15T15:58:46.944734969Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: Alfresco content repository Helm chart
+    digest: c16cdd1a31d1f79d5637b80091a90c60b84cd9b67206632ce05bb69a8299daa3
+    name: alfresco-repository
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-repository-1.5.0/alfresco-repository-1.5.0.tgz
+    version: 1.5.0
+  - apiVersion: v2
+    appVersion: 26.1.0
     created: "2026-05-13T07:59:04.190381354Z"
     dependencies:
     - name: alfresco-common
@@ -5471,6 +5485,20 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-repository-0.1.0-alpha.0/alfresco-repository-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-search-enterprise:
+  - apiVersion: v2
+    appVersion: 5.5.0
+    created: "2026-05-15T15:58:47.145612665Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: A Helm chart for deploying Alfresco Elasticsearch connector
+    digest: 7b353050fc32494c3f93914ab4c1ed71d026bf47e41159f9a7259cd1c259f2d5
+    name: alfresco-search-enterprise
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-search-enterprise-4.14.0/alfresco-search-enterprise-4.14.0.tgz
+    version: 4.14.0
   - apiVersion: v2
     appVersion: 5.5.0
     created: "2026-05-13T13:34:56.152801835Z"
@@ -11031,4 +11059,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2026-05-13T13:34:57.75909047Z"
+generated: "2026-05-15T15:58:47.14661467Z"
