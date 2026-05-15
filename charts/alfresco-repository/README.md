@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 1.4.0](https://img.shields.io/badge/Version-1.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -75,8 +75,13 @@ service:
 | configuration.messageBroker.username | string | `nil` | Username to authenticate to the message broker |
 | configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties see [details](./docs/repository-properties.md) |
 | configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repository as env vars. This list can contain special secrets marked with predefined `purpose`: `acs-license` to pass license as a secret or subsystems:*:* to configure an Alfresco subsystem. See [Configuring Alfresco Subsystem](./docs/subsystems.md) for more details. |
-| configuration.search.elasticsearchProperties | object | `{"createIndexIfNotExists":true,"indexName":"alfresco"}` | A map of additional elasticsearch.* properties to be passed as -D arguments to the repository when search.flavor is set to elasticsearch. See more on the [docs](https://support.hyland.com/r/Alfresco/Alfresco-Search-Enterprise/5.3/Alfresco-Search-Enterprise/Configure/Overview/Alfresco-Repository) |
-| configuration.search.elasticsearchProperties.createIndexIfNotExists | bool | `true` | Automatically create the search index if it does not exist at repository startup. Enabled by default for convenience but it is recommended to disable it in production and create the index with the right shards/replicas settings beforehand. See also the `indexInit` feature in the `alfresco-search-enterprise` chart. |
+| configuration.search.elasticsearchProperties | object | see below | A map of additional elasticsearch.* properties to be passed as -D arguments to the repository when search.flavor is set to elasticsearch. See more on the [docs](https://support.hyland.com/r/Alfresco/Alfresco-Search-Enterprise/5.3/Alfresco-Search-Enterprise/Configure/Overview/Alfresco-Repository) |
+| configuration.search.elasticsearchProperties."archive.indexName" | string | `"alfresco-archive"` | Name of the archive search index to use. |
+| configuration.search.elasticsearchProperties."index.custom.analyzer.config.files" | string | `""` | Custom language analyzer configuration files. Multiple files can be specified as a comma-separated list (e.g. `file:/path/to/file.txt,file:/path/to/file2.txt`). |
+| configuration.search.elasticsearchProperties."index.locale" | string | `"en"` | Locale used for the Elasticsearch language analyzer. |
+| configuration.search.elasticsearchProperties."index.mapping.total_fields.limit" | int | `7500` | Maximum number of fields allowed in the search index mapping. |
+| configuration.search.elasticsearchProperties."index.max_result_window" | int | `10000` | Maximum number of results that can be returned by a single query. |
+| configuration.search.elasticsearchProperties."ssl.host.name.verification" | bool | `true` | When using TLS (`https` or `mtls`), whether to verify the server certificate hostname matches. |
 | configuration.search.elasticsearchProperties.indexName | string | `"alfresco"` | Name of the search index to use. |
 | configuration.search.existingConfigMap.keys.flavor | string | `"SEARCH_FLAVOR"` | configmap key where to find the search engine used |
 | configuration.search.existingConfigMap.keys.host | string | `"SEARCH_HOST"` | configmap key where to find the hostname part of the search URL. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. |
