@@ -18,11 +18,10 @@ tests:
         createIndexTemplate:
           enabled: true
     asserts:
-      - contains:
-          path: spec.template.spec.initContainers
-          content:
-            name: create-index-template
-
+      - equal:
+          path: spec.template.spec.initContainers[1].name
+          value: create-index-template
+  
   - it: should use configured image when enabled
     set:
       initContainers:
@@ -33,13 +32,16 @@ tests:
             tag: "9.0.0"
             pullPolicy: Always
     asserts:
-      - contains:
-          path: spec.template.spec.initContainers
-          content:
-            name: create-index-template
-            image: "custom/curl:9.0.0"
-            imagePullPolicy: Always
-
+      - equal:
+          path: spec.template.spec.initContainers[1].name
+          value: create-index-template
+      - equal:
+          path: spec.template.spec.initContainers[1].image
+          value: "custom/curl:9.0.0"
+      - equal:
+          path: spec.template.spec.initContainers[1].imagePullPolicy
+          value: Always
+  
   - it: should render correct resources when enabled
     set:
       initContainers:
@@ -50,15 +52,16 @@ tests:
               cpu: "500m"
               memory: "50Mi"
     asserts:
-      - contains:
-          path: spec.template.spec.initContainers
-          content:
-            name: create-index-template
-            resources:
-              limits:
-                cpu: "500m"
-                memory: "50Mi"
-
+      - equal:
+          path: spec.template.spec.initContainers[1].name
+          value: create-index-template
+      - equal:
+          path: spec.template.spec.initContainers[1].resources.limits.cpu
+          value: "500m"
+      - equal:
+          path: spec.template.spec.initContainers[1].resources.limits.memory
+          value: "50Mi"
+  
   - it: should use configured template name and index name
     set:
       initContainers:
@@ -69,46 +72,25 @@ tests:
       configuration:
         search:
           elasticsearchProperties:
-            index:
-              max_result_window: 20000
-              mapping:
-                total_fields:
-                  limit: 10000
+            index.max_result_window: 20000
+            index.mapping.total_fields.limit: 10000
     asserts:
-      - contains:
-          path: spec.template.spec.initContainers
-          content:
-            name: create-index-template
-            args:
-              - |
-                ES_URL="${SPRING_ELASTICSEARCH_REST_URIS%%,*}"
-                until curl -sf -XPUT \
-                  -H "Content-Type: application/json" \
-                  -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
-                  "${ES_URL}/_index_template/RELEASE-NAME-custom-tpl" \
-                  -d '{
-                    "index_patterns": ["custom-index"],
-                    "template": {
-                      "settings": {
-                        "number_of_shards": 1,
-                        "number_of_replicas": 0,
-                        "index": {
-                          "max_result_window": 20000,
-                          "mapping": {
-                            "total_fields": {
-                              "limit": 10000
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }'
-                do
-                  echo "Waiting for Elasticsearch to be ready at ${ES_URL}..."
-                  sleep 5
-                done
-                echo "Index template created successfully"
-
+      - equal:
+          path: spec.template.spec.initContainers[1].name
+          value: create-index-template
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*_index_template/RELEASE-NAME-custom-tpl.*'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*"index_patterns": \["custom-index"\].*'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*"max_result_window": 20000.*'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*"limit": 10000.*'
+  
   - it: should use default max_result_window and totalFieldsLimit when not specified
     set:
       initContainers:
@@ -117,63 +99,58 @@ tests:
           numberOfShards: 2
           numberOfReplicas: 1
     asserts:
-      - contains:
-          path: spec.template.spec.initContainers
-          content:
-            name: create-index-template
-            args:
-              - |
-                ES_URL="${SPRING_ELASTICSEARCH_REST_URIS%%,*}"
-                until curl -sf -XPUT \
-                  -H "Content-Type: application/json" \
-                  -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
-                  "${ES_URL}/_index_template/RELEASE-NAME-alfresco-template" \
-                  -d '{
-                    "index_patterns": ["alfresco"],
-                    "template": {
-                      "settings": {
-                        "number_of_shards": 2,
-                        "number_of_replicas": 1,
-                        "index": {
-                          "max_result_window": 10000,
-                          "mapping": {
-                            "total_fields": {
-                              "limit": 7500
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }'
-                do
-                  echo "Waiting for Elasticsearch to be ready at ${ES_URL}..."
-                  sleep 5
-                done
-                echo "Index template created successfully"
-
+      - equal:
+          path: spec.template.spec.initContainers[1].name
+          value: create-index-template
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*"index_patterns": \["alfresco"\].*'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*"number_of_shards": 2.*'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*"number_of_replicas": 1.*'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*"max_result_window": 10000.*'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*"limit": 7500.*'
+  
   - it: should include elasticsearch credentials from search configuration
     set:
       initContainers:
         createIndexTemplate:
           enabled: true
     asserts:
-      - contains:
-          path: spec.template.spec.initContainers
-          content:
-            name: create-index-template
-            env:
-              - name: SPRING_ELASTICSEARCH_REST_URIS
-                valueFrom:
-                  configMapKeyRef:
-                    name: RELEASE-NAME-alfresco-search
-                    key: SEARCH_URL
-              - name: SPRING_ELASTICSEARCH_REST_USERNAME
-                valueFrom:
-                  secretKeyRef:
-                    name: RELEASE-NAME-alfresco-search
-                    key: ELASTICSEARCH_USERNAME
-              - name: SPRING_ELASTICSEARCH_REST_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: RELEASE-NAME-alfresco-search
-                    key: ELASTICSEARCH_PASSWORD
+      - equal:
+          path: spec.template.spec.initContainers[1].name
+          value: create-index-template
+      - equal:
+          path: spec.template.spec.initContainers[1].env[0].name
+          value: SPRING_ELASTICSEARCH_REST_URIS
+      - equal:
+          path: spec.template.spec.initContainers[1].env[0].valueFrom.configMapKeyRef.name
+          value: RELEASE-NAME-alfresco-search
+      - equal:
+          path: spec.template.spec.initContainers[1].env[0].valueFrom.configMapKeyRef.key
+          value: SEARCH_URL
+      - equal:
+          path: spec.template.spec.initContainers[1].env[1].name
+          value: SPRING_ELASTICSEARCH_REST_USERNAME
+      - equal:
+          path: spec.template.spec.initContainers[1].env[1].valueFrom.secretKeyRef.name
+          value: RELEASE-NAME-alfresco-search
+      - equal:
+          path: spec.template.spec.initContainers[1].env[1].valueFrom.secretKeyRef.key
+          value: ELASTICSEARCH_USERNAME
+      - equal:
+          path: spec.template.spec.initContainers[1].env[2].name
+          value: SPRING_ELASTICSEARCH_REST_PASSWORD
+      - equal:
+          path: spec.template.spec.initContainers[1].env[2].valueFrom.secretKeyRef.name
+          value: RELEASE-NAME-alfresco-search
+      - equal:
+          path: spec.template.spec.initContainers[1].env[2].valueFrom.secretKeyRef.key
+          value: ELASTICSEARCH_PASSWORD

@@ -95,10 +95,10 @@ spec:
                       "number_of_shards": {{ .Values.initContainers.createIndexTemplate.numberOfShards }},
                       "number_of_replicas": {{ .Values.initContainers.createIndexTemplate.numberOfReplicas }},
                       "index": {
-                        "max_result_window": {{ .Values.configuration.search.elasticsearchProperties.index.max_result_window | default 10000 }},
+                        "max_result_window": {{ index .Values.configuration.search.elasticsearchProperties "index.max_result_window" | default 10000 }},
                         "mapping": {
                           "total_fields": {
-                            "limit": {{ .Values.configuration.search.elasticsearchProperties.index.mapping.total_fields.limit | default 7500 }}
+                            "limit": {{ index .Values.configuration.search.elasticsearchProperties "index.mapping.total_fields.limit" | default 7500 }}
                           }
                         }
                       }
