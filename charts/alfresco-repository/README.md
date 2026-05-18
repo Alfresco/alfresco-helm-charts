@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 1.6.0-alpha.1](https://img.shields.io/badge/Version-1.6.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -132,6 +132,18 @@ service:
 | ingress.hosts[0].paths[1].pathType | string | `"Prefix"` |  |
 | ingress.hosts[0].paths[2] | object | `{"path":"/alfresco/s/prometheus","pathType":"Prefix","serviceName":"blocked-prometheus"}` | Block direct access to prometheus endpoint |
 | ingress.tls | list | `[]` |  |
+| initContainers.createIndexTemplate.enabled | bool | `false` | Whether to create an Elasticsearch index template before starting the repository |
+| initContainers.createIndexTemplate.image.pullPolicy | string | `"IfNotPresent"` |  |
+| initContainers.createIndexTemplate.image.repository | string | `"curlimages/curl"` |  |
+| initContainers.createIndexTemplate.image.tag | string | `"8.11.0"` |  |
+| initContainers.createIndexTemplate.indexName | string | `"alfresco"` | Index name pattern to apply the template to |
+| initContainers.createIndexTemplate.maxResultWindow | int | `10000` | Maximum number of results that can be returned by a single search request |
+| initContainers.createIndexTemplate.numberOfReplicas | int | `0` | Number of replicas for the index |
+| initContainers.createIndexTemplate.numberOfShards | int | `1` | Number of shards for the index |
+| initContainers.createIndexTemplate.resources.limits.cpu | string | `"250m"` |  |
+| initContainers.createIndexTemplate.resources.limits.memory | string | `"20Mi"` |  |
+| initContainers.createIndexTemplate.templateName | string | `"alfresco-template"` | Template name for the index template |
+| initContainers.createIndexTemplate.totalFieldsLimit | int | `7500` | Maximum number of fields that can be created in the index |
 | initContainers.waitDbReady.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.waitDbReady.image.repository | string | `"busybox"` |  |
 | initContainers.waitDbReady.image.tag | string | `"1.37"` |  |

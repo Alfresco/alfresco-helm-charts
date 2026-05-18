@@ -356,6 +356,29 @@ initContainers:
       limits:
         cpu: 250m
         memory: 20Mi
+  createIndexTemplate:
+    # -- Whether to create an Elasticsearch index template before starting the repository
+    enabled: false
+    image:
+      repository: curlimages/curl
+      tag: "8.11.0"
+      pullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: "250m"
+        memory: "20Mi"
+    # -- Template name for the index template
+    templateName: alfresco-template
+    # -- Index name pattern to apply the template to
+    indexName: alfresco
+    # -- Number of shards for the index
+    numberOfShards: 1
+    # -- Number of replicas for the index
+    numberOfReplicas: 0
+    # -- Maximum number of results that can be returned by a single search request
+    maxResultWindow: 10000
+    # -- Maximum number of fields that can be created in the index
+    totalFieldsLimit: 7500
 global:
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:

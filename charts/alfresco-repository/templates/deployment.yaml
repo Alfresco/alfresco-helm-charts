@@ -51,6 +51,61 @@ spec:
                 done
               else echo "No port in jdbc URL $DATABASE_URL. Can't guess it so skipping db status check"
               fi
+        {{- if .Values.initContainers.createIndexTemplate.enabled }}
+        - name: create-index-template
+          {{- with .Values.initContainers.createIndexTemplate }}
+          image: {{ printf "%s:%s" .image.repository .image.tag | quote }}
+          imagePullPolicy: {{ .image.pullPolicy }}
+          resources: {{- toYaml .resources | nindent 12 }}
+          {{- end }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
+          env:
+            {{- $cmCtx := dict "Values" (dict "nameOverride" "alfresco-search") "Chart" .Chart "Release" .Release }}
+            {{- with .Values.configuration.search }}
+            {{- $cm := coalesce .existingConfigMap.name (include "alfresco-repository.fullname" $cmCtx) }}
+            {{- $secret := coalesce .existingSecret.name (include "alfresco-repository.fullname" $cmCtx) }}
+            - name: SPRING_ELASTICSEARCH_REST_URIS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $cm }}
+                  key: {{ .existingConfigMap.keys.url }}
+            - name: SPRING_ELASTICSEARCH_REST_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $secret }}
+                  key: {{ .existingSecret.keys.username }}
+            - name: SPRING_ELASTICSEARCH_REST_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $secret }}
+                  key: {{ .existingSecret.keys.password }}
+            {{- end }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              ES_URL="${SPRING_ELASTICSEARCH_REST_URIS%%,*}"
+              curl -sf -XPUT \
+                -H "Content-Type: application/json" \
+                -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
+                "${ES_URL}/_index_template/{{ .Release.Name }}-{{ .Values.initContainers.createIndexTemplate.templateName }}" \
+                -d '{
+                  "index_patterns": ["{{ .Values.initContainers.createIndexTemplate.indexName }}"],
+                  "template": {
+                    "settings": {
+                      "number_of_shards": {{ .Values.initContainers.createIndexTemplate.numberOfShards }},
+                      "number_of_replicas": {{ .Values.initContainers.createIndexTemplate.numberOfReplicas }},
+                      "index": {
+                        "max_result_window": {{ .Values.initContainers.createIndexTemplate.maxResultWindow }},
+                        "mapping": {
+                          "total_fields": {
+                            "limit": {{ .Values.initContainers.createIndexTemplate.totalFieldsLimit }}
+                          }
+                        }
+                      }
+                    }
+                  }
+                }'
+        {{- end }}
         {{- range .Values.extraInitContainers }}
         {{- list . | toYaml | nindent 8 }}
         {{- end }}
