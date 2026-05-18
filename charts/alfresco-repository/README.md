@@ -79,8 +79,8 @@ service:
 | configuration.search.elasticsearchProperties."archive.indexName" | string | `"alfresco-archive"` | Name of the archive search index to use. |
 | configuration.search.elasticsearchProperties."index.custom.analyzer.config.files" | string | `""` | Custom language analyzer configuration files. Multiple files can be specified as a comma-separated list (e.g. `file:/path/to/file.txt,file:/path/to/file2.txt`). |
 | configuration.search.elasticsearchProperties."index.locale" | string | `"en"` | Locale used for the Elasticsearch language analyzer. |
-| configuration.search.elasticsearchProperties."index.mapping.total_fields.limit" | int | `7500` | Maximum number of fields that can be created in the index |
-| configuration.search.elasticsearchProperties."index.max_result_window" | int | `10000` | Maximum number of results that can be returned by a single search request |
+| configuration.search.elasticsearchProperties."index.mapping.total_fields.limit" | int | `7500` | Maximum number of fields allowed in the search index mapping. |
+| configuration.search.elasticsearchProperties."index.max_result_window" | int | `10000` | Maximum number of results that can be returned by a single query. |
 | configuration.search.elasticsearchProperties."ssl.host.name.verification" | bool | `true` | When using TLS (`https` or `mtls`), whether to verify the server certificate hostname matches. |
 | configuration.search.elasticsearchProperties.createIndexIfNotExists | bool | `true` | Automatically create the search index if it does not exist at repository startup. Enabled by default for convenience but it is recommended to disable it in production and create the index with the right shards/replicas settings beforehand. See also the `indexInit` feature in the `alfresco-search-enterprise` chart. |
 | configuration.search.elasticsearchProperties.indexName | string | `"alfresco"` | Name of the search index to use. |
