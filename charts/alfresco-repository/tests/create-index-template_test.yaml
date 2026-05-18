@@ -11,7 +11,7 @@ tests:
           path: spec.template.spec.initContainers
           content:
             name: create-index-template
-  
+
   - it: should render create-index-template init-container when enabled
     set:
       initContainers:
@@ -22,7 +22,7 @@ tests:
           path: spec.template.spec.initContainers
           content:
             name: create-index-template
-  
+
   - it: should use configured image when enabled
     set:
       initContainers:
@@ -39,7 +39,7 @@ tests:
             name: create-index-template
             image: "custom/curl:9.0.0"
             imagePullPolicy: Always
-  
+
   - it: should render correct resources when enabled
     set:
       initContainers:
@@ -58,7 +58,7 @@ tests:
               limits:
                 cpu: "500m"
                 memory: "50Mi"
-  
+
   - it: should use configured template name and index name
     set:
       initContainers:
@@ -108,7 +108,7 @@ tests:
                   sleep 5
                 done
                 echo "Index template created successfully"
-  
+
   - it: should use default max_result_window and totalFieldsLimit when not specified
     set:
       initContainers:
@@ -150,7 +150,7 @@ tests:
                   sleep 5
                 done
                 echo "Index template created successfully"
-  
+
   - it: should include elasticsearch credentials from search configuration
     set:
       initContainers:

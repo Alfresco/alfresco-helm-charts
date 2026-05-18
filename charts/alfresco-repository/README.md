@@ -76,13 +76,12 @@ service:
 | configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties see [details](./docs/repository-properties.md) |
 | configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repository as env vars. This list can contain special secrets marked with predefined `purpose`: `acs-license` to pass license as a secret or subsystems:*:* to configure an Alfresco subsystem. See [Configuring Alfresco Subsystem](./docs/subsystems.md) for more details. |
 | configuration.search.elasticsearchProperties | object | see below | A map of additional elasticsearch.* properties to be passed as -D arguments to the repository when search.flavor is set to elasticsearch. See more on the [docs](https://support.hyland.com/r/Alfresco/Alfresco-Search-Enterprise/5.3/Alfresco-Search-Enterprise/Configure/Overview/Alfresco-Repository) |
-| configuration.search.elasticsearchProperties."archive.indexName" | string | `"alfresco-archive"` | Name of the archive search index to use. |
-| configuration.search.elasticsearchProperties."index.custom.analyzer.config.files" | string | `""` | Custom language analyzer configuration files. Multiple files can be specified as a comma-separated list (e.g. `file:/path/to/file.txt,file:/path/to/file2.txt`). |
-| configuration.search.elasticsearchProperties."index.locale" | string | `"en"` | Locale used for the Elasticsearch language analyzer. |
-| configuration.search.elasticsearchProperties."index.mapping.total_fields.limit" | int | `7500` | Maximum number of fields allowed in the search index mapping. |
-| configuration.search.elasticsearchProperties."index.max_result_window" | int | `10000` | Maximum number of results that can be returned by a single query. |
-| configuration.search.elasticsearchProperties."ssl.host.name.verification" | bool | `true` | When using TLS (`https` or `mtls`), whether to verify the server certificate hostname matches. |
+| configuration.search.elasticsearchProperties.createIndexIfNotExists | bool | `true` | Automatically create the search index if it does not exist at repository startup. Enabled by default for convenience but it is recommended to disable it in production and create the index with the right shards/replicas settings beforehand. See also the `indexInit` feature in the `alfresco-search-enterprise` chart. |
 | configuration.search.elasticsearchProperties.indexName | string | `"alfresco"` | Name of the search index to use. |
+| configuration.search.elasticsearchProperties.keys.password | string | `"ELASTICSEARCH_PASSWORD"` | Key within the secret holding the search service password |
+| configuration.search.elasticsearchProperties.keys.solr-secret | string | `"SOLR_SECRET"` | Key within the secret holding the index shared secret |
+| configuration.search.elasticsearchProperties.keys.username | string | `"ELASTICSEARCH_USERNAME"` | Key within the secret holding the search service username |
+| configuration.search.elasticsearchProperties.name | string | `nil` | Optional secret containing search service credentials |
 | configuration.search.existingConfigMap.keys.flavor | string | `"SEARCH_FLAVOR"` | configmap key where to find the search engine used |
 | configuration.search.existingConfigMap.keys.host | string | `"SEARCH_HOST"` | configmap key where to find the hostname part of the search URL. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. |
 | configuration.search.existingConfigMap.keys.port | string | `"SEARCH_PORT"` | configmap key where to find the port part of the search URL. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. |
@@ -90,10 +89,6 @@ service:
 | configuration.search.existingConfigMap.keys.solr_base_url | string | `"SOLR_BASE_URL"` | configmap key where to find the root path to Solr. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. Not applicable to Elasticsearch |
 | configuration.search.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap  holding the search service URL. |
 | configuration.search.existingConfigMap.name | string | `nil` | Optional configmap containing the search service URL |
-| configuration.search.existingSecret.keys.password | string | `"ELASTICSEARCH_PASSWORD"` | Key within the secret holding the search service password |
-| configuration.search.existingSecret.keys.solr-secret | string | `"SOLR_SECRET"` | Key within the secret holding the index shared secret |
-| configuration.search.existingSecret.keys.username | string | `"ELASTICSEARCH_USERNAME"` | Key within the secret holding the search service username |
-| configuration.search.existingSecret.name | string | `nil` | Optional secret containing search service credentials |
 | configuration.search.flavor | string | `"noindex"` | Can be either `solr`, `elasticsearch` or `noindex` |
 | configuration.search.password | string | `nil` | Password to authenticate to the search service |
 | configuration.search.solr-secret | string | `nil` | Solr inter process shared secret |
@@ -136,14 +131,12 @@ service:
 | initContainers.createIndexTemplate.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.createIndexTemplate.image.repository | string | `"curlimages/curl"` |  |
 | initContainers.createIndexTemplate.image.tag | string | `"8.11.0"` |  |
-| initContainers.createIndexTemplate.indexName | string | `"alfresco"` | Index name pattern to apply the template to |
-| initContainers.createIndexTemplate.maxResultWindow | int | `10000` | Maximum number of results that can be returned by a single search request |
+| initContainers.createIndexTemplate.indexName | string | `"alfresco"` | Index name to apply the template to |
 | initContainers.createIndexTemplate.numberOfReplicas | int | `0` | Number of replicas for the index |
 | initContainers.createIndexTemplate.numberOfShards | int | `1` | Number of shards for the index |
 | initContainers.createIndexTemplate.resources.limits.cpu | string | `"250m"` |  |
 | initContainers.createIndexTemplate.resources.limits.memory | string | `"20Mi"` |  |
 | initContainers.createIndexTemplate.templateName | string | `"alfresco-template"` | Template name for the index template |
-| initContainers.createIndexTemplate.totalFieldsLimit | int | `7500` | Maximum number of fields that can be created in the index |
 | initContainers.waitDbReady.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.waitDbReady.image.repository | string | `"busybox"` |  |
 | initContainers.waitDbReady.image.tag | string | `"1.37"` |  |
