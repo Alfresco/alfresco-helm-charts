@@ -21,7 +21,7 @@ tests:
       - equal:
           path: spec.template.spec.initContainers[1].name
           value: create-index-template
-  
+
   - it: should use configured image when enabled
     set:
       initContainers:
@@ -41,7 +41,7 @@ tests:
       - equal:
           path: spec.template.spec.initContainers[1].imagePullPolicy
           value: Always
-  
+
   - it: should render correct resources when enabled
     set:
       initContainers:
@@ -61,7 +61,7 @@ tests:
       - equal:
           path: spec.template.spec.initContainers[1].resources.limits.memory
           value: "50Mi"
-  
+
   - it: should use configured template name and index name
     set:
       initContainers:
@@ -90,7 +90,7 @@ tests:
       - matchRegex:
           path: spec.template.spec.initContainers[1].args[0]
           pattern: '.*"limit": 10000.*'
-  
+
   - it: should use default max_result_window and totalFieldsLimit when not specified
     set:
       initContainers:
@@ -117,7 +117,7 @@ tests:
       - matchRegex:
           path: spec.template.spec.initContainers[1].args[0]
           pattern: '.*"limit": 7500.*'
-  
+
   - it: should include elasticsearch credentials from search configuration
     set:
       initContainers:

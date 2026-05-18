@@ -84,10 +84,6 @@ service:
 | configuration.search.elasticsearchProperties."ssl.host.name.verification" | bool | `true` | When using TLS (`https` or `mtls`), whether to verify the server certificate hostname matches. |
 | configuration.search.elasticsearchProperties.createIndexIfNotExists | bool | `true` | Automatically create the search index if it does not exist at repository startup. Enabled by default for convenience but it is recommended to disable it in production and create the index with the right shards/replicas settings beforehand. See also the `indexInit` feature in the `alfresco-search-enterprise` chart. |
 | configuration.search.elasticsearchProperties.indexName | string | `"alfresco"` | Name of the search index to use. |
-| configuration.search.elasticsearchProperties.keys.password | string | `"ELASTICSEARCH_PASSWORD"` | Key within the secret holding the search service password |
-| configuration.search.elasticsearchProperties.keys.solr-secret | string | `"SOLR_SECRET"` | Key within the secret holding the index shared secret |
-| configuration.search.elasticsearchProperties.keys.username | string | `"ELASTICSEARCH_USERNAME"` | Key within the secret holding the search service username |
-| configuration.search.elasticsearchProperties.name | string | `nil` | Optional secret containing search service credentials |
 | configuration.search.existingConfigMap.keys.flavor | string | `"SEARCH_FLAVOR"` | configmap key where to find the search engine used |
 | configuration.search.existingConfigMap.keys.host | string | `"SEARCH_HOST"` | configmap key where to find the hostname part of the search URL. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. |
 | configuration.search.existingConfigMap.keys.port | string | `"SEARCH_PORT"` | configmap key where to find the port part of the search URL. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. |
@@ -95,6 +91,10 @@ service:
 | configuration.search.existingConfigMap.keys.solr_base_url | string | `"SOLR_BASE_URL"` | configmap key where to find the root path to Solr. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. Not applicable to Elasticsearch |
 | configuration.search.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap  holding the search service URL. |
 | configuration.search.existingConfigMap.name | string | `nil` | Optional configmap containing the search service URL |
+| configuration.search.existingSecret.keys.password | string | `"ELASTICSEARCH_PASSWORD"` | Key within the secret holding the search service password |
+| configuration.search.existingSecret.keys.solr-secret | string | `"SOLR_SECRET"` | Key within the secret holding the index shared secret |
+| configuration.search.existingSecret.keys.username | string | `"ELASTICSEARCH_USERNAME"` | Key within the secret holding the search service username |
+| configuration.search.existingSecret.name | string | `nil` | Optional secret containing search service credentials |
 | configuration.search.flavor | string | `"noindex"` | Can be either `solr`, `elasticsearch` or `noindex` |
 | configuration.search.password | string | `nil` | Password to authenticate to the search service |
 | configuration.search.solr-secret | string | `nil` | Solr inter process shared secret |
