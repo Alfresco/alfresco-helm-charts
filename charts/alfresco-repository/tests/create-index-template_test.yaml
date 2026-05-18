@@ -1,0 +1,179 @@
+---
+suite: test create-index-template init-container
+templates:
+  - deployment.yaml
+values: &test_values
+  - values/test_values.yaml
+tests:
+  - it: should not render create-index-template init-container by default
+    asserts:
+      - notContains:
+          path: spec.template.spec.initContainers
+          content:
+            name: create-index-template
+  
+  - it: should render create-index-template init-container when enabled
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: create-index-template
+  
+  - it: should use configured image when enabled
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+          image:
+            repository: custom/curl
+            tag: "9.0.0"
+            pullPolicy: Always
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: create-index-template
+            image: "custom/curl:9.0.0"
+            imagePullPolicy: Always
+  
+  - it: should render correct resources when enabled
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "50Mi"
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: create-index-template
+            resources:
+              limits:
+                cpu: "500m"
+                memory: "50Mi"
+  
+  - it: should use configured template name and index name
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+          templateName: custom-tpl
+          indexName: custom-index
+      configuration:
+        search:
+          elasticsearchProperties:
+            index:
+              max_result_window: 20000
+              mapping:
+                total_fields:
+                  limit: 10000
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: create-index-template
+            args:
+              - |
+                ES_URL="${SPRING_ELASTICSEARCH_REST_URIS%%,*}"
+                until curl -sf -XPUT \
+                  -H "Content-Type: application/json" \
+                  -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
+                  "${ES_URL}/_index_template/RELEASE-NAME-custom-tpl" \
+                  -d '{
+                    "index_patterns": ["custom-index"],
+                    "template": {
+                      "settings": {
+                        "number_of_shards": 1,
+                        "number_of_replicas": 0,
+                        "index": {
+                          "max_result_window": 20000,
+                          "mapping": {
+                            "total_fields": {
+                              "limit": 10000
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }'
+                do
+                  echo "Waiting for Elasticsearch to be ready at ${ES_URL}..."
+                  sleep 5
+                done
+                echo "Index template created successfully"
+  
+  - it: should use default max_result_window and totalFieldsLimit when not specified
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+          numberOfShards: 2
+          numberOfReplicas: 1
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: create-index-template
+            args:
+              - |
+                ES_URL="${SPRING_ELASTICSEARCH_REST_URIS%%,*}"
+                until curl -sf -XPUT \
+                  -H "Content-Type: application/json" \
+                  -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
+                  "${ES_URL}/_index_template/RELEASE-NAME-alfresco-template" \
+                  -d '{
+                    "index_patterns": ["alfresco"],
+                    "template": {
+                      "settings": {
+                        "number_of_shards": 2,
+                        "number_of_replicas": 1,
+                        "index": {
+                          "max_result_window": 10000,
+                          "mapping": {
+                            "total_fields": {
+                              "limit": 7500
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }'
+                do
+                  echo "Waiting for Elasticsearch to be ready at ${ES_URL}..."
+                  sleep 5
+                done
+                echo "Index template created successfully"
+  
+  - it: should include elasticsearch credentials from search configuration
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+    asserts:
+      - contains:
+          path: spec.template.spec.initContainers
+          content:
+            name: create-index-template
+            env:
+              - name: SPRING_ELASTICSEARCH_REST_URIS
+                valueFrom:
+                  configMapKeyRef:
+                    name: RELEASE-NAME-alfresco-search
+                    key: SEARCH_URL
+              - name: SPRING_ELASTICSEARCH_REST_USERNAME
+                valueFrom:
+                  secretKeyRef:
+                    name: RELEASE-NAME-alfresco-search
+                    key: ELASTICSEARCH_USERNAME
+              - name: SPRING_ELASTICSEARCH_REST_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: RELEASE-NAME-alfresco-search
+                    key: ELASTICSEARCH_PASSWORD

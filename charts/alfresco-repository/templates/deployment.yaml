@@ -84,7 +84,7 @@ spec:
           args:
             - |
               ES_URL="${SPRING_ELASTICSEARCH_REST_URIS%%,*}"
-              curl -sf -XPUT \
+              until curl -sf -XPUT \
                 -H "Content-Type: application/json" \
                 -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
                 "${ES_URL}/_index_template/{{ .Release.Name }}-{{ .Values.initContainers.createIndexTemplate.templateName }}" \
@@ -95,16 +95,21 @@ spec:
                       "number_of_shards": {{ .Values.initContainers.createIndexTemplate.numberOfShards }},
                       "number_of_replicas": {{ .Values.initContainers.createIndexTemplate.numberOfReplicas }},
                       "index": {
-                        "max_result_window": {{ .Values.initContainers.createIndexTemplate.maxResultWindow }},
+                        "max_result_window": {{ .Values.configuration.search.elasticsearchProperties.index.max_result_window | default 10000 }},
                         "mapping": {
                           "total_fields": {
-                            "limit": {{ .Values.initContainers.createIndexTemplate.totalFieldsLimit }}
+                            "limit": {{ .Values.configuration.search.elasticsearchProperties.index.mapping.total_fields.limit | default 7500 }}
                           }
                         }
                       }
                     }
                   }
                 }'
+              do
+                echo "Waiting for Elasticsearch to be ready at ${ES_URL}..."
+                sleep 5
+              done
+              echo "Index template created successfully"
         {{- end }}
         {{- range .Values.extraInitContainers }}
         {{- list . | toYaml | nindent 8 }}
