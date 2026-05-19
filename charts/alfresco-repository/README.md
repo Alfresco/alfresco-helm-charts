@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 1.6.0-alpha.0](https://img.shields.io/badge/Version-1.6.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -82,6 +82,7 @@ service:
 | configuration.search.elasticsearchProperties."index.mapping.total_fields.limit" | int | `7500` | Maximum number of fields allowed in the search index mapping. |
 | configuration.search.elasticsearchProperties."index.max_result_window" | int | `10000` | Maximum number of results that can be returned by a single query. |
 | configuration.search.elasticsearchProperties."ssl.host.name.verification" | bool | `true` | When using TLS (`https` or `mtls`), whether to verify the server certificate hostname matches. |
+| configuration.search.elasticsearchProperties.createIndexIfNotExists | bool | `true` | Automatically create the search index if it does not exist at repository startup. Enabled by default for convenience but it is recommended to disable it in production and create the index with the right shards/replicas settings beforehand. See also the `indexInit` feature in the `alfresco-search-enterprise` chart. |
 | configuration.search.elasticsearchProperties.indexName | string | `"alfresco"` | Name of the search index to use. |
 | configuration.search.existingConfigMap.keys.flavor | string | `"SEARCH_FLAVOR"` | configmap key where to find the search engine used |
 | configuration.search.existingConfigMap.keys.host | string | `"SEARCH_HOST"` | configmap key where to find the hostname part of the search URL. The configmap may leverage the alfresco-repository.solr.cm named template to auto-generate it from the sole url parameter. |
@@ -132,6 +133,16 @@ service:
 | ingress.hosts[0].paths[1].pathType | string | `"Prefix"` |  |
 | ingress.hosts[0].paths[2] | object | `{"path":"/alfresco/s/prometheus","pathType":"Prefix","serviceName":"blocked-prometheus"}` | Block direct access to prometheus endpoint |
 | ingress.tls | list | `[]` |  |
+| initContainers.createIndexTemplate.enabled | bool | `false` | Whether to create an Elasticsearch index template before starting the repository |
+| initContainers.createIndexTemplate.image.pullPolicy | string | `"IfNotPresent"` |  |
+| initContainers.createIndexTemplate.image.repository | string | `"curlimages/curl"` |  |
+| initContainers.createIndexTemplate.image.tag | string | `"8.11.0"` |  |
+| initContainers.createIndexTemplate.indexName | string | `"alfresco"` | Index name to apply the template to |
+| initContainers.createIndexTemplate.numberOfReplicas | int | `0` | Number of replicas for the index |
+| initContainers.createIndexTemplate.numberOfShards | int | `1` | Number of shards for the index |
+| initContainers.createIndexTemplate.resources.limits.cpu | string | `"250m"` |  |
+| initContainers.createIndexTemplate.resources.limits.memory | string | `"20Mi"` |  |
+| initContainers.createIndexTemplate.templateName | string | `"alfresco-template"` | Template name for the index template |
 | initContainers.waitDbReady.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.waitDbReady.image.repository | string | `"busybox"` |  |
 | initContainers.waitDbReady.image.tag | string | `"1.37"` |  |
