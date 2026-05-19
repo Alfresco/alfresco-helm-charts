@@ -1,5 +1,7 @@
 # avoid too long resource names being truncated and conflicting
 nameOverride: aesc
+indexInit:
+  enabled: true
 reindexing:
   # A database is required for reindexing, but Helm does not wait for the job to complete during installation.
   enabled: true
