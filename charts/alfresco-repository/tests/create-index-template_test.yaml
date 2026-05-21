@@ -69,11 +69,6 @@ tests:
           enabled: true
           templateName: custom-tpl
           indexName: custom-index
-      configuration:
-        search:
-          elasticsearchProperties:
-            index.max_result_window: 20000
-            index.mapping.total_fields.limit: 10000
     asserts:
       - equal:
           path: spec.template.spec.initContainers[1].name
@@ -86,10 +81,10 @@ tests:
           pattern: '.*"index_patterns": \["custom-index"\].*'
       - matchRegex:
           path: spec.template.spec.initContainers[1].args[0]
-          pattern: '.*"max_result_window": 20000.*'
+          pattern: '.*"max_result_window": 10000.*'
       - matchRegex:
           path: spec.template.spec.initContainers[1].args[0]
-          pattern: '.*"limit": 10000.*'
+          pattern: '.*"limit": 7500.*'
 
   - it: should use default max_result_window and totalFieldsLimit when not specified
     set:
@@ -117,6 +112,24 @@ tests:
       - matchRegex:
           path: spec.template.spec.initContainers[1].args[0]
           pattern: '.*"limit": 7500.*'
+
+  - it: should use init container overrides for max_result_window and totalFieldsLimit
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+          maxResultWindow: 30000
+          totalFieldsLimit: 12000
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[1].name
+          value: create-index-template
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*"max_result_window": 30000.*'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*"limit": 12000.*'
 
   - it: should include elasticsearch credentials from search configuration
     set:

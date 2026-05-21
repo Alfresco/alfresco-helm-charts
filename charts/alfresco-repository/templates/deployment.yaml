@@ -83,22 +83,23 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - |
+              {{- with .Values.initContainers.createIndexTemplate }}
               ES_URL="${SPRING_ELASTICSEARCH_REST_URIS%%,*}"
               until curl -sf -XPUT \
                 -H "Content-Type: application/json" \
                 -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
-                "${ES_URL}/_index_template/{{ .Release.Name }}-{{ .Values.initContainers.createIndexTemplate.templateName }}" \
+                "${ES_URL}/_index_template/{{ $.Release.Name }}-{{ .templateName }}" \
                 -d '{
-                  "index_patterns": ["{{ .Values.initContainers.createIndexTemplate.indexName }}"],
+                  "index_patterns": ["{{ .indexName }}"],
                   "template": {
                     "settings": {
-                      "number_of_shards": {{ .Values.initContainers.createIndexTemplate.numberOfShards }},
-                      "number_of_replicas": {{ .Values.initContainers.createIndexTemplate.numberOfReplicas }},
+                      "number_of_shards": {{ .numberOfShards }},
+                      "number_of_replicas": {{ .numberOfReplicas }},
                       "index": {
-                        "max_result_window": {{ index .Values.configuration.search.elasticsearchProperties "index.max_result_window" | default 10000 }},
+                        "max_result_window": {{ .maxResultWindow }},
                         "mapping": {
                           "total_fields": {
-                            "limit": {{ index .Values.configuration.search.elasticsearchProperties "index.mapping.total_fields.limit" | default 7500 }}
+                            "limit": {{ .totalFieldsLimit }}
                           }
                         }
                       }
@@ -110,6 +111,7 @@ spec:
                 sleep 5
               done
               echo "Index template created successfully"
+              {{- end }}
         {{- end }}
         {{- range .Values.extraInitContainers }}
         {{- list . | toYaml | nindent 8 }}
