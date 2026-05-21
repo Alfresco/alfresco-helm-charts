@@ -376,6 +376,10 @@ initContainers:
     templateName: alfresco-template
     # -- Index name to apply the template to
     indexName: alfresco
+    # -- Maximum number of results that can be returned by a single search request.
+    maxResultWindow: 10000
+    # -- Maximum number of fields that can be created in the index mapping.
+    totalFieldsLimit: 7500
     # -- Number of shards for the index
     numberOfShards: 1
     # -- Number of replicas for the index
