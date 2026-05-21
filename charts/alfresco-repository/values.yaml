@@ -376,9 +376,9 @@ initContainers:
     templateName: alfresco-template
     # -- Index name to apply the template to
     indexName: alfresco
-    # -- @ignore
+    # @ignore
     maxResultWindow: 10000
-    # -- @ignore
+    # @ignore
     totalFieldsLimit: 7500
     # -- Number of shards for the index
     numberOfShards: 1
