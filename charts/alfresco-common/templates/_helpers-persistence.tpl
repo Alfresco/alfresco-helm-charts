@@ -39,6 +39,10 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: {{ printf "%s-%s-pvc" $svc_name $sc_name }}
+  {{- with .annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   {{- if .storageClass }}
   storageClassName: {{ .storageClass | quote }}
