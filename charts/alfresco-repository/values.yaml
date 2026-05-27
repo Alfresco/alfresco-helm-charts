@@ -105,7 +105,8 @@ configuration:
       # -- Automatically create the search index if it does not exist at
       # repository startup. Enabled by default for convenience but it is
       # recommended to disable it in production and create the index with the
-      # right shards/replicas settings beforehand.
+      # desired shards/replicas settings beforehand. See also the
+      # `initContainers.createIndexTemplate` feature in this chart.
       createIndexIfNotExists: true
       # -- Name of the search index to use.
       indexName: alfresco
