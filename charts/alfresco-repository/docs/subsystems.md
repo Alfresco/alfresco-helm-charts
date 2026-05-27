@@ -43,7 +43,7 @@ Creating the subsystem's secret:
 
 Place all the configuration files in a folder on your local system. Sample
 files can be extracted from the S3 AMP file. For more details on the content of
-the files check out the [Alfresco S3 connector docs](https://docs.alfresco.com/aws-s3/latest/config/#content-store-subsystems).
+the files check out the [Alfresco S3 connector docs](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Connector-for-AWS-S3/7.0/Alfresco-Content-Connector-for-AWS-S3/Configure/Configuring-Content-Connector-for-AWS-S3/Content-store-subsystems).
 
 ```bash
 mkdir s3-config

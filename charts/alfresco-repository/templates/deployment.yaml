@@ -85,7 +85,7 @@ spec:
             - |
               {{- with .Values.initContainers.createIndexTemplate }}
               ES_URL="${SPRING_ELASTICSEARCH_REST_URIS%%,*}"
-              until curl -sf -XPUT \
+              until curl -sfS -o /dev/null -XPUT \
                 -H "Content-Type: application/json" \
                 -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
                 "${ES_URL}/_index_template/{{ $.Release.Name }}-{{ .templateName }}" \
