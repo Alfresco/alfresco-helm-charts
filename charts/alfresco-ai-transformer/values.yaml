@@ -68,7 +68,7 @@ transformerLiveness:
 trouter:
   # -- List of transformer pipelines the ATS router can advertise when using AI
   # To get more details abous pipeline configuration check
-  # https://docs.alfresco.com/transform-service/latest/config/#transform-pipelines
+  # https://docs.hyland.com/r/Alfresco/Alfresco-Transform-Service/4.4/Alfresco-Transform-Service/Configure/Configure-Transform-Service/Configuring-T-Engines/Transform-pipelines
   # @default -- See
   # https://github.com/Alfresco/alfresco-ai-renditions/blob/master/ai-renditions/docker-compose/ai-pipeline-routes.json
   pipelines:
@@ -499,7 +499,7 @@ sfs:
       url: FILE_STORE_URL
 aws:
   # -- AWS credentials are required as documented at
-  # https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration
+  # https://docs.hyland.com/r/Alfresco/Alfresco-Intelligence-Services/1.5/Alfresco-Intelligence-Services/Alfresco-Intelligence-Services/Configure/Default-configuration
   accessKeyId: null
   secretAccessKey: null
   region: null

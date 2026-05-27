@@ -99,7 +99,7 @@ configuration:
     solr-secret: null
     # -- A map of additional elasticsearch.* properties to be passed as -D
     # arguments to the repository when search.flavor is set to elasticsearch.
-    # See more on the [docs](https://support.hyland.com/r/Alfresco/Alfresco-Search-Enterprise/5.3/Alfresco-Search-Enterprise/Configure/Overview/Alfresco-Repository)
+    # See more on the [docs](https://docs.hyland.com/r/Alfresco/Alfresco-Search-Enterprise/5.3/Alfresco-Search-Enterprise/Configure/Overview/Alfresco-Repository)
     # @default -- see below
     elasticsearchProperties:
       # -- Automatically create the search index if it does not exist at
@@ -190,7 +190,7 @@ configuration:
   # please use value `environment.CATALINA_OPTS` or
   # `configuration.repository.existingConfiMap` and check the [available
   # properties for this
-  # subsystem](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/25.2/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP/IMAP-Subsystem-Properties)
+  # subsystem](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services/25.2/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP/IMAP-Subsystem-Properties)
   # @default -- see below
   imap:
     # -- Enable/Disable Alfresco repository IMAP capabilities

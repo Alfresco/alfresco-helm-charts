@@ -117,7 +117,7 @@ scheme](https://hyland.atlassian.net/wiki/spaces/TECH/pages/edit-v2/1293317631#i
   has been manually updated for the latest acs version released and the
   compatibility matrix is up to date.
 * For minor releases, ensure to update the links beginning with
-  `https://support.hyland.com/r/Alfresco` to reflect the latest version or
+  `https://docs.hyland.com/r/Alfresco` to reflect the latest version or
   corresponding minor update documentation.
 * Trigger the `BumpVersions` workflow by executing [Bump
   version](../.github/workflows/updatecli.yaml) with `values` option. Optionally you can create a dedicated branch (ticket reference) if you want the workflow changes to be reviewed inside a PR.
