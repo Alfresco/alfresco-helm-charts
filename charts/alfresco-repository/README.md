@@ -60,7 +60,7 @@ service:
 | configuration.debug.port | int | `8888` | port to use for remote debugging |
 | configuration.debug.suspend | string | `"n"` | suspend JVM on startup waiting for debugger (y/n) |
 | configuration.hz.port | int | `5701` | Hazelcast listener port Only change it if you use a custom image where the port has been changed from default |
-| configuration.imap | object | see below | Basic IMAP capabilities config (limited to enabling/disabling). In order to pass more IMAP properties and configure the subsystem more deeply, please use value `environment.CATALINA_OPTS` or `configuration.repository.existingConfiMap` and check the [available properties for this subsystem](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services/25.2/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP/IMAP-Subsystem-Properties) |
+| configuration.imap | object | see below | Basic IMAP capabilities config (limited to enabling/disabling). In order to pass more IMAP properties and configure the subsystem more deeply, please use value `environment.CATALINA_OPTS` or `configuration.repository.existingConfigMap` and check the [available properties for this subsystem](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services/25.2/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP/IMAP-Subsystem-Properties) |
 | configuration.imap.enabled | bool | `false` | Enable/Disable Alfresco repository IMAP capabilities |
 | configuration.imap.port | int | `1143` | port to use to listen for IMAP clients |
 | configuration.imap.protocol | string | `"imap"` | Protocol to use to talk to IMAP clients (imap or imaps) |

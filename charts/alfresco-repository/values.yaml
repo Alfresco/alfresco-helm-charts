@@ -188,7 +188,7 @@ configuration:
   # -- Basic IMAP capabilities config (limited to enabling/disabling). In order
   # to pass more IMAP properties and configure the subsystem more deeply,
   # please use value `environment.CATALINA_OPTS` or
-  # `configuration.repository.existingConfiMap` and check the [available
+  # `configuration.repository.existingConfigMap` and check the [available
   # properties for this
   # subsystem](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services/25.2/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP/IMAP-Subsystem-Properties)
   # @default -- see below
