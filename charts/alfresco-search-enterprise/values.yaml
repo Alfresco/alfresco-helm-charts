@@ -291,52 +291,6 @@ reindexing:
         limits:
           cpu: "250m"
           memory: "20Mi"
-indexInit:
-  # -- One-shot job to create an index template for the Alfresco search index
-  # with custom shards/replicas/mapping settings. This job requires
-  # manage_index_templates privilege on the search/indexing service to be able
-  # to create the index template. If the regular elasticsearch user you're using
-  # doesn't have this privilege, you will need to ask your administrator to
-  # either grant your user this permission or create the template for you and
-  # keep indexInit.enabled to false.
-  enabled: false
-  image:
-    repository: curlimages/curl
-    tag: "8.11.0"
-    pullPolicy: IfNotPresent
-  # -- Environment variables to set for the container
-  environment: {}
-  # -- When to execute the job, by default as a standard resource or as a helm hook (e.g. post-install/post-upgrade)
-  hookExecution: false
-  # -- Pod restart policy for the job pod (e.g. Never, OnFailure)
-  restartPolicy: OnFailure
-  # -- Time to live for the job after it has finished
-  ttlSecondsAfterFinished: 3600
-  resources:
-    requests:
-      cpu: "0.25"
-      memory: "64Mi"
-    limits:
-      cpu: "1"
-      memory: "256Mi"
-  extraVolumeMounts: []
-  extraVolumes: []
-  # -- Number of shards to set when creating the index from the index template.
-  # The number of shards to set depends on the expected index size and growth.
-  # You should make sure that individual shards always remain smaller than 50GB.
-  # Shards cannot be changed after index creation. For more details, please
-  # refer to the Elasticsearch documentation.
-  numberOfShards: 1
-  # -- Number of replicas to set when creating the index from the index template.
-  # The number of replicas to set depends on the required level of redundancy
-  # and high availability. It is often linked to the cluster topology. For
-  # example, if you have a 3 nodes cluster spread in 3 different failure domains,
-  # you can set numberOfReplicas to 2.
-  numberOfReplicas: 1
-  # -- Maximum number of results that can be returned by a single search request
-  maxResultWindow: 10000
-  # -- Maximum number of fields that can be created in the index
-  totalFieldsLimit: 7500
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

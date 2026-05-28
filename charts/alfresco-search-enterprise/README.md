@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-enterprise
 
-![Version: 4.14.0](https://img.shields.io/badge/Version-4.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.5.0](https://img.shields.io/badge/AppVersion-5.5.0-informational?style=flat-square)
+![Version: 5.0.0-alpha.0](https://img.shields.io/badge/Version-5.0.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.5.0](https://img.shields.io/badge/AppVersion-5.5.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -33,24 +33,6 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | imagePullSecrets | list | `[]` |  |
-| indexInit.enabled | bool | `false` | One-shot job to create an index template for the Alfresco search index with custom shards/replicas/mapping settings. This job requires manage_index_templates privilege on the search/indexing service to be able to create the index template. If the regular elasticsearch user you're using doesn't have this privilege, you will need to ask your administrator to either grant your user this permission or create the template for you and keep indexInit.enabled to false. |
-| indexInit.environment | object | `{}` | Environment variables to set for the container |
-| indexInit.extraVolumeMounts | list | `[]` |  |
-| indexInit.extraVolumes | list | `[]` |  |
-| indexInit.hookExecution | bool | `false` | When to execute the job, by default as a standard resource or as a helm hook (e.g. post-install/post-upgrade) |
-| indexInit.image.pullPolicy | string | `"IfNotPresent"` |  |
-| indexInit.image.repository | string | `"curlimages/curl"` |  |
-| indexInit.image.tag | string | `"8.11.0"` |  |
-| indexInit.maxResultWindow | int | `10000` | Maximum number of results that can be returned by a single search request |
-| indexInit.numberOfReplicas | int | `1` | Number of replicas to set when creating the index from the index template. The number of replicas to set depends on the required level of redundancy and high availability. It is often linked to the cluster topology. For example, if you have a 3 nodes cluster spread in 3 different failure domains, you can set numberOfReplicas to 2. |
-| indexInit.numberOfShards | int | `1` | Number of shards to set when creating the index from the index template. The number of shards to set depends on the expected index size and growth. You should make sure that individual shards always remain smaller than 50GB. Shards cannot be changed after index creation. For more details, please refer to the Elasticsearch documentation. |
-| indexInit.resources.limits.cpu | string | `"1"` |  |
-| indexInit.resources.limits.memory | string | `"256Mi"` |  |
-| indexInit.resources.requests.cpu | string | `"0.25"` |  |
-| indexInit.resources.requests.memory | string | `"64Mi"` |  |
-| indexInit.restartPolicy | string | `"OnFailure"` | Pod restart policy for the job pod (e.g. Never, OnFailure) |
-| indexInit.totalFieldsLimit | int | `7500` | Maximum number of fields that can be created in the index |
-| indexInit.ttlSecondsAfterFinished | int | `3600` | Time to live for the job after it has finished |
 | indexName | string | `"alfresco"` | Name of the existing search index, usually created by repo |
 | liveIndexing.content.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-search-enterprise.content.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule the content pod on a different zone |
 | liveIndexing.content.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-search-enterprise.content.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}` | Prefer to schedule the content pod on a different node |
