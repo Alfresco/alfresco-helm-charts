@@ -6,6 +6,10 @@ global:
   additionalLabels: {}
   # -- Global ingress class name override for all ingress resources in this chart
   ingressClassName: "nginx"
+  persistence:
+    # -- Global annotations to apply to all PVCs. Merged with persistence.annotations,
+    # with chart-level annotations taking precedence.
+    annotations: {}
 # -- Additional labels to be added to all resources (deployments, statefulsets, services, pods, etc.)
 # Example:
 #   Product: k8s
@@ -63,6 +67,9 @@ persistence:
     - ReadWriteOnce
   # -- Define if you want to reuse an already existing PVC
   existingClaim: null
+  # -- Annotations to apply to the PVC. Merged with global.persistence.annotations,
+  # with these taking precedence.
+  annotations: {}
   # -- Where to mount data into the container
   data:
     mountPath: "/usr/local/data"

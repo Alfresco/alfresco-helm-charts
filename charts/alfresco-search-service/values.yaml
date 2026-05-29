@@ -97,6 +97,9 @@ persistence:
   storageClass: null
   # -- Provide a pre-existing PVC for persistency
   existingClaim: null
+  # -- Annotations to apply to the PVC. Merged with global.persistence.annotations,
+  # with chart-level annotations taking precedence.
+  annotations: {}
   search:
     data:
       mountPath: "/opt/alfresco-search-services/data"
@@ -129,6 +132,10 @@ global:
   additionalLabels: {}
   # -- Global ingress class name override for all ingress resources in this chart
   ingressClassName: "nginx"
+  persistence:
+    # -- Global annotations to apply to all PVCs. Merged with persistence.annotations,
+    # with chart-level annotations taking precedence.
+    annotations: {}
 nodeSelector: {}
 tolerations: []
 # -- Pod affinity, passed thru tpl function

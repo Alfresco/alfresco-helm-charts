@@ -222,6 +222,9 @@ persistence:
   storageClass: null
   # -- Use pre-provisioned pv through its claim (e.g. static provisioning)
   existingClaim: null
+  # -- Annotations to apply to the PVC. Merged with global.persistence.annotations,
+  # with chart-level annotations taking precedence.
+  annotations: {}
   data:
     mountPath: /usr/local/tomcat/alf_data
     subPath: alfresco-content-services/repository-data
@@ -396,6 +399,10 @@ global:
   alfrescoRegistryPullSecrets: quay-registry-secret
   # -- a fallback for .Values.known_urls that can be shared between charts
   known_urls: null
+  persistence:
+    # -- Global annotations to apply to all PVCs. Merged with persistence.annotations,
+    # with chart-level annotations taking precedence.
+    annotations: {}
 affinity:
   podAntiAffinity:
     preferredDuringSchedulingIgnoredDuringExecution:

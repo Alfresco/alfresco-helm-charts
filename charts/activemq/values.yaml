@@ -75,6 +75,9 @@ persistence:
   accessModes:
     - ReadWriteOnce
   existingClaim: null
+  # -- Annotations to apply to the PVC. Merged with global.persistence.annotations,
+  # with these taking precedence.
+  annotations: {}
   data:
     mountPath: "/opt/activemq/data"
     subPath: "alfresco-infrastructure/activemq-data"
@@ -85,3 +88,7 @@ global:
   # -- Global additional labels that can be set at parent/umbrella chart level
   # These will be merged with chart-level additionalLabels, with chart-level taking precedence
   additionalLabels: {}
+  persistence:
+    # -- Global annotations to apply to all PVCs. Merged with persistence.annotations,
+    # with chart-level annotations taking precedence.
+    annotations: {}

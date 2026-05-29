@@ -1,67 +1,46 @@
 ---
-suite: test activemq persistence
+suite: test alfresco-search-service persistence
 templates:
-  - deployment-activemq.yaml
-  - pvc-activemq.yaml
+  - pvc.yaml
 tests:
-  - it: should render an ephemeral volume
+  - it: should not render a pvc when persistence is disabled
     set:
       persistence:
         enabled: false
     asserts:
-      - contains:
-          path: spec.template.spec.volumes
-          content:
-            emptyDir:
-              sizeLimit: 20Gi
-            name: data
-        template: deployment-activemq.yaml
+      - hasDocuments:
+          count: 0
 
-  - it: should render a deployment with set claim
+  - it: should not render a pvc when existingClaim is set
     set:
       persistence:
         enabled: true
-        existingClaim: mysfsvolume
+        existingClaim: existing-claim
     asserts:
-      - equal:
-          path: >-
-            spec.template.spec.volumes[0].persistentVolumeClaim.claimName
-          value: mysfsvolume
-        template: deployment-activemq.yaml
+      - hasDocuments:
+          count: 0
 
-  - it: should render a deployment with dynamic claim name
+  - it: should render a pvc with dynamic claim name
     set:
       persistence:
         enabled: true
-        volumeMode: Block
-        accessModes:
-          - ReadWriteMany
-          - ReadOnlyMany
     asserts:
       - equal:
-          path: >-
-            spec.template.spec.volumes[0].persistentVolumeClaim.claimName
-          value: activemq-default-pvc
-        template: deployment-activemq.yaml
-      - isNull:
-          path: spec.storageClassName
-        template: pvc-activemq.yaml
+          path: metadata.name
+          value: solr-default-pvc
 
-  - it: should render a deployment with provided storage class
+  - it: should render a pvc with provided storage class
     set:
       persistence:
         enabled: true
-        storageClass: cheap
+        storageClass: fast
     asserts:
       - equal:
-          path: >-
-            spec.template.spec.volumes[0].persistentVolumeClaim.claimName
-          value: activemq-cheap-pvc
-        template: deployment-activemq.yaml
+          path: metadata.name
+          value: solr-fast-pvc
       - equal:
           path: spec.storageClassName
-          value: cheap
-        template: pvc-activemq.yaml
+          value: fast
 
   - it: should render pvc without annotations by default
     set:
@@ -70,7 +49,6 @@ tests:
     asserts:
       - isNull:
           path: metadata.annotations
-        template: pvc-activemq.yaml
 
   - it: should render pvc with global annotations
     set:
@@ -85,7 +63,6 @@ tests:
           path: metadata.annotations
           value:
             storageclass.kubernetes.io/is-default-class: "true"
-        template: pvc-activemq.yaml
 
   - it: should render pvc with local annotations
     set:
@@ -98,7 +75,6 @@ tests:
           path: metadata.annotations
           value:
             example.com/local: local-value
-        template: pvc-activemq.yaml
 
   - it: should merge global and local annotations with local taking precedence
     set:
@@ -119,4 +95,3 @@ tests:
             example.com/key: local-value
             example.com/local-only: local-only
             example.com/global-only: global-only
-        template: pvc-activemq.yaml
