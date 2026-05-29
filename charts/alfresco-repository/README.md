@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 1.6.1](https://img.shields.io/badge/Version-1.6.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 1.6.2](https://img.shields.io/badge/Version-1.6.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -60,7 +60,7 @@ service:
 | configuration.debug.port | int | `8888` | port to use for remote debugging |
 | configuration.debug.suspend | string | `"n"` | suspend JVM on startup waiting for debugger (y/n) |
 | configuration.hz.port | int | `5701` | Hazelcast listener port Only change it if you use a custom image where the port has been changed from default |
-| configuration.imap | object | see below | Basic IMAP capabilities config (limited to enabling/disabling). In order to pass more IMAP properties and configure the subsystem more deeply, please use value `environment.CATALINA_OPTS` or `configuration.repository.existingConfiMap` and check the [available properties for this subsystem](https://support.hyland.com/r/Alfresco/Alfresco-Content-Services/25.2/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP/IMAP-Subsystem-Properties) |
+| configuration.imap | object | see below | Basic IMAP capabilities config (limited to enabling/disabling). In order to pass more IMAP properties and configure the subsystem more deeply, please use value `environment.CATALINA_OPTS` or `configuration.repository.existingConfigMap` and check the [available properties for this subsystem](https://docs.hyland.com/r/Alfresco/Alfresco-Content-Services/25.2/Alfresco-Content-Services/Configure/Email/Configure-Email-Client-with-IMAP/IMAP-Subsystem-Properties) |
 | configuration.imap.enabled | bool | `false` | Enable/Disable Alfresco repository IMAP capabilities |
 | configuration.imap.port | int | `1143` | port to use to listen for IMAP clients |
 | configuration.imap.protocol | string | `"imap"` | Protocol to use to talk to IMAP clients (imap or imaps) |
@@ -75,7 +75,7 @@ service:
 | configuration.messageBroker.username | string | `nil` | Username to authenticate to the message broker |
 | configuration.repository.existingConfigMap | string | `nil` | a configmap containing the "alfresco-global.properties" key populated with actual Alfresco repository properties see [details](./docs/repository-properties.md) |
 | configuration.repository.existingSecrets | list | `[{"key":"license.lic","name":"repository-secrets","purpose":"acs-license"}]` | A list of secrets to make available to the repository as env vars. This list can contain special secrets marked with predefined `purpose`: `acs-license` to pass license as a secret or subsystems:*:* to configure an Alfresco subsystem. See [Configuring Alfresco Subsystem](./docs/subsystems.md) for more details. |
-| configuration.search.elasticsearchProperties | object | see below | A map of additional elasticsearch.* properties to be passed as -D arguments to the repository when search.flavor is set to elasticsearch. See more on the [docs](https://support.hyland.com/r/Alfresco/Alfresco-Search-Enterprise/5.3/Alfresco-Search-Enterprise/Configure/Overview/Alfresco-Repository) |
+| configuration.search.elasticsearchProperties | object | see below | A map of additional elasticsearch.* properties to be passed as -D arguments to the repository when search.flavor is set to elasticsearch. See more on the [docs](https://docs.hyland.com/r/Alfresco/Alfresco-Search-Enterprise/5.3/Alfresco-Search-Enterprise/Configure/Overview/Alfresco-Repository) |
 | configuration.search.elasticsearchProperties."archive.indexName" | string | `"alfresco-archive"` | Name of the archive search index to use. |
 | configuration.search.elasticsearchProperties."index.custom.analyzer.config.files" | string | `""` | Custom language analyzer configuration files. Multiple files can be specified as a comma-separated list (e.g. `file:/path/to/file.txt,file:/path/to/file2.txt`). |
 | configuration.search.elasticsearchProperties."index.locale" | string | `"en"` | Locale used for the Elasticsearch language analyzer. |

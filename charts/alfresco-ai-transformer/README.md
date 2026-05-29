@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-ai-transformer
 
-![Version: 3.7.0](https://img.shields.io/badge/Version-3.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.4.1](https://img.shields.io/badge/AppVersion-3.4.1-informational?style=flat-square)
+![Version: 3.7.1](https://img.shields.io/badge/Version-3.7.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.4.1](https://img.shields.io/badge/AppVersion-3.4.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco ai transformer service
 
@@ -25,7 +25,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-ai-transformer.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule pods in different zones |
 | affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-ai-transformer.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}` | Prefer to schedule pods in different nodes |
 | args | list | `[]` |  |
-| aws.accessKeyId | string | `nil` | AWS credentials are required as documented at https://docs.alfresco.com/intelligence-services/latest/config/#default-configuration |
+| aws.accessKeyId | string | `nil` | AWS credentials are required as documented at https://docs.hyland.com/r/Alfresco/Alfresco-Intelligence-Services/1.5/Alfresco-Intelligence-Services/Alfresco-Intelligence-Services/Configure/Default-configuration |
 | aws.comprehendRoleARN | string | `nil` |  |
 | aws.existingConfigMap.keys.comprehendRoleARN | string | `"AWS_COMPREHEND_ROLE_ARN"` |  |
 | aws.existingConfigMap.keys.region | string | `"AWS_REGION"` |  |
@@ -91,4 +91,4 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | transformerLiveness.livenessTransformPeriodSeconds | int | `600` |  |
 | transformerLiveness.maxTransformSeconds | int | `1800` |  |
 | transformerLiveness.maxTransforms | int | `10000` |  |
-| trouter.pipelines | list | See | List of transformer pipelines the ATS router can advertise when using AI To get more details abous pipeline configuration check https://docs.alfresco.com/transform-service/latest/config/#transform-pipelines https://github.com/Alfresco/alfresco-ai-renditions/blob/master/ai-renditions/docker-compose/ai-pipeline-routes.json |
+| trouter.pipelines | list | See | List of transformer pipelines the ATS router can advertise when using AI To get more details about pipeline configuration check https://docs.hyland.com/r/Alfresco/Alfresco-Transform-Service/4.4/Alfresco-Transform-Service/Configure/Configure-Transform-Service/Configuring-T-Engines/Transform-pipelines https://github.com/Alfresco/alfresco-ai-renditions/blob/master/ai-renditions/docker-compose/ai-pipeline-routes.json |
