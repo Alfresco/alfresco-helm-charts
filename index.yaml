@@ -1570,6 +1570,20 @@ entries:
   alfresco-ai-transformer:
   - apiVersion: v2
     appVersion: 3.4.1
+    created: "2026-05-29T06:15:06.736888034Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: A Helm chart for deploying Alfresco ai transformer service
+    digest: fcb45efb77b3de07d19e65c73afe919389c91fab253f5a937d2671ca060422fc
+    name: alfresco-ai-transformer
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-ai-transformer-3.7.1/alfresco-ai-transformer-3.7.1.tgz
+    version: 3.7.1
+  - apiVersion: v2
+    appVersion: 3.4.1
     created: "2026-05-13T13:34:54.669757674Z"
     dependencies:
     - name: alfresco-common
@@ -4325,6 +4339,20 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-msteams-0.1.0-alpha.0/alfresco-connector-msteams-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-repository:
+  - apiVersion: v2
+    appVersion: 26.1.0
+    created: "2026-05-29T06:15:06.936813428Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.0.0
+    description: Alfresco content repository Helm chart
+    digest: 8bfd3c2cee6081e2f3e3c39d35c4acedb3ae01719e69b667a72fa4070aa4d69f
+    name: alfresco-repository
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-repository-1.6.2/alfresco-repository-1.6.2.tgz
+    version: 1.6.2
   - apiVersion: v2
     appVersion: 26.1.0
     created: "2026-05-28T06:06:02.536399835Z"
@@ -11129,4 +11157,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2026-05-28T06:06:02.715890556Z"
+generated: "2026-05-29T06:15:06.937878406Z"
