@@ -32,6 +32,14 @@ Usage: include "alfresco-common.component_pvc" $
 */}}
 {{- define "alfresco-common.component_pvc" -}}
 {{ $svc_name := .service.name }}
+{{- $globalAnnotations := dict }}
+{{- if hasKey . "global" }}
+  {{- if hasKey .global "persistence" }}
+    {{- if hasKey .global.persistence "annotations" }}
+      {{- $globalAnnotations = .global.persistence.annotations }}
+    {{- end }}
+  {{- end }}
+{{- end }}
 {{- with .persistence }}
 {{- $sc_name := .storageClass | default "default" -}}
 ---
@@ -39,6 +47,11 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: {{ printf "%s-%s-pvc" $svc_name $sc_name }}
+  {{- $mergedAnnotations := merge (.annotations | default dict) $globalAnnotations }}
+  {{- with $mergedAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   {{- if .storageClass }}
   storageClassName: {{ .storageClass | quote }}
