@@ -17,7 +17,6 @@ tests:
     set:
       persistence:
         enabled: true
-        annotations: {}
     asserts:
       - isKind:
           of: PersistentVolumeClaim
