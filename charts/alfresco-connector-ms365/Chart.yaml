@@ -2,9 +2,9 @@ apiVersion: v2
 name: alfresco-connector-ms365
 description: A Helm chart for deploying Alfresco connector ms365 service
 type: application
-version: 3.7.0
+version: 3.8.0-alpha.0
 appVersion: 2.1.1
 dependencies:
   - name: alfresco-common
-    version: 5.0.0
+    version: 5.1.0-alpha.0
     repository: https://alfresco.github.io/alfresco-helm-charts/
