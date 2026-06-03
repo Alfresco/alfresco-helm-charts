@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-audit-storage
 
-![Version: 0.10.0](https://img.shields.io/badge/Version-0.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.1](https://img.shields.io/badge/AppVersion-1.3.1-informational?style=flat-square)
+![Version: 0.11.0-alpha.0](https://img.shields.io/badge/Version-0.11.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.1](https://img.shields.io/badge/AppVersion-1.3.1-informational?style=flat-square)
 
 A Helm chart for Kubernetes to deploy Alfresco Audit Storage
 
@@ -15,7 +15,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.1.0-alpha.0 |
 
 ## Values
 

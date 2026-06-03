@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-insight-zeppelin
 
-![Version: 4.6.0](https://img.shields.io/badge/Version-4.6.0-informational?style=flat-square) ![AppVersion: 2.0.19](https://img.shields.io/badge/AppVersion-2.0.19-informational?style=flat-square)
+![Version: 4.7.0-alpha.0](https://img.shields.io/badge/Version-4.7.0--alpha.0-informational?style=flat-square) ![AppVersion: 2.0.19](https://img.shields.io/badge/AppVersion-2.0.19-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Insight Zeppelin
 
@@ -21,7 +21,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.0.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.1.0-alpha.0 |
 
 ## Values
 

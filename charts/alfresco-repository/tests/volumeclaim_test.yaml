@@ -1,0 +1,68 @@
+---
+suite: test repository pvc
+templates:
+  - volumeclaim.yaml
+values:
+  - values/test_values.yaml
+tests:
+  - it: should not render pvc when persistence is disabled
+    set:
+      persistence:
+        enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render pvc without annotations by default
+    set:
+      persistence:
+        enabled: true
+    asserts:
+      - isKind:
+          of: PersistentVolumeClaim
+      - isNull:
+          path: metadata.annotations
+
+  - it: should render custom local persistence annotations
+    set:
+      persistence:
+        enabled: true
+        annotations:
+          example.com/test: some_cool_annotation
+    asserts:
+      - equal:
+          path: metadata.annotations['example.com/test']
+          value: some_cool_annotation
+
+  - it: should render global persistence annotations
+    set:
+      persistence:
+        enabled: true
+      global:
+        persistence:
+          annotations:
+            example.com/global: global_annotation
+    asserts:
+      - equal:
+          path: metadata.annotations['example.com/global']
+          value: global_annotation
+
+  - it: should merge annotations and keep local values over global ones
+    set:
+      persistence:
+        enabled: true
+        annotations:
+          example.com/shared: local_value
+          example.com/local: local_only
+      global:
+        persistence:
+          annotations:
+            example.com/shared: global_value
+            example.com/global: global_only
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            example.com/shared: local_value
+            example.com/local: local_only
+            example.com/global: global_only
