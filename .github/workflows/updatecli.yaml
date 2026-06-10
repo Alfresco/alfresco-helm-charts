@@ -27,10 +27,13 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-charts
       cancel-in-progress: false
+    env:
+      IS_MAIN_BUMP: ${{ github.event_name == 'release' || github.ref_name == 'main' }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
+          ref: ${{ env.IS_MAIN_BUMP == 'true' && 'main' || github.ref }}
 
       - uses: >-
           Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v18.1.0
@@ -63,9 +66,9 @@ jobs:
             🛠 Updatecli pipeline bump
           commit_user_name: ${{ vars.BOT_GITHUB_USERNAME }}
           commit_user_email: ${{ vars.BOT_GITHUB_EMAIL }}
-          branch: ${{ github.ref_name == 'main' && 'updatecli-bump-helm' || github.ref_name }}
-          create_branch: ${{ github.ref_name == 'main' && 'true' || 'false' }}
-          push_options: ${{ github.ref_name == 'main' && '--force' || '' }}
+          branch: ${{ env.IS_MAIN_BUMP == 'true' && 'updatecli-bump-helm' || github.ref_name }}
+          create_branch: ${{ env.IS_MAIN_BUMP }}
+          push_options: ${{ env.IS_MAIN_BUMP == 'true' && '--force' || '' }}
 
   bump-values-dependencies:
     runs-on: ubuntu-latest
