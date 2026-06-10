@@ -45,7 +45,7 @@ safe-outputs:
     max-patch-size: 5120
 ---
 
-# Alfresco Helm Charts Release Orchestrator
+# Release Orchestrator
 
 ## Context
 
