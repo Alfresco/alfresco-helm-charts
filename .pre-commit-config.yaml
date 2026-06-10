@@ -5,8 +5,9 @@ repos:
       - id: mixed-line-ending
         args: ["--fix=lf"]
       - id: end-of-file-fixer
-        exclude: README.md
+        exclude: README.md|\.github/workflows/.*\.lock\.yml
       - id: trailing-whitespace
+        exclude: \.github/workflows/.*\.lock\.yml
   - repo: https://github.com/norwoodj/helm-docs
     rev: v1.14.2
     hooks:
