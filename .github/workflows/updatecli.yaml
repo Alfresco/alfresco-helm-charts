@@ -1,8 +1,11 @@
 ---
 name: Bump versions
-run-name: Bump ${{ inputs.update-type }} using alfresco-updatecli/${{ inputs.alfresco-updatecli-ref }}
+run-name: >-
+  Bump ${{ inputs.update-type || 'charts' }}${{ github.event_name == 'release' && format(' (triggered by {0})', github.event.release.tag_name) || '' }}
 
 on:
+  release:
+    types: [published]
   workflow_dispatch:
     inputs:
       update-type:
@@ -20,7 +23,10 @@ jobs:
   bump-charts-dependencies:
     runs-on: ubuntu-latest
     name: Helm charts dependencies
-    if: inputs.update-type == 'charts'
+    if: github.event_name == 'release' || inputs.update-type == 'charts'
+    concurrency:
+      group: ${{ github.workflow }}-charts
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -65,6 +71,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Image tags values dependencies
     if: inputs.update-type == 'values'
+    concurrency:
+      group: ${{ github.workflow }}-values
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
