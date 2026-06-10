@@ -15,8 +15,8 @@ permissions:
 checkout:
   fetch-depth: 0
   fetch:
-    - "refs/heads/updatecli-bump-acs"
-    - "refs/heads/updatecli-bump-helm"
+    - "updatecli-bump-acs"
+    - "updatecli-bump-helm"
 tools:
   github:
     mode: gh-proxy
