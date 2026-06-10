@@ -59,7 +59,7 @@ podAnnotations: {}
 podLabels: {}
 image:
   repository: quay.io/alfresco/alfresco-ooi-service
-  tag: 2.1.1
+  tag: 2.1.2
   pullPolicy: IfNotPresent
   internalPort: 9095
 service:

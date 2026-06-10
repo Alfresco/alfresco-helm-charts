@@ -12,7 +12,7 @@ name: alfresco-search-service
 sources:
   - https://github.com/Alfresco/alfresco-helm-charts
 version: 6.3.0-alpha.0
-appVersion: 2.0.19
+appVersion: 2.0.20
 dependencies:
   - name: alfresco-insight-zeppelin
     version: 4.7.0-alpha.0
