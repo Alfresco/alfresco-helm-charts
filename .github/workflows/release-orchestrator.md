@@ -39,6 +39,8 @@ safe-outputs:
     allowed-files:
       - "charts/**/Chart.yaml"
       - "charts/**/Chart.lock"
+      - "charts/**/values.yaml"
+      - "charts/**/README.md"
       - "test-deps.yaml"
     allowed-base-branches:
       - "main"
