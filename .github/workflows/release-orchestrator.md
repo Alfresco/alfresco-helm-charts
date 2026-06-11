@@ -21,6 +21,9 @@ tools:
   github:
     mode: gh-proxy
     toolsets: [default]
+steps:
+  - name: Install helm-docs
+    uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.1.0
 safe-outputs:
   create-issue:
     labels: [release, automation]
@@ -203,6 +206,14 @@ Then regenerate the lock file:
 helm dependency update charts/alfresco-common 2>/dev/null || true
 ```
 
+Regenerate chart documentation and commit any changes:
+
+```bash
+helm-docs --chart-search-root charts/alfresco-common
+git add charts/alfresco-common/README.md
+git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for alfresco-common"
+```
+
 Create the PR using `create-pull-request`:
 - **title**: `chore: release alfresco-common <ga-version> GA`
 - **base**: `main`
@@ -257,6 +268,14 @@ Use the `edit` tool to write the computed version into `charts/activemq/Chart.ya
 
 ```bash
 helm dependency update charts/activemq 2>/dev/null || true
+```
+
+Regenerate chart documentation and commit any changes:
+
+```bash
+helm-docs --chart-search-root charts/activemq
+git add charts/activemq/README.md
+git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for activemq"
 ```
 
 Create the PR using `create-pull-request`:
@@ -343,6 +362,14 @@ helm dependency update charts/<chart-name> 2>/dev/null || true
 ```
 
 ### C4. Create the release PR
+
+Regenerate documentation for all changed charts and commit any updates:
+
+```bash
+helm-docs --chart-search-root charts
+git add charts/**/README.md
+git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for release ${{ inputs.release-name }}"
+```
 
 Use `create-pull-request`:
 - **title**: `🚀 Release: ${{ inputs.release-name }}`

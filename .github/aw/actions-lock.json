@@ -1,5 +1,10 @@
 {
   "entries": {
+    "Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.1.0": {
+      "repo": "Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs",
+      "version": "v18.1.0",
+      "sha": "a1a7ae3ff774f322769d47f3d67c846f95bd5a02"
+    },
     "actions/github-script@v9.0.0": {
       "repo": "actions/github-script",
       "version": "v9.0.0",
