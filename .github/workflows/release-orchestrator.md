@@ -8,6 +8,10 @@ on:
         description: 'Release codename (e.g. "nitrogen")'
         type: string
         required: true
+      jira-id:
+        description: 'Jira ticket ID to prefix PR titles (e.g. "HXOR-1234")'
+        type: string
+        required: false
 permissions:
   contents: read
   issues: read
@@ -63,7 +67,10 @@ safe-outputs:
 ## Context
 
 - **Release codename**: `${{ inputs.release-name }}`
+- **Jira ID**: `${{ inputs.jira-id || '(none)' }}`
 - **Triggered by**: `@${{ github.actor }}`
+
+**PR title prefix**: If `${{ inputs.jira-id }}` is non-empty, prefix every `create-pull-request` title with `[${{ inputs.jira-id }}] ` (including the space after the bracket).
 
 ## Design
 
@@ -227,7 +234,7 @@ git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for alfre
 ```
 
 Create the PR using `create-pull-request`:
-- **title**: `chore: release alfresco-common <ga-version> GA`
+- **title**: `chore: release alfresco-common <ga-version> GA` (prefix with `[${{ inputs.jira-id }}] ` if jira-id is set)
 - **base**: `main`
 - **branch**: `release/alfresco-common-ga`
 - **body**: explain this is a prerequisite for the `${{ inputs.release-name }}` release
@@ -300,7 +307,7 @@ git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for activ
 ```
 
 Create the PR using `create-pull-request`:
-- **title**: `chore: release activemq <version> GA`
+- **title**: `chore: release activemq <version> GA` (prefix with `[${{ inputs.jira-id }}] ` if jira-id is set)
 - **base**: `main`
 - **branch**: `release/activemq-ga`
 - **body**: explain this is a prerequisite for the `${{ inputs.release-name }}` release; list the changes included from `updatecli-bump-acs`
@@ -397,7 +404,7 @@ git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for relea
 ```
 
 Use `create-pull-request`:
-- **title**: `🚀 Release: ${{ inputs.release-name }}`
+- **title**: `🚀 Release: ${{ inputs.release-name }}` (prefix with `[${{ inputs.jira-id }}] ` if jira-id is set)
 - **base**: `main`
 - **branch**: `$RELEASE_BRANCH`
 - **body**: version-change table (chart | old | new | bump | reason), plus the remaining manual checklist
@@ -414,6 +421,7 @@ Use `create-pull-request`:
 | Field | Value |
 |-------|-------|
 | Codename | `${{ inputs.release-name }}` |
+| Jira ID | `${{ inputs.jira-id || '(none)' }}` |
 | Triggered by | @${{ github.actor }} |
 | Last updated | <current ISO datetime> |
 
