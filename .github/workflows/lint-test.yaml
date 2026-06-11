@@ -16,6 +16,9 @@ on:
       - '!charts/**/README.md'
       - '!charts/**/README.md.gotmpl'
       - '!charts/**/docs/**'
+  pull_request_review:
+    types:
+      - submitted
 
 env:
   TEST_ALL_CHARTS: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && 'true' || 'false' }}
@@ -24,6 +27,12 @@ env:
 jobs:
   list-changed:
     runs-on: ubuntu-slim
+    if: >-
+      (github.event_name == 'pull_request_review' &&
+        github.event.review.state == 'approved' &&
+        (github.event.pull_request.user.login == 'dependabot[bot]' ||
+         github.event.pull_request.user.login == 'github-actions[bot]')) ||
+      github.event_name != 'pull_request_review'
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       has-changes: ${{ steps.set-matrix.outputs.has-changes }}
