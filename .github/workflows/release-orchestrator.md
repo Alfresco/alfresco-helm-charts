@@ -80,7 +80,9 @@ This workflow is re-runnable. A GitHub issue titled **`🚀 Release: ${{ inputs.
 
 1. **alfresco-common GA** — if pre-release on `main`, create a PR to bump it to GA first
 2. **activemq GA** — if `updatecli-bump-acs` contains activemq changes AND activemq is not GA on `main`, create a separate activemq-only PR first
-3. **Main release** — only when alfresco-common is GA, activemq is GA, and activemq is no longer a diff between `updatecli-bump-acs` and `main`
+3. **postgres GA** — if `updatecli-bump-acs` contains postgres changes AND postgres is not GA on `main`, create a separate postgres-only PR first
+4. **elastic GA** — if `updatecli-bump-acs` contains elastic changes AND elastic is not GA on `main`, create a separate elastic-only PR first
+5. **Main release** — only when alfresco-common, activemq, postgres, and elastic are all GA on `main` and no longer diffed in `updatecli-bump-acs`
 
 Always end every run by updating the tracking issue and posting a summary comment.
 
@@ -105,6 +107,8 @@ gh search issues \
 Phase markers:
 - `<!-- phase:alfresco-common-ga:done -->` — alfresco-common is GA on main
 - `<!-- phase:activemq-ga:done -->` — activemq is GA on main (or not in updatecli-bump-acs)
+- `<!-- phase:postgres-ga:done -->` — postgres is GA on main (or not in updatecli-bump-acs)
+- `<!-- phase:elastic-ga:done -->` — elastic is GA on main (or not in updatecli-bump-acs)
 - `<!-- phase:main-release:done -->` — main release PR created
 
 ---
@@ -169,6 +173,8 @@ git diff origin/main...origin/updatecli-bump-acs --name-only
 ```
 
 Store whether `charts/activemq/` appears in that diff as `ACTIVEMQ_IN_ACS_BRANCH=true/false`.
+Store whether `charts/postgres/` appears in that diff as `POSTGRES_IN_ACS_BRANCH=true/false`.
+Store whether `charts/elastic/` appears in that diff as `ELASTIC_IN_ACS_BRANCH=true/false`.
 
 ---
 
@@ -253,7 +259,7 @@ Read `activemq` version from the snapshot (Step 1).
 
 ### Case 1: activemq already GA on `main` AND no longer diffed in `updatecli-bump-acs` relative to `main`
 
-This means the activemq GA PR was already merged. Mark `<!-- phase:activemq-ga:done -->` and proceed to Phase C.
+This means the activemq GA PR was already merged. Mark `<!-- phase:activemq-ga:done -->` and proceed to Phase B2.
 
 ### Case 2: activemq needs a GA PR
 
@@ -316,6 +322,152 @@ Record PR URL in the issue. Post a comment asking the DevOps to **merge this PR 
 
 ---
 
+## Phase B2 — postgres GA
+
+**Skip if** `<!-- phase:postgres-ga:done -->` is present in the issue.
+
+**Skip if** `POSTGRES_IN_ACS_BRANCH=false` (postgres not touched by `updatecli-bump-acs`) — mark done and proceed.
+
+Read `postgres` version from the snapshot (Step 1).
+
+### Case 1: postgres already GA on `main` AND no longer diffed in `updatecli-bump-acs` relative to `main`
+
+This means the postgres GA PR was already merged. Mark `<!-- phase:postgres-ga:done -->` and proceed to Phase B3.
+
+### Case 2: postgres needs a GA PR
+
+Check for an existing postgres GA PR:
+
+```bash
+gh pr list \
+  --repo Alfresco/alfresco-helm-charts \
+  --head "release/postgres-ga" \
+  --state open \
+  --json number,title,url
+```
+
+**If PR exists and is open**: record its URL, post a comment asking the DevOps to merge it and re-run. **Stop.**
+
+**If no PR exists**: create one using **only the postgres-specific changes from `updatecli-bump-acs`**, plus a GA version bump.
+
+```bash
+git checkout -b release/postgres-ga origin/main
+
+# Cherry-pick only the postgres-related changes from updatecli-bump-acs
+git checkout origin/updatecli-bump-acs -- charts/postgres/
+```
+
+Determine the correct GA version for postgres:
+- Read current `postgres` version on `main` (from snapshot)
+- If it is pre-release (e.g. `0.6.0-alpha.0`): strip the suffix → `0.6.0`
+- If it is already GA: apply an appropriate semver bump based on what changed in `charts/postgres/` between `origin/main` and `origin/updatecli-bump-acs` (use the semver rules from Phase C)
+
+Use the `edit` tool to write the computed version into `charts/postgres/Chart.yaml`.
+
+Regenerate the lock file (do NOT read or inspect Chart.lock afterwards — trust the command output):
+
+```bash
+helm dependency update charts/postgres 2>/dev/null || true
+```
+
+Commit any lock file changes:
+
+```bash
+git add charts/postgres/Chart.lock
+git diff --cached --quiet || git commit -m "chore: update Chart.lock for postgres"
+```
+
+Regenerate chart documentation and commit any changes:
+
+```bash
+helm-docs --chart-search-root charts/postgres
+git add charts/postgres/README.md
+git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for postgres"
+```
+
+Create the PR using `create-pull-request`:
+- **title**: `chore: release postgres <version> GA` (prefix with `${{ inputs.jira-id }} ` if jira-id is set)
+- **base**: `main`
+- **branch**: `release/postgres-ga`
+- **body**: explain this is a prerequisite for the `${{ inputs.release-name }}` release; list the changes included from `updatecli-bump-acs`
+
+Record PR URL in the issue. Post a comment asking the DevOps to **merge this PR first**, then re-run. **Stop.**
+
+---
+
+## Phase B3 — elastic GA
+
+**Skip if** `<!-- phase:elastic-ga:done -->` is present in the issue.
+
+**Skip if** `ELASTIC_IN_ACS_BRANCH=false` (elastic not touched by `updatecli-bump-acs`) — mark done and proceed.
+
+Read `elastic` version from the snapshot (Step 1).
+
+### Case 1: elastic already GA on `main` AND no longer diffed in `updatecli-bump-acs` relative to `main`
+
+This means the elastic GA PR was already merged. Mark `<!-- phase:elastic-ga:done -->` and proceed to Phase C.
+
+### Case 2: elastic needs a GA PR
+
+Check for an existing elastic GA PR:
+
+```bash
+gh pr list \
+  --repo Alfresco/alfresco-helm-charts \
+  --head "release/elastic-ga" \
+  --state open \
+  --json number,title,url
+```
+
+**If PR exists and is open**: record its URL, post a comment asking the DevOps to merge it and re-run. **Stop.**
+
+**If no PR exists**: create one using **only the elastic-specific changes from `updatecli-bump-acs`**, plus a GA version bump.
+
+```bash
+git checkout -b release/elastic-ga origin/main
+
+# Cherry-pick only the elastic-related changes from updatecli-bump-acs
+git checkout origin/updatecli-bump-acs -- charts/elastic/
+```
+
+Determine the correct GA version for elastic:
+- Read current `elastic` version on `main` (from snapshot)
+- If it is pre-release (e.g. `0.7.0-alpha.0`): strip the suffix → `0.7.0`
+- If it is already GA: apply an appropriate semver bump based on what changed in `charts/elastic/` between `origin/main` and `origin/updatecli-bump-acs` (use the semver rules from Phase C)
+
+Use the `edit` tool to write the computed version into `charts/elastic/Chart.yaml`.
+
+Regenerate the lock file (do NOT read or inspect Chart.lock afterwards — trust the command output):
+
+```bash
+helm dependency update charts/elastic 2>/dev/null || true
+```
+
+Commit any lock file changes:
+
+```bash
+git add charts/elastic/Chart.lock
+git diff --cached --quiet || git commit -m "chore: update Chart.lock for elastic"
+```
+
+Regenerate chart documentation and commit any changes:
+
+```bash
+helm-docs --chart-search-root charts/elastic
+git add charts/elastic/README.md
+git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for elastic"
+```
+
+Create the PR using `create-pull-request`:
+- **title**: `chore: release elastic <version> GA` (prefix with `${{ inputs.jira-id }} ` if jira-id is set)
+- **base**: `main`
+- **branch**: `release/elastic-ga`
+- **body**: explain this is a prerequisite for the `${{ inputs.release-name }}` release; list the changes included from `updatecli-bump-acs`
+
+Record PR URL in the issue. Post a comment asking the DevOps to **merge this PR first**, then re-run. **Stop.**
+
+---
+
 ## Phase C — Main release PR
 
 **Skip if** `<!-- phase:main-release:done -->` is present in the issue.
@@ -323,7 +475,11 @@ Record PR URL in the issue. Post a comment asking the DevOps to **merge this PR 
 **Prerequisites** — verify all of these before continuing:
 1. `alfresco-common` is GA on `main` (phase A marker present)
 2. `activemq` is GA on `main` (phase B marker present)
-3. `updatecli-bump-acs` diff relative to `main` does **not** contain `charts/activemq/` (the activemq GA PR has been merged and the branch no longer diverges on activemq)
+3. `postgres` is GA on `main` (phase B2 marker present)
+4. `elastic` is GA on `main` (phase B3 marker present)
+5. `updatecli-bump-acs` diff relative to `main` does **not** contain `charts/activemq/` (the activemq GA PR has been merged and the branch no longer diverges on activemq)
+6. `updatecli-bump-acs` diff relative to `main` does **not** contain `charts/postgres/`
+7. `updatecli-bump-acs` diff relative to `main` does **not** contain `charts/elastic/`
 
 If any prerequisite fails: update the issue with the blocking reason and stop.
 
@@ -381,7 +537,9 @@ Apply these semver rules:
 Apply bumps in dependency order:
 1. `alfresco-common` (if still changed after Phase A)
 2. `activemq` (if still changed after Phase B)
-3. All remaining charts alphabetically
+3. `postgres` (if still changed after Phase B2)
+4. `elastic` (if still changed after Phase B3)
+5. All remaining charts alphabetically
 
 Use the `edit` tool to write the new `version:` into each `Chart.yaml`. After bumping `alfresco-common`, update `dependencies[].version` for it in all dependent charts.
 
@@ -444,12 +602,30 @@ Use `create-pull-request`:
 
 ---
 
+## Phase B2 — postgres GA (if in updatecli-bump-acs)
+
+- [x/ ] postgres present in `updatecli-bump-acs` diff — **yes / no**
+- [x/ ] postgres GA PR — **<PR link or "not needed" or "pending merge">**
+
+---
+
+## Phase B3 — elastic GA (if in updatecli-bump-acs)
+
+- [x/ ] elastic present in `updatecli-bump-acs` diff — **yes / no**
+- [x/ ] elastic GA PR — **<PR link or "not needed" or "pending merge">**
+
+---
+
 ## Phase C — Main release
 
 **Prerequisites:**
 - [x/ ] `alfresco-common` GA on `main` — **<✅/❌>**
 - [x/ ] `activemq` GA on `main` — **<✅/❌>**
+- [x/ ] `postgres` GA on `main` — **<✅/❌>**
+- [x/ ] `elastic` GA on `main` — **<✅/❌>**
 - [x/ ] `updatecli-bump-acs` no longer touches `activemq` vs `main` — **<✅/❌>**
+- [x/ ] `updatecli-bump-acs` no longer touches `postgres` vs `main` — **<✅/❌>**
+- [x/ ] `updatecli-bump-acs` no longer touches `elastic` vs `main` — **<✅/❌>**
 - [x/ ] `updatecli-bump-acs` branch present — **<commit date or "missing">**
 - [x/ ] `updatecli-bump-helm` branch present — **<commit date or "missing">**
 - [ ] Both updatecli branches reviewed (unwanted bumps reverted) — **⚠️ manual**
@@ -481,6 +657,8 @@ Use `create-pull-request`:
 
 <!-- phase:alfresco-common-ga:done -->
 <!-- phase:activemq-ga:done -->
+<!-- phase:postgres-ga:done -->
+<!-- phase:elastic-ga:done -->
 <!-- phase:main-release:done -->
 ```
 
