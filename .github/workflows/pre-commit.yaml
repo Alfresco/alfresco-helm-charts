@@ -19,8 +19,7 @@ jobs:
     if: >-
       (github.event_name == 'pull_request_review' &&
         github.event.review.state == 'approved' &&
-        (github.event.pull_request.user.login == 'dependabot[bot]' ||
-         github.event.pull_request.user.login == 'github-actions[bot]')) ||
+        github.event.pull_request.user.login == 'github-actions[bot]') ||
       github.event_name != 'pull_request_review'
     permissions:
       contents: write
