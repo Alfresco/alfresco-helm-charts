@@ -42,6 +42,9 @@ safe-outputs:
       - "charts/**/values.yaml"
       - "charts/**/README.md"
       - "test-deps.yaml"
+    protected-files:
+      policy: request_review
+      exclude: ["README.md"]
     allowed-base-branches:
       - "main"
     max-patch-size: 5120
