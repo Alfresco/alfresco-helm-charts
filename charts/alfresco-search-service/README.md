@@ -22,7 +22,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | Repository | Name | Version |
 |------------|------|---------|
 |  | alfresco-insight-zeppelin | 4.7.0-alpha.0 |
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.1.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.1.0 |
 
 ## Values
 

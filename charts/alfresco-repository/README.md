@@ -26,7 +26,7 @@ service:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.1.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.1.0 |
 
 ## Values
 
