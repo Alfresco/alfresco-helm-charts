@@ -24,6 +24,7 @@ tools:
 network:
   allowed:
     - defaults
+    - github
     - alfresco.github.io
 steps:
   - name: Install helm-docs
