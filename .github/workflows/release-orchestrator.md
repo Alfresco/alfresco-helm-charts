@@ -9,7 +9,7 @@ on:
         type: string
         required: true
       jira-id:
-        description: 'Jira ticket ID to prefix PR titles (e.g. "HXOR-1234")'
+        description: 'Jira ticket ID to prefix PR titles (e.g. "OPSEXP-1234")'
         type: string
         required: false
 permissions:
