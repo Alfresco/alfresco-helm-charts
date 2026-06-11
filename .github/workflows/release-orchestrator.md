@@ -21,6 +21,10 @@ tools:
   github:
     mode: gh-proxy
     toolsets: [default]
+network:
+  allowed:
+    - defaults
+    - alfresco.github.io
 steps:
   - name: Install helm-docs
     uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.1.0
@@ -200,10 +204,17 @@ git checkout -b release/alfresco-common-ga origin/main
 
 Use the `edit` tool to update `version:` in `charts/alfresco-common/Chart.yaml` to the GA version.
 
-Then regenerate the lock file:
+Then regenerate the lock file (do NOT read or inspect Chart.lock afterwards — trust the command output):
 
 ```bash
 helm dependency update charts/alfresco-common 2>/dev/null || true
+```
+
+Commit any lock file changes:
+
+```bash
+git add charts/alfresco-common/Chart.lock
+git diff --cached --quiet || git commit -m "chore: update Chart.lock for alfresco-common"
 ```
 
 Regenerate chart documentation and commit any changes:
@@ -266,8 +277,17 @@ Determine the correct GA version for activemq:
 
 Use the `edit` tool to write the computed version into `charts/activemq/Chart.yaml`.
 
+Regenerate the lock file (do NOT read or inspect Chart.lock afterwards — trust the command output):
+
 ```bash
 helm dependency update charts/activemq 2>/dev/null || true
+```
+
+Commit any lock file changes:
+
+```bash
+git add charts/activemq/Chart.lock
+git diff --cached --quiet || git commit -m "chore: update Chart.lock for activemq"
 ```
 
 Regenerate chart documentation and commit any changes:
@@ -357,8 +377,12 @@ Apply bumps in dependency order:
 
 Use the `edit` tool to write the new `version:` into each `Chart.yaml`. After bumping `alfresco-common`, update `dependencies[].version` for it in all dependent charts.
 
+For each changed chart, regenerate its lock file. Do NOT read or inspect Chart.lock or verify checksums manually — trust the command output:
+
 ```bash
 helm dependency update charts/<chart-name> 2>/dev/null || true
+git add charts/<chart-name>/Chart.lock
+git diff --cached --quiet || git commit -m "chore: update Chart.lock for <chart-name>"
 ```
 
 ### C4. Create the release PR
