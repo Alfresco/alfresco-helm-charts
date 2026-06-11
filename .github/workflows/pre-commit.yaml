@@ -8,11 +8,20 @@ on:
   push:
     branches:
       - main
+  pull_request_review:
+    types:
+      - submitted
 
 jobs:
   pre_commit:
     name: Run pre-commit
     runs-on: ubuntu-latest
+    if: >-
+      (github.event_name == 'pull_request_review' &&
+        github.event.review.state == 'approved' &&
+        (github.event.pull_request.user.login == 'dependabot[bot]' ||
+         github.event.pull_request.user.login == 'github-actions[bot]')) ||
+      github.event_name != 'pull_request_review'
     permissions:
       contents: write
     steps:
