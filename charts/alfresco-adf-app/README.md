@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-adf-app
 
-![Version: 0.8.0-alpha.0](https://img.shields.io/badge/Version-0.8.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 A generic Alfresco Development Framework Helm chart for Kubernetes
 
@@ -15,7 +15,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.1.0-alpha.0 |
+| https://alfresco.github.io/alfresco-helm-charts/ | alfresco-common | 5.1.0 |
 
 ## Values
 
