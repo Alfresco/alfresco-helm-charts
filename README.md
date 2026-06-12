@@ -97,10 +97,29 @@ We are ensuring backward compatibility with older K8s versions with
 
 ## Release
 
-Helm charts versioning should comply to [agreed
-scheme](https://hyland.atlassian.net/wiki/spaces/TECH/pages/edit-v2/1293317631#individual-component-charts-(alfresco-helm-charts))
+Helm charts versioning should follow the principles of semantic versioning. For
+assistance with version bumping, see the [Copilot
+Instructions](.github/copilot-instructions.md) which provide guidance when
+making chart changes.
 
-> **Note**: For automated assistance with version bumping, see the [Copilot Instructions](.github/copilot-instructions.md) which provide guidance on semantic versioning when making chart changes.
+### Agentic release workflow
+
+The recommended path is to trigger the [Release
+Orchestrator](.github/workflows/release-orchestrator.md) agentic workflow from
+the [Actions
+tab](https://github.com/Alfresco/alfresco-helm-charts/actions/workflows/release-orchestrator.lock.yml).
+It automates the bulk of the checklist below — creating prerequisite GA PRs for
+`alfresco-common`, `activemq`, `postgres`, and `elastic`, inferring per-chart
+semver bumps from the `updatecli-bump-acs`/`updatecli-bump-helm` diff, and
+opening a draft release PR. The workflow takes a release codename and an
+optional Jira ID, uses a GitHub issue as a resumable state machine, and is meant
+to be re-run as each prerequisite PR is merged. The checklist below remains
+authoritative for the manual steps it cannot perform — reviewing updatecli
+bumps, refreshing the supported matrix and `docs.hyland.com` links in
+`values.yaml`, updating `UPGRADES.md`, and the post-merge `acs-deployment`
+update.
+
+### Manual release checklist
 
 * Ensure alfresco-common [version](../charts/alfresco-common/Chart.yaml) is not a
   pre-release, otherwise release it.
