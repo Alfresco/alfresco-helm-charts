@@ -25,20 +25,20 @@ jobs:
       contents: write
     steps:
       - name: Ensure SHA pinned actions
-        uses: hyland/github-actions-ensure-sha-pinned-actions@v2.0.0
+        uses: hyland/github-actions-ensure-sha-pinned-actions@v2.0.1
         with:
           allowlist: |
             Alfresco/alfresco-build-tools/
 
       - name: Setup helm docs
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.13.0
 
       - name: Install kubeconform helm plugin
         run: |
           helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.2.0
 
       - name: Run pre-commit
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.13.0
         with:
           # disable auto-commit for PRs from forks
           auto-commit: ${{ github.event_name != 'pull_request' || ! github.event.pull_request.head.repo.fork }}
