@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Add dependency chart repos
         run: |
@@ -36,7 +36,7 @@ jobs:
           done
 
       - name: Run checkov
-        uses: bridgecrewio/checkov-action@fa9edf8f0a491c59a924ea6accd5bdcf07752cff # v12.3107.0
+        uses: bridgecrewio/checkov-action@4a1afa9897f7afe297a3762c926e1e800361464f # v12.3111.0
         with:
           config_file: .checkov.yml
           output_format: cli,sarif
