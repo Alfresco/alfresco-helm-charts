@@ -1,0 +1,40 @@
+suite: test service
+templates:
+  - service.yaml
+tests:
+  - it: render default service
+    asserts:
+      - equal:
+          path: spec.type
+          value: ClusterIP
+      - contains:
+          path: spec.ports
+          content:
+            port: 8080
+            targetPort: http
+            protocol: TCP
+            name: http
+  - it: render modified service
+    set:
+      service.type: NodePort
+      service.port: 2222
+    asserts:
+      - equal:
+          path: spec.type
+          value: NodePort
+      - contains:
+          path: spec.ports
+          content:
+            port: 2222
+            targetPort: http
+            protocol: TCP
+            name: http
+  - it: should render service annotations
+    set:
+      service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"

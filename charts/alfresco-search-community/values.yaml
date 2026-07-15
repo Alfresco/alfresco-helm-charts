@@ -1,0 +1,170 @@
+# -- The batch indexing component is a singleton; this value must remain 1
+# (a second instance conflicts on the shared watermark and self-terminates)
+replicaCount: 1
+
+global:
+  alfrescoRegistryPullSecrets: quay-registry-secret
+  # -- Global additional labels that can be set at parent/umbrella chart level
+  # These will be merged with chart-level additionalLabels, with chart-level taking precedence
+  additionalLabels: {}
+
+image:
+  repository: docker.io/alfresco/alfresco-elasticsearch-batch-indexing
+  pullPolicy: IfNotPresent
+  tag: 5.7.0-A.5
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+# -- Additional labels to be added to all resources (deployments, services, pods, etc.)
+# Example:
+#   Product: k8s
+#   Environment: DEV
+additionalLabels: {}
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health
+    port: http
+  initialDelaySeconds: 120
+  timeoutSeconds: 60
+readinessProbe:
+  httpGet:
+    path: /actuator/health
+    port: http
+  initialDelaySeconds: 60
+  timeoutSeconds: 60
+
+# -- Name of the search index, usually created by the repository
+indexName: alfresco
+
+# -- Set additional environment variables for the batch indexing container
+# (e.g. `ALFRESCO_REINDEX_*` tunables or `JAVA_OPTS`)
+environment: {}
+
+index:
+  # -- The URL where the elasticsearch service is available
+  url: null
+  # -- The username required to access the elasticsearch service, if any
+  username: null
+  # -- The password required to access the elasticsearch service, if any
+  password: null
+  existingConfigMap:
+    # -- Alternatively, provide elasticsearch service connection details via
+    # an existing configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the elasticsearch service
+      url: SEARCH_URL
+  existingSecret:
+    # -- Alternatively, provide elasticsearch credentials via an existing secret
+    name: null
+    keys:
+      # -- Key within the secret that holds the elasticsearch username
+      username: SEARCH_USERNAME
+      # -- Key within the secret that holds the elasticsearch password
+      password: SEARCH_PASSWORD
+
+db:
+  # -- Provide the full JDBC url to connect to database service e.g.:
+  # `jdbc:postgresql://hostname:5432/database`
+  url: null
+  # -- The username required to access the database service
+  username: null
+  # -- The password required to access the database service
+  password: null
+  existingSecret:
+    # -- Alternatively, provide database credentials via an existing secret
+    name: null
+    keys:
+      # -- Key within the secret holding the database username
+      username: DATABASE_USERNAME
+      # -- Key within the secret holding the database password
+      password: DATABASE_PASSWORD
+  existingConfigMap:
+    # -- Alternatively, provide database connection details via an existing
+    # configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the full JDBC url to connect to
+      # database service
+      url: DATABASE_URL
+
+repository:
+  # -- URL of the Alfresco repository (ACS)
+  url: null
+  existingConfigMap:
+    # -- Alternatively, provide repository connection details via an existing
+    # configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the full url to connect to the
+      # alfresco repository
+      url: REPOSITORY_URL
+
+transform:
+  # -- URL of the alfresco transform config endpoint (e.g.
+  # `http://transform-core-aio:8090/transform/config`)
+  url: null
+  existingConfigMap:
+    # -- Alternatively, provide transform config endpoint details via an
+    # existing configmap
+    name: null
+    keys:
+      # -- Key within the configmap holding the URL of the transform config
+      # endpoint
+      url: TRANSFORM_URL
+
+sharedSecret:
+  # -- Shared secret used to authenticate content requests against the
+  # repository (must match the repository's `solr.sharedSecret`)
+  value: null
+  existingSecret:
+    # -- Alternatively, provide the shared secret via an existing secret
+    name: null
+    keys:
+      # -- Key within the secret holding the shared secret
+      sharedSecret: ALFRESCO_CONTENT_TRANSFORM_SHAREDSECRET
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 8080
+  annotations: {}
+
+resources:
+  requests:
+    cpu: "0.5"
+    memory: "256Mi"
+  limits:
+    cpu: "2"
+    memory: "2048Mi"
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

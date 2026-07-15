@@ -1,0 +1,274 @@
+suite: test deployment
+templates:
+  - deployment.yaml
+values:
+  - values/embedded-charts-values.yaml
+tests:
+  - it: should have default image pull secret
+    asserts:
+      - equal:
+          path: spec.template.spec.imagePullSecrets[0].name
+          value: quay-registry-secret
+  - it: should have a single replica
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 1
+  - it: should have default container name
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].name
+          value: alfresco-search-community
+  - it: should have custom container image
+    set:
+      image:
+        repository: "custom-repo"
+        tag: "custom-tag"
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].image
+          value: "custom-repo:custom-tag"
+  - it: should have default container image
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.containers[0].image
+          pattern: "docker.io/alfresco/alfresco-elasticsearch-batch-indexing:.+"
+  - it: should have default securityContext
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].securityContext
+          value:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+  - it: should have default ports section
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].ports[0]
+          value:
+            containerPort: 8080
+            name: http
+            protocol: TCP
+  - it: should contain default database, elasticsearch, repository and transform envs
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_DATASOURCE_URL
+            valueFrom:
+              configMapKeyRef:
+                key: DATABASE_URL
+                name: RELEASE-NAME-alfresco-search-community-database
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_DATASOURCE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: DATABASE_USERNAME
+                name: RELEASE-NAME-alfresco-search-community-database
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: DATABASE_PASSWORD
+                name: RELEASE-NAME-alfresco-search-community-database
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_URIS
+            valueFrom:
+              configMapKeyRef:
+                key: SEARCH_URL
+                name: RELEASE-NAME-alfresco-search-community-es
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: SEARCH_USERNAME
+                name: RELEASE-NAME-alfresco-search-community-es
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: SEARCH_PASSWORD
+                name: RELEASE-NAME-alfresco-search-community-es
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ELASTICSEARCH_INDEXNAME
+            value: alfresco
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_ACS_URL
+            valueFrom:
+              configMapKeyRef:
+                key: REPOSITORY_URL
+                name: RELEASE-NAME-alfresco-search-community-repository
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL
+            valueFrom:
+              configMapKeyRef:
+                key: TRANSFORM_URL
+                name: RELEASE-NAME-alfresco-search-community-transform
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_CONTENT_TRANSFORM_SHAREDSECRET
+            valueFrom:
+              secretKeyRef:
+                key: ALFRESCO_CONTENT_TRANSFORM_SHAREDSECRET
+                name: RELEASE-NAME-alfresco-search-community-shared-secret
+  - it: should wire envs from external configmaps and secrets
+    set:
+      index:
+        existingConfigMap:
+          name: es-external-config
+          keys:
+            url: SEARCH_URL_EXTERNAL
+        existingSecret:
+          name: es-external-secret
+          keys:
+            username: SEARCH_USERNAME_EXTERNAL
+            password: SEARCH_PASSWORD_EXTERNAL
+      db:
+        existingConfigMap:
+          name: db-external-config
+          keys:
+            url: DATABASE_URL_EXTERNAL
+        existingSecret:
+          name: db-external-secret
+          keys:
+            username: DATABASE_USERNAME_EXTERNAL
+            password: DATABASE_PASSWORD_EXTERNAL
+      repository:
+        existingConfigMap:
+          name: repo-external-config
+          keys:
+            url: REPOSITORY_URL_EXTERNAL
+      transform:
+        existingConfigMap:
+          name: transform-external-config
+          keys:
+            url: TRANSFORM_URL_EXTERNAL
+      sharedSecret:
+        existingSecret:
+          name: shared-secret-external
+          keys:
+            sharedSecret: SHARED_SECRET_EXTERNAL
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_DATASOURCE_URL
+            valueFrom:
+              configMapKeyRef:
+                key: DATABASE_URL_EXTERNAL
+                name: db-external-config
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_DATASOURCE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: DATABASE_USERNAME_EXTERNAL
+                name: db-external-secret
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_URIS
+            valueFrom:
+              configMapKeyRef:
+                key: SEARCH_URL_EXTERNAL
+                name: es-external-config
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: SEARCH_PASSWORD_EXTERNAL
+                name: es-external-secret
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_ACS_URL
+            valueFrom:
+              configMapKeyRef:
+                key: REPOSITORY_URL_EXTERNAL
+                name: repo-external-config
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_BASEURL
+            valueFrom:
+              configMapKeyRef:
+                key: TRANSFORM_URL_EXTERNAL
+                name: transform-external-config
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_CONTENT_TRANSFORM_SHAREDSECRET
+            valueFrom:
+              secretKeyRef:
+                key: SHARED_SECRET_EXTERNAL
+                name: shared-secret-external
+  - it: should render custom environment variables
+    set:
+      environment:
+        ALFRESCO_REINDEX_CONTINUOUS_POLLINGINTERVAL: 15s
+        JAVA_OPTS: "-Xmx768m"
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_REINDEX_CONTINUOUS_POLLINGINTERVAL
+            value: "15s"
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: JAVA_OPTS
+            value: "-Xmx768m"
+  - it: should render custom index name
+    set:
+      indexName: custom-index
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ELASTICSEARCH_INDEXNAME
+            value: custom-index
+  - it: should render pods annotations
+    set:
+      podAnnotations:
+        alfresco-helm-charts.github.io/test: annotate-pods
+    asserts:
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            alfresco-helm-charts.github.io/test: annotate-pods
+  - it: should render labels
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-search-community
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: alfresco-search-community
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-search-community-1.0.0

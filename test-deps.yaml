@@ -34,6 +34,9 @@ charts:
   alfresco-connector-msteams: []
   alfresco-repository:
     - postgresql
+  alfresco-search-community:
+    - postgresql
+    - elasticsearch
   alfresco-search-enterprise:
     - activemq
     - elasticsearch
