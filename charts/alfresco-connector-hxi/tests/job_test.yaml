@@ -15,6 +15,16 @@ tests:
           path: spec.template.spec.initContainers[0].imagePullPolicy
           value: IfNotPresent
 
+  - it: should omit the init container when disabled
+    set:
+      bulkIngester:
+        initContainers:
+          waitForRepository:
+            enabled: false
+    asserts:
+      - isNull:
+          path: spec.template.spec.initContainers
+
   - it: should render labels for job
     chart:
       version: 1.0.0

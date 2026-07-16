@@ -1,3 +1,7 @@
+# No real Alfresco Repository is deployed for this chart's tests, so
+# live-ingester/prediction-applier readiness (which depends on reaching it) is
+# relaxed to a plain TCP check, and bulk-ingester's wait-for-repository init
+# container (which blocks on an HTTP 200 from it) is disabled.
 liveIngester:
   replicaCount: 1
   resources:
@@ -7,6 +11,18 @@ liveIngester:
     limits:
       cpu: "1"
       memory: "500Mi"
+  livenessProbe:
+    httpGet: null
+    tcpSocket:
+      port: 8080
+    initialDelaySeconds: 60
+    periodSeconds: 30
+  readinessProbe:
+    httpGet: null
+    tcpSocket:
+      port: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 30
 bulkIngester:
   resources:
     requests:
@@ -15,6 +31,9 @@ bulkIngester:
     limits:
       cpu: "1"
       memory: "1Gi"
+  initContainers:
+    waitForRepository:
+      enabled: false
 predictionApplier:
   replicaCount: 1
   resources:
@@ -24,6 +43,18 @@ predictionApplier:
     limits:
       cpu: "1"
       memory: "1Gi"
+  livenessProbe:
+    httpGet: null
+    tcpSocket:
+      port: 8080
+    initialDelaySeconds: 60
+    periodSeconds: 30
+  readinessProbe:
+    httpGet: null
+    tcpSocket:
+      port: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 30
 db:
   url: jdbc:postgresql://postgresql:5432/alfresco
 messageBroker:
@@ -31,7 +62,7 @@ messageBroker:
   username: admin
   password: admin
 repository:
-  url: https://httpbin.org/status/204
+  url: http://repository
   versionOverride: '23.3.0'
 ats:
   sfsUrl: http://alfresco-transform-services-sfs

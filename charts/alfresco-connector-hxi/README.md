@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-hxi
 
-![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.2](https://img.shields.io/badge/AppVersion-2.0.2-informational?style=flat-square)
+![Version: 0.9.0-alpha.0](https://img.shields.io/badge/Version-0.9.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.0.2](https://img.shields.io/badge/AppVersion-2.0.2-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector hxi services
 
@@ -33,6 +33,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | bulkIngester.image.pullPolicy | string | `"IfNotPresent"` |  |
 | bulkIngester.image.repository | string | `"quay.io/alfresco/alfresco-hxinsight-connector-bulk-ingester"` |  |
 | bulkIngester.image.tag | string | `"2.0.2"` |  |
+| bulkIngester.initContainers.waitForRepository.enabled | bool | `true` |  |
 | bulkIngester.initContainers.waitForRepository.image.pullPolicy | string | `"IfNotPresent"` |  |
 | bulkIngester.initContainers.waitForRepository.image.repository | string | `"curlimages/curl"` |  |
 | bulkIngester.initContainers.waitForRepository.image.tag | string | `"8.11.0"` |  |
