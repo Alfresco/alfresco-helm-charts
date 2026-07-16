@@ -33,6 +33,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | bulkIngester.image.pullPolicy | string | `"IfNotPresent"` |  |
 | bulkIngester.image.repository | string | `"quay.io/alfresco/alfresco-hxinsight-connector-bulk-ingester"` |  |
 | bulkIngester.image.tag | string | `"2.0.2"` |  |
+| bulkIngester.initContainers.waitForRepository.enabled | bool | `true` |  |
 | bulkIngester.initContainers.waitForRepository.image.pullPolicy | string | `"IfNotPresent"` |  |
 | bulkIngester.initContainers.waitForRepository.image.repository | string | `"curlimages/curl"` |  |
 | bulkIngester.initContainers.waitForRepository.image.tag | string | `"8.11.0"` |  |
