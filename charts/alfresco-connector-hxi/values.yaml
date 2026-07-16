@@ -105,6 +105,7 @@ bulkIngester:
     ALFRESCO_BULK_INGEST_PUBLISHER_ENDPOINT: activemq:queue:bulk-ingester-events
   initContainers:
     waitForRepository:
+      enabled: true
       image:
         repository: curlimages/curl
         tag: "8.11.0"

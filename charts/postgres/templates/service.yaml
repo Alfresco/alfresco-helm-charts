@@ -18,4 +18,4 @@ spec:
       name: tcp-postgresql
   selector:
     {{- include "postgres.selectorLabels" $ | nindent 4 }}
-{{ end }}
+{{- end }}
