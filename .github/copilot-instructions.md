@@ -218,6 +218,12 @@ When working on changes to any chart (e.g., `charts/alfresco-repository/`, `char
 - **Pre-release versions**: Use semantic versioning pre-release identifiers (e.g., "1.0.0-alpha.1")
 - **Coordination with releases**: Version bumps trigger chart releases through CI/CD
 
+#### Alpha version requests
+
+If asked to bump a chart to an alpha version, bump to the next minor version
+with an `-alpha.0` suffix (e.g. `0.8.0` → `0.9.0-alpha.0`), regardless of the
+underlying change's own semver category.
+
 ### Chart Dependencies
 
 Some charts depend on others (e.g., many charts depend on `alfresco-common`). When updating:
