@@ -51,6 +51,17 @@ tests:
             containerPort: 8080
             name: http
             protocol: TCP
+  - it: should have custom container port
+    set:
+      image:
+        internalPort: 9090
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].ports[0]
+          value:
+            containerPort: 9090
+            name: http
+            protocol: TCP
   - it: should contain default database, elasticsearch, repository and transform envs
     asserts:
       - contains:

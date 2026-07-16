@@ -35,6 +35,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | fullnameOverride | string | `""` |  |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
+| image.internalPort | int | `8080` | Port the container listens on |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"docker.io/alfresco/alfresco-elasticsearch-batch-indexing"` |  |
 | image.tag | string | `"5.7.0-A.5"` |  |

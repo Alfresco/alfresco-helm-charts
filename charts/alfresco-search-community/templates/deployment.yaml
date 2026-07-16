@@ -31,7 +31,7 @@ spec:
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.image.internalPort }}
               protocol: TCP
           env:
             {{- include "alfresco-search-community.db.env" $ | nindent 12 }}
