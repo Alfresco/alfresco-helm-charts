@@ -30,6 +30,17 @@ tests:
     asserts:
       - hasDocuments:
           count: 0
+  - it: should render elasticsearch url under a custom key name
+    template: configmap-es.yaml
+    set:
+      index:
+        existingConfigMap:
+          keys:
+            url: ES_URL
+    asserts:
+      - equal:
+          path: data.ES_URL
+          value: http://elasticsearch:9200
   - it: should render database url
     template: configmap-database.yaml
     asserts:

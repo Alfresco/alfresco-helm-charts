@@ -19,6 +19,6 @@ data:
   {{- if not $esHost }}
     {{- fail (printf "%s Invalid URL format missing host. Provided: %s" $reqMsg .url) }}
   {{- end }}
-  SEARCH_URL: {{ printf "%s://%s:%v" $esProtocol $esHost $esPort }}
+  {{ .existingConfigMap.keys.url }}: {{ printf "%s://%s:%v" $esProtocol $esHost $esPort }}
 {{- end }}
 {{- end }}
