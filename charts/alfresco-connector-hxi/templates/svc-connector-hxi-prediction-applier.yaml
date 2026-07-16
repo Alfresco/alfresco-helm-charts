@@ -17,4 +17,4 @@ spec:
       name: {{ .Values.predictionApplier.service.name }}
   selector:
     {{- include "alfresco-connector-hxi.prediction-applier.selectorLabels" . | nindent 4 }}
-{{ end }}
+{{- end }}
