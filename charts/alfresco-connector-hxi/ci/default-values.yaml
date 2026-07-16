@@ -1,8 +1,7 @@
-# Both live-ingester and prediction-applier gate /actuator/health/readiness on
-# reaching the ACS repository, which chart-testing points at the public
-# https://httpbin.org/status/204 as a stand-in; when that third-party endpoint
-# is slow or unavailable the probe never turns healthy. Relax to a plain TCP
-# check so the workload is validated as started instead.
+# No real Alfresco Repository is deployed for this chart's tests, so
+# live-ingester/prediction-applier readiness (which depends on reaching it) is
+# relaxed to a plain TCP check, and bulk-ingester's wait-for-repository init
+# container (which blocks on an HTTP 200 from it) is disabled.
 liveIngester:
   replicaCount: 1
   resources:
@@ -32,6 +31,9 @@ bulkIngester:
     limits:
       cpu: "1"
       memory: "1Gi"
+  initContainers:
+    waitForRepository:
+      enabled: false
 predictionApplier:
   replicaCount: 1
   resources:
@@ -60,7 +62,7 @@ messageBroker:
   username: admin
   password: admin
 repository:
-  url: https://httpbin.org/status/204
+  url: http://repository
   versionOverride: '23.3.0'
 ats:
   sfsUrl: http://alfresco-transform-services-sfs
