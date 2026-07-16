@@ -22,7 +22,7 @@ on:
 
 env:
   TEST_ALL_CHARTS: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && 'true' || 'false' }}
-  HELM_VERSION: v4.2.3
+  HELM_VERSION: v4.1.1
   CHART_TESTING_VERSION: v3.14.0
 jobs:
   list-changed:
