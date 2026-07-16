@@ -4,3 +4,6 @@ rules:
   line-length: disable
   indentation: disable
   trailing-spaces: disable
+  empty-lines:
+    max: 2
+    max-end: 1
