@@ -3274,6 +3274,20 @@ entries:
   alfresco-connector-hxi:
   - apiVersion: v2
     appVersion: 2.0.2
+    created: "2026-07-16T14:53:34.229096606Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.1.0
+    description: A Helm chart for deploying Alfresco connector hxi services
+    digest: eb4a4c174859102f89b42ef32f157a14c6cfd9f23052a1e3220310d2e5e54598
+    name: alfresco-connector-hxi
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-hxi-0.9.0-alpha.0/alfresco-connector-hxi-0.9.0-alpha.0.tgz
+    version: 0.9.0-alpha.0
+  - apiVersion: v2
+    appVersion: 2.0.2
     created: "2026-06-12T11:24:12.297168434Z"
     dependencies:
     - name: alfresco-common
@@ -11751,4 +11765,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2026-06-12T11:24:13.924206826Z"
+generated: "2026-07-16T14:53:34.229946291Z"
