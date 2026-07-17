@@ -1,0 +1,69 @@
+suite: test configmaps
+templates:
+  - configmap-es.yaml
+  - configmap-database.yaml
+  - configmap-repository.yaml
+  - configmap-transform.yaml
+values:
+  - values/embedded-charts-values.yaml
+tests:
+  - it: should render normalized elasticsearch url
+    template: configmap-es.yaml
+    asserts:
+      - equal:
+          path: data.SEARCH_URL
+          value: http://elasticsearch:9200
+  - it: should fail when elasticsearch url has no scheme separator
+    template: configmap-es.yaml
+    set:
+      index:
+        url: elasticsearch:9200
+    asserts:
+      - failedTemplate:
+          errorMessage: "Please provide elasticsearch connection details as .index.url values or using an .index.existingConfigMap. Invalid URL format - URL must contain '://' scheme separator. Provided: elasticsearch:9200"
+  - it: should not render elasticsearch configmap when existingConfigMap is set
+    template: configmap-es.yaml
+    set:
+      index:
+        existingConfigMap:
+          name: my-es-cm
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: should render elasticsearch url under a custom key name
+    template: configmap-es.yaml
+    set:
+      index:
+        existingConfigMap:
+          keys:
+            url: ES_URL
+    asserts:
+      - equal:
+          path: data.ES_URL
+          value: http://elasticsearch:9200
+  - it: should render database url
+    template: configmap-database.yaml
+    asserts:
+      - equal:
+          path: data.DATABASE_URL
+          value: jdbc:postgresql://postgresql:5432/alfresco
+  - it: should fail when database url is missing
+    template: configmap-database.yaml
+    set:
+      db:
+        url: null
+    asserts:
+      - failedTemplate:
+          errorMessage: ".db.url is mandatory when not using existingConfigMap"
+  - it: should render repository url
+    template: configmap-repository.yaml
+    asserts:
+      - equal:
+          path: data.REPOSITORY_URL
+          value: http://alfresco:8080
+  - it: should render transform url
+    template: configmap-transform.yaml
+    asserts:
+      - equal:
+          path: data.TRANSFORM_URL
+          value: http://transform-core-aio:8090/transform/config

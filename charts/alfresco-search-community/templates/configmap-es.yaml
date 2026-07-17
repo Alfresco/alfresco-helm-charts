@@ -1,0 +1,24 @@
+{{- with .Values.index }}
+{{- if not .existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "es")) "Chart" $.Chart "Release" $.Release }}
+  name: {{ template "alfresco-search-community.fullname" $ctx }}
+  labels:
+    {{- include "alfresco-search-community.labels" $ | nindent 4 }}
+data:
+  {{- $reqMsg := "Please provide elasticsearch connection details as .index.url values or using an .index.existingConfigMap." }}
+  {{- $assertCondition := required $reqMsg .url }}
+  {{- if not (contains "://" .url) }}
+    {{- fail (printf "%s Invalid URL format - URL must contain '://' scheme separator. Provided: %s" $reqMsg .url) }}
+  {{- end }}
+  {{- $esProtocol := include "alfresco-common.url.scheme" .url }}
+  {{- $esHost := include "alfresco-common.url.host" .url }}
+  {{- $esPort := include "alfresco-common.url.port" .url }}
+  {{- if not $esHost }}
+    {{- fail (printf "%s Invalid URL format missing host. Provided: %s" $reqMsg .url) }}
+  {{- end }}
+  {{ .existingConfigMap.keys.url }}: {{ printf "%s://%s:%v" $esProtocol $esHost $esPort }}
+{{- end }}
+{{- end }}

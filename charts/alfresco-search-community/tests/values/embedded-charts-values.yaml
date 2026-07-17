@@ -1,0 +1,12 @@
+index:
+  url: http://elasticsearch:9200
+db:
+  url: jdbc:postgresql://postgresql:5432/alfresco
+  username: alfresco
+  password: alfresco
+repository:
+  url: http://alfresco:8080
+transform:
+  url: http://transform-core-aio:8090/transform/config
+sharedSecret:
+  value: secret

@@ -1,0 +1,36 @@
+# avoid too long resource names being truncated and conflicting
+nameOverride: assc
+index:
+  url: http://elasticsearch:9200
+db:
+  url: jdbc:postgresql://postgresql:5432/alfresco
+  username: alfresco
+  password: alfresco
+repository:
+  url: http://alfresco:8080
+transform:
+  url: http://transform-core-aio:8090/transform/config
+sharedSecret:
+  value: secret
+# The batch indexing component needs the Alfresco DB schema (created by the
+# repository) to become healthy, which is not available in chart-testing. Relax
+# the probes to a plain TCP check so the workload is validated as started.
+livenessProbe:
+  httpGet: null
+  tcpSocket:
+    port: http
+  initialDelaySeconds: 120
+  periodSeconds: 30
+readinessProbe:
+  httpGet: null
+  tcpSocket:
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 30
+resources:
+  requests:
+    cpu: "100m"
+    memory: "128Mi"
+  limits:
+    cpu: "1"
+    memory: "1Gi"

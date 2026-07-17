@@ -1,0 +1,11 @@
+{{- if not .Values.transform.existingConfigMap.name }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  {{- $ctx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "transform")) "Chart" .Chart "Release" .Release }}
+  name: {{ template "alfresco-search-community.fullname" $ctx }}
+  labels:
+    {{- include "alfresco-search-community.labels" . | nindent 4 }}
+data:
+  {{ .Values.transform.existingConfigMap.keys.url }}: {{ required ".transform.url is mandatory when not using existingConfigMap" .Values.transform.url }}
+{{- end }}
