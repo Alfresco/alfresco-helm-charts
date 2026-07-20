@@ -370,7 +370,7 @@ initContainers:
       aws:
         # -- AWS region of the OpenSearch domain; required when mode is `iam`
         region: null
-        # -- AWS service name for SigV4 signing: `es` for managed OpenSearch/Elasticsearch, `aoss` for OpenSearch Serverless
+        # -- AWS service name for SigV4 signing (defaults to `es` for managed OpenSearch/Elasticsearch)
         service: es
     # -- Init container image per auth mode; the entry matching `auth.mode` is used
     images:
