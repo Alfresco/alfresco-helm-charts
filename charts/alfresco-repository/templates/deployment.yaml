@@ -52,12 +52,18 @@ spec:
               else echo "No port in jdbc URL $DATABASE_URL. Can't guess it so skipping db status check"
               fi
         {{- if .Values.initContainers.createIndexTemplate.enabled }}
-        {{- $iam := eq .Values.initContainers.createIndexTemplate.auth.mode "iam" }}
+        {{- $mode := ((.Values.initContainers.createIndexTemplate.auth | default dict).mode | default "basic") }}
+        {{- if not (has $mode (list "basic" "iam")) }}
+        {{- fail (printf "initContainers.createIndexTemplate.auth.mode must be \"basic\" or \"iam\", got %q" $mode) }}
+        {{- end }}
+        {{- $iam := eq $mode "iam" }}
         - name: create-index-template
           {{- with .Values.initContainers.createIndexTemplate }}
-          {{- $image := index .images .auth.mode }}
-          image: {{ printf "%s:%s" $image.repository $image.tag | quote }}
-          imagePullPolicy: {{ $image.pullPolicy }}
+          {{- $image := index .images $mode | default dict }}
+          {{- $repository := $image.repository | required (printf "initContainers.createIndexTemplate.images.%s.repository is required" $mode) }}
+          {{- $tag := $image.tag | required (printf "initContainers.createIndexTemplate.images.%s.tag is required" $mode) }}
+          image: {{ printf "%s:%s" $repository $tag | quote }}
+          imagePullPolicy: {{ $image.pullPolicy | default "IfNotPresent" }}
           resources: {{- toYaml .resources | nindent 12 }}
           {{- end }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
