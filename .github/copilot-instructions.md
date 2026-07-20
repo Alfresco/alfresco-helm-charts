@@ -292,9 +292,16 @@ helm repo update
 ### Making Changes
 1. **Keep changes minimal**: Only modify what's necessary
 2. **Preserve existing behavior**: Unless explicitly fixing a bug
-3. **Update tests**: Add/modify tests for your changes
+3. **Verify with helm-unittest, not manual rendering**: Prove template changes by adding/extending `tests/*.yaml` assertions and running `helm unittest charts/<chart-name>`, rather than eyeballing `helm template` output. Cover every branch you introduce (e.g. each auth/flavor mode), both the rendered and the omitted paths, and any `required` failure via `failedTemplate`. Reserve `helm template` for whole-chart render sanity checks in CI.
 4. **Document in UPGRADES.md**: If introducing breaking changes
 5. **Update README.md.gotmpl**: Charts auto-generate README from this template
+
+### Template Authoring Conventions
+1. **Defaults live in `values.yaml`, not in template logic**: Templates should *select* from values, never hardcode literal defaults, so defaults are visible via `helm show values`/README and overridable.
+2. **No redundant override layers**: One configurable source of truth per setting. Don't add a nullable "override" field on top of a value that already has a default — users override the value itself.
+3. **Optimize the rendered output for readability, even at the cost of DRY in the template**: Keep generated JSON/YAML bodies and shell scripts multi-line and readable rather than collapsing them to deduplicate; avoid long lines.
+4. **Factor repeated shell with the right primitive**: When conditional branches share command logic, extract it so the conditional touches only the differing line and quoting stays intact. Init scripts run under `/bin/sh` (no arrays).
+5. **Fail fast on misconfiguration**: Guard required inputs with `required` so bad config fails at render time.
 
 ### After Making Changes
 1. **Bump Chart.yaml version** (critical - see versioning rules above)
