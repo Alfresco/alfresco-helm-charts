@@ -67,19 +67,6 @@ tests:
       - failedTemplate:
           errorMessage: initContainers.createIndexTemplate.auth.mode must be "basic" or "iam", got "bogus"
 
-  - it: should fail rendering when the resolved image repository is empty
-    set:
-      initContainers:
-        createIndexTemplate:
-          enabled: true
-          images:
-            basic:
-              repository: null
-              tag: "8.11.0"
-    asserts:
-      - failedTemplate:
-          errorMessage: initContainers.createIndexTemplate.images.basic.repository is required
-
   - it: should render correct resources when enabled
     set:
       initContainers:

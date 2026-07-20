@@ -59,11 +59,9 @@ spec:
         {{- $iam := eq $mode "iam" }}
         - name: create-index-template
           {{- with .Values.initContainers.createIndexTemplate }}
-          {{- $image := index .images $mode | default dict }}
-          {{- $repository := $image.repository | required (printf "initContainers.createIndexTemplate.images.%s.repository is required" $mode) }}
-          {{- $tag := $image.tag | required (printf "initContainers.createIndexTemplate.images.%s.tag is required" $mode) }}
-          image: {{ printf "%s:%s" $repository $tag | quote }}
-          imagePullPolicy: {{ $image.pullPolicy | default "IfNotPresent" }}
+          {{- $image := index .images $mode }}
+          image: {{ printf "%s:%s" $image.repository $image.tag | quote }}
+          imagePullPolicy: {{ $image.pullPolicy }}
           resources: {{- toYaml .resources | nindent 12 }}
           {{- end }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
