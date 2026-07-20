@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 1.7.0](https://img.shields.io/badge/Version-1.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 1.8.0-alpha.0](https://img.shields.io/badge/Version-1.8.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -21,6 +21,28 @@ service:
     traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
     traefik.ingress.kubernetes.io/service.sticky.cookie.name: alfrescoRepo
 ```
+
+## OpenSearch index template creation
+
+When `initContainers.createIndexTemplate.enabled` is `true`, an init container PUTs an index template to the search backend before the repository starts. It supports two authentication modes via `initContainers.createIndexTemplate.auth.mode`:
+
+- `basic` (default): HTTP basic auth using the search credentials, run with `curlimages/curl`. Behaviour is unchanged from previous releases.
+- `iam`: AWS SigV4-signed request for IAM-secured AWS OpenSearch Service domains, run with `ghcr.io/okigan/awscurl`. Credentials are resolved automatically from the pod's AWS identity (IRSA), including session tokens — no keys are configured in the chart. Set `initContainers.createIndexTemplate.auth.aws.region` to the domain's region, and use `auth.aws.service: aoss` for OpenSearch Serverless (defaults to `es`). Annotate the ServiceAccount with the IAM role to assume:
+
+```yaml
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::<account-id>:role/<role-name>
+initContainers:
+  createIndexTemplate:
+    enabled: true
+    auth:
+      mode: iam
+      aws:
+        region: us-east-1
+```
+
+The init container image is selected automatically based on the auth mode; override `initContainers.createIndexTemplate.images.basic.*` or `images.iam.*` to pin a different image.
 
 ## Requirements
 
@@ -133,10 +155,11 @@ service:
 | ingress.hosts[0].paths[1].pathType | string | `"Prefix"` |  |
 | ingress.hosts[0].paths[2] | object | `{"path":"/alfresco/s/prometheus","pathType":"Prefix","serviceName":"blocked-prometheus"}` | Block direct access to prometheus endpoint |
 | ingress.tls | list | `[]` |  |
+| initContainers.createIndexTemplate.auth.aws.region | string | `nil` | AWS region of the OpenSearch domain; required when mode is `iam` |
+| initContainers.createIndexTemplate.auth.aws.service | string | `"es"` | AWS service name for SigV4 signing: `es` for managed OpenSearch/Elasticsearch, `aoss` for OpenSearch Serverless |
+| initContainers.createIndexTemplate.auth.mode | string | `"basic"` | Authentication mode for the index-template request: `basic` (HTTP basic auth) or `iam` (AWS SigV4, signed with the pod's AWS identity via IRSA) |
 | initContainers.createIndexTemplate.enabled | bool | `false` | Whether to create an Elasticsearch index template before starting the repository |
-| initContainers.createIndexTemplate.image.pullPolicy | string | `"IfNotPresent"` |  |
-| initContainers.createIndexTemplate.image.repository | string | `"curlimages/curl"` |  |
-| initContainers.createIndexTemplate.image.tag | string | `"8.11.0"` |  |
+| initContainers.createIndexTemplate.images | object | `{"basic":{"pullPolicy":"IfNotPresent","repository":"curlimages/curl","tag":"8.11.0"},"iam":{"pullPolicy":"IfNotPresent","repository":"ghcr.io/okigan/awscurl","tag":"v0.44"}}` | Init container image per auth mode; the entry matching `auth.mode` is used |
 | initContainers.createIndexTemplate.indexName | string | `"alfresco"` | Index name to apply the template to |
 | initContainers.createIndexTemplate.numberOfReplicas | int | `0` | Number of replicas for the index |
 | initContainers.createIndexTemplate.numberOfShards | int | `1` | Number of shards for the index |

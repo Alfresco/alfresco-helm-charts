@@ -23,6 +23,28 @@ service:
     traefik.ingress.kubernetes.io/service.sticky.cookie.name: alfrescoRepo
 ```
 
+## OpenSearch index template creation
+
+When `initContainers.createIndexTemplate.enabled` is `true`, an init container PUTs an index template to the search backend before the repository starts. It supports two authentication modes via `initContainers.createIndexTemplate.auth.mode`:
+
+- `basic` (default): HTTP basic auth using the search credentials, run with `curlimages/curl`. Behaviour is unchanged from previous releases.
+- `iam`: AWS SigV4-signed request for IAM-secured AWS OpenSearch Service domains, run with `ghcr.io/okigan/awscurl`. Credentials are resolved automatically from the pod's AWS identity (IRSA), including session tokens — no keys are configured in the chart. Set `initContainers.createIndexTemplate.auth.aws.region` to the domain's region, and use `auth.aws.service: aoss` for OpenSearch Serverless (defaults to `es`). Annotate the ServiceAccount with the IAM role to assume:
+
+```yaml
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::<account-id>:role/<role-name>
+initContainers:
+  createIndexTemplate:
+    enabled: true
+    auth:
+      mode: iam
+      aws:
+        region: us-east-1
+```
+
+The init container image is selected automatically based on the auth mode; override `initContainers.createIndexTemplate.images.basic.*` or `images.iam.*` to pin a different image.
+
 {{ template "chart.homepageLine" . }}
 
 {{ template "chart.maintainersSection" . }}

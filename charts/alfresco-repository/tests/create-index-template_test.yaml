@@ -27,10 +27,11 @@ tests:
       initContainers:
         createIndexTemplate:
           enabled: true
-          image:
-            repository: custom/curl
-            tag: "9.0.0"
-            pullPolicy: Always
+          images:
+            basic:
+              repository: custom/curl
+              tag: "9.0.0"
+              pullPolicy: Always
     asserts:
       - equal:
           path: spec.template.spec.initContainers[1].name
@@ -41,6 +42,19 @@ tests:
       - equal:
           path: spec.template.spec.initContainers[1].imagePullPolicy
           value: Always
+
+  - it: should default to the curl image for basic auth
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[1].image
+          value: "curlimages/curl:8.11.0"
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '-sfS'
 
   - it: should render correct resources when enabled
     set:
@@ -167,3 +181,100 @@ tests:
       - equal:
           path: spec.template.spec.initContainers[1].env[2].valueFrom.secretKeyRef.key
           value: ELASTICSEARCH_PASSWORD
+
+  - it: should default to the awscurl image for iam auth
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+          auth:
+            mode: iam
+            aws:
+              region: us-east-1
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[1].image
+          value: "ghcr.io/okigan/awscurl:v0.44"
+
+  - it: should sign the request with awscurl in iam mode
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+          templateName: custom-tpl
+          indexName: custom-index
+          auth:
+            mode: iam
+            aws:
+              region: us-east-1
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: 'awscurl'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '--fail-with-body'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '--service "es"'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '--region "us-east-1"'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '-X PUT'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*_index_template/RELEASE-NAME-custom-tpl.*'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*"index_patterns": \["custom-index"\].*'
+      - notMatchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '-sfS'
+
+  - it: should use the configured aws service in iam mode
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+          auth:
+            mode: iam
+            aws:
+              region: eu-west-1
+              service: aoss
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '--service "aoss"'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '--region "eu-west-1"'
+
+  - it: should not include basic-auth credentials in iam mode
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+          auth:
+            mode: iam
+            aws:
+              region: us-east-1
+    asserts:
+      - lengthEqual:
+          path: spec.template.spec.initContainers[1].env
+          count: 1
+      - equal:
+          path: spec.template.spec.initContainers[1].env[0].name
+          value: SPRING_ELASTICSEARCH_REST_URIS
+
+  - it: should fail rendering when region is missing in iam mode
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+          auth:
+            mode: iam
+    asserts:
+      - failedTemplate:
+          errorMessage: initContainers.createIndexTemplate.auth.aws.region is required when auth.mode is iam

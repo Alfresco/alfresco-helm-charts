@@ -52,10 +52,12 @@ spec:
               else echo "No port in jdbc URL $DATABASE_URL. Can't guess it so skipping db status check"
               fi
         {{- if .Values.initContainers.createIndexTemplate.enabled }}
+        {{- $iam := eq .Values.initContainers.createIndexTemplate.auth.mode "iam" }}
         - name: create-index-template
           {{- with .Values.initContainers.createIndexTemplate }}
-          image: {{ printf "%s:%s" .image.repository .image.tag | quote }}
-          imagePullPolicy: {{ .image.pullPolicy }}
+          {{- $image := index .images .auth.mode }}
+          image: {{ printf "%s:%s" $image.repository $image.tag | quote }}
+          imagePullPolicy: {{ $image.pullPolicy }}
           resources: {{- toYaml .resources | nindent 12 }}
           {{- end }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
@@ -69,6 +71,7 @@ spec:
                 configMapKeyRef:
                   name: {{ $cm }}
                   key: {{ .existingConfigMap.keys.url }}
+            {{- if not $iam }}
             - name: SPRING_ELASTICSEARCH_REST_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -80,32 +83,47 @@ spec:
                   name: {{ $secret }}
                   key: {{ .existingSecret.keys.password }}
             {{- end }}
+            {{- end }}
           command: ["/bin/sh", "-c"]
           args:
             - |
               {{- with .Values.initContainers.createIndexTemplate }}
               ES_URL="${SPRING_ELASTICSEARCH_REST_URIS%%,*}"
-              until curl -sfS -o /dev/null -XPUT \
-                -H "Content-Type: application/json" \
-                -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
-                "${ES_URL}/_index_template/{{ $.Release.Name }}-{{ .templateName }}" \
-                -d '{
-                  "index_patterns": ["{{ .indexName }}"],
-                  "template": {
-                    "settings": {
-                      "number_of_shards": {{ .numberOfShards }},
-                      "number_of_replicas": {{ .numberOfReplicas }},
-                      "index": {
-                        "max_result_window": {{ .maxResultWindow }},
-                        "mapping": {
-                          "total_fields": {
-                            "limit": {{ .totalFieldsLimit }}
+              put_index_template() {
+              {{- if $iam }}
+                awscurl \
+                  --fail-with-body \
+                  -o /dev/null \
+                  --service {{ .auth.aws.service | quote }} \
+                  --region {{ required "initContainers.createIndexTemplate.auth.aws.region is required when auth.mode is iam" .auth.aws.region | quote }} \
+              {{- else }}
+                curl \
+                  -sfS \
+                  -o /dev/null \
+                  -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
+              {{- end }}
+                  -X PUT \
+                  -H "Content-Type: application/json" \
+                  "${ES_URL}/_index_template/{{ $.Release.Name }}-{{ .templateName }}" \
+                  -d '{
+                    "index_patterns": ["{{ .indexName }}"],
+                    "template": {
+                      "settings": {
+                        "number_of_shards": {{ .numberOfShards }},
+                        "number_of_replicas": {{ .numberOfReplicas }},
+                        "index": {
+                          "max_result_window": {{ .maxResultWindow }},
+                          "mapping": {
+                            "total_fields": {
+                              "limit": {{ .totalFieldsLimit }}
+                            }
                           }
                         }
                       }
                     }
-                  }
-                }'
+                  }'
+              }
+              until put_index_template
               do
                 echo "Waiting for Elasticsearch to be ready at ${ES_URL}..."
                 sleep 5
