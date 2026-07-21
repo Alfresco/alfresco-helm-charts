@@ -382,10 +382,17 @@ initContainers:
         repository: ghcr.io/okigan/awscurl
         tag: "v0.44"
         pullPolicy: IfNotPresent
+    # -- Init container resources per auth mode; the entry matching `auth.mode` is used. The `iam`
+    # awscurl image (Python + botocore) needs substantially more memory than the `basic` curl image.
     resources:
-      limits:
-        cpu: "250m"
-        memory: "20Mi"
+      basic:
+        limits:
+          cpu: "250m"
+          memory: "20Mi"
+      iam:
+        limits:
+          cpu: "250m"
+          memory: "256Mi"
     # -- Template name for the index template
     templateName: alfresco-template
     # -- Index name to apply the template to

@@ -62,7 +62,7 @@ spec:
           {{- $image := index .images $mode }}
           image: {{ printf "%s:%s" $image.repository $image.tag | quote }}
           imagePullPolicy: {{ $image.pullPolicy }}
-          resources: {{- toYaml .resources | nindent 12 }}
+          resources: {{- toYaml (index .resources $mode) | nindent 12 }}
           {{- end }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           env:

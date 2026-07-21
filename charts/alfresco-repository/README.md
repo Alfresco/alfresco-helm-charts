@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 1.8.0-alpha.0](https://img.shields.io/badge/Version-1.8.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
+![Version: 1.8.0-alpha.1](https://img.shields.io/badge/Version-1.8.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.1.0](https://img.shields.io/badge/AppVersion-26.1.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -163,8 +163,7 @@ The init container image is selected automatically based on the auth mode; overr
 | initContainers.createIndexTemplate.indexName | string | `"alfresco"` | Index name to apply the template to |
 | initContainers.createIndexTemplate.numberOfReplicas | int | `0` | Number of replicas for the index |
 | initContainers.createIndexTemplate.numberOfShards | int | `1` | Number of shards for the index |
-| initContainers.createIndexTemplate.resources.limits.cpu | string | `"250m"` |  |
-| initContainers.createIndexTemplate.resources.limits.memory | string | `"20Mi"` |  |
+| initContainers.createIndexTemplate.resources | object | `{"basic":{"limits":{"cpu":"250m","memory":"20Mi"}},"iam":{"limits":{"cpu":"250m","memory":"256Mi"}}}` | Init container resources per auth mode; the entry matching `auth.mode` is used. The `iam` awscurl image (Python + botocore) needs substantially more memory than the `basic` curl image. |
 | initContainers.createIndexTemplate.templateName | string | `"alfresco-template"` | Template name for the index template |
 | initContainers.waitDbReady.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.waitDbReady.image.repository | string | `"busybox"` |  |
