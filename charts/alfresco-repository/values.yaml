@@ -383,9 +383,14 @@ initContainers:
         tag: "v0.44"
         pullPolicy: IfNotPresent
     resources:
-      limits:
-        cpu: "250m"
-        memory: "20Mi"
+      basic:
+        limits:
+          cpu: "250m"
+          memory: "20Mi"
+      iam:
+        limits:
+          cpu: "250m"
+          memory: "256Mi"
     # -- Template name for the index template
     templateName: alfresco-template
     # -- Index name to apply the template to

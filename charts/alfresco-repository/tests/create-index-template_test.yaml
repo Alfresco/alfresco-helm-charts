@@ -73,9 +73,10 @@ tests:
         createIndexTemplate:
           enabled: true
           resources:
-            limits:
-              cpu: "500m"
-              memory: "50Mi"
+            basic:
+              limits:
+                cpu: "500m"
+                memory: "50Mi"
     asserts:
       - equal:
           path: spec.template.spec.initContainers[1].name
@@ -86,6 +87,30 @@ tests:
       - equal:
           path: spec.template.spec.initContainers[1].resources.limits.memory
           value: "50Mi"
+
+  - it: should default to 20Mi for basic auth
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[1].resources.limits.memory
+          value: "20Mi"
+
+  - it: should default to 256Mi for iam auth
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+          auth:
+            mode: iam
+            aws:
+              region: us-east-1
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[1].resources.limits.memory
+          value: "256Mi"
 
   - it: should use configured template name and index name
     set:
