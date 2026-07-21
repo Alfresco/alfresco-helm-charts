@@ -42,7 +42,11 @@ indexName: alfresco
 
 # -- Set additional environment variables for the batch indexing container
 # (e.g. `ALFRESCO_REINDEX_*` tunables or `JAVA_OPTS`)
-environment: {}
+environment:
+  # -- Disable the accepted content media types cache: it requires a single
+  # endpoint exposing all renderers (ATS all-in-one), which is not how transform
+  # components are deployed on Kubernetes
+  ALFRESCO_ACCEPTEDCONTENTMEDIATYPESCACHE_ENABLED: "false"
 
 index:
   # -- The URL where the elasticsearch service is available
@@ -105,9 +109,10 @@ repository:
       url: REPOSITORY_URL
 
 transform:
-  # -- URL of the alfresco transform config endpoint (e.g.
-  # `http://transform-core-aio:8090/transform/config`)
-  url: null
+  # -- URL of the alfresco transform config endpoint. Only queried when the
+  # accepted content media types cache is enabled (disabled by default, see the
+  # environment section); a value is nonetheless required by the chart
+  url: http://transform-core-aio:8090/transform/config
   existingConfigMap:
     # -- Alternatively, provide transform config endpoint details via an
     # existing configmap
@@ -116,17 +121,17 @@ transform:
       # -- Key within the configmap holding the URL of the transform config
       # endpoint
       url: TRANSFORM_URL
-
-sharedSecret:
-  # -- Shared secret used to authenticate content requests against the
-  # repository (must match the repository's `solr.sharedSecret`)
-  value: null
-  existingSecret:
-    # -- Alternatively, provide the shared secret via an existing secret
-    name: null
-    keys:
-      # -- Key within the secret holding the shared secret
-      sharedSecret: ALFRESCO_CONTENT_TRANSFORM_SHAREDSECRET
+  sharedSecret:
+    # -- Shared secret authenticating the accepted content media types cache
+    # query against the repository. Only used when that cache is enabled
+    # (disabled by default)
+    value: notused
+    existingSecret:
+      # -- Alternatively, provide the shared secret via an existing secret
+      name: null
+      keys:
+        # -- Key within the secret holding the shared secret
+        sharedSecret: ALFRESCO_CONTENT_TRANSFORM_SHAREDSECRET
 
 serviceAccount:
   # Specifies whether a service account should be created

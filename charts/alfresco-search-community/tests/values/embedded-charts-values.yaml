@@ -8,5 +8,5 @@ repository:
   url: http://alfresco:8080
 transform:
   url: http://transform-core-aio:8090/transform/config
-sharedSecret:
-  value: secret
+  sharedSecret:
+    value: secret

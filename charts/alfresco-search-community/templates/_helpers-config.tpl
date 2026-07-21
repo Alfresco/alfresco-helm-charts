@@ -11,7 +11,7 @@ Usage: include "alfresco-search-community.config.env" $
 {{- $transformCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "transform")) "Chart" .Chart "Release" .Release }}
 {{- $transformCm := coalesce .Values.transform.existingConfigMap.name (include "alfresco-search-community.fullname" $transformCtx) }}
 {{- $secretCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "shared-secret")) "Chart" .Chart "Release" .Release }}
-{{- $sharedSecret := coalesce .Values.sharedSecret.existingSecret.name (include "alfresco-search-community.fullname" $secretCtx) }}
+{{- $sharedSecret := coalesce .Values.transform.sharedSecret.existingSecret.name (include "alfresco-search-community.fullname" $secretCtx) }}
 - name: ELASTICSEARCH_INDEXNAME
   value: {{ .Values.indexName | quote }}
 - name: ALFRESCO_ACS_URL
@@ -28,5 +28,5 @@ Usage: include "alfresco-search-community.config.env" $
   valueFrom:
     secretKeyRef:
       name: {{ $sharedSecret }}
-      key: {{ .Values.sharedSecret.existingSecret.keys.sharedSecret }}
+      key: {{ .Values.transform.sharedSecret.existingSecret.keys.sharedSecret }}
 {{- end -}}
