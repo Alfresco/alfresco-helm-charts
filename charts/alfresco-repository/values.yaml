@@ -364,10 +364,24 @@ initContainers:
   createIndexTemplate:
     # -- Whether to create an Elasticsearch index template before starting the repository
     enabled: false
-    image:
-      repository: curlimages/curl
-      tag: "8.11.0"
-      pullPolicy: IfNotPresent
+    auth:
+      # -- Authentication mode for the index-template request: `basic` (HTTP basic auth) or `iam` (AWS SigV4, signed with the pod's AWS identity via IRSA)
+      mode: basic
+      aws:
+        # -- AWS region of the OpenSearch domain; required when mode is `iam`
+        region: null
+        # -- AWS service name for SigV4 signing (defaults to `es` for managed OpenSearch/Elasticsearch)
+        service: es
+    # -- Init container image per auth mode; the entry matching `auth.mode` is used
+    images:
+      basic:
+        repository: curlimages/curl
+        tag: "8.11.0"
+        pullPolicy: IfNotPresent
+      iam:
+        repository: ghcr.io/okigan/awscurl
+        tag: "v0.44"
+        pullPolicy: IfNotPresent
     resources:
       limits:
         cpu: "250m"
