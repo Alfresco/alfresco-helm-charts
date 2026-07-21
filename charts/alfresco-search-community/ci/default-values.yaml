@@ -10,8 +10,8 @@ repository:
   url: http://alfresco:8080
 transform:
   url: http://transform-core-aio:8090/transform/config
-sharedSecret:
-  value: secret
+  sharedSecret:
+    value: secret
 # The batch indexing component needs the Alfresco DB schema (created by the
 # repository) to become healthy, which is not available in chart-testing. Relax
 # the probes to a plain TCP check so the workload is validated as started.
