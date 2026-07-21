@@ -163,7 +163,10 @@ The init container image is selected automatically based on the auth mode; overr
 | initContainers.createIndexTemplate.indexName | string | `"alfresco"` | Index name to apply the template to |
 | initContainers.createIndexTemplate.numberOfReplicas | int | `0` | Number of replicas for the index |
 | initContainers.createIndexTemplate.numberOfShards | int | `1` | Number of shards for the index |
-| initContainers.createIndexTemplate.resources | object | `{"basic":{"limits":{"cpu":"250m","memory":"20Mi"}},"iam":{"limits":{"cpu":"250m","memory":"256Mi"}}}` | Init container resources per auth mode; the entry matching `auth.mode` is used. The `iam` awscurl image (Python + botocore) needs substantially more memory than the `basic` curl image. |
+| initContainers.createIndexTemplate.resources.basic.limits.cpu | string | `"250m"` |  |
+| initContainers.createIndexTemplate.resources.basic.limits.memory | string | `"20Mi"` |  |
+| initContainers.createIndexTemplate.resources.iam.limits.cpu | string | `"250m"` |  |
+| initContainers.createIndexTemplate.resources.iam.limits.memory | string | `"256Mi"` |  |
 | initContainers.createIndexTemplate.templateName | string | `"alfresco-template"` | Template name for the index template |
 | initContainers.waitDbReady.image.pullPolicy | string | `"IfNotPresent"` |  |
 | initContainers.waitDbReady.image.repository | string | `"busybox"` |  |
