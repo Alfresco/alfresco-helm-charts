@@ -3,7 +3,7 @@ description: A Helm chart for Alfresco Activiti
 type: application
 name: alfresco-activiti
 version: 0.13.0
-appVersion: 26.2.0
+appVersion: 26.1.0
 dependencies:
   - name: alfresco-common
     version: 5.1.0
