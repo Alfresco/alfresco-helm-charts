@@ -92,3 +92,9 @@ matrix:
         charts/alfresco-search-service/charts/alfresco-insight-zeppelin/values.yaml
       helm_key: $.image.tag
       helm_update_appVersion: true
+
+  community:
+    batch-indexing:
+      helm_target: charts/alfresco-search-community/values.yaml
+      helm_key: $.image.tag
+      helm_update_appVersion: true
