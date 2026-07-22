@@ -218,6 +218,23 @@ When working on changes to any chart (e.g., `charts/alfresco-repository/`, `char
 - **Pre-release versions**: Use semantic versioning pre-release identifiers (e.g., "1.0.0-alpha.1")
 - **Coordination with releases**: Version bumps trigger chart releases through CI/CD
 
+#### `appVersion` bumps
+
+When a change bumps the chart's `appVersion` (the packaged application/product
+version, e.g. ACS), the chart `version` bump must match the semver level of
+the `appVersion` bump — never default to patch just because the diff looks
+like "only an image tag/appVersion bump":
+- `appVersion` `MAJOR` differs (e.g. `25.x.x` → `26.x.x`) → **major** chart bump
+- `appVersion` `MINOR` differs (e.g. `26.1.0` → `26.2.0`) → **minor** chart bump
+- Only `appVersion` `PATCH` differs, or `appVersion` unchanged → patch-level per the rules above
+
+If other chart changes in the same diff call for a higher bump than the
+`appVersion` change alone, use the higher of the two.
+
+Example: `version: 0.14.0` with `appVersion: 26.1.0` → `26.2.0` is a minor
+`appVersion` bump, so `version` must also bump minor to `0.15.0` (not
+`0.14.1`).
+
 #### Alpha version requests
 
 If asked to bump a chart to an alpha version, bump to the next minor version

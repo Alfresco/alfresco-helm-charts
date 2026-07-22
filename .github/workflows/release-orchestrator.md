@@ -538,13 +538,25 @@ For each changed chart, inspect the full diff:
 git diff origin/main...HEAD -- charts/<chart-name>/
 ```
 
-Apply these semver rules:
+Apply these semver rules. Evaluate **both** dimensions below, then take the **higher** of the two bump levels (major > minor > patch) as the final bump for the chart.
+
+**Dimension 1 — structural chart changes:**
 
 | Change type | Bump |
 |-------------|------|
 | Removed/renamed value, incompatible default, planned removal in UPGRADES.md | **major** `X+1.0.0` |
 | New optional value, new template, new conditional resource, compat dependency bump | **minor** `x.Y+1.0` |
-| Image tag bump only, bug fix, doc update, patch dependency bump | **patch** `x.y.Z+1` |
+| Bug fix, doc update, patch dependency bump | **patch** `x.y.Z+1` |
+
+**Dimension 2 — `appVersion` change:** the chart version bump must mirror the semver level of the `appVersion:` bump — do not default to patch just because the diff looks like "only an image tag bump." Compare old vs new `appVersion` in the `Chart.yaml` diff as `MAJOR.MINOR.PATCH`:
+
+| `appVersion` change | Bump |
+|-------------|------|
+| `MAJOR` differs (e.g. `25.x.x` → `26.x.x`) | **major** |
+| `MINOR` differs (e.g. `26.1.0` → `26.2.0`) | **minor** |
+| Only `PATCH` differs, or `appVersion` unchanged | **patch** |
+
+Example: `version: 0.14.0` / `appVersion: 26.1.0` → `appVersion: 26.2.0` is a minor `appVersion` bump, so the chart version must also bump minor: `0.15.0` (not `0.14.1`).
 
 Apply bumps in dependency order:
 1. `alfresco-common` (if still changed after Phase A)
