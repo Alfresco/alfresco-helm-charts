@@ -32,7 +32,7 @@ network:
     - alfresco.github.io
 steps:
   - name: Install helm-docs
-    uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.1.0
+    uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.20.0
 safe-outputs:
   create-issue:
     labels: [release, automation]
