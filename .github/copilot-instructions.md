@@ -235,6 +235,14 @@ Example: `version: 0.14.0` with `appVersion: 26.1.0` → `26.2.0` is a minor
 `appVersion` bump, so `version` must also bump minor to `0.15.0` (not
 `0.14.1`).
 
+**Exception — promoting a pre-release chart to GA:** if the chart's current
+`version` is a pre-release (contains `-`, e.g. `1.8.0-alpha.1`) and the change
+drops the pre-release suffix to land on that same version core (e.g.
+`1.8.0`), land on the GA version as-is — don't additionally bump for the
+`appVersion` change above, even if `appVersion` also changed in the same
+diff. The pre-release version core already reserved the slot for this
+release; don't stack a further bump on top of the GA promotion itself.
+
 #### Alpha version requests
 
 If asked to bump a chart to an alpha version, bump to the next minor version
