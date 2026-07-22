@@ -3,7 +3,7 @@ apiVersion: v2
 name: alfresco-search-community
 description: A Helm chart for deploying the Alfresco Elasticsearch Community batch indexing component
 type: application
-version: 0.1.0-alpha.1
+version: 0.1.0
 appVersion: 5.7.0-A.5
 dependencies:
   - name: alfresco-common
