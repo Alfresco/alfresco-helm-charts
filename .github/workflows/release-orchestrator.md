@@ -151,7 +151,7 @@ gh api "repos/Alfresco/alfresco-helm-charts/contents/charts/alfresco-repository/
 
 ## Step 2 — Check updatecli branches (prerequisite for all phases)
 
-The DevOps must have already run the `BumpVersions` workflow. Verify both branches exist:
+The DevOps must have already run the `BumpVersions` workflow **recently**. Branch existence alone is not enough — a branch can exist but be stale (created by a previous, older run and never refreshed). Verify both branches exist **and** were pushed within the last day:
 
 ```bash
 gh api "repos/Alfresco/alfresco-helm-charts/branches/updatecli-bump-acs" \
@@ -164,6 +164,18 @@ gh api "repos/Alfresco/alfresco-helm-charts/branches/updatecli-bump-helm" \
 ```
 
 If either is missing: update the issue with instructions to run [BumpVersions](https://github.com/Alfresco/alfresco-helm-charts/actions/workflows/updatecli.yaml) first, then re-run this workflow. **Stop here.**
+
+Then check that the `BumpVersions` workflow itself has actually run recently — the branch's last commit date is not a reliable freshness signal if the workflow runs but produces no diff (no new commit). Query the most recent runs directly:
+
+```bash
+gh api "repos/Alfresco/alfresco-helm-charts/actions/workflows/updatecli.yaml/runs?per_page=5" \
+  --jq '.workflow_runs[] | {id, status, conclusion, created_at, head_branch}'
+```
+
+- Find the most recent run(s) targeting `updatecli-bump-acs` and `updatecli-bump-helm` (or the run that fans out to both, if it's a single workflow — check `head_branch` and job names).
+- Compute how long ago `created_at` was relative to now. If the most recent successful run for either branch is **more than 1 day old**, treat both branches as **stale**.
+
+If either branch is stale: update the issue explaining that `updatecli-bump-acs` and/or `updatecli-bump-helm` exist but are stale (include the last run date and age), instruct the DevOps to re-run [BumpVersions](https://github.com/Alfresco/alfresco-helm-charts/actions/workflows/updatecli.yaml) to refresh them, then re-run this workflow. **Stop here.**
 
 Now compute what `updatecli-bump-acs` changes relative to `main` (used in Phase B and C):
 
@@ -626,8 +638,8 @@ Use `create-pull-request`:
 - [x/ ] `updatecli-bump-acs` no longer touches `activemq` vs `main` — **<✅/❌>**
 - [x/ ] `updatecli-bump-acs` no longer touches `postgres` vs `main` — **<✅/❌>**
 - [x/ ] `updatecli-bump-acs` no longer touches `elastic` vs `main` — **<✅/❌>**
-- [x/ ] `updatecli-bump-acs` branch present — **<commit date or "missing">**
-- [x/ ] `updatecli-bump-helm` branch present — **<commit date or "missing">**
+- [x/ ] `updatecli-bump-acs` branch present and fresh (BumpVersions run ≤1 day old) — **<commit date, last run date, or "missing"/"stale">**
+- [x/ ] `updatecli-bump-helm` branch present and fresh (BumpVersions run ≤1 day old) — **<commit date, last run date, or "missing"/"stale">**
 - [ ] Both updatecli branches reviewed (unwanted bumps reverted) — **⚠️ manual**
 
 **Release:**
