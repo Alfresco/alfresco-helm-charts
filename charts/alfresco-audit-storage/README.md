@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-audit-storage
 
-![Version: 0.11.0](https://img.shields.io/badge/Version-0.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.2](https://img.shields.io/badge/AppVersion-1.3.2-informational?style=flat-square)
+![Version: 0.11.0](https://img.shields.io/badge/Version-0.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.3](https://img.shields.io/badge/AppVersion-1.3.3-informational?style=flat-square)
 
 A Helm chart for Kubernetes to deploy Alfresco Audit Storage
 
@@ -31,7 +31,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | global.alfrescoRegistryPullSecrets | string | `"quay-registry-secret"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"quay.io/alfresco/alfresco-audit-storage"` |  |
-| image.tag | string | `"1.3.2"` |  |
+| image.tag | string | `"1.3.3"` |  |
 | imagePullSecrets | list | `[]` |  |
 | index.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap holding the URL of the elasticsearch service |
 | index.existingConfigMap.name | string | `nil` | Alternatively, provide elasticsearch service connection details via an existing configmap |
