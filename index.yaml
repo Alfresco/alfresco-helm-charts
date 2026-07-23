@@ -6044,6 +6044,21 @@ entries:
     version: 0.1.0-alpha.0
   alfresco-search-community:
   - apiVersion: v2
+    appVersion: 5.7.0
+    created: "2026-07-23T13:48:52.931064749Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.1.0
+    description: A Helm chart for deploying the Alfresco Elasticsearch Community batch
+      indexing component
+    digest: 82b0a854c0bf5f870ea8bd0141677b14b18fea559a091a197a91c12a881238d8
+    name: alfresco-search-community
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-search-community-0.1.0/alfresco-search-community-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
     appVersion: 5.7.0-A.5
     created: "2026-07-21T14:21:30.494543184Z"
     dependencies:
@@ -12062,4 +12077,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2026-07-23T09:23:39.840417669Z"
+generated: "2026-07-23T13:48:52.93204623Z"
