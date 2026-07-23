@@ -11,7 +11,7 @@ global:
 image:
   repository: docker.io/alfresco/alfresco-elasticsearch-batch-indexing
   pullPolicy: IfNotPresent
-  tag: 5.7.0-A.5
+  tag: 5.7.0
   # -- Port the container listens on
   internalPort: 8080
 
