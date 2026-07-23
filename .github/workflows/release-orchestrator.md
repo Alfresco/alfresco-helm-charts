@@ -32,7 +32,7 @@ network:
     - alfresco.github.io
 steps:
   - name: Install helm-docs
-    uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.1.0
+    uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.20.0
 safe-outputs:
   create-issue:
     labels: [release, automation]
@@ -151,7 +151,7 @@ gh api "repos/Alfresco/alfresco-helm-charts/contents/charts/alfresco-repository/
 
 ## Step 2 — Check updatecli branches (prerequisite for all phases)
 
-The DevOps must have already run the `BumpVersions` workflow. Verify both branches exist:
+The DevOps must have already run the `BumpVersions` workflow **recently**. Branch existence alone is not enough — a branch can exist but be stale (created by a previous, older run and never refreshed). Verify both branches exist **and** were pushed within the last day:
 
 ```bash
 gh api "repos/Alfresco/alfresco-helm-charts/branches/updatecli-bump-acs" \
@@ -164,6 +164,18 @@ gh api "repos/Alfresco/alfresco-helm-charts/branches/updatecli-bump-helm" \
 ```
 
 If either is missing: update the issue with instructions to run [BumpVersions](https://github.com/Alfresco/alfresco-helm-charts/actions/workflows/updatecli.yaml) first, then re-run this workflow. **Stop here.**
+
+Then check that the `BumpVersions` workflow itself has actually run recently — the branch's last commit date is not a reliable freshness signal if the workflow runs but produces no diff (no new commit). Query the most recent runs directly:
+
+```bash
+gh api "repos/Alfresco/alfresco-helm-charts/actions/workflows/updatecli.yaml/runs?per_page=5" \
+  --jq '.workflow_runs[] | {id, status, conclusion, created_at, head_branch}'
+```
+
+- Find the most recent run(s) targeting `updatecli-bump-acs` and `updatecli-bump-helm` (or the run that fans out to both, if it's a single workflow — check `head_branch` and job names).
+- Compute how long ago `created_at` was relative to now. If the most recent successful run for either branch is **more than 1 day old**, treat both branches as **stale**.
+
+If either branch is stale: update the issue explaining that `updatecli-bump-acs` and/or `updatecli-bump-helm` exist but are stale (include the last run date and age), instruct the DevOps to re-run [BumpVersions](https://github.com/Alfresco/alfresco-helm-charts/actions/workflows/updatecli.yaml) to refresh them, then re-run this workflow. **Stop here.**
 
 Now compute what `updatecli-bump-acs` changes relative to `main` (used in Phase B and C):
 
@@ -526,13 +538,27 @@ For each changed chart, inspect the full diff:
 git diff origin/main...HEAD -- charts/<chart-name>/
 ```
 
-Apply these semver rules:
+Apply these semver rules. Evaluate **both** dimensions below, then take the **higher** of the two bump levels (major > minor > patch) as the final bump for the chart.
+
+**Dimension 1 — structural chart changes:**
 
 | Change type | Bump |
 |-------------|------|
 | Removed/renamed value, incompatible default, planned removal in UPGRADES.md | **major** `X+1.0.0` |
 | New optional value, new template, new conditional resource, compat dependency bump | **minor** `x.Y+1.0` |
-| Image tag bump only, bug fix, doc update, patch dependency bump | **patch** `x.y.Z+1` |
+| Bug fix, doc update, patch dependency bump | **patch** `x.y.Z+1` |
+
+**Dimension 2 — `appVersion` change:** the chart version bump must mirror the semver level of the `appVersion:` bump — do not default to patch just because the diff looks like "only an image tag bump." Compare old vs new `appVersion` in the `Chart.yaml` diff as `MAJOR.MINOR.PATCH`:
+
+| `appVersion` change | Bump |
+|-------------|------|
+| `MAJOR` differs (e.g. `25.x.x` → `26.x.x`) | **major** |
+| `MINOR` differs (e.g. `26.1.0` → `26.2.0`) | **minor** |
+| Only `PATCH` differs, or `appVersion` unchanged | **patch** |
+
+Example: `version: 0.14.0` / `appVersion: 26.1.0` → `appVersion: 26.2.0` is a minor `appVersion` bump, so the chart version must also bump minor: `0.15.0` (not `0.14.1`).
+
+**Exception — pre-release chart being promoted to GA:** if the chart's current `version` on `main` is a pre-release (contains `-`, e.g. `1.8.0-alpha.1`) and this diff drops the pre-release suffix to land on that same version core (e.g. `1.8.0`), land on the GA version **as-is** — do not additionally bump for dimension 2, even if `appVersion` also changed in the same diff. The alpha/pre-release version core already reserved the slot for this release; do not stack a further bump on top of the GA promotion itself.
 
 Apply bumps in dependency order:
 1. `alfresco-common` (if still changed after Phase A)
@@ -626,8 +652,8 @@ Use `create-pull-request`:
 - [x/ ] `updatecli-bump-acs` no longer touches `activemq` vs `main` — **<✅/❌>**
 - [x/ ] `updatecli-bump-acs` no longer touches `postgres` vs `main` — **<✅/❌>**
 - [x/ ] `updatecli-bump-acs` no longer touches `elastic` vs `main` — **<✅/❌>**
-- [x/ ] `updatecli-bump-acs` branch present — **<commit date or "missing">**
-- [x/ ] `updatecli-bump-helm` branch present — **<commit date or "missing">**
+- [x/ ] `updatecli-bump-acs` branch present and fresh (BumpVersions run ≤1 day old) — **<commit date, last run date, or "missing"/"stale">**
+- [x/ ] `updatecli-bump-helm` branch present and fresh (BumpVersions run ≤1 day old) — **<commit date, last run date, or "missing"/"stale">**
 - [ ] Both updatecli branches reviewed (unwanted bumps reverted) — **⚠️ manual**
 
 **Release:**

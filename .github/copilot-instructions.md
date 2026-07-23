@@ -218,6 +218,31 @@ When working on changes to any chart (e.g., `charts/alfresco-repository/`, `char
 - **Pre-release versions**: Use semantic versioning pre-release identifiers (e.g., "1.0.0-alpha.1")
 - **Coordination with releases**: Version bumps trigger chart releases through CI/CD
 
+#### `appVersion` bumps
+
+When a change bumps the chart's `appVersion` (the packaged application/product
+version, e.g. ACS), the chart `version` bump must match the semver level of
+the `appVersion` bump — never default to patch just because the diff looks
+like "only an image tag/appVersion bump":
+- `appVersion` `MAJOR` differs (e.g. `25.x.x` → `26.x.x`) → **major** chart bump
+- `appVersion` `MINOR` differs (e.g. `26.1.0` → `26.2.0`) → **minor** chart bump
+- Only `appVersion` `PATCH` differs, or `appVersion` unchanged → patch-level per the rules above
+
+If other chart changes in the same diff call for a higher bump than the
+`appVersion` change alone, use the higher of the two.
+
+Example: `version: 0.14.0` with `appVersion: 26.1.0` → `26.2.0` is a minor
+`appVersion` bump, so `version` must also bump minor to `0.15.0` (not
+`0.14.1`).
+
+**Exception — promoting a pre-release chart to GA:** if the chart's current
+`version` is a pre-release (contains `-`, e.g. `1.8.0-alpha.1`) and the change
+drops the pre-release suffix to land on that same version core (e.g.
+`1.8.0`), land on the GA version as-is — don't additionally bump for the
+`appVersion` change above, even if `appVersion` also changed in the same
+diff. The pre-release version core already reserved the slot for this
+release; don't stack a further bump on top of the GA promotion itself.
+
 #### Alpha version requests
 
 If asked to bump a chart to an alpha version, bump to the next minor version
