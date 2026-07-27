@@ -53,7 +53,7 @@ live-ingester.
   valueFrom:
     configMapKeyRef:
         name: {{ $cmName }}
-        key: {{ .existingConfigMap.keys.url }}
+        key: {{ .existingConfigMap.keys.apiUrl }}
 - name: AUTH_ALFRESCO_TYPE
   valueFrom:
     configMapKeyRef:

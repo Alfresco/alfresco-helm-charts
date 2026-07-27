@@ -143,6 +143,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | repository.authType | string | `nil` |  |
 | repository.clientId | string | `nil` |  |
 | repository.clientSecret | string | `nil` |  |
+| repository.existingConfigMap.keys.apiUrl | string | `"REPOSITORY_API_BASE_URL"` | Key within the configmap holding the full Alfresco REST API v1 base url (used by nucleus-sync) |
 | repository.existingConfigMap.keys.authGrantType | string | `"REPOSITORY_AUTH_GRANT_TYPE"` |  |
 | repository.existingConfigMap.keys.authTokenUrl | string | `"REPOSITORY_AUTH_TOKEN_URL"` |  |
 | repository.existingConfigMap.keys.authType | string | `"REPOSITORY_AUTH_TYPE"` |  |
@@ -154,8 +155,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | repository.existingSecret.keys.password | string | `"REPOSITORY_PASSWORD"` |  |
 | repository.existingSecret.keys.username | string | `"REPOSITORY_USERNAME"` |  |
 | repository.existingSecret.name | string | `nil` |  |
+| repository.nucleusSyncApiUrl | string | `nil` | Base URL for the Alfresco REST API v1, used by nucleus-sync. Defaults to `{url}/api/-default-/public/alfresco/versions/1` when not set. |
 | repository.password | string | `nil` |  |
-| repository.url | string | `nil` | URL of the Alfresco repository |
+| repository.url | string | `nil` | URL of the Alfresco repository (e.g. http://alfresco:8080/alfresco) |
 | repository.username | string | `nil` |  |
 | repository.versionOverride | string | `nil` |  |
 | securityContext | object | `{}` |  |

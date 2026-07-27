@@ -240,8 +240,11 @@ messageBroker:
       username: BROKER_USERNAME
       password: BROKER_PASSWORD
 repository:
-  # -- URL of the Alfresco repository
+  # -- URL of the Alfresco repository (e.g. http://alfresco:8080/alfresco)
   url: null
+  # -- Base URL for the Alfresco REST API v1, used by nucleus-sync.
+  # Defaults to `{url}/api/-default-/public/alfresco/versions/1` when not set.
+  nucleusSyncApiUrl: null
   authType: null
   authGrantType: null
   authTokenUrl: null
@@ -258,6 +261,9 @@ repository:
       # -- Key within the configmap holding the full url to connect to the
       # alfresco repository
       url: REPOSITORY_URL
+      # -- Key within the configmap holding the full Alfresco REST API v1 base
+      # url (used by nucleus-sync)
+      apiUrl: REPOSITORY_API_BASE_URL
       authType: REPOSITORY_AUTH_TYPE
       authGrantType: REPOSITORY_AUTH_GRANT_TYPE
       authTokenUrl: REPOSITORY_AUTH_TOKEN_URL

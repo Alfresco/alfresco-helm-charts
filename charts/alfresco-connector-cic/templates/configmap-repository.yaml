@@ -8,6 +8,7 @@ metadata:
     {{- include "alfresco-connector-cic.labels" . | nindent 4 }}
 data:
   REPOSITORY_URL: {{ .Values.repository.url | default "" | quote }}
+  REPOSITORY_API_BASE_URL: {{ coalesce .Values.repository.nucleusSyncApiUrl (printf "%s/api/-default-/public/alfresco/versions/1" (.Values.repository.url | default "")) | quote }}
   REPOSITORY_AUTH_TYPE: {{ .Values.repository.authType | default "basic" | quote }}
   REPOSITORY_AUTH_GRANT_TYPE: {{ .Values.repository.authGrantType | default "" | quote }}
   REPOSITORY_AUTH_TOKEN_URL: {{ .Values.repository.authTokenUrl | default "" | quote }}
