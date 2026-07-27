@@ -64,6 +64,11 @@ tests:
           pattern: |-
             (^\s*|[^\s]\s+)-Dsolr\.secureComms="\$SEARCH_SECURECOMMS"($|\s)
         template: configmap-repository.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.sharedSecret=\$SOLR_SECRET($|\s)
+        template: configmap-repository.yaml
 
   - it: should render a working Solr6 config based on values (noauth)
     set:
@@ -77,6 +82,41 @@ tests:
           path: data.SEARCH_SECURECOMMS
           value: none
         template: configmap-search.yaml
+      - notMatchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.sharedSecret
+        template: configmap-repository.yaml
+
+  - it: solr6 secureComms is overridable via existingConfigMap independent of shared secret
+    set:
+      configuration:
+        search:
+          flavor: solr6
+          existingConfigMap:
+            name: mysolrcm
+            keys:
+              securecomms: INDEX_SERVICE_SECURITY
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SEARCH_SECURECOMMS
+            valueFrom:
+              configMapKeyRef:
+                name: mysolrcm
+                key: INDEX_SERVICE_SECURITY
+        template: deployment.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.secureComms="\$SEARCH_SECURECOMMS"($|\s)
+        template: configmap-repository.yaml
+      - notMatchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.sharedSecret
+        template: configmap-repository.yaml
 
   - it: should not render any search configmap
     set:
@@ -175,6 +215,33 @@ tests:
           pattern: |-
             (^\s*|[^\s]\s+)-Delasticsearch\.secureComms=\$SEARCH_SECURECOMMS($|\s)
         template: configmap-repository.yaml
+
+  - it: should render the legacy Solr shared secret alongside an ES flavor
+    set:
+      configuration:
+        search:
+          << : *esValues
+          solr-secret: mysupersecret
+    asserts:
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.secureComms="secret"($|\s)
+        template: configmap-repository.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.sharedSecret=\$SOLR_SECRET($|\s)
+        template: configmap-repository.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Delasticsearch\.secureComms=\$SEARCH_SECURECOMMS($|\s)
+        template: configmap-repository.yaml
+      - equal:
+          path: data.SOLR_SECRET
+          value: bXlzdXBlcnNlY3JldA==
+        template: secret-search.yaml
 
   - it: should render a working ES config based on values (noauth)
     set:

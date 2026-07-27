@@ -95,7 +95,11 @@ configuration:
     username: null
     # -- Password to authenticate to the search service
     password: null
-    # -- Solr inter process shared secret
+    # -- Shared secret protecting the repository's legacy Solr tracking
+    # webscripts API (`solr.secureComms`/`solr.sharedSecret`). Authenticates
+    # any indexer that still pulls metadata/renditions through that API (e.g.
+    # a Solr6 tracker, or the alfresco-search-community batch indexer), so it
+    # applies independently of the repository's own outbound query flavor.
     solr-secret: null
     # -- A map of additional elasticsearch.* properties to be passed as -D
     # arguments to the repository when search.flavor is set to elasticsearch.
@@ -133,7 +137,8 @@ configuration:
         username: ELASTICSEARCH_USERNAME
         # -- Key within the secret holding the search service password
         password: ELASTICSEARCH_PASSWORD
-        # -- Key within the secret holding the index shared secret
+        # -- Key within the secret holding the legacy Solr tracking
+        # webscripts shared secret
         solr-secret: SOLR_SECRET
 
     existingConfigMap:
