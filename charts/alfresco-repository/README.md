@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 1.8.0](https://img.shields.io/badge/Version-1.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.0](https://img.shields.io/badge/AppVersion-26.2.0-informational?style=flat-square)
+![Version: 1.9.0-alpha.0](https://img.shields.io/badge/Version-1.9.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.0](https://img.shields.io/badge/AppVersion-26.2.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -114,12 +114,12 @@ The init container image is selected automatically based on the auth mode; overr
 | configuration.search.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap  holding the search service URL. |
 | configuration.search.existingConfigMap.name | string | `nil` | Optional configmap containing the search service URL |
 | configuration.search.existingSecret.keys.password | string | `"ELASTICSEARCH_PASSWORD"` | Key within the secret holding the search service password |
-| configuration.search.existingSecret.keys.solr-secret | string | `"SOLR_SECRET"` | Key within the secret holding the index shared secret |
+| configuration.search.existingSecret.keys.solr-secret | string | `"SOLR_SECRET"` | Key within the secret holding the legacy Solr tracking webscripts shared secret |
 | configuration.search.existingSecret.keys.username | string | `"ELASTICSEARCH_USERNAME"` | Key within the secret holding the search service username |
 | configuration.search.existingSecret.name | string | `nil` | Optional secret containing search service credentials |
 | configuration.search.flavor | string | `"noindex"` | Can be either `solr`, `elasticsearch` or `noindex` |
 | configuration.search.password | string | `nil` | Password to authenticate to the search service |
-| configuration.search.solr-secret | string | `nil` | Solr inter process shared secret |
+| configuration.search.solr-secret | string | `nil` | Shared secret protecting the repository's legacy Solr tracking webscripts API (`solr.secureComms`/`solr.sharedSecret`). Authenticates any indexer that still pulls metadata/renditions through that API (e.g. a Solr6 tracker, or the alfresco-search-community batch indexer), so it applies independently of the repository's own outbound query flavor. |
 | configuration.search.url | string | `nil` | URL where the search service can be found |
 | configuration.search.username | string | `nil` | Username to authenticate to the search service |
 | configuration.smtp | object | see below | Basic SMTP capabilities config (limited to enabling/disabling). In order to pass more SMTP properties and configure the subsystem more deeply, please use value `environment.CATALINA_OPTS` or `configuration.repository.existingConfigMap` and check the [available properties for this subsystem](https://github.com/Alfresco/alfresco-community-repo/blob/master/repository/src/main/resources/alfresco/subsystems/email/InboundSMTP/inboundSMTP.properties) |
