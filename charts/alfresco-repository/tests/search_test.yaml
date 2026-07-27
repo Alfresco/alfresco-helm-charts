@@ -62,7 +62,7 @@ tests:
       - matchRegex:
           path: data.CATALINA_OPTS
           pattern: |-
-            (^\s*|[^\s]\s+)-Dsolr\.secureComms="secret"($|\s)
+            (^\s*|[^\s]\s+)-Dsolr\.secureComms="\$SEARCH_SECURECOMMS"($|\s)
         template: configmap-repository.yaml
       - matchRegex:
           path: data.CATALINA_OPTS
@@ -85,7 +85,37 @@ tests:
       - notMatchRegex:
           path: data.CATALINA_OPTS
           pattern: |-
-            (^\s*|[^\s]\s+)-Dsolr\.(secureComms|sharedSecret)
+            (^\s*|[^\s]\s+)-Dsolr\.sharedSecret
+        template: configmap-repository.yaml
+
+  - it: solr6 secureComms is overridable via existingConfigMap independent of shared secret
+    set:
+      configuration:
+        search:
+          flavor: solr6
+          existingConfigMap:
+            name: mysolrcm
+            keys:
+              securecomms: INDEX_SERVICE_SECURITY
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SEARCH_SECURECOMMS
+            valueFrom:
+              configMapKeyRef:
+                name: mysolrcm
+                key: INDEX_SERVICE_SECURITY
+        template: deployment.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.secureComms="\$SEARCH_SECURECOMMS"($|\s)
+        template: configmap-repository.yaml
+      - notMatchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.sharedSecret
         template: configmap-repository.yaml
 
   - it: should not render any search configmap
