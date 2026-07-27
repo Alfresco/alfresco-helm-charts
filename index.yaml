@@ -4745,6 +4745,20 @@ entries:
   alfresco-repository:
   - apiVersion: v2
     appVersion: 26.2.0
+    created: "2026-07-27T10:52:41.13295215Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.1.0
+    description: Alfresco content repository Helm chart
+    digest: 602ed6a8c101953f243fde211a280cd31681e5b9769119ae56e793fc9e95fd33
+    name: alfresco-repository
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-repository-1.9.0-alpha.0/alfresco-repository-1.9.0-alpha.0.tgz
+    version: 1.9.0-alpha.0
+  - apiVersion: v2
+    appVersion: 26.2.0
     created: "2026-07-23T09:23:38.548605802Z"
     dependencies:
     - name: alfresco-common
@@ -12077,4 +12091,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2026-07-23T13:48:52.93204623Z"
+generated: "2026-07-27T10:52:41.133959957Z"
