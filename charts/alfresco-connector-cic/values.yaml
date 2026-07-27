@@ -14,7 +14,7 @@ tolerations: []
 liveIngester:
   image:
     repository: quay.io/alfresco/alfresco-cic-connector-live-ingester
-    tag: 2.0.2
+    tag: 1.0.1
     pullPolicy: IfNotPresent
     internalPort: &liveIngesterPort 8080
   replicaCount: 1
@@ -97,7 +97,7 @@ bulkIngester:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-cic-connector-bulk-ingester
-    tag: 2.0.2
+    tag: 1.0.1
     pullPolicy: IfNotPresent
   resources:
     requests:
@@ -124,7 +124,7 @@ nucleusSync:
   enabled: true
   image:
     repository: quay.io/alfresco/alfresco-cic-connector-nucleus-sync
-    tag: 2.0.2
+    tag: 1.0.1
     pullPolicy: IfNotPresent
     internalPort: &nucleusSyncPort 8080
   replicaCount: 1

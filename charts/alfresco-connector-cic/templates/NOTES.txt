@@ -1,4 +1,4 @@
-Add those properites to alfresco instance:
+Add those properties to alfresco instance:
 
 hxi.discovery.base-url=https://discovery.{{ .Values.cic.hxEnv }}.experience.hyland.com
 hxi.auth.providers.hyland-experience.token-uri={{ .Values.cic.hxAuthTokenUrl }}
