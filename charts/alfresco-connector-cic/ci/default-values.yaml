@@ -57,6 +57,8 @@ nucleusSync:
     periodSeconds: 30
 db:
   url: jdbc:postgresql://postgresql:5432/alfresco
+  username: alfresco
+  password: alfresco
 messageBroker:
   url: nio://activemq-broker:61616
   username: admin
