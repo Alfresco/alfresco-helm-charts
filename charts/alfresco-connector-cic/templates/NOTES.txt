@@ -1,0 +1,9 @@
+Add those properites to alfresco instance:
+
+hxi.discovery.base-url=https://discovery.{{ .Values.cic.hxEnv }}.experience.hyland.com
+hxi.auth.providers.hyland-experience.token-uri={{ .Values.cic.hxAuthTokenUrl }}
+hxi.auth.providers.hyland-experience.environment-key={{ .Values.cic.hxEnvKey }}
+hxi.auth.providers.hyland-experience.client-id={{ .Values.cic.hxClientId }}
+hxi.auth.providers.hyland-experience.client-secret={{ .Values.cic.hxClientSecret }}
+hxi.knowledge-retrieval.url=https://{{ .Values.cic.hxEnvKey }}.insight.{{ .Values.cic.hxEnv }}.ncp.hyland.com/discovery/agents
+hxi.connector.source-id={{ .Values.cic.hxAppSourceId }}

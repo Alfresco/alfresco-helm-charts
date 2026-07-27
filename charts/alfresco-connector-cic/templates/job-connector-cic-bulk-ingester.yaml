@@ -1,0 +1,84 @@
+{{- if .Values.bulkIngester.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "alfresco-connector-cic.bulk-ingester.fullname" . }}
+  labels:
+    {{- include "alfresco-connector-cic.bulk-ingester.labels" $ | nindent 4 }}
+spec:
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "alfresco-connector-cic.bulk-ingester.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "alfresco-connector-cic.serviceAccountName" . }}
+      {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
+      {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
+      restartPolicy: Never
+      containers:
+        - name: {{ include "alfresco-connector-cic.bulk-ingester.name" . }}
+          image: {{ printf "%s:%s" .Values.bulkIngester.image.repository .Values.bulkIngester.image.tag | quote }}
+          imagePullPolicy: {{ .Values.bulkIngester.image.pullPolicy }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
+          resources: {{- toYaml .Values.bulkIngester.resources | nindent 12 }}
+          env:
+            {{- $dbCtx := dict "Values" (dict "nameOverride" "alfresco-database") "Chart" .Chart "Release" .Release }}
+            {{- $dbFullName := (include "alfresco-connector-cic.fullname" $dbCtx) }}
+            {{- include "alfresco-connector-cic.database.cm.env" $ | indent 12 }}
+            {{- include "alfresco-connector-cic.database.secret.env" $ | indent 12 }}
+            {{- include "alfresco-connector-cic.activemq.cm.env" $ | indent 12 }}
+            {{- include "alfresco-connector-cic.activemq.secret.env" $ | indent 12 }}
+            {{- range $key, $val := $.Values.bulkIngester.environment }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+      {{- if .Values.bulkIngester.initContainers.waitForRepository.enabled }}
+      initContainers:
+        - name: wait-for-repository
+          {{- with .Values.bulkIngester.initContainers.waitForRepository }}
+          image: {{ printf "%s:%s" .image.repository .image.tag | quote }}
+          imagePullPolicy: {{ .image.pullPolicy }}
+          resources: {{- toYaml .resources | nindent 12 }}
+          {{- end }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
+          env:
+            {{- $repoCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" ($.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" $.Chart "Release" $.Release }}
+            {{- $repoCm := coalesce .Values.repository.existingConfigMap.name (include "alfresco-connector-cic.fullname" $repoCtx) }}
+            - name: REPOSITORY_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $repoCm }}
+                  key: {{ .Values.repository.existingConfigMap.keys.url }}
+          command: ["/bin/sh", "-c"]
+          # Delay running the reindexing to give Alfresco Repository a chance to initialise its database
+          args:
+            - |
+              while [ $(curl -sw '%{http_code}' ${REPOSITORY_URL}/api/-default-/public/alfresco/versions/1/probes/-ready- -o /dev/null) -ne 200 ]
+              do echo "Waiting for the Alfresco repository to come up at $REPOSITORY_URL ..."
+                sleep 5
+              done
+              echo 'Alfresco is ready, delay reindexing to give a chance to fully initialise.'
+              sleep 30
+              echo 'Bulk ingesting started!'
+      {{- end }}
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.bulkIngester.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
