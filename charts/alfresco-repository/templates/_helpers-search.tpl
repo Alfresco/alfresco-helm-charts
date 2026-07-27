@@ -34,15 +34,16 @@ Usage: include "alfresco-repository.search.config" $
 */}}
 {{- define "alfresco-repository.search.config" -}}
 {{- with .Values.configuration.search }}
-  {{- if eq "solr6" (include "alfresco-repository.search.flavor.valid" .flavor) }}
+  {{- $flavor := include "alfresco-repository.search.flavor.valid" .flavor }}
+  {{- if and (ne "noindex" $flavor) (or .existingSecret.name (index . "solr-secret")) }}
+  -Dsolr.secureComms="secret"
+  -Dsolr.sharedSecret=$SOLR_SECRET
+  {{- end }}
+  {{- if eq "solr6" $flavor }}
   -Dsolr.host="$SEARCH_HOST"
   -Dsolr.port="$SEARCH_PORT"
   -Dsolr.base.url="$SOLR_BASE_URL"
-  -Dsolr.secureComms="$SEARCH_SECURECOMMS"
-  {{- if or .existingSecret.name (index . "solr-secret") }}
-  -Dsolr.sharedSecret=$SOLR_SECRET
-  {{- end }}
-  {{- else if eq "elasticsearch" (include "alfresco-repository.search.flavor.valid" .flavor) }}
+  {{- else if eq "elasticsearch" $flavor }}
   -Delasticsearch.host=$SEARCH_HOST
   -Delasticsearch.port=$SEARCH_PORT
   -Delasticsearch.secureComms=$SEARCH_SECURECOMMS
