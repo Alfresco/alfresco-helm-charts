@@ -8,4 +8,7 @@ metadata:
 data:
   HX_AUTH_TOKEN_URL: {{ .Values.cic.hxAuthTokenUrl | default "" | quote }}
   HX_INSIGHT_INGESTION_URL: {{ .Values.cic.hxInsightIngestionUrl | default "" | quote }}
+  NUCLEUS_BASE_URL: {{ .Values.cic.nucleusBaseUrl | default "" | quote }}
+  NUCLEUS_IDP_BASE_URL: {{ .Values.cic.nucleusIdpBaseUrl | default "" | quote }}
+  NUCLEUS_SYSTEM_ID: {{ .Values.cic.nucleusSystemId | default "" | quote }}
 {{- end -}}

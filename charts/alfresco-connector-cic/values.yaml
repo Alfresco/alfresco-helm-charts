@@ -289,11 +289,18 @@ cic:
   hxEnvKey: null
   hxAppSourceId: null
   hxEnv: null
+  # -- Nucleus connection settings (nucleus-sync only)
+  nucleusBaseUrl: null
+  nucleusIdpBaseUrl: null
+  nucleusSystemId: null
   existingConfigMap:
     name: null
     keys:
       hxAuthTokenUrl: HX_AUTH_TOKEN_URL
       hxInsightIngestionUrl: HX_INSIGHT_INGESTION_URL
+      nucleusBaseUrl: NUCLEUS_BASE_URL
+      nucleusIdpBaseUrl: NUCLEUS_IDP_BASE_URL
+      nucleusSystemId: NUCLEUS_SYSTEM_ID
   existingSecret:
     name: null
     keys:

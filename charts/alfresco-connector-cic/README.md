@@ -45,6 +45,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | bulkIngester.resources.requests.memory | string | `"128Mi"` |  |
 | cic.existingConfigMap.keys.hxAuthTokenUrl | string | `"HX_AUTH_TOKEN_URL"` |  |
 | cic.existingConfigMap.keys.hxInsightIngestionUrl | string | `"HX_INSIGHT_INGESTION_URL"` |  |
+| cic.existingConfigMap.keys.nucleusBaseUrl | string | `"NUCLEUS_BASE_URL"` |  |
+| cic.existingConfigMap.keys.nucleusIdpBaseUrl | string | `"NUCLEUS_IDP_BASE_URL"` |  |
+| cic.existingConfigMap.keys.nucleusSystemId | string | `"NUCLEUS_SYSTEM_ID"` |  |
 | cic.existingConfigMap.name | string | `nil` |  |
 | cic.existingSecret.keys.hxAppSourceId | string | `"HX_APP_SOURCE_ID"` |  |
 | cic.existingSecret.keys.hxClientId | string | `"HX_CLIENT_ID"` |  |
@@ -58,6 +61,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | cic.hxEnv | string | `nil` |  |
 | cic.hxEnvKey | string | `nil` |  |
 | cic.hxInsightIngestionUrl | string | `nil` |  |
+| cic.nucleusBaseUrl | string | `nil` | Nucleus connection settings (nucleus-sync only) |
+| cic.nucleusIdpBaseUrl | string | `nil` |  |
+| cic.nucleusSystemId | string | `nil` |  |
 | db.existingConfigMap.keys.url | string | `"DATABASE_URL"` | Key within the configmap holding the full JDBC url to connect to database service |
 | db.existingConfigMap.name | string | `nil` | Alternatively, provide database connection details via an existing configmap |
 | db.existingSecret.keys.password | string | `"DATABASE_PASSWORD"` | Key within the secret holding the database password |

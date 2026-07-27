@@ -24,16 +24,7 @@ liveIngester:
     initialDelaySeconds: 30
     periodSeconds: 30
 bulkIngester:
-  resources:
-    requests:
-      cpu: "0.01"
-      memory: "128Mi"
-    limits:
-      cpu: "1"
-      memory: "1Gi"
-  initContainers:
-    waitForRepository:
-      enabled: false
+  enabled: false
 nucleusSync:
   replicaCount: 1
   resources:
@@ -65,8 +56,13 @@ messageBroker:
   password: admin
 repository:
   url: http://repository
+  username: admin
+  password: admin
   versionOverride: '23.3.0'
 ats:
   sfsUrl: http://alfresco-transform-services-sfs
 cic:
   hxInsightIngestionUrl: http://hxi-ingestion
+  nucleusBaseUrl: http://nucleus-mock
+  nucleusIdpBaseUrl: http://nucleus-idp-mock
+  nucleusSystemId: test-system-id

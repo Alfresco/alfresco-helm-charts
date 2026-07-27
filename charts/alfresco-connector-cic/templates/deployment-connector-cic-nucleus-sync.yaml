@@ -36,9 +36,7 @@ spec:
           imagePullPolicy: {{ .Values.nucleusSync.image.pullPolicy }}
           {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
           env:
-            {{- include "alfresco-connector-cic.activemq.cm.env" . | indent 12 }}
-            {{- include "alfresco-connector-cic.activemq.secret.env" . | indent 12 }}
-            {{- include "alfresco-connector-cic.repository.cm.env" . | indent 12 }}
+            {{- include "alfresco-connector-cic.nucleus-sync.repository.cm.env" . | indent 12 }}
             {{- include "alfresco-connector-cic.repository.secret.env" . | indent 12 }}
             {{- include "alfresco-connector-cic.nucleus-sync.cm.env" . | indent 12 }}
             {{- include "alfresco-connector-cic.secret.env" . | indent 12 }}

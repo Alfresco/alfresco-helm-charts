@@ -37,17 +37,31 @@ Usage: include "alfresco-connector-cic.live-ingester.cm.env" $
 
 Usage: include "alfresco-connector-cic.nucleus-sync.cm.env" $
 
+Injects Nucleus-specific CIC config into the nucleus-sync container.
+Note: alfresco.base-url for nucleus-sync is injected separately via
+alfresco-connector-cic.nucleus-sync.repository.cm.env.
+
 */}}
 {{- define "alfresco-connector-cic.nucleus-sync.cm.env" -}}
 {{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.cic }}
 {{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-cic.fullname" $cmCtx ) }}
 {{- include "alfresco-connector-cic.cm.env" $ }}
-- name: HYLANDEXPERIENCE_INSIGHT_INGESTION_BASEURL
+- name: NUCLEUS_BASEURL
   valueFrom:
     configMapKeyRef:
       name: {{ $cmName }}
-      key: {{ .existingConfigMap.keys.hxInsightIngestionUrl }}
+      key: {{ .existingConfigMap.keys.nucleusBaseUrl }}
+- name: NUCLEUS_IDPBASEURL
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $cmName }}
+      key: {{ .existingConfigMap.keys.nucleusIdpBaseUrl }}
+- name: NUCLEUS_SYSTEMID
+  valueFrom:
+    configMapKeyRef:
+      name: {{ $cmName }}
+      key: {{ .existingConfigMap.keys.nucleusSystemId }}
 {{- end -}}
 {{- end -}}
 
