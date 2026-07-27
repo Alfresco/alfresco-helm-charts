@@ -49,16 +49,42 @@ live-ingester.
 {{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.repository }}
 {{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-cic.fullname" $cmCtx) }}
-- name: ALFRESCO_BASEURL
+- name: ALFRESCO_BASE_URL
   valueFrom:
     configMapKeyRef:
         name: {{ $cmName }}
         key: {{ .existingConfigMap.keys.url }}
-- name: AUTH_PROVIDERS_ALFRESCO_TYPE
+- name: AUTH_ALFRESCO_TYPE
   valueFrom:
     configMapKeyRef:
       name: {{ $cmName }}
       key: {{ .existingConfigMap.keys.authType }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+
+Usage: include "alfresco-connector-cic.nucleus-sync.repository.secret.env" $
+
+Injects Alfresco credentials using the shortened env var names
+(ALFRESCO_USER_NAME, ALFRESCO_PASSWORD) expected by nucleus-sync,
+rather than the AUTH_PROVIDERS_ALFRESCO_* names used by live-ingester.
+
+*/}}
+{{- define "alfresco-connector-cic.nucleus-sync.repository.secret.env" -}}
+{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" .Chart "Release" .Release }}
+{{- with .Values.repository }}
+{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.fullname" $cmCtx ) }}
+- name: ALFRESCO_USER_NAME
+  valueFrom:
+    secretKeyRef:
+      name: {{ $secretName }}
+      key: {{ .existingSecret.keys.username }}
+- name: ALFRESCO_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ $secretName }}
+      key: {{ .existingSecret.keys.password }}
 {{- end -}}
 {{- end -}}
 

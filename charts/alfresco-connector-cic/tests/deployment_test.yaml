@@ -60,3 +60,133 @@ tests:
             helm.sh/chart: alfresco-connector-cic-1.0.0
             my-global-custom-label: global-custom-value
             my-custom-chart-label: custom-value
+
+  - it: nucleus-sync should use shortened CIC env var names not AUTH_PROVIDERS_* style
+    template: deployment-connector-cic-nucleus-sync.yaml
+    asserts:
+      # Alfresco connection — nucleus-sync uses shortened names
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_BASE_URL
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUTH_ALFRESCO_TYPE
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_USER_NAME
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_PASSWORD
+          any: true
+      # Nucleus connection
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: NUCLEUS_BASE_URL
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: NUCLEUS_IDP_BASE_URL
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: NUCLEUS_SYSTEM_ID
+          any: true
+      # HX auth — nucleus-sync uses short names (HX_TOKEN_URI etc.) not AUTH_PROVIDERS_HYLANDEXPERIENCE_*
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: HX_TOKEN_URI
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: HX_CLIENT_ID
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: HX_CLIENT_SECRET
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUTH_HX_TYPE
+          any: true
+      # Must NOT receive live-ingester-style env var names
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_REPOSITORY_BASEURL
+          any: true
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUTH_PROVIDERS_HYLANDEXPERIENCE_CLIENTID
+          any: true
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: HYLANDEXPERIENCE_INSIGHT_INGESTION_BASEURL
+          any: true
+
+  - it: live-ingester should use AUTH_PROVIDERS_* env var names not nucleus-sync style
+    template: deployment-connector-cic-live-ingester.yaml
+    asserts:
+      # Alfresco connection — live-ingester uses AUTH_PROVIDERS_* style
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_REPOSITORY_BASEURL
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUTH_PROVIDERS_ALFRESCO_USERNAME
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUTH_PROVIDERS_ALFRESCO_TYPE
+          any: true
+      # HX auth — live-ingester uses full AUTH_PROVIDERS_HYLANDEXPERIENCE_* names
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUTH_PROVIDERS_HYLANDEXPERIENCE_TOKENURI
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: AUTH_PROVIDERS_HYLANDEXPERIENCE_CLIENTID
+          any: true
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: HYLANDEXPERIENCE_INSIGHT_INGESTION_BASEURL
+          any: true
+      # Must NOT receive nucleus-sync-style env var names
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: ALFRESCO_BASE_URL
+          any: true
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: HX_CLIENT_ID
+          any: true
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: NUCLEUS_BASE_URL
+          any: true

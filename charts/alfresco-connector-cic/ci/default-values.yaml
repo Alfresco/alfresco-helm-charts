@@ -62,7 +62,7 @@ repository:
 ats:
   sfsUrl: http://alfresco-transform-services-sfs
 cic:
-  hxInsightIngestionUrl: http://hxi-ingestion
+  hxInsightIngestionUrl: http://hx-ingestion-service
   nucleusBaseUrl: http://nucleus-mock
   nucleusIdpBaseUrl: http://nucleus-idp-mock
   nucleusSystemId: test-system-id

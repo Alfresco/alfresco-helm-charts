@@ -1,4 +1,5 @@
 cic:
+  # -- Hyland Experience credentials (required for live-ingester)
   hxAuthTokenUrl: "https://auth.iam.staging.experience.hyland.com/idp/connect/token"
   hxInsightIngestionUrl: "https://ingestion-api.insight.staging.ncp.hyland.com/v1"
   hxClientId: sc-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
@@ -6,6 +7,10 @@ cic:
   hxEnvKey: alfresco-kd-ci-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
   hxAppSourceId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
   hxEnv: staging
+  # -- Nucleus connection settings (required for nucleus-sync)
+  nucleusBaseUrl: "https://nucleus.experience.hyland.com"
+  nucleusIdpBaseUrl: "https://auth.iam.staging.experience.hyland.com"
+  nucleusSystemId: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
 liveIngester:
   image:
     repository: quay.io/alfresco/alfresco-cic-connector-live-ingester
@@ -17,9 +22,12 @@ messageBroker:
 ats:
   sfsUrl: http://acs-filestore
 repository:
+  url: http://acs-alfresco-repository:8080/alfresco
   authType: basic
+  username: admin
+  password: admin
   versionOverride: 25.1.0 # same as alfresco-repository
 bulkIngester:
   enabled: false
 nucleusSync:
-  enabled: false
+  enabled: true

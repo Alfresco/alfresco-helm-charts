@@ -141,6 +141,7 @@ nucleusSync:
       memory: "2048Mi"
   environment:
     SERVER_PORT: *nucleusSyncPort
+    AUTH_HX_TYPE: oauth2
   livenessProbe:
     initialDelaySeconds: 30
     httpGet:

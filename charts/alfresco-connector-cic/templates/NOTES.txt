@@ -1,9 +1,13 @@
-Add those properties to alfresco instance:
+If live-ingester is enabled, add the following properties to your Alfresco
+repository instance under additionalGlobalProperties. These use the hxi.*
+namespace because they configure the Alfresco Repository's HXI extension:
 
-hxi.discovery.base-url=https://discovery.{{ .Values.cic.hxEnv }}.experience.hyland.com
-hxi.auth.providers.hyland-experience.token-uri={{ .Values.cic.hxAuthTokenUrl }}
-hxi.auth.providers.hyland-experience.environment-key={{ .Values.cic.hxEnvKey }}
-hxi.auth.providers.hyland-experience.client-id={{ .Values.cic.hxClientId }}
-hxi.auth.providers.hyland-experience.client-secret={{ .Values.cic.hxClientSecret }}
-hxi.knowledge-retrieval.url=https://{{ .Values.cic.hxEnvKey }}.insight.{{ .Values.cic.hxEnv }}.ncp.hyland.com/discovery/agents
-hxi.connector.source-id={{ .Values.cic.hxAppSourceId }}
+  hxi.auth.providers.hyland-experience.token-uri={{ .Values.cic.hxAuthTokenUrl }}
+  hxi.auth.providers.hyland-experience.environment-key={{ .Values.cic.hxEnvKey }}
+  hxi.auth.providers.hyland-experience.client-id={{ .Values.cic.hxClientId }}
+  hxi.auth.providers.hyland-experience.client-secret={{ .Values.cic.hxClientSecret }}
+  hxi.connector.source-id={{ .Values.cic.hxAppSourceId }}
+
+Consult your Hyland Experience portal for the values of:
+  hxi.discovery.base-url
+  hxi.knowledge-retrieval.url
