@@ -36,25 +36,25 @@ jobs:
           ref: ${{ env.IS_MAIN_BUMP == 'true' && 'main' || github.ref }}
 
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v18.19.0
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v18.21.0
 
       - name: Login to quay.io
-        uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
+        uses: docker/login-action@abd2ef45e78c5afb21d64d4ca52ee8550d9572c7 # v4.5.1
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.19.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.21.0
 
       - run: updatecli apply
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.19.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.21.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.19.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.21.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
@@ -83,17 +83,17 @@ jobs:
           token: ${{ secrets.BOT_GITHUB_TOKEN }}
 
       - uses: >-
-          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v18.19.0
+          Alfresco/alfresco-build-tools/.github/actions/get-branch-name@v18.21.0
 
       - name: Login to quay.io
-        uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
+        uses: docker/login-action@abd2ef45e78c5afb21d64d4ca52ee8550d9572c7 # v4.5.1
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
       - name: Install Updatecli
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.19.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.21.0
 
       - name: Checkout updatecli configs
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -112,9 +112,9 @@ jobs:
             -v alfresco-updatecli/deployments/values/supported-matrix.yaml \
             -v .github/updatecli-matrix-targets.yaml
 
-      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.19.0
+      - uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.21.0
       - name: Regenerate helm docs if necessary
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.19.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.21.0
         with:
           pre-commit-args: helm-docs || true
           skip_checkout: "true"
