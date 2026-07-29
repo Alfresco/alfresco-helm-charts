@@ -5,7 +5,7 @@ deps:
   postgresql:
     chart: postgres
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 0.6.0
+    version: 0.7.0-alpha.0
   activemq:
     chart: activemq
     repository: https://alfresco.github.io/alfresco-helm-charts/
