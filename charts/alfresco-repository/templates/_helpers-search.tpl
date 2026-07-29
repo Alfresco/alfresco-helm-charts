@@ -19,8 +19,8 @@ Usage: include "alfresco-repository.solr.security" (dict "search" (dict "existin
 
 */}}
 {{- define "alfresco-repository.solr.security" -}}
-{{- if and .existingSecret.name (index .existingSecret.keys "solr-secret") }}
-  {{- print "secret" }}
+{{- if .existingSecret.name }}
+  {{- not (empty (index .existingSecret.keys "solr-secret")) | ternary "secret" "none" }}
 {{- else }}
   {{- not (empty (index . "solr-secret")) | ternary "secret" "none" }}
 {{- end }}
