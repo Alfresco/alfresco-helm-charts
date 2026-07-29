@@ -139,7 +139,7 @@ tests:
             name: ALFRESCO_CONTENT_TRANSFORM_SHAREDSECRET
             valueFrom:
               secretKeyRef:
-                key: ALFRESCO_CONTENT_TRANSFORM_SHAREDSECRET
+                key: SOLR_SECRET
                 name: RELEASE-NAME-alfresco-search-community-shared-secret
   - it: should disable the accepted content media types cache by default
     asserts:
@@ -175,16 +175,16 @@ tests:
           name: repo-external-config
           keys:
             url: REPOSITORY_URL_EXTERNAL
-      transform:
-        existingConfigMap:
-          name: transform-external-config
-          keys:
-            url: TRANSFORM_URL_EXTERNAL
         sharedSecret:
           existingSecret:
             name: shared-secret-external
             keys:
               sharedSecret: SHARED_SECRET_EXTERNAL
+      transform:
+        existingConfigMap:
+          name: transform-external-config
+          keys:
+            url: TRANSFORM_URL_EXTERNAL
     asserts:
       - contains:
           path: spec.template.spec.containers[0].env
