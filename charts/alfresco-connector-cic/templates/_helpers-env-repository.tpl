@@ -39,11 +39,6 @@ Usage: include "alfresco-connector-cic.repository.cm.env" $
 
 Usage: include "alfresco-connector-cic.nucleus-sync.repository.cm.env" $
 
-Like repository.cm.env but maps the repository URL to ALFRESCO_BASEURL
-(alfresco.base-url) as expected by nucleus-sync, rather than
-ALFRESCO_REPOSITORY_BASEURL (alfresco.repository.base-url) used by
-live-ingester.
-
 */}}
 {{- define "alfresco-connector-cic.nucleus-sync.repository.cm.env" -}}
 {{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" .Chart "Release" .Release }}
@@ -65,10 +60,6 @@ live-ingester.
 {{/*
 
 Usage: include "alfresco-connector-cic.nucleus-sync.repository.secret.env" $
-
-Injects Alfresco credentials using the shortened env var names
-(ALFRESCO_USER_NAME, ALFRESCO_PASSWORD) expected by nucleus-sync,
-rather than the AUTH_PROVIDERS_ALFRESCO_* names used by live-ingester.
 
 */}}
 {{- define "alfresco-connector-cic.nucleus-sync.repository.secret.env" -}}

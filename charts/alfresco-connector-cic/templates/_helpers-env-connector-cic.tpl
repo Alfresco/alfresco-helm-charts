@@ -37,10 +37,6 @@ Usage: include "alfresco-connector-cic.live-ingester.cm.env" $
 
 Usage: include "alfresco-connector-cic.nucleus-sync.cm.env" $
 
-Injects CIC config into the nucleus-sync container using the shortened env var
-names expected by nucleus-sync (HX_TOKEN_URI, NUCLEUS_BASE_URL, etc.) rather
-than the AUTH_PROVIDERS_HYLANDEXPERIENCE_* style used by live-ingester.
-
 */}}
 {{- define "alfresco-connector-cic.nucleus-sync.cm.env" -}}
 {{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "")) "Chart" .Chart "Release" .Release }}
@@ -72,10 +68,6 @@ than the AUTH_PROVIDERS_HYLANDEXPERIENCE_* style used by live-ingester.
 {{/*
 
 Usage: include "alfresco-connector-cic.nucleus-sync.secret.env" $
-
-Injects HX credentials using the shortened names (HX_CLIENT_ID, HX_CLIENT_SECRET)
-expected by nucleus-sync, rather than the AUTH_PROVIDERS_HYLANDEXPERIENCE_* style
-used by live-ingester.
 
 */}}
 {{- define "alfresco-connector-cic.nucleus-sync.secret.env" -}}

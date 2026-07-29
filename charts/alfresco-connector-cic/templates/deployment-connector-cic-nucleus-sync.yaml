@@ -17,13 +17,10 @@ spec:
       {{- toYaml .Values.nucleusSync.strategy.rollingUpdate | nindent 6 }}
   template:
     metadata:
+      {{- with $.Values.podAnnotations }}
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap-connector-cic.yaml") $ | sha256sum }}
-        checksum/secret: {{ include (print $.Template.BasePath "/secret-connector-cic.yaml") $ | sha256sum }}
-        checksum/secret-broker: {{ include (print $.Template.BasePath "/secret-mq.yaml") $ | sha256sum }}
-        {{- with $.Values.podAnnotations }}
-          {{- toYaml . | nindent 8 }}
-        {{- end }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       labels:
         {{- include "alfresco-connector-cic.nucleus-sync.labels" . | nindent 8 }}
     spec:

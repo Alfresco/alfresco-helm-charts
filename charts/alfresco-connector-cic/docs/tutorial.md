@@ -16,15 +16,13 @@ correctly configured with the CIC extension.
 Before you begin, make sure you have:
 
 1. A working Alfresco Content Services deployment
-2. The CIC (Content Intelligence Connector) extension installed and enabled on
-   the repository.
-3. From your ACS stack:
+2. From your ACS stack:
    - ActiveMQ URL
    - ActiveMQ username
    - ActiveMQ password
    - SFS (Shared File Store) URL
    - Repository URL
-4. From Hyland Experience (HX) / Content Intelligence:
+3. From Hyland Experience (HX) / Content Intelligence:
    - HX Client ID
    - HX Client Secret
    - HX Environment Key
@@ -32,7 +30,7 @@ Before you begin, make sure you have:
    - HX Authentication Token URL
    - HX Insight Ingestion URL
    - HX Environment name (e.g. `staging` or `production`)
-5. From Nucleus (required if deploying the nucleus-sync component):
+4. From Nucleus (required if deploying the nucleus-sync component):
    - Nucleus Base URL
    - Nucleus IDP Base URL
    - Nucleus System ID
@@ -73,23 +71,35 @@ Before you begin, make sure you have:
    kubectl get pods -l app.kubernetes.io/instance=cic
    ```
 
-4. **Configure the repository** with the CIC extension properties. If you are
-   using the `alfresco-content-services` Helm chart, add them under
-   `config.repository.additionalGlobalProperties`.
+4. **Configure the repository** with the CIC related properties in the
+   `alfresco-global.properties` file:
 
-   Example:
+   ```properties
+   hxi.discovery.base-url=https://discovery.staging.experience.hyland.com
+   hxi.auth.providers.hyland-experience.token-uri=https://auth.iam.staging.experience.hyland.com/idp/connect/token
+   hxi.auth.providers.hyland-experience.environment-key=alfresco-kd-ci-xxxx
+   hxi.auth.providers.hyland-experience.client-id=sc-xxxx
+   hxi.auth.providers.hyland-experience.client-secret=your-client-secret
+   hxi.knowledge-retrieval.url=https://alfresco-kd-ci-xxxx.insight.staging.ncp.hyland.com/discovery/agents
+   hxi.connector.source-id=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
+   ```
+
+   If you are using the `alfresco-content-services` Helm chart, add them under
+   `config.repository.additionalGlobalProperties`. Note that the root element
+   must be `alfresco-repository:` when configuring via the umbrella chart:
 
    ```yaml
-   config:
-     repository:
-       additionalGlobalProperties:
-         hxi.discovery.base-url: https://discovery.staging.experience.hyland.com
-         hxi.auth.providers.hyland-experience.token-uri: https://auth.iam.staging.experience.hyland.com/idp/connect/token
-         hxi.auth.providers.hyland-experience.environment-key: alfresco-kd-ci-xxxx
-         hxi.auth.providers.hyland-experience.client-id: sc-xxxx
-         hxi.auth.providers.hyland-experience.client-secret: your-client-secret
-         hxi.knowledge-retrieval.url: https://alfresco-kd-ci-xxxx.insight.staging.ncp.hyland.com/discovery/agents
-         hxi.connector.source-id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
+   alfresco-repository:
+     config:
+       repository:
+         additionalGlobalProperties:
+           hxi.discovery.base-url: https://discovery.staging.experience.hyland.com
+           hxi.auth.providers.hyland-experience.token-uri: https://auth.iam.staging.experience.hyland.com/idp/connect/token
+           hxi.auth.providers.hyland-experience.environment-key: alfresco-kd-ci-xxxx
+           hxi.auth.providers.hyland-experience.client-id: sc-xxxx
+           hxi.auth.providers.hyland-experience.client-secret: your-client-secret
+           hxi.knowledge-retrieval.url: https://alfresco-kd-ci-xxxx.insight.staging.ncp.hyland.com/discovery/agents
+           hxi.connector.source-id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
    ```
 
    > Note: These repository-side properties are provided by Hyland along with
