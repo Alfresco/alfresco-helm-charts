@@ -51,7 +51,7 @@ Usage: include "alfresco-repository.search.config" $
   {{- range $key, $val := .elasticsearchProperties }}
   -Delasticsearch.{{ $key }}={{ $val }}
   {{- end }}
-  {{- if or .existingSecret.name (index . "solr-secret") }}
+  {{- if index . "solr-secret" }}
   -Dsolr.secureComms="secret"
   -Dsolr.sharedSecret=$SOLR_SECRET
   {{- end }}

@@ -296,6 +296,11 @@ tests:
                 key: PASS
                 optional: true
         template: deployment.yaml
+      - notMatchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.(secureComms|sharedSecret)
+        template: configmap-repository.yaml
 
   - it: Should default to noindex despite all other configs
     set: &messyconfig_all_noindex
