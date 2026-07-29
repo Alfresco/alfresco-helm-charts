@@ -8,6 +8,9 @@ sources:
     spec:
       url: https://alfresco.github.io/alfresco-helm-charts/
       name: activemq
+      versionfilter:
+        kind: semver
+        pattern: '>= 0.0.0-0'
 
   postgres:
     name: "postgres"
@@ -15,6 +18,9 @@ sources:
     spec:
       url: https://alfresco.github.io/alfresco-helm-charts/
       name: postgres
+      versionfilter:
+        kind: semver
+        pattern: '>= 0.0.0-0'
 
   elastic:
     name: "elastic"
@@ -22,6 +28,9 @@ sources:
     spec:
       url: https://alfresco.github.io/alfresco-helm-charts/
       name: elastic
+      versionfilter:
+        kind: semver
+        pattern: '>= 0.0.0-0'
 
 targets:
   activemq:
