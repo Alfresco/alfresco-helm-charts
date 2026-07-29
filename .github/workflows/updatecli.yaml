@@ -48,7 +48,7 @@ jobs:
       - name: Install Updatecli
         uses: Alfresco/alfresco-build-tools/.github/actions/setup-updatecli@v18.21.0
 
-      - run: updatecli apply
+      - run: updatecli pipeline apply
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
@@ -102,13 +102,13 @@ jobs:
           ref: ${{ inputs.alfresco-updatecli-ref || 'master' }}
           path: alfresco-updatecli
 
-      - name: updatecli apply
+      - name: updatecli pipeline apply
         env:
           QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
           QUAY_PASSWORD: ${{ secrets.QUAY_PASSWORD }}
           UPDATECLI_GITHUB_TOKEN: ${{ secrets.BOT_GITHUB_TOKEN }}
         run: |
-          updatecli apply -c alfresco-updatecli/deployments/uber-manifest.tpl \
+          updatecli pipeline apply -c alfresco-updatecli/deployments/uber-manifest.tpl \
             -v alfresco-updatecli/deployments/values/supported-matrix.yaml \
             -v .github/updatecli-matrix-targets.yaml
 
