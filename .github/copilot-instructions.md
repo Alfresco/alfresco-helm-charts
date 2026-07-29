@@ -274,7 +274,7 @@ grep -E "version: [0-9]+\.[0-9]+\.[0-9]+" charts/*/Chart.yaml
 Current chart versions (as reference):
 - `alfresco-common`: 4.0.0 (library chart, many dependencies)
 - `alfresco-repository`: 0.10.1 (application chart)
-- `alfresco-connector-hxi`: 0.1.5 (newer chart)
+- `alfresco-connector-cic`: 0.1.0-alpha.1 (newer chart)
 - `elastic`: 0.1.2 (infrastructure chart)
 
 ### Automation Note
@@ -290,7 +290,7 @@ Many charts depend on `alfresco-common` (currently v4.0.0), which is a library c
 **Dependency chain:**
 1. `alfresco-common` - Base library chart (used by many charts)
 2. `activemq` - Depends on `alfresco-common`
-3. Multiple charts depend on `activemq` (e.g., alfresco-sync-service, alfresco-transform-service, alfresco-audit-storage, alfresco-ai-transformer, alfresco-connector-hxi, alfresco-search-enterprise)
+3. Multiple charts depend on `activemq` (e.g., alfresco-sync-service, alfresco-transform-service, alfresco-audit-storage, alfresco-ai-transformer, alfresco-connector-cic, alfresco-search-enterprise)
 
 **When updating alfresco-common:**
 1. Bump `alfresco-common` version first

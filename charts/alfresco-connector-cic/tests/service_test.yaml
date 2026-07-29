@@ -1,0 +1,15 @@
+---
+suite: test connector cic services
+templates:
+  - svc-connector-cic-live-ingester.yaml
+tests:
+  - it: should render live ingester service annotations
+    set:
+      liveIngester.service.annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    template: svc-connector-cic-live-ingester.yaml
+    asserts:
+      - isSubset:
+          path: metadata.annotations
+          content:
+            service.beta.kubernetes.io/aws-load-balancer-internal: "true"

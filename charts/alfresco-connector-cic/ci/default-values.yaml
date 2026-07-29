@@ -1,0 +1,68 @@
+# No real Alfresco Repository is deployed for this chart's tests, so
+# live-ingester/nucleus-sync readiness (which depends on reaching it) is
+# relaxed to a plain TCP check, and bulk-ingester's wait-for-repository init
+# container (which blocks on an HTTP 200 from it) is disabled.
+liveIngester:
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "128Mi"
+    limits:
+      cpu: "1"
+      memory: "500Mi"
+  livenessProbe:
+    httpGet: null
+    tcpSocket:
+      port: 8080
+    initialDelaySeconds: 60
+    periodSeconds: 30
+  readinessProbe:
+    httpGet: null
+    tcpSocket:
+      port: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 30
+bulkIngester:
+  enabled: false
+nucleusSync:
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: "0.01"
+      memory: "128Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+  livenessProbe:
+    httpGet: null
+    tcpSocket:
+      port: 8080
+    initialDelaySeconds: 60
+    periodSeconds: 30
+  readinessProbe:
+    httpGet: null
+    tcpSocket:
+      port: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 30
+db:
+  url: jdbc:postgresql://postgresql:5432/alfresco
+  username: alfresco
+  password: alfresco
+messageBroker:
+  url: nio://activemq-broker:61616
+  username: admin
+  password: admin
+repository:
+  url: http://repository
+  username: admin
+  password: admin
+  versionOverride: '23.3.0'
+ats:
+  sfsUrl: http://alfresco-transform-services-sfs
+cic:
+  hxInsightIngestionUrl: http://hx-ingestion-service
+  nucleusBaseUrl: http://nucleus-mock
+  nucleusIdpBaseUrl: http://nucleus-idp-mock
+  nucleusSystemId: test-system-id

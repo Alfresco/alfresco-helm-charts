@@ -27,7 +27,7 @@ charts:
   alfresco-audit-storage:
     - activemq
     - elasticsearch
-  alfresco-connector-hxi:
+  alfresco-connector-cic:
     - activemq
     - postgresql
   alfresco-connector-ms365: []
