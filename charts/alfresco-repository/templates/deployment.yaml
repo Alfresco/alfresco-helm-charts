@@ -151,6 +151,7 @@ spec:
           {{- $mqsecret := "" }}
           {{- $searchsecretCtx := dict }}
           {{- $searchsecret := "" }}
+          {{- $solrSecretKey := "" }}
           {{- with .Values.configuration }}
             {{- $dbsecretCtx = dict "Values" (dict "nameOverride" "secret-database") "Chart" $.Chart "Release" $.Release }}
             {{- $dbsecret = coalesce .db.existingSecret.name (include "alfresco-repository.fullname" $dbsecretCtx) }}
@@ -160,6 +161,7 @@ spec:
             {{- $mqsecret = coalesce .messageBroker.existingSecret.name (include "alfresco-repository.fullname" $mqsecretCtx) }}
             {{- $searchsecretCtx = dict "Values" (dict "nameOverride" "secret-search") "Chart" $.Chart "Release" $.Release }}
             {{- $searchsecret = coalesce .search.existingSecret.name (include "alfresco-repository.fullname" $searchsecretCtx) }}
+            {{- $solrSecretKey = ternary "SOLR_SECRET" (index .search.existingSecret.keys "solr-secret") (not .search.existingSecret.name) }}
           {{- end }}
           env:
             - name: ENC_METADATA_STOREPASS
@@ -197,12 +199,14 @@ spec:
                   name: {{ $searchsecret }}
                   key: {{ .Values.configuration.search.existingSecret.keys.password }}
                   optional: true
+            {{- if $solrSecretKey }}
             - name: SOLR_SECRET
               valueFrom:
                 secretKeyRef:
                   name: {{ $searchsecret }}
-                  key: {{ index .Values.configuration.search.existingSecret.keys "solr-secret" }}
+                  key: {{ $solrSecretKey }}
                   optional: true
+            {{- end }}
             - name: BROKER_URL
               valueFrom:
                 configMapKeyRef:

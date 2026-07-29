@@ -19,7 +19,7 @@ Usage: include "alfresco-repository.solr.security" (dict "search" (dict "existin
 
 */}}
 {{- define "alfresco-repository.solr.security" -}}
-{{- if .existingSecret.name }}
+{{- if and .existingSecret.name (index .existingSecret.keys "solr-secret") }}
   {{- print "secret" }}
 {{- else }}
   {{- not (empty (index . "solr-secret")) | ternary "secret" "none" }}
@@ -39,7 +39,7 @@ Usage: include "alfresco-repository.search.config" $
   -Dsolr.port="$SEARCH_PORT"
   -Dsolr.base.url="$SOLR_BASE_URL"
   -Dsolr.secureComms="$SEARCH_SECURECOMMS"
-  {{- if or .existingSecret.name (index . "solr-secret") }}
+  {{- if eq "secret" (include "alfresco-repository.solr.security" .) }}
   -Dsolr.sharedSecret=$SOLR_SECRET
   {{- end }}
   {{- else if eq "elasticsearch" (include "alfresco-repository.search.flavor.valid" .flavor) }}
@@ -51,7 +51,7 @@ Usage: include "alfresco-repository.search.config" $
   {{- range $key, $val := .elasticsearchProperties }}
   -Delasticsearch.{{ $key }}={{ $val }}
   {{- end }}
-  {{- if index . "solr-secret" }}
+  {{- if eq "secret" (include "alfresco-repository.solr.security" .) }}
   -Dsolr.secureComms="secret"
   -Dsolr.sharedSecret=$SOLR_SECRET
   {{- end }}

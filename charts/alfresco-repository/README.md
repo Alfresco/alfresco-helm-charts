@@ -114,7 +114,7 @@ The init container image is selected automatically based on the auth mode; overr
 | configuration.search.existingConfigMap.keys.url | string | `"SEARCH_URL"` | Key within the configmap  holding the search service URL. |
 | configuration.search.existingConfigMap.name | string | `nil` | Optional configmap containing the search service URL |
 | configuration.search.existingSecret.keys.password | string | `"ELASTICSEARCH_PASSWORD"` | Key within the secret holding the search service password |
-| configuration.search.existingSecret.keys.solr-secret | string | `"SOLR_SECRET"` | Key within the secret holding the legacy Solr tracking webscripts shared secret |
+| configuration.search.existingSecret.keys.solr-secret | string | `nil` | Key within the secret holding the legacy Solr tracking webscripts shared secret. Leave unset unless the existing secret genuinely carries this key. |
 | configuration.search.existingSecret.keys.username | string | `"ELASTICSEARCH_USERNAME"` | Key within the secret holding the search service username |
 | configuration.search.existingSecret.name | string | `nil` | Optional secret containing search service credentials |
 | configuration.search.flavor | string | `"noindex"` | Can be either `solr`, `elasticsearch` or `noindex` |

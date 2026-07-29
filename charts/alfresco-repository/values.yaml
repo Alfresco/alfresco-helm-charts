@@ -138,8 +138,9 @@ configuration:
         # -- Key within the secret holding the search service password
         password: ELASTICSEARCH_PASSWORD
         # -- Key within the secret holding the legacy Solr tracking
-        # webscripts shared secret
-        solr-secret: SOLR_SECRET
+        # webscripts shared secret. Leave unset unless the existing secret
+        # genuinely carries this key.
+        solr-secret: null
 
     existingConfigMap:
       # -- Optional configmap containing the search service URL

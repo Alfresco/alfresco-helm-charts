@@ -69,6 +69,16 @@ tests:
           pattern: |-
             (^\s*|[^\s]\s+)-Dsolr\.sharedSecret=\$SOLR_SECRET($|\s)
         template: configmap-repository.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SOLR_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-secret-search
+                key: SOLR_SECRET
+                optional: true
+        template: deployment.yaml
 
   - it: should render a working Solr6 config based on values (noauth)
     set:
@@ -179,6 +189,30 @@ tests:
                 name: mysolrsecret
                 key: SOME_SECRET
                 optional: true
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.sharedSecret=\$SOLR_SECRET($|\s)
+        template: configmap-repository.yaml
+
+  - it: solr6 secureComms with existingSecret but no solr-secret key configured is not treated as a shared secret
+    set:
+      configuration:
+        search:
+          << : *solrK8sResources
+          existingSecret:
+            name: mysolrsecret
+    asserts:
+      - notMatchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.sharedSecret
+        template: configmap-repository.yaml
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SOLR_SECRET
+        template: deployment.yaml
 
   - it: should render a working ES config based on values
     set:
@@ -301,6 +335,44 @@ tests:
           pattern: |-
             (^\s*|[^\s]\s+)-Dsolr\.(secureComms|sharedSecret)
         template: configmap-repository.yaml
+      - notContains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SOLR_SECRET
+        template: deployment.yaml
+
+  - it: should render the legacy Solr shared secret alongside an ES flavor when explicitly configured via existingSecret
+    set:
+      configuration:
+        search:
+          << : *esK8sResources
+          existingSecret:
+            name: myessecret
+            keys:
+              username: USER
+              password: PASS
+              solr-secret: MY_SOLR_KEY
+    asserts:
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.secureComms="secret"($|\s)
+        template: configmap-repository.yaml
+      - matchRegex:
+          path: data.CATALINA_OPTS
+          pattern: |-
+            (^\s*|[^\s]\s+)-Dsolr\.sharedSecret=\$SOLR_SECRET($|\s)
+        template: configmap-repository.yaml
+      - contains:
+          path: spec.template.spec.containers[0].env
+          content:
+            name: SOLR_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: myessecret
+                key: MY_SOLR_KEY
+                optional: true
+        template: deployment.yaml
 
   - it: Should default to noindex despite all other configs
     set: &messyconfig_all_noindex
