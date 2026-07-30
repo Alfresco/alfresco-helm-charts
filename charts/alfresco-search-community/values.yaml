@@ -111,7 +111,7 @@ repository:
     # -- Shared secret authenticating the batch indexer against the
     # repository's legacy Solr tracking webscripts API. Must match
     # alfresco-repository's `configuration.search.solr-secret`
-    value: notused
+    value: null
     existingSecret:
       # -- Alternatively, provide the shared secret via an existing secret
       name: null

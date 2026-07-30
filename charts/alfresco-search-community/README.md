@@ -68,7 +68,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | repository.existingConfigMap.name | string | `nil` | Alternatively, provide repository connection details via an existing configmap |
 | repository.sharedSecret.existingSecret.keys.sharedSecret | string | `"SOLR_SECRET"` | Key within the secret holding the shared secret |
 | repository.sharedSecret.existingSecret.name | string | `nil` | Alternatively, provide the shared secret via an existing secret |
-| repository.sharedSecret.value | string | `"notused"` | Shared secret authenticating the batch indexer against the repository's legacy Solr tracking webscripts API. Must match alfresco-repository's `configuration.search.solr-secret` |
+| repository.sharedSecret.value | string | `nil` | Shared secret authenticating the batch indexer against the repository's legacy Solr tracking webscripts API. Must match alfresco-repository's `configuration.search.solr-secret` |
 | repository.url | string | `nil` | URL of the Alfresco repository (ACS) |
 | resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
