@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-community
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.7.0](https://img.shields.io/badge/AppVersion-5.7.0-informational?style=flat-square)
+![Version: 0.2.0-alpha.0](https://img.shields.io/badge/Version-0.2.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.7.0](https://img.shields.io/badge/AppVersion-5.7.0-informational?style=flat-square)
 
 A Helm chart for deploying the Alfresco Elasticsearch Community batch indexing component
 
@@ -66,6 +66,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | replicaCount | int | `1` | The batch indexing component is a singleton; this value must remain 1 (a second instance conflicts on the shared watermark and self-terminates) |
 | repository.existingConfigMap.keys.url | string | `"REPOSITORY_URL"` | Key within the configmap holding the full url to connect to the alfresco repository |
 | repository.existingConfigMap.name | string | `nil` | Alternatively, provide repository connection details via an existing configmap |
+| repository.sharedSecret.existingSecret.keys.sharedSecret | string | `"SOLR_SECRET"` | Key within the secret holding the shared secret |
+| repository.sharedSecret.existingSecret.name | string | `nil` | Alternatively, provide the shared secret via an existing secret |
+| repository.sharedSecret.value | string | `nil` | Shared secret authenticating the batch indexer against the repository's legacy Solr tracking webscripts API. Must match alfresco-repository's `configuration.search.solr-secret` |
 | repository.url | string | `nil` | URL of the Alfresco repository (ACS) |
 | resources.limits.cpu | string | `"2"` |  |
 | resources.limits.memory | string | `"2048Mi"` |  |
@@ -82,9 +85,6 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | tolerations | list | `[]` |  |
 | transform.existingConfigMap.keys.url | string | `"TRANSFORM_URL"` | Key within the configmap holding the URL of the transform config endpoint |
 | transform.existingConfigMap.name | string | `nil` | Alternatively, provide transform config endpoint details via an existing configmap |
-| transform.sharedSecret.existingSecret.keys.sharedSecret | string | `"ALFRESCO_CONTENT_TRANSFORM_SHAREDSECRET"` | Key within the secret holding the shared secret |
-| transform.sharedSecret.existingSecret.name | string | `nil` | Alternatively, provide the shared secret via an existing secret |
-| transform.sharedSecret.value | string | `"notused"` | Shared secret authenticating the accepted content media types cache query against the repository. Only used when that cache is enabled (disabled by default) |
 | transform.url | string | `"http://transform-core-aio:8090/transform/config"` | URL of the alfresco transform config endpoint. Only queried when the accepted content media types cache is enabled (disabled by default, see the environment section); a value is nonetheless required by the chart |
 | volumeMounts | list | `[]` |  |
 | volumes | list | `[]` |  |
