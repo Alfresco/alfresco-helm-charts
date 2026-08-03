@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-cic
 
-![Version: 0.1.0-alpha.0](https://img.shields.io/badge/Version-0.1.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.1](https://img.shields.io/badge/AppVersion-1.0.1-informational?style=flat-square)
+![Version: 0.1.0-alpha.1](https://img.shields.io/badge/Version-0.1.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.1](https://img.shields.io/badge/AppVersion-1.0.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector cic services
 
@@ -23,10 +23,8 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 |-----|------|---------|-------------|
 | additionalLabels | object | `{}` | Additional labels to be added to all resources (deployments, statefulsets, services, pods, etc.) Example:   Product: k8s   Environment: DEV |
 | ats.existingConfigMap.keys.sfsUrl | string | `"SFS_URL"` | Key within the configmap holding the URL of the alfresco shared filestore |
-| ats.existingConfigMap.keys.transformUrl | string | `"ATS_URL"` | Key within the configmap holding the URL of the alfresco transform |
 | ats.existingConfigMap.name | string | `nil` | Alternatively, provide ATS details via an existing configmap |
 | ats.sfsUrl | string | `nil` | URL of the alfresco shared filestore |
-| ats.transformUrl | string | `nil` | URL of the alfresco transform (trouter or tengine-aio) |
 | bulkIngester.affinity | object | `{}` |  |
 | bulkIngester.enabled | bool | `true` |  |
 | bulkIngester.environment.ALFRESCO_BULK_INGEST_PUBLISHER_ENDPOINT | string | `"activemq:queue:bulk-ingester-events"` |  |
@@ -58,7 +56,6 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | cic.hxAuthTokenUrl | string | `nil` |  |
 | cic.hxClientId | string | `nil` |  |
 | cic.hxClientSecret | string | `nil` |  |
-| cic.hxEnv | string | `nil` |  |
 | cic.hxEnvKey | string | `nil` |  |
 | cic.hxInsightIngestionUrl | string | `nil` |  |
 | cic.nucleusBaseUrl | string | `nil` | Nucleus connection settings (nucleus-sync only) |
