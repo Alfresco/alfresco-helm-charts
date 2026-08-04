@@ -6,7 +6,6 @@ cic:
   hxClientSecret: your-client-secret
   hxEnvKey: alfresco-kd-ci-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
   hxAppSourceId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx
-  hxEnv: staging
   # -- Nucleus connection settings (required for nucleus-sync)
   nucleusBaseUrl: "https://nucleus.experience.hyland.com"
   nucleusIdpBaseUrl: "https://auth.iam.staging.experience.hyland.com"

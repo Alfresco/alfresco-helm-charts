@@ -276,16 +276,12 @@ repository:
       clientId: REPOSITORY_CLIENT_ID
       clientSecret: REPOSITORY_CLIENT_SECRET
 ats:
-  # -- URL of the alfresco transform (trouter or tengine-aio)
-  transformUrl: null
   # -- URL of the alfresco shared filestore
   sfsUrl: null
   existingConfigMap:
     # -- Alternatively, provide ATS details via an existing configmap
     name: null
     keys:
-      # -- Key within the configmap holding the URL of the alfresco transform
-      transformUrl: ATS_URL
       # -- Key within the configmap holding the URL of the alfresco shared filestore
       sfsUrl: SFS_URL
 cic:
@@ -295,7 +291,6 @@ cic:
   hxClientSecret: null
   hxEnvKey: null
   hxAppSourceId: null
-  hxEnv: null
   # -- Nucleus connection settings (nucleus-sync only)
   nucleusBaseUrl: null
   nucleusIdpBaseUrl: null
