@@ -6,6 +6,8 @@ templates:
   - configmap-connector-cic.yaml
   - secret-connector-cic.yaml
   - secret-mq.yaml
+values: &testvalues
+  - values/test_values.yaml
 tests:
   - it: should render pods annotations
     set:

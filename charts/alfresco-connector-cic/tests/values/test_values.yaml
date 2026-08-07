@@ -1,0 +1,25 @@
+nucleusSync:
+  enabled: true
+messageBroker:
+  url: nio://activemq:61616
+  username: admin
+  password: admin
+repository:
+  url: http://alfresco:8080/alfresco
+  username: admin
+  password: admin
+ats:
+  sfsUrl: http://acs-alfresco-transform-service-sfs
+db:
+  url: jdbc:postgresql://postgres:5432/alfresco
+  username: alfresco
+  password: alfresco
+cic:
+  hxAuthTokenUrl: http://hx-auth.example.com/token
+  hxInsightIngestionUrl: http://hx-ingestion.example.com
+  hxClientId: test-client-id
+  hxClientSecret: test-client-secret
+  hxAppSourceId: test-app-source-id
+  nucleusBaseUrl: http://nucleus.example.com
+  nucleusIdpBaseUrl: http://nucleus-idp.example.com
+  nucleusSystemId: test-system-id

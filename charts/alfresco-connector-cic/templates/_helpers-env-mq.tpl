@@ -13,9 +13,8 @@ Usage: include "alfresco-connector-cic.activemq.cm.env" $
 
 */}}
 {{- define "alfresco-connector-cic.activemq.cm.env" -}}
-{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "mq")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.messageBroker }}
-{{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-cic.fullname" $cmCtx) }}
+{{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-cic.mq.fullname" $) }}
 - name: SPRING_ACTIVEMQ_BROKERURL
   valueFrom:
     configMapKeyRef:
@@ -30,9 +29,8 @@ Usage: include "alfresco-connector-cic.activemq.secret.env" $
 
 */}}
 {{- define "alfresco-connector-cic.activemq.secret.env" -}}
-{{- $secretCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default .Chart.Name) "mq")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.messageBroker }}
-{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.fullname" $secretCtx) }}
+{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.mq.fullname" $) }}
 - name: SPRING_ACTIVEMQ_USER
   valueFrom:
     secretKeyRef:

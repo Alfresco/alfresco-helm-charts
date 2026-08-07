@@ -121,7 +121,7 @@ bulkIngester:
           memory: 20Mi
   affinity: {}
 nucleusSync:
-  enabled: true
+  enabled: false
   image:
     repository: quay.io/alfresco/alfresco-cic-connector-nucleus-sync
     tag: 1.0.1
@@ -245,7 +245,7 @@ repository:
   # -- Base URL for the Alfresco REST API v1, used by nucleus-sync.
   # Defaults to `{url}/api/-default-/public/alfresco/versions/1` when not set.
   nucleusSyncApiUrl: null
-  authType: null
+  authType: basic
   authGrantType: null
   authTokenUrl: null
   username: null
