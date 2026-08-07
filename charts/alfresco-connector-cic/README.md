@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-cic
 
-![Version: 0.1.0-alpha.1](https://img.shields.io/badge/Version-0.1.0--alpha.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.1](https://img.shields.io/badge/AppVersion-1.0.1-informational?style=flat-square)
+![Version: 0.1.0-alpha.2](https://img.shields.io/badge/Version-0.1.0--alpha.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.1](https://img.shields.io/badge/AppVersion-1.0.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector cic services
 
@@ -113,7 +113,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | nodeSelector | object | `{}` |  |
 | nucleusSync.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-cic.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule the content pod on a different zone |
 | nucleusSync.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-cic.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}` | Prefer to schedule the content pod on a different node |
-| nucleusSync.enabled | bool | `true` |  |
+| nucleusSync.enabled | bool | `false` |  |
 | nucleusSync.environment.AUTH_HX_TYPE | string | `"oauth2"` |  |
 | nucleusSync.environment.SERVER_PORT | int | `8080` |  |
 | nucleusSync.image.internalPort | int | `8080` |  |
@@ -137,7 +137,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | podSecurityContext | object | `{}` |  |
 | repository.authGrantType | string | `nil` |  |
 | repository.authTokenUrl | string | `nil` |  |
-| repository.authType | string | `nil` |  |
+| repository.authType | string | `"basic"` |  |
 | repository.clientId | string | `nil` |  |
 | repository.clientSecret | string | `nil` |  |
 | repository.existingConfigMap.keys.apiUrl | string | `"REPOSITORY_API_BASE_URL"` | Key within the configmap holding the full Alfresco REST API v1 base url (used by nucleus-sync) |
