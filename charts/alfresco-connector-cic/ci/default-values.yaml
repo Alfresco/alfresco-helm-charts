@@ -26,6 +26,7 @@ liveIngester:
 bulkIngester:
   enabled: false
 nucleusSync:
+  enabled: true
   replicaCount: 1
   resources:
     requests:
@@ -62,7 +63,11 @@ repository:
 ats:
   sfsUrl: http://alfresco-transform-services-sfs
 cic:
+  hxAuthTokenUrl: http://hx-auth-service
   hxInsightIngestionUrl: http://hx-ingestion-service
+  hxClientId: ci-client-id
+  hxClientSecret: ci-client-secret
+  hxAppSourceId: ci-app-source-id
   nucleusBaseUrl: http://nucleus-mock
   nucleusIdpBaseUrl: http://nucleus-idp-mock
   nucleusSystemId: test-system-id

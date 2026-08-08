@@ -6,9 +6,11 @@ metadata:
   labels:
     {{- include "alfresco-connector-cic.labels" . | nindent 4 }}
 data:
-  HX_AUTH_TOKEN_URL: {{ .Values.cic.hxAuthTokenUrl | default "" | quote }}
-  HX_INSIGHT_INGESTION_URL: {{ .Values.cic.hxInsightIngestionUrl | default "" | quote }}
-  NUCLEUS_BASE_URL: {{ .Values.cic.nucleusBaseUrl | default "" | quote }}
-  NUCLEUS_IDP_BASE_URL: {{ .Values.cic.nucleusIdpBaseUrl | default "" | quote }}
-  NUCLEUS_SYSTEM_ID: {{ .Values.cic.nucleusSystemId | default "" | quote }}
+  HX_AUTH_TOKEN_URL: {{ required "cic.hxAuthTokenUrl is required" .Values.cic.hxAuthTokenUrl | quote }}
+  HX_INSIGHT_INGESTION_URL: {{ required "cic.hxInsightIngestionUrl is required" .Values.cic.hxInsightIngestionUrl | quote }}
+  {{- if .Values.nucleusSync.enabled }}
+  NUCLEUS_BASE_URL: {{ required "cic.nucleusBaseUrl is required when nucleusSync is enabled" .Values.cic.nucleusBaseUrl | quote }}
+  NUCLEUS_IDP_BASE_URL: {{ required "cic.nucleusIdpBaseUrl is required when nucleusSync is enabled" .Values.cic.nucleusIdpBaseUrl | quote }}
+  NUCLEUS_SYSTEM_ID: {{ required "cic.nucleusSystemId is required when nucleusSync is enabled" .Values.cic.nucleusSystemId | quote }}
+  {{- end }}
 {{- end -}}

@@ -48,9 +48,9 @@ spec:
           resources:
             {{- toYaml .Values.liveIngester.resources | nindent 12 }}
           livenessProbe:
-            {{- toYaml .Values.liveIngester.livenessProbe | nindent 12 }}
+            {{- include "alfresco-connector-cic.probe" (list .Values.liveIngester.livenessProbe .Values.liveIngester.image.internalPort) | nindent 12 }}
           readinessProbe:
-            {{- toYaml .Values.liveIngester.readinessProbe | nindent 12 }}
+            {{- include "alfresco-connector-cic.probe" (list .Values.liveIngester.readinessProbe .Values.liveIngester.image.internalPort) | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -1,0 +1,173 @@
+---
+suite: test configmaps
+templates:
+  - configmap-connector-cic.yaml
+  - configmap-ats.yaml
+  - configmap-database.yaml
+  - configmap-mq.yaml
+  - configmap-repository.yaml
+tests:
+  - it: should fail when cic.hxAuthTokenUrl is not set
+    template: configmap-connector-cic.yaml
+    values:
+      - values/test_values.yaml
+    set:
+      cic:
+        hxAuthTokenUrl: null
+    asserts:
+      - failedTemplate:
+          errorMessage: cic.hxAuthTokenUrl is required
+
+  - it: should fail when ats.sfsUrl is not set
+    template: configmap-ats.yaml
+    values:
+      - values/test_values.yaml
+    set:
+      ats:
+        sfsUrl: null
+    asserts:
+      - failedTemplate:
+          errorMessage: You need to provide the SFS URL using either ats.sfsUrl value or a configmap
+
+  - it: should fail when messageBroker.url is not set
+    template: configmap-mq.yaml
+    values:
+      - values/test_values.yaml
+    set:
+      messageBroker:
+        url: null
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            You need to provide an ActiveMQ URL using messageBroker.url or using an existingConfigMap check chart README file
+
+  - it: should render all configmaps with test values
+    values:
+      - values/test_values.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+        template: configmap-connector-cic.yaml
+      - equal:
+          path: data.HX_AUTH_TOKEN_URL
+          value: "http://hx-auth.example.com/token"
+        template: configmap-connector-cic.yaml
+      - equal:
+          path: data.HX_INSIGHT_INGESTION_URL
+          value: "http://hx-ingestion.example.com"
+        template: configmap-connector-cic.yaml
+      - equal:
+          path: data.NUCLEUS_BASE_URL
+          value: "http://nucleus.example.com"
+        template: configmap-connector-cic.yaml
+      - equal:
+          path: data.SFS_URL
+          value: "http://acs-alfresco-transform-service-sfs"
+        template: configmap-ats.yaml
+      - matchRegex:
+          path: data.BROKER_URL
+          pattern: "nio://activemq:61616"
+        template: configmap-mq.yaml
+      - equal:
+          path: data.REPOSITORY_URL
+          value: "http://alfresco:8080/alfresco"
+        template: configmap-repository.yaml
+      - equal:
+          path: data.REPOSITORY_AUTH_TYPE
+          value: "basic"
+        template: configmap-repository.yaml
+
+  - it: should not render cic configmap when existingConfigMap is set
+    values:
+      - values/test_values.yaml
+    set:
+      cic:
+        existingConfigMap:
+          name: my-cic-configmap
+    template: configmap-connector-cic.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not render ats configmap when existingConfigMap is set
+    values:
+      - values/test_values.yaml
+    set:
+      ats:
+        existingConfigMap:
+          name: my-ats-configmap
+    template: configmap-ats.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not render repository configmap when existingConfigMap is set
+    values:
+      - values/test_values.yaml
+    set:
+      repository:
+        existingConfigMap:
+          name: my-repository-configmap
+    template: configmap-repository.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should not render database configmap when bulkIngester is disabled
+    values:
+      - values/test_values.yaml
+    set:
+      bulkIngester:
+        enabled: false
+    template: configmap-database.yaml
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render database configmap when bulkIngester is enabled
+    values:
+      - values/test_values.yaml
+    set:
+      bulkIngester:
+        enabled: true
+    template: configmap-database.yaml
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: data.DATABASE_URL
+          value: "jdbc:postgresql://postgres:5432/alfresco"
+
+  - it: should not render nucleus keys when nucleusSync is disabled
+    values:
+      - values/test_values.yaml
+    set:
+      nucleusSync:
+        enabled: false
+    template: configmap-connector-cic.yaml
+    asserts:
+      - notExists:
+          path: data.NUCLEUS_BASE_URL
+
+  - it: should render correct configmap names with nameOverride
+    values:
+      - values/test_values.yaml
+    set:
+      nameOverride: mycic
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-mycic
+        template: configmap-connector-cic.yaml
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-mycic-ats
+        template: configmap-ats.yaml
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-mycic-mq
+        template: configmap-mq.yaml
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-mycic-repository
+        template: configmap-repository.yaml

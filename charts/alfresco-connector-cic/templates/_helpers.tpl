@@ -64,3 +64,17 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Render a probe spec, injecting port from image.internalPort so values.yaml
+does not duplicate it alongside internalPort.
+Usage: include "alfresco-connector-cic.probe" (list <probeValues> <port>)
+*/}}
+{{- define "alfresco-connector-cic.probe" -}}
+{{- $probe := deepCopy (index . 0) -}}
+{{- $port := index . 1 -}}
+{{- range list "httpGet" "tcpSocket" -}}
+{{- with index $probe . -}}{{- $_ := set . "port" $port -}}{{- end -}}
+{{- end -}}
+{{- toYaml $probe -}}
+{{- end -}}
