@@ -16,7 +16,7 @@ liveIngester:
     repository: quay.io/alfresco/alfresco-cic-connector-live-ingester
     tag: 1.0.1
     pullPolicy: IfNotPresent
-    internalPort: &liveIngesterPort 8080
+    internalPort: 8080
   replicaCount: 1
   strategy:
     rollingUpdate:
@@ -30,7 +30,7 @@ liveIngester:
       cpu: "2"
       memory: "2048Mi"
   environment:
-    SERVER_PORT: *liveIngesterPort
+    SERVER_PORT: 8080
     ALFRESCO_BULKINGESTER_ENDPOINT: activemq:queue:bulk-ingester-events
     ALFRESCO_BULKINGESTER_DEADLETTERENABLED: "false"
     ALFRESCO_BULKINGESTER_DEADLETTERURI: activemq:queue:ActiveMQ.DLQ
@@ -41,12 +41,10 @@ liveIngester:
     initialDelaySeconds: 30
     httpGet:
       path: /actuator/health/liveness
-      port: *liveIngesterPort
   readinessProbe:
     initialDelaySeconds: 40
     httpGet:
       path: /actuator/health/readiness
-      port: *liveIngesterPort
   service:
     name: cic-live-ingester-service
     type: ClusterIP
@@ -126,7 +124,7 @@ nucleusSync:
     repository: quay.io/alfresco/alfresco-cic-connector-nucleus-sync
     tag: 1.0.1
     pullPolicy: IfNotPresent
-    internalPort: &nucleusSyncPort 8080
+    internalPort: 8080
   replicaCount: 1
   strategy:
     rollingUpdate:
@@ -140,18 +138,16 @@ nucleusSync:
       cpu: "2"
       memory: "2048Mi"
   environment:
-    SERVER_PORT: *nucleusSyncPort
+    SERVER_PORT: 8080
     AUTH_HX_TYPE: oauth2
   livenessProbe:
     initialDelaySeconds: 30
     httpGet:
       path: /actuator/health/liveness
-      port: *nucleusSyncPort
   readinessProbe:
     initialDelaySeconds: 40
     httpGet:
       path: /actuator/health/readiness
-      port: *nucleusSyncPort
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:

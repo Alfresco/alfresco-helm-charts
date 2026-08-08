@@ -46,9 +46,9 @@ spec:
           resources:
             {{- toYaml .Values.nucleusSync.resources | nindent 12 }}
           livenessProbe:
-            {{- toYaml .Values.nucleusSync.livenessProbe | nindent 12 }}
+            {{- include "alfresco-connector-cic.probe" (list .Values.nucleusSync.livenessProbe .Values.nucleusSync.image.internalPort) | nindent 12 }}
           readinessProbe:
-            {{- toYaml .Values.nucleusSync.readinessProbe | nindent 12 }}
+            {{- include "alfresco-connector-cic.probe" (list .Values.nucleusSync.readinessProbe .Values.nucleusSync.image.internalPort) | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
