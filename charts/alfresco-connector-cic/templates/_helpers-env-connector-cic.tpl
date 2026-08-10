@@ -4,9 +4,8 @@ Usage: include "alfresco-connector-cic.cm.env" $
 
 */}}
 {{- define "alfresco-connector-cic.cm.env" -}}
-{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.cic }}
-{{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-cic.fullname" $cmCtx ) }}
+{{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-cic.fullname" $) }}
 - name: AUTH_PROVIDERS_HYLANDEXPERIENCE_TOKENURI
   valueFrom:
     configMapKeyRef:
@@ -21,9 +20,8 @@ Usage: include "alfresco-connector-cic.live-ingester.cm.env" $
 
 */}}
 {{- define "alfresco-connector-cic.live-ingester.cm.env" -}}
-{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.cic }}
-{{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-cic.fullname" $cmCtx ) }}
+{{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-cic.fullname" $) }}
 {{- include "alfresco-connector-cic.cm.env" $ }}
 - name: HYLANDEXPERIENCE_INSIGHT_INGESTION_BASEURL
   valueFrom:
@@ -39,9 +37,8 @@ Usage: include "alfresco-connector-cic.nucleus-sync.cm.env" $
 
 */}}
 {{- define "alfresco-connector-cic.nucleus-sync.cm.env" -}}
-{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.cic }}
-{{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-cic.fullname" $cmCtx ) }}
+{{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-cic.fullname" $) }}
 - name: HX_TOKEN_URI
   valueFrom:
     configMapKeyRef:
@@ -71,9 +68,8 @@ Usage: include "alfresco-connector-cic.nucleus-sync.secret.env" $
 
 */}}
 {{- define "alfresco-connector-cic.nucleus-sync.secret.env" -}}
-{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.cic }}
-{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.fullname" $cmCtx ) }}
+{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.fullname" $) }}
 - name: HX_CLIENT_ID
   valueFrom:
     secretKeyRef:
@@ -93,9 +89,8 @@ Usage: include "alfresco-connector-cic.secret.env" $
 
 */}}
 {{- define "alfresco-connector-cic.secret.env" -}}
-{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.cic }}
-{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.fullname" $cmCtx ) }}
+{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.fullname" $) }}
 - name: AUTH_PROVIDERS_HYLANDEXPERIENCE_CLIENTID
   valueFrom:
     secretKeyRef:

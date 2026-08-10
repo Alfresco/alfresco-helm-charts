@@ -4,34 +4,41 @@ Usage: include "alfresco-connector-cic.repository.cm.env" $
 
 */}}
 {{- define "alfresco-connector-cic.repository.cm.env" -}}
-{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.repository }}
-{{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-cic.fullname" $cmCtx) }}
+{{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-cic.repository.fullname" $) }}
 - name: ALFRESCO_REPOSITORY_BASEURL
   valueFrom:
     configMapKeyRef:
         name: {{ $cmName }}
         key: {{ .existingConfigMap.keys.url }}
+{{- if .existingConfigMap.keys.authType }}
 - name: AUTH_PROVIDERS_ALFRESCO_TYPE
   valueFrom:
     configMapKeyRef:
       name: {{ $cmName }}
       key: {{ .existingConfigMap.keys.authType }}
+{{- end }}
+{{- if .existingConfigMap.keys.authGrantType }}
 - name: AUTH_PROVIDERS_ALFRESCO_GRANTTYPE
   valueFrom:
     configMapKeyRef:
       name: {{ $cmName }}
       key: {{ .existingConfigMap.keys.authGrantType }}
+{{- end }}
+{{- if .existingConfigMap.keys.authTokenUrl }}
 - name: AUTH_PROVIDERS_ALFRESCO_TOKENURI
   valueFrom:
     configMapKeyRef:
       name: {{ $cmName }}
       key: {{ .existingConfigMap.keys.authTokenUrl }}
+{{- end }}
+{{- if .existingConfigMap.keys.versionOverride }}
 - name: ALFRESCO_REPOSITORY_VERSIONOVERRIDE
   valueFrom:
     configMapKeyRef:
         name: {{ $cmName }}
         key: {{ .existingConfigMap.keys.versionOverride }}
+{{- end }}
 {{- end -}}
 {{- end -}}
 
@@ -41,19 +48,20 @@ Usage: include "alfresco-connector-cic.nucleus-sync.repository.cm.env" $
 
 */}}
 {{- define "alfresco-connector-cic.nucleus-sync.repository.cm.env" -}}
-{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.repository }}
-{{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-cic.fullname" $cmCtx) }}
+{{- $cmName := coalesce .existingConfigMap.name (include "alfresco-connector-cic.repository.fullname" $) }}
 - name: ALFRESCO_BASE_URL
   valueFrom:
     configMapKeyRef:
         name: {{ $cmName }}
         key: {{ .existingConfigMap.keys.apiUrl }}
+{{- if .existingConfigMap.keys.authType }}
 - name: AUTH_ALFRESCO_TYPE
   valueFrom:
     configMapKeyRef:
       name: {{ $cmName }}
       key: {{ .existingConfigMap.keys.authType }}
+{{- end }}
 {{- end -}}
 {{- end -}}
 
@@ -63,9 +71,8 @@ Usage: include "alfresco-connector-cic.nucleus-sync.repository.secret.env" $
 
 */}}
 {{- define "alfresco-connector-cic.nucleus-sync.repository.secret.env" -}}
-{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.repository }}
-{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.fullname" $cmCtx ) }}
+{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.repository.fullname" $) }}
 - name: ALFRESCO_USER_NAME
   valueFrom:
     secretKeyRef:
@@ -85,9 +92,8 @@ Usage: include "alfresco-connector-cic.repository.secret.env" $
 
 */}}
 {{- define "alfresco-connector-cic.repository.secret.env" -}}
-{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.repository }}
-{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.fullname" $cmCtx ) }}
+{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.repository.fullname" $) }}
 - name: AUTH_PROVIDERS_ALFRESCO_USERNAME
   valueFrom:
     secretKeyRef:
