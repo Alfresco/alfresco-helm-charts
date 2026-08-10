@@ -111,7 +111,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | nodeSelector | object | `{}` |  |
 | nucleusSync.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-cic.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule the content pod on a different zone |
 | nucleusSync.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-cic.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}` | Prefer to schedule the content pod on a different node |
-| nucleusSync.enabled | bool | `false` |  |
+| nucleusSync.enabled | bool | `true` |  |
 | nucleusSync.environment.AUTH_HX_TYPE | string | `"oauth2"` |  |
 | nucleusSync.environment.SERVER_PORT | int | `8080` |  |
 | nucleusSync.image.internalPort | int | `8080` |  |

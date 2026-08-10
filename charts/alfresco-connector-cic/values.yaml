@@ -119,7 +119,7 @@ bulkIngester:
           memory: 20Mi
   affinity: {}
 nucleusSync:
-  enabled: false
+  enabled: true
   image:
     repository: quay.io/alfresco/alfresco-cic-connector-nucleus-sync
     tag: 1.0.1

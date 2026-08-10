@@ -71,9 +71,8 @@ Usage: include "alfresco-connector-cic.nucleus-sync.repository.secret.env" $
 
 */}}
 {{- define "alfresco-connector-cic.nucleus-sync.repository.secret.env" -}}
-{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.repository }}
-{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.fullname" $cmCtx ) }}
+{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.repository.fullname" $) }}
 - name: ALFRESCO_USER_NAME
   valueFrom:
     secretKeyRef:
@@ -93,9 +92,8 @@ Usage: include "alfresco-connector-cic.repository.secret.env" $
 
 */}}
 {{- define "alfresco-connector-cic.repository.secret.env" -}}
-{{- $cmCtx := dict "Values" (dict "nameOverride" (printf "%s-%s" (.Values.nameOverride | default $.Chart.Name) "repository")) "Chart" .Chart "Release" .Release }}
 {{- with .Values.repository }}
-{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.fullname" $cmCtx ) }}
+{{- $secretName := coalesce .existingSecret.name (include "alfresco-connector-cic.repository.fullname" $) }}
 - name: AUTH_PROVIDERS_ALFRESCO_USERNAME
   valueFrom:
     secretKeyRef:
