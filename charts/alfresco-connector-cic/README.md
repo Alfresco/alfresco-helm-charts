@@ -139,10 +139,10 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | repository.clientId | string | `nil` |  |
 | repository.clientSecret | string | `nil` |  |
 | repository.existingConfigMap.keys.apiUrl | string | `"REPOSITORY_API_BASE_URL"` | Key within the configmap holding the full Alfresco REST API v1 base url (used by nucleus-sync) |
-| repository.existingConfigMap.keys.authGrantType | string | `""` | Set to empty string to skip mounting this env var when using an external configmap |
-| repository.existingConfigMap.keys.authTokenUrl | string | `""` |  |
+| repository.existingConfigMap.keys.authGrantType | string | `"REPOSITORY_AUTH_GRANT_TYPE"` |  |
+| repository.existingConfigMap.keys.authTokenUrl | string | `"REPOSITORY_AUTH_TOKEN_URL"` |  |
 | repository.existingConfigMap.keys.url | string | `"REPOSITORY_URL"` | Key within the configmap holding the full url to connect to the alfresco repository |
-| repository.existingConfigMap.keys.versionOverride | string | `""` |  |
+| repository.existingConfigMap.keys.versionOverride | string | `"REPOSITORY_VERSION_OVERRIDE"` |  |
 | repository.existingConfigMap.name | string | `nil` | Alternatively, provide repository connection details via an existing configmap |
 | repository.existingSecret.keys.clientId | string | `"REPOSITORY_CLIENT_ID"` |  |
 | repository.existingSecret.keys.clientSecret | string | `"REPOSITORY_CLIENT_SECRET"` |  |

@@ -262,10 +262,9 @@ repository:
       # -- Key within the configmap holding the full Alfresco REST API v1 base
       # url (used by nucleus-sync)
       apiUrl: REPOSITORY_API_BASE_URL
-      # -- Set to empty string to skip mounting this env var when using an external configmap
-      authGrantType: ""
-      authTokenUrl: ""
-      versionOverride: ""
+      authGrantType: REPOSITORY_AUTH_GRANT_TYPE
+      authTokenUrl: REPOSITORY_AUTH_TOKEN_URL
+      versionOverride: REPOSITORY_VERSION_OVERRIDE
   existingSecret:
     name: null
     keys:

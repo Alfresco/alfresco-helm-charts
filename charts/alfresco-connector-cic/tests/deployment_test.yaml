@@ -155,11 +155,6 @@ tests:
           content:
             name: AUTH_PROVIDERS_ALFRESCO_USERNAME
           any: true
-      - notContains:
-          path: spec.template.spec.containers[0].env
-          content:
-            name: AUTH_PROVIDERS_ALFRESCO_TYPE
-          any: true
       # HX auth — live-ingester uses full AUTH_PROVIDERS_HYLANDEXPERIENCE_* names
       - contains:
           path: spec.template.spec.containers[0].env
