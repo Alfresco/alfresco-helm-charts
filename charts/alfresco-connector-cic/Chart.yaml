@@ -2,7 +2,7 @@ apiVersion: v2
 name: alfresco-connector-cic
 description: A Helm chart for deploying Alfresco connector cic services
 type: application
-version: 0.1.0-alpha.2
+version: 0.1.0-alpha.3
 appVersion: 1.0.1
 dependencies:
   - name: alfresco-common

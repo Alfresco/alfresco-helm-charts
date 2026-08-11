@@ -11,13 +11,6 @@ Usage: include "alfresco-connector-cic.repository.cm.env" $
     configMapKeyRef:
         name: {{ $cmName }}
         key: {{ .existingConfigMap.keys.url }}
-{{- if .existingConfigMap.keys.authType }}
-- name: AUTH_PROVIDERS_ALFRESCO_TYPE
-  valueFrom:
-    configMapKeyRef:
-      name: {{ $cmName }}
-      key: {{ .existingConfigMap.keys.authType }}
-{{- end }}
 {{- if .existingConfigMap.keys.authGrantType }}
 - name: AUTH_PROVIDERS_ALFRESCO_GRANTTYPE
   valueFrom:
@@ -55,13 +48,6 @@ Usage: include "alfresco-connector-cic.nucleus-sync.repository.cm.env" $
     configMapKeyRef:
         name: {{ $cmName }}
         key: {{ .existingConfigMap.keys.apiUrl }}
-{{- if .existingConfigMap.keys.authType }}
-- name: AUTH_ALFRESCO_TYPE
-  valueFrom:
-    configMapKeyRef:
-      name: {{ $cmName }}
-      key: {{ .existingConfigMap.keys.authType }}
-{{- end }}
 {{- end -}}
 {{- end -}}
 
@@ -104,6 +90,7 @@ Usage: include "alfresco-connector-cic.repository.secret.env" $
     secretKeyRef:
       name: {{ $secretName }}
       key: {{ .existingSecret.keys.password }}
+{{- if ne (.authType | default "basic") "basic" }}
 - name: AUTH_PROVIDERS_ALFRESCO_CLIENTID
   valueFrom:
     secretKeyRef:
@@ -114,5 +101,6 @@ Usage: include "alfresco-connector-cic.repository.secret.env" $
     secretKeyRef:
       name: {{ $secretName }}
       key: {{ .existingSecret.keys.clientSecret }}
+{{- end }}
 {{- end -}}
 {{- end -}}

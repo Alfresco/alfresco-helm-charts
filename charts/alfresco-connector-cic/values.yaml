@@ -37,6 +37,7 @@ liveIngester:
     ALFRESCO_BULKINGESTER_MAXIMUMREDELIVERIES: "6"
     ALFRESCO_BULKINGESTER_REDELIVERYDELAYMS: "1000"
     CAMEL_COMPONENT_ACTIVEMQ_TRANSACTED: "true"
+    AUTH_PROVIDERS_HYLANDEXPERIENCE_GRANTTYPE: client_credentials
   livenessProbe:
     initialDelaySeconds: 30
     httpGet:
@@ -140,6 +141,7 @@ nucleusSync:
   environment:
     SERVER_PORT: 8080
     AUTH_HX_TYPE: oauth2
+    AUTH_ALFRESCO_TYPE: basic
   livenessProbe:
     initialDelaySeconds: 30
     httpGet:
@@ -260,10 +262,10 @@ repository:
       # -- Key within the configmap holding the full Alfresco REST API v1 base
       # url (used by nucleus-sync)
       apiUrl: REPOSITORY_API_BASE_URL
-      authType: REPOSITORY_AUTH_TYPE
-      authGrantType: REPOSITORY_AUTH_GRANT_TYPE
-      authTokenUrl: REPOSITORY_AUTH_TOKEN_URL
-      versionOverride: REPOSITORY_VERSION_OVERRIDE
+      # -- Set to empty string to skip mounting this env var when using an external configmap
+      authGrantType: ""
+      authTokenUrl: ""
+      versionOverride: ""
   existingSecret:
     name: null
     keys:

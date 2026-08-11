@@ -155,7 +155,7 @@ tests:
           content:
             name: AUTH_PROVIDERS_ALFRESCO_USERNAME
           any: true
-      - contains:
+      - notContains:
           path: spec.template.spec.containers[0].env
           content:
             name: AUTH_PROVIDERS_ALFRESCO_TYPE
