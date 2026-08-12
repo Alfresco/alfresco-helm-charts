@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-cic
 
-![Version: 0.1.0-alpha.2](https://img.shields.io/badge/Version-0.1.0--alpha.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.1](https://img.shields.io/badge/AppVersion-1.0.1-informational?style=flat-square)
+![Version: 0.1.0-alpha.3](https://img.shields.io/badge/Version-0.1.0--alpha.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.1](https://img.shields.io/badge/AppVersion-1.0.1-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector cic services
 
@@ -80,6 +80,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | liveIngester.environment.ALFRESCO_BULKINGESTER_ENDPOINT | string | `"activemq:queue:bulk-ingester-events"` |  |
 | liveIngester.environment.ALFRESCO_BULKINGESTER_MAXIMUMREDELIVERIES | string | `"6"` |  |
 | liveIngester.environment.ALFRESCO_BULKINGESTER_REDELIVERYDELAYMS | string | `"1000"` |  |
+| liveIngester.environment.AUTH_PROVIDERS_HYLANDEXPERIENCE_GRANTTYPE | string | `"client_credentials"` |  |
 | liveIngester.environment.CAMEL_COMPONENT_ACTIVEMQ_TRANSACTED | string | `"true"` |  |
 | liveIngester.environment.SERVER_PORT | int | `8080` |  |
 | liveIngester.image.internalPort | int | `8080` |  |
@@ -112,6 +113,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | nucleusSync.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-cic.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"topology.kubernetes.io/zone"},"weight":10}` | Prefer to schedule the content pod on a different zone |
 | nucleusSync.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[1] | object | `{"podAffinityTerm":{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["{{ template \"alfresco-connector-cic.name\" $ }}"]},{"key":"app.kubernetes.io/instance","operator":"In","values":["{{ $.Release.Name }}"]},{"key":"app.kubernetes.io/component","operator":"In","values":["{{ $.Chart.Name }}"]}]},"topologyKey":"kubernetes.io/hostname"},"weight":5}` | Prefer to schedule the content pod on a different node |
 | nucleusSync.enabled | bool | `true` |  |
+| nucleusSync.environment.AUTH_ALFRESCO_TYPE | string | `"basic"` |  |
 | nucleusSync.environment.AUTH_HX_TYPE | string | `"oauth2"` |  |
 | nucleusSync.environment.SERVER_PORT | int | `8080` |  |
 | nucleusSync.image.internalPort | int | `8080` |  |
@@ -139,7 +141,6 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | repository.existingConfigMap.keys.apiUrl | string | `"REPOSITORY_API_BASE_URL"` | Key within the configmap holding the full Alfresco REST API v1 base url (used by nucleus-sync) |
 | repository.existingConfigMap.keys.authGrantType | string | `"REPOSITORY_AUTH_GRANT_TYPE"` |  |
 | repository.existingConfigMap.keys.authTokenUrl | string | `"REPOSITORY_AUTH_TOKEN_URL"` |  |
-| repository.existingConfigMap.keys.authType | string | `"REPOSITORY_AUTH_TYPE"` |  |
 | repository.existingConfigMap.keys.url | string | `"REPOSITORY_URL"` | Key within the configmap holding the full url to connect to the alfresco repository |
 | repository.existingConfigMap.keys.versionOverride | string | `"REPOSITORY_VERSION_OVERRIDE"` |  |
 | repository.existingConfigMap.name | string | `nil` | Alternatively, provide repository connection details via an existing configmap |

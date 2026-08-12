@@ -11,28 +11,21 @@ Usage: include "alfresco-connector-cic.repository.cm.env" $
     configMapKeyRef:
         name: {{ $cmName }}
         key: {{ .existingConfigMap.keys.url }}
-{{- if .existingConfigMap.keys.authType }}
-- name: AUTH_PROVIDERS_ALFRESCO_TYPE
-  valueFrom:
-    configMapKeyRef:
-      name: {{ $cmName }}
-      key: {{ .existingConfigMap.keys.authType }}
-{{- end }}
-{{- if .existingConfigMap.keys.authGrantType }}
+{{- if and .existingConfigMap.keys.authGrantType .authGrantType }}
 - name: AUTH_PROVIDERS_ALFRESCO_GRANTTYPE
   valueFrom:
     configMapKeyRef:
       name: {{ $cmName }}
       key: {{ .existingConfigMap.keys.authGrantType }}
 {{- end }}
-{{- if .existingConfigMap.keys.authTokenUrl }}
+{{- if and .existingConfigMap.keys.authTokenUrl .authTokenUrl }}
 - name: AUTH_PROVIDERS_ALFRESCO_TOKENURI
   valueFrom:
     configMapKeyRef:
       name: {{ $cmName }}
       key: {{ .existingConfigMap.keys.authTokenUrl }}
 {{- end }}
-{{- if .existingConfigMap.keys.versionOverride }}
+{{- if and .existingConfigMap.keys.versionOverride .versionOverride }}
 - name: ALFRESCO_REPOSITORY_VERSIONOVERRIDE
   valueFrom:
     configMapKeyRef:
@@ -55,13 +48,6 @@ Usage: include "alfresco-connector-cic.nucleus-sync.repository.cm.env" $
     configMapKeyRef:
         name: {{ $cmName }}
         key: {{ .existingConfigMap.keys.apiUrl }}
-{{- if .existingConfigMap.keys.authType }}
-- name: AUTH_ALFRESCO_TYPE
-  valueFrom:
-    configMapKeyRef:
-      name: {{ $cmName }}
-      key: {{ .existingConfigMap.keys.authType }}
-{{- end }}
 {{- end -}}
 {{- end -}}
 
@@ -104,6 +90,7 @@ Usage: include "alfresco-connector-cic.repository.secret.env" $
     secretKeyRef:
       name: {{ $secretName }}
       key: {{ .existingSecret.keys.password }}
+{{- if ne (.authType | default "basic") "basic" }}
 - name: AUTH_PROVIDERS_ALFRESCO_CLIENTID
   valueFrom:
     secretKeyRef:
@@ -114,5 +101,6 @@ Usage: include "alfresco-connector-cic.repository.secret.env" $
     secretKeyRef:
       name: {{ $secretName }}
       key: {{ .existingSecret.keys.clientSecret }}
+{{- end }}
 {{- end -}}
 {{- end -}}
