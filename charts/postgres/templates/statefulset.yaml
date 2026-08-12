@@ -65,6 +65,16 @@ spec:
             - name: data
               mountPath: {{ .primary.persistence.data.mountPath }}
               subPath: {{ .primary.persistence.data.subPath }}
+            {{- if .primary.shmVolume.enabled }}
+            - name: dshm
+              mountPath: /dev/shm
+            {{- end }}
       volumes:
         {{- include "alfresco-common.data_volume" .primary | nindent 8 }}
+        {{- if .primary.shmVolume.enabled }}
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: {{ .primary.shmVolume.sizeLimit | quote }}
+        {{- end }}
 {{- end }}

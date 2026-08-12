@@ -1,6 +1,6 @@
 # postgres
 
-![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 17.9](https://img.shields.io/badge/AppVersion-17.9-informational?style=flat-square)
+![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 17.9](https://img.shields.io/badge/AppVersion-17.9-informational?style=flat-square)
 
 WARNING: This chart is meant to ease initial deployment for TESTING purposes.
 DO NOT use this chart in any staging, or production environment. It has very
@@ -56,6 +56,7 @@ Alfresco charts to point to it.
 | primary.service.annotations | object | `{}` |  |
 | primary.service.name | string | `"postgresql"` | used for naming pvc |
 | primary.service.ports.postgresql | int | `5432` |  |
+| primary.shmVolume | object | `{"enabled":true,"sizeLimit":"1Gi"}` | Memory-backed volume mounted at /dev/shm for PostgreSQL dynamic shared memory (parallel queries). The container runtime default of 64Mi is too small for heavy workloads and causes "could not resize shared memory segment ... No space left on device". Counts against the pod memory limit, so keep sizeLimit comfortably below primary.resources.limits.memory. |
 | readinessProbe.exec.command[0] | string | `"/bin/sh"` |  |
 | readinessProbe.exec.command[1] | string | `"-c"` |  |
 | readinessProbe.exec.command[2] | string | `"-e"` |  |
