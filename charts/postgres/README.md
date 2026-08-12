@@ -56,7 +56,8 @@ Alfresco charts to point to it.
 | primary.service.annotations | object | `{}` |  |
 | primary.service.name | string | `"postgresql"` | used for naming pvc |
 | primary.service.ports.postgresql | int | `5432` |  |
-| primary.shmVolume | object | `{"enabled":true,"sizeLimit":"1Gi"}` | Memory-backed volume mounted at /dev/shm for PostgreSQL dynamic shared memory (parallel queries). The container runtime default of 64Mi is too small for heavy workloads and causes "could not resize shared memory segment ... No space left on device". Counts against the pod memory limit, so keep sizeLimit comfortably below primary.resources.limits.memory. |
+| primary.shmVolume.enabled | bool | `true` |  |
+| primary.shmVolume.sizeLimit | string | `"256Mi"` | Size of the memory-backed /dev/shm volume for PostgreSQL dynamic shared memory (parallel queries). The container runtime default of 64Mi is too small for heavy workloads and causes "could not resize shared memory segment ... No space left on device". Charged to the pod memory cgroup, so keep it comfortably below primary.resources.limits.memory. |
 | readinessProbe.exec.command[0] | string | `"/bin/sh"` |  |
 | readinessProbe.exec.command[1] | string | `"-c"` |  |
 | readinessProbe.exec.command[2] | string | `"-e"` |  |

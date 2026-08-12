@@ -54,7 +54,7 @@ tests:
             name: dshm
             emptyDir:
               medium: Memory
-              sizeLimit: 1Gi
+              sizeLimit: 256Mi
 
   - it: should honour a custom shmVolume.sizeLimit
     set:
@@ -87,4 +87,4 @@ tests:
             name: dshm
             emptyDir:
               medium: Memory
-              sizeLimit: 1Gi
+              sizeLimit: 256Mi
