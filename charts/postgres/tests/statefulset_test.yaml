@@ -39,3 +39,52 @@ tests:
       - equal:
           path: spec.template.spec.containers[0].volumeMounts[0].mountPath
           value: /custom/path
+
+  - it: should mount a memory-backed /dev/shm volume by default
+    set: {}
+    asserts:
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: dshm
+            mountPath: /dev/shm
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: dshm
+            emptyDir:
+              medium: Memory
+              sizeLimit: 256Mi
+
+  - it: should honour a custom shmVolume.sizeLimit
+    set:
+      primary:
+        shmVolume:
+          sizeLimit: 2Gi
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: dshm
+            emptyDir:
+              medium: Memory
+              sizeLimit: 2Gi
+
+  - it: should not render the /dev/shm volume when shmVolume is disabled
+    set:
+      primary:
+        shmVolume:
+          enabled: false
+    asserts:
+      - notContains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            name: dshm
+            mountPath: /dev/shm
+      - notContains:
+          path: spec.template.spec.volumes
+          content:
+            name: dshm
+            emptyDir:
+              medium: Memory
+              sizeLimit: 256Mi

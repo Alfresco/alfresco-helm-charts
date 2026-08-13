@@ -47,6 +47,14 @@ readinessProbe:
   periodSeconds: 10
   timeoutSeconds: 3
 primary:
+  shmVolume:
+    enabled: true
+    # -- Size of the memory-backed /dev/shm volume for PostgreSQL dynamic shared
+    # memory (parallel queries). The container runtime default of 64Mi is too
+    # small for heavy workloads and causes "could not resize shared memory
+    # segment ... No space left on device". Charged to the pod memory cgroup, so
+    # keep it comfortably below primary.resources.limits.memory.
+    sizeLimit: 256Mi
   extendedConfiguration: |
     max_connections=250
     shared_buffers=512MB
