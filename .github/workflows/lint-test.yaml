@@ -113,6 +113,15 @@ jobs:
         with:
           version: ${{ env.CHART_TESTING_VERSION }}
 
+      - name: Debug helm-unittest coverage
+        run: |
+          for chart in charts/alfresco-repository; do
+            echo "=== Running helm unittest on $chart ==="
+            helm unittest "$chart" --color --coverage-file "$chart/coverage" --coverage-format cobertura || true
+            echo "=== Coverage file check ==="
+            ls -la "$chart"/coverage* 2>/dev/null || echo "No coverage files found"
+          done
+
       - name: Run chart-testing (lint)
         run: ct lint --config ct.yaml ${{ env.TEST_ALL_CHARTS == 'true' && '--all' || '' }}
 
