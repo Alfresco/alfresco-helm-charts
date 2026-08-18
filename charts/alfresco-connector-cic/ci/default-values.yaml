@@ -1,6 +1,7 @@
-# No repository is deployed for CI. The endpoint below returns HTTP < 400, so
-# AcsHealthProbe starts the Camel routes. bulk-ingester is disabled because it
-# requires a real repository.
+# No real Alfresco Repository is deployed for this chart's tests. The endpoint
+# below returns HTTP < 400, so AcsHealthProbe can start the live-ingester and
+# nucleus-sync Camel routes. bulk-ingester's wait-for-repository init container
+# (which requires a real repository) is disabled.
 liveIngester:
   replicaCount: 1
   resources:
