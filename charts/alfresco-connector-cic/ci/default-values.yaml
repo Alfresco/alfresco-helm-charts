@@ -1,7 +1,10 @@
-# No real Alfresco Repository is deployed for this chart's tests, so
-# live-ingester/nucleus-sync readiness (which depends on reaching it) is
-# relaxed to a plain TCP check, and bulk-ingester's wait-for-repository init
-# container (which blocks on an HTTP 200 from it) is disabled.
+# No real Alfresco Repository is deployed for this chart's tests. Readiness
+# normally depends on reaching the repository (Camel routes only start after
+# an "acsHealthy" event), but setting repository.url (alfresco.repository.base-url)
+# and repository.versionOverride (ALFRESCO_REPOSITORY_VERSIONOVERRIDE) below
+# fakes that health check, so the default httpGet probes can be used as-is
+# here without a real repository. bulk-ingester's wait-for-repository init
+# container (which blocks on an HTTP 200 from the repository) is disabled.
 liveIngester:
   replicaCount: 1
   resources:
@@ -11,18 +14,6 @@ liveIngester:
     limits:
       cpu: "1"
       memory: "500Mi"
-  livenessProbe:
-    httpGet: null
-    tcpSocket:
-      port: 8080
-    initialDelaySeconds: 60
-    periodSeconds: 30
-  readinessProbe:
-    httpGet: null
-    tcpSocket:
-      port: 8080
-    initialDelaySeconds: 30
-    periodSeconds: 30
 bulkIngester:
   enabled: false
 nucleusSync:
@@ -35,18 +26,6 @@ nucleusSync:
     limits:
       cpu: "1"
       memory: "1Gi"
-  livenessProbe:
-    httpGet: null
-    tcpSocket:
-      port: 8080
-    initialDelaySeconds: 60
-    periodSeconds: 30
-  readinessProbe:
-    httpGet: null
-    tcpSocket:
-      port: 8080
-    initialDelaySeconds: 30
-    periodSeconds: 30
 db:
   url: jdbc:postgresql://postgresql:5432/alfresco
   username: alfresco
