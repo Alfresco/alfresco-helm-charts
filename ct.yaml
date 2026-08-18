@@ -17,6 +17,6 @@ helm-extra-args: --timeout 600s
 validate-maintainers: false
 
 additional-commands:
-  - helm unittest {{ .Path }} --color
+  - helm unittest {{ .Path }} --color --coverage-file {{ .Path }}/coverage --coverage-format cobertura
   - helm template {{ .Path }} --output-dir {{ .Path }}/render -f {{ .Path }}/ci/default-values.yaml
   - yamllint -c .yamllint.yml {{ .Path }}/render

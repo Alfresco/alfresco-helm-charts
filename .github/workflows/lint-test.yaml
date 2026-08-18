@@ -110,6 +110,16 @@ jobs:
       - name: Run chart-testing (lint)
         run: ct lint --config ct.yaml ${{ env.TEST_ALL_CHARTS == 'true' && '--all' || '' }}
 
+      - name: Upload coverage to Codecov
+        if: always()
+        uses: codecov/codecov-action@0fb7174895f61a3b6b78fc075e0cd60383518dac # v5.5.5
+        with:
+          files: charts/*/coverage.xml
+          flags: helm-unittest
+          fail_ci_if_error: false
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
   install:
     needs: list-changed
     if: needs.list-changed.outputs.has-changes == 'true' && ! github.event.pull_request.head.repo.fork
