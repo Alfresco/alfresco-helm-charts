@@ -32,10 +32,10 @@ messageBroker:
   username: admin
   password: admin
 repository:
-  url: https://alfresco.example.com
+  url: https://alfresco.github.io/alfresco-helm-charts/test/alfresco/service/devicesync/config
   username: admin
   password: admin
-  versionOverride: '23.3.0'
+  versionOverride: "23.3.0"
 ats:
   sfsUrl: http://alfresco-transform-services-sfs
 cic:
