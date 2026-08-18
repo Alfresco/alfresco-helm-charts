@@ -1,7 +1,7 @@
 # No real Alfresco Repository is deployed for this chart's tests. Readiness
 # normally depends on reaching the repository (Camel routes only start after
-# an "acsHealthy" event), but setting repository.url (alfresco.repository.base-url)
-# and repository.versionOverride (ALFRESCO_REPOSITORY_VERSIONOVERRIDE) below
+# an "acsHealthy" event), but setting repository.url (env ALFRESCO_REPOSITORY_BASEURL)
+# and repository.versionOverride (env ALFRESCO_REPOSITORY_VERSIONOVERRIDE) below
 # fakes that health check, so the default httpGet probes can be used as-is
 # here without a real repository. bulk-ingester's wait-for-repository init
 # container (which blocks on an HTTP 200 from the repository) is disabled.
