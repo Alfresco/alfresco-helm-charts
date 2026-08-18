@@ -117,7 +117,7 @@ jobs:
         run: |
           for chart in charts/alfresco-repository; do
             echo "=== Running helm unittest on $chart ==="
-            helm unittest "$chart" --color --coverage-file "$chart/coverage" --coverage-format cobertura || true
+            helm unittest "$chart" --coverage-file "$chart/coverage" --coverage-format cobertura || true
             echo "=== Coverage file check ==="
             ls -la "$chart"/coverage* 2>/dev/null || echo "No coverage files found"
           done
