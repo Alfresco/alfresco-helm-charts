@@ -3332,6 +3332,20 @@ entries:
   alfresco-connector-cic:
   - apiVersion: v2
     appVersion: 1.0.1
+    created: "2026-08-18T14:41:51.456428224Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.1.0
+    description: A Helm chart for deploying Alfresco connector cic services
+    digest: 902abb90d3643c49f5a1807bd6a5e3b69176bd20bb120e6855ece758c2428e74
+    name: alfresco-connector-cic
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-connector-cic-0.1.0-alpha.4/alfresco-connector-cic-0.1.0-alpha.4.tgz
+    version: 0.1.0-alpha.4
+  - apiVersion: v2
+    appVersion: 1.0.1
     created: "2026-08-12T06:55:07.142561273Z"
     dependencies:
     - name: alfresco-common
@@ -12248,4 +12262,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2026-08-13T09:11:43.244437406Z"
+generated: "2026-08-18T14:41:51.457263891Z"
