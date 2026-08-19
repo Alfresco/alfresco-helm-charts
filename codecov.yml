@@ -1,0 +1,16 @@
+coverage:
+  status:
+    project:
+      default:
+        target: auto
+    patch:
+      default:
+        target: auto
+
+comment:
+  layout: "header, diff, flags, components"
+  behavior: default
+  require_changes: false
+
+github_checks:
+  annotations: true
