@@ -292,14 +292,35 @@ reindexing:
           cpu: "250m"
           memory: "20Mi"
     waitForElasticsearch:
-      image:
-        repository: curlimages/curl
-        tag: "8.11.0"
-        pullPolicy: IfNotPresent
+      # -- Wait for Elasticsearch cluster health before starting reindexing. Disabled by default. Only the first URI in `SPRING_ELASTICSEARCH_REST_URIS` is checked.
+      enabled: false
+      auth:
+        # -- Authentication mode for the health-check request: `basic` (HTTP basic auth) or `iam` (AWS SigV4, signed with the pod's AWS identity via IRSA)
+        mode: basic
+        aws:
+          # -- AWS region of the OpenSearch domain; required when mode is `iam`
+          region: null
+          # -- AWS service name for SigV4 signing (defaults to `es` for managed OpenSearch/Elasticsearch)
+          service: es
+      # -- Init container image per auth mode; the entry matching `auth.mode` is used
+      images:
+        basic:
+          repository: curlimages/curl
+          tag: "8.11.0"
+          pullPolicy: IfNotPresent
+        iam:
+          repository: ghcr.io/okigan/awscurl
+          tag: "v0.44"
+          pullPolicy: IfNotPresent
       resources:
-        limits:
-          cpu: "250m"
-          memory: "20Mi"
+        basic:
+          limits:
+            cpu: "250m"
+            memory: "20Mi"
+        iam:
+          limits:
+            cpu: "250m"
+            memory: "256Mi"
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

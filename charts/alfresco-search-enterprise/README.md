@@ -111,11 +111,15 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | reindexing.image.pullPolicy | string | `"IfNotPresent"` |  |
 | reindexing.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-reindexing"` |  |
 | reindexing.image.tag | string | `"5.7.0"` |  |
-| reindexing.initcontainers.waitForElasticsearch.image.pullPolicy | string | `"IfNotPresent"` |  |
-| reindexing.initcontainers.waitForElasticsearch.image.repository | string | `"curlimages/curl"` |  |
-| reindexing.initcontainers.waitForElasticsearch.image.tag | string | `"8.11.0"` |  |
-| reindexing.initcontainers.waitForElasticsearch.resources.limits.cpu | string | `"250m"` |  |
-| reindexing.initcontainers.waitForElasticsearch.resources.limits.memory | string | `"20Mi"` |  |
+| reindexing.initcontainers.waitForElasticsearch.auth.aws.region | string | `nil` | AWS region of the OpenSearch domain; required when mode is `iam` |
+| reindexing.initcontainers.waitForElasticsearch.auth.aws.service | string | `"es"` | AWS service name for SigV4 signing (defaults to `es` for managed OpenSearch/Elasticsearch) |
+| reindexing.initcontainers.waitForElasticsearch.auth.mode | string | `"basic"` | Authentication mode for the health-check request: `basic` (HTTP basic auth) or `iam` (AWS SigV4, signed with the pod's AWS identity via IRSA) |
+| reindexing.initcontainers.waitForElasticsearch.enabled | bool | `false` | Wait for Elasticsearch cluster health before starting reindexing. Disabled by default. Only the first URI in `SPRING_ELASTICSEARCH_REST_URIS` is checked. |
+| reindexing.initcontainers.waitForElasticsearch.images | object | `{"basic":{"pullPolicy":"IfNotPresent","repository":"curlimages/curl","tag":"8.11.0"},"iam":{"pullPolicy":"IfNotPresent","repository":"ghcr.io/okigan/awscurl","tag":"v0.44"}}` | Init container image per auth mode; the entry matching `auth.mode` is used |
+| reindexing.initcontainers.waitForElasticsearch.resources.basic.limits.cpu | string | `"250m"` |  |
+| reindexing.initcontainers.waitForElasticsearch.resources.basic.limits.memory | string | `"20Mi"` |  |
+| reindexing.initcontainers.waitForElasticsearch.resources.iam.limits.cpu | string | `"250m"` |  |
+| reindexing.initcontainers.waitForElasticsearch.resources.iam.limits.memory | string | `"256Mi"` |  |
 | reindexing.initcontainers.waitForRepository.image.pullPolicy | string | `"IfNotPresent"` |  |
 | reindexing.initcontainers.waitForRepository.image.repository | string | `"curlimages/curl"` |  |
 | reindexing.initcontainers.waitForRepository.image.tag | string | `"8.11.0"` |  |

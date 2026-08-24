@@ -106,27 +106,54 @@ spec:
               done
               echo 'Alfresco is ready, delay reindexing to give a chance to fully initialise.'
               sleep 30
+        {{- if .Values.reindexing.initcontainers.waitForElasticsearch.enabled }}
+        {{- with .Values.reindexing.initcontainers.waitForElasticsearch }}
+        {{- $mode := (.auth.mode | default "basic") }}
+        {{- if not (has $mode (list "basic" "iam")) }}
+        {{- fail (printf "reindexing.initcontainers.waitForElasticsearch.auth.mode must be \"basic\" or \"iam\", got %q" $mode) }}
+        {{- end }}
+        {{- $iam := eq $mode "iam" }}
         - name: wait-for-elasticsearch
-          {{- with .Values.reindexing.initcontainers.waitForElasticsearch }}
-          image: {{ printf "%s:%s" .image.repository .image.tag | quote }}
-          imagePullPolicy: {{ .image.pullPolicy }}
-          resources: {{- toYaml .resources | nindent 12 }}
-          {{- end }}
-          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
+          {{- $image := index .images $mode }}
+          image: {{ printf "%s:%s" $image.repository $image.tag | quote }}
+          imagePullPolicy: {{ $image.pullPolicy }}
+          resources: {{- toYaml (index .resources $mode) | nindent 12 }}
+          {{- include "alfresco-common.component-security-context" $.Values | indent 8 }}
           env:
             {{- include "alfresco-search-enterprise.config.spring.es.env" $ | nindent 12 }}
-            {{- include "alfresco-search-enterprise.config.spring.envCredentials" . | nindent 12 }}
+            {{- if not $iam }}
+            {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
+            {{- end }}
           command: ["/bin/sh", "-c"]
-          # Only start reindexing once Elasticsearch reports a healthy cluster status
+          # Only start reindexing once Elasticsearch reports a healthy cluster status.
+          # Only the first URI is checked when multiple are configured, matching
+          # alfresco-repository's initContainers.createIndexTemplate pattern.
           args:
             - |
-              until curl -sf --connect-timeout 5 --max-time 10 -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
-                "${SPRING_ELASTICSEARCH_REST_URIS}/_cluster/health?wait_for_status=yellow&timeout=5s" -o /dev/null
+              ES_URL="${SPRING_ELASTICSEARCH_REST_URIS%%,*}"
+              check_cluster_health() {
+              {{- if $iam }}
+                awscurl \
+                  --fail-with-body \
+                  -o /dev/null \
+                  --service {{ .auth.aws.service | quote }} \
+                  --region {{ required "reindexing.initcontainers.waitForElasticsearch.auth.aws.region is required when auth.mode is iam" .auth.aws.region | quote }} \
+              {{- else }}
+                curl \
+                  -sf --connect-timeout 5 --max-time 10 \
+                  -o /dev/null \
+                  -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
+              {{- end }}
+                  "${ES_URL}/_cluster/health?wait_for_status=yellow&timeout=5s"
+              }
+              until check_cluster_health
               do
-                echo "Waiting for Elasticsearch to become healthy at ${SPRING_ELASTICSEARCH_REST_URIS} ..."
+                echo "Waiting for Elasticsearch to become healthy at ${ES_URL} ..."
                 sleep 5
               done
               echo 'Elasticsearch is healthy, reindexing started!'
+        {{- end }}
+        {{- end }}
       {{- with $.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

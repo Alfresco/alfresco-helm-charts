@@ -170,7 +170,18 @@ tests:
                 name: mycm
                 key: REPO_URL
 
-  - it: should render wait-for-elasticsearch init container waiting on cluster health
+  - it: should not render wait-for-elasticsearch init container by default
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[0].name
+          value: wait-for-repository
+      - lengthEqual:
+          path: spec.template.spec.initContainers
+          count: 1
+
+  - it: should render wait-for-elasticsearch init container waiting on cluster health when enabled
+    set:
+      reindexing.initcontainers.waitForElasticsearch.enabled: true
     asserts:
       - equal:
           path: spec.template.spec.initContainers[1].name
@@ -208,6 +219,56 @@ tests:
       - matchRegex:
           path: spec.template.spec.initContainers[1].args[0]
           pattern: "--connect-timeout 5 --max-time 10"
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: 'ES_URL="\$\{SPRING_ELASTICSEARCH_REST_URIS%%,\*\}"'
+
+  - it: should render wait-for-elasticsearch with awscurl when auth mode is iam
+    set:
+      reindexing.initcontainers.waitForElasticsearch:
+        enabled: true
+        auth:
+          mode: iam
+          aws:
+            region: eu-west-1
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].image
+          pattern: "ghcr.io/okigan/awscurl:.+"
+      - notContains:
+          path: spec.template.spec.initContainers[1].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_USERNAME
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: "awscurl \\\\"
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: "--region \"eu-west-1\""
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: "--service \"es\""
+
+  - it: should fail when auth mode is iam without a region
+    set:
+      reindexing.initcontainers.waitForElasticsearch:
+        enabled: true
+        auth:
+          mode: iam
+    asserts:
+      - failedTemplate:
+          errorMessage: reindexing.initcontainers.waitForElasticsearch.auth.aws.region is required when auth.mode is iam
+
+  - it: should fail when auth mode is invalid
+    set:
+      reindexing.initcontainers.waitForElasticsearch:
+        enabled: true
+        auth:
+          mode: invalid
+    asserts:
+      - failedTemplate:
+          errorMessage: 'reindexing.initcontainers.waitForElasticsearch.auth.mode must be "basic" or "iam", got "invalid"'
+
 
   - it: has default hook annotation
     asserts:
