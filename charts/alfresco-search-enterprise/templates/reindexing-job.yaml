@@ -120,7 +120,7 @@ spec:
           # Only start reindexing once Elasticsearch reports a healthy cluster status
           args:
             - |
-              until curl -sf -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
+              until curl -sf --connect-timeout 5 --max-time 10 -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
                 "${SPRING_ELASTICSEARCH_REST_URIS}/_cluster/health?wait_for_status=yellow&timeout=5s" -o /dev/null
               do
                 echo "Waiting for Elasticsearch to become healthy at ${SPRING_ELASTICSEARCH_REST_URIS} ..."

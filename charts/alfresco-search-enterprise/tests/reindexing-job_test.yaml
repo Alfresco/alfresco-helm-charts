@@ -194,9 +194,20 @@ tests:
               secretKeyRef:
                 name: RELEASE-NAME-alfresco-search-enterprise-es
                 key: SEARCH_USERNAME
+      - contains:
+          path: spec.template.spec.initContainers[1].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-es
+                key: SEARCH_PASSWORD
       - matchRegex:
           path: spec.template.spec.initContainers[1].args[0]
           pattern: _cluster/health\?wait_for_status=yellow
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: "--connect-timeout 5 --max-time 10"
 
   - it: has default hook annotation
     asserts:
