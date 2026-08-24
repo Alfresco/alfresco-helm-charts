@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-enterprise
 
-![Version: 5.2.0](https://img.shields.io/badge/Version-5.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.7.0](https://img.shields.io/badge/AppVersion-5.7.0-informational?style=flat-square)
+![Version: 5.3.0-alpha.0](https://img.shields.io/badge/Version-5.3.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.7.0](https://img.shields.io/badge/AppVersion-5.7.0-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco Elasticsearch connector
 
@@ -111,6 +111,11 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | reindexing.image.pullPolicy | string | `"IfNotPresent"` |  |
 | reindexing.image.repository | string | `"quay.io/alfresco/alfresco-elasticsearch-reindexing"` |  |
 | reindexing.image.tag | string | `"5.7.0"` |  |
+| reindexing.initcontainers.waitForElasticsearch.image.pullPolicy | string | `"IfNotPresent"` |  |
+| reindexing.initcontainers.waitForElasticsearch.image.repository | string | `"curlimages/curl"` |  |
+| reindexing.initcontainers.waitForElasticsearch.image.tag | string | `"8.11.0"` |  |
+| reindexing.initcontainers.waitForElasticsearch.resources.limits.cpu | string | `"250m"` |  |
+| reindexing.initcontainers.waitForElasticsearch.resources.limits.memory | string | `"20Mi"` |  |
 | reindexing.initcontainers.waitForRepository.image.pullPolicy | string | `"IfNotPresent"` |  |
 | reindexing.initcontainers.waitForRepository.image.repository | string | `"curlimages/curl"` |  |
 | reindexing.initcontainers.waitForRepository.image.tag | string | `"8.11.0"` |  |

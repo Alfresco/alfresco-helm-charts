@@ -106,7 +106,27 @@ spec:
               done
               echo 'Alfresco is ready, delay reindexing to give a chance to fully initialise.'
               sleep 30
-              echo 'Reindexing started!'
+        - name: wait-for-elasticsearch
+          {{- with .Values.reindexing.initcontainers.waitForElasticsearch }}
+          image: {{ printf "%s:%s" .image.repository .image.tag | quote }}
+          imagePullPolicy: {{ .image.pullPolicy }}
+          resources: {{- toYaml .resources | nindent 12 }}
+          {{- end }}
+          {{- include "alfresco-common.component-security-context" .Values | indent 8 }}
+          env:
+            {{- include "alfresco-search-enterprise.config.spring.es.env" $ | nindent 12 }}
+            {{- include "alfresco-search-enterprise.config.spring.envCredentials" . | nindent 12 }}
+          command: ["/bin/sh", "-c"]
+          # Only start reindexing once Elasticsearch reports a healthy cluster status
+          args:
+            - |
+              until curl -sf -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
+                "${SPRING_ELASTICSEARCH_REST_URIS}/_cluster/health?wait_for_status=yellow&timeout=5s" -o /dev/null
+              do
+                echo "Waiting for Elasticsearch to become healthy at ${SPRING_ELASTICSEARCH_REST_URIS} ..."
+                sleep 5
+              done
+              echo 'Elasticsearch is healthy, reindexing started!'
       {{- with $.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

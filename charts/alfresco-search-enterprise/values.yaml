@@ -291,6 +291,15 @@ reindexing:
         limits:
           cpu: "250m"
           memory: "20Mi"
+    waitForElasticsearch:
+      image:
+        repository: curlimages/curl
+        tag: "8.11.0"
+        pullPolicy: IfNotPresent
+      resources:
+        limits:
+          cpu: "250m"
+          memory: "20Mi"
 serviceAccount:
   # Specifies whether a service account should be created
   create: true

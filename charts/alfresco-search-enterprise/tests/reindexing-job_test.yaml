@@ -170,6 +170,34 @@ tests:
                 name: mycm
                 key: REPO_URL
 
+  - it: should render wait-for-elasticsearch init container waiting on cluster health
+    asserts:
+      - equal:
+          path: spec.template.spec.initContainers[1].name
+          value: wait-for-elasticsearch
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].image
+          pattern: "curlimages/curl:.+"
+      - contains:
+          path: spec.template.spec.initContainers[1].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_URIS
+            valueFrom:
+              configMapKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-es
+                key: SEARCH_URL
+      - contains:
+          path: spec.template.spec.initContainers[1].env
+          content:
+            name: SPRING_ELASTICSEARCH_REST_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: RELEASE-NAME-alfresco-search-enterprise-es
+                key: SEARCH_USERNAME
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: _cluster/health\?wait_for_status=yellow
+
   - it: has default hook annotation
     asserts:
       - equal:
