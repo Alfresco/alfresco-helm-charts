@@ -125,13 +125,10 @@ spec:
             {{- include "alfresco-search-enterprise.config.spring.envCredentials" $ | nindent 12 }}
             {{- end }}
           command: ["/bin/sh", "-c"]
-          # Only start reindexing once Elasticsearch reports a healthy cluster status.
-          # Only the first URI is checked when multiple are configured, matching
-          # alfresco-repository's initContainers.createIndexTemplate pattern.
           args:
             - |
               ES_URL="${SPRING_ELASTICSEARCH_REST_URIS%%,*}"
-              check_cluster_health() {
+              until
               {{- if $iam }}
                 awscurl \
                   --fail-with-body \
@@ -145,8 +142,6 @@ spec:
                   -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" \
               {{- end }}
                   "${ES_URL}/_cluster/health?wait_for_status=yellow&timeout=5s"
-              }
-              until check_cluster_health
               do
                 echo "Waiting for Elasticsearch to become healthy at ${ES_URL} ..."
                 sleep 5
