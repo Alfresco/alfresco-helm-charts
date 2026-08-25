@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 1.9.0](https://img.shields.io/badge/Version-1.9.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.0](https://img.shields.io/badge/AppVersion-26.2.0-informational?style=flat-square)
+![Version: 1.10.0-alpha.0](https://img.shields.io/badge/Version-1.10.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.0](https://img.shields.io/badge/AppVersion-26.2.0-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -158,6 +158,7 @@ The init container image is selected automatically based on the auth mode; overr
 | initContainers.createIndexTemplate.auth.aws.region | string | `nil` | AWS region of the OpenSearch domain; required when mode is `iam` |
 | initContainers.createIndexTemplate.auth.aws.service | string | `"es"` | AWS service name for SigV4 signing (defaults to `es` for managed OpenSearch/Elasticsearch) |
 | initContainers.createIndexTemplate.auth.mode | string | `"basic"` | Authentication mode for the index-template request: `basic` (HTTP basic auth) or `iam` (AWS SigV4, signed with the pod's AWS identity via IRSA) |
+| initContainers.createIndexTemplate.dynamic | bool | `false` | Whether new fields are added dynamically to the index mapping. Disable to avoid unbounded index growth from unexpected fields. |
 | initContainers.createIndexTemplate.enabled | bool | `false` | Whether to create an Elasticsearch index template before starting the repository |
 | initContainers.createIndexTemplate.images | object | `{"basic":{"pullPolicy":"IfNotPresent","repository":"curlimages/curl","tag":"8.11.0"},"iam":{"pullPolicy":"IfNotPresent","repository":"ghcr.io/okigan/awscurl","tag":"v0.44"}}` | Init container image per auth mode; the entry matching `auth.mode` is used |
 | initContainers.createIndexTemplate.indexName | string | `"alfresco"` | Index name to apply the template to |

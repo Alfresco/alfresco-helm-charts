@@ -162,6 +162,9 @@ tests:
       - matchRegex:
           path: spec.template.spec.initContainers[1].args[0]
           pattern: '.*"limit": 7500.*'
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*"dynamic": false.*'
 
   - it: should use init container overrides for max_result_window and totalFieldsLimit
     set:
@@ -180,6 +183,17 @@ tests:
       - matchRegex:
           path: spec.template.spec.initContainers[1].args[0]
           pattern: '.*"limit": 12000.*'
+
+  - it: should use configured dynamic mapping setting
+    set:
+      initContainers:
+        createIndexTemplate:
+          enabled: true
+          dynamic: true
+    asserts:
+      - matchRegex:
+          path: spec.template.spec.initContainers[1].args[0]
+          pattern: '.*"dynamic": true.*'
 
   - it: should include elasticsearch credentials from search configuration
     set:

@@ -409,6 +409,8 @@ initContainers:
     numberOfShards: 1
     # -- Number of replicas for the index
     numberOfReplicas: 0
+    # -- Whether new fields are added dynamically to the index mapping. Disable to avoid unbounded index growth from unexpected fields.
+    dynamic: false
 global:
   # -- If a private image registry a secret can be defined and passed to
   # kubernetes, see:
