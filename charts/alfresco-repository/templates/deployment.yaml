@@ -123,6 +123,9 @@ spec:
                             }
                           }
                         }
+                      },
+                      "mappings": {
+                        "dynamic": {{ .dynamic }}
                       }
                     }
                   }'
