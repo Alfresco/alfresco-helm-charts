@@ -7,6 +7,8 @@ parent: Charts Reference
 
 ![Version: 2.5.0](https://img.shields.io/badge/Version-2.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.0](https://img.shields.io/badge/AppVersion-26.2.0-informational?style=flat-square)
 
+[![codecov](https://codecov.io/gh/alxgomz/alfresco-helm-charts/branch/main/graph/badge.svg?flag=alfresco-share)](https://app.codecov.io/gh/alxgomz/alfresco-helm-charts/flags?flags%5B0%5D=alfresco-share)
+
 Alfresco Share Helm chart for Kubernetes
 
 Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for an example of how to leverage this chart from an umbrella chart.

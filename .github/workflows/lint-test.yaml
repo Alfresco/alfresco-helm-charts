@@ -127,13 +127,21 @@ jobs:
 
       - name: Upload coverage to Codecov
         if: always()
-        uses: codecov/codecov-action@0fb7174895f61a3b6b78fc075e0cd60383518dac # v5.5.5
-        with:
-          files: charts/*/coverage.xml
-          flags: helm-unittest
-          fail_ci_if_error: false
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: |
+          curl -Os https://cli.codecov.io/latest/linux/codecov
+          chmod +x codecov
+          for f in charts/*/coverage.xml; do
+            [ -f "$f" ] || continue
+            chart=$(basename "$(dirname "$f")")
+            ./codecov upload-process \
+              --file "$f" \
+              --flag "helm-unittest" \
+              --flag "$chart" \
+              --disable-search \
+              --fail-on-error false
+          done
 
   install:
     needs: list-changed

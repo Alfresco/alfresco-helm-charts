@@ -7,6 +7,8 @@ parent: Charts Reference
 
 ![Version: 3.8.1](https://img.shields.io/badge/Version-3.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.1.3](https://img.shields.io/badge/AppVersion-2.1.3-informational?style=flat-square)
 
+[![codecov](https://codecov.io/gh/alxgomz/alfresco-helm-charts/branch/main/graph/badge.svg?flag=alfresco-connector-ms365)](https://app.codecov.io/gh/alxgomz/alfresco-helm-charts/flags?flags%5B0%5D=alfresco-connector-ms365)
+
 A Helm chart for deploying Alfresco connector ms365 service
 
 Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for an example of how to leverage this chart from an umbrella chart.

@@ -15,6 +15,35 @@ comment:
 github_checks:
   annotations: true
 
+flag_management:
+  default_rules:
+    carryforward: true
+    statuses:
+      - type: project
+        target: auto
+  individual_flags:
+    - name: helm-unittest
+    - name: activemq
+    - name: alfresco-activiti
+    - name: alfresco-activiti-admin
+    - name: alfresco-adf-app
+    - name: alfresco-ai-transformer
+    - name: alfresco-audit-storage
+    - name: alfresco-common
+    - name: alfresco-connector-cic
+    - name: alfresco-connector-hxi
+    - name: alfresco-connector-ms365
+    - name: alfresco-connector-msteams
+    - name: alfresco-repository
+    - name: alfresco-search-community
+    - name: alfresco-search-enterprise
+    - name: alfresco-search-service
+    - name: alfresco-share
+    - name: alfresco-sync-service
+    - name: alfresco-transform-service
+    - name: elastic
+    - name: postgres
+
 component_management:
   default_rules:
     statuses:

@@ -7,6 +7,8 @@ parent: Charts Reference
 
 ![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.7.0](https://img.shields.io/badge/AppVersion-5.7.0-informational?style=flat-square)
 
+[![codecov](https://codecov.io/gh/alxgomz/alfresco-helm-charts/branch/main/graph/badge.svg?flag=alfresco-search-community)](https://app.codecov.io/gh/alxgomz/alfresco-helm-charts/flags?flags%5B0%5D=alfresco-search-community)
+
 A Helm chart for deploying the Alfresco Elasticsearch Community batch indexing component
 
 Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for an example of how to leverage this chart from an umbrella chart.

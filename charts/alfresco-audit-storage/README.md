@@ -7,6 +7,8 @@ parent: Charts Reference
 
 ![Version: 0.11.1](https://img.shields.io/badge/Version-0.11.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.3](https://img.shields.io/badge/AppVersion-1.3.3-informational?style=flat-square)
 
+[![codecov](https://codecov.io/gh/alxgomz/alfresco-helm-charts/branch/main/graph/badge.svg?flag=alfresco-audit-storage)](https://app.codecov.io/gh/alxgomz/alfresco-helm-charts/flags?flags%5B0%5D=alfresco-audit-storage)
+
 A Helm chart for Kubernetes to deploy Alfresco Audit Storage
 
 Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs-deployment/blob/master/docs/helm/README.md) for an example of how to leverage this chart from an umbrella chart.
