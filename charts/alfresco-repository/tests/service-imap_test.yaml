@@ -1,0 +1,110 @@
+---
+suite: imap service
+templates:
+  - service-imap.yaml
+values:
+  - values/test_values.yaml
+tests:
+  - it: should not render when disabled
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should render with default imap protocol and port
+    set:
+      configuration:
+        imap:
+          enabled: true
+    asserts:
+      - hasDocuments:
+          count: 1
+      - equal:
+          path: kind
+          value: Service
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-repository-imap
+      - equal:
+          path: spec.type
+          value: LoadBalancer
+      - equal:
+          path: spec.externalTrafficPolicy
+          value: Local
+      - contains:
+          path: spec.ports
+          content:
+            name: imap
+            port: 1143
+            protocol: TCP
+            targetPort: 1143
+
+  - it: should render with imaps protocol and custom port
+    set:
+      configuration:
+        imap:
+          enabled: true
+          protocol: imaps
+          port: 1993
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-repository-imaps
+      - contains:
+          path: spec.ports
+          content:
+            name: imaps
+            port: 1993
+            protocol: TCP
+            targetPort: 1993
+
+  - it: should render provided annotations
+    set:
+      configuration:
+        imap:
+          enabled: true
+          annotations:
+            service.beta.kubernetes.io/aws-load-balancer-type: nlb
+            a8r.io/description: repo IMAP endpoint
+    asserts:
+      - equal:
+          path: metadata.annotations['service.beta.kubernetes.io/aws-load-balancer-type']
+          value: nlb
+      - equal:
+          path: metadata.annotations['a8r.io/description']
+          value: repo IMAP endpoint
+
+  - it: should render selector labels pointing at the repository pods
+    set:
+      configuration:
+        imap:
+          enabled: true
+    asserts:
+      - isSubset:
+          path: spec.selector
+          content:
+            app.kubernetes.io/name: alfresco-repository
+            app.kubernetes.io/instance: RELEASE-NAME
+
+  - it: should honor nameOverride for service name and labels
+    set:
+      nameOverride: myrepo
+      configuration:
+        imap:
+          enabled: true
+          protocol: imaps
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-myrepo-imaps
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/name: myrepo-imaps
+            app.kubernetes.io/component: alfresco-repository
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-repository-1.0.0
