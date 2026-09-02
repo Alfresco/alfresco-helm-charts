@@ -262,7 +262,9 @@ jobs:
           GH_AW_GITHUB_WORKSPACE: ${{ github.workspace }}
         # poutine:ignore untrusted_checkout_exec
         run: |
-          bash "${RUNNER_TEMP}/gh-aw/actions/create_prompt_first.sh"
+          set +o histexpand
+          PROMPT_DIR="$(dirname "$GH_AW_PROMPT")"
+          mkdir -p "$PROMPT_DIR"
           {
           cat << 'GH_AW_PROMPT_cdff9d4535e56074_EOF'
           <system>
