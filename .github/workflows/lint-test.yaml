@@ -115,12 +115,15 @@ jobs:
 
       - name: Debug helm-unittest coverage
         run: |
-          for chart in charts/alfresco-repository; do
-            echo "=== Running helm unittest on $chart ==="
-            helm unittest "$chart" --coverage-file "$chart/coverage" --coverage-format cobertura || true
-            echo "=== Coverage file check ==="
-            ls -la "$chart"/coverage* 2>/dev/null || echo "No coverage files found"
-          done
+          chart=charts/alfresco-repository
+          helm dependency update "$chart"
+          set +e
+          helm unittest "$chart" --coverage-file "$chart/coverage" --coverage-format cobertura
+          rc=$?
+          set -e
+          echo "::notice::helm unittest exit code: $rc"
+          ls -la "$chart"/coverage* 2>/dev/null || echo "No coverage files found"
+          exit $rc
 
       - name: Run chart-testing (lint)
         run: ct lint --config ct.yaml ${{ env.TEST_ALL_CHARTS == 'true' && '--all' || '' }}
@@ -135,12 +138,11 @@ jobs:
           for f in charts/*/coverage.xml; do
             [ -f "$f" ] || continue
             chart=$(basename "$(dirname "$f")")
-            ./codecov upload-process \
-              --file "$f" \
-              --flag "helm-unittest" \
-              --flag "$chart" \
+            ./codecov --verbose upload-process \
               --disable-search \
-              --fail-on-error false
+              -f "$f" \
+              -F helm-unittest \
+              -F "$chart"
           done
 
   install:
