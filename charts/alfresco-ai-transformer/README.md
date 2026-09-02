@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-ai-transformer
 
-![Version: 3.8.1](https://img.shields.io/badge/Version-3.8.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.4.4](https://img.shields.io/badge/AppVersion-3.4.4-informational?style=flat-square)
+![Version: 3.9.0-alpha.0](https://img.shields.io/badge/Version-3.9.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.4.4](https://img.shields.io/badge/AppVersion-3.4.4-informational?style=flat-square)
 
 [![codecov](https://codecov.io/gh/alxgomz/alfresco-helm-charts/branch/main/graph/badge.svg?flag=alfresco-ai-transformer)](https://app.codecov.io/gh/alxgomz/alfresco-helm-charts/flags?flags%5B0%5D=alfresco-ai-transformer)
 

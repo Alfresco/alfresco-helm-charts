@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-transform-service
 
-![Version: 2.9.1](https://img.shields.io/badge/Version-2.9.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.4.3](https://img.shields.io/badge/AppVersion-4.4.3-informational?style=flat-square)
+![Version: 2.10.0-alpha.0](https://img.shields.io/badge/Version-2.10.0--alpha.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.4.3](https://img.shields.io/badge/AppVersion-4.4.3-informational?style=flat-square)
 
 [![codecov](https://codecov.io/gh/alxgomz/alfresco-helm-charts/branch/main/graph/badge.svg?flag=alfresco-transform-service)](https://app.codecov.io/gh/alxgomz/alfresco-helm-charts/flags?flags%5B0%5D=alfresco-transform-service)
 
