@@ -101,8 +101,16 @@ gh search issues \
   -- "in:title \"🚀 Release: ${{ inputs.release-name }}\""
 ```
 
-- **Found**: read the body carefully. Extract all `<!-- phase:X:done -->` markers. Store the issue number — you will call `update-issue` at the end of this run.
-- **Not found**: you will call `create-issue` at the end of this run.
+- **Found**: read the body carefully. Extract all `<!-- phase:X:done -->` markers. Store the issue number as `TRACKING_ISSUE_NUMBER`.
+- **Not found**: call `create-issue` with `temporary_id: "tracking-issue"`, then refer to that temporary ID when updating or commenting on the new issue.
+
+Every `update-issue` call must explicitly identify its target. Never call it with only a body:
+
+```json
+{"issue_number": "TRACKING_ISSUE_NUMBER", "body": "<complete status body>"}
+```
+
+For a newly created issue in the same run, use `"issue_number": "tracking-issue"`. Every `add-comment` call must likewise include `item_number: "TRACKING_ISSUE_NUMBER"` or `item_number: "tracking-issue"`.
 
 Phase markers:
 - `<!-- phase:alfresco-common-ga:done -->` — alfresco-common is GA on main
@@ -690,8 +698,8 @@ Use `create-pull-request`:
 
 Include only the markers for phases that actually completed.
 
-- Existing issue → `update-issue` with that issue number
-- New issue → `create-issue`
+- Existing issue → `update-issue` with `issue_number: TRACKING_ISSUE_NUMBER`
+- New issue → `create-issue` with `temporary_id: "tracking-issue"`; do not call `update-issue` separately unless it uses `issue_number: "tracking-issue"`
 
 Post an `add-comment` (with `hide-older-comments: true`) summarising what this run executed and what the DevOps must do next.
 
