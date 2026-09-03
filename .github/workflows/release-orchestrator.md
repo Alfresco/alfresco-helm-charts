@@ -566,7 +566,12 @@ Apply these semver rules. Evaluate **both** dimensions below, then take the **hi
 
 Example: `version: 0.14.0` / `appVersion: 26.1.0` → `appVersion: 26.2.0` is a minor `appVersion` bump, so the chart version must also bump minor: `0.15.0` (not `0.14.1`).
 
-**Exception — pre-release chart being promoted to GA:** if the chart's current `version` on `main` is a pre-release (contains `-`, e.g. `1.8.0-alpha.1`) and this diff drops the pre-release suffix to land on that same version core (e.g. `1.8.0`), land on the GA version **as-is** — do not additionally bump for dimension 2, even if `appVersion` also changed in the same diff. The alpha/pre-release version core already reserved the slot for this release; do not stack a further bump on top of the GA promotion itself.
+**Exception — pre-release chart promotion:** if the current chart version on
+`main` is pre-release (contains `-`) and the release promotes it to GA, keep
+the same version core and remove only the suffix. For example,
+`1.10.0-alpha.1` becomes `1.10.0`, and `3.2.0-M1` becomes `3.2.0`. Land on the
+GA version as-is; do not apply an additional semver bump from Dimension 2, even
+if `appVersion` changes in the same release.
 
 Apply bumps in dependency order:
 1. `alfresco-common` (if still changed after Phase A)
