@@ -33,6 +33,7 @@ matrix:
         LiveIngester: $.liveIngester.image.tag
         BulkIngester: $.bulkIngester.image.tag
         NucleusSync: $.nucleusSync.image.tag
+      helm_update_appVersion: true
     intelligence:
       helm_target: charts/alfresco-ai-transformer/values.yaml
       helm_key: $.image.tag

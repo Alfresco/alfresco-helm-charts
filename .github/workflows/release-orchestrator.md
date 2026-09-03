@@ -70,7 +70,7 @@ safe-outputs:
 - **Jira ID**: `${{ inputs.jira-id || '(none)' }}`
 - **Triggered by**: `@${{ github.actor }}`
 
-**PR title prefix**: If `${{ inputs.jira-id }}` is non-empty, prefix every `create-pull-request` title with `${{ inputs.jira-id }} ` (followed by a space).
+**PR title prefix**: If `${{ inputs.jira-id }}` is non-empty, prefix every `create_pull_request` title with `${{ inputs.jira-id }} ` (followed by a space).
 
 ## Design
 
@@ -102,15 +102,15 @@ gh search issues \
 ```
 
 - **Found**: read the body carefully. Extract all `<!-- phase:X:done -->` markers. Store the issue number as `TRACKING_ISSUE_NUMBER`.
-- **Not found**: call `create-issue` with `temporary_id: "tracking-issue"`, then refer to that temporary ID when updating or commenting on the new issue.
+- **Not found**: call `create_issue` with `temporary_id: "aw_tracking"`, then refer to that temporary ID when updating or commenting on the new issue.
 
-Every `update-issue` call must explicitly identify its target. Never call it with only a body:
+Every `update_issue` call must explicitly identify its target. Never call it with only a body:
 
 ```json
 {"issue_number": "TRACKING_ISSUE_NUMBER", "body": "<complete status body>"}
 ```
 
-For a newly created issue in the same run, use `"issue_number": "tracking-issue"`. Every `add-comment` call must likewise include `item_number: "TRACKING_ISSUE_NUMBER"` or `item_number: "tracking-issue"`.
+For a newly created issue in the same run, use `"issue_number": "aw_tracking"`. Every `add_comment` call must likewise include `item_number: "TRACKING_ISSUE_NUMBER"` or `item_number: "aw_tracking"`.
 
 Phase markers:
 - `<!-- phase:alfresco-common-ga:done -->` — alfresco-common is GA on main
@@ -259,7 +259,7 @@ git add charts/alfresco-common/README.md
 git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for alfresco-common"
 ```
 
-Create the PR using `create-pull-request`:
+Create the PR using `create_pull_request`:
 - **title**: `chore: release alfresco-common <ga-version> GA` (prefix with `${{ inputs.jira-id }} ` if jira-id is set)
 - **base**: `main`
 - **branch**: `release/alfresco-common-ga`
@@ -332,7 +332,7 @@ git add charts/activemq/README.md
 git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for activemq"
 ```
 
-Create the PR using `create-pull-request`:
+Create the PR using `create_pull_request`:
 - **title**: `chore: release activemq <version> GA` (prefix with `${{ inputs.jira-id }} ` if jira-id is set)
 - **base**: `main`
 - **branch**: `release/activemq-ga`
@@ -405,7 +405,7 @@ git add charts/postgres/README.md
 git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for postgres"
 ```
 
-Create the PR using `create-pull-request`:
+Create the PR using `create_pull_request`:
 - **title**: `chore: release postgres <version> GA` (prefix with `${{ inputs.jira-id }} ` if jira-id is set)
 - **base**: `main`
 - **branch**: `release/postgres-ga`
@@ -478,7 +478,7 @@ git add charts/elastic/README.md
 git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for elastic"
 ```
 
-Create the PR using `create-pull-request`:
+Create the PR using `create_pull_request`:
 - **title**: `chore: release elastic <version> GA` (prefix with `${{ inputs.jira-id }} ` if jira-id is set)
 - **base**: `main`
 - **branch**: `release/elastic-ga`
@@ -595,7 +595,7 @@ git add charts/**/README.md
 git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for release ${{ inputs.release-name }}"
 ```
 
-Use `create-pull-request`:
+Use `create_pull_request`:
 - **title**: `🚀 Release: ${{ inputs.release-name }}` (prefix with `${{ inputs.jira-id }} ` if jira-id is set)
 - **base**: `main`
 - **branch**: `$RELEASE_BRANCH`
@@ -698,10 +698,10 @@ Use `create-pull-request`:
 
 Include only the markers for phases that actually completed.
 
-- Existing issue → `update-issue` with `issue_number: TRACKING_ISSUE_NUMBER`
-- New issue → `create-issue` with `temporary_id: "tracking-issue"`; do not call `update-issue` separately unless it uses `issue_number: "tracking-issue"`
+- Existing issue → `update_issue` with `issue_number: TRACKING_ISSUE_NUMBER`
+- New issue → `create_issue` with `temporary_id: "aw_tracking"`; do not call `update_issue` separately unless it uses `issue_number: "aw_tracking"`
 
-Post an `add-comment` (with `hide-older-comments: true`) summarising what this run executed and what the DevOps must do next.
+Post an `add_comment` (with `hide-older-comments: true`) summarising what this run executed and what the DevOps must do next.
 
 ## Noop condition
 
