@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-connector-cic
 
-![Version: 0.1.0-alpha.4](https://img.shields.io/badge/Version-0.1.0--alpha.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.1](https://img.shields.io/badge/AppVersion-1.0.1-informational?style=flat-square)
+![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.0.2](https://img.shields.io/badge/AppVersion-1.0.2-informational?style=flat-square)
 
 A Helm chart for deploying Alfresco connector cic services
 
@@ -30,7 +30,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | bulkIngester.environment.ALFRESCO_BULK_INGEST_PUBLISHER_ENDPOINT | string | `"activemq:queue:bulk-ingester-events"` |  |
 | bulkIngester.image.pullPolicy | string | `"IfNotPresent"` |  |
 | bulkIngester.image.repository | string | `"quay.io/alfresco/alfresco-cic-connector-bulk-ingester"` |  |
-| bulkIngester.image.tag | string | `"1.0.1"` |  |
+| bulkIngester.image.tag | string | `"1.0.2"` |  |
 | bulkIngester.initContainers.waitForRepository.enabled | bool | `true` |  |
 | bulkIngester.initContainers.waitForRepository.image.pullPolicy | string | `"IfNotPresent"` |  |
 | bulkIngester.initContainers.waitForRepository.image.repository | string | `"curlimages/curl"` |  |
@@ -86,7 +86,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | liveIngester.image.internalPort | int | `8080` |  |
 | liveIngester.image.pullPolicy | string | `"IfNotPresent"` |  |
 | liveIngester.image.repository | string | `"quay.io/alfresco/alfresco-cic-connector-live-ingester"` |  |
-| liveIngester.image.tag | string | `"1.0.1"` |  |
+| liveIngester.image.tag | string | `"1.0.2"` |  |
 | liveIngester.livenessProbe.httpGet.path | string | `"/actuator/health/liveness"` |  |
 | liveIngester.livenessProbe.initialDelaySeconds | int | `30` |  |
 | liveIngester.readinessProbe.httpGet.path | string | `"/actuator/health/readiness"` |  |
@@ -119,7 +119,7 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | nucleusSync.image.internalPort | int | `8080` |  |
 | nucleusSync.image.pullPolicy | string | `"IfNotPresent"` |  |
 | nucleusSync.image.repository | string | `"quay.io/alfresco/alfresco-cic-connector-nucleus-sync"` |  |
-| nucleusSync.image.tag | string | `"1.0.1"` |  |
+| nucleusSync.image.tag | string | `"1.0.2"` |  |
 | nucleusSync.livenessProbe.httpGet.path | string | `"/actuator/health/liveness"` |  |
 | nucleusSync.livenessProbe.initialDelaySeconds | int | `30` |  |
 | nucleusSync.readinessProbe.httpGet.path | string | `"/actuator/health/readiness"` |  |
