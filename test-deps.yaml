@@ -9,7 +9,7 @@ deps:
   activemq:
     chart: activemq
     repository: https://alfresco.github.io/alfresco-helm-charts/
-    version: 4.2.0
+    version: 4.2.1
   elasticsearch:
     chart: elastic
     repository: https://alfresco.github.io/alfresco-helm-charts/
