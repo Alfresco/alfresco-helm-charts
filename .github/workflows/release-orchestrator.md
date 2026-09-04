@@ -70,7 +70,7 @@ safe-outputs:
 - **Jira ID**: `${{ inputs.jira-id || '(none)' }}`
 - **Triggered by**: `@${{ github.actor }}`
 
-**PR title prefix**: If `${{ inputs.jira-id }}` is non-empty, prefix every `create-pull-request` title with `${{ inputs.jira-id }} ` (followed by a space).
+**PR title prefix**: If `${{ inputs.jira-id }}` is non-empty, prefix every `create_pull_request` title with `${{ inputs.jira-id }} ` (followed by a space).
 
 ## Design
 
@@ -101,8 +101,16 @@ gh search issues \
   -- "in:title \"🚀 Release: ${{ inputs.release-name }}\""
 ```
 
-- **Found**: read the body carefully. Extract all `<!-- phase:X:done -->` markers. Store the issue number — you will call `update-issue` at the end of this run.
-- **Not found**: you will call `create-issue` at the end of this run.
+- **Found**: read the body carefully. Extract all `<!-- phase:X:done -->` markers. Store the issue number as `TRACKING_ISSUE_NUMBER`.
+- **Not found**: call `create_issue` with `temporary_id: "aw_tracking"`, then refer to that temporary ID when updating or commenting on the new issue.
+
+Every `update_issue` call must explicitly identify its target. Never call it with only a body:
+
+```json
+{"issue_number": "TRACKING_ISSUE_NUMBER", "body": "<complete status body>"}
+```
+
+For a newly created issue in the same run, use `"issue_number": "aw_tracking"`. Every `add_comment` call must likewise include `item_number: "TRACKING_ISSUE_NUMBER"` or `item_number: "aw_tracking"`.
 
 Phase markers:
 - `<!-- phase:alfresco-common-ga:done -->` — alfresco-common is GA on main
@@ -251,7 +259,7 @@ git add charts/alfresco-common/README.md
 git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for alfresco-common"
 ```
 
-Create the PR using `create-pull-request`:
+Create the PR using `create_pull_request`:
 - **title**: `chore: release alfresco-common <ga-version> GA` (prefix with `${{ inputs.jira-id }} ` if jira-id is set)
 - **base**: `main`
 - **branch**: `release/alfresco-common-ga`
@@ -324,7 +332,7 @@ git add charts/activemq/README.md
 git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for activemq"
 ```
 
-Create the PR using `create-pull-request`:
+Create the PR using `create_pull_request`:
 - **title**: `chore: release activemq <version> GA` (prefix with `${{ inputs.jira-id }} ` if jira-id is set)
 - **base**: `main`
 - **branch**: `release/activemq-ga`
@@ -397,7 +405,7 @@ git add charts/postgres/README.md
 git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for postgres"
 ```
 
-Create the PR using `create-pull-request`:
+Create the PR using `create_pull_request`:
 - **title**: `chore: release postgres <version> GA` (prefix with `${{ inputs.jira-id }} ` if jira-id is set)
 - **base**: `main`
 - **branch**: `release/postgres-ga`
@@ -470,7 +478,7 @@ git add charts/elastic/README.md
 git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for elastic"
 ```
 
-Create the PR using `create-pull-request`:
+Create the PR using `create_pull_request`:
 - **title**: `chore: release elastic <version> GA` (prefix with `${{ inputs.jira-id }} ` if jira-id is set)
 - **base**: `main`
 - **branch**: `release/elastic-ga`
@@ -558,7 +566,12 @@ Apply these semver rules. Evaluate **both** dimensions below, then take the **hi
 
 Example: `version: 0.14.0` / `appVersion: 26.1.0` → `appVersion: 26.2.0` is a minor `appVersion` bump, so the chart version must also bump minor: `0.15.0` (not `0.14.1`).
 
-**Exception — pre-release chart being promoted to GA:** if the chart's current `version` on `main` is a pre-release (contains `-`, e.g. `1.8.0-alpha.1`) and this diff drops the pre-release suffix to land on that same version core (e.g. `1.8.0`), land on the GA version **as-is** — do not additionally bump for dimension 2, even if `appVersion` also changed in the same diff. The alpha/pre-release version core already reserved the slot for this release; do not stack a further bump on top of the GA promotion itself.
+**Exception — pre-release chart promotion:** if the current chart version on
+`main` is pre-release (contains `-`) and the release promotes it to GA, keep
+the same version core and remove only the suffix. For example,
+`1.10.0-alpha.1` becomes `1.10.0`, and `3.2.0-M1` becomes `3.2.0`. Land on the
+GA version as-is; do not apply an additional semver bump from Dimension 2, even
+if `appVersion` changes in the same release.
 
 Apply bumps in dependency order:
 1. `alfresco-common` (if still changed after Phase A)
@@ -587,7 +600,7 @@ git add charts/**/README.md
 git diff --cached --quiet || git commit -m "docs: regenerate helm-docs for release ${{ inputs.release-name }}"
 ```
 
-Use `create-pull-request`:
+Use `create_pull_request`:
 - **title**: `🚀 Release: ${{ inputs.release-name }}` (prefix with `${{ inputs.jira-id }} ` if jira-id is set)
 - **base**: `main`
 - **branch**: `$RELEASE_BRANCH`
@@ -690,10 +703,10 @@ Use `create-pull-request`:
 
 Include only the markers for phases that actually completed.
 
-- Existing issue → `update-issue` with that issue number
-- New issue → `create-issue`
+- Existing issue → `update_issue` with `issue_number: TRACKING_ISSUE_NUMBER`
+- New issue → `create_issue` with `temporary_id: "aw_tracking"`; do not call `update_issue` separately unless it uses `issue_number: "aw_tracking"`
 
-Post an `add-comment` (with `hide-older-comments: true`) summarising what this run executed and what the DevOps must do next.
+Post an `add_comment` (with `hide-older-comments: true`) summarising what this run executed and what the DevOps must do next.
 
 ## Noop condition
 
