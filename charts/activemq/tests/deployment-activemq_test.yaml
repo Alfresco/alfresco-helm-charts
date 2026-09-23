@@ -20,6 +20,16 @@ tests:
           path: spec.template.spec.containers[0].env[3].valueFrom.secretKeyRef.name
           value: existing-secret
 
+  - it: "[pattern-6] should honor custom imagePullSecrets from values"
+    set:
+      imagePullSecrets:
+        - name: my-private-registry-secret
+    asserts:
+      - contains:
+          path: spec.template.spec.imagePullSecrets
+          content:
+            name: my-private-registry-secret
+
   - it: should render cpu and memory limits
     asserts:
       - equal:

@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 1.11.0-alpha.4](https://img.shields.io/badge/Version-1.11.0--alpha.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.2](https://img.shields.io/badge/AppVersion-26.2.2-informational?style=flat-square)
+![Version: 1.11.0-alpha.5](https://img.shields.io/badge/Version-1.11.0--alpha.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.2](https://img.shields.io/badge/AppVersion-26.2.2-informational?style=flat-square)
 
 [![codecov](https://codecov.io/gh/alxgomz/alfresco-helm-charts/branch/main/graph/badge.svg?flag=alfresco-repository)](https://app.codecov.io/gh/alxgomz/alfresco-helm-charts/flags?flags%5B0%5D=alfresco-repository)
 

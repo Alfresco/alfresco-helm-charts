@@ -720,3 +720,21 @@ tests:
       - isNull:
           path: data.path
         template: config-transform-misc.yaml
+
+  - it: "[pattern-1] should render filestore tolerations when set"
+    template: deployment-filestore.yaml
+    values: *testvalues
+    set:
+      filestore:
+        tolerations:
+          - key: workload
+            operator: Equal
+            value: transform
+            effect: NoSchedule
+    asserts:
+      - equal:
+          path: spec.template.spec.tolerations[0].key
+          value: workload
+      - equal:
+          path: spec.template.spec.tolerations[0].effect
+          value: NoSchedule

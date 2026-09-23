@@ -4,6 +4,7 @@ templates:
   - secret-message-broker.yaml
   - deployment.yaml
   - configmap-repository.yaml
+  - configmap-mq.yaml
 values:
   - values/test_values.yaml
 tests:
@@ -40,3 +41,14 @@ tests:
       - hasDocuments:
           count: 0
         template: secret-message-broker.yaml
+
+  - it: "[pattern-5] should render BROKER_URL via alfresco-common subchart helper"
+    template: configmap-mq.yaml
+    set:
+      configuration:
+        messageBroker:
+          url: ssl://mq-custom:61617
+    asserts:
+      - equal:
+          path: data.BROKER_URL
+          value: failover:(ssl://mq-custom:61617)

@@ -28,3 +28,12 @@ tests:
           content:
             traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
             traefik.ingress.kubernetes.io/service.sticky.cookie.name: alfrescoShare
+
+  - it: "[pattern-2] should render LoadBalancer type when set"
+    set:
+      service:
+        type: LoadBalancer
+    asserts:
+      - equal:
+          path: spec.type
+          value: LoadBalancer

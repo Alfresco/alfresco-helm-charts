@@ -41,6 +41,19 @@ tests:
           errorMessage: >-
             You need to provide an ActiveMQ URL using messageBroker.url or using an existingConfigMap check chart README file
 
+  - it: "[pattern-3] should fail when db.url is not set and bulkIngester enabled"
+    template: configmap-database.yaml
+    values:
+      - values/test_values.yaml
+    set:
+      bulkIngester:
+        enabled: true
+      db:
+        url: null
+    asserts:
+      - failedTemplate:
+          errorMessage: Specifying DB URL is mandatory when not using existingConfigMap
+
   - it: should render all configmaps with test values
     values:
       - values/test_values.yaml

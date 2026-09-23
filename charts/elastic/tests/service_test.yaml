@@ -26,3 +26,11 @@ tests:
           path: metadata.annotations
           content:
             service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+
+  - it: "[pattern-4] should not render kibana service when kibana.enabled=false"
+    template: kibana-service.yaml
+    set:
+      kibana.enabled: false
+    asserts:
+      - hasDocuments:
+          count: 0
