@@ -14,8 +14,13 @@ spec:
   selector:
     matchLabels:
       {{- include "alfresco-share.selectorLabels" . | nindent 6 }}
+  {{- $strategy := .Values.strategy | default .Values.global.strategy }}
   strategy:
-    {{- toYaml (.Values.strategy | default .Values.global.strategy) | nindent 4 }}
+    type: {{ $strategy.type }}
+    {{- if eq $strategy.type "RollingUpdate" }}
+    rollingUpdate:
+      {{- toYaml $strategy.rollingUpdate | nindent 6 }}
+    {{- end }}
   template:
     metadata:
       annotations:

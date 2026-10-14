@@ -8,7 +8,7 @@ image:
   tag: 26.2.2
   port: 8080
 strategy:
-  type: RollingUpdate
+  type: Recreate
   rollingUpdate:
     maxSurge: 1
     maxUnavailable: 0

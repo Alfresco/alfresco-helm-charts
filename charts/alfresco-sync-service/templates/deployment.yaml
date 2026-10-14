@@ -11,9 +11,11 @@ spec:
     matchLabels:
       {{- include "alfresco-sync-service.selectorLabels" . | nindent 6 }}
   strategy:
-    type: RollingUpdate
+    type: {{ .Values.global.strategy.type }}
+    {{- if eq .Values.global.strategy.type "RollingUpdate" }}
     rollingUpdate:
-{{ toYaml .Values.global.strategy.rollingUpdate | indent 6 }}
+      {{- toYaml .Values.global.strategy.rollingUpdate | nindent 6 }}
+    {{- end }}
   template:
     metadata:
       labels:
