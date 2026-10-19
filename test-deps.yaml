@@ -49,3 +49,11 @@ charts:
     - activemq
   elastic: []
   postgres: []
+
+# Charts installed on PRs from forks, which get no registry or license secrets.
+# Only list charts whose ci/*-values.yaml pull public images exclusively.
+fork-safe:
+  - activemq
+  - alfresco-search-community
+  - elastic
+  - postgres

@@ -149,7 +149,7 @@ charts/<chart-name>/
    - `ct lint` - Helm linting
    - `helm unittest` - Unit tests
    - `helm template` + `yamllint` - Template validation
-3. `install` job (non-fork PRs only):
+3. `install` job (fork PRs only install charts listed under `fork-safe` in `test-deps.yaml`):
    - Creates KinD cluster
    - Installs chart with test values
    - Validates deployment
