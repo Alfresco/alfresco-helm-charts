@@ -4907,6 +4907,20 @@ entries:
   alfresco-repository:
   - apiVersion: v2
     appVersion: 26.2.2
+    created: "2026-10-19T13:10:15.688200806Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.1.0
+    description: Alfresco content repository Helm chart
+    digest: 963531c60c8ad290f57b678654991dcbda4132342db2f13c42c551c90518e97c
+    name: alfresco-repository
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-repository-2.0.0/alfresco-repository-2.0.0.tgz
+    version: 2.0.0
+  - apiVersion: v2
+    appVersion: 26.2.2
     created: "2026-09-04T08:43:56.036141234Z"
     dependencies:
     - name: alfresco-common
@@ -9016,6 +9030,20 @@ entries:
   alfresco-share:
   - apiVersion: v2
     appVersion: 26.2.2
+    created: "2026-10-19T13:10:15.931670984Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts
+      version: 5.1.0
+    description: Alfresco Share Helm chart for Kubernetes
+    digest: af0bbc1b3ff9a902d4e423a016e09b57b5bfd4daa193fe625b47ec10233033a6
+    name: alfresco-share
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-share-3.0.0/alfresco-share-3.0.0.tgz
+    version: 3.0.0
+  - apiVersion: v2
+    appVersion: 26.2.2
     created: "2026-09-04T08:43:56.773519212Z"
     dependencies:
     - name: alfresco-common
@@ -9547,6 +9575,27 @@ entries:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-share-0.1.0-alpha.0/alfresco-share-0.1.0-alpha.0.tgz
     version: 0.1.0-alpha.0
   alfresco-sync-service:
+  - apiVersion: v2
+    appVersion: 5.3.6
+    created: "2026-10-19T13:10:16.150401052Z"
+    dependencies:
+    - name: alfresco-common
+      repository: https://alfresco.github.io/alfresco-helm-charts/
+      version: 5.1.0
+    description: Alfresco Sync Service
+    digest: bf1f7e27cb9c9f6b81cf863e09390128287caa32265300b53ed55cb680ac15e4
+    icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
+    keywords:
+    - syncservice
+    - alfresco
+    - application
+    name: alfresco-sync-service
+    sources:
+    - https://github.com/Alfresco/acs-deployment
+    type: application
+    urls:
+    - https://github.com/Alfresco/alfresco-helm-charts/releases/download/alfresco-sync-service-8.0.0/alfresco-sync-service-8.0.0.tgz
+    version: 8.0.0
   - apiVersion: v2
     appVersion: 5.3.6
     created: "2026-09-04T08:43:56.960294003Z"
@@ -12485,4 +12534,4 @@ entries:
     urls:
     - https://github.com/Alfresco/alfresco-helm-charts/releases/download/postgres-0.1.0/postgres-0.1.0.tgz
     version: 0.1.0
-generated: "2026-09-04T08:43:57.166487049Z"
+generated: "2026-10-19T13:10:16.151624731Z"
