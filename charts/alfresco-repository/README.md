@@ -214,8 +214,6 @@ The init container image is selected automatically based on the auth mode; overr
 | startupProbe.httpGet.port | string | `"http"` |  |
 | startupProbe.periodSeconds | int | `20` |  |
 | startupProbe.timeoutSeconds | int | `3` |  |
-| strategy.rollingUpdate.maxSurge | int | `1` |  |
-| strategy.rollingUpdate.maxUnavailable | int | `0` |  |
 | strategy.type | string | `"Recreate"` |  |
 | terminationGracePeriod | int | `60` | How long to wait for tomcat to complete shutdown before killing it |
 | tolerations | list | `[]` |  |
