@@ -26,7 +26,7 @@ podSecurityContext:
   fsGroup: 1000
 image:
   repository: quay.io/alfresco/service-sync
-  tag: 5.3.6
+  tag: 5.3.7
   pullPolicy: IfNotPresent
   internalPort: 9090
 environment:

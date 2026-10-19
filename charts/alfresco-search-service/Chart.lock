@@ -1,9 +1,9 @@
 dependencies:
 - name: alfresco-insight-zeppelin
   repository: ""
-  version: 4.7.2
+  version: 4.7.3
 - name: alfresco-common
   repository: https://alfresco.github.io/alfresco-helm-charts/
   version: 5.1.0
-digest: sha256:78ca5bf3395b27fa2e92b5c64159c26825c09e5e174b0147f1bd4b62878afcb2
-generated: "2026-09-03T08:15:49.251413075Z"
+digest: sha256:5e71282ed97d6a2f4031995bea9cdc6221a395357edebeef0dd5eecd3b92cc87
+generated: "2026-10-19T23:12:52.792908+05:30"
