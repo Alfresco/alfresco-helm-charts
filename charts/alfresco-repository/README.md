@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-repository
 
-![Version: 1.10.0](https://img.shields.io/badge/Version-1.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.2](https://img.shields.io/badge/AppVersion-26.2.2-informational?style=flat-square)
+![Version: 2.0.0](https://img.shields.io/badge/Version-2.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.2](https://img.shields.io/badge/AppVersion-26.2.2-informational?style=flat-square)
 
 Alfresco content repository Helm chart
 
@@ -214,8 +214,6 @@ The init container image is selected automatically based on the auth mode; overr
 | startupProbe.httpGet.port | string | `"http"` |  |
 | startupProbe.periodSeconds | int | `20` |  |
 | startupProbe.timeoutSeconds | int | `3` |  |
-| strategy.rollingUpdate.maxSurge | int | `1` |  |
-| strategy.rollingUpdate.maxUnavailable | int | `0` |  |
-| strategy.type | string | `"RollingUpdate"` |  |
+| strategy.type | string | `"Recreate"` |  |
 | terminationGracePeriod | int | `60` | How long to wait for tomcat to complete shutdown before killing it |
 | tolerations | list | `[]` |  |

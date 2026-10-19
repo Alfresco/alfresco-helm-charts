@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-share
 
-![Version: 2.5.1](https://img.shields.io/badge/Version-2.5.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.2](https://img.shields.io/badge/AppVersion-26.2.2-informational?style=flat-square)
+![Version: 3.0.0](https://img.shields.io/badge/Version-3.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 26.2.2](https://img.shields.io/badge/AppVersion-26.2.2-informational?style=flat-square)
 
 Alfresco Share Helm chart for Kubernetes
 
@@ -103,7 +103,5 @@ service:
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `"share-sa"` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |
-| strategy.rollingUpdate.maxSurge | int | `1` |  |
-| strategy.rollingUpdate.maxUnavailable | int | `0` |  |
-| strategy.type | string | `"RollingUpdate"` |  |
+| strategy.type | string | `"Recreate"` |  |
 | tolerations | list | `[]` |  |

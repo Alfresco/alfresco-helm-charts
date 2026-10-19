@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-sync-service
 
-![Version: 7.12.2](https://img.shields.io/badge/Version-7.12.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.6](https://img.shields.io/badge/AppVersion-5.3.6-informational?style=flat-square)
+![Version: 8.0.0](https://img.shields.io/badge/Version-8.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.3.6](https://img.shields.io/badge/AppVersion-5.3.6-informational?style=flat-square)
 
 Alfresco Sync Service
 
@@ -39,10 +39,9 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | database.url | string | `nil` | JDBC url to connect to the external DB |
 | database.username | string | `nil` | JDBC username to use to connect to the DB |
 | environment.JAVA_OPTS | string | `"-Dsql.db.pool.initial=25 -Dsql.db.pool.max=75 -Dsync.metrics.reporter.graphite.enabled=false -XX:MinRAMPercentage=50 -XX:MaxRAMPercentage=80"` |  |
-| global | object | `{"additionalLabels":{},"alfrescoRegistryPullSecrets":"quay-registry-secret","ingressClassName":"nginx","strategy":{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
+| global | object | `{"additionalLabels":{},"alfrescoRegistryPullSecrets":"quay-registry-secret","ingressClassName":"nginx"}` | Global definition of Docker registry pull secret which can be overridden from parent ACS Helm chart(s) |
 | global.additionalLabels | object | `{}` | Global additional labels that can be set at parent/umbrella chart level These will be merged with chart-level additionalLabels, with chart-level taking precedence |
 | global.ingressClassName | string | `"nginx"` | Global ingress class name override for all ingress resources in this chart |
-| global.strategy | object | `{"rollingUpdate":{"maxSurge":1,"maxUnavailable":0}}` | Update strategy for the deployment |
 | hazelcast.service.annotations | object | `{}` |  |
 | hazelcast.service.port | int | `5701` |  |
 | hazelcast.service.type | string | `"ClusterIP"` |  |
@@ -107,5 +106,6 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `"alfresco-sync"` |  |
+| strategy | object | `{"type":"Recreate"}` | Update strategy for the deployment |
 | terminationGracePeriodSeconds | int | `60` |  |
 | tolerations | list | `[]` |  |

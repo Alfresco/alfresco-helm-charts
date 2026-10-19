@@ -8,10 +8,7 @@ image:
   tag: 26.2.2
   port: 8080
 strategy:
-  type: RollingUpdate
-  rollingUpdate:
-    maxSurge: 1
-    maxUnavailable: 0
+  type: Recreate
 # -- How long to wait for tomcat to complete shutdown before killing it
 terminationGracePeriod: 60
 configuration:

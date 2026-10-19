@@ -401,3 +401,32 @@ tests:
           content:
             name: MESSAGING_CLIENTID
             value: sync-service-$(POD_ID)
+
+  - it: should use the Recreate strategy by default
+    template: deployment.yaml
+    values: *testvalues
+    asserts:
+      - equal:
+          path: spec.strategy.type
+          value: Recreate
+      - notExists:
+          path: spec.strategy.rollingUpdate
+
+  - it: should have rollingUpdate when strategy.type is RollingUpdate
+    template: deployment.yaml
+    values: *testvalues
+    set:
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxSurge: 1
+          maxUnavailable: 0
+    asserts:
+      - equal:
+          path: spec.strategy.type
+          value: RollingUpdate
+      - equal:
+          path: spec.strategy.rollingUpdate
+          value:
+            maxSurge: 1
+            maxUnavailable: 0
