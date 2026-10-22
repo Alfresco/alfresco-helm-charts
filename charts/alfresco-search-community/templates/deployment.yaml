@@ -24,6 +24,26 @@ spec:
       {{- include "alfresco-common.imagePullSecrets" . | indent 6 }}
       {{- include "alfresco-common.component-pod-security-context" .Values | indent 4 }}
       serviceAccountName: {{ include "alfresco-search-community.serviceAccountName" . }}
+      {{- with .Values.initContainers.waitForElasticsearch }}
+      {{- if .enabled }}
+      initContainers:
+        - name: wait-for-elasticsearch
+          image: {{ printf "%s:%s" .image.repository .image.tag | quote }}
+          imagePullPolicy: {{ .image.pullPolicy }}
+          resources: {{- toYaml .resources | nindent 12 }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              until curl -sf -u "${SPRING_ELASTICSEARCH_REST_USERNAME}:${SPRING_ELASTICSEARCH_REST_PASSWORD}" "${SPRING_ELASTICSEARCH_REST_URIS}/_cluster/health?wait_for_status=yellow&timeout=5s" > /dev/null
+              do echo "Waiting for Elasticsearch to become available at ${SPRING_ELASTICSEARCH_REST_URIS} ..."
+                sleep 5
+              done
+              echo "Elasticsearch is ready."
+          env:
+            {{- include "alfresco-search-community.es.env" $ | nindent 12 }}
+            {{- include "alfresco-search-community.es.envCredentials" $ | nindent 12 }}
+      {{- end }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: {{ printf "%s:%s" .Values.image.repository .Values.image.tag | quote }}

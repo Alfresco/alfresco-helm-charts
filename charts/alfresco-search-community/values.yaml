@@ -164,6 +164,18 @@ resources:
     cpu: "2"
     memory: "2048Mi"
 
+initContainers:
+  waitForElasticsearch:
+    enabled: true
+    image:
+      repository: curlimages/curl
+      tag: "8.11.0"
+      pullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: "250m"
+        memory: "20Mi"
+
 # Additional volumes on the output Deployment definition.
 volumes: []
 

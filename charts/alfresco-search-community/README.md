@@ -5,7 +5,7 @@ parent: Charts Reference
 
 # alfresco-search-community
 
-![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.9.0](https://img.shields.io/badge/AppVersion-5.9.0-informational?style=flat-square)
+![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 5.9.0](https://img.shields.io/badge/AppVersion-5.9.0-informational?style=flat-square)
 
 A Helm chart for deploying the Alfresco Elasticsearch Community batch indexing component
 
@@ -50,6 +50,12 @@ Checkout [alfresco-content-services chart's doc](https://github.com/Alfresco/acs
 | index.url | string | `nil` | The URL where the elasticsearch service is available |
 | index.username | string | `nil` | The username required to access the elasticsearch service, if any |
 | indexName | string | `"alfresco"` | Name of the search index, usually created by the repository |
+| initContainers.waitForElasticsearch.enabled | bool | `true` |  |
+| initContainers.waitForElasticsearch.image.pullPolicy | string | `"IfNotPresent"` |  |
+| initContainers.waitForElasticsearch.image.repository | string | `"curlimages/curl"` |  |
+| initContainers.waitForElasticsearch.image.tag | string | `"8.11.0"` |  |
+| initContainers.waitForElasticsearch.resources.limits.cpu | string | `"250m"` |  |
+| initContainers.waitForElasticsearch.resources.limits.memory | string | `"20Mi"` |  |
 | livenessProbe.httpGet.path | string | `"/actuator/health"` |  |
 | livenessProbe.httpGet.port | string | `"http"` |  |
 | livenessProbe.initialDelaySeconds | int | `120` |  |
