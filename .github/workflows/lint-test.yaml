@@ -25,7 +25,7 @@ env:
   CHART_TESTING_VERSION: v3.14.0
 jobs:
   list-changed:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     if: >-
       (github.event_name == 'pull_request_review' &&
         github.event.review.state == 'approved' &&
@@ -81,7 +81,7 @@ jobs:
   lint:
     needs: list-changed
     if: needs.list-changed.outputs.has-changes == 'true'
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
