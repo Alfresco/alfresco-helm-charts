@@ -491,7 +491,7 @@ jobs:
           name: activation
           path: /tmp/gh-aw
       - name: Install helm-docs
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@768b583839a22ef7d882da0c5b82af3832197d00 # v19.7.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@b5af07b541efe7eb5a8e7a3ced767dcc276d5690 # v19.9.1
 
       - name: Configure Git credentials
         env:

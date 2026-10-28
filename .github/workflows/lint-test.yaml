@@ -41,13 +41,13 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Helm
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.7.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.9.1
         with:
           version-file: .tool-versions
 
       - name: List changed files
         id: pr-changes
-        uses: Alfresco/alfresco-build-tools/.github/actions/github-list-changes@v19.7.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/github-list-changes@v19.9.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -89,7 +89,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Helm
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.7.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.9.1
         with:
           version-file: .tool-versions
 
@@ -126,7 +126,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Helm
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.7.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.9.1
         with:
           version-file: .tool-versions
 
@@ -136,7 +136,7 @@ jobs:
           version: ${{ env.CHART_TESTING_VERSION }}
 
       - name: Create kind cluster
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v19.7.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-kind@v19.9.1
         with:
           ingress-nginx-ref: skip
 

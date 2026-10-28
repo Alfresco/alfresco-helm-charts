@@ -25,7 +25,7 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Set up Helm
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.7.1
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.9.1
         with:
           version-file: .tool-versions
 
