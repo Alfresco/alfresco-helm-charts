@@ -5,7 +5,7 @@
 This repository contains Helm charts for deploying Alfresco Content Services (ACS) and related components to Kubernetes. It includes 18 individual charts for various Alfresco services including repository, share, search, transform services, and integrations.
 
 **Key Technologies:**
-- Helm 4
+- Helm 4, pinned in `.tool-versions`. Keep that version in sync with `.tool-versions` in Alfresco/acs-deployment
 - Kubernetes
 - YAML templating
 - GitHub Actions for CI/CD

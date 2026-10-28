@@ -1,1 +1,2 @@
+# Keep helm in sync with .tool-versions in Alfresco/acs-deployment
 helm 4.2.3
