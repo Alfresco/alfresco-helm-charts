@@ -25,7 +25,9 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Set up Helm
-        uses: ./.github/actions/setup-helm
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@setup-helm
+        with:
+          version-file: .tool-versions
 
       # Optional step if GPG signing is used
       - name: Prepare GPG key

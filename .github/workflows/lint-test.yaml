@@ -41,7 +41,9 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Helm
-        uses: ./.github/actions/setup-helm
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@setup-helm
+        with:
+          version-file: .tool-versions
 
       - name: List changed files
         id: pr-changes
@@ -87,7 +89,9 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Helm
-        uses: ./.github/actions/setup-helm
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@setup-helm
+        with:
+          version-file: .tool-versions
 
       - name: Set up Unit Test plugin for Helm
         env:
@@ -122,7 +126,9 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Helm
-        uses: ./.github/actions/setup-helm
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@setup-helm
+        with:
+          version-file: .tool-versions
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # v2.8.0

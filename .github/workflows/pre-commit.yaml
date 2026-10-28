@@ -37,7 +37,9 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Set up Helm
-        uses: ./.github/actions/setup-helm
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@setup-helm
+        with:
+          version-file: .tool-versions
 
       - name: Install kubeconform helm plugin
         run: >-
