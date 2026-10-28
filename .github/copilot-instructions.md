@@ -5,7 +5,7 @@
 This repository contains Helm charts for deploying Alfresco Content Services (ACS) and related components to Kubernetes. It includes 18 individual charts for various Alfresco services including repository, share, search, transform services, and integrations.
 
 **Key Technologies:**
-- Helm 4
+- Helm 4, pinned in `.tool-versions`. Keep that version in sync with `.tool-versions` in Alfresco/acs-deployment
 - Kubernetes
 - YAML templating
 - GitHub Actions for CI/CD
@@ -21,7 +21,7 @@ brew bundle install  # Installs all required tools from Brewfile
 
 **Required Helm plugins (any platform):**
 ```bash
-helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.2.0
+helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.3.0 --verify=false
 helm plugin install https://github.com/helm-unittest/helm-unittest --version v1.0.3 --verify=false
 ```
 
