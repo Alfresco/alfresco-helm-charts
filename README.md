@@ -98,9 +98,8 @@ We are ensuring backward compatibility with older K8s versions with
 ## Release
 
 Helm charts versioning should follow the principles of semantic versioning. For
-assistance with version bumping, see the [Copilot
-Instructions](.github/copilot-instructions.md) which provide guidance when
-making chart changes.
+assistance with version bumping, see the [agent instructions](AGENTS.md) which
+provide guidance when making chart changes.
 
 ### Agentic release workflow
 
