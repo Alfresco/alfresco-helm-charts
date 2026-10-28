@@ -31,13 +31,13 @@ jobs:
             Alfresco/alfresco-build-tools/
 
       - name: Setup helm docs
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v18.28.3
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@v19.7.1
 
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Set up Helm
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.9.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.7.1
         with:
           version-file: .tool-versions
 
@@ -48,7 +48,7 @@ jobs:
           --verify=false
 
       - name: Run pre-commit
-        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v18.28.3
+        uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@v19.7.1
         with:
           # disable auto-commit for PRs from forks
           auto-commit: ${{ github.event_name != 'pull_request' || ! github.event.pull_request.head.repo.fork }}
