@@ -36,14 +36,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Read Helm version
-        id: helm-version
-        run: echo "version=$(awk '$1 == "helm" { print $2 }' .tool-versions)" >> "$GITHUB_OUTPUT"
-
       - name: Set up Helm
-        uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5.0.1
-        with:
-          version: ${{ steps.helm-version.outputs.version }}
+        uses: ./.github/actions/setup-helm
 
       - name: Install kubeconform helm plugin
         run: >-
