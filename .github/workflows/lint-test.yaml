@@ -93,17 +93,18 @@ jobs:
     if: needs.list-changed.outputs.has-changes == 'true'
     runs-on: ubuntu-latest
     steps:
-      - name: Clone helm-unittest with coverage support
-        run: |
-          git init helm-unittest-src
-          cd helm-unittest-src
-          git fetch --depth 1 https://github.com/helm-unittest/helm-unittest "$HELM_UNITTEST_REF"
-          git checkout --detach FETCH_HEAD
+      - name: Checkout helm-unittest with coverage support
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: helm-unittest/helm-unittest
+          ref: ${{ env.HELM_UNITTEST_REF }}
+          path: helm-unittest-src
 
       - name: Set up Go
         uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version-file: helm-unittest-src/go.mod
+          cache-dependency-path: helm-unittest-src/go.sum
 
       - name: Build helm-unittest plugin binary
         working-directory: helm-unittest-src
@@ -129,6 +130,10 @@ jobs:
       - build-plugin
     if: needs.list-changed.outputs.has-changes == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      code-quality: write
+      pull-requests: read
     strategy:
       fail-fast: false
       matrix:
@@ -173,6 +178,14 @@ jobs:
 
       - name: Generate coverage report
         run: helm unittest ${{ matrix.chart }} --color=auto --coverage-file ${{ matrix.chart }}/coverage.xml --coverage-format cobertura
+
+      - name: Upload coverage
+        if: ${{ !github.event.pull_request.head.repo.fork }}
+        uses: actions/upload-code-coverage@2b21a77928be8d5168c2b9581a67f2adbebacc52 # v1.4.4
+        with:
+          file: ${{ matrix.chart }}/coverage.xml
+          language: YAML
+          label: ${{ steps.chart.outputs.name }}
 
       # - name: Upload coverage to Codecov
       #   uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
