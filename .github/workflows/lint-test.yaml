@@ -179,13 +179,33 @@ jobs:
       - name: Generate coverage report
         run: helm unittest ${{ matrix.chart }} --color=auto --coverage-file ${{ matrix.chart }}/coverage.xml --coverage-format cobertura
 
-      - name: Upload coverage
-        if: ${{ !github.event.pull_request.head.repo.fork }}
-        uses: actions/upload-code-coverage@2b21a77928be8d5168c2b9581a67f2adbebacc52 # v1.4.4
+
+      - name: Setup .NET Core # Required to execute ReportGenerator
+        uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5.4.0
         with:
-          file: ${{ matrix.chart }}/coverage.xml
-          language: YAML
-          label: ${{ steps.chart.outputs.name }}
+          dotnet-version: 10.x
+          dotnet-quality: ga
+
+      - name: ReportGenerator
+        uses: danielpalme/ReportGenerator-GitHub-Action@5f3701a41d14548c9b8e575a5c235230e515cbc0 # 5.6.0
+        with:
+          reports: ${{ matrix.chart }}/coverage.xml
+          targetdir: coveragereport
+          reporttypes: HtmlInline;MarkdownSummaryGithub
+          tag: ${{ github.run_number }}_${{ github.run_id }}
+
+      - name: Upload coverage report artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: coverage-report-${{ steps.chart.outputs.name }}
+          path: coveragereport
+
+      - name: Publish coverage in build summary
+        env:
+          CHART_NAME: ${{ steps.chart.outputs.name }}
+        run: |
+          echo "## Coverage: ${CHART_NAME}" >> "$GITHUB_STEP_SUMMARY"
+          cat coveragereport/SummaryGithub.md >> "$GITHUB_STEP_SUMMARY"
 
       # - name: Upload coverage to Codecov
       #   uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
