@@ -27,8 +27,8 @@ pre-commit install
 To install required helm plugins:
 
 ```shell
-helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.1.12
-helm plugin install https://github.com/helm-unittest/helm-unittest --version v1.2.1
+helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.3.0 --verify=false
+helm plugin install https://github.com/helm-unittest/helm-unittest --version v1.2.1 --verify=false
 ```
 
 ### PR workflow
@@ -60,6 +60,18 @@ workflow](https://github.com/Alfresco/alfresco-helm-charts/actions/workflows/upd
 make test alfresco-repository
 make lint alfresco-repository
 ```
+
+### Code Coverage
+
+[![codecov](https://codecov.io/github/alfresco/alfresco-helm-charts/graph/badge.svg?token=7LFZ0VQ37Q)](https://codecov.io/github/alfresco/alfresco-helm-charts)
+
+Unit tests generate Cobertura coverage reports for each chart at `charts/<chart>/coverage.xml`. To generate coverage locally:
+
+```shell
+helm unittest charts/<chart-name> --color=auto --coverage-file charts/<chart-name>/coverage.xml --coverage-format cobertura
+```
+
+Coverage reports are uploaded to [Codecov](https://codecov.io/github/alfresco/alfresco-helm-charts) in CI, tracked per-chart component. See [codecov.yml](codecov.yml) for the per-chart configuration.
 
 ### Local integration testing
 
