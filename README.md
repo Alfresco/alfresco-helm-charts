@@ -65,7 +65,7 @@ make lint alfresco-repository
 
 [![codecov](https://codecov.io/github/alfresco/alfresco-helm-charts/graph/badge.svg?token=7LFZ0VQ37Q)](https://codecov.io/github/alfresco/alfresco-helm-charts)
 
-Unit tests generate Cobertura coverage reports for each chart at `charts/<chart>/coverage.xml`. Coverage support is not included in the released `helm-unittest` v1.2.1 plugin installed above. To generate coverage locally, first build and install the plugin from its `main` branch, as CI does using `HELM_UNITTEST_REF` in the [lint-test workflow](.github/workflows/lint-test.yaml). Then run:
+Unit tests generate Cobertura coverage reports for each chart at `charts/<chart>/coverage.xml`. Coverage support is not included in the released `helm-unittest` v1.2.1 plugin installed above. To generate coverage locally, first build and install the plugin from the same commit (`e06eae3765d849f9c4ef9c7308a7b2db7bdd716c`) configured as `HELM_UNITTEST_REF` in the [lint-test workflow](.github/workflows/lint-test.yaml). Once coverage support is available in a tagged release, use that release version instead. Then run:
 
 ```shell
 helm unittest charts/<chart-name> --color=auto --coverage-file charts/<chart-name>/coverage.xml --coverage-format cobertura
