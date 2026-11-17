@@ -7,5 +7,6 @@
 merged.yaml
 alfresco-updatecli
 charts/*/render
+charts/*/coverage.xml
 
 _site

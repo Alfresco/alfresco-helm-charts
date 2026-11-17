@@ -1,6 +1,12 @@
 name: Lint and Test Charts
 
 on:
+  workflow_dispatch:
+    inputs:
+      all-charts:
+        description: Run lint and unit-test coverage for all eligible charts
+        type: boolean
+        default: true
   pull_request:
     branches:
       - main
@@ -21,8 +27,12 @@ on:
       - submitted
 
 env:
-  TEST_ALL_CHARTS: ${{ contains(github.event.pull_request.labels.*.name, 'ci-test-all') && 'true' || 'false' }}
+  TEST_ALL_CHARTS: ${{ ((github.event_name == 'workflow_dispatch' && inputs.all-charts) || contains(github.event.pull_request.labels.*.name, 'ci-test-all')) && 'true' || 'false' }}
   CHART_TESTING_VERSION: v3.14.0
+  # helm-unittest ref built from source to get --coverage support (PR #938).
+  # Swap this for a release pin (HELM_UNITTEST_VERSION) once a tagged release
+  # ships the coverage feature.
+  HELM_UNITTEST_REF: e06eae3765d849f9c4ef9c7308a7b2db7bdd716c
 jobs:
   list-changed:
     runs-on: ubuntu-latest
@@ -78,10 +88,57 @@ jobs:
             echo "No charts changed"
           fi
 
-  lint:
+  build-plugin:
     needs: list-changed
     if: needs.list-changed.outputs.has-changes == 'true'
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout helm-unittest with coverage support
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: helm-unittest/helm-unittest
+          ref: ${{ env.HELM_UNITTEST_REF }}
+          path: helm-unittest-src
+
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: helm-unittest-src/go.mod
+          cache-dependency-path: helm-unittest-src/go.sum
+
+      - name: Build helm-unittest plugin binary
+        working-directory: helm-unittest-src
+        run: >-
+          go build
+          -o untt-linux-amd64
+          -ldflags "-X github.com/helm-unittest/helm-unittest/internal/build.version=${HELM_UNITTEST_REF:0:7}-coverage -extldflags '-static'"
+          ./cmd/helm-unittest
+
+      - name: Upload plugin artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: helm-unittest-plugin
+          path: |
+            helm-unittest-src/untt-linux-amd64
+            helm-unittest-src/plugin.yaml
+          if-no-files-found: error
+          retention-days: 1
+
+  lint:
+    needs:
+      - list-changed
+      - build-plugin
+    if: needs.list-changed.outputs.has-changes == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      code-quality: write
+      id-token: write
+      pull-requests: read
+    strategy:
+      fail-fast: false
+      matrix:
+        chart: ${{ fromJson(needs.list-changed.outputs.matrix) }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -93,25 +150,49 @@ jobs:
         with:
           version-file: .tool-versions
 
-      - name: Set up Unit Test plugin for Helm
-        env:
-          HELM_UNITTEST_VERSION: v1.0.3
-        run: >-
-          helm plugin install https://github.com/helm-unittest/helm-unittest
-          --version $HELM_UNITTEST_VERSION
-          --verify=false
+      - name: Download helm-unittest plugin
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: helm-unittest-plugin
+          path: helm-unittest-plugin
+
+      - name: Install helm-unittest plugin
+        run: |
+          plugins_dir="$(helm env | sed -n 's/^HELM_PLUGINS="\(.*\)"$/\1/p')"
+          dest="${plugins_dir}/helm-unittest"
+          mkdir -p "$dest"
+          cp helm-unittest-plugin/untt-linux-amd64 helm-unittest-plugin/plugin.yaml "$dest/"
+          chmod +x "$dest/untt-linux-amd64"
+          helm unittest --help > /dev/null
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@720270857a28afd41e2426521a7801db09e9b510 # v2.9.0
         with:
           version: ${{ env.CHART_TESTING_VERSION }}
 
+      - name: Resolve chart name
+        id: chart
+        run: echo "name=$(basename '${{ matrix.chart }}')" >> "$GITHUB_OUTPUT"
+
       - name: Run chart-testing (lint)
-        run: ct lint --config ct.yaml ${{ env.TEST_ALL_CHARTS == 'true' && '--all' || '' }}
+        run: ct lint --config ct.yaml --charts ${{ matrix.chart }}
+
+      - name: Generate coverage report
+        run: helm unittest ${{ matrix.chart }} --color=auto --coverage-file ${{ matrix.chart }}/coverage.xml --coverage-format cobertura
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          files: ${{ matrix.chart }}/coverage.xml
+          flags: ${{ steps.chart.outputs.name }}
+          name: ${{ steps.chart.outputs.name }}
+          disable_search: true
+          fail_ci_if_error: false
+          use_oidc: true
 
   install:
     needs: list-changed
-    if: needs.list-changed.outputs.has-changes == 'true' && ! github.event.pull_request.head.repo.fork
+    if: needs.list-changed.outputs.has-changes == 'true' && github.event_name != 'workflow_dispatch' && ! github.event.pull_request.head.repo.fork
     runs-on: ubuntu-latest
     env:
       INSTALL_NAMESPACE: alfresco

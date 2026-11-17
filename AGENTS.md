@@ -22,8 +22,17 @@ brew bundle install  # Installs all required tools from Brewfile
 **Required Helm plugins (any platform):**
 ```bash
 helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.3.0 --verify=false
-helm plugin install https://github.com/helm-unittest/helm-unittest --version v1.0.3 --verify=false
+helm plugin install https://github.com/helm-unittest/helm-unittest --version v1.2.1 --verify=false
 ```
+
+> **Coverage note:** unit-test coverage (`--coverage`, `--coverage-file`,
+> `--coverage-format cobertura`) landed in `helm-unittest` via
+> [PR #938](https://github.com/helm-unittest/helm-unittest/pull/938) but is not
+> in a tagged release yet. CI builds the plugin from the `helm-unittest` `main`
+> branch (see `HELM_UNITTEST_REF` in `.github/workflows/lint-test.yaml`) to
+> produce the Cobertura reports uploaded to Codecov. To exercise coverage
+> locally, build the plugin from `main`; otherwise the released plugin above is
+> enough for `helm unittest`.
 
 **Pre-commit hooks:**
 ```bash
@@ -40,6 +49,13 @@ ct lint --config ct.yaml --charts charts/<chart-name>
 **2. Run unit tests for a chart:**
 ```bash
 helm unittest --color charts/<chart-name>
+```
+
+CI additionally generates Cobertura coverage per chart via `ct.yaml` and uploads
+it to Codecov under a per-chart flag. To reproduce the coverage report locally
+(requires a `main`-built plugin, see the coverage note above):
+```bash
+helm unittest charts/<chart-name> --coverage-file charts/<chart-name>/coverage.xml --coverage-format cobertura
 ```
 
 **3. Validate chart rendering:**

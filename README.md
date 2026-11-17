@@ -28,7 +28,7 @@ To install required helm plugins:
 
 ```shell
 helm plugin install https://github.com/jtyr/kubeconform-helm --version v0.1.12
-helm plugin install https://github.com/helm-unittest/helm-unittest --version v0.3.4
+helm plugin install https://github.com/helm-unittest/helm-unittest --version v1.2.1
 ```
 
 ### PR workflow
