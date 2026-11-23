@@ -98,8 +98,8 @@ Set a custom namespace with `NAMESPACE=alfresco`.
 
 Each chart is tested against a default configuration on
 [KinD](https://kind.sigs.k8s.io/). You can check the currently tested K8s version
-by looking at the `KIND_NODE_IMAGE` value in the main [lint-test
-workflow](../.github/workflows/lint-test.yaml).
+by looking at the default `kind-node-image` of the `setup-kind` action version
+used in the main [lint-test workflow](../.github/workflows/lint-test.yaml).
 
 We are ensuring backward compatibility with older K8s versions with
 [kubeconform](https://github.com/yannh/kubeconform). You can check the oldest

@@ -402,9 +402,9 @@ kind delete cluster
 ```
 
 ### Checking Kubernetes API Compatibility
-The repository supports Kubernetes versions 1.28.15 through 1.34.2. CI and tooling validate against the range endpoints:
+The repository supports Kubernetes versions 1.28.15 through 1.35.9. CI and tooling validate against the range endpoints:
 - Minimum (lower bound): 1.28.15 (oldest EKS extended support)
-- Current (upper bound): 1.34.2 (current EKS version)
+- Current (upper bound): 1.35.9 (current EKS version)
 
 Pre-commit hooks validate manifests against these two versions (minimum and maximum) to approximate compatibility across the full supported range. Use deprecated API checkers if modifying resources.
 
