@@ -13,6 +13,10 @@ coverage:
 comment:
   layout: "condensed_header, condensed_files, components"
   require_changes: true
+  show_carryforward_flags: true
+
+github_checks:
+  annotations: true
 
 
 # Unit-test reports include coverage for alfresco-common helpers as chart
