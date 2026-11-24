@@ -29,10 +29,9 @@ component_management:
   default_rules:
     statuses:
       - type: project
-        target: auto
-        threshold: 1%
+        target: 80%
       - type: patch
-        target: 90%
+        target: 80%
         threshold: 0%
   individual_components:
     - component_id: activemq
