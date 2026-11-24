@@ -2,28 +2,48 @@ coverage:
   status:
     project:
       default:
-        informational: true
+        target: auto
+        threshold: 1%
+        paths:
+          - "!charts/alfresco-search-service/**"
     patch:
       default:
-        informational: true
+        target: auto
+        threshold: 0%
 
 comment:
   layout: "condensed_header, condensed_files, components"
   require_changes: true
+  show_carryforward_flags: true
 
-# Each chart is uploaded under its own flag by the lint matrix job so coverage
-# can be tracked per chart. alfresco-common is a library chart and is excluded
-# from chart testing, so it has no coverage flag/component.
+github_checks:
+  annotations: true
+
+
+# Unit-test reports include coverage for alfresco-common helpers as chart
+# dependencies, so expose that coverage as its own component.
 flag_management:
   default_rules:
     carryforward: true
 
 component_management:
+  default_rules:
+    statuses:
+      - type: project
+        target: 50%
+      - type: patch
+        target: 80%
+        threshold: 0%
   individual_components:
     - component_id: activemq
       name: activemq
       paths:
         - charts/activemq/**
+      statuses:
+        - type: project
+          informational: true
+        - type: patch
+          informational: true
     - component_id: alfresco-activiti
       name: alfresco-activiti
       paths:
@@ -44,6 +64,11 @@ component_management:
       name: alfresco-audit-storage
       paths:
         - charts/alfresco-audit-storage/**
+    - component_id: alfresco-common
+      name: alfresco-common
+      paths:
+        - charts/alfresco-common/**
+        - charts/*/charts/alfresco-common/**
     - component_id: alfresco-connector-cic
       name: alfresco-connector-cic
       paths:
@@ -72,6 +97,11 @@ component_management:
       name: alfresco-search-service
       paths:
         - charts/alfresco-search-service/**
+      statuses:
+        - type: project
+          informational: true
+        - type: patch
+          informational: true
     - component_id: alfresco-share
       name: alfresco-share
       paths:
@@ -88,7 +118,17 @@ component_management:
       name: elastic
       paths:
         - charts/elastic/**
+      statuses:
+        - type: project
+          informational: true
+        - type: patch
+          informational: true
     - component_id: postgres
       name: postgres
       paths:
         - charts/postgres/**
+      statuses:
+        - type: project
+          informational: true
+        - type: patch
+          informational: true
