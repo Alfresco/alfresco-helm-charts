@@ -25,7 +25,7 @@ component_management:
   default_rules:
     statuses:
       - type: project
-        target: 80%
+        target: 90%
       - type: patch
         target: 80%
         threshold: 0%
