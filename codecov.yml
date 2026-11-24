@@ -14,10 +14,6 @@ comment:
   layout: "condensed_header, condensed_files, components"
   require_changes: true
 
-# The unsupported search-service chart must not contribute to any coverage
-# total or status.
-ignore:
-  - charts/alfresco-search-service/**
 
 # Unit-test reports include coverage for alfresco-common helpers as chart
 # dependencies, so expose that coverage as its own component.
@@ -38,6 +34,11 @@ component_management:
       name: activemq
       paths:
         - charts/activemq/**
+      statuses:
+        - type: project
+          informational: true
+        - type: patch
+          informational: true
     - component_id: alfresco-activiti
       name: alfresco-activiti
       paths:
@@ -87,6 +88,15 @@ component_management:
       name: alfresco-search-enterprise
       paths:
         - charts/alfresco-search-enterprise/**
+    - component_id: alfresco-search-service
+      name: alfresco-search-service
+      paths:
+        - charts/alfresco-search-service/**
+      statuses:
+        - type: project
+          informational: true
+        - type: patch
+          informational: true
     - component_id: alfresco-share
       name: alfresco-share
       paths:
@@ -103,7 +113,17 @@ component_management:
       name: elastic
       paths:
         - charts/elastic/**
+      statuses:
+        - type: project
+          informational: true
+        - type: patch
+          informational: true
     - component_id: postgres
       name: postgres
       paths:
         - charts/postgres/**
+      statuses:
+        - type: project
+          informational: true
+        - type: patch
+          informational: true
