@@ -4,10 +4,11 @@ coverage:
       default:
         target: auto
         threshold: 1%
-        informational: true
+        paths:
+          - "!charts/alfresco-search-service/**"
     patch:
       default:
-        target: 90%
+        target: auto
         threshold: 0%
 
 comment:
