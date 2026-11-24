@@ -9,7 +9,6 @@ coverage:
       default:
         target: 90%
         threshold: 0%
-        informational: true
 
 comment:
   layout: "condensed_header, condensed_files, components"
