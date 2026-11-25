@@ -1,0 +1,11 @@
+{{- if .Values.jdbc.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jdbc
+data:
+  rdbms: {{ include "alfresco-common.db.rdbms" .Values.jdbc.url | quote }}
+  hostname: {{ include "alfresco-common.db.hostname" .Values.jdbc.url | quote }}
+  port: {{ include "alfresco-common.db.port" .Values.jdbc.url | quote }}
+  driver: {{ include "alfresco-common.db.driver" (dict "url" .Values.jdbc.url "driver" .Values.jdbc.driver) | quote }}
+{{- end }}

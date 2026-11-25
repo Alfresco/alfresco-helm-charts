@@ -1,0 +1,6 @@
+dependencies:
+- name: alfresco-common
+  repository: file://../../
+  version: 5.1.0
+digest: sha256:8a34d853f7d008b5f4046d17cca1a9252b9b734c2640aa915aa8bf2ffc2760b6
+generated: "2026-11-25T12:39:59.787981+05:30"

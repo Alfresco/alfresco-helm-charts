@@ -1,0 +1,12 @@
+---
+apiVersion: v2
+name: alfresco-common-consumer
+description: |
+  Minimal chart consuming alfresco-common helpers so that the library chart,
+  which cannot be rendered on its own, can be covered by helm-unittest.
+type: application
+version: 0.1.0
+dependencies:
+  - name: alfresco-common
+    version: 5.1.0
+    repository: file://../../

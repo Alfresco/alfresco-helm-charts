@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: security
+spec:
+{{- include "alfresco-common.component-pod-security-context" .Values.pod }}
+  containers:
+    - name: main
+      image: busybox
+{{- include "alfresco-common.component-security-context" .Values.container | indent 4 }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: security-aliases
+data:
+  default_pod: {{ include "default-pod-security-context" . | fromYaml | toJson | quote }}
+  default_container: {{ include "default-security-context" . | fromYaml | toJson | quote }}
+  component_pod: {{ include "component-pod-security-context" .Values.pod | fromYaml | toJson | quote }}
+  component_container: {{ include "component-security-context" .Values.container | fromYaml | toJson | quote }}

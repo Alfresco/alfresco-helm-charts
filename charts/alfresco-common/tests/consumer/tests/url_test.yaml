@@ -1,0 +1,101 @@
+---
+suite: test url helpers
+templates:
+  - url.yaml
+tests:
+  - it: should default to localhost known URLs
+    asserts:
+      - equal: {path: data.known_urls, value: '{"known_urls":["http://localhost","https://localhost"]}'}
+      - equal: {path: data.external_url, value: http://localhost}
+      - equal: {path: data.external_host, value: localhost}
+      - equal: {path: data.external_port, value: "80"}
+      - equal: {path: data.external_scheme, value: http}
+      - equal: {path: data.csrf_referer, value: 'http://localhost/.*\|https://localhost/.*'}
+      - equal: {path: data.csrf_origin, value: 'http://localhost\|https://localhost'}
+
+  - it: should split known_urls given as a comma separated string
+    set:
+      known_urls: https://one.example.com,http://two.example.com
+    asserts:
+      - equal: {path: data.known_urls, value: '{"known_urls":["https://one.example.com","http://two.example.com"]}'}
+      - equal: {path: data.external_url, value: https://one.example.com}
+
+  - it: should accept known_urls given as a list
+    set:
+      known_urls:
+        - https://one.example.com
+        - http://two.example.com
+    asserts:
+      - equal: {path: data.known_urls, value: '{"known_urls":["https://one.example.com","http://two.example.com"]}'}
+
+  - it: should fall back to the global known_urls
+    set:
+      global.known_urls: https://global.example.com
+    asserts:
+      - equal: {path: data.external_url, value: https://global.example.com}
+
+  - it: should prefer the chart known_urls over the global ones
+    set:
+      known_urls: https://chart.example.com
+      global.known_urls: https://global.example.com
+    asserts:
+      - equal: {path: data.external_url, value: https://chart.example.com}
+
+  - it: should fail when a known URL has no scheme
+    set:
+      known_urls: example.com
+    asserts:
+      - failedTemplate:
+          errorPattern: MUST start with a scheme
+
+  - it: should fail when only some known URLs have a scheme
+    set:
+      known_urls: https://one.example.com,two.example.com
+    asserts:
+      - failedTemplate:
+          errorPattern: MUST start with a scheme
+
+  - it: should use the default https port for an external https URL
+    set:
+      known_urls: https://example.com
+    asserts:
+      - equal: {path: data.external_scheme, value: https}
+      - equal: {path: data.external_port, value: "443"}
+
+  - it: should use the port of the external URL when it has one
+    set:
+      known_urls: https://example.com:8443/alfresco
+    asserts:
+      - equal: {path: data.external_host, value: example.com}
+      - equal: {path: data.external_port, value: "8443"}
+      - equal: {path: data.external_url, value: "https://example.com:8443"}
+
+  - it: should keep the path in the CSRF referer but not in the origin
+    set:
+      known_urls: https://example.com:8443/alfresco
+    asserts:
+      - equal: {path: data.csrf_referer, value: 'https://example.com:8443/alfresco/.*'}
+      - equal: {path: data.csrf_origin, value: 'https://example.com:8443'}
+
+  - it: should split a full URL into its parts
+    set:
+      url.sample: https://example.com:8443/some/path?foo=bar
+    asserts:
+      - equal: {path: data.url_scheme, value: https}
+      - equal: {path: data.url_host, value: example.com}
+      - equal: {path: data.url_port, value: "8443"}
+      - equal: {path: data.url_path, value: /some/path}
+      - equal: {path: data.url_query, value: foo=bar}
+
+  - it: should default to http and port 80 for a URL without scheme or port
+    set:
+      url.sample: //example.com/path
+    asserts:
+      - equal: {path: data.url_scheme, value: http}
+      - equal: {path: data.url_port, value: "80"}
+
+  - it: should default to port 443 for an https URL without port
+    set:
+      url.sample: https://example.com/path
+    asserts:
+      - equal: {path: data.url_port, value: "443"}

@@ -1,0 +1,11 @@
+{{- if .Values.utils.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: utils
+data:
+  read: {{ include "alfresco-common.read.cm.then.value" (dict "ns" .Release.Namespace "key" .Values.utils.key "context" (merge (dict "existingConfigMap" .Values.utils.cm) .Values.utils.inline)) | quote }}
+  has_key: {{ include "alfresco-common.haskey.secret" (dict "ns" .Release.Namespace "key" .Values.utils.key "context" (dict "existingSecret" .Values.utils.secret)) | quote }}
+  checksum: {{ include "alfresco-common.checksum.config" (dict "ns" .Release.Namespace "configKey" .Values.utils.configKey "context" .Values.utils) | quote }}
+  value_from_key: {{ include "alfresco-common.lazy.getValueFromKey" (dict "key" .Values.utils.path "context" $) | quote }}
+{{- end }}
