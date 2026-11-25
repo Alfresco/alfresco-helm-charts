@@ -4,8 +4,6 @@ coverage:
       default:
         target: auto
         threshold: 1%
-        paths:
-          - "!charts/alfresco-search-service/**"
     patch:
       default:
         target: auto
@@ -19,7 +17,8 @@ comment:
 github_checks:
   annotations: true
 
-# alfresco-search-service is unsupported: keep it out of the reported total.
+# Exclude alfresco-search-service (unsupported) from the gates and from the
+# reported total
 ignore:
   - charts/alfresco-search-service/**
 

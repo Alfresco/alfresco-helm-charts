@@ -19,6 +19,7 @@ on:
       - 'charts/**'
       - '.github/workflows/lint-test.yaml'
       - 'test-deps.yaml'
+      - 'codecov.yml'
       - '!charts/**/README.md'
       - '!charts/**/README.md.gotmpl'
       - '!charts/**/docs/**'
@@ -69,7 +70,7 @@ jobs:
       - name: List changed charts and create matrix
         id: set-matrix
         run: |
-          if [[ "$TEST_ALL_CHARTS" == "true" ]] || echo "${{ steps.pr-changes.outputs.all_changed_files }}" | grep -q '^test-deps.yaml$'; then
+          if [[ "$TEST_ALL_CHARTS" == "true" ]] || echo "${{ steps.pr-changes.outputs.all_changed_files }}" | grep -qE '^(test-deps\.yaml|codecov\.yml)$'; then
             charts=$(make list-charts)
           else
             charts=$(ct list-changed --config ct.yaml)
