@@ -19,6 +19,9 @@ comment:
 github_checks:
   annotations: true
 
+# alfresco-search-service is unsupported: keep it out of the reported total.
+ignore:
+  - charts/alfresco-search-service/**
 
 # Unit-test reports include coverage for alfresco-common helpers as chart
 # dependencies, so expose that coverage as its own component.
