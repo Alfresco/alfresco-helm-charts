@@ -74,8 +74,10 @@ jobs:
 
       - name: List changed charts and create matrix
         id: set-matrix
+        env:
+          CHANGED_FILES: ${{ steps.pr-changes.outputs.all_changed_files }}
         run: |
-          if [[ "$TEST_ALL_CHARTS" == "true" ]] || echo "${{ steps.pr-changes.outputs.all_changed_files }}" | grep -q '^test-deps.yaml$'; then
+          if [[ "$TEST_ALL_CHARTS" == "true" ]] || echo "$CHANGED_FILES" | grep -q '^test-deps.yaml$'; then
             charts=$(make list-charts)
           else
             charts=$(ct list-changed --config ct.yaml)
@@ -96,7 +98,7 @@ jobs:
 
           # The lint job also tests the alfresco-common consumer chart, the install job does not
           lint_charts="$charts"
-          if [[ "$TEST_ALL_CHARTS" == "true" ]] || echo "${{ steps.pr-changes.outputs.all_changed_files }}" | grep -q '^charts/alfresco-common/'; then
+          if [[ "$TEST_ALL_CHARTS" == "true" ]] || echo "$CHANGED_FILES" | grep -q '^charts/alfresco-common/'; then
             lint_charts=$(printf '%s\n%s' "$charts" "$COMMON_TEST_CHART")
           fi
 
