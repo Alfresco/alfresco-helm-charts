@@ -34,6 +34,10 @@ env:
   # Swap this for a release pin (HELM_UNITTEST_VERSION) once a tagged release
   # ships the coverage feature.
   HELM_UNITTEST_REF: e06eae3765d849f9c4ef9c7308a7b2db7bdd716c
+  # alfresco-common is a library chart, excluded from chart-testing as it cannot
+  # be rendered on its own. Its helpers are unit-tested through this consumer
+  # chart, which only goes through the lint job.
+  COMMON_TEST_CHART: charts/alfresco-common/tests/consumer
 jobs:
   list-changed:
     runs-on: ubuntu-latest
@@ -45,7 +49,8 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       has-changes: ${{ steps.set-matrix.outputs.has-changes }}
-      common-changed: ${{ steps.set-matrix.outputs.common-changed }}
+      lint-matrix: ${{ steps.set-matrix.outputs.lint-matrix }}
+      has-lint-changes: ${{ steps.set-matrix.outputs.has-lint-changes }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -71,14 +76,6 @@ jobs:
       - name: List changed charts and create matrix
         id: set-matrix
         run: |
-          # alfresco-common is excluded from chart-testing, it is tested
-          # through a consumer chart by the test-common job
-          if [[ "$TEST_ALL_CHARTS" == "true" ]] || echo "${{ steps.pr-changes.outputs.all_changed_files }}" | grep -q '^charts/alfresco-common/'; then
-            echo "common-changed=true" >> $GITHUB_OUTPUT
-          else
-            echo "common-changed=false" >> $GITHUB_OUTPUT
-          fi
-
           if [[ "$TEST_ALL_CHARTS" == "true" ]] || echo "${{ steps.pr-changes.outputs.all_changed_files }}" | grep -q '^test-deps.yaml$'; then
             charts=$(make list-charts)
           else
@@ -98,9 +95,23 @@ jobs:
             echo "No charts changed"
           fi
 
+          # The lint job also tests the alfresco-common consumer chart, the install job does not
+          lint_charts="$charts"
+          if [[ "$TEST_ALL_CHARTS" == "true" ]] || echo "${{ steps.pr-changes.outputs.all_changed_files }}" | grep -q '^charts/alfresco-common/'; then
+            lint_charts=$(printf '%s\n%s' "$charts" "$COMMON_TEST_CHART")
+          fi
+
+          if [[ -n "$lint_charts" ]]; then
+            echo "has-lint-changes=true" >> $GITHUB_OUTPUT
+            echo "lint-matrix=$(echo "$lint_charts" | jq -R -s -c 'split("\n") | map(select(length > 0))')" >> $GITHUB_OUTPUT
+          else
+            echo "has-lint-changes=false" >> $GITHUB_OUTPUT
+            echo "lint-matrix=[]" >> $GITHUB_OUTPUT
+          fi
+
   build-plugin:
     needs: list-changed
-    if: needs.list-changed.outputs.has-changes == 'true' || needs.list-changed.outputs.common-changed == 'true'
+    if: needs.list-changed.outputs.has-lint-changes == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout helm-unittest with coverage support
@@ -138,7 +149,7 @@ jobs:
     needs:
       - list-changed
       - build-plugin
-    if: needs.list-changed.outputs.has-changes == 'true'
+    if: needs.list-changed.outputs.has-lint-changes == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -148,7 +159,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        chart: ${{ fromJson(needs.list-changed.outputs.matrix) }}
+        chart: ${{ fromJson(needs.list-changed.outputs.lint-matrix) }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -182,10 +193,22 @@ jobs:
 
       - name: Resolve chart name
         id: chart
-        run: echo "name=$(basename '${{ matrix.chart }}')" >> "$GITHUB_OUTPUT"
+        run: |
+          if [[ "${{ matrix.chart }}" == "$COMMON_TEST_CHART" ]]; then
+            echo "name=alfresco-common" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=$(basename '${{ matrix.chart }}')" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Run chart-testing (lint)
+        if: matrix.chart != env.COMMON_TEST_CHART
         run: ct lint --config ct.yaml --charts ${{ matrix.chart }}
+
+      - name: Lint alfresco-common consumer chart
+        if: matrix.chart == env.COMMON_TEST_CHART
+        run: |
+          helm dependency update ${{ matrix.chart }}
+          helm lint ${{ matrix.chart }}
 
       - name: Generate coverage report
         run: helm unittest ${{ matrix.chart }} --color=auto --coverage-file ${{ matrix.chart }}/coverage.xml --coverage-format cobertura
@@ -196,59 +219,6 @@ jobs:
           files: ${{ matrix.chart }}/coverage.xml
           flags: ${{ steps.chart.outputs.name }}
           name: ${{ steps.chart.outputs.name }}
-          disable_search: true
-          fail_ci_if_error: false
-          use_oidc: true
-
-  test-common:
-    needs:
-      - list-changed
-      - build-plugin
-    if: needs.list-changed.outputs.common-changed == 'true'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      code-quality: write
-      id-token: write
-      pull-requests: read
-    env:
-      CONSUMER_CHART: charts/alfresco-common/tests/consumer
-    steps:
-      - name: Checkout
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Set up Helm
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm@v19.15.0
-        with:
-          version-file: .tool-versions
-
-      - name: Download helm-unittest plugin
-        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
-        with:
-          name: helm-unittest-plugin
-          path: helm-unittest-plugin
-
-      - name: Install helm-unittest plugin
-        run: |
-          plugins_dir="$(helm env | sed -n 's/^HELM_PLUGINS="\(.*\)"$/\1/p')"
-          dest="${plugins_dir}/helm-unittest"
-          mkdir -p "$dest"
-          cp helm-unittest-plugin/untt-linux-amd64 helm-unittest-plugin/plugin.yaml "$dest/"
-          chmod +x "$dest/untt-linux-amd64"
-          helm unittest --help > /dev/null
-
-      - name: Update consumer chart dependencies
-        run: helm dependency update ${{ env.CONSUMER_CHART }}
-
-      - name: Generate coverage report
-        run: helm unittest ${{ env.CONSUMER_CHART }} --color=auto --coverage-file ${{ env.CONSUMER_CHART }}/coverage.xml --coverage-format cobertura
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
-        with:
-          files: ${{ env.CONSUMER_CHART }}/coverage.xml
-          flags: alfresco-common
-          name: alfresco-common
           disable_search: true
           fail_ci_if_error: false
           use_oidc: true
