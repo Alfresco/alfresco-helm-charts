@@ -1,13 +1,20 @@
+# alfresco-search-service is unsupported: keep it out of the gates (the global
+# statuses below and its informational component) but leave it in the reported
+# total. Do not use a top-level ignore, that would drop it from the total too.
 coverage:
   status:
     project:
       default:
         target: auto
         threshold: 1%
+        paths:
+          - "!charts/alfresco-search-service/**"
     patch:
       default:
         target: auto
         threshold: 0%
+        paths:
+          - "!charts/alfresco-search-service/**"
 
 comment:
   layout: "condensed_header, condensed_files, components"
@@ -17,10 +24,6 @@ comment:
 github_checks:
   annotations: true
 
-# Exclude alfresco-search-service (unsupported) from the gates and from the
-# reported total
-ignore:
-  - charts/alfresco-search-service/**
 
 # Unit-test reports include coverage for alfresco-common helpers as chart
 # dependencies, so expose that coverage as its own component.
