@@ -115,7 +115,7 @@ jobs:
     steps:
       - name: Setup Scripts
         id: setup
-        uses: github/gh-aw-actions/setup@862164f9ffbcce2e24e5397da938e3b19f839dce # v1.2.3
+        uses: github/gh-aw-actions/setup@dfe97a19c8249d41e2adfc95f92db2b8facea58f # v1.3.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
           job-name: ${{ github.job }}
@@ -439,7 +439,7 @@ jobs:
     steps:
       - name: Setup Scripts
         id: setup
-        uses: github/gh-aw-actions/setup@862164f9ffbcce2e24e5397da938e3b19f839dce # v1.2.3
+        uses: github/gh-aw-actions/setup@dfe97a19c8249d41e2adfc95f92db2b8facea58f # v1.3.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
           job-name: ${{ github.job }}
@@ -491,7 +491,7 @@ jobs:
           name: activation
           path: /tmp/gh-aw
       - name: Install helm-docs
-        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@3bbbfc459dd15452e68e3cefcbc56596d88d71ee # v19.15.0
+        uses: Alfresco/alfresco-build-tools/.github/actions/setup-helm-docs@16298278308f674c76542d61658da190e975e31c # v19.16.0
 
       - name: Configure Git credentials
         env:
@@ -1313,7 +1313,7 @@ jobs:
     steps:
       - name: Setup Scripts
         id: setup
-        uses: github/gh-aw-actions/setup@862164f9ffbcce2e24e5397da938e3b19f839dce # v1.2.3
+        uses: github/gh-aw-actions/setup@dfe97a19c8249d41e2adfc95f92db2b8facea58f # v1.3.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
           job-name: ${{ github.job }}
@@ -1593,7 +1593,7 @@ jobs:
     steps:
       - name: Setup Scripts
         id: setup
-        uses: github/gh-aw-actions/setup@862164f9ffbcce2e24e5397da938e3b19f839dce # v1.2.3
+        uses: github/gh-aw-actions/setup@dfe97a19c8249d41e2adfc95f92db2b8facea58f # v1.3.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
           job-name: ${{ github.job }}
@@ -1883,7 +1883,7 @@ jobs:
     steps:
       - name: Setup Scripts
         id: setup
-        uses: github/gh-aw-actions/setup@862164f9ffbcce2e24e5397da938e3b19f839dce # v1.2.3
+        uses: github/gh-aw-actions/setup@dfe97a19c8249d41e2adfc95f92db2b8facea58f # v1.3.1
         with:
           destination: ${{ runner.temp }}/gh-aw/actions
           job-name: ${{ github.job }}
