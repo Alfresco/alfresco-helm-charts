@@ -77,7 +77,7 @@ jobs:
         env:
           CHANGED_FILES: ${{ steps.pr-changes.outputs.all_changed_files }}
         run: |
-          if [[ "$TEST_ALL_CHARTS" == "true" ]] || echo "$CHANGED_FILES" | grep -q '^test-deps.yaml$'; then
+          if [[ "$TEST_ALL_CHARTS" == "true" ]] || echo "$CHANGED_FILES" | grep -qE '^(test-deps\.yaml|codecov\.yml)$'; then
             charts=$(make list-charts)
           else
             charts=$(ct list-changed --config ct.yaml)
