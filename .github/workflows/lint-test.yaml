@@ -50,7 +50,6 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       has-changes: ${{ steps.set-matrix.outputs.has-changes }}
       lint-matrix: ${{ steps.set-matrix.outputs.lint-matrix }}
-      has-lint-changes: ${{ steps.set-matrix.outputs.has-lint-changes }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -101,17 +100,11 @@ jobs:
             lint_charts=$(printf '%s\n%s' "$charts" "$COMMON_TEST_CHART")
           fi
 
-          if [[ -n "$lint_charts" ]]; then
-            echo "has-lint-changes=true" >> $GITHUB_OUTPUT
-            echo "lint-matrix=$(echo "$lint_charts" | jq -R -s -c 'split("\n") | map(select(length > 0))')" >> $GITHUB_OUTPUT
-          else
-            echo "has-lint-changes=false" >> $GITHUB_OUTPUT
-            echo "lint-matrix=[]" >> $GITHUB_OUTPUT
-          fi
+          echo "lint-matrix=$(echo "$lint_charts" | jq -R -s -c 'split("\n") | map(select(length > 0))')" >> $GITHUB_OUTPUT
 
   build-plugin:
     needs: list-changed
-    if: needs.list-changed.outputs.has-lint-changes == 'true'
+    if: needs.list-changed.outputs.lint-matrix != '[]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout helm-unittest with coverage support
@@ -149,7 +142,7 @@ jobs:
     needs:
       - list-changed
       - build-plugin
-    if: needs.list-changed.outputs.has-lint-changes == 'true'
+    if: needs.list-changed.outputs.lint-matrix != '[]'
     runs-on: ubuntu-latest
     permissions:
       contents: read

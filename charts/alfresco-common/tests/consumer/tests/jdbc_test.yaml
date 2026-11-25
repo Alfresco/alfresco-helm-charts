@@ -90,6 +90,12 @@ tests:
       - equal: {path: data.hostname, value: db.example.com}
       - equal: {path: data.port, value: "1434"}
 
+  - it: should keep the host of a sqlserver URL when serverName is also given
+    set:
+      jdbc.url: jdbc:sqlserver://db.example.com:1433;serverName=other.example.com;databaseName=alfresco
+    asserts:
+      - equal: {path: data.hostname, value: db.example.com}
+
   - it: should prefer the given driver over the default one
     set:
       jdbc.url: jdbc:postgresql://db.example.com/alfresco

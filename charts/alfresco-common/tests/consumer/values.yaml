@@ -21,6 +21,7 @@ activemq:
 utils:
   enabled: false
   requiredEnabled: false
+  noNamespace: false
   cm:
     name: ""
     keys: {}

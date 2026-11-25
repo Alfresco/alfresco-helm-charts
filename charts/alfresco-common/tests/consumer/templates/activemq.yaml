@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: activemq
 data:
-  {{- include "alfresco-common.activemq.cm" (required "activemq.url is required" .Values.activemq.url) | nindent 2 }}
+  {{- include "alfresco-common.activemq.cm" .Values.activemq.url | nindent 2 }}
   failover_url: {{ include "alfresco-common.activemq.url.withFailover" .Values.activemq.url | quote }}
 ---
 apiVersion: v1

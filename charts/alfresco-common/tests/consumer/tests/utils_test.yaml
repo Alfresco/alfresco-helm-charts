@@ -162,6 +162,14 @@ tests:
       - equal: {path: data.has_key, value: "false"}
 
   # alfresco-common.checksum.config
+  - it: should fail to checksum without the release namespace
+    template: utils.yaml
+    set:
+      utils.noNamespace: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "template needs to be given the release namepace"
+
   - it: should checksum the values when neither ConfigMap nor Secret is given
     template: utils.yaml
     set:
