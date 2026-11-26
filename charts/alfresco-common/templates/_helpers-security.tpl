@@ -7,6 +7,7 @@ Usage: include "alfresco-common.default-pod-security-context" ""
 {{- define "alfresco-common.default-pod-security-context" }}
     runAsNonRoot: true
     runAsUser: 33099
+    fsGroup: 1000
     fsGroupChangePolicy: OnRootMismatch
 {{- end }}
 
@@ -35,32 +36,40 @@ Usage: include "alfresco-common.default-security-context" ""
 {{/*
 Provide pod security context
 
-Usage: include "alfresco-common.component-pod-security-context" $
+Usage: include "alfresco-common.component-pod-security-context" .
+
+Applies .podSecurityContext if defined. Set to null to disable defaults.
 
 */}}
 {{- define "alfresco-common.component-pod-security-context" }}
   securityContext:
-{{- if .podSecurityContext }}
-    {{- .podSecurityContext | toYaml | nindent 4 }}
+{{- if hasKey .Values "podSecurityContext" }}
+  {{- if .Values.podSecurityContext }}
+    {{- .Values.podSecurityContext | toYaml | nindent 4 }}
+  {{- end }}
 {{- else }}
 {{- include "alfresco-common.default-pod-security-context" . }}
 {{- end }}
 {{- end }}
 
 {{- define "component-pod-security-context" }}
-{{- template "alfresco-common.component-pod-security-context" $ }}
+{{- template "alfresco-common.component-pod-security-context" . }}
 {{- end }}
 
 {{/*
 Provide container security context
 
-Usage: include "alfresco-common.component-security-context" $
+Usage: include "alfresco-common.component-security-context" .
+
+Applies .securityContext if defined. Set to null to disable defaults.
 
 */}}
 {{- define "alfresco-common.component-security-context" }}
   securityContext:
-{{- if .securityContext }}
-  {{- .securityContext | toYaml | nindent 4 }}
+{{- if hasKey .Values "securityContext" }}
+  {{- if .Values.securityContext }}
+    {{- .Values.securityContext | toYaml | nindent 4 }}
+  {{- end }}
 {{- else }}
 {{- include "alfresco-common.default-security-context" . }}
 {{- end }}

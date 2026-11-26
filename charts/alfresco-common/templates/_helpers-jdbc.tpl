@@ -1,7 +1,19 @@
 {{/*
 Compute a JDBC URL object
-We're just manipulating the string URl to make it parseable by urlParse.
+We're just manipulating the string URL to make it parseable by urlParse.
 This template SHOULD NOT be used directly.
+
+Supported formats:
+  - PostgreSQL: jdbc:postgresql://host:5432/database
+  - MySQL: jdbc:mysql://host:3306/database
+  - MariaDB: jdbc:mariadb://host:3306/database
+  - Oracle: jdbc:oracle:thin:@host:1521:service or jdbc:oracle:thin:@//host:1521/service
+  - SQL Server: jdbc:sqlserver://host;databaseName=database
+
+Known limitations (not currently supported, requires direct JDBC URL):
+  - Oracle multi-host URLs: jdbc:oracle:thin:@(DESCRIPTION=...)
+  - Multi-host database clusters (e.g., jdbc:postgresql://h1:5432,h2:5432/db)
+  - IPv6 hosts in URL format (use serverName parameter for SQL Server)
 
 Usage: include "alfresco-common.jdbc.parser" "URL"
 
@@ -48,6 +60,8 @@ Usage: include "alfresco-common.jdbc.parser" "URL"
 {{/*
 Compute default ports based on URL
 
+Known limitation: Multi-host database clusters are not currently supported.
+
 Usage: include "alfresco-common.db.default.port" "URL"
 
 */}}
@@ -56,7 +70,7 @@ Usage: include "alfresco-common.db.default.port" "URL"
 {{- $my_rdbms := dict "name" "mysql" "port" 3306 }}
 {{- $maria_rdbms := dict "name" "mariadb" "port" 3306 }}
 {{- $ora_rdbms := dict "name" "oracle" "port" 1521 }}
-{{- $ms_rdbms := dict "name" "sqlserver" "port" 1434 }}
+{{- $ms_rdbms := dict "name" "sqlserver" "port" 1433 }}
 {{- range $rdbms := list $pg_rdbms $my_rdbms $maria_rdbms $ora_rdbms $ms_rdbms }}
 {{- eq $rdbms.name $ | ternary $rdbms.port "" }}
 {{- end }}
