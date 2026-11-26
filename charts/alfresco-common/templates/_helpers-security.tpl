@@ -36,17 +36,15 @@ Usage: include "alfresco-common.default-security-context" ""
 {{/*
 Provide pod security context
 
-Usage: include "alfresco-common.component-pod-security-context" .
+Usage: include "alfresco-common.component-pod-security-context" $.Values
 
-Applies .podSecurityContext if defined. Set to null to disable defaults.
+Takes a values map. Applies .podSecurityContext when non-empty, defaults otherwise.
 
 */}}
 {{- define "alfresco-common.component-pod-security-context" }}
   securityContext:
-{{- if hasKey .Values "podSecurityContext" }}
-  {{- if .Values.podSecurityContext }}
-    {{- .Values.podSecurityContext | toYaml | nindent 4 }}
-  {{- end }}
+{{- if .podSecurityContext }}
+  {{- .podSecurityContext | toYaml | nindent 4 }}
 {{- else }}
 {{- include "alfresco-common.default-pod-security-context" . }}
 {{- end }}
@@ -59,17 +57,15 @@ Applies .podSecurityContext if defined. Set to null to disable defaults.
 {{/*
 Provide container security context
 
-Usage: include "alfresco-common.component-security-context" .
+Usage: include "alfresco-common.component-security-context" $.Values
 
-Applies .securityContext if defined. Set to null to disable defaults.
+Takes a values map. Applies .securityContext when non-empty, defaults otherwise.
 
 */}}
 {{- define "alfresco-common.component-security-context" }}
   securityContext:
-{{- if hasKey .Values "securityContext" }}
-  {{- if .Values.securityContext }}
-    {{- .Values.securityContext | toYaml | nindent 4 }}
-  {{- end }}
+{{- if .securityContext }}
+  {{- .securityContext | toYaml | nindent 4 }}
 {{- else }}
 {{- include "alfresco-common.default-security-context" . }}
 {{- end }}

@@ -10,7 +10,7 @@ imagePullSecrets:
 {{- with .Values }}
 {{- range .imagePullSecrets }}
   {{- if kindIs "string" . }}
-  - name: {{ . }}
+  - name: {{ . | quote }}
   {{- else }}
   - {{ toYaml . }}
   {{- end }}
