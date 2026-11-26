@@ -7,7 +7,8 @@ Usage: include "alfresco-common.transform.fullurl" "URL"
 */}}
 {{- define "alfresco-common.ats.fullurl" -}}
 {{- $scheme := include "alfresco-common.url.scheme" . }}
-{{- $host := include "alfresco-common.url.host" . }}
+{{- /* .host keeps the port (and IPv6 brackets), unlike url.host which is hostname only */ -}}
+{{- $host := (urlParse .).host }}
 {{- printf "%s://%s/transform/config" $scheme $host }}
 {{- end -}}
 
@@ -20,6 +21,7 @@ Usage: include "alfresco-common.sfs.fullurl" "URL"
 */}}
 {{- define "alfresco-common.sfs.fullurl" -}}
 {{- $scheme := include "alfresco-common.url.scheme" . }}
-{{- $host := include "alfresco-common.url.host" . }}
+{{- /* .host keeps the port (and IPv6 brackets), unlike url.host which is hostname only */ -}}
+{{- $host := (urlParse .).host }}
 {{- printf "%s://%s/alfresco/api/-default-/private/sfs/versions/1/file" $scheme $host }}
 {{- end -}}

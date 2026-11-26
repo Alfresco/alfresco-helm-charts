@@ -7,10 +7,12 @@ Supported formats:
   - PostgreSQL: jdbc:postgresql://host:5432/database
   - MySQL: jdbc:mysql://host:3306/database
   - MariaDB: jdbc:mariadb://host:3306/database
-  - Oracle: jdbc:oracle:thin:@host:1521:service or jdbc:oracle:thin:@//host:1521/service
+  - Oracle: jdbc:oracle:thin:@host:1521/service or jdbc:oracle:thin:@tcp(s)://host:1521/service
   - SQL Server: jdbc:sqlserver://host;databaseName=database
 
 Known limitations (not currently supported, requires direct JDBC URL):
+  - Oracle service name URLs: jdbc:oracle:thin:@//host:1521/service
+  - Oracle SID URLs: jdbc:oracle:thin:@host:1521:sid
   - Oracle multi-host URLs: jdbc:oracle:thin:@(DESCRIPTION=...)
   - Multi-host database clusters (e.g., jdbc:postgresql://h1:5432,h2:5432/db)
   - IPv6 hosts in URL format (use serverName parameter for SQL Server)
