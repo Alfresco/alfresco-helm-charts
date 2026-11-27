@@ -1,17 +1,22 @@
 {{/*
-Read pull secrets from .Values.global
+Read pull secrets from .Values.imagePullSecrets or .Values.global.alfrescoRegistryPullSecrets.
+Supports both a list of {name: ...} objects and plain string values.
 
-Usage: include "alfresco-common.imagePullSecrets" $
+Usage: include "alfresco-common.imagePullSecrets" .
 
 */}}
 {{- define "alfresco-common.imagePullSecrets" }}
 imagePullSecrets:
 {{- with .Values }}
 {{- range .imagePullSecrets }}
+  {{- if kindIs "string" . }}
+  - name: {{ . | quote }}
+  {{- else }}
   - {{ toYaml . }}
+  {{- end }}
 {{- end }}
-{{- if .global.alfrescoRegistryPullSecrets }}
-  - name: {{ .global.alfrescoRegistryPullSecrets }}
+{{- if and (hasKey . "global") .global.alfrescoRegistryPullSecrets }}
+  - name: {{ .global.alfrescoRegistryPullSecrets | quote }}
 {{- end }}
 {{- end }}
 {{- end }}

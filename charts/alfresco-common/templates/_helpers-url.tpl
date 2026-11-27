@@ -1,32 +1,46 @@
 {{/*
-Known URLs are the URL we can trust
+Known URLs are the URLs we can trust.
+Splits on commas and/or whitespace, handles both "url1, url2" and "url1 url2" formats.
 
-Usage: include "alfresco-common.known.urls" $
+Usage: include "alfresco-common.known.urls" .
 
 */}}
 {{- define "alfresco-common.known.urls" -}}
-{{- $known_urls := coalesce .Values.known_urls .Values.global.known_urls "http://localhost,https://localhost" }}
+{{- $known_urls := coalesce .Values.known_urls (and (hasKey .Values "global") .Values.global.known_urls) "http://localhost,https://localhost" }}
 {{- if kindIs "string" $known_urls }}
+  {{- /* Replace common separators with comma, then split */ -}}
+  {{- $known_urls = regexReplaceAll "\\s+|,\\s*" $known_urls "," }}
   {{- $known_urls = splitList "," $known_urls }}
+  {{- /* Filter empty items */ -}}
+  {{- $known_urls = compact $known_urls }}
 {{- end }}
+{{- if empty $known_urls }}
+  {{- fail "No valid URLs found in known_urls after parsing" }}
+{{- end }}
+{{- $normalized := list }}
 {{- range $known_urls }}
-  {{- if not (or (hasPrefix "http://" .) (hasPrefix "https://" .)) }}
+  {{- $trimmed := trim . }}
+  {{- if not (or (hasPrefix "http://" $trimmed) (hasPrefix "https://" $trimmed)) }}
     {{- fail "provided known_urls MUST start with a scheme (http :// or https://)" }}
   {{- end }}
+  {{- $normalized = append $normalized $trimmed }}
 {{- end }}
-{{- mustToJson (dict "known_urls" $known_urls) }}
+{{- mustToJson (dict "known_urls" $normalized) }}
 {{- end -}}
 
 {{/*
-Build up CSRF referer
+Build up CSRF referer with pipe-separated regex patterns.
+Note: Share image's substituter.sh uses sed with | as delimiter,
+so the pipe separator is escaped as \| in template output.
 
-Usage: include "alfresco-common.csrf.referer" $
+Usage: include "alfresco-common.csrf.referer" .
 
 */}}
 {{- define "alfresco-common.csrf.referer" -}}
 {{- $csrf_referers := list }}
 {{- range index (include "alfresco-common.known.urls" . | fromJson) "known_urls" }}
-  {{- $parsed_url := urlParse . }}
+  {{- $url := trimSuffix "/" . }}
+  {{- $parsed_url := urlParse $url }}
   {{- $known_url := urlJoin (dict "host" $parsed_url.host "path" $parsed_url.path "scheme" $parsed_url.scheme) }}
   {{- $csrf_referers = append $csrf_referers $known_url }}
 {{- end }}
@@ -34,15 +48,18 @@ Usage: include "alfresco-common.csrf.referer" $
 {{- end -}}
 
 {{/*
-Build up CSRF Origin
+Build up CSRF Origin with pipe-separated values.
+Note: Share image's substituter.sh uses sed with | as delimiter,
+so the pipe separator is escaped as \| in template output.
 
-Usage: include "alfresco-common.csrf.origin" $
+Usage: include "alfresco-common.csrf.origin" .
 
 */}}
 {{- define "alfresco-common.csrf.origin" -}}
 {{- $csrf_origins := list }}
 {{- range index (include "alfresco-common.known.urls" . | fromJson) "known_urls" }}
-  {{- $parsed_url := urlParse . }}
+  {{- $url := trimSuffix "/" . }}
+  {{- $parsed_url := urlParse $url }}
   {{- $known_url := urlJoin (dict "host" $parsed_url.host "scheme" $parsed_url.scheme) }}
   {{- $csrf_origins = append $csrf_origins $known_url }}
 {{- end }}
@@ -109,7 +126,7 @@ Usage: include "alfresco-common.url.scheme" "URL"
 {{- end -}}
 
 {{/*
-Pick the URL hostname
+Pick the URL hostname (without port, see url.port)
 
 Usage: include "alfresco-common.url.host" "URL"
 
