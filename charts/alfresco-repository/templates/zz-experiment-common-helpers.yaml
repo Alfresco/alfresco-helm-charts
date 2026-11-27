@@ -1,0 +1,25 @@
+{{- with .Values.zzExperiment }}
+{{- with .jdbc }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zz-experiment-jdbc
+data:
+  rdbms: {{ include "alfresco-common.db.rdbms" .url | quote }}
+  hostname: {{ include "alfresco-common.db.hostname" .url | quote }}
+  port: {{ include "alfresco-common.db.port" .url | quote }}
+  driver: {{ include "alfresco-common.db.driver" (dict "url" .url "driver" .driver) | quote }}
+{{- end }}
+{{- with .utils }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zz-experiment-utils
+data:
+  read: {{ include "alfresco-common.read.cm.then.value" (dict "ns" $.Release.Namespace "key" .key "context" (merge (dict "existingConfigMap" .cm) .inline)) | quote }}
+  has_key: {{ include "alfresco-common.haskey.secret" (dict "ns" $.Release.Namespace "key" .key "context" (dict "existingSecret" .secret)) | quote }}
+  checksum: {{ include "alfresco-common.checksum.config" (dict "ns" $.Release.Namespace "configKey" .configKey "context" .) | quote }}
+  value_from_key: {{ include "alfresco-common.lazy.getValueFromKey" (dict "key" .path "context" $) | quote }}
+{{- end }}
+{{- end }}
