@@ -201,12 +201,7 @@ jobs:
           helm lint ${{ matrix.chart }}
 
       - name: Generate coverage report
-        run: |
-          helm unittest ${{ matrix.chart }} --color=auto --coverage-file ${{ matrix.chart }}/coverage.xml --coverage-format cobertura
-          # The consumer reports the library under its own charts/ folder, map it back to the tracked sources
-          if [[ "${{ matrix.chart }}" == "$COMMON_TEST_CHART" ]]; then
-            sed -i "s#${COMMON_TEST_CHART}/charts/alfresco-common/#charts/alfresco-common/#g" "${{ matrix.chart }}/coverage.xml"
-          fi
+        run: helm unittest ${{ matrix.chart }} --color=auto --coverage-file ${{ matrix.chart }}/coverage.xml --coverage-format cobertura
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
