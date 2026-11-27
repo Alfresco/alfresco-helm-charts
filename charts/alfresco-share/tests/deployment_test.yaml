@@ -289,3 +289,17 @@ tests:
           value:
             maxSurge: 2
             maxUnavailable: 1
+
+  - it: should render image pull secrets from the alfresco-common helper
+    set:
+      imagePullSecrets:
+        - name: my-secret
+    asserts:
+      - contains:
+          path: spec.template.spec.imagePullSecrets
+          content:
+            name: my-secret
+      - contains:
+          path: spec.template.spec.imagePullSecrets
+          content:
+            name: quay-registry-secret
