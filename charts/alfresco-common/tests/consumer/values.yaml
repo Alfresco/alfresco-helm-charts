@@ -1,0 +1,41 @@
+---
+# Defaults only, each test sets the values it exercises.
+# The library expects consumers to define global.
+global: {}
+
+jdbc:
+  enabled: false
+  url: ""
+  driver: ""
+
+url:
+  sample: ""
+
+pod: {}
+container: {}
+
+activemq:
+  enabled: false
+  url: ""
+
+utils:
+  enabled: false
+  requiredEnabled: false
+  noNamespace: false
+  cm:
+    name: ""
+    keys: {}
+  secret:
+    name: ""
+    keys: {}
+  inline: {}
+  key: ""
+  configKey: cfg
+  cfg:
+    existingConfigMap:
+      name: ""
+      keys: {}
+    existingSecret:
+      name: ""
+      keys: {}
+  path: ""

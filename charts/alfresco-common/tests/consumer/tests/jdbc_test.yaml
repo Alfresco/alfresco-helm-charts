@@ -1,0 +1,126 @@
+---
+suite: test jdbc helpers
+templates:
+  - jdbc.yaml
+set:
+  jdbc.enabled: true
+tests:
+  - it: should fail when no JDBC URL is given
+    set:
+      jdbc.url: ""
+    asserts:
+      - failedTemplate:
+          errorPattern: needs a database to start
+
+  - it: should parse a postgresql URL and use its default port and driver
+    set:
+      jdbc.url: jdbc:postgresql://db.example.com/alfresco
+    asserts:
+      - equal: {path: data.rdbms, value: postgresql}
+      - equal: {path: data.hostname, value: db.example.com}
+      - equal: {path: data.port, value: "5432"}
+      - equal: {path: data.driver, value: org.postgresql.Driver}
+
+  - it: should accept a URL without the jdbc prefix
+    set:
+      jdbc.url: postgresql://db.example.com/alfresco
+    asserts:
+      - equal: {path: data.rdbms, value: postgresql}
+      - equal: {path: data.hostname, value: db.example.com}
+
+  - it: should use the port given in the URL over the default one
+    set:
+      jdbc.url: jdbc:postgresql://db.example.com:5433/alfresco
+    asserts:
+      - equal: {path: data.port, value: "5433"}
+
+  - it: should use default port and driver for mysql
+    set:
+      jdbc.url: jdbc:mysql://db/alfresco
+    asserts:
+      - equal: {path: data.rdbms, value: mysql}
+      - equal: {path: data.port, value: "3306"}
+      - equal: {path: data.driver, value: com.mysql.jdbc.Driver}
+
+  - it: should use default port and driver for mariadb
+    set:
+      jdbc.url: jdbc:mariadb://db/alfresco
+    asserts:
+      - equal: {path: data.rdbms, value: mariadb}
+      - equal: {path: data.port, value: "3306"}
+      - equal: {path: data.driver, value: org.mariadb.jdbc.Driver}
+
+  - it: should parse an oracle thin URL
+    set:
+      jdbc.url: jdbc:oracle:thin:@db.example.com:1521/ORCL
+    asserts:
+      - equal: {path: data.rdbms, value: oracle}
+      - equal: {path: data.hostname, value: db.example.com}
+      - equal: {path: data.port, value: "1521"}
+      - equal: {path: data.driver, value: oracle.jdbc.OracleDriver}
+
+  - it: should use the default oracle port when the thin URL has none
+    set:
+      jdbc.url: jdbc:oracle:thin:@db.example.com/ORCL
+    asserts:
+      - equal: {path: data.port, value: "1521"}
+
+  - it: should parse an oracle thin URL using TLS
+    set:
+      jdbc.url: jdbc:oracle:thin:@tcps://db.example.com:1522/ORCL
+    asserts:
+      - equal: {path: data.rdbms, value: oracle}
+      - equal: {path: data.hostname, value: db.example.com}
+      - equal: {path: data.port, value: "1522"}
+
+  - it: should parse a sqlserver URL with the host first
+    set:
+      jdbc.url: jdbc:sqlserver://db.example.com:1433;databaseName=alfresco;encrypt=true
+    asserts:
+      - equal: {path: data.rdbms, value: sqlserver}
+      - equal: {path: data.hostname, value: db.example.com}
+      - equal: {path: data.port, value: "1433"}
+      - equal: {path: data.driver, value: com.microsoft.sqlserver.jdbc.SQLServerDriver}
+
+  - it: should parse a sqlserver URL giving the host as serverName
+    set:
+      jdbc.url: jdbc:sqlserver://;serverName=db.example.com;databaseName=alfresco
+    asserts:
+      - equal: {path: data.rdbms, value: sqlserver}
+      - equal: {path: data.hostname, value: db.example.com}
+      - equal: {path: data.port, value: "1434"}
+
+  - it: should keep the host of a sqlserver URL when serverName is also given
+    set:
+      jdbc.url: jdbc:sqlserver://db.example.com:1433;serverName=other.example.com;databaseName=alfresco
+    asserts:
+      - equal: {path: data.hostname, value: db.example.com}
+
+  - it: should prefer the given driver over the default one
+    set:
+      jdbc.url: jdbc:postgresql://db.example.com/alfresco
+      jdbc.driver: my.custom.Driver
+    asserts:
+      - equal: {path: data.driver, value: my.custom.Driver}
+
+  - it: should have no default port or driver for an unknown database
+    set:
+      jdbc.url: jdbc:foo://db.example.com/alfresco
+    asserts:
+      - equal: {path: data.rdbms, value: foo}
+      - equal: {path: data.port, value: ""}
+      - equal: {path: data.driver, value: ""}
+
+  - it: should fail when the URL has no host
+    set:
+      jdbc.url: jdbc:postgresql://
+    asserts:
+      - failedTemplate:
+          errorPattern: cannot be parsed
+
+  - it: should fail when the URL has no database path
+    set:
+      jdbc.url: jdbc:postgresql://db.example.com/
+    asserts:
+      - failedTemplate:
+          errorPattern: cannot be parsed

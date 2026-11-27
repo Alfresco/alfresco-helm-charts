@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: url
+data:
+  known_urls: {{ include "alfresco-common.known.urls" . | quote }}
+  csrf_referer: {{ include "alfresco-common.csrf.referer" . | quote }}
+  csrf_origin: {{ include "alfresco-common.csrf.origin" . | quote }}
+  external_url: {{ include "alfresco-common.external.url" . | quote }}
+  external_host: {{ include "alfresco-common.external.host" . | quote }}
+  external_port: {{ include "alfresco-common.external.port" . | quote }}
+  external_scheme: {{ include "alfresco-common.external.scheme" . | quote }}
+  {{- with .Values.url.sample }}
+  url_scheme: {{ include "alfresco-common.url.scheme" . | quote }}
+  url_host: {{ include "alfresco-common.url.host" . | quote }}
+  url_port: {{ include "alfresco-common.url.port" . | quote }}
+  url_path: {{ include "alfresco-common.url.path" . | quote }}
+  url_query: {{ include "alfresco-common.url.query" . | quote }}
+  {{- end }}

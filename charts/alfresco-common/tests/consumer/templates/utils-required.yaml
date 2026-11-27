@@ -1,0 +1,8 @@
+{{- if .Values.utils.requiredEnabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: utils-required
+data:
+  req_read: {{ include "alfresco-common.reqRead.cm.then.value" (dict "ns" .Release.Namespace "key" .Values.utils.key "context" (merge (dict "existingConfigMap" .Values.utils.cm) .Values.utils.inline)) | quote }}
+{{- end }}

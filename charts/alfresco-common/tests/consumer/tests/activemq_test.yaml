@@ -1,0 +1,70 @@
+---
+suite: test activemq helpers
+templates:
+  - activemq.yaml
+set:
+  activemq.enabled: true
+tests:
+  - it: should wrap a plain broker URL into a failover transport
+    documentIndex: 0
+    set:
+      activemq.url: nio://activemq:61616
+    asserts:
+      - equal: {path: data.failover_url, value: "failover:(nio://activemq:61616)"}
+      - equal: {path: data.BROKER_URL, value: "failover:(nio://activemq:61616)"}
+
+  - it: should keep a broker URL that already has a failover transport
+    documentIndex: 0
+    set:
+      activemq.url: failover:(nio://activemq:61616)?timeout=3000
+    asserts:
+      - equal: {path: data.failover_url, value: "failover:(nio://activemq:61616)?timeout=3000"}
+      - equal: {path: data.BROKER_URL, value: "failover:(nio://activemq:61616)?timeout=3000"}
+
+  - it: should provide the generic ActiveMQ env vars through both helper names
+    documentIndex: 1
+    set:
+      activemq.url: nio://activemq:61616
+    asserts:
+      - equal:
+          path: spec.containers[0].env
+          value:
+            - name: ACTIVEMQ_URL
+              value: $(BROKER_URL)
+            - name: ACTIVEMQ_USER
+              value: $(BROKER_USERNAME)
+            - name: ACTIVEMQ_PASSWORD
+              value: $(BROKER_PASSWORD)
+      - equal:
+          path: spec.containers[1].env
+          value:
+            - name: ACTIVEMQ_URL
+              value: $(BROKER_URL)
+            - name: ACTIVEMQ_USER
+              value: $(BROKER_USERNAME)
+            - name: ACTIVEMQ_PASSWORD
+              value: $(BROKER_PASSWORD)
+
+  - it: should provide the Spring ActiveMQ env vars through both helper names
+    documentIndex: 1
+    set:
+      activemq.url: nio://activemq:61616
+    asserts:
+      - equal:
+          path: spec.containers[2].env
+          value:
+            - name: SPRING_ACTIVEMQ_BROKERURL
+              value: $(BROKER_URL)
+            - name: SPRING_ACTIVEMQ_USER
+              value: $(BROKER_USERNAME)
+            - name: SPRING_ACTIVEMQ_PASSWORD
+              value: $(BROKER_PASSWORD)
+      - equal:
+          path: spec.containers[3].env
+          value:
+            - name: SPRING_ACTIVEMQ_BROKERURL
+              value: $(BROKER_URL)
+            - name: SPRING_ACTIVEMQ_USER
+              value: $(BROKER_USERNAME)
+            - name: SPRING_ACTIVEMQ_PASSWORD
+              value: $(BROKER_PASSWORD)

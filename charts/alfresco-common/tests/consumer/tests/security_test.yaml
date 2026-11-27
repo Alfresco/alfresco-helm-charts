@@ -1,0 +1,85 @@
+---
+suite: test security helpers
+templates:
+  - security.yaml
+tests:
+  - it: should default the pod security context
+    documentIndex: 0
+    asserts:
+      - equal:
+          path: spec.securityContext
+          value:
+            runAsNonRoot: true
+            runAsUser: 33099
+            fsGroupChangePolicy: OnRootMismatch
+
+  - it: should use the given pod security context instead of the default one
+    documentIndex: 0
+    set:
+      pod:
+        podSecurityContext:
+          runAsUser: 1000
+          fsGroup: 2000
+    asserts:
+      - equal:
+          path: spec.securityContext
+          value:
+            runAsUser: 1000
+            fsGroup: 2000
+
+  - it: should default the container security context
+    documentIndex: 0
+    asserts:
+      - equal:
+          path: spec.containers[0].securityContext
+          value:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+
+  - it: should use the given container security context instead of the default one
+    documentIndex: 0
+    set:
+      container:
+        securityContext:
+          readOnlyRootFilesystem: true
+    asserts:
+      - equal:
+          path: spec.containers[0].securityContext
+          value:
+            readOnlyRootFilesystem: true
+
+  - it: should keep the legacy helper names working with the defaults
+    documentIndex: 1
+    asserts:
+      - equal:
+          path: data.default_pod
+          value: '{"fsGroupChangePolicy":"OnRootMismatch","runAsNonRoot":true,"runAsUser":33099}'
+      - equal:
+          path: data.default_container
+          value: '{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true}'
+      - equal:
+          path: data.component_pod
+          value: '{"securityContext":{"fsGroupChangePolicy":"OnRootMismatch","runAsNonRoot":true,"runAsUser":33099}}'
+      - equal:
+          path: data.component_container
+          value: '{"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"runAsNonRoot":true}}'
+
+  - it: should keep the legacy component helpers honouring the given contexts
+    documentIndex: 1
+    set:
+      pod:
+        podSecurityContext:
+          runAsUser: 1000
+      container:
+        securityContext:
+          readOnlyRootFilesystem: true
+    asserts:
+      - equal:
+          path: data.component_pod
+          value: '{"securityContext":{"runAsUser":1000}}'
+      - equal:
+          path: data.component_container
+          value: '{"securityContext":{"readOnlyRootFilesystem":true}}'

@@ -1,0 +1,342 @@
+---
+suite: test utils helpers
+templates:
+  - utils.yaml
+  - utils-required.yaml
+set:
+  utils.enabled: true
+release:
+  namespace: test-ns
+tests:
+  # alfresco-common.read.cm.then.value
+  - it: should read the value from the context when no ConfigMap is given
+    template: utils.yaml
+    set:
+      utils.key: foo
+      utils.inline.foo: from-values
+    asserts:
+      - equal: {path: data.read, value: from-values}
+
+  - it: should read the value from the ConfigMap when it exists
+    template: utils.yaml
+    set:
+      utils.key: foo
+      utils.inline.foo: from-values
+      utils.cm:
+        name: my-cm
+        keys:
+          foo: cm-key
+    kubernetesProvider:
+      scheme:
+        "v1/ConfigMap":
+          gvr: {version: v1, resource: configmaps}
+          namespaced: true
+      objects:
+        - apiVersion: v1
+          kind: ConfigMap
+          metadata: {name: my-cm, namespace: test-ns}
+          data:
+            cm-key: from-configmap
+    asserts:
+      - equal: {path: data.read, value: from-configmap}
+
+  - it: should read an empty value when the ConfigMap does not exist
+    template: utils.yaml
+    set:
+      utils.key: foo
+      utils.inline.foo: from-values
+      utils.cm:
+        name: my-cm
+        keys:
+          foo: cm-key
+    asserts:
+      - equal: {path: data.read, value: ""}
+
+  # alfresco-common.reqRead.cm.then.value
+  - it: should require a value read from the context
+    template: utils-required.yaml
+    set:
+      utils.requiredEnabled: true
+      utils.key: foo
+      utils.inline.foo: from-values
+    asserts:
+      - equal: {path: data.req_read, value: from-values}
+
+  - it: should require a value read from the ConfigMap
+    template: utils-required.yaml
+    set:
+      utils.requiredEnabled: true
+      utils.key: foo
+      utils.cm:
+        name: my-cm
+        keys:
+          foo: cm-key
+    kubernetesProvider:
+      scheme:
+        "v1/ConfigMap":
+          gvr: {version: v1, resource: configmaps}
+          namespaced: true
+      objects:
+        - apiVersion: v1
+          kind: ConfigMap
+          metadata: {name: my-cm, namespace: test-ns}
+          data:
+            cm-key: from-configmap
+    asserts:
+      - equal: {path: data.req_read, value: from-configmap}
+
+  - it: should fail when the required value is missing from the ConfigMap
+    template: utils-required.yaml
+    set:
+      utils.requiredEnabled: true
+      utils.key: foo
+      utils.cm:
+        name: my-cm
+        keys:
+          foo: cm-key
+    asserts:
+      - failedTemplate:
+          errorMessage: "key foo not found in provided context neither in ConfigMap test-ns/my-cm"
+
+  # alfresco-common.haskey.secret
+  - it: should answer nothing when no Secret is given
+    template: utils.yaml
+    set:
+      utils.key: pass
+    asserts:
+      - equal: {path: data.has_key, value: ""}
+
+  - it: should answer false when the Secret does not exist
+    template: utils.yaml
+    set:
+      utils.key: pass
+      utils.secret:
+        name: my-secret
+        keys:
+          pass: pass-key
+    asserts:
+      - equal: {path: data.has_key, value: "false"}
+
+  - it: should answer true when the Secret has the key
+    template: utils.yaml
+    set:
+      utils.key: pass
+      utils.secret:
+        name: my-secret
+        keys:
+          pass: pass-key
+    kubernetesProvider:
+      scheme:
+        "v1/Secret":
+          gvr: {version: v1, resource: secrets}
+          namespaced: true
+      objects:
+        - apiVersion: v1
+          kind: Secret
+          metadata: {name: my-secret, namespace: test-ns}
+          data:
+            pass-key: czNjcmV0
+    asserts:
+      - equal: {path: data.has_key, value: "true"}
+
+  - it: should answer false when the Secret lacks the key
+    template: utils.yaml
+    set:
+      utils.key: pass
+      utils.secret:
+        name: my-secret
+        keys:
+          pass: pass-key
+    kubernetesProvider:
+      scheme:
+        "v1/Secret":
+          gvr: {version: v1, resource: secrets}
+          namespaced: true
+      objects:
+        - apiVersion: v1
+          kind: Secret
+          metadata: {name: my-secret, namespace: test-ns}
+          data:
+            other-key: czNjcmV0
+    asserts:
+      - equal: {path: data.has_key, value: "false"}
+
+  # alfresco-common.checksum.config
+  - it: should fail to checksum without the release namespace
+    template: utils.yaml
+    set:
+      utils.noNamespace: true
+    asserts:
+      - failedTemplate:
+          errorMessage: "template needs to be given the release namepace"
+
+  - it: should checksum the values when neither ConfigMap nor Secret is given
+    template: utils.yaml
+    set:
+      utils.cfg:
+        existingConfigMap:
+          keys:
+            user: user-key
+        existingSecret:
+          keys:
+            pass: pass-key
+        user: bob
+        pass-key: s3cret
+    asserts:
+      - equal:
+          path: data.checksum
+          value: "checksum.config.alfresco.org/cfg: cc2a82b1f4e50ee16ce31b1f6e28fe596ad980615c94d1fe1ca836c44dc5ba20"
+
+  - it: should change the checksum when a value changes
+    template: utils.yaml
+    set:
+      utils.cfg:
+        existingConfigMap:
+          keys:
+            user: user-key
+        existingSecret:
+          keys:
+            pass: pass-key
+        user: alice
+        pass-key: s3cret
+    asserts:
+      - equal:
+          path: data.checksum
+          value: "checksum.config.alfresco.org/cfg: 8cf3f1819ed1c17f17224068a18229b35547b9e5ce8736343e665f3c35968d26"
+
+  - it: should checksum the ConfigMap entries when the ConfigMap exists
+    template: utils.yaml
+    set:
+      utils.cfg:
+        existingConfigMap:
+          name: my-cm
+          keys:
+            user: user-key
+        existingSecret:
+          keys:
+            pass: pass-key
+        pass-key: s3cret
+    kubernetesProvider:
+      scheme:
+        "v1/ConfigMap":
+          gvr: {version: v1, resource: configmaps}
+          namespaced: true
+      objects:
+        - apiVersion: v1
+          kind: ConfigMap
+          metadata: {name: my-cm, namespace: test-ns}
+          data:
+            user-key: bob
+    asserts:
+      - equal:
+          path: data.checksum
+          value: "checksum.config.alfresco.org/cfg: 868f1c88d02f5b762b0c291d4a0543f4c56b1941bdc93347656859944233b644"
+
+  - it: should checksum nothing for a ConfigMap that does not exist
+    template: utils.yaml
+    set:
+      utils.cfg:
+        existingConfigMap:
+          name: my-cm
+          keys:
+            user: user-key
+        existingSecret:
+          keys:
+            pass: pass-key
+        pass-key: s3cret
+    asserts:
+      - equal:
+          path: data.checksum
+          value: "checksum.config.alfresco.org/cfg: c17b7e04dc8d1d633a92d7b83abbd4cb748e1e27a293d7d85e60ee8a9ae8bdfc"
+
+  - it: should checksum the Secret entries when the Secret exists
+    template: utils.yaml
+    set:
+      utils.cfg:
+        existingConfigMap:
+          keys:
+            user: user-key
+        existingSecret:
+          name: my-secret
+          keys:
+            pass: pass-key
+        user: bob
+    kubernetesProvider:
+      scheme:
+        "v1/Secret":
+          gvr: {version: v1, resource: secrets}
+          namespaced: true
+      objects:
+        - apiVersion: v1
+          kind: Secret
+          metadata: {name: my-secret, namespace: test-ns}
+          data:
+            pass-key: czNjcmV0
+    asserts:
+      - equal:
+          path: data.checksum
+          value: "checksum.config.alfresco.org/cfg: f973c4de2036b138bdcce3277b109eafd0a70207e87e83937563ba2c5bf8736b"
+
+  - it: should checksum nothing for a Secret that does not exist
+    template: utils.yaml
+    set:
+      utils.cfg:
+        existingConfigMap:
+          keys:
+            user: user-key
+        existingSecret:
+          name: my-secret
+          keys:
+            pass: pass-key
+        user: bob
+    asserts:
+      - equal:
+          path: data.checksum
+          value: "checksum.config.alfresco.org/cfg: 70cd42a6c85b6834eae1440fe06d1b3c7cec8939bc349022f456d4a7a84510c4"
+
+  - it: should name the checksum annotation after the config key
+    template: utils.yaml
+    set:
+      utils.configKey: other
+      utils.other:
+        existingConfigMap:
+          keys: {}
+        existingSecret:
+          keys: {}
+    asserts:
+      - equal:
+          path: data.checksum
+          value: "checksum.config.alfresco.org/other: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+
+  # alfresco-common.lazy.getValueFromKey
+  - it: should get a nested value from its path
+    template: utils.yaml
+    set:
+      tree.a.b: found
+      utils.path: tree.a.b
+    asserts:
+      - equal: {path: data.value_from_key, value: found}
+
+  - it: should render a non string value as text
+    template: utils.yaml
+    set:
+      tree.a.n: 5
+      utils.path: tree.a.n
+    asserts:
+      - equal: {path: data.value_from_key, value: "5"}
+
+  - it: should get nothing for a key missing at the end of the path
+    template: utils.yaml
+    set:
+      tree.a.b: found
+      utils.path: tree.a.missing
+    asserts:
+      - equal: {path: data.value_from_key, value: ""}
+
+  - it: should get nothing when a parent of the path is missing
+    template: utils.yaml
+    set:
+      tree.a.b: found
+      utils.path: tree.missing.b
+    asserts:
+      - equal: {path: data.value_from_key, value: ""}

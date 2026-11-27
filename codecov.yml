@@ -1,6 +1,11 @@
+# The alfresco-common consumer chart only renders the helpers under test, keep
+# it out of the reports and the total so only the helpers are measured.
+ignore:
+  - "charts/alfresco-common/tests/**"
+
 # alfresco-search-service is unsupported: keep it out of the gates (the global
 # statuses below and its informational component) but leave it in the reported
-# total. Do not use a top-level ignore, that would drop it from the total too.
+# total. Do not use a top-level ignore for it, that would drop it from the total too.
 coverage:
   status:
     project:

@@ -34,6 +34,10 @@ env:
   # Swap this for a release pin (HELM_UNITTEST_VERSION) once a tagged release
   # ships the coverage feature.
   HELM_UNITTEST_REF: e06eae3765d849f9c4ef9c7308a7b2db7bdd716c
+  # alfresco-common is a library chart, excluded from chart-testing as it cannot
+  # be rendered on its own. Its helpers are unit-tested through this consumer
+  # chart, which only goes through the lint job.
+  COMMON_TEST_CHART: charts/alfresco-common/tests/consumer
 jobs:
   list-changed:
     runs-on: ubuntu-latest
@@ -45,6 +49,7 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       has-changes: ${{ steps.set-matrix.outputs.has-changes }}
+      lint-matrix: ${{ steps.set-matrix.outputs.lint-matrix }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -89,9 +94,14 @@ jobs:
             echo "No charts changed"
           fi
 
+          # The lint job also tests the alfresco-common consumer chart, the install job does not
+          lint_charts=$(printf '%s\n%s' "$charts" "$COMMON_TEST_CHART")
+
+          echo "lint-matrix=$(echo "$lint_charts" | jq -R -s -c 'split("\n") | map(select(length > 0))')" >> $GITHUB_OUTPUT
+
   build-plugin:
     needs: list-changed
-    if: needs.list-changed.outputs.has-changes == 'true'
+    if: needs.list-changed.outputs.lint-matrix != '[]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout helm-unittest with coverage support
@@ -129,7 +139,7 @@ jobs:
     needs:
       - list-changed
       - build-plugin
-    if: needs.list-changed.outputs.has-changes == 'true'
+    if: needs.list-changed.outputs.lint-matrix != '[]'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -139,7 +149,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        chart: ${{ fromJson(needs.list-changed.outputs.matrix) }}
+        chart: ${{ fromJson(needs.list-changed.outputs.lint-matrix) }}
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -173,10 +183,22 @@ jobs:
 
       - name: Resolve chart name
         id: chart
-        run: echo "name=$(basename '${{ matrix.chart }}')" >> "$GITHUB_OUTPUT"
+        run: |
+          if [[ "${{ matrix.chart }}" == "$COMMON_TEST_CHART" ]]; then
+            echo "name=alfresco-common" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=$(basename '${{ matrix.chart }}')" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Run chart-testing (lint)
+        if: matrix.chart != env.COMMON_TEST_CHART
         run: ct lint --config ct.yaml --charts ${{ matrix.chart }}
+
+      - name: Lint alfresco-common consumer chart
+        if: matrix.chart == env.COMMON_TEST_CHART
+        run: |
+          helm dependency update ${{ matrix.chart }}
+          helm lint ${{ matrix.chart }}
 
       - name: Generate coverage report
         run: helm unittest ${{ matrix.chart }} --color=auto --coverage-file ${{ matrix.chart }}/coverage.xml --coverage-format cobertura
