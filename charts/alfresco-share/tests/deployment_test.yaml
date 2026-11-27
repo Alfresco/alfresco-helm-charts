@@ -1,0 +1,291 @@
+---
+suite: test share deployment
+templates:
+  - deployment.yaml
+tests:
+  - it: should have basic metadata in place in deployment
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-alfresco-share
+      - isNull:
+          path: spec.template.spec.nodeSelector
+      - isNull:
+          path: spec.template.spec.tolerations
+      - isEmpty:
+          path: spec.template.spec.volumes
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 10
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - alfresco-share
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-share
+              topologyKey: topology.kubernetes.io/zone
+      - contains:
+          path: spec.template.spec.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution
+          content:
+            weight: 5
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - alfresco-share
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - RELEASE-NAME
+                  - key: app.kubernetes.io/component
+                    operator: In
+                    values:
+                      - alfresco-share
+              topologyKey: kubernetes.io/hostname
+
+  - it: should have customized metadata in place in deployment
+    set:
+      nameOverride: share-ui
+      nodeSelector:
+        disktype: ssd
+      tolerations:
+        - key: "skipme"
+          operator: "Exists"
+          effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux
+      podLabels:
+        env: qa
+      podAnnotations:
+        some.annotations.for.stuff: something
+        some.annotations.for.otherstuff: somethingelse
+    asserts:
+      - equal:
+          path: metadata.name
+          value: RELEASE-NAME-share-ui
+      - contains:
+          path: >-
+            spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms
+          content:
+            matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                  - linux
+      - contains:
+          path: spec.template.spec.tolerations
+          content:
+            key: "skipme"
+            operator: "Exists"
+            effect: "NoSchedule"
+      - isSubset:
+          path: spec.template.metadata.labels
+          content:
+            env: qa
+      - isSubset:
+          path: spec.template.metadata.annotations
+          content:
+            some.annotations.for.stuff: something
+            some.annotations.for.otherstuff: somethingelse
+      - isSubset:
+          path: spec.template.spec.nodeSelector
+          content:
+            disktype: ssd
+
+  - it: should leverage provided existing configmap
+    set:
+      repository:
+        existingConfigMap:
+          name: myns/mycm
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[5].valueFrom.configMapKeyRef.name
+          value: myns/mycm
+
+  - it: Fail due to broken input
+    set:
+      known_urls:
+        - not.an/url
+    asserts:
+      - failedTemplate:
+          errorMessage: >-
+            provided known_urls MUST start with a scheme (http :// or https://)
+  - it: |
+      should render custom CSRF config.
+      referrers MUST be a regex with pipes escaped (due to the way vars are substituted in Share pods
+      origins MUST be a list of hosts (without paths) separated by pipes.
+    set:
+      known_urls:
+        - https://ecm.domain.tld/myapp/callback
+        - https://ecm.domain.tld/alfresco
+        - http://app.domain.local:8000
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0]
+          value:
+            name: CSRF_FILTER_REFERER
+            value: >-
+              https://ecm.domain.tld/myapp/callback/.*\|https://ecm.domain.tld/alfresco/.*\|http://app.domain.local:8000/.*
+      - equal:
+          path: spec.template.spec.containers[0].env[1]
+          value:
+            name: CSRF_FILTER_ORIGIN
+            value: https://ecm.domain.tld\|https://ecm.domain.tld\|http://app.domain.local:8000
+      - equal:
+          path: spec.template.spec.containers[0].env[2]
+          value:
+            name: BASEURL
+            value: https://ecm.domain.tld
+
+  - it: should render a default Xorigin restriction config
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].env[0]
+          value:
+            name: CSRF_FILTER_REFERER
+            value: http://localhost/.*\|https://localhost/.*
+      - equal:
+          path: spec.template.spec.containers[0].env[1]
+          value:
+            name: CSRF_FILTER_ORIGIN
+            value: http://localhost\|https://localhost
+      - equal:
+          path: spec.template.spec.containers[0].env[2]
+          value:
+            name: BASEURL
+            value: http://localhost
+
+  - it: should render extra configs
+    set:
+      extraSideContainers:
+        - image: busybox:latest
+      extraVolumes:
+        - name: share-config
+          configMap:
+            name: anotherns/morecm
+      extraVolumeMounts:
+        - name: share-config
+          mountPath: /usr/local/tomcat/shared/classes/Alfresco/web-extension/share-config-custom.xml
+    asserts:
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: share-config
+            configMap:
+              name: anotherns/morecm
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: >-
+              /usr/local/tomcat/shared/classes/Alfresco/web-extension/share-config-custom.xml
+            name: share-config
+      - lengthEqual:
+          path: spec.template.spec.containers
+          count: 2
+
+  - it: should render cpu and memory limits
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "4"
+              memory: "2000Mi"
+
+  - it: should render volumes when replicaCount more than 1
+    set:
+      replicaCount: 2
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 2
+      - contains:
+          path: spec.template.spec.volumes
+          content:
+            name: custom-application-context-volume
+            configMap:
+              name: RELEASE-NAME-share-custom-application-context
+      - contains:
+          path: spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /usr/local/tomcat/shared/classes/alfresco/web-extension/custom-slingshot-application-context.xml
+            subPath: custom-slingshot-application-context.xml
+            name: custom-application-context-volume
+      - contains:
+          path: spec.template.spec.containers[0].ports
+          content:
+            containerPort: 5701
+            name: hz
+            protocol: TCP
+
+  - it: should render labels for deployment
+    chart:
+      version: 1.0.0
+      appVersion: 2.0.0
+    set:
+      nameOverride: testName
+      additionalLabels:
+        my-custom-chart-label: custom-value
+      global:
+        additionalLabels:
+          my-global-custom-label: global-custom-value
+          my-custom-chart-label: global-custom-value
+    asserts:
+      - isSubset:
+          path: metadata.labels
+          content:
+            app.kubernetes.io/component: alfresco-share
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: testName
+            app.kubernetes.io/version: 2.0.0
+            helm.sh/chart: alfresco-share-1.0.0
+            my-custom-chart-label: custom-value
+            my-global-custom-label: global-custom-value
+
+  - it: should use the Recreate strategy by default
+    asserts:
+      - equal:
+          path: spec.strategy.type
+          value: Recreate
+      - notExists:
+          path: spec.strategy.rollingUpdate
+
+  - it: should have rollingUpdate when strategy.type is RollingUpdate
+    set:
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxSurge: 2
+          maxUnavailable: 1
+    asserts:
+      - equal:
+          path: spec.strategy.type
+          value: RollingUpdate
+      - equal:
+          path: spec.strategy.rollingUpdate
+          value:
+            maxSurge: 2
+            maxUnavailable: 1
