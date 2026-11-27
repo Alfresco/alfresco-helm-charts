@@ -74,16 +74,8 @@ jobs:
 
       - name: List changed charts and create matrix
         id: set-matrix
-        env:
-          CHANGED_FILES: ${{ steps.pr-changes.outputs.all_changed_files }}
         run: |
-          # These changes must exercise every chart
-          run_all=false
-          if [[ "$TEST_ALL_CHARTS" == "true" ]] || echo "$CHANGED_FILES" | grep -qE '^(test-deps\.yaml|codecov\.yml)$'; then
-            run_all=true
-          fi
-
-          if [[ "$run_all" == "true" ]]; then
+          if [[ "$TEST_ALL_CHARTS" == "true" ]] || echo "${{ steps.pr-changes.outputs.all_changed_files }}" | grep -qE '^(test-deps\.yaml|codecov\.yml)$'; then
             charts=$(make list-charts)
           else
             charts=$(ct list-changed --config ct.yaml)
@@ -103,10 +95,7 @@ jobs:
           fi
 
           # The lint job also tests the alfresco-common consumer chart, the install job does not
-          lint_charts="$charts"
-          if [[ "$run_all" == "true" ]] || echo "$CHANGED_FILES" | grep -q '^charts/alfresco-common/'; then
-            lint_charts=$(printf '%s\n%s' "$charts" "$COMMON_TEST_CHART")
-          fi
+          lint_charts=$(printf '%s\n%s' "$charts" "$COMMON_TEST_CHART")
 
           echo "lint-matrix=$(echo "$lint_charts" | jq -R -s -c 'split("\n") | map(select(length > 0))')" >> $GITHUB_OUTPUT
 
