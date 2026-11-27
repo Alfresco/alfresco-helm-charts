@@ -1,0 +1,9 @@
+---
+suite: experiment common helpers
+templates:
+  - zz-experiment-common-helpers.yaml
+tests:
+  - it: should hit common external host, port and scheme helpers only
+    asserts:
+      - isKind:
+          of: ConfigMap

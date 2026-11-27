@@ -1,0 +1,73 @@
+---
+suite: experiment common helpers
+templates:
+  - zz-experiment-common-helpers.yaml
+release:
+  namespace: test-ns
+tests:
+  - it: should hit the common jdbc helpers with a postgresql URL
+    set:
+      zzExperiment.jdbc.url: jdbc:postgresql://db.example.com/alfresco
+      zzExperiment.jdbc.driver: ""
+    asserts:
+      - isKind:
+          of: ConfigMap
+
+  - it: should hit the common jdbc helpers with a mysql URL
+    set:
+      zzExperiment.jdbc.url: jdbc:mysql://db/alfresco
+      zzExperiment.jdbc.driver: ""
+    asserts:
+      - isKind:
+          of: ConfigMap
+
+  - it: should hit the common jdbc helpers with a mariadb URL
+    set:
+      zzExperiment.jdbc.url: jdbc:mariadb://db/alfresco
+      zzExperiment.jdbc.driver: ""
+    asserts:
+      - isKind:
+          of: ConfigMap
+
+  - it: should hit the common jdbc helpers with an oracle URL
+    set:
+      zzExperiment.jdbc.url: jdbc:oracle:thin:@db.example.com:1521/ORCL
+      zzExperiment.jdbc.driver: ""
+    asserts:
+      - isKind:
+          of: ConfigMap
+
+  - it: should hit the common jdbc helpers with a sqlserver URL
+    set:
+      zzExperiment.jdbc.url: jdbc:sqlserver://db.example.com:1433;databaseName=alfresco
+      zzExperiment.jdbc.driver: ""
+    asserts:
+      - isKind:
+          of: ConfigMap
+
+  - it: should hit the common utils helpers
+    set:
+      zzExperiment.tree.a.b: nested
+      zzExperiment.utils:
+        key: foo
+        inline:
+          foo: from-values
+        cm:
+          name: ""
+          keys: {}
+        secret:
+          name: ""
+          keys: {}
+        configKey: cfg
+        cfg:
+          existingConfigMap:
+            name: ""
+            keys: {}
+          existingSecret:
+            name: ""
+            keys: {}
+        path: zzExperiment.tree.a.b
+    asserts:
+      - isKind:
+          of: ConfigMap
+        documentIndex: 0
