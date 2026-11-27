@@ -16,7 +16,7 @@ imagePullSecrets:
   {{- end }}
 {{- end }}
 {{- if and (hasKey . "global") .global.alfrescoRegistryPullSecrets }}
-  - name: {{ .global.alfrescoRegistryPullSecrets }}
+  - name: {{ .global.alfrescoRegistryPullSecrets | quote }}
 {{- end }}
 {{- end }}
 {{- end }}
