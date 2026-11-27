@@ -21,7 +21,7 @@ Usage: include "alfresco-common.known.urls" .
 {{- range $known_urls }}
   {{- $trimmed := trim . }}
   {{- if not (or (hasPrefix "http://" $trimmed) (hasPrefix "https://" $trimmed)) }}
-    {{- fail (printf "known_urls entry '%s' MUST start with a scheme (http:// or https://)" $trimmed) }}
+    {{- fail "provided known_urls MUST start with a scheme (http :// or https://)" }}
   {{- end }}
   {{- $normalized = append $normalized $trimmed }}
 {{- end }}
